@@ -86,96 +86,49 @@ Since $ \frac{1}{3} < 1 $, the series converges by the ratio test.
 \end{solution}
 \begin{problem}[14.4(a,b)]
    Determine which of the following series converge. Justify your answers.
-\begin{enumerate}
-    \item $\sum_{n=2}^{\infty} \frac{1}{\left( n+(-1)^{n}  \right)^{2}  }$ 
-    \item $\sum_{n=1}^{\infty}\left( \sqrt{n+1}-\sqrt{n}   \right)  $ 
-\end{enumerate}
-    
+   \begin{enumerate}
+     \item $\displaystyle\sum_{n=2}^{\infty} \frac{1}{\bigl(n+(-1)^{n}\bigr)^{2}}$
+     \item $\displaystyle\sum_{n=1}^{\infty}\bigl(\sqrt{n+1}-\sqrt{n}\bigr)$
+   \end{enumerate}
 \end{problem}
-   \begin{solution}
-      \begin{enumerate}
-         \item \begin{proof}
-            We are given the following expression:
-      
-      \begin{align}
-      \frac{(n+(-1)^n)^2}{(n+1)(-1)^n)^2} \cdot \frac{(n+1)^2}{1}
-      \end{align}
-      
-      Expanding the numerator and denominator:
-      
-      \begin{align}
-      = \frac{n^2 + 2n(-1)^n + 1}{n^2 + 2n(-1)^n + (-1)^{2n} + 2(-1)^n + 2}
-      \end{align}
-      
-      Breaking it down further:
-      
-      \begin{align}
-      (n + (-1)^n)^2 = (n + (-1)^n)(n + (-1)^n)
-      \end{align}
-      
-      Which expands to:
-      
-      \begin{align}
-      n^2 + n(-1)^n + n(-1)^n + (-1)^{2n} = n^2 + 2n(-1)^n + 1
-      \end{align}
-      
-      Thus:
-      
-      \begin{align}
-      = \frac{n^2 + 2n(-1)^n + 1}{n^2 + 2n(-1)^n + 2(-1)^n + 2}
-      \end{align}
-      
-      Finally, simplifying the entire expression, we get:
-      
-      \begin{align}
-      = \frac{1 + \frac{2}{n}(-1)^n + \frac{1}{n^2}}{1 + \frac{2}{n} + \frac{2}{n}(-1)^n + \frac{2}{n^2}} = 2
-      \end{align}
-      
-      Since the limit results in a constant value, we conclude:
-      
 
-         \end{proof}
-      
-      \item \begin{proof}
-         We are tasked with evaluating the series:
-      
-      \begin{align}
-      \sum_{n=1}^{\infty} \left( \sqrt{n+1} - \sqrt{n} \right)
-      \end{align}
-      
-      To simplify, multiply both the numerator and denominator by the conjugate:
-      
-      \begin{align}
-      \left( \sqrt{n+1} - \sqrt{n} \right) \cdot \frac{\sqrt{n+1} + \sqrt{n}}{\sqrt{n+1} + \sqrt{n}}
-      \end{align}
-      
-      This simplifies to:
-      
-      \begin{align}
-      \frac{n+1 - n}{\sqrt{n+1} + \sqrt{n}} = \frac{1}{\sqrt{n+1} + \sqrt{n}}
-      \end{align}
-      
-      Now, we observe that:
-      
-      \begin{align}
-      \frac{1}{\sqrt{n+1} + \sqrt{n}} < \frac{1}{2\sqrt{n}}
-      \end{align}
-      
-      Thus, we can compare this to the series $ \sum_{n=1}^{\infty} \frac{1}{n^{1/2}} $, which is a p-series with $ p = \frac{1}{2} $, and since $ p \leq 1 $, the series diverges. Therefore:
-      
-      \begin{align}
-      \sum_{n=1}^{\infty} \frac{1}{\sqrt{n}} \text{ diverges.}
-      \end{align}
-      
-      Since $ \frac{1}{\sqrt{n+1} + \sqrt{n}} $ is bounded by a divergent series, by the comparison test:
-      
-      \begin{align}
-      \sum_{n=1}^{\infty} \left( \sqrt{n+1} - \sqrt{n} \right) \text{ also diverges.}
-      \end{align}
-      \end{proof}
-       
-      \end{enumerate}
-      \end{solution}
+\begin{solution}
+  \begin{enumerate}
+  %----------------  (a)  ----------------%
+  \item \begin{proof}
+    For even $n$ we have $n+(-1)^n=n-1$, and for odd $n$ we have
+    $n+(-1)^n=n+1$.  In either case
+    \[
+       (n-1)^2 \;\le\; \bigl(n+(-1)^n\bigr)^2 \;\le\; (n+1)^2 .
+    \]
+    Hence
+    \[
+       \frac{1}{(n+1)^2} \;\le\;
+       \frac{1}{\bigl(n+(-1)^n\bigr)^2} \;\le\;
+       \frac{1}{(n-1)^2}\quad(n\ge 2).
+    \]
+    Because the $p$-series $\sum n^{-2}$ converges and the middle
+    expression is sandwiched between two constant multiples of $n^{-2}$,
+    the comparison test shows the given series converges.
+  \end{proof}
+
+  %----------------  (b)  ----------------%
+  \item \begin{proof}
+    Write one term and telescope:
+    \[
+      \sqrt{n+1}-\sqrt{n}
+      =\frac{(\sqrt{n+1}-\sqrt{n})(\sqrt{n+1}+\sqrt{n})}{\sqrt{n+1}+\sqrt{n}}
+      =\frac{1}{\sqrt{n+1}+\sqrt{n}}.
+    \]
+    Since $\sqrt{n+1}+\sqrt{n}\ge 2\sqrt{n}$, each term satisfies
+    \[
+      0 < \frac{1}{\sqrt{n+1}+\sqrt{n}} \le \frac{1}{2\sqrt{n}},
+    \]
+    and the comparison with the divergent $p$-series
+    $\sum n^{-1/2}$ shows that the series diverges.
+  \end{proof}
+  \end{enumerate}
+\end{solution}
 \begin{problem}[14.5(a,b,c)]
    Suppose $\sum_{n=1}^{\infty} a_{n} =A$ and $\sum_{n=1}^{\infty} b_{n} =B$, where $A$ and $B$ are real numbers. Use limit theorems from section $9$ to quickly prove the following.
    \begin{enumerate}
@@ -184,38 +137,51 @@ Since $ \frac{1}{3} < 1 $, the series converges by the ratio test.
     \item Is $\sum_{n=1}^{\infty} a_{n}b_{n} =AB$ a reasonable conjecture? Discuss.  
    \end{enumerate}  
 \end{problem}
-   \begin{solution}
-      We are tasked with evaluating the following properties of series.
-      
-      \begin{enumerate}
-          \item \begin{proof}
-            Given $ \sum_{n=1}^{\infty} a_n = A $ and $ \sum_{n=1}^{\infty} b_n = B $, we want to show:
-            \begin{align}
-            \sum_{n=1}^{\infty} (a_n + b_n) = A + B
-            \end{align}
-            Let $ a_n^* $ and $ b_n^* $ be the partial sums of $ \sum_{n=1}^{\infty} a_n $ and $ \sum_{n=1}^{\infty} b_n $. Then, we have:
-            \begin{align}
-            \lim_{n \to \infty} a_n^* + \lim_{n \to \infty} b_n^* = \lim_{n \to \infty} (a_n^* + b_n^*) \quad \checkmark
-            \end{align}
-            
-            
-          \end{proof}
-          \item \begin{proof}
-            \item For a constant $ k \in \mathbb{R} $, we want to show:
-            \begin{align}
-            \sum_{n=1}^{\infty} k a_n = kA
-            \end{align}
-            The limit of the partial sums satisfies:
-            \begin{align}
-            \lim_{n \to \infty} (k a_n^*) = k \lim_{n \to \infty} a_n^* = kA \quad \checkmark
-            \end{align}  
-          \end{proof}
-          \item \begin{proof}
-            The series $ \sum a_nb_n $ converges if and only if $a_{n}$ and $b_{n}$ converge absolutely. 
-          \end{proof}
-      \end{enumerate}
-      
-      \end{solution}
+\begin{solution}
+   We are asked to verify some basic algebra of convergent series.
+   \begin{enumerate}
+   %----------------  (a)  ----------------%
+   \item \begin{proof}
+     Let $A_n=\sum_{k=1}^{n} a_k$ and $B_n=\sum_{k=1}^{n} b_k$.
+     Because $\displaystyle\sum_{k=1}^{\infty} a_k = A$ and
+     $\displaystyle\sum_{k=1}^{\infty} b_k = B$, we have
+     $\lim_{n\to\infty}A_n=A$ and $\lim_{n\to\infty}B_n=B$.
+     Then
+     \[
+        \sum_{k=1}^{n}(a_k+b_k)=A_n+B_n
+        \quad\Longrightarrow\quad
+        \lim_{n\to\infty}(A_n+B_n)=A+B,
+     \]
+     so $\displaystyle\sum_{k=1}^{\infty}(a_k+b_k)=A+B$.
+   \end{proof}
+ 
+   %----------------  (b)  ----------------%
+   \item \begin{proof}
+     Fix a constant $k\in\mathbb R$.  The $n$-th partial sum of
+     $\displaystyle\sum_{k=1}^{\infty} k a_n$ is
+     $kA_n$, and
+     \[
+       \lim_{n\to\infty} kA_n \;=\;
+       k\lim_{n\to\infty} A_n \;=\; kA,
+     \]
+     proving $\displaystyle\sum_{n=1}^{\infty} ka_n = kA$.
+   \end{proof}
+ 
+   %----------------  (c)  ----------------%
+   \item \begin{proof}
+     In general the series $\displaystyle\sum a_n b_n$
+     **does not** equal $AB$.
+     A simple counter-example: take $a_n=b_n=(-1)^{n+1}$.
+     Then $A=B=1-1+1-1+\dots$ converges conditionally by Cesàro
+     summation to $\tfrac12$, but $a_nb_n=1$ for every $n$, so
+     $\displaystyle\sum a_nb_n$ diverges to $+\infty$.
+     The correct statement is that
+     $\displaystyle\sum a_n b_n$ converges (and the naive identity
+     holds) **only if** the series of absolute values
+     $\sum|a_n|$ and $\sum|b_n|$ both converge.
+   \end{proof}
+   \end{enumerate}
+ \end{solution} 
 \begin{problem}[14.6(a)]
     \begin{enumerate}
         \item Prove that if $\sum_{n=1}^{\infty} \left\vert a_{n}  \right\vert $ converges and $b_{n} $ is a bounded sequence, then $\sum_{n=1}^{\infty} a_{n}b_{n} $ converges. \emph{Hint}: Use Theorem 14.4. 
