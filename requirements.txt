@@ -1,0 +1,5 @@
+Flask>=3.0
+gunicorn>=22.0
+# plus whatever tex-to-html.py imports, e.g.
+pylatexenc
+pygments
