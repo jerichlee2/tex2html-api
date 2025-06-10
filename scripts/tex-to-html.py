@@ -59,27 +59,32 @@ def process(tex: str) -> str:
         out.append(tex_inline(tex[i:m.start()]))
 
         env = m.group(1)
-        end = re.search(rf"\\end\{{{env}\}}", tex, m.end())
-        if not end:
+
+        # ---------- fixed code starts here ----------
+        end_m   = re.search(rf"\\end\{{{env}\}}", tex[m.end():], re.S)
+        if not end_m:
             raise ValueError(f"Missing \\end{{{env}}}")
-        block = tex[m.start():end.end()]
+
+        end_abs = m.end() + end_m.end()        # absolute index in full string
+        block   = tex[m.start():end_abs]
+        # ---------- fixed code ends here ----------
 
         if env in ("itemize", "enumerate"):
             out.append(list_to_html(env, block))
         else:  # verbatim
-            code = re.sub(r"\\begin{verbatim}|\\end{verbatim}", "", block, flags=re.S)
+            code = re.sub(r"\\begin{verbatim}|\\end{verbatim}",
+                        "", block, flags=re.S)
             out.append(f"<pre>{html.escape(code)}</pre>")
 
-        i = end.end()
-
-    html_text = "".join(out)
-    for pat, rep in [
-        (r"\\section\{(.*?)\}",    r"<h2>\1</h2>"),
-        (r"\\subsection\{(.*?)\}", r"<h3>\1</h3>"),
-        (r"\\subsubsection\{(.*?)\}", r"<h4>\1</h4>"),
-    ]:
-        html_text = re.sub(pat, rep, html_text, flags=re.S)
-    return html_text
+        i = end_abs      # advance cursor to just after the \end{…}
+        html_text = "".join(out)
+        for pat, rep in [
+            (r"\\section\{(.*?)\}",    r"<h2>\1</h2>"),
+            (r"\\subsection\{(.*?)\}", r"<h3>\1</h3>"),
+            (r"\\subsubsection\{(.*?)\}", r"<h4>\1</h4>"),
+        ]:
+            html_text = re.sub(pat, rep, html_text, flags=re.S)
+        return html_text
 
 # ───────────────────────── main converter ────────────────────────────
 def convert(latex_path: pathlib.Path, extra_class: str = "") -> str:
