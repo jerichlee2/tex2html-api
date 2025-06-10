@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1749540461.26468 "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.1/limits-and-sequences.tex" "limits-and-sequences.pdf" "limits-and-sequences" 1749540461.83327 0
-  "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.1/limits-and-sequences.tex" 1749540461.0503 18275 42053dc3569ddbd5ab028a3d59dfbe16 ""
+["pdflatex"] 1749567778.16611 "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.1/limits-and-sequences.tex" "limits-and-sequences.pdf" "limits-and-sequences" 1749567778.66502 0
+  "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.1/limits-and-sequences.tex" 1749567777.29838 16516 c502c8285bce407bf7ec486e8b8caa3f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -86,9 +86,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1710571862.48943 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1710571826 8221424 096a2afea9898eaddb935b45b38cfbab ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "limits-and-sequences.aux" 1749540461.77634 162 afb4ef04385f9e3622d558f5dc6a25fe "pdflatex"
-  "limits-and-sequences.out" 1749540461.58931 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "limits-and-sequences.tex" 1749540461.0503 18275 42053dc3569ddbd5ab028a3d59dfbe16 ""
+  "limits-and-sequences.aux" 1749567778.61377 162 8041607b76d73e3dcbdb7e912bad98fd "pdflatex"
+  "limits-and-sequences.out" 1749567778.43278 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "limits-and-sequences.tex" 1749567777.29838 16516 c502c8285bce407bf7ec486e8b8caa3f ""
   (generated)
   "limits-and-sequences.aux"
   "limits-and-sequences.log"

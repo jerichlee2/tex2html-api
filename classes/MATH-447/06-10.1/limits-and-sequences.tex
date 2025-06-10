@@ -36,72 +36,38 @@
 
 \begin{solution}
     \begin{enumerate}
-        \item \begin{proof}
-        $\forall s_n, s_n \neq 0, \lim_{n \to \infty} \left| \frac{s_{n+1}}{s_n} \right| = L.$
-    
+      %-----------------  (a)  -----------------%
+      \item[(a)]
+        \begin{proof}
+          Assume $s_n\neq0$ and  
+          $\displaystyle L=\lim_{n\to\infty}\left|\frac{s_{n+1}}{s_n}\right|<1$.
+          Pick $a$ with $L<a<1$.  
+          Then there is $N\in\mathbb N$ such that
+          $\bigl|s_{n+1}\bigr|\le a\,\bigl|s_n\bigr|$ for all $n\ge N$.
+          Iterating,
+          \[
+             |s_{n}| \le a^{\,n-N}\,|s_N| \xrightarrow[n\to\infty]{} 0,
+          \]
+          because $0<a<1$. Hence $\displaystyle\lim_{n\to\infty}s_n=0$.
+        \end{proof}
+  
+      %-----------------  (b)  -----------------%
+      \item[(b)]
         \begin{proposition}
-             If $L < 1$, then $\lim_{n \to \infty} s_n = 0.$
+          If $L>1$, then $\displaystyle\lim_{n\to\infty}|s_n|=+\infty$.
         \end{proposition}
-    
-        $\forall \epsilon > 0, \exists N \in \mathbb{N} \text{ s.t. } n > N \implies \left| \frac{s_{n+1}}{s_n} - L \right| < \epsilon.$
-        This implies that $\frac{s_{n+1}}{s_n} < \epsilon + L.$ Then we select a value $a$ such that $L < a < 1.$
-        \begin{align}
-            s_{n+1} &< (\epsilon + L) s_n \tag{1} \\
-            a &= \epsilon + L \tag{2}
-        \end{align}
-    
-        To show that $|s_n| < a^{n-N} |s_N|$, we will show the following:
-        \begin{align}
-            |s_n| &= \left| \frac{s_n}{s_{n-1}} \cdot \frac{s_{n-1}}{s_{n-2}} \cdot \dots \cdot \frac{s_{N+1}}{s_N} \cdot |s_N| \right| \tag{4} \\
-            |s_n| &< a^{n-N} |s_N| \tag{5}
-        \end{align}
-    
-        $\frac{1}{a^N} |s_N|$ is a constant, so we can rename it as the following:
-        \begin{align}
-            C = \frac{1}{a^N} |s_N| \tag{6}
-        \end{align}
-    
-        Then, we can say the following:
-        \begin{align}
-            |s_n| < a^n \tag{7}
-        \end{align}
-    
-        If $a < 1$, we know that $\lim_{n \to \infty} a^n = 0.$ By Theorem 9.7 (b) in Ross, we know that $\lim_{n \to \infty} a^n = 0.$
-        Therefore, by Theorem 9.2 in Ross, $\lim_{n \to \infty} |s_n| = 0.$ 
-    \end{proof}
-\item    \begin{proposition}
-         If $L > 1$, then $\lim_{n \to \infty} |s_n| = \infty.$
-    \end{proposition}
-    
-    \begin{proof}
-        Let $t_n = \frac{1}{|s_n|}$. Our goal is to prove $\lim_{n \to \infty} t_n = 0.$ Then:
-        \begin{align}
-            L &= \lim_{n \to \infty} \left| \frac{s_{n+1}}{s_n} \right| \notag \\
-            &= \lim_{n \to \infty} \left| \frac{t_n}{t_{n+1}} \right| \tag{9}
-        \end{align}
-    
-        $\forall \epsilon > 0, \exists N \in \mathbb{N} \text{ s.t. } n > N \implies \left| \frac{t_n}{t_{n+1}} - L \right| < \epsilon.$
-        \begin{align}
-            \frac{t_n}{t_{n+1}} &< \left( \frac{\epsilon + L}{a} \right) t_n \tag{11}
-        \end{align}
-    
-        Applying the same process as in (a), we can say that $L < a < 1.$ Then:
-        \begin{align}
-            t_{n+1} &< at_n \tag{12} \\
-            \frac{t_{n+1}}{t_n} &< a \tag{13} \\
-            |t_n| &= \left| \frac{t_n}{t_{n-1}} \cdot \frac{t_{n-1}}{t_{n-2}} \cdot \dots \cdot \frac{t_{N+1}}{t_N} \cdot |t_N| \right| \tag{14} \\
-            C &= a^{-N} |t_N| \tag{15}
-        \end{align}
-    
-        We can say that $|t_n| < a^n C$ if $a < 1$, so $\lim_{n \to \infty} a^n = 0.$ Then $\lim_{n \to \infty} t_n = 0.$ Therefore:
-        \begin{align}
-            \lim_{n \to \infty} \frac{1}{|s_n|} = 0 \tag{16}
-        \end{align}
-        By Theorem 9.10 in Ross, $\lim_{n \to \infty} |s_n| = \infty.$ 
-    \end{proof}
-
+        \begin{proof}
+          Define $t_n = \dfrac{1}{|s_n|}$.  
+          From the ratio in part (a) we get
+          \[
+            \lim_{n\to\infty}\Bigl|\frac{t_{n+1}}{t_n}\Bigr|
+            =\frac{1}{L}<1,
+          \]
+          so by the result of part (a) we have $\displaystyle\lim_{n\to\infty}t_n=0$.
+          Therefore $|s_n|=\dfrac1{t_n}\to\infty$.
+        \end{proof}
     \end{enumerate}
-    \end{solution}
+  \end{solution}
 
 \begin{problem}[9.14]
     Let $p > 0$. Use Exercise 9.12 to show
