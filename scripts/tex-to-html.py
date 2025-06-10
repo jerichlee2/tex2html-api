@@ -1,133 +1,171 @@
 #!/usr/bin/env python3
 """
-tex-to-html.py  —  LaTeX → HTML snippet (no outer page chrome)
+tex-to-html.py  –  LaTeX → *fragment* HTML (no <html> wrapper)
 
-Usage
-=====
-    python3 tex-to-html.py <input.tex>          # writes HTML fragment to stdout
-    python3 tex-to-html.py <input.tex> dark.css # (optional) extra class hook
+This version borrows the recursive environment handler from
+“latex_to_html.py”, so it understands
+  • nested enumerate / itemize (with [resume] etc.)
+  • custom environments:  problem, solution, proof, lemma, proposition, theorem
+  • verbatim / lstlisting / figure  …and passes math environments straight
+    through ($$, $) for MathJax.
 
-The output contains:
-  <article class="post [EXTRA_CSS]">
-      <header> …title / author / date… </header>
-      …converted body…
-  </article>
-
-No <html>, <head>, sidebars, or scripts are included.
-MathJax markup ($…$, $$…$$) is left as‑is; load MathJax once in your host page.
+Usage (unchanged)
+    python3 tex-to-html.py input.tex            >  fragment.html
+    python3 tex-to-html.py input.tex dark.css   >  fragment.html
 """
 
 from __future__ import annotations
 import re, sys, html, pathlib
 from datetime import datetime
 
-# ───────────────────────── helper utilities ──────────────────────────
+# ───────────────────────── helpers ──────────────────────────
 def escape_angle_brackets_in_math(s: str) -> str:
-    """Escape < > inside LaTeX math so they survive HTML parsing."""
-    return re.sub(r"(\$[^$]*\$|\$\$[^$]*\$\$)",
-                  lambda m: m.group(0).replace("<", "&lt;").replace(">", "&gt;"),
-                  s)
+    return re.sub(
+        r"(\${1,2})(.*?)(\1)",
+        lambda m: f"{m.group(1)}{m.group(2).replace('<','&lt;').replace('>','&gt;')}{m.group(1)}",
+        s,
+        flags=re.S,
+    )
 
-def tex_inline(text: str) -> str:
-    """Very small inline‑tag subset."""
-    subs = [
-        (r"\\textbf\{(.*?)\}",   r"<strong>\1</strong>"),
-        (r"\\textit\{(.*?)\}",   r"<em>\1</em>"),
-        (r"\\emph\{(.*?)\}",     r"<em>\1</em>"),
-        (r"\\underline\{(.*?)\}",r"<u>\1</u>"),
-        (r"\\\\",                "<br>"),
-    ]
-    for pat, rep in subs:
-        text = re.sub(pat, rep, text, flags=re.S)
-    return html.escape(text, quote=False)
+def tex_escape(txt: str) -> str:
+    return (txt.replace("&", "&amp;")
+               .replace("<", "&lt;")
+               .replace(">", "&gt;"))
 
-def list_to_html(env: str, block: str) -> str:
-    tag = "ul" if env == "itemize" else "ol"
-    items = re.findall(r"\\item\s+(.*?)(?=\\item|\\end{" + env + "})", block, re.S)
-    lis = "".join(f"<li>{process(i.strip())}</li>" for i in items)
-    return f"<{tag}>{lis}</{tag}>"
+# ────────────────── generic env extractor (nested-safe) ──────────────────
+def grab_env(block: str, pos: int, env: str) -> tuple[str, int]:
+    beg_pat = re.compile(rf"\\begin\{{{env}\}}\s*(\[[^\]]*\])?", re.S)
+    end_pat = re.compile(rf"\\end\{{{env}\}}", re.S)
 
-def process(tex: str) -> str:
-    """Recursive one‑pass conversion of supported constructs."""
-    out, i = [], 0
-    env_pat = re.compile(r"\\begin\{(itemize|enumerate|verbatim)\}", re.S)
-    while i < len(tex):
-        m = env_pat.search(tex, i)
+    m0 = beg_pat.match(block, pos)
+    if not m0:
+        raise ValueError(f"Expected \\begin{{{env}}} at {pos}")
+    depth, cursor = 1, m0.end()
+
+    while True:
+        m = re.search(rf"{beg_pat.pattern}|{end_pat.pattern}", block[cursor:], re.S)
         if not m:
-            out.append(tex_inline(tex[i:]))
-            break
-        out.append(tex_inline(tex[i:m.start()]))
-
-        env = m.group(1)
-
-        # ---------- fixed code starts here ----------
-        end_m   = re.search(rf"\\end\{{{env}\}}", tex[m.end():], re.S)
-        if not end_m:
             raise ValueError(f"Missing \\end{{{env}}}")
+        cursor += m.end()
+        depth += 1 if m.group(0).startswith("\\begin") else -1
+        if depth == 0:
+            return block[pos:cursor], cursor
 
-        end_abs = m.end() + end_m.end()        # absolute index in full string
-        block   = tex[m.start():end_abs]
-        # ---------- fixed code ends here ----------
+# ────────────────── recursive LaTeX-to-HTML core ──────────────────
+def render(tex: str, in_math=False) -> str:
+    # strip comments (unescaped %), cheap.
+    tex = re.sub(r"(?<!\\)%.*", "", tex)
 
-        if env in ("itemize", "enumerate"):
-            out.append(list_to_html(env, block))
-        else:  # verbatim
-            code = re.sub(r"\\begin{verbatim}|\\end{verbatim}",
-                        "", block, flags=re.S)
-            out.append(f"<pre>{html.escape(code)}</pre>")
+    out, i = [], 0
+    while i < len(tex):
+        if tex.startswith("\\begin{", i):
+            env = re.match(r"\\begin\{(\w+\*?)\}", tex[i:]).group(1)
+            block, j = grab_env(tex, i, env)
+            i = j
+            inner = re.sub(rf"\\begin\{{{env}\}}(\[[^\]]*\])?|\\end\{{{env}\}}", "", block, flags=re.S)
 
-        i = end_abs      # advance cursor to just after the \end{…}
-        html_text = "".join(out)
-        for pat, rep in [
-            (r"\\section\{(.*?)\}",    r"<h2>\1</h2>"),
-            (r"\\subsection\{(.*?)\}", r"<h3>\1</h3>"),
-            (r"\\subsubsection\{(.*?)\}", r"<h4>\1</h4>"),
-        ]:
-            html_text = re.sub(pat, rep, html_text, flags=re.S)
-        return html_text
+            if env == "enumerate":
+                out.append(list_env(inner, ordered=True))
+            elif env == "itemize":
+                out.append(list_env(inner, ordered=False))
+            elif env == "verbatim":
+                out.append(f"<pre>{tex_escape(inner)}</pre>")
+            elif env == "lstlisting":
+                out.append(f"<pre class='code-block'>{tex_escape(inner)}</pre>")
+            elif env == "figure":
+                out.append(handle_figure(inner))
+            elif env in ("align", "align*", "equation", "equation*", "gather",
+                         "multline", "split"):
+                out.append(f"$${block}$$")              # keep LaTeX for MathJax
+            elif env in ("problem", "solution", "proof",
+                         "lemma", "proposition", "theorem"):
+                label = env.capitalize().rstrip("*") + "."
+                body  = render(inner)
+                qed   = "<div class='qed'>∎</div>" if env == "proof" else ""
+                out.append(f"<div class='{env}'><strong>{label}</strong><br>{body}{qed}</div>")
+            else:   # unknown env → recurse
+                out.append(render(inner, in_math=in_math))
+        else:
+            # plain text or LaTeX command
+            m_cmd = re.match(r"\\(\w+)(\*?)\{(.*?)\}", tex[i:], re.S)
+            if m_cmd and not in_math:
+                cmd, arg = m_cmd.group(1), m_cmd.group(3)
+                if cmd == "section":
+                    out.append(f"<h2>{html.escape(arg)}</h2>")
+                elif cmd == "subsection":
+                    out.append(f"<h3>{html.escape(arg)}</h3>")
+                elif cmd == "subsubsection":
+                    out.append(f"<h4>{html.escape(arg)}</h4>")
+                elif cmd in ("textbf",):
+                    out.append(f"<strong>{html.escape(arg)}</strong>")
+                elif cmd in ("textit", "emph"):
+                    out.append(f"<em>{html.escape(arg)}</em>")
+                else:      # leave unrecognised command verbatim
+                    out.append(tex_escape(m_cmd.group(0)))
+                i += m_cmd.end()
+            else:
+                # consume until next backslash or end
+                nxt = tex.find("\\", i+1)
+                segment = tex[i:nxt if nxt != -1 else len(tex)]
+                out.append(tex_escape(segment) if not in_math else segment)
+                i = nxt if nxt != -1 else len(tex)
 
-# ───────────────────────── main converter ────────────────────────────
-def convert(latex_path: pathlib.Path, extra_class: str = "") -> str:
+    return "".join(out)
+
+def list_env(inner: str, *, ordered: bool) -> str:
+    tag = "ol" if ordered else "ul"
+    items = re.split(r"\\item", inner)[1:]  # first split is before first \item
+    items_html = "".join(f"<li>{render(it.strip())}</li>" for it in items)
+    return f"<{tag}>{items_html}</{tag}>"
+
+def handle_figure(inner: str) -> str:
+    img   = re.search(r"\\includegraphics\[.*?\]\{(.*?)\}", inner, re.S)
+    cap   = re.search(r"\\caption\{(.*?)\}", inner, re.S)
+    imgsrc = html.escape(img.group(1).strip()) if img else ""
+    caption= html.escape(cap.group(1).strip()) if cap else ""
+    cap_html = f"<figcaption>{caption}</figcaption>" if caption else ""
+    return (f"<figure><img src='{imgsrc}' alt='{caption}' "
+            "style='max-width:100%;height:auto;'>"
+            f"{cap_html}</figure>")
+
+# ────────────────── public convert() function ──────────────────
+def convert(latex_path: pathlib.Path, extra_class: str="") -> str:
     tex = latex_path.read_text(encoding="utf-8")
 
-    # -------- metadata --------
-    def grab(cmd):  # helper to extract single‑line commands
-        m = re.search(rf"\\{cmd}\{{(.*?)\}}", tex, re.S)
-        return m.group(1).strip() if m else ""
+    # metadata
+    md = {k: re.search(rf"\\{k}\{{(.*?)\}}", tex, re.S)
+              for k in ("title","author","date")}
+    title  = md["title"].group(1).strip()  if md["title"]  else ""
+    author = md["author"].group(1).strip() if md["author"] else ""
+    date   = (md["date"].group(1).replace("\\today",
+             datetime.now().strftime("%B %d, %Y")).strip()
+             if md["date"] else "")
 
-    title   = grab("title")
-    author  = grab("author")
-    date    = grab("date").replace("\\today",
-              datetime.now().strftime("%B %d, %Y")) or ""
-
-    header_parts = []
-    if title:  header_parts.append(f"<h1>{html.escape(title)}</h1>")
-    if author: header_parts.append(f"<h3>{html.escape(author)}</h3>")
-    if date:   header_parts.append(f"<h4>{html.escape(date)}</h4>")
-    header_html = "\n".join(header_parts)
+    header = "".join([
+        f"<h1>{html.escape(title)}</h1>"   if title  else "",
+        f"<h3>{html.escape(author)}</h3>"  if author else "",
+        f"<h4>{html.escape(date)}</h4>"    if date   else ""
+    ])
 
     tex_body = tex.replace("\\maketitle", "TITLE_PLACEHOLDER")
     start = tex_body.find("\\begin{document}") + len("\\begin{document}")
     end   = tex_body.rfind("\\end{document}")
     if start < 0 or end < 0:
-        raise ValueError("Missing \\begin{document} or \\end{document}")
+        raise ValueError("Missing \\begin{document} / \\end{document}")
     body_tex = tex_body[start:end].strip()
 
-    html_body = process(body_tex).replace("TITLE_PLACEHOLDER", header_html)
+    html_body = render(body_tex).replace("TITLE_PLACEHOLDER", header)
     html_body = escape_angle_brackets_in_math(html_body)
 
     cls_attr = f"post {extra_class}".strip()
     return f'<article class="{cls_attr}">\n{html_body}\n</article>'
 
-# ───────────────────────── CLI wrapper ───────────────────────────────
+# ────────────────── CLI wrapper (unchanged) ──────────────────
 if __name__ == "__main__":
-    if len(sys.argv) not in (2, 3):
-        sys.exit("Usage: python3 tex-to-html.py <input.tex> [extra_class]")
-
-    tex_file   = pathlib.Path(sys.argv[1]).expanduser()
-    extra_cls  = sys.argv[2] if len(sys.argv) == 3 else ""
+    if len(sys.argv) not in (2,3):
+        sys.exit("Usage: tex-to-html.py input.tex [extra_class]")
     try:
-        print(convert(tex_file, extra_cls))
+        print(convert(pathlib.Path(sys.argv[1]), sys.argv[2] if len(sys.argv)==3 else ""))
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(2)
