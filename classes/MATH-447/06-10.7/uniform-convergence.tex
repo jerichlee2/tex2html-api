@@ -6,49 +6,17 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{xcolor}
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{physics}
-\usepackage{siunitx}
-\usepackage{booktabs}
-\usepackage{cancel}
-  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
 
-
-\DeclareMathOperator{\Log}{Log}
-\DeclareMathOperator{\Arg}{Arg}
-
-\lstset{
-    breaklines=true,         % Enable line wrapping
-    breakatwhitespace=false, % Wrap lines even if there's no whitespace
-    basicstyle=\ttfamily,    % Use monospaced font
-    frame=single,            % Add a frame around the code
-    columns=fullflexible,    % Better handling of variable-width fonts
-}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./Figures/}{#1.pdf_tex}
-}
+% Define the solution environment with normal text
 \theoremstyle{definition} % This style uses normal (non-italicized) text
 \newtheorem{solution}{Solution}
-\newtheorem{proposition}{Proposition}
+\newtheorem*{proposition}{Proposition}
 \newtheorem{problem}{Problem}
 \newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-\newtheorem{remark}{Remark}
-\newtheorem{note}{Note}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{corollary}{Corollary}
 \theoremstyle{plain} % Restore the default style for other theorem environments
 %
 
-% Theorem-like environments
+
 % Title information
 \title{Uniform Convergence}
 \author{Jerich Lee}
@@ -57,5 +25,238 @@
 \begin{document}
 
 \maketitle
+Throughout this homework, we assume that (reverse) trigonometric and exponential functions (such as exp, sin, cos, tan, or arctan) are continuous. Other common calculus facts about these functions can also be used.
+\begin{problem}[20.16]
+    Suppose the limits $ L_1 = \lim_{x \to a^+} f_1(x) $ and $ L_2 = \lim_{x \to a^+} f_2(x) $ exist.
 
+\begin{enumerate}
+    \item[(a)] Show if $ f_1(x) \leq f_2(x) $ for all $ x $ in some interval $ (a, b) $, then $ L_1 \leq L_2 $.
+    \item[(b)] Suppose that, in fact, $ f_1(x) < f_2(x) $ for all $ x $ in some interval $ (a, b) $. Can you conclude $ L_1 < L_2 $?
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\begin{enumerate}
+\item \begin{proof}
+    $\forall \varepsilon>0, \exists \delta >0 \ s.t. \ \left\vert f_1(x)-L_1 \right\vert <\varepsilon_1$ whenever $x\in (a- \delta, a+\delta)\cap S$. Let $S \text{ be }  (a,b), b>a$. $\forall \varepsilon>0, \exists \delta_2 >0 \ s.t. \ \left\vert f_2(x)-L_2 \right\vert <\varepsilon_2$. Choose $\delta = \text{min}\left\{ \delta_1, \delta_2 \right\}$. Then,
+    \begin{align}
+        L_2 - \varepsilon < f_2(x) < L_2 + \varepsilon \\[10pt] 
+        L_1 - \varepsilon < f_1(x) < L_1 + \varepsilon \\[10pt] 
+        L_1 - \frac{\varepsilon}{2} < f_1(x) \leq f_2(x) <L_2 +\frac{\varepsilon}{2} \\[10pt] 
+        \forall \varepsilon, L_1 < L_2 + \varepsilon \implies \\[10pt] 
+        L_1 \leq L_2
+    \end{align} 
+\end{proof}
+\item \begin{proof}
+    No, due to the proof of part a of this problem. We can say that $L_1=L2$, which satisfies $L_1<L_{2}+\varepsilon$ but not $L_1 < L_2$. 
+\end{proof}
+\end{enumerate}    
+\end{solution}
+\begin{problem}[20.17]
+    Show that if $ \lim_{x \to a^+} f_1(x) = \lim_{x \to a^+} f_3(x) = L $ and if $ f_1(x) \leq f_2(x) \leq f_3(x) $ for all $ x $ in some interval $ (a, b) $, then $ \lim_{x \to a^+} f_2(x) = L $. This is called the squeeze lemma. \textit{Warning}: This is not immediate from Exercise 20.16(a), because we are not assuming $ \lim_{x \to a^+} f_2(x) $ exists; this must be proved.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        $\lim_{x \to n^{+}} f_1(x)=\lim_{x \to n^{+}}f_{3}(x)=L$, if $\forall x \in (a,b), f_1(x) \leq f_2(x) \leq f_3(x)\implies \lim_{x \to a^{+}} f_2(x)=L$. \begin{align}
+           \text{Let } x\in (a-\delta ,a+\delta )\cap S \text{, } S = (a,b) \ s.t. \ b>a. \\[10pt] 
+           \forall \varepsilon>0, \exists \delta >0 \ s.t. \ \left\vert f_1(x) - L \right\vert <\varepsilon \\[10pt] 
+           \left\vert f_{3}(x) - L  \right\vert < \varepsilon \\[10pt] 
+           L-\varepsilon<f_1(x) \leq f_2(x) \leq f_3(x) <\varepsilon+L \\[10pt] 
+           L-\varepsilon< f_2(x) < \varepsilon+L \\[10pt] 
+           \left\vert f_2(x)-L \right\vert <\varepsilon \implies \\[10pt] 
+           \lim_{x \to a^{+}}f_2(x)=L 
+        \end{align}  
+    \end{proof}
+\end{solution}
+\begin{problem}[23.4c]
+    For $ n = 0, 1, 2, 3, \dots $, let $ a_n = \left[ \frac{4 + 2 (-1)^n}{5} \right]^n $.
+
+\begin{enumerate}
+    \item[(a)] Find $ \limsup (a_n)^{1/n} $, $ \liminf (a_n)^{1/n} $, $ \limsup \left| \frac{a_{n+1}}{a_n} \right| $ and $ \liminf \left| \frac{a_{n+1}}{a_n} \right| $.
+    \item[(b)] Do the series $ \sum a_n $ and $ \sum (-1)^n a_n $ converge? Explain briefly.
+    \item[(c)] Now consider the power series $ \sum a_n x^n $ with the coefficients $ a_n $ as above. Find the radius of convergence and determine the exact interval of convergence for the series.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+   \begin{enumerate}
+    \item \begin{enumerate}
+    \item           
+              
+              \begin{align}
+                 \limsup_{n \to \infty} (a_n)^{\frac{1}{n}} &= \limsup_{n \to \infty} \left(\left[ \frac{4 + 2(-1)^n}{5} \right]^n\right)^{\frac{1}{n}} \\[10pt] 
+                 &= \max \left\{ \limsup_{k \to \infty} \left( \frac{6}{5} \right)^{\frac{2k}{2k}}, \limsup_{k \to \infty} \left( \frac{2}{5} \right)^{\frac{2k+1}{2k+1}} \right\} \\[10pt]
+                 &= \frac{6}{5}
+              \end{align}
+              
+              \item 
+              \begin{align}
+                 \liminf_{n \to \infty} (a_n)^{\frac{1}{n}} &= \min \left\{ \liminf_{k \to \infty} \left( \frac{6}{5} \right)^{\frac{2k}{2k}}, \liminf_{k \to \infty} \left( \frac{2}{5} \right)^{\frac{2k+1}{2k+1}} \right\} \\[10pt]
+                 &= \frac{2}{5}
+              \end{align}
+     
+              \item 
+              \begin{align}
+                 \limsup_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| &= \limsup_{n \to \infty} 
+                 \begin{cases}
+                     \frac{a_{2k+1}}{a_{2k}} = \frac{\left(\frac{2}{5}\right)^{2k+1}}{\left(\frac{6}{5}\right)^{2k}} & \text{if } n = 2k \\
+                     \frac{a_{2k+2}}{a_{2k+1}} = \frac{\left(\frac{6}{5}\right)^{2k+2}}{\left(\frac{2}{5}\right)^{2k+1}} & \text{if } n = 2k+1
+                 \end{cases} \\[10pt]
+                 &= \max \left\{ 0, \infty \right\} \\[10pt]
+                 &= \infty
+    \end{align}
+    \item 
+    \begin{align}
+       \liminf_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| &= \liminf_{n \to \infty} 
+       \begin{cases}
+           \frac{a_{2k+1}}{a_{2k}} = \frac{\left(\frac{2}{5}\right)^{2k+1}}{\left(\frac{6}{5}\right)^{2k}} & \text{if } n = 2k \\[10pt]
+           \frac{a_{2k+2}}{a_{2k+1}} = \frac{\left(\frac{6}{5}\right)^{2k+2}}{\left(\frac{2}{5}\right)^{2k+1}} & \text{if } n = 2k+1
+       \end{cases} \\[10pt]
+       &= \min \left\{ 0, \infty \right\} \\[10pt]
+       &= 0
+    \end{align}
+\end{enumerate}
+\item These series do not converge; these do not pass the criteria of the Ratio and Root tests, i.e., either $\alpha = \limsup_{n \to \infty} \left\vert a_{n} \right\vert^{\frac{1}{n}}>1 $ or $\limsup_{n \to \infty} \left\vert \frac{a_{n+1}}{a_{n}}  \right\vert>1 $ imply that the series $\sum_{n=1}^{\infty} a_{n}$ does not converge.
+\item 
+\begin{align}    
+\sum_{i=1}^{\infty} a_{n}x^{n} \\[10pt] 
+\beta = \limsup_{n \to \infty} \left\vert a_{n} \right\vert^{\frac{1}{n}} \\[10pt] 
+R = \frac{1}{\beta}\\[10pt] 
+\beta = \frac{5}{6} \\[10pt] 
+R = \frac{5}{6} \\[10pt] 
+\left\vert x \right\vert < \frac{5}{6}
+\end{align}
+The above converges for $(-\frac{5}{6}, \frac{5}{6})$. 
+   \end{enumerate} 
+\end{solution}
+\begin{problem}[23.5b]
+    Consider a power series $ \sum a_n x^n $ with radius of convergence $ R $.
+\begin{enumerate}
+    \item[(b)] Prove that if $ \limsup |a_n| > 0 $, then $ R \leq 1 $.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\begin{proof}
+    \begin{align}
+    \beta = \limsup_{n \to \infty} \left\vert a_{n} \right\vert^{\frac{1}{n}}\\[10pt] 
+    c = \limsup_{n \to \infty} \left\vert a_{n} \right\vert>0\\[10pt] 
+    \lim_{n \to \infty}c^{\frac{1}{n}} = 1, \text{ by Theorem 9.7 in Ross} \\[10pt] 
+    \left\vert \beta-1 \right\vert <\varepsilon= 1-\varepsilon < \beta <\varepsilon+1 \\[10pt] 
+    \implies \beta\geq 1\\[10pt] 
+    1\geq \frac{1}{\beta}=R \\[10pt] 
+    1\geq R
+\end{align}
+\end{proof} 
+\end{solution}
+\begin{problem}[24.10a]
+    (a) Prove that if $ f_n \to f $ uniformly on a set $ S $, and if $ g_n \to g $ uniformly on $ S $, then $ f_n + g_n \to f + g $ uniformly on $ S $.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        $\forall \varepsilon>0 \exists N_1 \ s.t. \ N_1(\varepsilon)\in \mathbb{N} \ s.t. \ \left\vert f_n(x)-f(x) \right\vert<\varepsilon $ for $n\geq N_1, \forall x\in S$, 
+    $\forall \varepsilon>0 \exists N_2 \ s.t. \ N_2(\varepsilon)\in \mathbb{N} \ s.t. \ \left\vert g_n(x)-g(x) \right\vert<\varepsilon $ for $n\geq N_2, \forall x\in S$. Then,
+    \begin{align}
+        f(x)-\varepsilon<f_{n}(x)<f(x)+\varepsilon \\[10pt] 
+        g(x)-\varepsilon<g_{n}(x)<g(x)+\varepsilon \\[10pt]
+        f_{n}(x)-f(x)+g_{n}(x)-g(x)<\varepsilon \\[10pt] 
+        -f_{n}(x)-g_{n}(x)<\varepsilon-g(x)-f(x) \\[10pt] 
+        f_{n}(x)+g_{n}(x)>-\varepsilon+g(x)+f(x) \\[10pt] 
+        \implies \left\vert f_{n}(x)+g_{n}(x) \right\vert <\varepsilon
+    \end{align}
+    \end{proof}
+\end{solution}
+\begin{problem}[24.11]
+    Let $ f_n(x) = x $ and $ g_n(x) = \frac{1}{n} $ for all $ x \in \mathbb{R} $. Let $ f(x) = x $ and $ g(x) = 0 $ for $ x \in \mathbb{R} $.
+
+\begin{enumerate}
+    \item[(a)] Observe $ f_n \to f $ uniformly on $ \mathbb{R} $ [obvious!] and $ g_n \to g $ uniformly on $ \mathbb{R} $ [almost obvious].
+    \item[(b)] Observe the sequence $ (f_n g_n) $ does not converge uniformly to $ fg $ on $ \mathbb{R} $. Compare Exercise 24.2.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+     \begin{enumerate}
+    \item \begin{enumerate}
+        \item $f_{n}\to f$ is Lipschitz at $k=1$, $x-y\leq k\left\vert x-y \right\vert $, so $f_{n}\to f$ is uniformly continuous. We know that:
+        \item \begin{align}
+            \lim_{n \to \infty}\sup_{x\in \mathbb{R}}\left\vert g_{n}(x)-g(x) \right\vert= 0\\[10pt] 
+            = \lim_{n \to \infty}\sup_{x\in \mathbb{R}} \left\vert \frac{1}{n}-0 \right\vert, \lim_{n \to \infty} \frac{1}{n}=0 \\[10pt] 
+            \implies \lim_{n \to \infty} \sup_{x\in \mathbb{R} } \frac{1}{n}=0
+        \end{align}
+        Therefore, $g_{n}\to g$ is uniformly convergent. 
+        \end{enumerate}
+    \item \begin{proof}
+        \begin{align}
+            (f_{n}g_{n}) \underbrace{\not\to}_{UC} fg \\[10pt] 
+            \lim_{n \to \infty} \sup_{x\in S} \left\vert f_{n}(x)g_{n}(x)-f(x)g(x) \right\vert = 0\\[10pt] 
+            \lim_{n \to \infty} \sup_{x\in S} \left\vert \frac{x}{n}-0 \right\vert =0 \\[10pt] 
+            fg(x) = \frac{1}{n} \\[10pt] 
+            f_{n}=\frac{x}{n} \\[10pt] 
+            \sup_{x\in S}\left\vert \frac{x}{n} \right\vert = \infty \\[10pt] 
+            \lim_{n \to \infty} \frac{\infty}{n} = \infty \\[10pt] 
+        \end{align}
+        Therefore, $f_{n}g_{n}$ is not uniformly convergent. 
+    \end{proof}
+     \end{enumerate}
+    \end{solution}
+\begin{problem}[24.14]
+    Let $ f_n(x) = \frac{nx}{1 + n^2 x^2} $ and $ f(x) = 0 $ for $ x \in \mathbb{R} $.
+
+\begin{enumerate}
+    \item[(a)] Show $ f_n \to f $ pointwise on $ \mathbb{R} $.
+    \item[(b)] Does $ f_n \to f $ uniformly on $ [0, 1] $? Justify.
+    \item[(c)] Does $ f_n \to f $ uniformly on $ [1, \infty) $? Justify.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item Choose $N>n=\frac{1}{\varepsilon x}$. Then,
+        \begin{align}
+           \frac{1}{\varepsilon x} \\[10pt] 
+           \frac{1}{nx}<\varepsilon \\[10pt] 
+           \left\vert \frac{1}{nx}-0 \right\vert < \varepsilon \implies \forall x\in S, \lim_{n \to \infty} \frac{1}{nx}\\[10pt] 
+           \frac{nx}{1+n^{2}x^{2}}<\frac{nx}{n^{2}x^{2}}<\varepsilon \\[10pt] 
+           \frac{nx}{1+n^{2}x^{2}}<\varepsilon \\[10pt] 
+           \left\vert \frac{nx}{1+n^{2}x^{2}}-0 \right\vert < \varepsilon
+        \end{align}
+        \item We wish to find: $\lim_{n \to \infty} \sup_{x\in\mathbb{R}}\left\vert f_{n}-f \right\vert =0$:
+        \begin{proof}
+            \begin{align}
+                \lim_{n \to \infty} \sup_{x\mathbb{R}}\left\vert \frac{nx}{1+n^{2}x^{2}}-0 \right\vert =0 \\[10pt] 
+                \sup_{x\in \mathbb{R}}\frac{nx}{1+n^{2}x^{2}} \\[10pt] 
+                \frac{nx}{1+n^{2}x^{2}}<\frac{nx}{n^{2}x^{2}} \\[10pt] 
+                \sup \frac{nx}{1+n^{2}x^{2}}\leq \sup \frac{nx}{n^{2}x^{2}} = \sup \frac{1}{nx}=0\\[10pt] 
+                \sup \frac{nx}{1+n^{2}x^{2}} \leq 0 \\[10pt] 
+                \implies \sup \frac{nx}{1+n^{2}x^{2}}=0 \\[10pt] 
+                \lim_{n \to \infty} \sup_{x\in \mathbb{R} } \left\vert \frac{nx}{1+n^{2}x^{2}}-0 \right\vert =0
+            \end{align} 
+        \end{proof}
+    \item Yes, due to the proof above.
+    \end{enumerate}
+\end{solution}
+\begin{problem}[25.5]
+    Let $ (f_n) $ be a sequence of bounded functions on a set $ S $, and suppose $ f_n \to f $ uniformly on $ S $. Prove $ f $ is a bounded function on $ S $.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        Because $f_{n}\to f$ is uniformly convergent, by Theorem 24.4, $f_{n}$ is uniformly Cauchy. Then, there exists some $N \ s.t. \ m,n \geq N \implies $ 
+    \begin{align}
+        \lim_{n \to \infty} \sup_{x\in S} \left\vert f_{n}(x) - g_{n}(x) \right\vert =0\\[10pt]
+        \left\vert f_{n}(x)-f(x) \right\vert < \frac{\varepsilon}{2}\\[10pt] 
+        \left\vert g_{n}(x)-g(x) \right\vert < \frac{\varepsilon}{2}\\[10pt] 
+    \end{align}
+    Eqn 68 implies that $f$ is bounded.
+    \end{proof}
+\end{solution}
+\begin{problem}[25.9a]
+    (a) Let $ 0 < a < 1 $. Show the series $ \sum_{n=0}^{\infty} x^n $ converges uniformly on $ [-a, a] $ to $ \frac{1}{1 - x} $.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        Let $M_k=\left\vert a_{k} \right\vert b^{k}$, where $a_k = 1$ and $b = a$ in the context of this problem. Then, $\limsup_{n \to \infty} M_k^{\frac{1}{k}}=a$, and $R=1$. Then, $a \cdot 1 < 1$, so $\sum_{k=1}^{\infty} M_k < \infty$. Applying the Weierstrass M-test, we show that $\sum_{k=1}^{\infty} x^{k}$ converges uniformly on $S$. Using the result in section $14.2$ in Example $1$, we show that $\sum_{k=1}^{\infty} x^{k} = \frac{1}{1-r}$. Therefore, $\sum_{k=1}^{\infty} x^{n}$ converges uniformly on $[-a,a]$ to $\frac{1}{1-x}$.       
+    \end{proof}
+\end{solution}
+\begin{problem}[25.9b (Bonus)]
+    (b) Does the series $ \sum_{n=0}^{\infty} x^n $ converge uniformly on $ (-1, 1) $ to $ \frac{1}{1 - x} $? Explain.
+\end{problem}
+\begin{solution}
+    This convergence is not uniform because $f(x)=\frac{1}{1-x}$ is not bounded from $(-1,1)$. This is because the interval $(-1,1)$ is not compact, hence $f$ is not bounded. This violates the result from Problem 8 of this homework.
+\end{solution}
 \end{document}

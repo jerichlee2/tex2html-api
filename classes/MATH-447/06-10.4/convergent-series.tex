@@ -5,57 +5,322 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{physics}
-\usepackage{siunitx}
-\usepackage{booktabs}
-\usepackage{cancel}
-  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+% Theorem-like environments
 
 
-\DeclareMathOperator{\Log}{Log}
-\DeclareMathOperator{\Arg}{Arg}
-
-\lstset{
-    breaklines=true,         % Enable line wrapping
-    breakatwhitespace=false, % Wrap lines even if there's no whitespace
-    basicstyle=\ttfamily,    % Use monospaced font
-    frame=single,            % Add a frame around the code
-    columns=fullflexible,    % Better handling of variable-width fonts
-}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./Figures/}{#1.pdf_tex}
-}
+% Define the solution environment with normal text
 \theoremstyle{definition} % This style uses normal (non-italicized) text
 \newtheorem{solution}{Solution}
-\newtheorem{proposition}{Proposition}
+\newtheorem*{proposition}{Proposition}
 \newtheorem{problem}{Problem}
 \newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-\newtheorem{remark}{Remark}
-\newtheorem{note}{Note}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{corollary}{Corollary}
 \theoremstyle{plain} % Restore the default style for other theorem environments
 %
 
-% Theorem-like environments
 % Title information
-\title{Convergent series}
+\title{Convergent Series}
 \author{Jerich Lee}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+\begin{problem}[14.2(d)]
+   Determine which of the following series converge. Justify your answers.
+   \begin{enumerate}
+    \item $\sum_{n=1}^{\infty} (\frac{n^{3}}{3^{n} })$ 
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+   \begin{proof}
+      We are given the series:
+
+\begin{align}
+\sum_{n=1}^{\infty} \frac{n^3}{3^n}
+\end{align}
+
+We will apply the ratio test to check for convergence. First, compute the ratio:
+
+\begin{align}
+\left| \frac{a_{n+1}}{a_n} \right| = \left| \frac{(n+1)^3}{3^{n+1}} \times \frac{3^n}{n^3} \right|
+\end{align}
+
+Simplifying the expression:
+
+\begin{align}
+= \frac{(n+1)^3}{n^3} \times \frac{1}{3}
+\end{align}
+
+Now expand $(n+1)^3$:
+
+\begin{align}
+(n+1)^3 = n^3 + 3n^2 + 3n + 1
+\end{align}
+
+Thus:
+
+\begin{align}
+= \frac{n^3 + 3n^2 + 3n + 1}{n^3} \times \frac{1}{3}
+\end{align}
+
+Simplifying the fraction:
+
+\begin{align}
+= \frac{1 + \frac{3}{n} + \frac{3}{n^2} + \frac{1}{n^3}}{3}
+\end{align}
+
+As $ n \to \infty $, the terms involving $ \frac{3}{n}, \frac{3}{n^2}, \frac{1}{n^3} $ approach zero, so:
+
+\begin{align}
+\lim_{n \to \infty} \frac{a_{n+1}}{a_n} = \frac{1}{3}
+\end{align}
+
+Since $ \frac{1}{3} < 1 $, the series converges by the ratio test.
+
+
+
+
+   \end{proof}
+
+\end{solution}
+\begin{problem}[14.4(a,b)]
+   Determine which of the following series converge. Justify your answers.
+\begin{enumerate}
+    \item $\sum_{n=2}^{\infty} \frac{1}{\left( n+(-1)^{n}  \right)^{2}  }$ 
+    \item $\sum_{n=1}^{\infty}\left( \sqrt{n+1}-\sqrt{n}   \right)  $ 
+\end{enumerate}
+    
+\end{problem}
+   \begin{solution}
+      \begin{enumerate}
+         \item \begin{proof}
+            We are given the following expression:
+      
+      \begin{align}
+      \frac{(n+(-1)^n)^2}{(n+1)(-1)^n)^2} \cdot \frac{(n+1)^2}{1}
+      \end{align}
+      
+      Expanding the numerator and denominator:
+      
+      \begin{align}
+      = \frac{n^2 + 2n(-1)^n + 1}{n^2 + 2n(-1)^n + (-1)^{2n} + 2(-1)^n + 2}
+      \end{align}
+      
+      Breaking it down further:
+      
+      \begin{align}
+      (n + (-1)^n)^2 = (n + (-1)^n)(n + (-1)^n)
+      \end{align}
+      
+      Which expands to:
+      
+      \begin{align}
+      n^2 + n(-1)^n + n(-1)^n + (-1)^{2n} = n^2 + 2n(-1)^n + 1
+      \end{align}
+      
+      Thus:
+      
+      \begin{align}
+      = \frac{n^2 + 2n(-1)^n + 1}{n^2 + 2n(-1)^n + 2(-1)^n + 2}
+      \end{align}
+      
+      Finally, simplifying the entire expression, we get:
+      
+      \begin{align}
+      = \frac{1 + \frac{2}{n}(-1)^n + \frac{1}{n^2}}{1 + \frac{2}{n} + \frac{2}{n}(-1)^n + \frac{2}{n^2}} = 2
+      \end{align}
+      
+      Since the limit results in a constant value, we conclude:
+      
+
+         \end{proof}
+      
+      \item \begin{proof}
+         We are tasked with evaluating the series:
+      
+      \begin{align}
+      \sum_{n=1}^{\infty} \left( \sqrt{n+1} - \sqrt{n} \right)
+      \end{align}
+      
+      To simplify, multiply both the numerator and denominator by the conjugate:
+      
+      \begin{align}
+      \left( \sqrt{n+1} - \sqrt{n} \right) \cdot \frac{\sqrt{n+1} + \sqrt{n}}{\sqrt{n+1} + \sqrt{n}}
+      \end{align}
+      
+      This simplifies to:
+      
+      \begin{align}
+      \frac{n+1 - n}{\sqrt{n+1} + \sqrt{n}} = \frac{1}{\sqrt{n+1} + \sqrt{n}}
+      \end{align}
+      
+      Now, we observe that:
+      
+      \begin{align}
+      \frac{1}{\sqrt{n+1} + \sqrt{n}} < \frac{1}{2\sqrt{n}}
+      \end{align}
+      
+      Thus, we can compare this to the series $ \sum_{n=1}^{\infty} \frac{1}{n^{1/2}} $, which is a p-series with $ p = \frac{1}{2} $, and since $ p \leq 1 $, the series diverges. Therefore:
+      
+      \begin{align}
+      \sum_{n=1}^{\infty} \frac{1}{\sqrt{n}} \text{ diverges.}
+      \end{align}
+      
+      Since $ \frac{1}{\sqrt{n+1} + \sqrt{n}} $ is bounded by a divergent series, by the comparison test:
+      
+      \begin{align}
+      \sum_{n=1}^{\infty} \left( \sqrt{n+1} - \sqrt{n} \right) \text{ also diverges.}
+      \end{align}
+      \end{proof}
+       
+      \end{enumerate}
+      \end{solution}
+\begin{problem}[14.5(a,b,c)]
+   Suppose $\sum_{n=1}^{\infty} a_{n} =A$ and $\sum_{n=1}^{\infty} b_{n} =B$, where $A$ and $B$ are real numbers. Use limit theorems from section $9$ to quickly prove the following.
+   \begin{enumerate}
+    \item $\sum_{n=1}^{\infty} (a_{n} +b_{n}  )=A+B$
+    \item $\sum_{n=1}^{\infty} ka_{n} =kA$ for $k\in \mathbb{{R}} $   
+    \item Is $\sum_{n=1}^{\infty} a_{n}b_{n} =AB$ a reasonable conjecture? Discuss.  
+   \end{enumerate}  
+\end{problem}
+   \begin{solution}
+      We are tasked with evaluating the following properties of series.
+      
+      \begin{enumerate}
+          \item \begin{proof}
+            Given $ \sum_{n=1}^{\infty} a_n = A $ and $ \sum_{n=1}^{\infty} b_n = B $, we want to show:
+            \begin{align}
+            \sum_{n=1}^{\infty} (a_n + b_n) = A + B
+            \end{align}
+            Let $ a_n^* $ and $ b_n^* $ be the partial sums of $ \sum_{n=1}^{\infty} a_n $ and $ \sum_{n=1}^{\infty} b_n $. Then, we have:
+            \begin{align}
+            \lim_{n \to \infty} a_n^* + \lim_{n \to \infty} b_n^* = \lim_{n \to \infty} (a_n^* + b_n^*) \quad \checkmark
+            \end{align}
+            
+            
+          \end{proof}
+          \item \begin{proof}
+            \item For a constant $ k \in \mathbb{R} $, we want to show:
+            \begin{align}
+            \sum_{n=1}^{\infty} k a_n = kA
+            \end{align}
+            The limit of the partial sums satisfies:
+            \begin{align}
+            \lim_{n \to \infty} (k a_n^*) = k \lim_{n \to \infty} a_n^* = kA \quad \checkmark
+            \end{align}  
+          \end{proof}
+          \item \begin{proof}
+            The series $ \sum a_nb_n $ converges if and only if $a_{n}$ and $b_{n}$ converge absolutely. 
+          \end{proof}
+      \end{enumerate}
+      
+      \end{solution}
+\begin{problem}[14.6(a)]
+    \begin{enumerate}
+        \item Prove that if $\sum_{n=1}^{\infty} \left\vert a_{n}  \right\vert $ converges and $b_{n} $ is a bounded sequence, then $\sum_{n=1}^{\infty} a_{n}b_{n} $ converges. \emph{Hint}: Use Theorem 14.4. 
+    \end{enumerate}
+    
+\end{problem}
+\begin{solution}
+   If $b_{n}$ is bounded, then $\forall n, \exists M\in \ s.t. \ \left\vert s_{n} \right\vert\leq M $. 
+   \begin{align}
+      \sum_{n=1}^{\infty} a_{n}b_{n} \leq \sum_{n=1}^{\infty} a_{n}M
+   \end{align}
+   By Problem 3.2 in this document, we can state:
+   \begin{align}
+      \sum_{n=1}^{\infty} a_{n}M=AM
+   \end{align}
+   \begin{align}
+      \left\vert \sum_{n=1}^{\infty} a_{n} \right\vert = \lim_{n \to \infty} \left( \sum_{k=1}^{\infty} a_{k} \right) \\[10pt] 
+      \left\vert \sum_{k=1}^{\infty} a_{k}-S \right\vert <\frac{\varepsilon}{M}
+   \end{align}
+
+\end{solution}
+
+\begin{problem}[17.4]
+   Prove the function $\sqrt{x} $ is continuous on its domain $[0,\infty )$. \emph{Hint:} Apply Example 5 in section 8. 
+\end{problem}
+\begin{solution}
+   \begin{proof}
+      We will utilize the definition of continuity of a function at a point for this proof. To assist us in our proof, we can use Example 5 in section 8.
+      \begin{align}   
+      x=\lim_{n \to \infty} x_{n}
+      \end{align}
+      Invoking Example 5 in section 8, we obtain: 
+      \begin{align}   
+      \lim_{n \to \infty} f(x_{n}) = \lim_{n \to \infty} \sqrt{x_{n}} = \sqrt{x}  
+      \end{align}
+   \end{proof} 
+\end{solution}
+
+\begin{problem}[17.9(c,d)]
+   Prove each of the following functions is continuous at $x_{0}$ by verifying
+the $\epsilon-\delta$ property of Theorem $17.2$ .
+   \begin{enumerate}
+   \item $f(x)=x\sin \left( \frac{1}{x} \right) ,x_{0} =0$ for $x\neq 0$ and $f(0)=0$, $x_{0}=0 $
+   \item $g(x)=x^{3} $, $x_{0}   $ arbitrary. \emph{Hint}: $x^{3} -x^{3}_{0}=(x-x_{0} )(x^{2}+x_{0}x+x_{0}^{2}) $ 
+
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+   \begin{enumerate}
+    \item \begin{proof}
+      \begin{align}
+        f(x)=x\sin \left(  \frac{1}{x}\right)\\[10pt] 
+        x\sin \left( \frac{1}{x} \right) <\varepsilon
+      \end{align}
+      We know that the value of $f(x)$ will always be less than or equal to $x$, as the value of $\sin(x)$ is bounded from $[-1,1]$. Thus,
+      \begin{align}
+         \left\vert f(x)-f(0) \right\vert =\left\vert f({x}) \right\vert \leq x<\varepsilon
+      \end{align}
+      Setting $\delta =\varepsilon$:
+      \begin{align}
+         \left\vert x-0 \right\vert <\delta \implies \left\vert x- 0 \right\vert < \varepsilon \\[10pt] 
+         \implies \left\vert f(x)-f(0) \right\vert < \varepsilon
+      \end{align}
+    \end{proof}
+  \item \begin{proof}
+  For all $\varepsilon$, we want to find $\delta$ such that $\left\vert x-x_0 \right\vert <\delta $ implies $\left\vert f(x)-f(x_0) \right\vert <\epsilon$. We state: 
+      \begin{align}
+        \left\vert x^{3}-x_0^{3} \right\vert =\left\vert x-x_0 \right\vert \left\vert x^{2}+x_{0}x+x_{0}^{2}  \right\vert <\varepsilon \\[10pt] 
+        \left\vert x \right\vert <\left\vert x_0 \right\vert +1 \\[10pt] 
+        \left\vert x^{2}+x_{0}x+x_{0}^{2}  \right\vert \leq \left\vert x^{2} \right\vert +\left\vert x_{0}x  \right\vert +\left\vert x_{0}^{2} \right\vert \\[10pt] 
+        < \left( \left\vert x_0 \right\vert  +1\right)^{2}+\left\vert x_{0}^{2} \right\vert +\left\vert x_0 (\left\vert x_0 \right\vert +1) \right\vert 
+      \end{align}
+      Solving for $\left\vert x-x_0 \right\vert $:
+      \begin{align}
+         \left\vert x-x_0 \right\vert < \frac{\varepsilon}{\left( \left\vert x_0 \right\vert  +1\right)^{2}+\left\vert x_{0}^{2} \right\vert +\left\vert x_0 (\left\vert x_0 \right\vert +1) \right\vert}
+      \end{align}
+      Setting $\delta$ = $\mathop{\min}\left\{ 1, \frac{\varepsilon}{\left( \left\vert x_0 \right\vert  +1\right)^{2}+\left\vert x_{0}^{2} \right\vert +\left\vert x_0 (\left\vert x_0 \right\vert +1) \right\vert}
+\right\} $:
+\begin{align}
+   \left\vert x-x_0 \right\vert <\delta \implies \left\vert f(x)-f(0) \right\vert <\varepsilon
+\end{align}
+  \end{proof}
+   \end{enumerate}
+   \end{solution}
+
+
+\begin{problem}[17.10(b)]
+   Prove the following functions are discontinuous at the indicated points. You may use either Def 17.1 or the $\varepsilon-\delta$ property in Theorem $17.2$.
+   \begin{enumerate}
+    \item g(x)=$\sin \left( \frac{1}{x} \right) $ for $x\neq 0$ and $g(0)=0,x_{0}=0  $.
+   \end{enumerate}   
+\end{problem}
+\begin{solution} 
+   \begin{proof}
+     Our goal is to find $x_{n}\to 0$ such that $g(x_{n})\not\to g(0)=0$. It suffices to use the definition of continuity at a function at a point by finding a sequence $x_{n}$ converging to $0$ such that $f(x_{n})$ does not converge to $g(0)=0$. 
+    \begin{align}
+      \frac{1}{x}=2\pi n+\frac{\pi}{2}\\[10pt] 
+      x_{n}=\frac{1}{2\pi n+\frac{\pi}{2}} \\[10pt] 
+      \lim_{n \to \infty} x_{n}=0 \\[10pt] 
+      \lim_{n \to \infty} f(x_{n})=\lim_{n \to \infty} 1 = 1 \\[10pt] 
+      0 \neq 1
+    \end{align}
+    
+   \end{proof}
+    \end{solution}
+
 
 \end{document}

@@ -5,57 +5,227 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{physics}
-\usepackage{siunitx}
-\usepackage{booktabs}
-\usepackage{cancel}
-  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
-
-
-\DeclareMathOperator{\Log}{Log}
-\DeclareMathOperator{\Arg}{Arg}
-
-\lstset{
-    breaklines=true,         % Enable line wrapping
-    breakatwhitespace=false, % Wrap lines even if there's no whitespace
-    basicstyle=\ttfamily,    % Use monospaced font
-    frame=single,            % Add a frame around the code
-    columns=fullflexible,    % Better handling of variable-width fonts
-}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./Figures/}{#1.pdf_tex}
-}
-\theoremstyle{definition} % This style uses normal (non-italicized) text
-\newtheorem{solution}{Solution}
-\newtheorem{proposition}{Proposition}
-\newtheorem{problem}{Problem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-\newtheorem{remark}{Remark}
-\newtheorem{note}{Note}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{corollary}{Corollary}
-\theoremstyle{plain} % Restore the default style for other theorem environments
-%
 
 % Theorem-like environments
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}
+
 % Title information
-\title{Limits and sequences continued}
+\title{Limits and Sequences Continued}
 \author{Jerich Lee}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\begin{problem}[11.5]
+Let $(q_n)$ be an enumeration of all the rationals in the interval $(0,1]$.
+\begin{enumerate}
+    \item Give the set of subsequential limits for $(q_n)$.
+    \item Give the values of $\lim \sup q_n$ and $\lim \inf q_n$. 
+\end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{enumerate}      
+  \item The set of subsequential limits for $(q_{n} )$ is ${q \in Q : 0 < q \leq 1}$. 
+  \item  \begin{enumerate}
+ \item $\lim \sup q_{n} =1$   
+ \item $\lim \inf q_{n} = 0$ 
+  \end{enumerate}    
+   \end{enumerate}
+\end{solution}
+
+\begin{problem}[11.11]
+    Let $S$ be a bounded set. Prove there is an increasing sequence $(s_n)$ of points in $S$ such that $\lim_{n \to \infty} s_n=\sup S$. Compare Exercise 10.7. Note: If $\sup S$ is in $S$, it's sufficient to define $s_n=\sup S$ for all $n$.  
+\end{problem}
+
+\begin{solution}
+$u_{n} =\sup s_{n} $, and $s_{n} \leq \sup s_{n} $. If $S$ is bounded, then there exists a real number $a$ such that $s_{n} \leq a$. By Theorem 11.4 in Ross, there exists a monotonic subsequence for bounded set $S$. We shall prove that this sequence is increasing.
+\begin{proof}
+    Because $S$ is bounded, we know that there exists $\sup S$ by the Axiom of Completeness. We also know that monotone bounded sequences converge by Theorem 10.2 in Ross. Therefore, we can say:
+    \begin{align}
+        \sup S-s_{n} <1
+    \end{align}
+    Where 1 is chosen arbitrarily. We can then choose a subsequence of $S$ such that it satisfies the following conditions:
+    \begin{align}
+        \sup S - s_n = \min \left( \sup S - s_{n-1}, \frac{1}{n} \right)
+    \end{align}
+    Choosing such $s_{n} $ enforces that the sequence is increasing, and is getting closer and closer to the supremum. With the the values selected, we now have a subsequence of $S$ such that $n_1<n_{2}<\ldots n_k $, $s_{n_1}<s_{n_2}<\ldots s_{n_k}$, and $\lim S_{n_k} = \sup S$.  
+\end{proof} 
+\end{solution}
+
+\begin{problem}[12.3 (d,e)]
+Let $(s_n)$ and $(t_n)$ be the following sequences that repeat in cycles of four:
+\begin{enumerate}
+    \item $(s_n)=(0,1,2,1,0,1,2,1,0,1,2,1,0,\dots)$ 
+        \item $(t_n)=(2,1,1,0,2,1,1,0,2,1,1,0,\dots)$  
+    \end{enumerate}
+Find:
+\begin{enumerate}
+    \item $\lim \sup (s_n+t_n)$ 
+    \item $\lim \sup s_n + \lim \sup t_n$
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item $\lim \sup (s_{n} + t_{n}) = 3$
+    \item $\lim \sup (s_{n} )+\lim \sup (t_{n} )=4$  
+\end{enumerate}    
+\end{solution}
+
+\begin{problem}[12.4]   
+    Show $\lim_{N \to \infty} \sup_{n>N}(s_{n} +t_n)\leq \lim_{N \to \infty} \sup_{n>N}s_n+\lim_{N \to \infty} \sup_{n>N} t_n$ for bounded sequences $(s_n)$ and $(t_n)$. Hint: First show:
+    \begin{enumerate}
+        \item $\sup\{s_{n} +t_{n} : n> N\}\leq \sup\{s_{n} :n>N\}+\sup \{t_{n} :n>N\}$. 
+    \end{enumerate}
+    Then apply Exercise 9.9 (c).\\
+    Suppose there exists $N_0$ such that $s_{n} \leq t_{n} $ for all $n>N_0$\\
+    Exercise 9.9 (c):
+    \begin{enumerate}
+        \item Prove that if $\lim s_{n} $ and $\lim t_{n} $ exist, then $\lim s_n\leq \lim t_n$.   
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+   \begin{proof}
+    We want to find the following:
+        \begin{align}
+            \limsup_{N \to \infty} s_{N}+t_{N} \leq (\limsup_{N \to \infty} s_{n} )+(\limsup_{N \to \infty} t_{n} )
+        \end{align} 
+        We know that the following holds true, as this is the definition of $\lim\sup $.
+        \begin{align}
+           \limsup_{N \to \infty} s_{N} = \limsup_{M \to \infty}\left\{ s_{N} | N\geq M \right\} 
+        \end{align}
+        We also know that any element of a sequence $s_{n} $ is always less than or equal to the supremum of $s_{n} $ due to the Axiom of Completeness. Then, we can state the following. 
+        \begin{align}
+            N>M\implies s_{N} \leq \sup \left\{ s_{N} | N\geq M  \right\} 
+        \end{align}
+        Therefore, the following also holds true from above:
+        \begin{align}
+            s_{N} +t_{N} \leq \sup \left\{ s_{N} |N>M \right\} + \sup \left\{ t_{N} |N>M \right\} 
+        \end{align}
+        The RHS of the above is a constant, so the following is true:
+        \begin{align}
+            (s_{N} +t_{N} \leq C)
+        \end{align}
+        If any value of $s_{n} +t_{n} $ is always less than the RHS of above, then we can say the the supremum of $s_{n} +t_{n} $ is also less than or equal to the RHS of above:        \begin{align}
+            \sup \left\{ s_{N} +t_{N} |N>M \right\} \leq \sup \left\{ s_{N} |N>M \right\} +\sup \left\{ t_{N} |N>M \right\} 
+        \end{align}
+        We have now established $\sup (s_{n} +t_{n})\leq \sup s_{n} +\sup t_{n} $. Now, we can use a familiar limit theorem to prove our original hypothesis.
+        \begin{align}
+           \limsup_{N \to \infty} s_{N} +t_{N}  
+        \end{align}
+        We know that the above is equal to the following from the definition of $\limsup$. Then, we can take the limit of both sides. From Exercise 9.9c, we know that if if given $N_{0}\ s.t. \ s_{n} \leq t_{n}  $ for all $n>N_0$  $\lim_{n \to \infty} s_{n} $ and $\lim_{n \to \infty} t_{n} $ exist, then $\lim_{n \to \infty}\leq \lim_{n \to \infty} t_{n}$
+        \begin{align}
+            =\limsup_{M \to \infty} \left\{ s_{N} +t_{N} |N>M \right\} \leq \lim_{M \to \infty} (\sup \left\{ s_{N} |N>M \right\} +\sup  \left\{ t_{N} |N>M \right\} )
+        \end{align}
+        From a known limit theorem, we know that $\lim_{n \to \infty} s_{n} +t_{n} =\lim_{n \to \infty} s_{n} +\lim_{n \to \infty} t_{n} $: 
+        \begin{align}
+            =\limsup_{M \to \infty} \left\{ s_{N} |N>M \right\} +\limsup_{M \to \infty} \left\{ t_{N} |N>M \right\} 
+        \end{align}
+        \begin{align}
+            \limsup_{N \to \infty} (s_{N} +t_{N} )\leq \limsup_{N \to \infty} s_{N} + \limsup_{N \to \infty} t_{N} 
+        \end{align}
+   \end{proof} 
+\end{solution}
+
+\begin{problem}[12.12]
+   Let $(s_{n} )$ be a sequence of nonnegative numbers, and for each $n$ define $\sigma_n=\frac{1}{n}(s_1 +s_2 +\dots +s_n )$.
+   \begin{enumerate}
+    \item Show:
+    \begin{align}
+       \lim_{N \to \infty} \inf_{n>N}s_n \leq \lim_{N \to \infty} \inf_{n>N} \sigma_n \leq \lim_{N \to \infty} \sup_{n>N} \sigma_n \leq \lim_{N \to \infty} \sup_{n>N} s_n
+    \end{align}\\
+    Hint: for the last inequality, show first that $M>N$ implies:
+    \begin{align}
+        \sup \left\{ \sigma_n:n>M \right\} \leq \frac{1}{M}(s_1 +s_2 + \dots +s_n)+\sup \left\{ s_n:n>N \right\}
+    \end{align}
+    \item Show that if $\lim_{n \to \infty} s_n$ exists, then $\lim_{n \to \infty} \sigma_n$ exists and $\lim_{n \to \infty} \sigma_n=\lim_{n \to \infty} s_n$.  
+    \item Give an example where $\lim_{n \to \infty} \sigma_n$ exists, but $\lim_{n \to \infty} s_{n} $ does not exist.  
+   \end{enumerate}   
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item \begin{proof} 
+            \begin{align}
+                \liminf_{N \to \infty} s_{N} \leq \liminf_{N \to \infty} \sigma_{N} \leq \limsup_{N \to \infty} \sigma_{N} \leq \limsup_{N \to \infty} s_{N} 
+            \end{align}
+            \begin{align}
+                \lim_{n \to \infty} s_{N} = s \implies s=\liminf_{N \to \infty} s_{N} \leq \liminf_{N \to \infty} \sigma_{N} \leq \limsup_{N \to \infty} \sigma_{N} \leq \limsup_{N \to \infty} s_{N} = s
+            \end{align}
+            By the Squeeze Theorem,
+            \begin{align}
+                \implies \liminf_{N \to \infty} \sigma_{N} =\limsup_{n \to \infty} \sigma_{N} =s 
+            \end{align}
+            \begin{align}
+                \implies \lim_{N \to \infty} \sigma_{N} =s
+            \end{align}
+            We wish to find the third inequality as shown below, as the second inequality is obvious, and the first inequality can be proved similarly to the third inequality.
+            \begin{align}
+               \limsup_{N \to \infty} \sigma_{N} \leq \limsup_{N \to \infty} s_{N}  
+            \end{align}
+            We will fix $L$. Then, if $M>L$, we can consider $\sup \left\{ \sigma_{N} |N>M \right\} $ 
+            \begin{align}
+                \sigma_{N} &= \frac{s_{1}+\ldots s_{N}}{N}\\[10pt] 
+                &= \frac{s_{1} +\ldots +s_{N}   }{N}+\frac{s_{L+1}+\ldots +s_{N}  }{N}
+            \end{align}
+            We know that there are $N-(L+1)+1=N-L$ total terms in the denominator of the second term of the RHS above. Therefore, we can state the following:
+            \begin{align} 
+                \sigma_{N} \leq \frac{s_{1}+\ldots s_{L}}{N} + \underbrace{\frac{N-L}{N}}_{\leq 1}\sup \left\{ s_{N} |N>L \right\} 
+            \end{align}
+            \begin{align}
+                \leq \frac{s_{1} +\ldots +s_{L}  }{M}+\sup \left\{ s_{N} |N>L \right\} 
+            \end{align}
+            \begin{align}
+                \sup \left\{ \sigma_{N} |N>M \right\} \leq \frac{s_{1} +\ldots +s_{L}  }{M}+\sup \left\{ s_{N} |N>L \right\} 
+            \end{align}
+            We know that the RHS above is independent of $N$, so we take the limit of both sides above. Doing so results in the following: 
+            \begin{align}
+                \limsup_{N \to \infty} \sup \sigma_{N} =\limsup_{M \to \infty} \sigma_{N} \left\{ N|N>M \right\}\\[10pt] 
+                \leq \lim_{M \to \infty} (\underbrace{\frac{s_{1} +\ldots +s_{L}}{M}}_{\text{goes to $0$  as $M\to infinity$ } } +\sup \left\{ s_{N} |N>L \right\} )
+            \end{align}
+            \begin{align}
+             \limsup_{N \to \infty} \sigma_{N} \leq \sup \left\{ s_{N} |N>L \right\} 
+            \end{align}
+       \end{proof}
+        \item \begin{proof}
+           \begin{align}
+            \left\vert s_{n} -L \right\vert < \varepsilon \\[10pt] 
+            \sigma_{n} = \frac{1}{n} \Sigma_{i=1}^{n}s_{n} \\[10pt] 
+            \lim \frac{1}{n}\Sigma_{i=1}^{n}s_{n}\\[10pt]  
+            n>N \implies \Sigma_{i=1}^{n}s_{n} \\[10pt] 
+            \implies \left\vert ns_{n} -nL \right\vert \\[10pt] 
+            \frac{1}{n}\left\vert n(s_{n} -L) \right\vert <\varepsilon \\[10pt] 
+            =\left\vert (s_{n} -L) \right\vert <\varepsilon \\[10pt] 
+            = \left\vert s_{n} -L \right\vert <\varepsilon \\[10pt] 
+            = \lim \sigma_{n} = L=\lim s_{n}  
+           \end{align}  
+        \end{proof}
+        \begin{proof}
+         \item Suppose $s_{n} = (-1)^n$. Then $\lim s_{n} = \text{DNE} $. But we know:
+        \begin{align}
+            \frac{\text{$-1$ or $0$  } }{N} \underbrace{\to }_{N\to \infty } 0
+        \end{align}
+        Therefore, the $\lim_{n \to \infty} \sigma_{n}$  exists if $\lim_{n \to \infty} s_{n}=\text{DNE} $. 
+        \end{proof}
+
+    \end{enumerate}
+\end{solution}
+
+\begin{problem}[12.13]
+   Let $(s_{n} )$ be a bounded sequence in $\mathbb{R}$. Let $A$ be the set of $a\in\mathbb{R} $ such that $\left\{n \in \mathbb{N} :s_{n} <a \right\} $ is finite, i.e., all but finitely many $s_{n} $ are $\geq a$. Let $B$ be the set of $b\in\mathbb{R} $ such that $\left\{ n\in \mathbb{N}: s_{n} >b \right\} $ is finite. Prove $\sup A=\lim_{N \to \infty} \inf_{n>N}s_{n} $ and $\inf B=\lim_{N \to \infty} \sup_{n>N}s_{n} $.   
+\end{problem}
+
+\begin{solution}
+   From Theorem 11.7, there exists a monotonic subsequence whose limit is $\lim \sup s_{n} $  and $\lim \inf s_{n} $. So $\lim \sup s_{n} $ and $\lim \inf s_{n} $ exist. From Theorem 10.1, we know that these limits converge because $s_{n} $ is bounded. Our goal is to show that $\lim \sup s_{n}=\inf B $, and $\lim \inf s_{n} =\sup A$, for sets $A=\left\{ s_{n} :s_{n} <a \right\} $, and $B = \left\{ s_{n} :s_{n} >b \right\} $, where $A,B$ both have finite cardinality.    
+\begin{proof}
+    Choose $N_{1}\ s.t. \ n>N_{1}\implies \left\{  n:\left\vert s_{n} -a \right\vert < \varepsilon \right\}    $ is infinite. By Theorem 11.2, $a$ is a subsequential limit. Choose $N_{2} \ s.t. \ n>N_{2}\implies \left\{ n:\left\vert s_{n} -b \right\vert <\varepsilon   \right\}  $ is infinite. By 11.2, $b$ is also a subsequential limit. To prove that $a=\sup A$, choose $N=\mathop{\min} \left\{ d(s_{N}, a) \right\} $. Then $N=n+1\implies s_{n+1} >a$, so $s_{n} $  is not the least upper bound of A. So $a=\sup A$. A similar argument follows for $\inf B=b$. We know that $a<b$, or else $B$ would be infinite, contradictory to $B$ being finite in the given. Let $S=\left\{ a,b \right\} $. Then, by Theorem 11.8, $\inf S=\lim \inf s_{n}, \sup S=\lim \sup s_{n}  $. This implies $\sup A=\lim \inf s_{n}, \inf B=\lim \sup s_{n}  $.   
+\end{proof}
+\end{solution}
+
+
 
 \end{document}

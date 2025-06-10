@@ -5,57 +5,233 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumitem}
 \usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{physics}
-\usepackage{siunitx}
-\usepackage{booktabs}
-\usepackage{cancel}
-  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+% Theorem-like environments
 
 
-\DeclareMathOperator{\Log}{Log}
-\DeclareMathOperator{\Arg}{Arg}
-
-\lstset{
-    breaklines=true,         % Enable line wrapping
-    breakatwhitespace=false, % Wrap lines even if there's no whitespace
-    basicstyle=\ttfamily,    % Use monospaced font
-    frame=single,            % Add a frame around the code
-    columns=fullflexible,    % Better handling of variable-width fonts
-}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./Figures/}{#1.pdf_tex}
-}
+% Define the solution environment with normal text
 \theoremstyle{definition} % This style uses normal (non-italicized) text
 \newtheorem{solution}{Solution}
 \newtheorem{proposition}{Proposition}
 \newtheorem{problem}{Problem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{theorem}{Theorem}
-\newtheorem{remark}{Remark}
-\newtheorem{note}{Note}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{corollary}{Corollary}
 \theoremstyle{plain} % Restore the default style for other theorem environments
 %
 
-% Theorem-like environments
 % Title information
-\title{Metric spaces and topology}
+\title{Metric Spaces and Topology}
 \author{Jerich Lee}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\begin{problem}[13.3]
+Let $B$ be the set of all bounded sequences $\mathbf{x} = (x_{1}, x_{2}, \ldots)$ and define $d(\mathbf{x}, \mathbf{y})=\sup \left\{ \left\vert x_{j}-y_{j}  \right\vert :j=1,2, \ldots   \right\} $.
+\begin{enumerate}
+    \item Show $d$ is a metric for $B$. 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+We will show that $d$ is a metric for $B$ by showing that it satisfies the symmetry, non-degeneracy, and triangle inequality with respect to $B$, i.e. the set of all bounded sequences.
+\begin{proof}
+ \begin{enumerate}
+    \item Symmetry: 
+    We wish to show that $d(\mathbf{x}, \mathbf{y})=d(\mathbf{y}, \mathbf{x})$.  \begin{align} d(\mathbf{x}, \mathbf{y}) = \sup\left\{ \left\vert x_{j}-y_{j} \right\vert : j=1,2, \ldots   \right\} \\[10pt]  d(\mathbf{x}, \mathbf{y}) = \sup\left\{ \left\vert y_{j}-x_{j} \right\vert : j=1,2, \ldots   \right\} \\[10pt] \end{align} From the properties of absolute value, we know that $\left\vert a-b \right\vert = \left\vert b-a \right\vert $. Setting $a=x_{j}$ and $b=y_{j} $, we can state: \begin{align} \left\vert x_{j} -y_{j}  \right\vert =\left\vert y_{j} -x_{j}  \right\vert \end{align} \item Non-degeneracy We wish to show that $d(\mathbf{x},\mathbf{y} )=\sup \left\{ \left\vert x_{j}-y_{j}  \right\vert : j=1,2, \ldots   \right\}=0 $ iff $\mathbf{x} =\mathbf{y} $.
+   \begin{align}
+    \left\vert x_{j} -y_{j}  \right\vert =0  \iff x_{j} =y_{j} \\[10pt] 
+    x_{j} -y_{j} =0    
+   \end{align}
+   \item Triangle Inequality
+   We wish to show that $d(\mathbf{x}, \mathbf{z})\leq d(\mathbf{x},\mathbf{y})+d(\mathbf{y}, \mathbf{z})$.
+   \begin{align}
+\text{RHS} = d(\mathbf{x}, \mathbf{z})+d(\mathbf{y}, \mathbf{zy})\\[10pt] 
+= \sup\left\{ \left\vert x_{j}-y_{j} \right\vert : j=1,2, \ldots   \right\}+ \sup\left\{ \left\vert y_{j}-z_{j} \right\vert : j=1,2, \ldots   \right\} \\[10pt] 
+\geq  \sup\left\{ \left\vert x_{j}-y_{j} \right\vert +\left\vert y_{j} -z_{j}  \right\vert : j=1,2, \ldots   \right\}\\[10pt] 
+\geq \sup \left\{ (x_{j} -y_{j} )+(y_{j} -z_{j} ) \right\} \\[10pt] 
+=\sup \left\{ \left\vert x_{j} -z_{j} \right\vert   \right\} =\text{LHS} 
+   \end{align}
+\end{enumerate} 
+Lines 8 and 9 can be shown in Homework 3 Problem 4.
+\end{proof}
+\end{solution}
+
+\begin{problem}[13.4]
+    Prove (iii) and (iv) in Discussion 13.7
+    \begin{enumerate}
+        \item The union of \emph{any} collection of open sets is open.
+        \item The intersection of \emph{finitely many} open sets is again an open set.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item \begin{proof}
+        Suppose we have a collection of open sets, $\left\{ U_k\right\} $. Then if $x\in \left\{ U_k\right\} $, then $x\in \cup_k \left\{ U_k \right\} $. Because $\left\{ U_k \right\} $ is a collection of open sets, $\cup_k \left\{ U_k \right\} $ is also itself an open set. 
+    \end{proof}
+    \item
+    \begin{proof}
+        Suppose we have a collection of finitely open sets, $\left\{ U_k \right\}$. Then, for each element $x$ in the intersection $\cap_k U_k$, there exists a neighborhood $N_k$ about the element $x$ for each open set $U_{ k=1,2, \ldots  k}  $ such that $N_k\subset U_k, k=1,2, \ldots  k $. For each $N_k$, there exists a radius $r_k$. We can choose the smallest radius out of all neighborhoods $N_k$ such that $r_{\mathop{\min}}=\mathop{\min} \left\{ N_1,N_{2}, \ldots  N_k   \right\} $. Then, this neighborhood is a subset of all open sets $U_k$, $N_{k_{\mathop{\min}(r) } }\subset \left\{U_k \right\} $.  Therefore, the intersection $\cap_k U_k$ is open for a finite collection of open sets.     
+    \end{proof}
+    \end{enumerate}
+    \end{solution}
+
+\begin{problem}[13.10]
+Show that the interior of each of the following sets is the empty set.
+\begin{enumerate}
+    \item $\left\{ \frac{1}{n}:n\in\mathbb{{N}}  \right\} $ 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+   \begin{proof}
+    The definition of the interior point of a set $E$ is a point that contains at least one neighborhood such that $N\subset E$. The interior of a set $E$ is a set that contains only interior points. A set $E$ is called \emph{open} if the set $E$ is equal to its interior. Therefore, to show that the interior of the set $E=\left\{ \frac{1}{n}:n\in \mathbb{{N}}  \right\} $ is the empty set, we must show that there exists a point in $E$ such that its neighborhood
+    contains elements that are included in the set $\left\{ \frac{1}{n}:n\in\mathbb{{N}}  \right\}$. 
+    We will show that for any point in $E$, there is no neighborhood of $s_{o} $ such that $B_{r}^{o}(s_{o} )\subset E $ for all $r$. We will first show that between any two rational numbers, there exists an irrational number.
+    \begin{align}
+        0<\frac{1}{\sqrt{2} }<1 \\[10pt] 
+        r_{1} + 0 < r_{1} + \frac{1}{\sqrt{2} }(r_{1} -r_{2} )<r_{1} +(r_{2} -r_{1} )\\[10pt] 
+        r_{1} <r_{1} +\frac{1}{\sqrt{2} }(r_{2} -r_{1} )<r_{2}
+    \end{align}
+    Suppose that the radius of any neighborhood about any point in $E$ is a rational number. Then, by above, there exists members of $B_{r}^{o}(s_{o} )$ that are irrational, and $\notin E $, as $E$ contains only rational numbers. Now suppose that we set our radius $r$ to be an irrational number. We know that between any rational and irrational number exists an irrational number. Let $A$  be a rational number, and $C$  to be an irrational number. Then, $B=\frac{A+C}{2}$ is irrational, and $A<B<C$. Therefore, we have shown that there is no value of radius $r$ that satisfies $B_{r}^{o}(s_{o} )\subset E$ for any rational point $s_{o} $ in $E$.
+   \end{proof} 
+\end{solution}
+
+\begin{problem}[13.12]   
+Let $(S,d)$ be any metric space.
+\begin{enumerate}
+    \item Show that the finite union of compact sets in $S$ is compact.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+   \begin{proof}
+    To show that the finite union of compact sets in $S$ is compact, we will use the property of compactness of each set $U_k$ in the finite union $\cup_k \left\{  U_k\right\} $. 
+    If a set $U_k$ is compact, then there exists a finite subcover for every open cover of $U_k$. Then, there exists $\cup_k U_k$ for finitely many $k$.
+   \end{proof} 
+\end{solution}
+
+\begin{problem}
+    Show that a sequence in a metric space $(S,d)$ cannot have more than one limit.
+\end{problem}
+
+\begin{solution}
+   We will show that if a sequence $s_{n} $ converges to $L_{1} $ and $L_{2} $, $\forall \varepsilon >0$, $\exists N_{1}\ s.t. \ m,n >N \implies \left\vert s_{n} -L_{1}   \right\vert <\frac{\varepsilon}{2}$ and $\exists N_{2} \ s.t. \ n>N_{2} \implies \left\vert s_{n} -L_{2}  \right\vert <\frac{\varepsilon}{2}$. Choose $N_{\text{max} }=\text{max}(N_{1},N_{2} )  $. Then, $n>N_{\text{max} } \implies $
+   \begin{align}
+    d\left( s_{n}  -L_{1}  + (L_{2}-s_{n}) \right)  <  d\left( \frac{\varepsilon}{2} \right)  +  d\left( \frac{\varepsilon}{2} \right)< \varepsilon \\[10pt] 
+   =  d\left( \frac{\varepsilon}{2} \right) <\varepsilon 
+   \end{align}
+   This implies that $L_{1} =L_{2} $, so there cannot be more than one limit in $(S,d)$. 
+\end{solution}
+
+\begin{problem}
+    \begin{enumerate}
+        \item Suppose a sequence $s_{n} $ in a metric space $(S,d)$ converges to $s\in S$. Prove that any subsequence of $s_{n} $ converges to $s$ as well.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    Let $s_{n} $ be a sequence in $S$. By the given, $\forall \varepsilon >0,\exists N\ s.t. \ n>N\implies d(s_{n}-s)$. Let $s_{n_{k}} $ be a subsequence of $s_{n} $. We know that $n_{k} >k$ for all $k$. 
+    Now let $s=\lim_{n \to \infty} s_{n} $ and let $\varepsilon >0$. There exists $N$ such that $n>N$ implies $d(s_{n} -s)<\varepsilon $. Now $k>N$ implies $n_{k} >N$, implying $d(s_{n_{k} }-s )<\varepsilon $. Therefore,
+    \begin{align}
+        \lim_{k \to \infty} s_{n_{k} }=s 
+    \end{align}   
+\end{solution}
+\begin{problem}
+    Suppose $(S,d)$ is a complete metric space, and $E \subset S$. We can view $E$ as a metric space, equipped with the metric inherited from $S$. Prove that $E$ is complete iff it is a closed subset of $S$. 
+\end{problem}
+
+\begin{solution}
+    $\implies :$ Suppose that $E$ is not complete. Then, $E$ does not contain its limit points. By definition, a closed set is a set that contains all of its limit points. Therefore, $E$ cannot be closed.
+    $\impliedby :$ Suppose that $E$ is not a closed subset of $S$. Then, $E$ does not contain all of its limit points. Suppose that $E$ is complete. Then, every Cauchy sequence in $E$ converges to some limit point in $E$.
+\end{solution}
+\begin{problem}
+    Suppose $s_{n} $ is a Cauchy sequence in a metric space $(S,d)$ which has a convergent subsequence. Is it true that the sequence $s_{n} $ itself converges?
+\end{problem}
+
+\begin{solution}
+   We know that the following holds:
+   \begin{align}
+    \forall \varepsilon >0, \exists N\ s.t. \ m,n>N\implies d(s_{m} -s_{n} )<\varepsilon 
+   \end{align} 
+   Want: If $s_{n} $ has a convergent subsequence, then $L\in S$, $d(s_{n_{k} }-L )<\varepsilon\implies d(s_{n} -L)<\varepsilon  $.
+   Choose $N$ such that $n>N\implies d(s_{n_{k}  } -L)<\frac{\varepsilon}{2}$.
+   Choose $N_{1} $ such that $d(s_{n_{k+1} }-s_{n_{k} }  )<\frac{\varepsilon}{2}$  
+   Then we get:
+   \begin{align}
+    d(s_{n_{k+1} }-s_{n_{k} }+s_{n_{k} }-L   )<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}<\varepsilon \\[10pt] 
+    d(s_{n_{k+1} }-L )<\varepsilon 
+   \end{align}
+\end{solution}
+
+\begin{problem}
+    Is the metric space $(B,d)$ defined in Problem 13.3(a) complete?
+\end{problem}
+
+\begin{solution}
+        If $B$ is the set of all bounded sequences $\mathbf{x} = (x_{1}, x_{2}, \ldots, x_n )$, endowed with the distance function $d(\mathbf{x}, \mathbf{y})=\sup \left\{ \left\vert x_i - y_{i} \right\vert : i=1,2, \ldots n \right\}$, then the metric space $(B,d)$ is complete.
+    \begin{proof}
+
+        We wish to find a proof that $(B, d)$ such that $B$ is the set of all bounded sequences, and $d$ is the distance defined as:
+        \begin{align}
+            d(\mathbf{x}, \mathbf{y})=\sup \left\{ \left\vert x_i - y_{i} \right\vert : i=1,2, \ldots n \right\} 
+        \end{align} 
+        The idea is to treat the set $B$ of sequences as a set of infinite dimensional vectors in $\mathbb{{R}} $. 
+        We will utilize and prove the following lemma: 
+\begin{lemma}
+            Consider a sequence $(\mathbf{x}^{k})_k$ in $\mathbb{{R}}^n$, with $\mathbf{x}^{k}=(x_i^{k})^{n}_{i=1}$   
+\end{lemma}
+            \begin{enumerate}
+                \item $(\textbf{x}^{(k)})_{k}$ is Cauchy iff $(\textbf{x}^{k})_{k}$  is Cauchy for $1 \leq i \leq n $
+                \item $(\textbf{x}^{(k)})_{k}$ converges to $\mathbf{x} = (x_{i})^{n}_{i=1}$ iff $\lim_{k \to \infty} x_{i}^{(k)}$ for $1 \leq i \leq n $ 
+            \end{enumerate} 
+
+        \noindent
+       $\implies :$  To prove part one of the lemma above, we will suppose that $(\textbf{x}^{k})_{k}$ is Cauchy. Fix $i$. Want: $(x_{i}^{(k)})_{k}$ is Cauchy. For $\varepsilon > 0$ we need to find $N\ s.t. \ \left\vert x_{i}^{(k)} - x_{i}^{(m)} \right\vert <\varepsilon $ for $k, m>N$. We need to find an $N\ s.t. \ d(\mathbf{x}^{k}, \mathbf{x}^{m})<\varepsilon$ for all $k,m>N$. $\varepsilon > d(\mathbf{x}^{(k)}, \mathbf{x}^{(m)})=\sup \left\{ \left\vert  x_{i}- y_{i}\right\vert : i= 1,2, \ldots , n   \right\} \geq \left\vert x_{i}-y_{i} \right\vert $. Therefore, this $N$ works in the forward direction.
+        $\impliedby :$ Suppose $(x_{i}^{(k)})_{k}$ is Cauchy $\forall \ i$. We want to find: $(\mathbf{x}^{(k)})_{k}$ is Cauchy. We fix $\varepsilon >0$. We need to find $N\ s.t. \ d(\mathbf{x}^{k}, \mathbf{x}^{m})<\varepsilon $ for $k, m>N$. For $1\leq i\leq n$ find $N_{i} \in \mathbb{{N}} \ s.t. \ \left\vert x_{i}^{(k)}- x_{i}^{(m)} \right\vert < \varepsilon$ for $k,m>N_{i} $. Then, we know that:
+        \begin{align}
+            x_{i}^{(k)} <\varepsilon + x_{i}^{(m)} \\[10pt] 
+            x_{i}^{(m)} < \varepsilon + x_{i}^{(k)} 
+        \end{align}
+        Therefore, by the properties of the least upper bound, we have the following:
+        \begin{align}
+          \sup x_{i}^{(k)} \leq \varepsilon + x_{i}^{(m)}\\[10pt] 
+          \sup x_{i}^{(m)} \leq \varepsilon + x_{i}^{(k)}\\[10pt] 
+        \end{align}
+        We can prove a quick fact proposition about differences of supremums of sequences:
+
+       \begin{proposition} 
+        \begin{align}  
+          \sup (s_{n} -t_{n} )\leq \sup s_{n} - t_{n} \\[10pt]  
+        \end{align}
+       \end{proposition}
+        \begin{proof}
+            \begin{align}
+                s_{n} \leq \sup s_{n} \\[10pt] 
+                t_{n} \leq \sup t_{n} \\[10pt] 
+                s_{n} - t_{n} \leq \sup s_{n} -\sup t_{n} \\[10pt] 
+                \sup (s_{n} -t_{n} ) \leq \sup s_{n} -\sup t_{n} 
+            \end{align}
+        \end{proof}
+        Therefore, we can state the following:
+        \begin{align}
+            \sup (x_{i}^{(k)} -x_{i}^{(m)})\leq \sup x_{i}^{(k)}-\sup x_{i}^{(m)}\\[10pt] 
+            \leq (x_{i}^{(m)} +\varepsilon )-(x_{i}^{(k)} +\varepsilon )
+        \end{align}
+        We know from the implication that the following is true:
+        \begin{align} 
+            \left\vert x_{i}^{(k)}- x_{i}^{(m)} \right\vert< \varepsilon \\[10pt] 
+            \sup (x_{i}^{(k)}-x_{i}^{(m)}    )<\varepsilon 
+        \end{align}
+        Therefore, we can say the following:
+        \begin{align} 
+            \sup \left(  \left\vert x_{i}^{(k)}-x_{i}^{(m)} \right\vert\right)      <\varepsilon 
+        \end{align}
+        To show the second part of Lemma 1, we can use similar reasoning as the first part of Lemma 1 to show that the limit exists $B$.  
+    \end{proof}
+\end{solution}
 
 \end{document}
