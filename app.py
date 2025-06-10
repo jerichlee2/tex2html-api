@@ -12,14 +12,13 @@ import os, subprocess, pathlib, logging
 from flask import Flask, request, abort, Response, jsonify
 from werkzeug.exceptions import HTTPException
 from functools import lru_cache
+from pathlib import Path   #  add this line at the top
 
 # ──────────────────────────────────────────────────────────────
 # Configuration (edit these four lines or use env vars)
 # ──────────────────────────────────────────────────────────────
-BASE_DIR   = pathlib.Path(os.getenv("T2H_REPO_ROOT",
-                     "https://jerichlee2.github.io/Jerich.ai")).resolve()
-TEX2HTML   = pathlib.Path(os.getenv("T2H_SCRIPT",
-                     BASE_DIR / "scripts/tex-to-html.py")).resolve()
+BASE_DIR = (Path(__file__).parent / "classes").resolve()
+TEX2HTML = (Path(__file__).parent / "scripts" / "tex-to-html.py").resolve()
 PYTHON_EXE = os.getenv("T2H_PYTHON", "python3")
 PORT       = int(os.getenv("PORT", 8000))
 
