@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\subsubsection*{Expanded Step 3:  Isolating the zero of $g$}
+
+We wish to prove that there exists a radius $r>0$ such that 
+\[
+   0<|z-z_{0}|\le r \;\Longrightarrow\; g(z)\neq0.
+\]
+This follows from the \emph{factorisation theorem} (sometimes called the
+Weierstrass or local‐structure theorem for analytic functions), which we now
+recall and apply carefully.
+
+\paragraph{3.1  Local factorisation near a zero.}
+Because $g$ is analytic and vanishes at $z_{0}$, there exists an integer
+$m\ge1$ and an analytic function $h$ with $h(z_{0})\neq0$ such that  
+\[
+   g(z)=(z-z_{0})^{m}\,h(z),\qquad z\in D. \tag{3.1}
+\]
+(The integer $m$ is the \emph{order} of the zero.)
+
+\paragraph{3.2  Non–vanishing of the auxiliary factor $h$.}
+Since $h$ is continuous and $h(z_{0})\neq0$, there exists a number 
+$r_{1}>0$ for which  
+\[
+   |z-z_{0}|<r_{1}\;\Longrightarrow\; h(z)\neq0 . \tag{3.2}
+\]
+
+\paragraph{3.3  Choosing the isolation radius.}
+Let $r:=r_{1}$.  For any $z$ satisfying $0<|z-z_{0}|<r$ we have  
+$h(z)\neq0$ by \eqref{3.2} and $(z-z_{0})^{m}\neq0$ because the factor
+$(z-z_{0})$ is non‑zero.  Consequently
+\[
+   g(z)=(z-z_{0})^{m}h(z)\neq0 . \tag{3.3}
+\]
+Hence $g$ has \textbf{no} other zeros in the punctured disc
+$0<|z-z_{0}|<r$.  We say that the zero at $z_{0}$ is \emph{isolated}.
+
+\paragraph{3.4  Why this matters for openness of $f(D)$.}
+The isolation property \eqref{3.3} will allow us, in Step 4 of the proof,
+to apply the \emph{maximum–modulus principle} (to $1/g$) or equivalently
+the \emph{open mapping theorem} on the disc $|z-z_{0}|<r$ to show that
+$g$ (hence $f$) sends a neighbourhood of $z_{0}$ onto a neighbourhood of
+$w_{0}=f(z_{0})$.  That produces the open ball contained in $f(D)$, thereby
+establishing that $f(D)$ itself is an open set.
+
+\paragraph{Why does $g$ vanish at $z_0$?}
+
+Recall the two choices made in Steps 1–2:
+
+1.  We pick a point \(w_0\in f(D)\).  
+2.  Because \(w_0\) lies in the image, there exists (by definition of
+    the image set) a point \(z_0\in D\) with  
+    \[
+       f(z_0)=w_0 .
+    \]
+
+We then \emph{define} the auxiliary function
+
+\[
+   g(z):=f(z)-w_0 .
+\]
+
+Evaluating \(g\) at the specific point \(z_0\) gives
+
+\[
+   g(z_0)=f(z_0)-w_0 = w_0-w_0 = 0 .
+\]
+
+Hence \(z_0\) is a zero of \(g\); i.e.\ \(g\) \emph{vanishes} at \(z_0\).
+The subsequent factorisation
+\(
+   g(z)=(z-z_0)^{m}h(z)
+\)
+is simply the standard local representation of an analytic function at an
+isolated zero of (finite) order \(m\ge1\).
+\end{document}

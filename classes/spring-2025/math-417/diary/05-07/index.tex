@@ -1,0 +1,344 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{finals prep}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%-----------------------------------------------------------------
+%  Problem 35(c) –  Inverses in the group \((G,\star)\)
+%  where \(G=\{-1,0,1\}\) and
+%  \[
+%     a\star b=
+%     \begin{cases}
+%        a+b+1, & a+b\le 0,\\[4pt]
+%        a+b-2, & a+b> 0 .
+%     \end{cases}
+%  \]
+%-----------------------------------------------------------------
+
+\subsection*{Step 1.  Recall (from part b) the identity element}
+
+We showed in part (b) that
+\[
+e=-1,
+\qquad
+a\star(-1)=(-1)\star a=a\quad\forall\,a\in G.
+\]
+
+\subsection*{Step 2.  Set up the inverse condition}
+
+For each \(a\in G\) we need \(b\in G\) such that
+\[
+a\star b = e = -1 .
+\]
+
+\subsection*{Step 3.  Solve \(a\star b=-1\) using the
+piece-wise definition}
+
+\[
+a\star b =
+\begin{cases}
+a+b+1, & a+b \le 0,\\
+a+b-2, & a+b > 0 .
+\end{cases}
+\]
+
+\[
+a\star b = -1 \;\Longrightarrow\;
+\begin{cases}
+a+b+1 = -1, & a+b \le 0,\\
+a+b-2 = -1, & a+b > 0,
+\end{cases}
+\;\Longrightarrow\;
+\begin{cases}
+b = -2-a, & a+b \le 0,\\
+b = 1-a,  & a+b > 0.
+\end{cases}
+\]
+
+We test these candidates for each \(a\) and keep the one that lies in
+\(G=\{-1,0,1\}\) \emph{and} satisfies its associated inequality.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccl}
+\(a\) & candidate from \(\;b=-2-a\) &
+candidate from \(\;b=1-a\) & valid inverse \\ \hline
+\(-1\) & \(b=-2-(-1)=-1\in G\) \(\checkmark\) & \(b=1-(-1)=2\notin G\) & \(-1\) \\[2pt]
+\(0\)  & \(b=-2\notin G\) & \(b=1-0=1\in G,\;a+b=1>0\) \(\checkmark\) & \(1\) \\[2pt]
+\(1\)  & \(b=-3\notin G\) & \(b=1-1=0\in G,\;a+b=1>0\) \(\checkmark\) & \(0\)
+\end{tabular}
+\end{center}
+
+\subsection*{Step 4.  Summary of the inverse operation}
+
+\[
+a^{-1}=
+\begin{cases}
+-1, & a=-1,\\
+\;\;1, & a=0,\\
+\;\;0, & a=1.
+\end{cases}
+\]
+
+Equivalently, the inverse table is
+
+\[
+\begin{array}{c|ccc}
+a & -1 & 0 & 1 \\ \hline
+a^{-1} & -1 & 1 & 0
+\end{array}
+\]
+
+\subsection*{Step 5.  Quick check}
+
+Compute \(a\star a^{-1}\):
+
+\[
+\begin{aligned}
+-1\star(-1)&=-1 &&(\text{identity})\\
+0\star 1   &=(-1) &&(\text{using }0+1>0)\\
+1\star 0   &=(-1) &&(\text{using }1+0>0)
+\end{aligned}
+\]
+and similarly \(a^{-1}\star a=-1\) for each \(a\).
+Thus the inverses are correct.
+%---------------------------------------------------------------
+%  Inverses in the multiplicative group  \(\Bbb Z_{18}^{\!*}\)
+%---------------------------------------------------------------
+\[
+\Bbb Z_{18}^{\!*}
+   \;=\;
+   \{\,a\in\{1,2,\dots,17\}\mid\gcd(a,18)=1\,\}
+   \;=\;
+   \{1,5,7,11,13,17\}.
+\]
+
+For each \(a\) we need \(a^{-1}\) satisfying
+\[
+a\,a^{-1}\equiv 1 \pmod{18}.
+\]
+
+\[
+\renewcommand{\arraystretch}{1.3}
+\begin{array}{c|c}
+a & a^{-1}\pmod{18}\\\hline
+ 1 & 1 \\[2pt]
+ 5 & 11 \quad(\,5\!\times\!11 = 55 \equiv 1\,)\\
+ 7 & 13 \quad(\,7\!\times\!13 = 91 \equiv 1\,)\\
+11 & 5  \quad(\,11\!\times\!5 = 55 \equiv 1\,)\\
+13 & 7  \quad(\,13\!\times\!7 = 91 \equiv 1\,)\\
+17 & 17 \quad(\,17\!\times\!17 = 289 \equiv 1\,)
+\end{array}
+\]
+
+Hence the inverse pairs are
+\[
+1\leftrightarrow 1,\quad
+5\leftrightarrow 11,\quad
+7\leftrightarrow 13,\quad
+17\leftrightarrow 17.
+\]
+
+All elements now have their multiplicative inverses in
+\(\Bbb Z_{18}^{\!*}\), completing the task.
+%-----------------------------------------------------------------
+%  Problem 41. Problem 2 – Modular–exponentiation practice
+%-----------------------------------------------------------------
+
+\newcommand{\pow}[2]{#1^{#2}}
+
+\begin{enumerate}[label=(\alph*)]
+
+%------------------ (a) ------------------
+\item  \(\displaystyle \pow{3}{100}\pmod{10}\).
+
+      Because \(\gcd(3,10)=1\) we may use Euler’s theorem
+      \(\pow{3}{\varphi(10)}\equiv1\pmod{10}\) with
+      \(\varphi(10)=4\):
+
+      \[
+        3^{100}
+          =\bigl(3^{4}\bigr)^{25}
+          \equiv 1^{25}\equiv\boxed{1}\pmod{10}.
+      \]
+
+%------------------ (b) ------------------
+\item  \(\displaystyle \pow{5}{60}\pmod{7}\).
+
+      The modulus \(7\) is prime, so \(\varphi(7)=6\) and
+      \(5^{6}\equiv1\pmod{7}\):
+      \[
+        5^{60}
+          =\bigl(5^{6}\bigr)^{10}
+          \equiv 1^{10}\equiv\boxed{1}\pmod{7}.
+      \]
+
+%------------------ (c) ------------------
+\item  \(\displaystyle \pow{400}{60}\pmod{61}\).
+
+      First reduce the base:
+      \(400\equiv400-6\!\times\!61=34\pmod{61}\).
+
+      Since \(61\) is prime,
+      \(34^{60}\equiv1\pmod{61}\) (Fermat’s little theorem):
+
+      \[
+        400^{60}\equiv34^{60}\equiv\boxed{1}\pmod{61}.
+      \]
+
+%------------------ (d) ------------------
+\item  Last digit of \(17^{50}\).
+
+      Last digits correspond to residues mod \(10\).
+      Replace \(17\) by \(7\):
+
+      \[
+        7^{1}\equiv7,\;
+        7^{2}\equiv9,\;
+        7^{3}\equiv3,\;
+        7^{4}\equiv1\pmod{10},
+      \]
+      so the cycle length is \(4\).
+      Because \(50\equiv2\pmod{4}\),
+
+      \[
+        17^{50}\equiv7^{50}\equiv7^{2}\equiv9\pmod{10}.
+      \]
+
+      The last digit is \(\boxed{9}\).
+
+\end{enumerate}
+%-----------------------------------------------------------------
+%  Every subgroup of \((\Bbb Z,+)\) is cyclic of the form \(k\Bbb Z\)
+%-----------------------------------------------------------------
+
+\begin{theorem}
+  Let \(H\le(\Bbb Z,+)\).  Then there exists a (unique) integer
+  \(k\ge0\) such that
+  \[
+        H = k\Bbb Z := \{\,ka : a\in\Bbb Z\,\}.
+  \]
+  \end{theorem}
+  
+  \begin{proof}
+  \textbf{Step 1.  Handle the trivial subgroup.}
+  
+  If \(H=\{0\}\) we may take \(k=0\), because \(0\Bbb Z=\{0\}\).
+  
+  \vspace{2ex}
+  \textbf{Step 2.  Assume \(H\neq\{0\}\) and find the least positive element.}
+  
+  Because \(H\) is non‑empty and closed under additive inverses,
+  it contains some positive integers.
+  Let
+  \[
+        k := \min\bigl\{\,h\in H : h>0\,\bigr\}.
+  \]
+  Existence of the minimum follows from the well‑ordering of
+  \(\Bbb Z_{\ge0}\).
+  
+  \vspace{2ex}
+  \textbf{Step 3.  Show \(k\Bbb Z\subseteq H\).}
+  
+  For any \(a\in\Bbb Z\) we have \(ka = a\!+\!\dots+ a\)
+  (\(a\) times) or its negative,
+  and \(H\) is closed under integer addition,
+  so \(ka\in H\).
+  Thus \(k\Bbb Z\subseteq H\).
+  
+  \vspace{2ex}
+  \textbf{Step 4.  Show \(H\subseteq k\Bbb Z\).}
+  
+  Take an arbitrary \(h\in H\) with \(h>0\).
+  Apply the division algorithm:
+  \[
+        h = qk + r,
+        \quad 0\le r < k,
+        \quad q\in\Bbb Z.
+  \]
+  
+  Since \(qk\in k\Bbb Z\subseteq H\) and \(H\) is a subgroup,
+  the difference \(r = h - qk\) also lies in \(H\).
+  By construction \(0\le r < k\), but \(k\) is the \emph{smallest}
+  positive element of \(H\); hence we must have \(r=0\).
+  Therefore \(h = qk\in k\Bbb Z\).
+  
+  The same argument with \(-h\) covers negative elements, so
+  every \(h\in H\) is a multiple of \(k\):
+  \(H\subseteq k\Bbb Z\).
+  
+  \vspace{2ex}
+  \textbf{Step 5.  Combine the inclusions.}
+  
+  We have shown \(k\Bbb Z\subseteq H\) and \(H\subseteq k\Bbb Z\),
+  hence \(H = k\Bbb Z\).
+  
+  \vspace{2ex}
+  \textbf{Uniqueness.}
+  If \(k\Bbb Z = k'\Bbb Z\) with \(k,k'>0\),
+  then \(k\in k'\Bbb Z\) implies \(k'|k\) and vice‑versa,
+  forcing \(k=k'\).
+  \end{proof}
+  
+  \begin{remark}
+  Thus the lattice of subgroups of \((\Bbb Z,+)\) is in one‑to‑one
+  correspondence with the set of non‑negative integers:
+  \[
+        \{\,\{0\}=0\Bbb Z,\;1\Bbb Z,\;2\Bbb Z,\;3\Bbb Z,\dots\}.
+  \]
+  \end{remark}
+\end{document}

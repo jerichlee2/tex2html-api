@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Proofs with structure}
+\author{Jerich Lee}
+\date{2024-11-26}
+
+\begin{document}
+
+\maketitle
+We now are able to create our own hypotheses—check it out:
+\begin{problem}
+    Let $a$ and $b$ be real numbers and suppose that $a-5b=4$ and $b+2=3$. Show that $a=9$.  
+\end{problem}
+\begin{solution}
+    \begin{proof} Since $b+2=3$, we have $b=1$. Therefore:
+        \begin{align}
+           a&=(a-5b)+5b \\[10pt] 
+            &=4+5 \cdot1 \\[10pt] 
+            &=9
+        \end{align}
+    \end{proof}
+\end{solution}
+Writing this in Lean:
+\begin{lstlisting}
+example {a b : \real} (h1 : a - 5 * b = 4) (h2 : b + 2 = 3) : a = 9 := by
+    have hb : b = 1 := by addarith [h2]
+    calc
+      a = a - 5 * b + 5 * b := by ring
+      _ = 4 + 5 * 1 := by rw [h1, hb]
+      _ = 9 := by ring
+\end{lstlisting}
+Pay attention to the \emph{have} command on line 2 of the above; we can create our own givens and use it in our proofs. Coolio.
+\vspace{.5cm} 
+We can use lemmas, or previously proved statements to help prove our current statement. Check it out:
+\begin{problem}
+    Let $x$ be a rational number, and suppose that $3x=2$. Show that $x\neq 1$.  
+\end{problem}
+\begin{solution}
+    \begin{proof} It suffices to prove that $x<1$: 
+        \begin{align}
+           x&=\frac{3x}{3} \\[10pt] 
+           &= \frac{2}{3}\\[10pt] 
+            &<1
+        \end{align}
+    \end{proof}
+\end{solution}
+Lean:
+\begin{lstlisting}
+example {x : \rat} (hx : 3 * x = 2) : x \neq 1 := by
+    apply ne_of_lt
+    calc
+      x = 3 * x / 3 := by ring
+      _ = 2 / 3 := by rw [hx]
+      _ < 1 := by numbers
+\end{lstlisting} 
+\end{document}

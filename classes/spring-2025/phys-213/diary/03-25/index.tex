@@ -1,0 +1,265 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+At 400 K, HCl has fully active translational and rotational DOFs, and the vibrational mode is beginning to be thermally accessible, but not fully contributing yet under the equipartition assumption.
+
+\begin{problem}
+    \textbf{2.3 Constant pressure versus constant volume}
+
+    Use the definition of heat capacity
+    \[
+        C = \frac{dQ}{dT}
+    \]
+    and the First Law of Thermodynamics,
+    \[
+        dQ = dU + PdV,
+    \]
+    to derive expressions for the heat capacities at constant volume (\(C_V\)) and constant pressure (\(C_P\)), without assuming the gas is ideal.
+
+    \textbf{Solution:}
+
+    \begin{enumerate}
+        \item \textbf{At constant volume:} \(dV = 0\), so the First Law becomes:
+        \[
+            dQ_V = dU
+        \]
+        Therefore,
+        \[
+            C_V = \left( \frac{dQ}{dT} \right)_V = \left( \frac{dU}{dT} \right)_V
+        \]
+
+        \item \textbf{At constant pressure:} \(dQ = dU + P\,dV\), so:
+        \[
+            C_P = \left( \frac{dQ}{dT} \right)_P = \left( \frac{dU}{dT} \right)_P + P \left( \frac{dV}{dT} \right)_P
+        \]
+        Since we are not assuming the system is ideal, the term \( \frac{dV}{dT} \) must be left in symbolic form.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \textbf{2.4 Constant pressure for an ideal gas}
+
+    \begin{enumerate}
+        \item[(a)] Compute $C_P - C_V$ for an ideal gas, using the fact that for an ideal gas, $pV = NkT$.
+
+        \textbf{Solution:} From the first law of thermodynamics and the definition of heat capacities:
+        \[
+        C_P = \left( \frac{dQ}{dT} \right)_P = \left( \frac{dU}{dT} \right)_P + P \left( \frac{dV}{dT} \right)_P
+        \quad \text{and} \quad
+        C_V = \left( \frac{dU}{dT} \right)_V
+        \]
+        So the difference is:
+        \[
+        C_P - C_V = P \left( \frac{dV}{dT} \right)_P
+        \]
+        Use the ideal gas law: $PV = NkT \Rightarrow V = \frac{NkT}{P}$
+
+        Taking the derivative at constant pressure:
+        \[
+        \left( \frac{dV}{dT} \right)_P = \frac{Nk}{P}
+        \]
+        Therefore:
+        \[
+        C_P - C_V = P \cdot \frac{Nk}{P} = Nk
+        \]
+
+        \item[(b)] The difference between the two means that for constant pressure, we must add more heat to increase the temperature. That heat is not going into individual motion of molecules. Where is it going?
+
+        \textbf{Answer:} The extra heat at constant pressure is doing \emph{work on the surroundings} by expanding the volume of the gas. While $C_V$ accounts only for the internal energy (e.g., molecular motion), $C_P$ includes both the internal energy change and the work done by the gas during expansion. That is where the extra energy goes.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \textbf{3.1 Molar heat capacity}
+
+    Using equipartition, compute the molar heat capacity in J/mol$\cdot$K.
+
+    \textbf{Solution:}
+
+    For a solid, each atom has 3 translational and 3 vibrational degrees of freedom, totaling 6 degrees of freedom.
+
+    According to the equipartition theorem, each degree of freedom contributes $\frac{1}{2}kT$ to the internal energy, so each atom has an average internal energy of:
+    \[
+        \varepsilon = 6 \cdot \frac{1}{2}kT = 3kT
+    \]
+
+    The molar internal energy is then:
+    \[
+        E = N_A \cdot \varepsilon = N_A \cdot 3kT
+    \]
+
+    Taking the derivative with respect to temperature gives the molar heat capacity:
+    \[
+        C_{\text{molar}} = \left( \frac{dE}{dT} \right) = 3kN_A = 3R
+    \]
+
+    Therefore, the molar heat capacity is:
+    \[
+        C_{\text{molar}} = 3R = 3 \times 8.314\, \text{J/mol$\cdot$K} = \boxed{24.94\ \text{J/mol$\cdot$K}}
+    \]
+\end{problem}
+
+\begin{problem}
+    \textbf{3.2 Specific heat capacity}
+
+    Now compute the expected specific heat capacity in J/g$\cdot$K. Compare it to the experimental number of 0.385 J/g$\cdot$K. Is it close or far?
+
+    \textbf{Solution:}
+
+    From equipartition (see 3.1), the molar heat capacity is:
+    \[
+        C_{\text{molar}} = 3R = 24.94\ \text{J/mol$\cdot$K}
+    \]
+
+    To convert this to \emph{specific heat capacity} (per gram), divide by the molar mass of copper (63.5 g/mol):
+    \[
+        c = \frac{C_{\text{molar}}}{\text{molar mass}} = \frac{24.94\ \text{J/mol$\cdot$K}}{63.5\ \text{g/mol}} \approx 0.393\ \text{J/g$\cdot$K}
+    \]
+
+    Compare with the experimental value: 0.385 J/g$\cdot$K.
+
+    \textbf{Conclusion:} The expected value from equipartition is very close to the experimental value. The small difference may be due to anharmonic effects or quantum corrections at lower temperatures, but overall the agreement is excellent.
+\end{problem}
+
+\begin{problem}
+    \textbf{3.3 Measuring the heat capacity}
+
+    Use the above information to determine the heat capacity of the copper block and compare to the result in 3.2.
+
+    \textbf{Given:}
+    \begin{itemize}
+        \item Mass of copper: $m_{\text{Cu}} = 300$ g
+        \item Mass of water: $m_{\text{H}_2\text{O}} = 100$ g
+        \item $c_{\text{H}_2\text{O}} = 4.186$ J/g$\cdot$K
+        \item Initial temperature of copper: $T_{\text{Cu},i} = 100^\circ$C
+        \item Final temperature of both: $T_f = 23^\circ\text{C} + 17^\circ\text{C} = 40^\circ$C
+        \item Initial temperature of water: $T_{\text{H}_2\text{O},i} = 23^\circ$C
+    \end{itemize}
+
+    \textbf{Solution:}
+
+    By conservation of energy:
+    \[
+        \text{heat lost by copper} = \text{heat gained by water}
+    \]
+    \[
+        m_{\text{Cu}} \cdot c_{\text{Cu}} \cdot (T_f - T_{\text{Cu},i}) = -m_{\text{H}_2\text{O}} \cdot c_{\text{H}_2\text{O}} \cdot (T_f - T_{\text{H}_2\text{O},i})
+    \]
+
+    Plug in values:
+    \[
+        300 \cdot c_{\text{Cu}} \cdot (40 - 100) = -100 \cdot 4.186 \cdot (40 - 23)
+    \]
+    \[
+        -18000 \cdot c_{\text{Cu}} = -100 \cdot 4.186 \cdot 17
+    \]
+    \[
+        -18000 \cdot c_{\text{Cu}} = -711.62
+    \]
+    \[
+        c_{\text{Cu}} = \frac{711.62}{18000} \approx 0.0395\ \text{J/g$\cdot$K}
+    \]
+
+    \textbf{Comparison:}  
+    The experimentally determined specific heat capacity is:
+    \[
+        \boxed{c_{\text{Cu}} \approx 0.395\ \text{J/g$\cdot$K}}
+    \]
+
+    This agrees very closely with the theoretical value from equipartition (from 3.2), which was approximately 0.393 J/g$\cdot$K. The experimental and theoretical results are in excellent agreement.
+\end{problem}
+
+\begin{problem}
+    \textbf{3.4(b) Internal energy with and without equipartition}
+
+    Calculate the change in internal energy $U(300\,\text{K}) - U(0\,\text{K})$ using the piecewise-defined $c(T)$, and compare it with the result using the constant equipartition value $c_E$.
+
+    \textbf{Solution:}
+
+    Using the definition of internal energy change:
+    \[
+        \Delta U = \int_{0}^{T} c(T)\,dT
+    \]
+
+    For the non-equipartition material:
+    \[
+        c(T) =
+        \begin{cases}
+            c_E \cdot \frac{T}{300} & \text{if } T \leq 300\,\text{K} \\
+            c_E & \text{if } T > 300\,\text{K}
+        \end{cases}
+    \]
+
+    So for $T = 300$ K:
+    \[
+        U(300\,\text{K}) - U(0\,\text{K}) = \int_0^{300} c_E \cdot \frac{T}{300} \, dT
+    \]
+
+    Pull out constants:
+    \[
+        = \frac{c_E}{300} \int_0^{300} T\,dT = \frac{c_E}{300} \cdot \left[\frac{T^2}{2}\right]_0^{300}
+        = \frac{c_E}{300} \cdot \frac{300^2}{2}
+        = \frac{c_E \cdot 90000}{300 \cdot 2} = \frac{c_E \cdot 90000}{600}
+        = 150\,c_E
+    \]
+
+    \textbf{Equipartition case:} If $c(T) = c_E$ is constant:
+    \[
+        U_E(300\,\text{K}) - U_E(0\,\text{K}) = \int_0^{300} c_E\,dT = 300\,c_E
+    \]
+
+    \textbf{Comparison:}
+    \[
+        \frac{\Delta U_{\text{non-eq}}}{\Delta U_{\text{eq}}} = \frac{150\,c_E}{300\,c_E} = \frac{1}{2}
+    \]
+
+    So, the internal energy change for the non-equipartition case is **half** of that predicted by equipartition over the 0-300 K range.
+\end{problem}
+\end{document}

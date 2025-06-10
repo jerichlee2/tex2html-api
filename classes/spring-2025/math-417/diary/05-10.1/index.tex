@@ -1,0 +1,200 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417 Practice Final Exam 1}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%------------------------------------------------------------
+%  Practice Final Exam – MATH 417: Introduction to Abstract Algebra
+%  13 questions • no calculators • show all reasoning
+%------------------------------------------------------------
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+
+\bigskip
+\begin{problem}
+  Let \(G=\{0,1,2,3\}\) and define
+  \[
+      a\star b \;:=\; a+b+1\pmod{4}.
+  \]
+  \begin{enumerate}
+      \item[(a)] Fill in the Cayley table of \((G,\star)\).
+      \item[(b)] Determine the identity element.
+      \item[(c)] Find the inverse of each element.
+      \item[(d)] Verify associativity by checking one non-trivial triple of elements.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let \(G\) be a group and define a relation on \(G\) by
+  \(a\sim b \iff \exists\,g\in G\text{ such that }b=gag^{-1}\).
+  \begin{enumerate}
+      \item[(a)] Prove that \(\sim\) is an equivalence relation
+                (\emph{conjugacy}).
+      \item[(b)] Show that elements lying in the same conjugacy class
+                have the same order.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let
+  \[
+      C_{8}\;=\;\bigl\{e^{2\pi i k/8}:k=0,1,\dots,7\bigr\}
+      \subset \mathbb{C}^{\times}.
+  \]
+  \begin{enumerate}
+      \item[(a)] Prove that \((C_{8},\cdot)\) is a cyclic (hence abelian) group.
+      \item[(b)] List all subgroups of \(C_{8}\) and draw the subgroup lattice.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  \begin{enumerate}
+      \item[(a)] Show that any subgroup of index \(2\) in a group is normal.
+      \item[(b)] Provide an explicit example of a subgroup of index \(3\)
+                that is \emph{not} normal, and justify your choice.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Determine \emph{all} group homomorphisms
+  \(\varphi:\Z_{15}\longrightarrow\Z_{6}\)
+  and count how many distinct homomorphisms there are.
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let \(G\) be a group of order \(63=3^{2}\cdot7\).
+  \begin{enumerate}
+      \item[(a)] Use Sylow’s theorems to show that \(G\) has a unique
+                Sylow \(7\)-subgroup, which is therefore normal.
+      \item[(b)] Is \(G\) necessarily abelian?  Prove your claim or give a
+                counter-example.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Classify, up to isomorphism, all abelian groups of order \(84\).
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Consider the multiplicative group \(\Z_{20}^{\ast}\).
+  \begin{enumerate}
+      \item[(a)] Compute the order of every element of \(\Z_{20}^{\ast}\).
+      \item[(b)] Identify all generators of \(\Z_{20}^{\ast}\).
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  \begin{enumerate}
+      \item[(a)] Prove Wilson’s theorem: for an odd prime \(p\),
+                \((p-1)!\equiv -1\pmod{p}\).
+      \item[(b)] Use part (a) to evaluate \(12!\pmod{13}\).
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  \begin{enumerate}
+      \item[(a)] Prove that every finite integral domain is a field.
+      \item[(b)] Give a concrete example of a finite ring with identity
+                that \emph{is not} an integral domain, and list all of its
+                zero divisors.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let \(\Z[i]\) be the ring of Gaussian integers.
+  \begin{enumerate}
+      \item[(a)] Show that \(\Z[i]\) is a Euclidean domain with respect
+                to the norm \(N(a+bi)=a^{2}+b^{2}\).
+      \item[(b)] Compute \(\gcd(4+5i,\;7+2i)\) in \(\Z[i]\), expressing it
+                as a Gaussian integer of minimal norm.
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let \(F\) be the (unique) field with \(16\) elements.
+  \begin{enumerate}
+      \item[(a)] Show that \(F\) contains exactly three subfields and
+                describe each of them explicitly.
+      \item[(b)] How many elements of order \(15\) does \(F^{\times}\) have?
+  \end{enumerate}
+\end{problem}
+
+\bigskip
+\begin{problem}
+  Let \(p\) be a prime and consider the elementary abelian group
+  \(V=\Z_{p}\oplus\Z_{p}\).
+  \begin{enumerate}
+      \item[(a)] Prove that \(\operatorname{Aut}(V)\cong GL_{2}(\Z_{p})\).
+      \item[(b)] Compute \(|\operatorname{Aut}(V)|\) as an explicit
+                function of \(p\).
+  \end{enumerate}
+\end{problem}
+%------------------------------------------------------------
+\end{document}

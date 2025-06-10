@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{HW 1—MATH E-222: Abstract Algebra I}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\noindent
+Read $\S 1.1$ and pages $38-42$ in Artin.  
+\begin{problem}[1.1.7]
+    Find a formula for 
+    \begin{align}
+        \begin{bmatrix}
+        1 & 1 &  1 \\
+        0 & 1 &  1 \\
+        0 & 0 &  1 \\
+    \end{bmatrix}^{n}
+    \end{align}, and prove it by induction. 
+\end{problem}
+\begin{solution}
+
+    \begin{proof}
+         I initially thought to use the following series:
+    $\sum_{k=1}^{n} (-1)^{k}k^{2}$. But I realized I was being silly and instead used the following:
+    \begin{align}
+     \begin{bmatrix}
+        1 & n &  \frac{n(n+1)}{2} \\
+         0 & 1 & n  \\
+         0& 0 & 1  \\
+    \end{bmatrix}+\begin{bmatrix}
+        0 & 1 &n+1   \\
+         0&0  &1  \\
+         0&0  &0   \\
+    \end{bmatrix}=\begin{bmatrix}
+        1 & n &  \frac{n(n+1)}{2} \\
+         0 & 1 & n  \\
+         0& 0 & 1  \\
+    \end{bmatrix}\cdot \begin{bmatrix}
+        1 & 1 &  1 \\
+        0 & 1 &  1 \\
+        0 & 0 &  1 \\
+    \end{bmatrix} 
+    \end{align}
+    \end{proof}
+    \end{solution}
+\begin{problem}[1.1.16]
+A square matrix $A$ is called \emph{nilpotent} if $A^{k}=0$ for some $k>0$. Prove that if $A$ is nilpotent, then $I+A$ is invertible.   
+\end{problem}
+\begin{solution}
+\begin{align}
+    \underbrace{\begin{bmatrix}
+    1 &  0 \\
+    0 &  1 \\
+   \end{bmatrix}}_{\mathbf{I} }+ \begin{bmatrix}
+    a &b   \\
+     c&d   \\
+   \end{bmatrix} = \begin{bmatrix}
+    a+1 &  b \\
+    c & d+1  \\
+   \end{bmatrix}
+\end{align}
+      \begin{align}
+    det(I+A)= (a+1)(b+1)-cb \\[10pt] 
+    =ad+a+d+1-cb = 0\\[10pt] 
+    ad-cb = -(a+d+1)\\[10pt] 
+    =det(A) \\[10pt] 
+    \neq 0 
+   \end{align}  
+   Need to show that if $A$ is nilpotent then $\det(A)=0$. 
+\end{solution}
+\begin{problem}[1.1.17]
+   \begin{enumerate}
+    \item Find infinitely many matrices $B$ such that $BA=I_2$ when 
+    \begin{align}
+        A= \begin{bmatrix}
+            2 &  3 \\
+            1 &  2 \\
+            2 &  5 \\
+        \end{bmatrix}
+    \end{align}
+    \item Prove that there is no matrix $C$ such that $AC=I_3$. 
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+
+\end{solution}
+\end{document}

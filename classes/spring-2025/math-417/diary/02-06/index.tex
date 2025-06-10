@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\[
+\textbf{Compute } 400^{60} \pmod{61}:
+\]
+
+\textbf{Step 1: Reduce the base modulo 61.}  
+\[
+400 \equiv 400 - 6 \cdot 61 
+     = 400 - 366
+     = 34 
+     \pmod{61}.
+\]
+Hence,
+\[
+400^{60} \equiv 34^{60} \pmod{61}.
+\]
+
+\textbf{Step 2: Apply Fermat's Little Theorem.}  
+
+Since \(61\) is prime, Fermat's Little Theorem says:
+\[
+a^{p-1} \equiv 1 \pmod{p}
+\quad
+\text{for all } a \text{ with } \gcd(a, p) = 1.
+\]
+Here \(p = 61\) and \(p-1 = 60\). Also, \(\gcd(34, 61) = 1\). Therefore,
+\[
+34^{60} \equiv 1 \pmod{61}.
+\]
+
+\textbf{Step 3: Conclusion.}  
+
+Combining everything,
+\[
+400^{60} 
+\equiv 34^{60} 
+\equiv 1
+\pmod{61}.
+\]
+
+Hence the final answer is
+\[
+\boxed{400^{60} \equiv 1 \pmod{61}}.
+\]
+\[
+\textbf{Compute the last digit of } 17^{50}.
+\]
+
+We want the remainder of \(17^{50}\) when divided by 10, i.e.,
+\[
+17^{50} \pmod{10}.
+\]
+
+\textbf{Step 1: Reduce the base modulo 10.}
+\[
+17 \equiv 7 \pmod{10}.
+\]
+Hence,
+\[
+17^{50} \equiv 7^{50} \pmod{10}.
+\]
+
+\textbf{Step 2: Find the pattern of powers of 7 modulo 10.}
+\[
+\begin{aligned}
+7^1 &\equiv 7 \pmod{10},\\
+7^2 &\equiv 49 \equiv 9 \pmod{10},\\
+7^3 &\equiv 9 \cdot 7 = 63 \equiv 3 \pmod{10},\\
+7^4 &\equiv 3 \cdot 7 = 21 \equiv 1 \pmod{10},\\
+7^5 &\equiv 1 \cdot 7 = 7 \pmod{10}.
+\end{aligned}
+\]
+Thus, the cycle of \(7^n \pmod{10}\) is \(\{7,9,3,1\}\) and repeats every 4 powers.
+
+\textbf{Step 3: Determine the position in the cycle.}
+
+We take \(50 \mod 4\):
+\[
+50 \equiv 2 \pmod{4}.
+\]
+Since the remainder is 2, we pick the second element in the cycle \(\{7,9,3,1\}\), which is \(9\).
+
+\textbf{Conclusion:}
+\[
+7^{50} \equiv 9 \pmod{10} 
+\quad\Longrightarrow\quad
+17^{50} \equiv 9 \pmod{10}.
+\]
+
+Therefore, the last digit of \(17^{50}\) in base-10 notation is
+\[
+\boxed{9}.
+\]
+\[
+\textbf{Why does the sequence of } 7^k \text{ (mod 10) repeat?}
+\]
+
+\textbf{1. Finite number of remainders:}
+
+When working \(\bmod\; 10\), any integer is congruent to one of the 10 possible remainders 
+\[
+\{0,1,2,\dots,9\}.
+\]
+Consider the sequence
+\[
+7^1 \bmod 10,\quad 7^2 \bmod 10,\quad 7^3 \bmod 10,\quad \dots
+\]
+Since there are only 10 possible remainders, by the \textit{pigeonhole principle}, eventually two of these powers must give the same remainder. Once a remainder repeats, the sequence will cycle from that point onward.
+
+\textbf{2. Coprimality and Euler's Theorem:}
+
+We also note that \(\gcd(7,10) = 1\). By Euler's theorem (a special case of Fermat's little theorem for general \(n\)), if \(\gcd(a,n)=1\), then
+\[
+a^{\varphi(n)} \equiv 1 \pmod{n},
+\]
+where \(\varphi(n)\) is Euler's totient function. For \(n=10\), we have \(\varphi(10) = 4\). Therefore,
+\[
+7^4 \equiv 1 \pmod{10}.
+\]
+This directly implies that
+\[
+7^5 \equiv 7 \pmod{10}, \quad 7^6 \equiv 7^2 \pmod{10}, \quad \ldots
+\]
+so the pattern of remainders \(\bmod\,10\) repeats every 4 powers.
+
+Hence, \emph{there must be a repeating cycle} in the powers of 7 modulo 10.
+\end{document}

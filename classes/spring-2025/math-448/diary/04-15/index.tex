@@ -1,0 +1,429 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Maximum Modulus and Mean Value: A Step-by-Step Walkthrough}
+
+\noindent
+\textbf{Setup.} Suppose that $f$ is an analytic function on a domain $D$. From earlier results,
+we know that if the range of $f$ lies in a circle or on a straight line, then $f$ must be constant.
+We now show a stronger statement: \emph{either} $f$ is constant on $D$ \emph{or} the range of $f$
+is an open set.
+
+\medskip
+
+\noindent
+\textbf{Step 1. Assume $f$ is nonconstant and fix a point in its range.}\\
+Let $f$ be not identically constant, and choose some $z_0$ in $D$. Denote $w_0 = f(z_0)$. This $w_0$
+is thus in the range of $f$.
+
+\medskip
+
+\noindent
+\textbf{Step 2. The function $f(z) - w_0$ has an isolated zero of order $m \ge 1$.}\\
+Consider the function $g(z) = f(z) - w_0$. Since $f$ is not constant, $g(z)$ is not the zero function.
+In fact, $g$ has a zero of order $m \ge 1$ at $z = z_0$. 
+
+\medskip
+
+\noindent
+\textbf{Step 3. Choose $r>0$ so that $g(z)$ has no other zeros on $0 < |z - z_0| \le r$.}\\
+Because the zeros of a nonconstant analytic function are isolated, we can choose $r > 0$ small enough
+so that $g(z) = f(z) - w_0$ does not vanish anywhere on $0 < |z - z_0| \le r$ (i.e.\ $z_0$ is the only
+zero inside the disk of radius $r$).
+
+\medskip
+
+\noindent
+\textbf{Step 4. Define $\delta$ as the minimum value of $|g(z)|$ on the boundary $|z - z_0| = r$.}\\
+Set
+\[
+  \delta = \min_{\substack{|z - z_0| = r}} \bigl|f(z) - w_0\bigr|.
+\]
+Since $f(z) - w_0$ is continuous and we are looking at a compact set (the circle $|z - z_0| = r$),
+this minimum is well-defined and positive (because $g(z)$ has no zeros on that circle).
+
+\medskip
+
+\noindent
+\textbf{Step 5. Take any $w$ with $|w - w_0| < \delta$, and compare $f(z) - w$ vs.\ $f(z) - w_0$.}\\
+For $|z - z_0| = r$, we have
+\[
+  \bigl|\bigl(f(z) - w\bigr) - \bigl(f(z) - w_0\bigr)\bigr|
+  = |w - w_0| < \delta \le |f(z) - w_0|.
+\]
+This is the crucial inequality (sometimes labeled as equation (1) in the text).
+
+\medskip
+
+\noindent
+\textbf{Step 6. Apply Rouch\'e's theorem.}\\
+By Rouch\'e's theorem, on the circle $|z - z_0| = r$, the two functions $f(z) - w$ and $f(z) - w_0$
+have the \emph{same} number of zeros inside that circle.  Since $f(z) - w_0$ has exactly $m$ zeros
+(with multiplicity) at $z_0$, it follows that $f(z) - w$ must also have exactly $m$ zeros in
+$|z - z_0| < r$.
+
+\medskip
+
+\noindent
+\textbf{Step 7. Conclude that every $w$ near $w_0$ is in the range of $f$.}\\
+Because $f(z) - w$ has a zero in $|z - z_0| < r$, it means there is some $z$ in that disk for which
+$f(z) = w$.  In other words, for \emph{all} $w$ with $|w - w_0| < \delta$, there exists a $z$ such that
+$f(z) = w$.  Hence, each point $w_0$ in the range is the center of a small disk (of radius $\delta$)
+lying entirely in the range of $f$.  Therefore, the range of $f$ is open.
+
+\begin{theorem}[Open Mapping Theorem for Analytic Functions]
+Suppose that $f$ is a nonconstant analytic function on a domain $D$. Then the set 
+$\{\,f(z) : z \in D\}$ is an open set.
+\end{theorem}
+\section*{Why $f(z) - w_0$ Has an Isolated Zero of Order $m \ge 1$}
+
+\noindent
+\textbf{Setup.} Let $f$ be an analytic function on a domain $D$ and $z_0 \in D$ such that
+$w_0 = f(z_0)$.  Define 
+\[
+  g(z) \;=\; f(z) \;-\; w_0.
+\]
+
+\medskip
+
+\noindent
+\textbf{Step 1. $g$ is not the zero function.}\\
+If $f$ is \emph{not} identically constant, there exists at least one point $z_1 \in D$ with
+$f(z_1) \neq w_0$, hence $g(z_1) = f(z_1) - w_0 \neq 0$.  Therefore, $g$ itself cannot be the zero
+function (which would vanish everywhere).
+
+\medskip
+
+\noindent
+\textbf{Step 2. $g(z_0) = 0$.}\\
+By definition, $g(z_0) = f(z_0) - w_0 = w_0 - w_0 = 0$.  Thus $z_0$ is a zero of $g$.
+
+\medskip
+
+\noindent
+\textbf{Step 3. Zeros of nonconstant analytic functions are isolated.}\\
+Since $g$ is analytic but \emph{not} identically zero, all its zeros must be isolated unless $g$
+were the zero function.  Therefore, there exists some radius $r > 0$ such that $z_0$ is the
+only zero of $g$ in the disk $\{\,z : |z - z_0| < r\}$.
+
+\medskip
+
+\noindent
+\textbf{Step 4. The order of the zero $m \ge 1$.}\\
+By analytic theory, we can write the Taylor expansion of $g(z)$ around $z_0$.  In particular,
+there is a smallest integer $m \ge 1$ such that
+\[
+  g(z) \;=\; (z - z_0)^m \, h(z),
+\]
+where $h(z)$ is an analytic function with $h(z_0) \neq 0$.  The integer $m$ is called the
+\emph{order} of the zero of $g$ at $z_0$.
+
+\medskip
+
+\noindent
+\textbf{Conclusion.}\\
+Putting it all together: $g(z) = f(z) - w_0$ has an isolated zero at $z = z_0$ (by Step 3), and
+the zero is of finite order $m \ge 1$ (by Step 4).  Hence we say
+``\,$f(z) - w_0$ has an isolated zero of order $m \ge 1$ at $z = z_0$\,'' as required.
+
+\section*{Local $m$-to-1 Behavior and Non-Invertibility}
+
+\noindent
+\textbf{Statement.} 
+Suppose $f$ is a nonconstant analytic function on a domain $D$ and that
+$f - f(z_0)$ has a zero of order $m \ge 1$ at $z_0$. Then in a neighborhood of $z_0$,
+the map $f$ behaves like an $m$-to-1 covering. In particular, if $f'(z_0) = 0$ (so $m \ge 2$),
+then $f$ cannot be injective in any disc containing $z_0$.
+
+\bigskip
+
+\noindent
+\textbf{Step 1. Express $f$ in a local factorization around $z_0$.}\\
+Since $f - f(z_0)$ has a zero of order $m$ at $z_0$, we can write
+\[
+  f(z) \;=\; f(z_0) \;+\; (z - z_0)^{m}\,h(z),
+\]
+where $h$ is analytic in a neighborhood of $z_0$ and $h(z_0) \neq 0$.
+
+\medskip
+
+\noindent
+\textbf{Step 2. Local invertibility and the $m$-to-1 property.}\\
+Define a local coordinate $w$ around $z_0$ by $w = z - z_0$. Then near $z_0$, we have
+\[
+  f(z) \;=\; f(z_0) + w^m \,h(z_0 + w).
+\]
+Because $h(z_0) \neq 0$, the function $z \mapsto w^m$ shows that, for any value close to $f(z_0)$,
+there are $m$ distinct solutions for $z$ (provided $w$ is small and $m \ge 1$). Hence in a small
+enough disc around $z_0$, each value of $f$ has exactly $m$ \emph{local} preimages.
+
+\medskip
+
+\noindent
+\textbf{Step 3. Consequence when $m \ge 2$.}\\
+If $m \ge 2$, in particular if $f'(z_0) = 0$, then there are at least two distinct solutions for $z$
+that map to the same value of $f(z_0 + w)$ near $f(z_0)$. Thus $f$ is \emph{not} injective on any
+disc containing $z_0$. 
+
+\medskip
+
+\noindent
+\textbf{Conclusion.}\\
+We conclude that $f$ is locally $m$-to-1 in a small neighborhood of $z_0$. Specifically, if $m=1$
+(that is, if $f'(z_0) \neq 0$), then $f$ is locally invertible near $z_0$. If $m \ge 2$, $f$ is
+\emph{not} one-to-one in any disc around $z_0$.
+\begin{theorem}[Schwarz's Lemma]
+    Suppose that $f$ is analytic on the open unit disk $\{\, z : |z| < 1\}$, with $f(0) = 0$ 
+    and $|f(z)| \le 1$ for all $|z| < 1$. Then for each $z$ with $|z|<1$,
+    \[
+       |f(z)| \;\le\; |z|.
+    \]
+    Moreover, if there exists some $z_0 \neq 0$ with $|f(z_0)| = |z_0|$, then $f$ must be of the form
+    $f(z) = \lambda \, z$ for some constant $\lambda$ with $|\lambda| = 1$.
+    \end{theorem}
+    
+    \begin{proof}
+    \textbf{Step 1. Define $g(z)$.}\\
+    Since $f(0)=0$, we can define 
+    \[
+       g(z) \;=\;
+       \begin{cases}
+         \dfrac{f(z)}{z}, & z \neq 0, \\[6pt]
+         f'(0), & z = 0.
+       \end{cases}
+    \]
+    Because $f$ is analytic and $f(0) = 0$, one can check by applying l'H\^opital's rule or by looking
+    at the power series expansion that $g$ is continuous on $|z|<1$, and in fact is analytic there (the
+    limit defining $g(0) = f'(0)$ matches the analytic continuation).
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 2. Estimate $|g(z)|$ on the circle $|z| = r$.}\\
+    Fix $0 < r < 1$ and consider $|z|=r$.  We then have
+    \[
+       |g(z)| \;=\; \biggl|\frac{f(z)}{z}\biggr|
+                \;\le\;\frac{|f(z)|}{|z|}
+                \;\le\;\frac{1}{r},
+    \]
+    because $|f(z)| \le 1$ for $|z|<1$.  Hence on the circle $|z| = r$, we see that
+    \[
+      |g(z)| \;\le\;\frac{1}{r}.
+    \]
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 3. Apply the Maximum Modulus Principle.}\\
+    Since $g$ is analytic on $|z|<1$ and continuous on the closed disk $|z|\le r$, the maximum‐modulus
+    principle implies that the maximum of $|g(z)|$ on the disk $|z|\le r$ occurs on the boundary
+    $|z|=r$.  We have already established $|g(z)| \le \frac{1}{r}$ for $|z|=r$.  Therefore,
+    \[
+      |g(z)| \;\le\;\frac{1}{r}
+      \quad\text{for all } |z| \le r.
+    \]
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 4. Let $r$ approach 1.}\\
+    Since $r$ can be chosen arbitrarily close to 1 (but still $r<1$), we conclude that for any
+    $|z|<1$,
+    \[
+       |g(z)| \;\le\; 1.
+    \]
+    Equivalently, $|f(z)| = |z|\cdot|g(z)| \le |z|\cdot 1 = |z|$. 
+    Hence
+    \[
+      |f(z)| \;\le\; |z|
+      \quad\text{for all } |z|<1.
+    \]
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 5. Characterize the equality case.}\\
+    Suppose there is some $z_0 \neq 0$ with $|f(z_0)| = |z_0|$.  Then 
+    \[
+       |g(z_0)| \;=\; \frac{|f(z_0)|}{|z_0|} \;=\; 1.
+    \]
+    But from Step~4, we have $|g(z)| \le 1$ for \emph{all} $z$ with $|z|<1$.  Hence $|g(z)|$ attains its
+    maximum value $1$ at an interior point $z_0$ with $|z_0|<1$.  By the \emph{strong form} of the
+    maximum‐modulus principle, $g$ must be a constant function on $|z|<1$.  Denote this constant by
+    $\lambda$ with $|\lambda|=1$.  Thus
+    \[
+       g(z) \;=\; \lambda, 
+       \qquad\text{so}\quad f(z) \;=\; \lambda \, z
+       \quad\text{for all } |z|<1.
+    \]
+    Hence if the equality $|f(z_0)| = |z_0|$ holds for some nonzero $z_0$, then $f$ must be a rotation
+    of the form $f(z) = \lambda z$ with $|\lambda|=1$.
+    
+    \end{proof}
+    \section*{Mean Value Theorem for Analytic Functions}
+
+    \noindent
+    \textbf{Statement.} 
+    If $f$ is an analytic function on a domain $D \subset \mathbb{C}$ and if
+    $z_0 \in D$ is such that the closed disk $\{ z : |z - z_0| \le r \}$ is contained in $D$, 
+    then
+    \[
+      f(z_0)
+      \;=\;
+      \frac{1}{2\pi}
+      \int_{0}^{2\pi}
+          f\bigl(z_0 + r e^{i t}\bigr)\,dt,
+    \]
+    where $0 \le t < 2\pi$.  This says that \emph{the value of $f$ at the center $z_0$ is the
+    average of its values on the circle $|z - z_0| = r$}.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Step 1. Recall Cauchy's Integral Formula.}\\
+    By Cauchy's Integral Formula (Chapter~2, Theorem~4 in many texts), for a circle $\gamma$ of radius $r$ around $z_0$,
+    \[
+      f(z_0)
+      \;=\;
+      \frac{1}{2\pi i}
+      \int_{\gamma} \frac{f(\zeta)}{\zeta - z_0}\, d\zeta,
+    \]
+    provided that $f$ is analytic in a simply connected domain containing $\gamma$ and $z_0$.
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 2. Parametrize the circle.}\\
+    Let $\gamma$ be the circle $|\zeta - z_0| = r$.  A standard parametrization is
+    \[
+      \zeta = z_0 + r e^{i t},
+      \quad t \in [0, 2\pi].
+    \]
+    Then $d\zeta = i r e^{i t} \,dt$, and $\zeta - z_0 = r e^{i t}$.
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 3. Rewrite the integral.}\\
+    Substituting $\zeta = z_0 + r e^{i t}$ into Cauchy's formula gives
+    \[
+      f(z_0)
+      = \frac{1}{2\pi i}
+        \int_{0}^{2\pi}
+          \frac{f\bigl(z_0 + r e^{i t}\bigr)}{r e^{i t}}
+          \cdot \bigl(i r e^{i t}\bigr)\, dt.
+    \]
+    Inside the integral, the factor $\frac{1}{r e^{i t}}$ multiplies $i r e^{i t}$ to yield $i$.  Hence
+    \[
+      f(z_0)
+      = \frac{1}{2\pi}
+        \int_{0}^{2\pi}
+          f\bigl(z_0 + r e^{i t}\bigr)\, dt.
+    \]
+    Thus, we obtain the \emph{Mean‐Value Theorem} for $f$:
+    \[
+      f(z_0)
+      = \frac{1}{2\pi}
+        \int_{0}^{2\pi}
+        f\bigl(z_0 + r e^{i t}\bigr)\, dt.
+    \]
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 4. Real (and imaginary) parts give the mean‐value property for harmonic functions.}\\
+    Let $u = \Re(f)$ be the real part of $f$.  Taking real parts in the above formula yields
+    \[
+      u(z_0)
+      = \Re\bigl(f(z_0)\bigr)
+      = \Re\!\biggl(\,\frac{1}{2\pi}\int_{0}^{2\pi} f(z_0 + re^{i t})\, dt\biggr)
+      = \frac{1}{2\pi}\int_{0}^{2\pi}
+          \Re\bigl(f(z_0 + re^{i t})\bigr)\, dt
+      = \frac{1}{2\pi}\int_{0}^{2\pi} u\bigl(z_0 + re^{i t}\bigr)\, dt.
+    \]
+    Hence $u$ itself satisfies the \emph{harmonic mean‐value property}: 
+    the value of $u$ at the center is the \emph{average} of its values on the boundary circle.
+    
+    \medskip
+    
+    \noindent
+    \textbf{Step 5. Why is this important?}
+    \begin{itemize}
+    \item \emph{Connection to Harmonic Functions:} 
+      Since the real (and imaginary) parts of an analytic function are harmonic, the above formula 
+      immediately shows that harmonic functions have the mean‐value property.  This is essential 
+      in studying \emph{potential theory} and PDEs (partial differential equations).
+    \item \emph{Local Behavior and Uniqueness:} 
+      The mean‐value property underlies important uniqueness theorems: for example, if a harmonic 
+      function attains its maximum (or minimum) in the interior of a domain, it must be constant 
+      (the \emph{Maximum Principle} for harmonic functions).
+    \item \emph{Recovering Information on the Inside from the Boundary:} 
+      In engineering and physics, boundary data (on a circle or sphere) can be used to reconstruct 
+      interior values of a harmonic or analytic function.  Formula~(5)/(6) in the text is a 
+      one‐dimensional case of a more general integral representation.
+    \item \emph{Bridge to Deeper Results:} 
+      The mean‐value property sets the stage for more advanced results, such as Harnack's inequality, 
+      the Poisson integral formula, and the general approach to boundary value problems for Laplace's equation.
+    \end{itemize}
+    
+    \bigskip
+    
+    \begin{remark}
+    In summary, the mean‐value theorem for analytic functions (and its harmonic corollary) tells us 
+    that \textbf{knowing the boundary values} of an analytic or harmonic function on a circle often 
+    \textbf{uniquely determines} the function’s interior values. It is fundamental in both theoretical 
+    analysis and numerous physical applications (heat, electrostatics, fluid flow, etc.).
+    \end{remark}    
+\end{document}

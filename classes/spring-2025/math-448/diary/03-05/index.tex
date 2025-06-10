@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+We want to show that
+\[
+\lvert e^{iz}\rvert \;=\; e^{\operatorname{Re}(iz)} \;=\; e^{-R\sin\theta}.
+\]
+
+\textbf{Step 1: Express $z$ in polar form.}  
+Let
+\[
+z = R e^{i\theta},
+\]
+where \(R = \sqrt{x^2 + y^2}\) and \(\theta = \arg(z)\).
+
+\textbf{Step 2: Compute $iz$.}  
+Since \(z = x + i\,y\), we have
+\[
+iz \;=\; i(x + i\,y) 
+\;=\; i\,x + i^2\,y 
+\;=\; i\,x - y 
+\;=\; -y \;+\; i\,x.
+\]
+Equivalently, using polar form,
+\[
+iz 
+\;=\;
+i \bigl(R e^{i\theta}\bigr)
+\;=\;
+R\,\bigl(i\,e^{i\theta}\bigr)
+\;=\;
+R\,e^{i(\theta + \pi/2)}.
+\]
+In either case, we see that
+\[
+\operatorname{Re}(iz) 
+\;=\; -\,R\sin\theta.
+\]
+
+\textbf{Step 3: The magnitude of $e^{iz}$.}  
+By the general property of complex exponentials,
+\[
+\lvert e^{w}\rvert 
+\;=\;
+e^{\operatorname{Re}(w)},
+\]
+so
+\[
+\lvert e^{iz}\rvert 
+\;=\;
+e^{\operatorname{Re}(iz)} 
+\;=\;
+e^{-\,R\sin\theta}.
+\]
+
+
+\end{document}

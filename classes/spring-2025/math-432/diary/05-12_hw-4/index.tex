@@ -1,0 +1,569 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 HW 4}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{solution}
+  \begin{theorem}
+    Let $(L,\le)$ be a lattice in which \emph{every} chain has an upper bound.
+    Then $L$ possesses a \emph{unique} maximal element.
+    \end{theorem}
+    
+    \begin{proof}
+    We argue in carefully itemised steps.
+    
+    \medskip
+    \textbf{Step 1 (Existence via Zorn’s Lemma).}
+    Because every chain (totally ordered subset) of $L$ has an upper bound
+    in $L$, Zorn’s lemma guarantees the existence of at least one maximal
+    element of $L$.
+    Fix such an element and denote it by $m$.
+    
+    \medskip
+    \textbf{Step 2 (Assume two maximal elements and derive a contradiction).}
+    Suppose, for the sake of uniqueness, that $a_1,a_2\in L$ are \emph{both}
+    maximal elements (we do not assume $a_1=a_2$).
+    
+    \medskip
+    \textbf{Step 3 (Use the lattice join).}
+    In a lattice the \emph{join} (least upper bound) $a_1\vee a_2$ exists
+    and satisfies
+    \[
+      a_1\;\le\;a_1\vee a_2
+      \quad\text{and}\quad
+      a_2\;\le\;a_1\vee a_2.
+    \]
+    
+    \medskip
+    \textbf{Step 4 (Maximality forces equality).}
+    Because $a_1$ is maximal and $a_1\le a_1\vee a_2$, we must have
+    $a_1\vee a_2\le a_1$, hence $a_1\vee a_2=a_1$.
+    Applying the same argument to $a_2$ yields $a_1\vee a_2=a_2$.
+    Consequently
+    \[
+      a_1 = a_1\vee a_2 = a_2.
+    \]
+    
+    \medskip
+    \textbf{Step 5 (Conclusion).}
+    The assumption of two distinct maximal elements led to equality,
+    so the maximal element is unique.
+    \end{proof}
+    \begin{theorem}
+      \label{thm:maximal-antichain}
+      Every partially ordered set $(L,\le)$ contains a \textbf{maximal
+      totally unordered subset} (equivalently, a \emph{maximal antichain}).
+      \end{theorem}
+      
+\end{solution}
+
+\begin{solution}
+  \begin{proof}
+    We give a detailed, Zorn--lemma style construction.
+    
+    \bigskip
+    \textbf{Step 1 (Build a poset of antichains).}
+    Let
+    \[
+      M \;:=\;
+      \{\,A\subseteq L \mid A\ \text{is totally unordered (an antichain)}\}.
+    \]
+    Partially order $M$ by inclusion:
+    $A_1\preceq A_2 \;\Longleftrightarrow\; A_1\subseteq A_2$.
+    
+    \bigskip
+    \textbf{Step 2 (Chains in $M$ have upper bounds).}
+    Let
+    \(
+      C=\{A_\alpha : \alpha\in I\}
+      \subseteq M
+    \)
+    be a chain, i.e.\ for any $\alpha,\beta\in I$ we have
+    $A_\alpha\subseteq A_\beta$ or $A_\beta\subseteq A_\alpha$.
+    Define the union
+    \[
+      A_0 \;:=\; \bigcup_{\alpha\in I} A_\alpha.
+    \]
+    
+    \smallskip
+    \emph{Claim: $A_0$ is an antichain (hence $A_0\in M$).}
+    
+    Take any $a,b\in A_0$.
+    Then $a\in A_{\alpha}$ and $b\in A_{\beta}$ for some
+    $\alpha,\beta\in I$.
+    Because $C$ is a chain, assume without loss of generality
+    $A_{\alpha}\subseteq A_{\beta}$.
+    Thus $a,b\in A_{\beta}$, and $A_{\beta}$ is totally unordered,
+    so neither $a<b$ nor $b<a$ in $L$.
+    Hence $A_0$ is totally unordered.
+    
+    \smallskip
+    Furthermore, $A_\alpha\subseteq A_0$ for every $\alpha$,
+    so $A_0$ is an \textbf{upper bound} of the chain $C$ in $(M,\preceq)$.
+    
+    \bigskip
+    \textbf{Step 3 (Invoke Zorn’s lemma).}
+    Every chain in $(M,\preceq)$ has an upper bound in $M$
+    (by Step~2), so Zorn’s lemma applies:
+    there exists a \emph{maximal} element $A^\ast\in M$.
+    
+    \bigskip
+    \textbf{Step 4 (Interpretation).}
+    By definition of $M$,
+    $A^\ast$ is a totally unordered subset of $L$,
+    and its maximality in $M$ means:
+    \[
+      A^\ast\subseteq B\in M \;\Longrightarrow\; B=A^\ast.
+    \]
+    In other words, $A^\ast$ is a \emph{maximal antichain} of $L$.
+    
+    \bigskip
+    \textbf{Step 5 (Conclusion).}
+    Thus every partially ordered set $(L,\le)$ possesses
+    at least one maximal totally unordered subset, as required.
+    \end{proof}
+\end{solution}
+
+    \begin{solution}
+      \begin{theorem}[Extension (Szpilrajn) theorem]
+        \label{thm:poset-extension}
+        Let $(L,\le)$ be a partially ordered set.
+        There exists a \emph{linear order} (total order) $\preceq$ on $L$
+        such that
+        \[
+          x\le y \;\Longrightarrow\; x\preceq y
+          \qquad(x,y\in L).
+        \]
+        Equivalently, every poset can be extended to a chain.
+        \end{theorem}
+        
+        \begin{proof}
+        We give a step–by–step construction that relies on Zorn’s lemma.
+        
+        \bigskip
+        \textbf{Step 1 (Encode partial orders as subsets of $L\times L$).}
+        A binary relation \(R\subseteq L\times L\) is a \emph{partial order}
+        iff it is reflexive, anti‑symmetric, and transitive.
+        Denote by
+        \[
+          \mathcal P \;=\;
+          \bigl\{\,R \subseteq L\times L
+                  \mid
+                  \le\;\subseteq R
+                  \text{ and $R$ is a partial order}
+           \bigr\}
+        \]
+        the collection of \emph{all} partial orders on $L$
+        that \emph{extend} the given $\le$.
+        
+        \bigskip
+        \textbf{Step 2 (Partially order $\mathcal P$ by inclusion).}
+        For $R_1,R_2\in\mathcal P$ write $R_1\preccurlyeq R_2$ iff
+        $R_1\subseteq R_2$.
+        This turns $\mathcal P$ itself into a poset.
+        
+        \bigskip
+        \textbf{Step 3 (Chains in $\mathcal P$ have an upper bound).}
+        Let
+        \(
+          \mathcal C=\{R_\alpha : \alpha\in I\}\subseteq\mathcal P
+        \)
+        be a chain (totally ordered by inclusion).
+        Define the union
+        \[
+          R_0\;:=\;\bigcup_{\alpha\in I} R_\alpha.
+        \]
+        
+        \emph{Claim: $R_0\in\mathcal P$.}
+        
+        \begin{itemize}
+          \item \emph{Reflexivity.}
+                Each $R_\alpha$ is reflexive, so $(x,x)\in R_\alpha$ for every
+                $x\in L$ and some $\alpha$; hence $(x,x)\in R_0$.
+          \item \emph{Anti‑symmetry.}
+                Suppose $(x,y)\in R_0$ and $(y,x)\in R_0$.
+                Then $(x,y)\in R_{\alpha}$ and $(y,x)\in R_{\beta}$ for some
+                $\alpha,\beta$.
+                Because $\mathcal C$ is a chain, assume $R_{\alpha}\subseteq R_{\beta}$.
+                Then both pairs lie in $R_{\beta}$, and anti‑symmetry of
+                $R_{\beta}$ forces $x=y$.
+          \item \emph{Transitivity.}
+                If $(x,y)\in R_0$ and $(y,z)\in R_0$, choose
+                $\alpha,\beta$ with $(x,y)\in R_\alpha$ and $(y,z)\in R_\beta$.
+                Without loss of generality $R_\alpha\subseteq R_\beta$,
+                so both pairs live in $R_\beta$ and transitivity there
+                gives $(x,z)\in R_\beta\subseteq R_0$.
+        \end{itemize}
+        Hence $R_0$ is a partial order containing $\le$,
+        so $R_0\in\mathcal P$ and clearly $R_\alpha\subseteq R_0$
+        for all $\alpha$.
+        Thus $R_0$ is an \emph{upper bound} of the chain $\mathcal C$.
+        
+        \bigskip
+        \textbf{Step 4 (Invoke Zorn’s lemma).}
+        Every chain in $\mathcal P$ has an upper bound in $\mathcal P$ (Step 3);
+        therefore, by Zorn’s lemma, $\mathcal P$ possesses a
+        \emph{maximal element}, say $R^\ast$.
+        
+        \bigskip
+        \textbf{Step 5 ($R^\ast$ is a total order).}
+        Assume, for contradiction, that $R^\ast$ is \emph{not} total:
+        there exist $a,b\in L$ with $a\neq b$ such that
+        \(
+          (a,b)\notin R^\ast \text{ and } (b,a)\notin R^\ast.
+        \)
+        
+        \smallskip
+        \emph{Extend $R^\ast$.}
+        Define
+        \[
+          S\;:=\;R^\ast \cup \bigl\{(a,b)\bigr\}
+                    \cup \bigl\{(x,b) : (x,a)\in R^\ast\bigr\}
+                    \cup \bigl\{(a,y) : (b,y)\in R^\ast\bigr\}.
+        \]
+        Intuitively, we declare $a\preceq b$ and preserve transitivity by
+        “pushing” all predecessors of $a$ below $b$
+        and all successors of $b$ above $a$.
+        
+        One checks directly that $S$ is still
+        reflexive, anti‑symmetric, and transitive, and that $R^\ast\subsetneq S$.
+        Hence $S\in\mathcal P$, contradicting the maximality of $R^\ast$.
+        
+        \smallskip
+        Therefore such incomparable $a,b$ cannot exist, and $R^\ast$ is a
+        \emph{total} (linear) order on $L$ extending $\le$.
+        
+        \bigskip
+        \textbf{Step 6 (Set the desired chain order).}
+        Put $\preceq:=R^\ast$.
+        Then $(L,\preceq)$ is a chain and $\le\subseteq\preceq$, completing
+        the extension.
+        
+        \end{proof}
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}
+        \label{thm:lattice-complete}
+        Let $(L,\le)$ be a lattice in which \emph{every} chain
+        has both a least upper bound and a greatest lower bound.
+        Then $L$ is \emph{complete}; that is, every subset
+        $A\subseteq L$ possesses a least upper bound
+        $\displaystyle\bigvee A$ and a greatest lower bound
+        $\displaystyle\bigwedge A$ in $L$.
+        \end{theorem}
+        
+        \begin{proof}
+        We give an explicit construction of $\bigvee A$;
+        the dual argument for $\bigwedge A$ is obtained by
+        reversing all inequalities.
+        
+        \smallskip
+        \textbf{Step 1 (A top element exists).}
+        Problem~1 (proved earlier) shows that under the
+        present hypothesis $L$ has a
+        \emph{unique maximal element}~$z$ (the “top” of $L$).
+        Consequently every subset of $L$ has at least one
+        upper bound, namely~$z$.
+        
+        \smallskip
+        \textbf{Step 2 (The poset of upper bounds of $A$).}
+        Fix any subset $A\subseteq L$ and define
+        \[
+          U\;:=\;
+          \bigl\{\,u\in L \mid \forall\,a\in A,\; a\le u\bigr\}.
+        \]
+        Because $z\in U$, the set $U$ is non–empty.
+        Endow $U$ with the restriction of~$\le$;
+        then $(U,\le)$ is a partially ordered set.
+        
+        \smallskip
+        \textbf{Step 3 (Chains in $U$ have lower bounds \emph{inside} $U$).}
+        Let $C\subseteq U$ be a chain.
+        Since $C$ is also a chain in~$L$, the hypothesis
+        provides its greatest lower bound
+        \[
+          \ell := \bigwedge C \in L.
+        \]
+        We claim that $\ell\in U$.
+        Indeed, fix $a\in A$.
+        Because each $u\in C$ is an upper bound of $A$, we have $a\le u$.
+        Hence $a$ is a lower bound of $C$.
+        By the definition of $\ell$ we then have $a\le\ell$,
+        so $\ell$ is an \emph{upper} bound of $A$, i.e.\ $\ell\in U$.
+        Moreover, $\ell\le u$ for every $u\in C$,
+        so $\ell$ is a lower bound of the chain $C$ \emph{within} $U$.
+        
+        \smallskip
+        \textbf{Step 4 (Apply the dual form of Zorn’s lemma).}
+        A standard equivalent of Zorn’s lemma states:
+        
+        \begin{quote}
+        \emph{If a partially ordered set $(P,\preceq)$ is such that every
+        chain in $P$ has a lower bound in $P$, then $P$ contains a
+        minimal element.}
+        \end{quote}
+        
+        Because Step~3 verifies the premise for $(U,\le)$,
+        there exists a \emph{minimal} element $m\in U$.
+        
+        \smallskip
+        \textbf{Step 5 ($m$ is the least upper bound of $A$).}
+        \begin{enumerate}[label=\textup{(\alph*)},wide,labelindent=0pt]
+          \item \emph{$m$ is an upper bound of $A$.}
+                This is true by construction since $m\in U$.
+          \item \emph{Minimality implies leastness.}
+                Suppose $u\in U$ is any upper bound of $A$.
+                Because $m$ is minimal in $U$, we must have $m\le u$.
+        \end{enumerate}
+        Thus $m$ is below every other upper bound of $A$,
+        so $m=\bigvee A$.
+        
+        \smallskip
+        \textbf{Step 6 (Greatest lower bound).}
+        Apply the same argument to the dual lattice $(L,\ge)$
+        (or, equivalently, to the set of \emph{lower} bounds of $A$)
+        to obtain a maximal element $g$, which is the greatest
+        lower bound $\bigwedge A$.
+        
+        \smallskip
+        \textbf{Step 7 (Conclusion).}
+        Every subset $A\subseteq L$ admits both $\bigvee A$ and $\bigwedge A$;
+        hence $L$ is complete.
+        \end{proof}
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}
+        Let $\frak c$ denote the cardinality of the real line $\Bbb R$.
+        Then
+        \[
+           \frak c+\frak c \;=\; \frak c .
+        \]
+        (Here “$+$’’ is cardinal addition, i.e.\ the cardinality of a
+        \emph{disjoint} union of two sets of size~$\frak c$.)
+        \end{theorem}
+        
+        \begin{proof}
+        We give an explicit, step--by--step argument that avoids the
+        invoked Theorems~13 and~14.
+        
+        \medskip
+        \textbf{Step 1 (Two convenient subsets of $\Bbb R$).}
+        Put
+        \[
+          P \;:=\; (0,\infty), \qquad
+          N \;:=\; (-\infty,0).
+        \]
+        The sets $P$ and $N$ are disjoint and
+        \(
+          P\cup N = \Bbb R\setminus\{0\}.
+        \)
+        
+        \medskip
+        \textbf{Step 2 ($|P|=\frak c$).}
+        Define
+        \[
+          g\colon \Bbb R \longrightarrow P,
+          \qquad
+          g(x)=e^{x}.
+        \]
+        $g$ is bijective (continuous, strictly increasing, surjective onto~$P$),
+        so $|P| = |\Bbb R| = \frak c$.
+        
+        \medskip
+        \textbf{Step 3 ($|N|=\frak c$).}
+        Similarly,
+        \[
+          h\colon \Bbb R \longrightarrow N,
+          \qquad
+          h(x) = -e^{x},
+        \]
+        is a bijection, hence $|N|=\frak c$.
+        
+        \medskip
+        \textbf{Step 4 ($|P\cup N|=\frak c$).}
+        Because $P\cup N = \Bbb R\setminus\{0\}$ differs from $\Bbb R$
+        by just one point, we construct an explicit bijection
+        \[
+          \varphi\colon \Bbb R \longrightarrow \Bbb R\setminus\{0\},
+          \qquad
+          \varphi(x)=
+          \begin{cases}
+             x           & \text{if }x<0,\\[6pt]
+             x+1         & \text{if }x\ge 0.
+          \end{cases}
+        \]
+        $\varphi$ is injective, its image omits $0$, and for any
+        $y\in\Bbb R\setminus\{0\}$ one checks a pre‑image exists,
+        so $\varphi$ is a bijection.
+        Thus $|P\cup N| = |\Bbb R\setminus\{0\}| = \frak c$.
+        
+        \medskip
+        \textbf{Step 5 (Compute the cardinal sum).}
+        Cardinal addition is defined by
+        \[
+          \frak c+\frak c \;=\; |P| + |N|
+          \;=\; |\,P \sqcup N\,|
+          \;=\; |P\cup N|
+          \;=\; \frak c .
+        \]
+        (The middle equality uses that $P$ and $N$ are already disjoint.)
+        
+        \medskip
+        \textbf{Step 6 (Conclusion).}
+        Hence $\frak c+\frak c=\frak c$, completing the proof.
+        \end{proof}      
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}
+        Let $\{A_i\}_{i\in\Bbb N}$ be a countably infinite family of
+        \emph{infinite} sets such that
+        \(
+           \lvert A_i\rvert = d
+        \)
+        for every $i\in\Bbb N$.
+        Then
+        \[
+           \left\lvert\;\bigcup_{i=1}^{\infty} A_i\;\right\rvert = d .
+        \]
+        \end{theorem}
+        
+        \begin{proof}
+        Write
+        \(
+          A \;:=\; \bigcup_{i=1}^{\infty} A_i.
+        \)
+        
+        \medskip
+        \textbf{Step 1 (Lower bound).}
+        Because $A_1\subseteq A$ and
+        $\lvert A_1\rvert=d$, we immediately have
+        \[
+           d \;\le\; \lvert A\rvert.
+        \]
+        
+        \medskip
+        \textbf{Step 2 (Arrange the $A_i$ disjointly).}
+        If the $A_i$ overlap, replace each by
+        \(
+          A_i' := A_i\times\{i\}\subseteq A_i\times\Bbb N
+        \);
+        each $A_i'$ is in bijection with $A_i$
+        (via $(a,i)\mapsto a$), so $\lvert A_i'\rvert=d$.
+        These new sets are disjoint, and their union is still
+        in bijection with~$A$.
+        Thus \emph{without loss of generality} we may assume the original
+        $\{A_i\}$ are disjoint.
+        
+        \medskip
+        \textbf{Step 3 (A surjection from $A_1\times\Bbb N$ onto $A$).}
+        For each $n\in\Bbb N$ fix a bijection
+        \[
+          f_n:A_1\longrightarrow A_n.
+        \]
+        Define
+        \[
+          f:A_1\times\Bbb N\longrightarrow A,
+          \qquad
+          f(a,n) := f_n(a).
+        \]
+        \begin{itemize}
+          \item \emph{Well‑defined:} $f_n(a)\in A_n\subseteq A$.
+          \item \emph{Surjective:} given any $x\in A$, choose the index
+                $n$ with $x\in A_n$; because $f_n$ is onto $A_n$,
+                there exists $a\in A_1$ with $f_n(a)=x$, so $f(a,n)=x$.
+        \end{itemize}
+        Hence $f$ is a surjection
+        \(
+          A_1\times\Bbb N \twoheadrightarrow A,
+        \)
+        so
+        \[
+           \lvert A\rvert \;\le\; \lvert A_1\times\Bbb N\rvert.
+        \]
+        
+        \medskip
+        \textbf{Step 4 (Cardinality of $A_1\times\Bbb N$).}
+        Since $\lvert A_1\rvert=d$ and $\lvert\Bbb N\rvert=\aleph_0$,
+        \[
+          \lvert A_1\times\Bbb N\rvert = d\cdot\aleph_0.
+        \]
+        For any infinite cardinal $d\ge\aleph_0$,
+        one has $d\cdot\aleph_0 = d$ (standard cardinal arithmetic).
+        
+        \medskip
+        \textbf{Step 5 (Combine bounds).}
+        We now have
+        \[
+           d \;\le\; \lvert A\rvert \;\le\; d,
+        \]
+        so $\lvert A\rvert=d$.
+        
+        \medskip
+        \textbf{Step 6 (Conclusion).}
+        Therefore
+        \(
+          \displaystyle
+          \left\lvert\bigcup_{i=1}^{\infty} A_i\right\rvert=d,
+        \)
+        as claimed.
+        \end{proof} 
+    \end{solution}
+\end{document}

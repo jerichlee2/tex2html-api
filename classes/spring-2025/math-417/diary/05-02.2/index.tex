@@ -1,0 +1,171 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{theorem}[Gauss--D’Alembert lemma, ``only–if’’ direction]%
+  \label{thm:UFD_to_fraction_field}
+  Let \(R\) be a unique–factorisation domain (UFD) and let
+  \(F=\operatorname{Frac}(R)\) be its field of fractions.
+  For any non–zero polynomial \(f\in R[X]\subseteq F[X]\) we have
+  \[
+     \text{if }f\text{ is irreducible in }R[X]
+     \;\Longrightarrow\;
+     f\text{ is irreducible in }F[X].
+  \]
+  \end{theorem}
+  
+  \begin{proof}
+  We prove the contrapositive:
+  \[
+     \text{if }f\text{ is \emph{reducible} in }F[X]
+     \;\Longrightarrow\;
+     f\text{ is \emph{reducible} in }R[X].
+  \]
+  
+  \medskip
+  \textbf{1.  A reducible factorisation in \(F[X]\).}
+  Assume \(f\in R[X]\) and that there exist \(g,h\in F[X]\) such that
+  \[
+     f = gh, \qquad 
+     \deg g,\deg h > 0, \qquad
+     g,h\notin F[X]^{\!*}=F^{\!*}.
+  \]
+  (The degree assumptions guarantee that \(g,h\) are \emph{not} units.)
+  
+  \medskip
+  \textbf{2.  Clearing denominators.}
+  Because \(g,h\) have coefficients in \(F\), we can choose a single
+  non–zero element \(d\in R\) such that
+  \(d\,g,\,d\,h\in R[X]\).
+  Writing \(d\,g=:g_0\) and \(d\,h=:h_0\) we get
+  \[
+     d\,f = g_0h_0, \qquad g_0,h_0\in R[X].
+  \]
+  
+  \medskip
+  \textbf{3.  Extracting contents.}
+  Recall that every polynomial \(p\in R[X]\) can be written uniquely (up to
+  units in \(R\)) as \(p=\operatorname{cont}(p)\,p^{\mathrm{pr}}\) where
+  
+  * \(\operatorname{cont}(p)\in R\) is the \emph{content} (the gcd of its
+    coefficients), and  
+  * \(p^{\mathrm{pr}}\) is \emph{primitive} (its coefficients have gcd \(1\)).
+  
+  Write
+  \[
+     g_0 = c_g\,g_1,\qquad
+     h_0 = c_h\,h_1,\qquad
+     f   = \gamma\,f_1
+  \]
+  with \(g_1,h_1,f_1\in R[X]\) primitive and
+  \(c_g,c_h,\gamma\in R\).
+  Substituting into \(d\,f=g_0h_0\) yields
+  \[
+     d\,\gamma\,f_1 = c_g\,c_h\,g_1h_1.
+  \]
+  
+  \medskip
+  \textbf{4.  Comparing contents.}
+  Both sides are polynomials in \(R[X]\).
+  By uniqueness of the content–primitive decomposition,
+  their \emph{contents} must coincide up to a unit in \(R\):
+  \[
+     d\,\gamma \;\sim\; c_g\,c_h
+     \quad\Longrightarrow\quad
+     \exists\,u\in R^{\!*}\text{ with }d\,\gamma = u\,c_g\,c_h.
+  \]
+  Absorbing the unit \(u\) into (say) \(c_g\) we may replace \(c_g\) by an
+  associate and assume
+  \[
+     d\,\gamma = c_g\,c_h.
+  \]
+  
+  \medskip
+  \textbf{5.  Cancelling the (now equal) contents.}
+  Divide both sides of the equality in Step 4 by \(d\,\gamma=c_g\,c_h\):
+  \[
+     f_1 = g_1h_1.
+  \]
+  
+  \medskip
+  \textbf{6.  Returning to \(f\).}
+  Because \(f=\gamma f_1\) we obtain
+  \[
+     f \;=\; \gamma\,g_1h_1.
+  \]
+  Here \(\gamma\in R^{\!*}\cup(\text{non–units})\), but
+  \emph{units in \(R[X]\) are precisely the units in \(R\)}:
+  \(R[X]^{\!*}=R^{\!*}\).
+  Hence:
+  
+  * \(\gamma\in R[X]^{\!*}\) (it is a constant), and  
+  * \(g_1,h_1\) are primitive of positive degree, so
+    \(g_1,h_1\notin R[X]^{\!*}\).
+  
+  Thus \(f\) is expressed as a product of two \emph{non–units} in \(R[X]\),
+  i.e.\ \(f\) is reducible in \(R[X]\).
+  
+  \medskip
+  \textbf{7.  Contrapositive completed.}
+  We have shown
+  \[
+     f\text{ reducible in }F[X] \;\Longrightarrow\;
+     f\text{ reducible in }R[X].
+  \]
+  Taking the contrapositive gives the stated theorem.
+  \end{proof}
+\end{document}

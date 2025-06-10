@@ -1,0 +1,348 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 Midterm 1}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  Let \(f\colon A\to B\) and \(g\colon B\to C\) be functions.
+  
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item Show that if the composition \(g\circ f\colon A\to C\) is \emph{onto} (surjective), then \(g\) itself is onto.
+    \item Give an explicit example in which \(g\) is onto but \(g\circ f\) is \emph{not} onto.
+  \end{enumerate}
+  \end{problem}
+  
+  \begin{solution}
+  \textbf{(a)  Surjectivity of \(g\) follows from surjectivity of \(g\circ f\).}
+  
+  \begin{enumerate}
+    \item[] Assume \(g\circ f\) is onto; that is,  
+          \(\forall\,c\in C\;\exists\,a\in A\) such that \((g\circ f)(a)=c\).
+    \item[] Fix an arbitrary element \(c\in C\).  
+          By Step~1, choose \(a\in A\) with \(g(f(a))=c\).
+    \item[] Set \(b:=f(a)\in B\).  
+          Then \(g(b)=g(f(a))=c\).
+    \item[] Because the choice of \(c\in C\) was arbitrary,  
+          we have shown \(\forall\,c\in C\;\exists\,b\in B\) such that \(g(b)=c\).  
+          Hence \(g\) is surjective.
+  \end{enumerate}
+  
+  \medskip
+  \textbf{(b)  An example with \(g\) onto but \(g\circ f\) not onto.}
+  
+  \begin{itemize}
+    \item Take the common underlying set  
+          \(A=B=C=(0,1)\subset\Bbb R\).
+    \item Define the functions
+          \[
+              f(x)=\frac12
+              \quad\text{for all }x\in(0,1),
+              \qquad
+              g(x)=x
+              \quad\text{for all }x\in(0,1).
+          \]
+    \item Verification:
+          \begin{enumerate}[label=\textbullet]
+            \item \(g\) is the identity on \((0,1)\), hence surjective.
+            \item The composition \((g\circ f)(x)=g\!\bigl(f(x)\bigr)=g\!\left(\tfrac12\right)=\tfrac12\)
+                  is the \emph{constant} function with image \(\{\tfrac12\}\subsetneq(0,1)\);  
+                  therefore \(g\circ f\) is \emph{not} onto.
+          \end{enumerate}
+  \end{itemize}
+  \end{solution}
+
+  \begin{solution}
+    \begin{theorem}
+      \label{thm:sup-from-inf}
+      Let $(L,\le)$ be a lattice with the following property:
+      
+      \begin{quote}
+      \emph{Every non–empty subset of $L$ that possesses a lower bound
+      has a greatest lower bound (\emph{infimum}) in $L$.}
+      \end{quote}
+      
+      Then every non–empty subset of $L$ that possesses an upper bound
+      has a least upper bound (\emph{supremum}) in $L$.
+      \end{theorem}
+      
+      \begin{proof}
+      Let $\varnothing\neq S\subseteq L$ and assume $S$ has at least
+      one upper bound.
+      
+      \medskip
+      \noindent\textbf{Step 1:  Collect all upper bounds of $S$.}
+      Define
+      \[
+        B_S\;:=\;\bigl\{\,x\in L \mid s\le x \text{ for all } s\in S \bigr\}.
+      \]
+      Because $S$ has an upper bound, $B_S\neq\varnothing$.
+      
+      \medskip
+      \noindent\textbf{Step 2:  Observe that every element of $S$ is a lower
+      bound for $B_S$.}
+      Indeed, for each $s\in S$ and every $x\in B_S$ we have $s\le x$ by
+      definition of $B_S$.
+      
+      \medskip
+      \noindent\textbf{Step 3:  Apply the hypothesis to $B_S$.}
+      Since $B_S$ is a non–empty subset of $L$ and
+      $S\subseteq L$ supplies lower bounds for $B_S$,
+      the assumption of the theorem yields a \emph{greatest lower bound}
+      of $B_S$:
+      \[
+        c \;:=\; \inf B_S \;\in\; L.
+      \]
+      
+      \medskip
+      \noindent\textbf{Step 4:  $c$ is an \emph{upper} bound for $S$.}
+      For any $s\in S$, $s$ is a lower bound of $B_S$ (Step 2).
+      By definition of greatest lower bound, $s\le c$.
+      Hence $c$ dominates every element of $S$ and therefore
+      $c\in B_S$.
+      
+      \medskip
+      \noindent\textbf{Step 5:  $c$ is the \emph{least} upper bound of $S$.}
+      Let $d$ be \emph{any} upper bound of $S$.
+      Then $d\in B_S$.
+      Because $c$ is the greatest lower bound of $B_S$, we have $c\le d$.
+      Thus $c$ is below every upper bound of $S$.
+      
+      \medskip
+      \noindent\textbf{Step 6:  Conclusion.}
+      Steps 4 and 5 show that $c$ is an upper bound of $S$
+      dominated by no smaller upper bound.
+      Therefore $c=\sup S$, establishing that $S$ has a least upper bound.
+      \end{proof}    
+  \end{solution}
+
+  \begin{solution}
+    \begin{theorem}
+      \label{thm:uncountable-minus-countable}
+      Let $A$ be an \emph{uncountable} set and let $B\subseteq A$ be
+      \emph{countable}.
+      Put $C:=A\setminus B$.
+      There exists a bijection $f\colon A\to C$.
+      \end{theorem}
+      
+      \begin{proof}
+      We build the bijection in explicit steps.
+      
+      \bigskip
+      \textbf{Step 1 (Why $C$ is uncountable).}
+      If $C$ were countable, then
+      \[
+         A \;=\; C\cup B
+      \]
+      would be a union of two countable sets and hence itself countable,
+      contradicting the hypothesis.
+      Thus $C$ is uncountable (and therefore infinite).
+      
+      \bigskip
+      \textbf{Step 2 (Choose a countably infinite subset of $C$).}
+      Because $C$ is infinite, it contains a countably infinite subset.
+      Fix one and denote it
+      \[
+        D \;=\; \{d_0,d_1,d_2,\dots\}\subseteq C.
+      \]
+      
+      \bigskip
+      \textbf{Step 3 (The set $B\cup D$ is countable).}
+      Since $B$ is countable and $D$ is countably infinite,
+      their union
+      \[
+        B\cup D=\{e_0,e_1,e_2,\dots\}
+      \]
+      is countably infinite as well.
+      
+      \bigskip
+      \textbf{Step 4 (A bijection $g\colon B\cup D \to D$).}
+      Define
+      \[
+        g(e_k) \;:=\; d_k\qquad(k\ge 0).
+      \]
+      Because every $e_k$ occurs exactly once in the domain and
+      every $d_k$ occurs exactly once in the codomain,
+      $g$ is bijective.
+      
+      \bigskip
+      \textbf{Step 5 (Define $f\colon A\to C$).}
+      \[
+        f(a)\;:=\;
+        \begin{cases}
+          a,   &\text{if }a\notin B\cup D,\\[6pt]
+          g(a),&\text{if }a\in B\cup D.
+        \end{cases}
+      \]
+      
+      \bigskip
+      \textbf{Step 6 (Injectivity of $f$).}
+      Let $a_1,a_2\in A$ and suppose $f(a_1)=f(a_2)$.
+      
+      \begin{itemize}
+        \item \emph{Case 1:} $a_1,a_2\notin B\cup D$.  
+              Then $f(a_i)=a_i$, so $a_1=a_2$.
+        \item \emph{Case 2:} $a_1,a_2\in B\cup D$.  
+              Here $f(a_i)=g(a_i)$; injectivity of $g$ implies $a_1=a_2$.
+        \item \emph{Case 3:} Exactly one of $a_1,a_2$ is in $B\cup D$.  
+              Say $a_1\in B\cup D$ and $a_2\notin B\cup D$.  
+              Then $f(a_1)=g(a_1)\in D$, whereas $f(a_2)=a_2\notin D$,
+              contradicting $f(a_1)=f(a_2)$.
+      \end{itemize}
+      Hence $f$ is injective.
+      
+      \bigskip
+      \textbf{Step 7 (Surjectivity of $f$ onto $C$).}
+      Let $c\in C$.
+      
+      \begin{itemize}
+        \item If $c\in D$, surjectivity of $g$ furnishes $a\in B\cup D$
+              such that $g(a)=c$, whence $f(a)=c$.
+        \item If $c\in C\setminus D$, then $c\notin B\cup D$
+              and $f(c)=c$.
+      \end{itemize}
+      Therefore every $c\in C$ is hit by $f$; $f$ is surjective.
+      
+      \bigskip
+      \textbf{Step 8 (Conclusion).}
+      $f$ is both injective and surjective, i.e.\ a bijection
+      $A\xrightarrow{\;\sim\;} C$.
+      \end{proof}    
+  \end{solution}
+
+  \begin{solution}
+    \begin{theorem}[Hamel Basis via Zorn’s Lemma]
+      \label{thm:vector-space-basis}
+      Every (non‑zero) real vector space \(V\) possesses a basis; that is,
+      a maximal linearly independent subset \(B\subseteq V\) whose linear
+      span equals \(V\).
+      \end{theorem}
+      
+      \begin{proof}
+      We give a detailed Zorn–lemma argument.
+      
+      \bigskip
+      \textbf{Step 1 (Partially order all linearly independent sets).}
+      Let
+      \[
+        \mathcal L \;:=\; \bigl\{\,A\subseteq V \mid A
+               \text{ is linearly independent in }V\bigr\}.
+      \]
+      Partially order \(\mathcal L\) by inclusion:
+      \(A\le B \iff A\subseteq B\).
+      Then \((\mathcal L,\subseteq)\) is a partially ordered set (poset).
+      
+      \bigskip
+      \textbf{Step 2 (Chains in \(\mathcal L\) have an upper bound in
+      \(\mathcal L\)).}
+      Let
+      \(
+        \mathcal C=\{A_\alpha : \alpha\in I\}\subseteq\mathcal L
+      \)
+      be a \emph{chain} (totally ordered by inclusion).
+      Define the union
+      \[
+        A_0 \;:=\; \bigcup_{\alpha\in I} A_\alpha.
+      \]
+      
+      \emph{Claim: \(A_0\in\mathcal L\).}
+      
+      Take any finite subset
+      \(
+        \{v_1,\dots,v_n\}\subseteq A_0
+      \).
+      For each \(v_k\) choose \(\alpha_k\) with \(v_k\in A_{\alpha_k}\).
+      Because \(\mathcal C\) is totally ordered, assume without loss of
+      generality \(A_{\alpha_1}\subseteq A_{\alpha_2}\subseteq\cdots
+      \subseteq A_{\alpha_n}\).
+      Then \(\{v_1,\dots,v_n\}\subseteq A_{\alpha_n}\), which is linearly
+      independent. Hence any finite subset of \(A_0\) is linearly independent,
+      so \(A_0\) itself is linearly independent.
+      Thus \(A_0\in\mathcal L\) and plainly \(A_\alpha\subseteq A_0\)
+      for all \(\alpha\), making \(A_0\) an upper bound of \(\mathcal C\)
+      in \(\mathcal L\).
+      
+      \bigskip
+      \textbf{Step 3 (Invoke Zorn’s lemma).}
+      Every chain in \(\mathcal L\) has an upper bound in \(\mathcal L\)
+      (Step~2).  Zorn’s lemma therefore furnishes a \emph{maximal} element
+      \(B\in\mathcal L\).
+      
+      \bigskip
+      \textbf{Step 4 (Maximal implies spanning).}
+      It remains to show that \(\operatorname{span} B = V\).
+      
+      Assume, for contradiction, that some \(v\in V\) is
+      \emph{not} in \(\operatorname{span} B\).
+      Then the set \(B\cup\{v\}\) is linearly independent
+      (otherwise \(v\) could be expressed as a finite linear combination of
+      elements of \(B\), contradicting \(v\notin\operatorname{span}B\)).
+      Thus \(B\cup\{v\}\in\mathcal L\) and strictly contains \(B\),
+      contradicting the maximality of \(B\).
+      
+      Therefore no such \(v\) exists, and \(\operatorname{span} B = V\).
+      
+      \bigskip
+      \textbf{Step 5 (Conclusion).}
+      The set \(B\) is linearly independent (by construction),
+      maximal with respect to inclusion (by Zorn’s lemma),
+      and spans \(V\) (Step~4);
+      hence \(B\) is a basis of \(V\).
+      \end{proof} 
+  \end{solution}
+
+ 
+\end{document}

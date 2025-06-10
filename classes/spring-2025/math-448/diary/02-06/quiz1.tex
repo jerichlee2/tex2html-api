@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+\begin{document}
+
+
+\paragraph{Key Point:} For a complex number $w$, the square of the modulus is 
+\[
+  |w|^2 \;=\; w\,\overline{w},
+\]
+while
+\[
+  w^2 \;=\; w \cdot w.
+\]
+These are not the same unless $w$ is purely real. In particular,
+\[
+  |\,2z - i\,|^2 
+  \;\neq\; (2z - i)^2
+  \quad\text{for complex }z.
+\]
+
+\subsection*{Detailed Explanation}
+
+We start with the equation
+\[
+\bigl\lvert 2z - i \bigr\rvert 
+\;=\; 
+\bigl\lvert 2 + i\,z \bigr\rvert
+\quad\Longleftrightarrow\quad
+\bigl\lvert 2z - i \bigr\rvert^2 
+\;=\; 
+\bigl\lvert 2 + i\,z \bigr\rvert^2.
+\]
+
+\begin{enumerate}
+\item \textbf{Incorrect Move:}  
+  A common mistake is to replace
+  \[
+    \bigl\lvert 2z - i\bigr\rvert^2
+    \quad\text{by}\quad
+    (2z - i)^2.
+  \]
+  In fact,
+  \[
+    \bigl\lvert 2z - i\bigr\rvert^2
+    \;=\;(2z - i)\,\overline{(2z - i)}
+    \;=\;(2z - i)\bigl(2\overline{z} - \overline{i}\bigr).
+  \]
+  Because $\overline{i} = -\,i$, the correct expression is
+  \[
+    \bigl\lvert 2z - i\bigr\rvert^2 
+    \;=\;
+    (2z - i)\bigl(2\overline{z} + i\bigr),
+  \]
+  not $(2z - i)^2$.
+
+\item \textbf{Correct Method via Real and Imag Parts:}
+
+  Let $z = x + i\,y$, where $x,y\in\mathbb{R}$. Then:
+  \[
+    2z - i 
+    \;=\; 2\bigl(x + i\,y\bigr) - i
+    \;=\; 2x + 2i\,y - i
+    \;=\; 2x \;+\; i(2y - 1).
+  \]
+  Hence
+  \[
+    \bigl\lvert 2z - i \bigr\rvert^2
+    \;=\; \bigl(2x\bigr)^2 + \bigl(2y - 1\bigr)^2.
+  \]
+  Likewise,
+  \[
+    i\,z 
+    \;=\; i\bigl(x + i\,y\bigr) 
+    \;=\; i\,x + i^2\,y 
+    \;=\; i\,x - y,
+  \]
+  so
+  \[
+    2 + i\,z 
+    \;=\; 2 + (i\,x - y)
+    \;=\; (2 - y) + i\,x.
+  \]
+  Hence
+  \[
+    \bigl\lvert 2 + i\,z \bigr\rvert^2
+    \;=\;\bigl(2 - y\bigr)^2 + x^2.
+  \]
+  The original condition becomes
+  \[
+    4x^2 + (2y - 1)^2 
+    \;=\; (2 - y)^2 + x^2.
+  \]
+  Expand and simplify:
+  \[
+    4x^2 + 4y^2 - 4y + 1 
+    \;=\; x^2 + y^2 + 4 - 4y
+    \;\;\Longrightarrow\;\;
+    3x^2 + 3y^2 - 3 = 0
+    \;\;\Longrightarrow\;\;
+    x^2 + y^2 = 1.
+  \]
+  Therefore, the solution set in the complex plane is precisely the \emph{unit circle}:
+  \[
+    \bigl\{\,z : |z| = 1 \bigr\}.
+  \]
+
+\end{enumerate}
+
+\subsection*{Conclusion}
+
+The core error in the derivation that led to the wrong result was using $(2z - i)^2$
+
+\end{document}

@@ -1,0 +1,968 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Maximum Modulus and Mean Value}
+
+\subsection*{Theorem 1}
+\begin{theorem}
+Let $f$ be a non–constant analytic function on a domain $D\subseteq\Bbb C$.  
+Then the image
+\[
+      f(D)\;=\;\{\,f(z): z\in D\,\}
+\]
+is an \emph{open} subset of~$\Bbb C$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step proof]
+\begin{enumerate}
+  \item Choose any point $w_0\in f(D)$ and pick $z_0\in D$ with $f(z_0)=w_0$.
+
+  \item Define the auxiliary function
+        \[
+            g(z)\;=\;f(z)-w_0 .
+        \]
+        Because $f$ is not constant, $g$ is not identically~$0$; hence
+        $g$ has an \emph{isolated} zero at $z_0$ of some order $m\ge 1$.
+
+  \item \textbf{Isolate the zero.}  
+        By the isolation property of analytic zeros there exists
+        an $r>0$ such that
+        \[
+             0<|z-z_0|\le r\quad\Longrightarrow\quad g(z)\neq 0 .
+        \]
+
+  \item \textbf{Fix a positive lower bound on $|g|$ along the circle.}  
+        On the circle $|z-z_0|=r$ set
+        \[
+             \delta\;=\;\min_{|z-z_0|=r}\bigl|g(z)\bigr| \;>\;0 .
+        \]
+
+  \item \textbf{Perturb the target value slightly.}  
+        Let $w\in\Bbb C$ satisfy $|w-w_0|<\delta$.  
+        On the same circle we have
+        \[
+          \bigl|(f(z)-w)-(f(z)-w_0)\bigr|
+          =|w-w_0|
+          <\delta
+          \le |f(z)-w_0|
+          =|g(z)|.
+        \]
+        Consequently
+        \[
+             |g(z)-(w-w_0)|<|g(z)|
+             \qquad (|z-z_0|=r).
+        \]
+
+  \item \textbf{Invoke Rouch\'e's Theorem.}  
+        The inequality above lets us apply Rouch\'e’s Theorem to the
+        pair of analytic functions
+        \[
+             g(z)\quad\text{and}\quad g(z)-(w-w_0)
+        \]
+        on $|z-z_0|=r$.  
+        Therefore these two functions possess the \emph{same} number of zeros,
+        counting multiplicity, inside the circle.  
+        Because $g$ has exactly $m$ zeros there, so does
+        $g-(w-w_0)=f-w$.
+
+  \item \textbf{Conclusion.}  
+        Every point $w$ with $|w-w_0|<\delta$ is attained by $f$,
+        and it is attained exactly $m$ times (again counting multiplicity)
+        inside $|z-z_0|<r$.  Thus a $\delta$‑disk around $w_0$
+        lies wholly in $f(D)$, proving that $f(D)$ is open.
+\end{enumerate}
+\end{proof}
+
+\medskip
+A direct corollary of the discussion inside the proof is the following
+local mapping property:
+
+\begin{corollary}
+Suppose $f$ is analytic and non‑constant on $D$ and that
+$f(z)-f(z_0)$ has a zero of order $m$ at $z_0\in D$.
+Then $f$ is \emph{$m$‑to‑$1$} (counting multiplicities) in some
+neighbourhood of $z_0$.  In particular, if $f'(z_0)=0$,
+$f$ cannot be one‑to‑one on any disc that contains $z_0$.
+\end{corollary}
+
+\subsection*{Corollary 1 (Maximum‑Modulus Principle)}
+\begin{corollary}
+Let $f$ be a non‑constant analytic function on a domain $D$.
+Then the modulus $|f|$ has \emph{no local maximum} inside~$D$.
+\end{corollary}
+
+\begin{proof}
+Assume, to obtain a contradiction, that $|f|$ attains a local maximum
+at $z_0\in D$.  Thus there exists $r>0$ such that
+\[
+    |f(z)| \;\le\; |f(z_0)| \quad\text{whenever } |z-z_0|<r .
+\]
+Define the set
+\[
+    W \;=\; \bigl\{\,f(z): |z-z_0|<r \bigr\}.
+\]
+By Theorem 1, $W$ is an \emph{open} neighbourhood of $f(z_0)$.
+However, the inequality shows that $f(z_0)$ lies on the \emph{boundary}
+of $W$, because no point inside $W$ has larger modulus than $f(z_0)$.
+This contradiction proves that such a local maximum cannot exist.
+\end{proof}
+\begin{theorem}[Schwarz's Lemma]
+  Let $f$ be analytic in the open unit disc $\{\,|z|<1\}$,
+  assume $f(0)=0$, and suppose $\lvert f(z)\rvert\le1$ for all $|z|<1$.
+  Then
+  \[
+        |f(z)|\le |z|, \qquad |z|<1.
+  \]
+  Moreover, if equality holds at some non‑zero point $z_0$,  
+  then $f$ is a rotation of $z$, i.e.\ $f(z)=\lambda z$ with $|\lambda|=1$.
+  \end{theorem}
+  
+  \begin{proof}[Step‑by‑step]
+  \begin{enumerate}
+    \item \textbf{Form an auxiliary function.}\;
+          Define
+          \[
+                g(z)=\frac{f(z)}{z}, \qquad z\neq0,\qquad\text{and}\qquad
+                g(0)=f'(0).
+          \]
+          Because $f(0)=0$ and $f$ is analytic, $g$ extends analytically
+          to the whole disc $|z|<1$.
+  
+    \item \textbf{Estimate $|g|$ on any circle $|z|=r<1$.}\;
+          Fix $0<r<1$ and $|z|=r$.  Then
+          \[
+              |g(z)|
+              =\frac{|f(z)|}{r}
+              \le\frac{1}{r},
+          \]
+          since $|f(z)|\le1$ by hypothesis.
+  
+    \item \textbf{Apply the Maximum–Modulus Principle.}\;
+          Because $g$ is analytic on $|z|<1$ and
+          $|g(z)|\le 1/r$ on the \emph{boundary} of the disc $|z|<r$,
+          the maximum–modulus principle forces the same bound
+          \(
+              |g(z)|\le 1/r
+          \)
+          throughout \(|z|<r\).
+  
+    \item \textbf{Let $r\uparrow1$.}\;
+          The radius $r$ can be chosen arbitrarily close to 1,
+          hence for every $z$ with $|z|<1$ we obtain
+          \[
+                |g(z)|\le1,
+                \qquad\text{i.e.}\qquad
+                |f(z)|\le |z|.
+          \]
+  
+    \item \textbf{Characterise the equality case.}\;
+          Suppose there exists some $z_0\ne0$ with $|f(z_0)|=|z_0|$.
+          Then $|g(z_0)|=1$, so $|g|$ attains its maximum modulus
+          \emph{inside} the domain.
+          The maximum–modulus principle then forces $g$ to be
+          \emph{constant}, say $g(z)\equiv\lambda$ with
+          $|\lambda|=1$.  Consequently $f(z)=\lambda z$ for all $|z|<1$.
+  \end{enumerate}
+  \end{proof}
+
+  \section*{Step--by--Step Walkthrough of the Consequences of the Maximum--Modulus Principle}
+
+\subsection*{Preliminaries}
+Let $f$ be a \emph{non‑constant} analytic function on a domain $D\subset\mathbb{C}$.  
+Write
+\[
+f(z)=u(z)+iv(z),\qquad u=\Re f,\quad v=\Im f .
+\]
+Throughout, we will appeal to the \textbf{Maximum–Modulus Principle} (MMP):
+
+\begin{quote}
+If $h$ is analytic and non‑constant on a domain $D$, the modulus $|h|$ cannot attain a (local or global) maximum at an interior point of $D$.
+\end{quote}
+
+\subsection*{1.  No interior extrema for the real part}
+
+\begin{theorem}\label{thm:NoInteriorExtrema}
+If $f$ is analytic and non‑constant on a domain $D$, then the real part $u=\Re f$ possesses neither local maxima nor local minima in $D$.
+\end{theorem}
+
+\begin{proof}[Proof in detailed steps]
+\begin{enumerate}
+  \item Define the \emph{exponential transform}  
+        \[
+        g(z)=e^{f(z)}.
+        \]
+        Because $f$ is analytic, so is $g$.
+  \item Observe that  
+        \[
+        |g(z)|=\bigl|e^{f(z)}\bigr| = e^{u(z)},\qquad 
+        \left| \frac{1}{g(z)} \right| = e^{-u(z)} .
+        \]
+  \item Apply the MMP to the analytic, non‑constant functions $g$ and $1/g$.  
+        Neither $|g|=e^{u}$ nor $|1/g| = e^{-u}$ can have a local maximum in $D$.
+  \item A local maximum of $u$ would correspond to a local maximum of $e^{u}$, and a
+        local minimum of $u$ would correspond to a local maximum of $e^{-u}$, contradicting Step~3.
+  \item Hence $u$ has no local maxima or minima in $D$.
+\end{enumerate}
+\end{proof}
+
+\subsection*{2.  Boundary‐Attainment of the Maximum}
+
+Let $D$ now be \emph{bounded} and let $B=\partial D$ denote its boundary.  
+Assume moreover that $f$ is continuous on the closure $D\cup B$ (automatic if $f$ is analytic on a neighborhood of $\overline{D}$).
+
+\begin{theorem}\label{thm:BoundaryMaximum}
+If $f$ is analytic on a bounded domain $D$ and continuous on $D\cup B$, then each of the functions
+\[
+|f|,\qquad \Re f,\qquad -\Re f
+\]
+attains its maximum value \emph{only} on the boundary $B=\partial D$.
+\end{theorem}
+
+\begin{proof}[Proof in detailed steps]
+\begin{enumerate}
+  \item Because $D\cup B$ is compact (closed and bounded) and each of the three listed
+        functions is continuous there, the \emph{Extreme Value Theorem} guarantees
+        the existence of global maxima on $D\cup B$.
+  \item Suppose $f$ is non‑constant.  
+        \begin{itemize}
+            \item If $|f|$ achieved its maximum at an interior point of $D$, this would violate the MMP.
+            \item By Theorem~\ref{thm:NoInteriorExtrema}, neither $\Re f$ nor $-\Re f$ can
+                  attain an interior maximum.
+        \end{itemize}
+  \item Consequently, every global maximum of $|f|$, $\Re f$, and $-\Re f$
+        must occur on the boundary $B$.
+\end{enumerate}
+\end{proof}
+
+\subsection*{3.  A Direct Corollary}
+
+\begin{corollary}
+If $\Re f$ vanishes \emph{identically} on the boundary $B$, then $\Re f\equiv 0$ on all of $D$, hence $f$ is constant on $D$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:BoundaryMaximum}, the maximum of $|\Re f|$ (which is the maximum of both $\Re f$ and $-\Re f$) occurs on $B$.  
+If $\Re f=0$ on $B$, that maximum is $0$, so $|\Re f|\le 0$ on $D$, forcing $\Re f\equiv 0$.  
+Analyticity plus the Cauchy–Riemann equations then imply $f$ is constant.
+\end{proof}
+
+\subsection*{4.  Necessity of Boundedness}
+
+Boundedness of $D$ is essential.  
+For example,
+\[
+f(z)=iz
+\]
+is analytic and non‑constant on the whole plane $\mathbb{C}$, yet
+\[
+\Re f = 0 \quad\text{on the real axis},
+\]
+which is the boundary of the upper half‑plane $\{\,z: \Im z>0\}$, while $f$ is certainly \emph{not} constant on that half‑plane.
+\begin{theorem}[Constant modulus on a Jordan curve]
+  \label{thm:constant‐mod‐or‐zero}
+  Let $f$ be analytic on a domain $D$ that contains a simple closed curve
+  $\gamma$ together with its interior region $\Omega$.
+  Assume that
+  \[
+    |f(z)| = M \quad\text{for every } z\in\gamma ,
+  \]
+  where $M\ge 0$ is a constant.
+  Then \emph{either}
+  \begin{enumerate}
+    \item $f$ is constant on $\Omega$, \emph{or}
+    \item $f$ possesses at least one zero in $\Omega$.
+  \end{enumerate}
+  \end{theorem}
+  
+  \begin{proof}[Step‑by‑step proof]
+  \begin{enumerate}
+  \item
+    Throughout the proof put
+    \[
+       \Omega=\text{int}(\gamma), \qquad M:=|f(z)|\;(z\in\gamma).
+    \]
+  
+  \item
+    If $f$ happens to be constant on $\Omega$, we are done.  
+    Hence assume \textbf{from now on that $f$ is \emph{non‑constant}.}
+  
+  \item
+    Suppose, aiming at a contradiction, that $f$ has \emph{no} zeros in $\Omega$.
+    Then we can define the analytic function
+    \[
+       g(z)=\frac{1}{f(z)}, \qquad z\in\Omega,
+    \]
+    which also extends analytically across~$\gamma$ because $f\neq0$ there.
+  
+  \item
+    On the boundary $\gamma$ we have the constant modulus relations
+    \[
+      |f(z)|=M, \qquad |g(z)|=\frac1M \quad(z\in\gamma).
+    \]
+  
+  \item
+    \emph{Upper bound for $|f|$.}
+    By the Maximum‑Modulus Principle (MMP), the maximum of $|f|$ over
+    $\overline{\Omega}$ is attained on $\gamma$; hence
+    \[
+        |f(z)|\le M \quad\text{for all } z\in\Omega. \tag{A}
+    \]
+  
+  \item
+    \emph{Lower bound for $|f|$.}
+    Apply the MMP to $g$: the maximum of $|g|$ over $\overline{\Omega}$
+    occurs on $\gamma$, so
+    \[
+        |g(z)|\le\frac1M \quad(z\in\Omega)
+        \;\Longrightarrow\;
+        |f(z)|\ge M \quad(z\in\Omega). \tag{B}
+    \]
+  
+  \item
+    Combining (A) and~(B) yields
+    \[
+        |f(z)| = M \quad\text{for every } z\in\Omega. \tag{C}
+    \]
+  
+  \item
+    Equation~(C) means that $f(\Omega)$ is contained in the \emph{circle}
+    $\{w\in\mathbb{C}:|w|=M\}$.
+    However, the Open Mapping Theorem asserts that the image of the \emph{open}
+    set $\Omega$ under a non‑constant analytic map must itself be open.
+    A circle is not open, so $f$ cannot be non‑constant—contradiction.
+  
+  \item
+    Therefore our assumption that $f$ has no zeros inside $\gamma$ is false.
+    Consequently, if $f$ is non‑constant it must have at least one zero in
+    $\Omega$.
+  \end{enumerate}
+  The two mutually exclusive alternatives in the statement now follow.
+  \end{proof}
+
+  \begin{theorem}
+    \label{thm:sign‐change}
+    Let $F$ be analytic and non‑constant on the open disc 
+    \[
+    D:=\{z\in\mathbb C:\;|z-z_{0}|<R\},
+    \qquad R>0,
+    \]
+    and assume 
+    \[
+    \Re F(z_{0}) = 0 .
+    \]
+    Then for every radius $r$ with $0<r<R$, the real part $\Re F$
+    takes \emph{both} positive and negative values on the circle 
+    $|z-z_{0}| = r$.
+    \end{theorem}
+    
+    \begin{proof}[Step‑by‑step proof]
+    \emph{Notation.}  
+    Fix $r\in(0,R)$ and write $C_{r}:=\{\,z:|z-z_{0}|=r\}$.
+    
+    \medskip
+    \textbf{Step 1: Assume, for contradiction, that $\Re F$ does \emph{not} change sign on $C_{r}$.}  
+    Thus either
+    \[
+    \Re F(z)\ge 0\quad\text{for all }z\in C_{r},
+    \qquad\text{or}\qquad
+    \Re F(z)\le 0\quad\text{for all }z\in C_{r}.
+    \]
+    Without loss of generality we treat the first case (the second is analogous).
+    
+    \medskip
+    \textbf{Step 2: Use the mean–value property of harmonic functions.}  
+    Because $F$ is analytic, $u:=\Re F$ is harmonic on $D$ and satisfies  
+    \[
+    u(z_{0})=\frac{1}{2\pi}\int_{0}^{2\pi}
+              u\!\bigl(z_{0}+re^{i\theta}\bigr)\,d\theta .
+    \]
+    The integrand is \emph{non‑negative} by Step~1, while the integral equals
+    $u(z_{0})=0$.  
+    Consequently
+    \[
+    u\!\bigl(z_{0}+re^{i\theta}\bigr)=0
+    \quad\text{for every }\theta\in[0,2\pi).
+    \tag{A}
+    \]
+    
+    \medskip
+    \textbf{Step 3: Apply the maximum–principle for harmonic functions.}  
+    Equation~(A) shows $u$ attains both its maximum and its minimum (namely~$0$)
+    on the interior point $z_{0}$.  
+    By the \emph{strong maximum principle} for harmonic functions,
+    this forces
+    \[
+    u\equiv 0 \quad\text{throughout } D .
+    \tag{B}
+    \]
+    
+    \medskip
+    \textbf{Step 4: Deduce that $F$ takes values in a one‑dimensional set.}  
+    Because $u\equiv 0$, we have
+    \[
+    F(D)\subset i\mathbb{R}\quad(\text{the imaginary axis}).
+    \]
+    
+    \medskip
+    \textbf{Step 5: Invoke the Open Mapping Theorem.}  
+    The image of a \emph{non‑constant} analytic function on a domain must be open,
+    but the imaginary axis is not open in~$\mathbb C$.  
+    Hence (B) can hold only if $F$ is \emph{constant}, contradicting the
+    hypothesis.
+    
+    \medskip
+    \textbf{Step 6: Conclude.}  
+    Our assumption in Step~1 is impossible; therefore $\Re F$ must assume
+    both positive and negative values on the circle $C_{r}$.
+    \end{proof}
+    \section*{Maximum of \boldmath$|f(z)|$ on a Quarter–Disc}
+
+\textbf{Problem.}
+Let
+\[
+  f(z)=z\,e^{z},\qquad 
+  D=\bigl\{\,x+iy : x^{2}+y^{2}\le 4,\;x\ge 0,\;y\ge 0\bigr\}.
+\]
+Find 
+\[
+  \max_{z\in D} |f(z)|.
+\]
+
+\bigskip
+\textbf{Step 1:  Reduce to the boundary.}  
+
+\begin{itemize}
+  \item $f$ is entire, hence analytic on a neighbourhood of $\overline{D}$.
+  \item Because $\overline{D}$ is compact, $|f|$ attains a maximum on~$\overline{D}$.
+  \item The Maximum–Modulus Principle implies that the maximum cannot occur
+        at an interior point where $f$ is non‑constant; hence it must lie on 
+        the \emph{boundary} of~$D$, which consists of
+        \[
+            \begin{aligned}
+              &\text{(i) the arc } C: x^{2}+y^{2}=4,\;x,y\ge 0,\\
+              &\text{(ii) the segment on the $x$–axis } \{\,y=0,\;0\le x\le 2\},\\
+              &\text{(iii) the segment on the $y$–axis } \{\,x=0,\;0\le y\le 2\}.
+            \end{aligned}
+        \]
+\end{itemize}
+
+\bigskip
+\textbf{Step 2:  Express \boldmath$|f|$ on the boundary.}
+
+Write $z=x+iy$ so that
+\[
+  |f(z)| = |z|\,e^{\Re z}=r\,e^{x},
+  \qquad r=\sqrt{x^{2}+y^{2}}.
+\]
+
+\bigskip
+\textbf{Step 3:  Examine each boundary piece.}
+
+\begin{description}
+  \item[Arc $C$:]  Here $r=2$ and $x\in[0,2]$.
+        \[
+           |f(z)| = 2\,e^{x}\quad\Longrightarrow\quad
+           \max_{C}|f| = 2e^{2}\ \text{ (attained at $(x,y)=(2,0)$).}
+        \]
+
+  \item[$x$–axis:]  ($y=0$, $0\le x\le 2$)  Then $r=x$ and
+        \[
+           |f(z)| = x e^{x},\qquad 0\le x\le 2.
+        \]
+        Since $\dfrac{d}{dx}(x e^{x}) = e^{x}(x+1)>0$, the function
+        is increasing; hence
+        \[
+           \max_{x\text{-axis}} |f| = 2e^{2}\ \text{ (at $x=2$).}
+        \]
+
+  \item[$y$–axis:]  ($x=0$, $0\le y\le 2$)  Then $r=y$ and
+        \[
+            |f(z)| = y,\qquad 0\le y\le 2,
+        \]
+        whose maximum is $2$.
+\end{description}
+
+\bigskip
+\textbf{Step 4:  Select the global maximum.}
+
+Comparing the three cases,
+\[
+   2e^{2}\; (\text{arc or $x$–axis}) \;>\;2\; (\text{$y$–axis}).
+\]
+Hence the overall maximum occurs at the point $z=2$ (i.e.\ $(x,y)=(2,0)$).
+
+\[
+  \boxed{\displaystyle \max_{z\in D} |f(z)| = 2e^{2}}
+\]
+
+\section*{Why \boldmath$S(0)=e>1$ Does \emph{Not} Contradict the Maximum–Modulus Principle}
+
+\subsection*{The set‑up}
+
+Consider
+\[
+   S(z)=\exp\!\Bigl(\frac{1+z}{\,1-z}\Bigr),
+   \qquad
+   D=\{\,z\in\mathbb C:|z|<1\}.
+\]
+The problem states:
+\begin{itemize}
+  \item $S$ is analytic on $D$.
+  \item For $|z|=1$ with $z\neq 1$ we have $|S(z)|=1$.
+  \item Yet $S(0)=e>1$.
+\end{itemize}
+At first glance this seems to violate the Maximum–Modulus Principle (MMP),
+which asserts that an analytic, non‑constant function cannot attain
+a (global) modulus maximum at an interior point.
+
+\subsection*{Step‑by‑step explanation}
+
+\begin{enumerate}
+\item
+  \textbf{Analyticity inside $D$.}  
+  The only singularity of $\dfrac{1+z}{1-z}$ is at $z=1$,
+  which lies \emph{on} the unit circle, not in~$D$.  
+  Hence $S$ is indeed analytic on $D$.
+
+\item
+  \textbf{Modulus on the boundary $|z|=1$, $z\neq1$.}  
+  Write $z=e^{i\theta}$, $\theta\in(0,2\pi)\setminus\{0\}$.
+  A direct calculation shows
+  \[
+     \frac{1+e^{i\theta}}{1-e^{i\theta}}
+     =-i\cot\!\bigl(\tfrac{\theta}{2}\bigr)\in i\mathbb R ,
+  \]
+  so its real part is $0$.  
+  Therefore
+  \[
+      |S(z)|=\exp\bigl(\Re(1+z)/(1-z)\bigr)=e^{0}=1.
+  \]
+
+\item
+  \textbf{Behaviour near the missing boundary point $z=1$.}  
+  Let $z\to1$ inside $D$.  Write $z=1-\rho$ with $\rho>0$ real and $\rho\to0$:
+  \[
+      \frac{1+z}{1-z}=\frac{2-\rho}{\rho}\; \longrightarrow +\infty.
+  \]
+  Hence $\Re\bigl[(1+z)/(1-z)\bigr]\to+\infty$ and
+  \[
+      |S(z)|=\exp\!\Bigl(\Re\frac{1+z}{1-z}\Bigr)\;\longrightarrow\;\infty .
+  \]
+  In particular, \emph{no finite upper bound} for $|S|$ exists on~$D$.
+
+\item
+  \textbf{Why $e$ is not a maximum.}  
+  The value $|S(0)|=e$ is merely one finite value among
+  an \emph{unbounded} set $\{|S(z)|:z\in D\}$.
+  Because $|S(z)|$ can be made arbitrarily large by choosing $z$ sufficiently
+  close to $1$ \emph{inside} $D$, $e$ cannot be the maximum modulus.
+
+\item
+  \textbf{Reconciliation with the MMP.}  
+  The MMP forbids an \emph{attained} maximum at an interior point,
+  but it does \emph{not} claim that the modulus must
+  attain its supremum on the boundary if that supremum is infinite.
+  Here the supremum of $|S|$ over $D$ is $+\infty$,
+  so no point in $D$ achieves it; thus the MMP is perfectly safe.
+\end{enumerate}
+
+\paragraph{Conclusion}
+There is no contradiction: although $|S(z)|=1$ along most of the unit circle,
+the function blows up near the missing boundary point $z=1$.
+Since $|S|$ is unbounded in $D$, the interior value $|S(0)|=e$
+is \emph{not} a maximum, so the Maximum–Modulus Principle remains valid.
+\begin{theorem}
+  \label{thm:equal‑real‑parts}
+  Let $D$ be a bounded domain with boundary $B$.
+  Suppose $f$ and $g$ are analytic on $D$ and continuous on $\overline{D}=D\cup B$.
+  Assume
+  \[
+     \Re f(z)=\Re g(z)\qquad\text{for every }z\in B.
+  \]
+  Then there exists a \emph{real} constant $\alpha$ such that
+  \[
+     f(z)=g(z)+i\alpha\qquad\text{for all }z\in D.
+  \]
+  \end{theorem}
+  
+  \begin{proof}[Step‑by‑step proof]
+  \textbf{1.  Reduce to a single analytic function.}  
+  Define
+  \[
+     h(z):=f(z)-g(z),\qquad z\in\overline{D}.
+  \]
+  Because $f$ and $g$ are analytic on $D$ and continuous on $\overline{D}$,
+  the same holds for $h$.
+  
+  \medskip
+  \textbf{2.  Boundary condition for $\Re h$.}  
+  For $z\in B$,
+  \[
+     \Re h(z)=\Re f(z)-\Re g(z)=0.
+  \]
+  Hence the harmonic function $u:=\Re h$ vanishes on~$B$.
+  
+  \medskip
+  \textbf{3.  Use the maximum–principle for harmonic functions.}  
+  Since $u$ is continuous on $\overline{D}$ and $D$ is bounded,
+  $u$ attains its maximum and minimum on~$\overline{D}$.
+  Both extrema occur on~$B$ and equal $0$,
+  so $u$ is constant ($\equiv0$) throughout~$D$.
+  
+  \medskip
+  \textbf{4.  Conclude that $h$ is purely imaginary.}  
+  Write $h=u+iv$ with $u,v$ real‑valued.
+  Step~3 gives $u\equiv0$, so $h(iv)$.
+  
+  \medskip
+  \textbf{5.  Show the imaginary part $v$ is constant.}  
+  Because $h$ is analytic and $u\equiv0$, the Cauchy–Riemann equations read
+  \[
+     u_x = v_y,\qquad u_y = -v_x.
+  \]
+  Substituting $u_x=u_y=0$ yields
+  \[
+     v_x=v_y=0\quad\text{on }D,
+  \]
+  so $v$ is constant on each component of~$D$
+  (and $D$ is connected, being a domain).
+  
+  \medskip
+  \textbf{6.  Finish.}  
+  There exists a real constant $\alpha$ such that $v\equiv\alpha$,
+  whence
+  \[
+      h(z)=i\alpha\quad\text{and}\quad f(z)=g(z)+i\alpha\qquad(z\in D).
+  \]
+  \end{proof}
+
+  \section*{Minimum‐Modulus Principle (Boundary Version)}
+
+\textbf{Statement.}
+Let $D$ be a \emph{bounded} domain whose boundary is $B$.  
+Assume $f$ is analytic on $D$, continuous on $\overline{D}=D\cup B$, and
+\[
+   f(z)\neq 0\quad\text{for every }z\in D .
+\]
+Then
+\[
+   \min_{z\in\overline{D}} |f(z)|
+   \quad\text{is attained on the boundary } B .
+   \tag{$\star$}
+\]
+
+\bigskip
+\textbf{Step‑by‑step proof.}
+
+\begin{enumerate}
+\item \textbf{Compactness guarantees existence of a minimum.}  
+      Because $\overline{D}$ is closed and bounded, it is compact.  
+      The modulus $|f|$ is continuous on $\overline{D}$, so by the Extreme
+      Value Theorem it attains a (global) minimum at some point
+      $z_{0}\in\overline{D}$.
+
+\item \textbf{Reduce the problem to ruling out an interior minimum.}  
+      To prove $(\star)$ it suffices to show $z_{0}\notin D$.
+
+\item \textbf{Introduce an auxiliary analytic function.}  
+      Since $f(z)\neq0$ for $z\in D$, define
+      \[
+          g(z):=\frac{1}{f(z)},\qquad z\in D .
+      \]
+      The function $g$ is analytic on $D$ (and continuous on $\overline{D}$).
+
+\item \textbf{Translate the minimum of $|f|$ into a maximum of $|g|$.}  
+      At the point $z_{0}$,
+      \[
+           |f(z_{0})| = \min_{\overline{D}}|f|
+           \quad\Longleftrightarrow\quad
+           |g(z_{0})| = \max_{\overline{D}}|g|.
+      \]
+
+\item \textbf{Apply the Maximum–Modulus Principle to $g$.}  
+      $g$ is analytic and — by construction — non‑constant
+      (otherwise $f$ would be constant).
+      The Maximum–Modulus Principle asserts that a non‑constant analytic
+      function cannot attain its (global) maximum modulus at an interior
+      point of its domain.
+      Therefore $z_{0}\notin D$.
+
+\item \textbf{Conclusion.}  
+      The minimiser $z_{0}$ found in Step 1 must lie on the boundary $B$,
+      proving $(\star)$.
+\end{enumerate}
+\section*{Polynomial Growth Outside the Unit Circle}
+
+\textbf{Claim.}\;
+Let $p$ be a polynomial of degree $n$ and assume
+\[
+   |p(z)|\le M
+   \quad\text{whenever }|z|=1 .
+\]
+Then for every $z$ with $|z|\ge 1$,
+\[
+   |p(z)|\le M\,|z|^{n}.
+   \tag{$\ast$}
+\]
+
+\bigskip
+\textbf{Step--by--step proof.}
+
+\begin{enumerate}
+\item \textbf{Define an auxiliary function.}\;
+      Set
+      \[
+          f(z):=\frac{p(z)}{z^{\,n}},\qquad z\neq0 .
+      \]
+      Because $p$ is a polynomial of degree $n$, $f$ is analytic on the
+      punctured plane $\mathbb C\!\setminus\!\{0\}$.
+
+\item \textbf{Check behaviour at $\infty$.}\;
+      Write $p(z)=a_n z^{n}+a_{n-1}z^{n-1}+\cdots+a_0$ with $a_n\neq0$.
+      Then
+      \[
+          f(z)=a_n + \frac{a_{n-1}}{z}+\cdots+\frac{a_0}{z^{n}} ,
+      \]
+      so $\displaystyle\lim_{z\to\infty}f(z)=a_n$.
+      Hence $f$ extends analytically to the \emph{Riemann sphere}
+      (the one--point compactification $\mathbb C\cup\{\infty\}$) by setting
+      $f(\infty)=a_n$.
+
+\item \textbf{Restrict to an annular domain that includes $\infty$.}\;
+      Consider
+      \[
+          \Omega:=\bigl\{\,z\in\mathbb C:\,|z|>1\bigr\}\cup\{\infty\}.
+      \]
+      The boundary of $\Omega$ in the Riemann sphere is the circle
+      $|z|=1$, and $f$ is analytic on $\Omega$.
+
+\item \textbf{Bound $f$ on the boundary.}\;
+      For $|z|=1$ we have, by hypothesis,
+      \[
+          |f(z)|=\frac{|p(z)|}{|z|^{n}} =|p(z)|\le M .
+      \]
+
+\item \textbf{Apply the Maximum--Modulus Principle.}\;
+      The extended domain $\Omega$ is compact and $f$ is analytic on it;
+      therefore $|f|$ attains its maximum somewhere in $\Omega$.
+      Because $f$ is \emph{non‑constant} unless $p$ is constant, the
+      Maximum--Modulus Principle forces every maximum of $|f|$ to occur
+      on the boundary $|z|=1$.
+      Thus
+      \[
+          |f(z)|\le M\quad\text{for all }z\in\Omega.
+      \]
+
+\item \textbf{Translate the bound back to $p$.}\;
+      For any $z$ with $|z|\ge1$,
+      \[
+          |p(z)| = |z|^{n}\,|f(z)| \le |z|^{n}\,M ,
+      \]
+      which is precisely $(\ast)$.
+\end{enumerate}
+
+\section*{A Blaschke‐Type Estimate}
+
+\subsection*{Setting}
+
+Let $f$ be analytic on the open unit disc
+\[
+   \mathbb D:=\{z\in\mathbb C:|z|<1\},
+\]
+continuous on the closed disc $\overline{\mathbb D}$, and assume
+\[
+   |f(z)|\le M\quad\text{for all }|z|=1.
+\]
+Suppose further that $f(\alpha)=0$ for some fixed $\alpha$ with $|\alpha|<1$.
+We prove
+\[
+   |f(z)|
+   \;\le\;
+   M\,
+   \left|\frac{z-\alpha}{1-\overline{\alpha}\,z}\right|,
+   \qquad |z|<1. \tag{$\ast$}
+\]
+
+\subsection*{Step‑by‑step proof}
+
+\begin{enumerate}
+\item \textbf{Introduce a Blaschke factor.}\\
+      Define
+      \[
+        B_\alpha(z):=\frac{z-\alpha}{1-\overline{\alpha}\,z},
+        \qquad z\in\mathbb D.
+      \]
+      Properties to note:
+      \begin{itemize}
+        \item $B_\alpha$ is analytic on $\mathbb D$ and continuous on $\overline{\mathbb D}$.
+        \item $|B_\alpha(z)|=1$ whenever $|z|=1$.
+      \end{itemize}
+
+\item \textbf{Factor out the zero of $f$.}\\
+      Define
+      \[
+          g(z):=
+          \begin{cases}
+             \dfrac{f(z)}{B_\alpha(z)}, & z\neq\alpha,\\[6pt]
+             f'(\alpha)\,(1-|\alpha|^{2}), & z=\alpha
+          \end{cases}
+      \]
+      (the value at $z=\alpha$ comes from L’Hospital’s rule).
+      Then $g$ is analytic on $\mathbb D$ and continuous on $\overline{\mathbb D}$.
+
+\item \textbf{Boundary estimate for $g$.}\\
+      For every boundary point $|z|=1$,
+      \[
+         |g(z)|=\frac{|f(z)|}{|B_\alpha(z)|}
+                =|f(z)|\le M .
+      \]
+
+\item \textbf{Apply the Maximum‐Modulus Principle.}\\
+      The function $g$ is analytic on $\mathbb D$ and bounded by $M$
+      on the boundary.  Hence, by the Maximum–Modulus Principle,
+      \[
+         |g(z)|\le M\quad\text{for all }z\in\mathbb D.
+      \]
+
+\item \textbf{Recover the desired inequality.}\\
+      Multiplying by $|B_\alpha(z)|$ and recalling that $|B_\alpha(z)|<1$
+      for $|z|<1$ (strict inequality unless $z=\alpha$), we obtain
+      \[
+         |f(z)| = |g(z)|\,|B_\alpha(z)|
+                 \le M\,|B_\alpha(z)|
+                 = M\,
+                   \left|\frac{z-\alpha}{1-\overline{\alpha}\,z}\right|,
+                 \qquad |z|<1,
+      \]
+      which is precisely $(\ast)$.
+\end{enumerate}
+
+\paragraph{Remark}
+Inequality $(\ast)$ is sharp: equality holds whenever $f$ is of the form
+$c\,B_\alpha$ with $|c|=M$.
+
+\section*{Schwarz Lemma---Step‑by‑Step Proof}
+
+\paragraph{Hypotheses}  
+Let $f$ be analytic on the open unit disc
+\[
+   \mathbb D=\{z\in\mathbb C : |z|<1\},
+\]
+and assume
+\[
+   |f(z)|\le 1 \quad(|z|<1), 
+   \qquad
+   f(0)=0 .
+\]
+
+\subsection*{(a)  Proof that \boldmath$|f'(0)|\le 1$}
+\begin{enumerate}
+\item \textbf{Define an auxiliary function.}  
+      For $z\neq0$ set
+      \[
+         g(z):=\frac{f(z)}{z},
+      \]
+      and define $g(0):=f'(0)$ (the derivative exists by analyticity).  
+      Thus $g$ is analytic on $\mathbb D$.
+
+\item \textbf{Bound $g$ on $\mathbb D$.}  
+      For $0<|z|<1$ we have
+      \[
+         |g(z)|=\frac{|f(z)|}{|z|}\le\frac{1}{|z|}.
+      \]
+      However, we need a \emph{uniform} bound independent of $z$.
+      Observe that
+      \[
+          |g(z)|\le 1
+          \quad\text{whenever }|z|=r<1,
+      \]
+      because $|f(z)|\le 1$ and $|z|=r$.  
+      Letting $r\uparrow1$ shows $|g(z)|\le 1$ for all $z\in\mathbb D$.
+
+\item \textbf{Evaluate at the origin.}  
+      Since $|g(z)|\le 1$ on $\mathbb D$,
+      \[
+         |f'(0)| = |g(0)| \le 1 .
+      \]
+\end{enumerate}
+
+\subsection*{(b)  The rigidity case \boldmath$|f'(0)|=1$}
+\begin{enumerate}
+\item \textbf{Interior maximum implies constancy.}  
+      If $|f'(0)|=1$ then $|g(0)|=1$.  
+      Because $|g(z)|\le 1$ everywhere in $\mathbb D$, the point $z=0$
+      is an interior point where $|g|$ attains its maximum.
+
+\item \textbf{Apply the Maximum–Modulus Principle.}  
+      For a non‑constant analytic function, the modulus cannot attain a
+      maximum at an interior point.  
+      Hence $g$ must be \emph{constant}: there exists $c\in\mathbb C$,
+      $|c|=1$, such that $g(z)\equiv c$.
+
+\item \textbf{Recover $f$.}  
+      Since $g(z)=c$, we have
+      \[
+         \frac{f(z)}{z}=c
+         \quad\Longrightarrow\quad
+         f(z)=c\,z \quad(|c|=1).
+      \]
+\end{enumerate}
+
+\paragraph{Conclusion}  
+\begin{itemize}
+  \item[(a)] $|f'(0)|\le 1$.
+  \item[(b)] Equality $|f'(0)|=1$ forces $f(z)=c z$ with $|c|=1$.
+\end{itemize}
+\end{document}

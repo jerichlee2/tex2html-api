@@ -1,0 +1,445 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  Find all one–to–one (i.e.\ biholomorphic) analytic functions that map the
+  upper half–plane
+  \[
+     \mathbb{U}\;:=\;\{\,z\in\mathbb{C}\mid\operatorname{Im}z>0\}
+  \]
+  onto itself.
+  
+  \medskip
+  \noindent
+  \textbf{Hint.}\;
+  The map
+  \(
+     \varphi(w)=\dfrac{i(1+w)}{1-w}
+  \)
+  sends the open unit disc
+  \(
+     \mathbb{D}:=\{\,w\in\mathbb{C}\mid |w|<1\}
+  \)
+  bijectively onto $\mathbb{U}$.
+  \end{problem}
+  
+  \begin{solution}
+  We proceed in four elementary steps.
+  
+  \medskip
+  \textbf{1.\;Conjugate the unknown map with $\varphi$.}
+  Let \(f:\mathbb{U}\to\mathbb{U}\) be analytic and one–to–one.
+  Define
+  \[
+     g \;:=\; \varphi^{-1}\circ f\circ\varphi
+     \;:\;
+     \mathbb{D}\longrightarrow\mathbb{D}.
+  \]
+  Because each factor in the composition is biholomorphic,  
+  \(g\) is a biholomorphic self–map of the unit disc.
+  
+  \medskip
+  \textbf{2.\;Use the classification of disc automorphisms.}
+  By the Schwarz–Pick theorem (or the
+  Riemann mapping theorem in its refined form),
+  every biholomorphic map of~$\mathbb{D}$ onto itself has the form  
+  \[
+     g(w)
+     \;=\;
+     e^{i\theta}\,\frac{w-\alpha}{1-\overline{\alpha}\,w},
+     \qquad
+        \theta\in\mathbb{R},\;
+        \alpha\in\mathbb{D}.
+     \tag{2.1}
+  \]
+  
+  \medskip
+  \textbf{3.\;Transform back to the half–plane.}
+  Write \(w=\varphi^{-1}(z)=\dfrac{z-i}{\,z+i\,}\).
+  Substituting \(w\) from this relation into~(2.1) and applying \(\varphi\)
+  again yields
+  \[
+     f(z)
+     \;=\;
+     \varphi\!\Bigl(
+        e^{i\theta}\,
+        \frac{\dfrac{z-i}{z+i}-\alpha}{1-\overline{\alpha}\,\dfrac{z-i}{z+i}}
+     \Bigr).
+  \]
+  A short computation (multiply numerator and denominator by \(z+i\))
+  shows that \(f\) is a Möbius transformation,
+  \[
+     f(z)
+     \;=\;
+     \frac{az+b}{cz+d},
+     \qquad\text{with }a,b,c,d\in\mathbb{R}.
+     \tag{3.1}
+  \]
+  Indeed,
+  the coefficients are\footnote{You do \emph{not} have to memorise these
+  formulas; only their reality matters.  Setting
+  \(
+     \alpha=x+iy
+  \)
+  and expanding verifies \(a,b,c,d\in\mathbb{R}\).}
+  \[
+  \begin{aligned}
+     a &= \cos\theta-\sin\theta\,x, 
+  &\qquad
+     b &= \sin\theta+\cos\theta\,x+2\sin\theta\,y,\\
+     c &= -\sin\theta, 
+  &\qquad
+     d &= \cos\theta+\sin\theta\,x .
+  \end{aligned}
+  \]
+  
+  \medskip
+  \textbf{4.\;Characterise the allowable coefficients.}
+  Because \(f\) is analytic (hence orientation–preserving)
+  and one–to–one,
+  its determinant must be positive:
+  \[
+     \Delta:=ad-bc>0.
+  \]
+  Conversely, any Möbius map
+  \(
+     f(z)=\dfrac{az+b}{cz+d}
+  \)
+  with real coefficients and \(\Delta>0\) sends $\mathbb{U}$ onto itself
+  (one checks directly that
+  \(\operatorname{Im}f(z)=\Delta\,\operatorname{Im}z/|cz+d|^{2}>0\)).
+  Hence every such map is a valid solution.
+  
+  \medskip
+  \textbf{Final description.}
+  The full set of one–to–one analytic self–maps of the upper half–plane is
+  \[
+     \boxed{\,\displaystyle
+     f(z)=\frac{az+b}{cz+d},
+     \quad a,b,c,d\in\mathbb{R},\;
+           ad-bc>0\, }.
+  \]
+  This group of transformations is precisely
+  \( \operatorname{PSL}(2,\mathbb{R})\), the projective special linear group
+  over the reals.
+  \end{solution}
+  
+  without additional packages.
+  \begin{problem}
+    Show that every \emph{one–to–one} entire function $f:\mathbb{C}\to\mathbb{C}$ has the form  
+    \[
+       f(z)=A\,z+B, \qquad A\neq 0 .
+    \]
+    \emph{Hint:} study the singularity of $f$ at the point ``$\infty$'' on the Riemann sphere~$\widehat{\mathbb{C}}$.
+    \end{problem}
+    
+    \begin{solution}
+    We analyse the extension of $f$ to $\widehat{\mathbb{C}}=\mathbb{C}\cup\{\infty\}$.
+    
+    \medskip
+    \textbf{Step 1.\;The singularity at $\boldsymbol{\infty}$ is \emph{not} essential.}
+    
+    If $f$ had an essential singularity at $\infty$, then by the
+    Casorati–Weierstrass (or Great Picard) theorem the image of every neighbourhood of $\infty$ would be dense in~$\mathbb{C}$.  
+    That contradicts injectivity, which forces $f$ to omit every value except one.  
+    Hence the singularity at $\infty$ is either removable or a pole.
+    
+    \medskip
+    \textbf{Step 2.\;$\boldsymbol{\infty}$ is \emph{not} a removable singularity.}
+    
+    Were the singularity removable, $f$ would extend continuously to $\infty$ with a finite value.  
+    Then $f$ would be bounded near~$\infty$ and hence (by Liouville’s theorem) bounded on~$\mathbb{C}$, forcing $f$ to be constant.  
+    A constant map is never one–to–one, so the removable case is impossible.
+    
+    \medskip
+    \textbf{Step 3.\;Therefore $\boldsymbol{\infty}$ is a pole—$f$ is a polynomial.}
+    
+    If the order of the pole is $m\ge1$ we obtain
+    \[
+       f(z)=a_m z^{m}+a_{m-1}z^{m-1}+\dots+a_0 ,
+       \qquad a_m\neq0 .
+    \]
+    
+    \medskip
+    \textbf{Step 4.\;The degree $\boldsymbol{m}$ must equal $1$.}
+    
+    \begin{itemize}
+       \item[(i)]  \emph{Algebraic argument.}
+       Fix any complex number $w$.  
+       The equation $f(z)=w$ is a polynomial equation of degree~$m$, so it has
+       exactly $m$ (not necessarily distinct) solutions in $\widehat{\mathbb{C}}$.  
+       If $m\ge2$, at least one value $w$ is assumed at two distinct points,
+       violating injectivity.  
+       Hence $m=1$.
+       
+       \item[(ii)] \emph{Critical–point argument (alternative).}
+       For $m\ge2$ we have $f'(z)=m\,a_m z^{m-1}+\dots$,
+       a polynomial of degree $m-1\ge1$, hence it has a root $z_0$.  
+       The local mapping theorem then shows $f$ is \emph{not} one–to–one near $z_0$,
+       again contradicting injectivity.
+    \end{itemize}
+    
+    \medskip
+    \textbf{Step 5.\;Conclusion.}
+    Thus $m=1$ and
+    \[
+         f(z)=A z+B ,\qquad A\neq0 .
+    \]
+    Every affine map with $A\ne0$ is entire and one–to–one, so the above list is exhaustive.
+    
+    \[
+       \boxed{\,f(z)=A z + B,\; A\in\mathbb{C}\setminus\{0\},\; B\in\mathbb{C}\,}
+    \]
+    \end{solution}
+    
+    \begin{problem}
+      Let \(f\) be a one–to–one analytic function on a domain \(D\subset\mathbb{C}\).
+      Assume there exists an analytic function \(h:D\to\mathbb{C}\) such that  
+      \[
+         h(z)^{2}=f(z)\qquad (z\in D).
+      \]
+      Show that \(h\) is also one–to–one (injective).
+      \end{problem}
+      
+      \begin{solution}
+      We give a short contradiction proof, laid out step by step.
+      
+      \medskip
+      \textbf{Step 1.\;Assume non-injectivity of \(h\).}  
+      Suppose there exist two \emph{distinct} points \(z_{1},z_{2}\in D\) with  
+      \(h(z_{1})=h(z_{2})\).
+      
+      \smallskip
+      \textbf{Step 2.\;Pass to \(f\) by squaring.}  
+      Because \(h^{2}=f\) we obtain  
+      \[
+         f(z_{1})=h(z_{1})^{2}=h(z_{2})^{2}=f(z_{2}).
+      \]
+      
+      \smallskip
+      \textbf{Step 3.\;Injectivity of \(f\) forces equality of inputs.}  
+      Since \(f\) is one–to–one on \(D\), the equality \(f(z_{1})=f(z_{2})\) implies  
+      \(z_{1}=z_{2}\), contradicting the choice of distinct points.
+      
+      \smallskip
+      \textbf{Step 4.\;Conclusion.}  
+      Thus no two different points of \(D\) can share the same \(h\)-value;  
+      \(h\) is injective.
+      
+      \medskip
+      \emph{Remark.}  
+      Even if a hypothetical counterexample satisfied \(h(z_{1})=-h(z_{2})\)
+      instead of \(h(z_{1})=h(z_{2})\),
+      squaring would still give \(f(z_{1})=f(z_{2})\),
+      and the same argument rules this out.
+      Therefore \(h\) is one–to–one in every case.
+      \end{solution}
+      \begin{problem}
+        Let \(F:D_{1}\to D_{2}\) be a \textbf{one–to–one} (injective) analytic map
+        \emph{onto} the domain \(D_{2}\).
+        Suppose \(\{z_{k}\}_{k\in\mathbb N}\subset D_{1}\) satisfies
+        \(z_{k}\longrightarrow p\) where 
+        \(p\in\partial D_{1}\) (the boundary of \(D_{1}\)).
+        Show that if \(\{F(z_{k})\}\) converges to a point \(q\), then  
+        \(q\in\partial D_{2}\).
+        
+        \emph{Hint.}  Assume \(q\in D_{2}\); then \(q=F(z_{0})\) for some
+        \(z_{0}\in D_{1}\).
+        Use injectivity plus the open–mapping theorem to get a contradiction.
+        \end{problem}
+        
+        \begin{solution}
+        We argue by contradiction.
+        
+        \medskip
+        \textbf{Step 1.\;Assume \(q\in D_{2}\).}
+        Because \(F\) is onto, there exists
+        \(z_{0}\in D_{1}\) such that
+        \(F(z_{0})=q\).
+        
+        \medskip
+        \textbf{Step 2.\;Exploit conformality at \(z_{0}\).}
+        Being analytic and one–to–one, \(F\) is
+        \emph{conformal} at \(z_{0}\);
+        in particular \(F'(z_{0})\neq0\).
+        Hence, by the open–mapping theorem (or the inverse–function theorem),
+        there is a radius \(r>0\) such that
+        \[
+           F\bigl(\Delta(z_{0},r)\bigr)\subset\Delta(q,R)
+           \quad\text{for some }R>0,
+        \]
+        where \(\Delta(a,\rho)=\{\,z\in\mathbb{C}:|z-a|<\rho\}\).
+        
+        \medskip
+        \textbf{Step 3.\;Separate the discs from the boundary.}
+        Because \(z_{0}\in D_{1}\) and \(D_{1}\) is open,
+        we may choose \(r\) so small that
+        \[
+           \overline{\Delta}(z_{0},r)\subset D_{1}.
+        \tag{3.1}
+        \]
+        Consequently \(\Delta(z_{0},r)\) lies at
+        positive distance from the boundary point \(p\).
+        
+        \medskip
+        \textbf{Step 4.\;Compare \(\{z_{k}\}\) with the small disc.}
+        Since \(z_{k}\to p\) and \(p\notin\overline{\Delta}(z_{0},r)\),
+        there exists an integer \(N\) such that for all \(k\ge N\)
+        \[
+           z_{k}\notin\overline{\Delta}(z_{0},r).
+        \tag{4.1}
+        \]
+        
+        \medskip
+        \textbf{Step 5.\;Compare their images with the image disc.}
+        By assumption \(F(z_{k})\to q\).
+        Therefore there is \(K\ge N\) such that for all \(k\ge K\)
+        \[
+           F(z_{k})\in\Delta(q,R).
+        \tag{5.1}
+        \]
+        
+        \medskip
+        \textbf{Step 6.\;Use injectivity to reach a contradiction.}
+        From \eqref{5.1} and the inclusion in Step~2 we know
+        \(F(z_{k})=F(w_{k})\) with
+        \(w_{k}\in\Delta(z_{0},r)\).
+        Injectivity of \(F\) forces \(w_{k}=z_{k}\), hence
+        \[
+           z_{k}\in\Delta(z_{0},r)\qquad(k\ge K),
+        \]
+        contradicting \eqref{4.1}.
+        
+        \medskip
+        \textbf{Step 7.\;Conclusion.}
+        The assumption \(q\in D_{2}\) is impossible;
+        hence the limit point \(q\) must lie on the boundary:
+        \[
+           \boxed{\,q\in\partial D_{2}\,}.
+        \]
+        
+        \end{solution}
+        \[
+          \Delta(a,r)  \;:=\; \{\,z\in\mathbb{{C}} : |z-a|<r\,\},
+          \qquad
+          \overline{\Delta}(a,r) \;:=\; \{\,z\in\mathbb{{C}}c : |z-a|\le r\,\}.
+       \]
+       
+       \begin{itemize}
+         \item \(\Delta(a,r)\) is the \emph{open disc} (or open ball) of radius \(r\)
+               centred at the point \(a\).
+         \item The overline in \(\overline{\Delta}(a,r)\) denotes **topological closure** in
+               \(\mathbb{{C}}\).
+               Thus \(\overline{\Delta}(a,r)\) is the \emph{closed disc}:
+               one adds every boundary point \(|z-a|=r\) to the open disc.
+       \end{itemize}
+       
+       In the proof above we needed a neighbourhood that is still entirely
+       contained in the domain \(D_{1}\); writing
+       \(\overline{\Delta}(z_{0},r)\subset D_{1}\) guarantees that
+       \emph{both} the interior points and the boundary circle of that small disc
+       stay inside \(D_{1}\). 
+       \begin{theorem}[Open Mapping Theorem]
+        Let $D\subset\mathbb{{C}}$ be a non-empty domain\footnote{A **domain** is a connected open set.} and
+        let $f:D\longrightarrow\mathbb{{C}}$ be a *non-constant* analytic function.
+        Then $f$ is an \emph{open map}; that is, for every open set
+        $U\subset D$ the image $f(U)$ is an open subset of $\mathbb{{C}}$.
+        \end{theorem}
+        
+        \begin{proof}[Proof sketch]
+        Fix $z_{0}\in D$ and set $w_{0}:=f(z_{0})$.
+        Because $f$ is analytic and non-constant, its derivative cannot vanish
+        identically.  Two cases:
+        
+        \smallskip
+        \emph{(i) $f'(z_{0})\neq0$.}\;
+        By the complex inverse–function theorem
+        there is a neighbourhood $\Delta(z_{0},r)$ on which $f$ is
+        conformal, hence a homeomorphism onto
+        $f\bigl(\Delta(z_{0},r)\bigr)$; the latter is therefore open.
+        
+        \smallskip
+        \emph{(ii) $f'(z_{0})=0$.}\;
+        Write the local power-series
+        $f(z)=w_{0}+a_{m}(z-z_{0})^{m}+\dots$ with $m\ge2$ and $a_{m}\neq0$.
+        Choose $\rho>0$ small enough that the series converges in
+        $\Delta(z_{0},\rho)$ and $f$ has no other critical points there.
+        On $\Delta(z_{0},\rho)\setminus\{z_{0}\}$ we are now in Case (i),
+        so $f$ maps each punctured disc
+        $\Delta(z_{0},\rho)\setminus\{z_{0}\}$ onto an open set.
+        Because $(z-z_{0})^{m}$ maps a small disc \emph{onto} a
+        small disc (though $m$‐to‐$1$), the full image
+        $f\bigl(\Delta(z_{0},\rho)\bigr)$ is again a neighbourhood of $w_{0}$.
+        \end{proof}
+        
+        \noindent
+        Thus every point $w_{0}=f(z_{0})$ is an interior point of $f(U)$ for some
+        small open $U\ni z_{0}$, proving that $f(U)$ is open.
+        \qed
+        \paragraph{The two analytic facts we need}
+
+\begin{enumerate}
+   \item[\textbf{(A)}] \textbf{Open Mapping Theorem.}\;
+         A non–constant analytic function sends every non–empty \emph{open}
+         set to an open set.
+
+   \item[\textbf{(B)}] \textbf{Continuity of analytic maps.}\;
+         If $f$ is analytic and $f(z_{0})=q$, then for every
+         $\varepsilon>0$ there exists $\delta>0$ such that
+         $|z-z_{0}|<\delta\;\Longrightarrow\;|f(z)-q|<\varepsilon$.
+\end{enumerate}
+\end{document}

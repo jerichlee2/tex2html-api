@@ -1,0 +1,515 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 HW 1}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  Recall the \emph{relative complement} and the \emph{symmetric difference} of two sets:
+  \[
+  A\setminus B \;=\;\{\,x\in A : x\notin B\,\},
+  \qquad
+  A\triangle B \;=\;(A\setminus B)\,\cup\,(B\setminus A).
+  \]
+  Throughout the proof we use the \emph{element method}: two sets are equal
+  iff every element of one is an element of the other (and vice‐versa).
+  
+  \begin{enumerate}[label=(\alph*)]
+  
+  %------------------------------------------------------------------
+  \item \textbf{$A\triangle B=(A\cup B)\setminus(A\cap B)$.}
+  
+  \smallskip
+  \textit{($\subset$)}  
+  Let $x\in A\triangle B$.  
+  Then either
+  \(
+  x\in A\setminus B
+  \)
+  or
+  \(
+  x\in B\setminus A.
+  \)
+  In either case $x\in A\cup B$ and $x\notin A\cap B$, hence
+  \(x\in(A\cup B)\setminus(A\cap B)\).
+  
+  \smallskip
+  \textit{($\supset$)}  
+  Conversely, let
+  \(x\in(A\cup B)\setminus(A\cap B)\).
+  Then $x$ lies in at least one of $A$ or $B$, but not in both.
+  Thus $x\in A\setminus B$ or $x\in B\setminus A$,
+  so \(x\in A\triangle B\).
+  
+  \smallskip
+  Therefore the two sets coincide.
+  
+  %------------------------------------------------------------------
+  \item \textbf{$A\cap(B\triangle C) = (A\cap B)\triangle(A\cap C)$.}
+  
+  Take $x\in A\cap(B\triangle C)$.  Then $x\in A$ and
+  \(
+  x\in B\triangle C\;=\;(B\setminus C)\cup(C\setminus B).
+  \)
+  Hence either
+  
+  \begin{itemize}
+    \item $x\in B\setminus C$.  
+          Then $x\in A\cap B$ and $x\notin A\cap C$, so
+          \(x\in(A\cap B)\setminus(A\cap C)\subset (A\cap B)\triangle(A\cap C)\); or
+    \item $x\in C\setminus B$.  
+          Then $x\in A\cap C$ and $x\notin A\cap B$, so
+          \(x\in(A\cap C)\setminus(A\cap B)\subset (A\cap B)\triangle(A\cap C)\).
+  \end{itemize}
+  Thus \(A\cap(B\triangle C)\subset (A\cap B)\triangle(A\cap C)\).
+  
+  For the reverse inclusion, let
+  \(x\in (A\cap B)\triangle(A\cap C)\).
+  Without loss of generality assume
+  \(x\in(A\cap B)\setminus(A\cap C)\)
+  (the other case is analogous).
+  Then $x\in A$, $x\in B$, and $x\notin C$; hence
+  \(x\in B\setminus C\subset B\triangle C\),
+  and so \(x\in A\cap(B\triangle C)\).
+  
+  %------------------------------------------------------------------
+  \item \textbf{$A\triangle C\subset (A\triangle B)\cup(B\triangle C)$.}
+  
+  Let $x\in A\triangle C$.  There are two cases.
+  
+  \begin{description}
+    \item[Case 1:] $x\in A\setminus C$.  
+          If $x\in B$ then $x\in B\setminus C\subset B\triangle C$.
+          If $x\notin B$ then $x\in A\setminus B\subset A\triangle B$.
+    \item[Case 2:] $x\in C\setminus A$.  
+          If $x\in B$ then $x\in B\setminus A\subset A\triangle B$.
+          If $x\notin B$ then $x\in C\setminus B\subset B\triangle C$.
+  \end{description}
+  In every instance $x$ belongs to the right--hand side, proving the inclusion.
+  
+  (Strict containment can occur; equality is \emph{not} guaranteed in general.)
+  
+  %------------------------------------------------------------------
+  \item \textbf{$C\setminus(A\cup B) = (C\setminus A)\cap(C\setminus B)$.}
+  
+  This is De~Morgan’s law.  
+  For any $x\in C$:
+  \[
+  x\in C\setminus(A\cup B)
+  \iff
+  x\notin A\cup B
+  \iff
+  x\notin A\;\text{and}\;x\notin B
+  \iff
+  x\in C\setminus A\;\text{and}\;x\in C\setminus B
+  \iff
+  x\in(C\setminus A)\cap(C\setminus B).
+  \]
+  Thus the two sets are identical.
+  
+  \end{enumerate}
+  \end{solution}
+  \begin{solution}
+    Let $P(A)$ denote the power set of $A$ ordered by inclusion $\subseteq$.
+    Recall that a \emph{chain} (or totally ordered set) is a poset in which \emph{every} two elements are comparable;  
+    that is, for all $X,Y\subseteq A$ we have either $X\subseteq Y$ or $Y\subseteq X$.
+    
+    \bigskip
+    \textbf{Claim.}  
+    $P(A)$ is a chain \emph{iff} $A=\varnothing$ or $|A|=1$.
+    
+    \medskip
+    \textbf{($\Longrightarrow$)}  
+    Assume $P(A)$ is a chain and suppose, towards a contradiction, that $A$ contains two distinct elements
+    \[
+    x\neq y\quad\text{with}\quad x,y\in A.
+    \]
+    Consider the singleton subsets $\{x\}$ and $\{y\}$ of $A$.
+    Neither is contained in the other:
+    \[
+    \{x\}\not\subseteq\{y\}
+    \quad\text{and}\quad
+    \{y\}\not\subseteq\{x\},
+    \]
+    because $x\neq y$.  
+    Thus $\{x\}$ and $\{y\}$ are \emph{incomparable}, contradicting the assumption that $P(A)$ is a chain.
+    Hence no such pair can exist, so $A$ contains at most one element; i.e.\ $A=\varnothing$ or $|A|=1$.
+    
+    \medskip
+    \textbf{($\Longleftarrow$)}  
+    Conversely, suppose $A=\varnothing$ \textbf{or} $A=\{a\}$ for some element $a$.
+    
+    \begin{itemize}
+      \item If $A=\varnothing$ then $P(A)=\{\varnothing\}$.
+            A poset with a single element is trivially a chain.
+    
+      \item If $A=\{a\}$ then $P(A)=\{\varnothing,\{a\}\}$.
+            These two subsets satisfy $\varnothing\subseteq\{a\}$,
+            so every pair of subsets in $P(A)$ is comparable; hence $P(A)$ is a chain.
+    \end{itemize}
+    
+    \medskip
+    \textbf{Conclusion.}  
+    $P(A)$ ordered by inclusion is a chain precisely when $A$ is empty or has exactly one element.
+    \end{solution}
+    \begin{problem}
+      Let $\langle L,\le\rangle$ be a partially ordered set that satisfies
+      
+      \begin{enumerate}
+          \item[(i)] $L$ has a \emph{bottom element}\/ $\bot$ (i.e.\ $\bot\le x$ for every $x\in L$);
+          \item[(ii)] every subset of $L$ has a \emph{least upper bound} (lub, or join).
+      \end{enumerate}
+      
+      Show that
+      \begin{enumerate}[label=(\alph*)]
+          \item $L$ is a lattice (i.e.\ every \emph{pair} of elements has both a lub and a greatest lower bound);
+          \item every subset of $L$ has a \emph{greatest lower bound} (glb, or meet).
+      \end{enumerate}
+      \end{problem}
+      
+      \begin{solution}
+      \textbf{(a) $L$ is a lattice.}
+      
+      \medskip
+      Fix any $a,b\in L$.  
+      Because single–element and two–element subsets are, of course, subsets of $L$, hypothesis~(ii) guarantees the existence of their least upper bounds:
+      \[
+      \text{lub}\,\{a\},\qquad\text{lub}\,\{b\},\qquad
+      \text{and in particular}\qquad
+      u:=\text{lub}\,\{a,b\}.
+      \]
+      Thus \emph{joins} always exist in $L$.
+      
+      \vspace{.5em}
+      \noindent\emph{Constructing the meet of $\{a,b\}$.}
+      For the greatest lower bound we mimic the standard “dual” construction.
+      
+      \begin{enumerate}
+          \item Define the set of (ordinary) lower bounds of $\{a,b\}$:
+          \[
+             G_{a,b}\;:=\;\{\,x\in L : x\le a\ \text{and}\ x\le b\,\}.
+          \]
+          Because $\bot$ is a lower bound of every element, $G_{a,b}\neq\varnothing$.
+      
+          \item Since $G_{a,b}\subseteq L$, hypothesis~(ii) supplies its least upper bound;
+                denote it by $m:=\text{lub}\,G_{a,b}$.
+      
+          \item\label{it:meet_is_glb} \emph{Claim.} $m$ is the \emph{greatest lower bound} of $\{a,b\}$.
+      
+                \begin{enumerate}
+                    \item[$\circ$] (\emph{Lower bound})  
+                      For each $x\in G_{a,b}$ we have $x\le m$ by definition of $m$.
+                      In particular $a$ and $b$ themselves are \emph{upper} bounds of $G_{a,b}$,
+                      so $m\le a$ and $m\le b$.  Hence $m$ is a lower bound of $\{a,b\}$.
+      
+                    \item[$\circ$] (\emph{Greatest})  
+                      If $k$ is any lower bound of $\{a,b\}$, then $k\in G_{a,b}$,
+                      and therefore $k\le m$ because $m$ is an upper bound of $G_{a,b}$.
+                \end{enumerate}
+      \end{enumerate}
+      Thus every pair $\{a,b\}$ possesses both a join ($u$) and a meet ($m$); therefore $L$ is a lattice.
+      
+      \bigskip
+      \textbf{(b) Arbitrary meets exist.}
+      
+      Let $S\subseteq L$ be \emph{any} subset (possibly infinite, possibly empty).
+      
+      \begin{enumerate}
+          \item Define the set of \emph{all} lower bounds of $S$:
+          \[
+             G_S\;:=\;\{\,x\in L : x\le s\ \text{for every }s\in S\,\}.
+          \]
+          Again $\bot\in G_S$, so $G_S\neq\varnothing$.
+      
+          \item By hypothesis~(ii) the subset $G_S$ has a least upper bound,
+                say $m_S:=\text{lub}\,G_S$.
+      
+          \item\label{it:ms_is_glb} \emph{Claim.} $m_S$ is the greatest lower bound of $S$.
+      
+                \begin{enumerate}
+                    \item[$\circ$] (\emph{Lower bound})  
+                      For every $s\in S$, the element $s$ is an \emph{upper} bound of $G_S$ (each $x\in G_S$ satisfies $x\le s$).  
+                      Hence $m_S\le s$ for all $s\in S$, so $m_S$ is a lower bound of $S$.
+      
+                    \item[$\circ$] (\emph{Greatest})  
+                      If $k$ is \emph{any} lower bound of $S$, then $k\in G_S$,
+                      and therefore $k\le m_S$ by definition of $m_S$.
+                \end{enumerate}
+      \end{enumerate}
+      Thus \emph{every} subset $S\subseteq L$ possesses a greatest lower bound.  Together with part~(a), this completes the proof.
+      \end{solution}
+      \begin{problem}
+        Let $\langle L,\le\rangle$ be a \emph{lattice}.  
+        Assume the following additional property:
+        
+        \begin{quote}
+        \textbf{(*)}\quad
+        \emph{Every non-empty subset of $L$ that possesses an \emph{upper} bound also
+        possesses a \emph{least} upper bound (lub).}
+        \end{quote}
+        
+        Show that
+        
+        \begin{quote}
+        \textbf{Goal}\quad
+        \emph{Every non-empty subset of $L$ that possesses a \emph{lower} bound
+        also possesses a \emph{greatest} lower bound (glb).}
+        \end{quote}
+        \end{problem}
+        
+        \begin{solution}
+        Let $\varnothing\neq S\subseteq L$ be a subset that has at least one lower bound;
+        choose and fix one such lower bound, call it $b\in L$.
+        (The proof is trivial when $S=\varnothing$, so we exclude that case for clarity.)
+        
+        \medskip
+        \textbf{1.  Collect \emph{all} lower bounds of $S$.}
+        
+        Define
+        \[
+           B_S\;:=\;\bigl\{\,x\in L : x\le s \text{ for every } s\in S\,\bigr\}.
+        \]
+        Because $b$ is a lower bound of $S$, we have $b\in B_S$,
+        so $B_S$ is \emph{non-empty}.
+        
+        \medskip
+        \textbf{2.  $B_S$ has an upper bound (indeed, many).}
+        
+        Fix any element $s\in S$.
+        By construction every $x\in B_S$ satisfies $x\le s$,
+        hence \emph{each} $s\in S$ serves as an \emph{upper} bound of $B_S$.
+        Thus $B_S$ is a subset with at least one upper bound.
+        
+        \medskip
+        \textbf{3.  Apply property (*) to obtain a least upper bound of $B_S$.}
+        
+        Since $B_S$ is non-empty and has an upper bound,
+        hypothesis~(*) guarantees that $B_S$ possesses a \emph{least} upper bound.
+        Denote this element by
+        \[
+           c\;:=\;\text{lub}\, B_S.
+        \]
+        
+        \medskip
+        \textbf{4.  $c$ is the greatest lower bound of $S$.}
+        
+        \begin{enumerate}[label=(\alph*)]
+        \item \emph{$c$ is a lower bound of $S$.}  
+              Because $c$ is an \emph{upper} bound of $B_S$, we have $x\le c$ for every $x\in B_S$.
+              In particular, for each $s\in S$ the element $s$ is an upper bound of $B_S$,
+              so by the minimality of $c$ we get $c\le s$.
+              Hence $c$ lies below every element of $S$.
+        
+        \item \emph{$c$ is \emph{greatest} among all lower bounds of $S$.}  
+              Let $d$ be \emph{any} lower bound of $S$.
+              Then $d\in B_S$, whence $d\le c$ because $c$ is an upper bound of $B_S$.
+              Therefore no lower bound exceeds $c$.
+        \end{enumerate}
+        
+        \medskip
+        \textbf{5.  Conclusion.}
+        The element $c$ is simultaneously
+        (i) a lower bound of $S$ and (ii) at least as large as every other lower bound.
+        Thus $c$ is the \emph{greatest lower bound} (glb) of $S$.
+        
+        \bigskip
+        Because the choice of $S$ was arbitrary,
+        \emph{every} non-empty subset of $L$ that possesses a lower bound
+        indeed has a greatest lower bound.
+        \end{solution}
+        \begin{problem}
+          Let $\langle L,\le\rangle$ be a partially ordered set such that
+          \emph{every} subset of $L$ possesses both a \emph{top element}
+          (maximum) and a \emph{bottom element} (minimum).
+          Prove that $L$ is a \textbf{finite chain};
+          that is, $L$ is finite and the order is total.
+          \end{problem}
+          
+          \begin{solution}
+          We argue in two stages.
+          
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \subsection*{1.  $L$ is a chain (totally ordered)}
+          Take any two elements $a,b\in L$.
+          The subset $\{a,b\}\subseteq L$ has a top element
+          and a bottom element by hypothesis.
+          Hence either $a\le b$ \emph{or} $b\le a$,
+          so $a$ and $b$ are comparable.
+          Because the choice of $a,b$ was arbitrary, $L$ is a \emph{chain}.
+          
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \subsection*{2.  $L$ is finite}
+          
+          \medskip
+          \paragraph{Assume, for contradiction, that $L$ is infinite.}
+          Because $L$ is a chain, we may use \emph{interval notation}
+          \(
+          [a,b]:=\{x\in L : a\le x\le b\}.
+          \)
+          
+          \smallskip
+          \noindent
+          Let $\bot$ and $\top$ denote, respectively, the bottom
+          and top elements of $L$ guaranteed by the hypothesis for the entire set $L$.
+          Set
+          \[
+          a_{1}:=\bot,
+          \qquad
+          b_{1}:=\top.
+          \]
+          
+          \medskip
+          \paragraph{Recursive bisection of an infinite interval.}
+          Suppose at the $k$-th step we have an interval $[a_{k},b_{k}]$
+          known to be infinite.
+          Because $L$ itself is infinite and $[a_{k},b_{k}]$ has
+          $\bot=a_{1}\le a_{k}<b_{k}\le b_{1}=\top$,
+          there exists an element
+          \[
+          c\in [a_{k},b_{k}]
+          \quad\text{with}\quad
+          c\ne a_{k},\;c\ne b_{k}.
+          \]
+          Since $L$ is a chain, the set
+          \(
+          [a_{k},b_{k}]
+          \)
+          splits as
+          \[
+          [a_{k},b_{k}]
+          =\,[a_{k},c]\;\cup\;[c,b_{k}],
+          \qquad
+          [a_{k},c]\cap[c,b_{k}]
+          =\{c\}.
+          \]
+          At least one of these two closed subintervals is infinite
+          (otherwise the union would be finite).
+          We make the following choice:
+          
+          \[
+          \begin{cases}
+          a_{k+1}:=a_{k},\; b_{k+1}:=c,
+          &\text{if }[a_{k},c]\text{ is infinite};\\[2pt]
+          a_{k+1}:=c,\; b_{k+1}:=b_{k},
+          &\text{if }[c,b_{k}]\text{ is infinite}.
+          \end{cases}
+          \]
+          
+          \noindent
+          In either case we obtain an \emph{infinite} interval
+          \(
+          [a_{k+1},b_{k+1}]
+          \subsetneq
+          [a_{k},b_{k}]
+          \)
+          and, crucially,
+          \[
+          a_{k}\;\le\;a_{k+1}\;<\;b_{k+1}\;\le\;b_{k}.
+          \]
+          Iterating this construction yields two monotone sequences
+          \[
+          a_{1}<a_{2}<a_{3}<\dotsb,
+          \qquad
+          b_{1}>b_{2}>b_{3}>\dotsb,
+          \]
+          all lying in $L$ and with
+          \(
+          a_{n}\le b_{n}\quad(n\ge1).
+          \)
+          
+          \medskip
+          \paragraph{Infinite subsets of $L$.}
+          Define
+          \[
+          A:=\{a_{n}:n\ge1\},\quad
+          B:=\{b_{n}:n\ge1\},\quad
+          C:=A\cup B.
+          \]
+          At each step of the construction exactly \emph{one}
+          new element is adjoined to $C$, so $C$ is infinite;
+          consequently either $A$ or $B$ must be infinite.
+          
+          \smallskip
+          \noindent
+          \textbf{Case 1: $A$ is infinite.}
+          The set $A$ is bounded above by every $b_{k}$, hence possesses a top element
+          $t=\max A$ by hypothesis.
+          But $t=a_{m}$ for some $m$ \emph{strictly} less than $a_{m+1}$,
+          contradicting the maximality of $t$.
+          Thus $A$ cannot be infinite.
+          
+          \smallskip
+          \noindent
+          \textbf{Case 2: $B$ is infinite.}
+          Dually, $B$ is bounded below by every $a_{k}$,
+          so it has a bottom element $b=\min B$.
+          Yet $b=b_{m}$ exceeds the strictly smaller element $b_{m+1}\in B$,
+          contradicting minimality.
+          Thus $B$ cannot be infinite.
+          
+          \medskip
+          \paragraph{Conclusion.}
+          Both cases lead to contradictions; therefore our initial assumption
+          that $L$ is infinite is false.
+          Hence $L$ is finite.
+          
+          \bigskip
+          \textbf{Final statement.}
+          Since $L$ is both finite and a chain, we conclude that
+          $L$ is a \emph{finite chain}.
+          \end{solution}
+          
+\end{document}

@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  Recall that a real-valued function $h:X\to\mathbb{R}$ is  
+  \emph{lower semicontinuous (l.s.c.)} iff, for every $\alpha\in\mathbb{R}$,
+  \begin{align*}
+    \{x\in X : h(x)>\alpha\}
+  \end{align*}
+  is open (equivalently, $\displaystyle\liminf_{x\to x_0}h(x)\ge h(x_0)$ for all $x_0\in X$).  
+  Dually, $h$ is \emph{upper semicontinuous (u.s.c.)} iff the set  
+  $\{x\in X : h(x)<\alpha\}$ is open for every $\alpha$.
+  
+  \begin{enumerate}
+      \item \textbf{Each $f_r$ is l.s.c.}\;
+            For a rational $r\in[0,1]$,
+            \begin{align*}
+                f_r(x)=
+                \begin{cases}
+                    r & \text{if } x\in V_r,\\[2pt]
+                    0 & \text{otherwise.}
+                \end{cases}
+            \end{align*}
+            Let $\alpha\in\mathbb{R}$.
+            \begin{itemize}
+                \item If $\alpha\ge r$, then $\{f_r>\alpha\}=\varnothing$, which is open.
+                \item If $0\le\alpha<r$, then
+                      \begin{align*}
+                          \{f_r>\alpha\}=V_r,
+                      \end{align*}
+                      and $V_r$ is open by construction.
+                \item If $\alpha<0$, then $\{f_r>\alpha\}=X$, which is open.
+            \end{itemize}
+            Hence $f_r$ is lower semicontinuous.
+  
+      \item \textbf{$f=\sup_{r} f_r$ is l.s.c.}\;
+            By Remark 2.8(c) in Rudin, the pointwise supremum of any family of l.s.c.\ functions is again l.s.c.; therefore $f$ is lower semicontinuous.
+  
+      \item \textbf{Each $g_s$ is u.s.c.}\;
+            For a rational $s\in[0,1]$,
+            \begin{align*}
+                g_s(x)=
+                \begin{cases}
+                    1 & \text{if } x\in\overline{V_s},\\[2pt]
+                    s & \text{otherwise.}
+                \end{cases}
+            \end{align*}
+            Let $\alpha\in\mathbb{R}$.
+            \begin{itemize}
+                \item If $\alpha\le s$, then $\{g_s<\alpha\}=\varnothing$, which is open.
+                \item If $s<\alpha\le 1$, then
+                      \begin{align*}
+                          \{g_s<\alpha\}=X\setminus\overline{V_s},
+                      \end{align*}
+                      the complement of a closed set, hence open.
+                \item If $\alpha>1$, then $\{g_s<\alpha\}=X$, which is open.
+            \end{itemize}
+            Thus every lower level set of $g_s$ is open, so $g_s$ is upper semicontinuous.
+  
+      \item \textbf{$g=\inf_{s} g_s$ is u.s.c.}\;
+            By Remark 2.8(d) in Rudin, the pointwise infimum of u.s.c.\ functions is again u.s.c.; therefore $g$ is upper semicontinuous.
+  \end{enumerate}
+  \end{solution}
+  \pagebreak
+  \begin{solution}
+    The proof begins by fixing a \emph{sequence of rational numbers}
+    \[
+      r_{1},\; r_{2},\; r_{3},\; r_{4},\;\dotsc
+      \qquad\text{with}\qquad
+      r_{1}=0,\; r_{2}=1,
+    \]
+    and where
+    \[
+      r_{3},\,r_{4},\,r_{5},\dotsc
+    \]
+    is \emph{an enumeration of all rationals in $(0,1)$}.  
+    Here is what that means, precisely:
+    
+    \begin{enumerate}
+        \item The set $\mathbb{Q}\cap(0,1)$ is \emph{countable}, so there exists a bijection
+              \[
+                 \mathbb{N}\;\longrightarrow\;\mathbb{Q}\cap(0,1),\qquad 
+                 n\;\longmapsto\; q_{n}.
+              \]
+              In other words, we can list the rationals in $(0,1)$ as a sequence
+              $q_{1},q_{2},q_{3},\dotsc$ with no repetition.
+    
+        \item We simply relabel that list by setting
+              \[
+                r_{3}=q_{1},\; r_{4}=q_{2},\; r_{5}=q_{3},\;\dotsc,
+              \]
+              while retaining $r_{1}=0$ and $r_{2}=1$.
+    
+        \item Thus the full sequence is
+              \[
+                0,\; 1,\; r_{3},\; r_{4},\; r_{5},\;\dotsc
+                \quad=\quad
+                0,\; 1,\; q_{1},\; q_{2},\; q_{3},\;\dotsc,
+              \]
+              which lists \emph{every} rational number in the closed interval
+              $[0,1]$ exactly once, starting with the two ``boundary'' values
+              $0$ and~$1$.
+    \end{enumerate}
+    
+    \medskip
+    \noindent
+    \textbf{Concrete example of an enumeration.}  
+    One common way to enumerate $\mathbb{Q}\cap(0,1)$ is to order
+    the rationals by increasing denominator, then by increasing numerator, and
+    skip any fraction that is not in lowest terms:
+    \[
+      \frac{1}{2},\;
+      \frac{1}{3},\;
+      \frac{2}{3},\;
+      \frac{1}{4},\;
+      \frac{3}{4},\;
+      \frac{1}{5},\;
+      \frac{2}{5},\;
+      \frac{3}{5},\;
+      \frac{4}{5},\;\dotsc
+    \]
+    Assigning these in order to $r_{3},r_{4},r_{5},\dotsc$ gives a perfectly
+    valid sequence $r_{n}$ for the proof.
+    
+    \end{solution}
+    \pagebreak
+    \begin{example}[A fully–worked concrete model in $\mathbb{R}$]
+      Let  
+      \[
+         X=\mathbb{R}, \qquad 
+         K=[{-}\tfrac12,\tfrac12], \qquad 
+         V=(-3,3).
+      \]
+      
+      \medskip
+      \noindent
+      \textbf{Step 1.  Enumerate the rationals in $[0,1]$.}  
+      Take
+      \[
+        r_{1}=0,\; r_{2}=1,\; r_{3}=\tfrac12,\; r_{4}=\tfrac13,\; r_{5}=\tfrac23,\;\dotsc
+      \]
+      (any bijective listing of $\mathbb{Q}\cap(0,1)$ after $r_{1},r_{2}$ will do).
+      
+      \medskip
+      \noindent
+      \textbf{Step 2.  Define the open sets.}  
+      For every rational $r\in[0,1]$ put
+      \[
+         V_{r}:=\bigl(-2+r,\;2-r\bigr)\subset\mathbb{R}.
+      \]
+      
+      \medskip
+      \noindent
+      \textbf{Step 3.  Verify the required properties.}
+      \begin{enumerate}
+          \item \emph{$K\subset V_{1}$.}  
+                Indeed, $V_{1}=(-1,1)$, and $[-\tfrac12,\tfrac12]\subset(-1,1)$.
+      
+          \item \emph{$\overline{V}_{0}\subset V$.}  
+                We have $V_{0}=(-2,2)$, so $\overline{V}_{0}=[-2,2]\subset(-3,3)=V$.
+      
+          \item \emph{Each $\overline{V}_{r}$ is compact.}  
+                Every $\overline{V}_{r}=[-2+r,\,2-r]$ is closed and bounded in $\mathbb{R}$.
+      
+          \item \emph{Nested‐closure condition:  
+                if $s>r$ then $\overline{V}_{s}\subset V_{r}$.}  
+                When $s>r$,
+                \[
+                     -2+r \;<\; -2+s 
+                     \quad\text{and}\quad 
+                     2-s \;<\; 2-r,
+                \]
+                hence
+                \[
+                  \overline{V}_{s}
+                    =[-2+s,\,2-s]
+                    \subset(-2+r,\,2-r)
+                    =V_{r}.
+                \]
+      \end{enumerate}
+      
+      \medskip
+      \noindent
+      \textbf{Concrete first few sets ($n\ge 2$).}
+      \[
+      \begin{aligned}
+        V_{r_{1}} &=V_{0}=(-2,2),\\
+        V_{r_{2}} &=V_{1}=(-1,1),\\[2pt]
+        V_{r_{3}} &=V_{1/2}=(-1.5,1.5),\\
+        V_{r_{4}} &=V_{1/3}=(-1.\overline{6},\,1.\overline{6}),\\
+        V_{r_{5}} &=V_{2/3}=(-1.\overline{3},\,1.\overline{3}),\ \text{etc.}
+      \end{aligned}
+      \]
+      
+      This sequence $\{V_{r}\}$ illustrates exactly the situation Rudin constructs:
+      \[
+         K\subset V_{1}\subset\overline{V}_{1}\subset V_{0}\subset\overline{V}_{0}\subset V,
+         \qquad
+         s>r\;\Longrightarrow\; \overline{V}_{s}\subset V_{r}.
+      \]
+      \end{example}
+      \pagebreak
+      \begin{remark}
+        The adjective \emph{lower} in “lower–semicontinuous’’ refers to the fact
+        that the function is “continuous from \emph{below}’’: it cannot jump
+        \emph{downward} at a point, whereas it \emph{may} jump upward.
+        
+        \bigskip
+        \textbf{Equivalent characterisations}
+        
+        For a real-valued function $h:X\to\mathbb{R}$ the following are
+        equivalent.
+        
+        \begin{enumerate}
+            \item For every $x_{0}\in X$
+                  \[
+                     h(x_{0})
+                     \;\le\;
+                     \liminf_{x\to x_{0}}h(x)
+                     \;=\;
+                     \lim_{\varepsilon\downarrow 0}\;
+                     \bigl(\inf_{d(x,x_{0})<\varepsilon}h(x)\bigr).
+                  \tag{1}
+                  \]
+        
+            \item For every $\alpha\in\mathbb{R}$ the
+                  \emph{super-level set}
+                  \[
+                      \{x\in X : h(x)>\alpha\}
+                  \]
+                  is open (equivalently,
+                  $\{x\in X : h(x)\ge\alpha\}$ is closed).              
+        
+            \item The \emph{epigraph}
+                  \[
+                    \operatorname{epi}(h)
+                    :=
+                    \{(x,t)\in X\times\mathbb{R}: t\ge h(x)\}
+                  \]
+                  is a closed subset of $X\times\mathbb{R}$.            
+        \end{enumerate}
+        
+        Any of these three statements defines \textbf{lower semicontinuity}.
+        Statement (2) is the one used in Rudin, hence the appearance of the set
+        $\{h>\alpha\}$.
+        
+        \bigskip
+        \textbf{Why does (2) capture “continuity from below’’?}
+        
+        Fix $x_{0}$ and let $\alpha:=h(x_{0})-\varepsilon$ for some
+        $\varepsilon>0$.  
+        Because $\{h>\alpha\}$ is open and contains $x_{0}$, there is a small
+        neighbourhood $U$ of $x_{0}$ such that $h(x)>\alpha$ for every
+        $x\in U$.  In particular,
+        \[
+           h(x) > h(x_{0})-\varepsilon
+           \quad\text{for all }x\text{ near }x_{0}.
+        \]
+        Since $\varepsilon$ is arbitrary, the values of $h$ near $x_{0}$ can be
+        forced to lie \emph{arbitrarily close to or above} $h(x_{0})$, but they
+        are \emph{not} allowed to dip significantly below $h(x_{0})$.  Thus the
+        function is protected against downward jumps, matching the inequality in
+        (1).
+        
+        \bigskip
+        \textbf{Dual notion}
+        
+        If we reverse the inequalities we obtain \emph{upper semicontinuity}:
+        $h$ is u.s.c.\ iff $\{h<\alpha\}$ is open for every $\alpha$, i.e.\ the
+        function cannot jump \emph{upwards}.  Hence the terms “lower’’ and
+        “upper’’ indicate which side of the value $h(x_{0})$ is
+        \emph{semicontinuously} controlled.
+        \end{remark}
+        \pagebreak
+        \begin{remark}[Why $\operatorname{supp}f\subset\overline{V_{0}}$]
+          Recall the definitions used in the proof.
+          
+          \begin{itemize}
+              \item For every rational $r\in(0,1]$ an open set $V_{r}$ is chosen so that  
+                    $s>r\;\Longrightarrow\;\overline{V}_{s}\subset V_{r}$ and, in particular,
+                    \[
+                        V_{r}\subset V_{0}\quad\text{for all }r>0.
+                    \]
+          
+              \item For each such $r$ define
+                    \[
+                       f_{r}(x)=
+                       \begin{cases}
+                          r & \text{if }x\in V_{r},\\[4pt]
+                          0 & \text{otherwise.}
+                       \end{cases}
+                    \]
+              \item Set $f(x)=\displaystyle\sup_{r>0}f_{r}(x)$.
+          \end{itemize}
+          
+          \medskip
+          \noindent
+          \textbf{Step 1.  Locate the points where $f$ can be non–zero.}
+          
+          Because every $f_{r}$ is identically $0$ outside $V_{r}$, we have
+          \[
+             f(x)\neq 0
+             \;\;\Longrightarrow\;\;
+             f_{r}(x)\neq 0\text{ for some }r
+             \;\;\Longrightarrow\;\;
+             x\in V_{r}\subset V_{0}.
+          \]
+          Thus
+          \[
+             \bigl\{x\in X:f(x)\neq 0\bigr\}\subset V_{0}.
+          \]
+          
+          \medskip
+          \noindent
+          \textbf{Step 2.  Take the closure.}
+          
+          The \emph{support} of $f$ is
+          \[
+             \operatorname{supp}f
+             :=\overline{\{x:f(x)\neq 0\}}.
+          \]
+          Since the set inside the closure is already contained in $V_{0}$, its
+          closure must lie inside $\overline{V_{0}}$:
+          \[
+             \operatorname{supp}f
+             \subset \overline{V_{0}}.
+          \]
+          
+          \bigskip
+          \noindent
+          Hence it is “clear’’—in the sense of an immediate consequence of the
+          definitions—that $f$ vanishes outside $V_{0}$ and therefore
+          $\operatorname{supp}f\subset\overline{V_{0}}$.
+          \end{remark}
+\end{document}

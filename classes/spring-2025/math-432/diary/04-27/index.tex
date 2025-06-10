@@ -1,0 +1,323 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432: HW 11}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  1.\ (a) Let $(X,D)$ be a \emph{separable} metric space and let  
+  \(f:X\to Y\) be a continuous \emph{surjection} onto a metric space \(Y\).  
+  Show that \(Y\) is separable.  
+  
+  \noindent(b) Is the statement in part (a) still true if “separable’’ is replaced by “complete’’?
+  \end{problem}
+  
+  \begin{solution}
+  \begin{enumerate}[]
+  %--------------------------------------------------------------------
+  \item \textbf{\(Y\) is separable.}
+  
+  \begin{enumerate}[]
+  \item Because \(X\) is separable, there exists a \emph{countable} dense subset  
+        \(A\subseteq X\) (i.e.\ \(\overline{A}=X\)).
+  
+  \item Define \(B:=f[A]\subseteq Y\).  
+        Since \(A\) is countable and \(f\) maps \(A\) into \(Y\), the set \(B\) is countable.
+  
+  \item We show that \(B\) is dense in \(Y\).  
+        Let \(V\subseteq Y\) be a non-empty open set and pick any \(y\in V\).
+  
+  \item Because \(f\) is surjective, there exists \(x\in X\) with \(f(x)=y\).  
+        Continuity of \(f\) gives that \(f^{-1}(V)\) is open in \(X\) and contains \(x\).
+  
+  \item Density of \(A\) implies \(A\cap f^{-1}(V)\neq\varnothing\).  
+        Choose \(a\in A\cap f^{-1}(V)\).
+  
+  \item Then \(f(a)\in B\cap V\), so every non-empty open set \(V\subseteq Y\) meets \(B\).
+  
+  \item Hence \(\overline{B}=Y\); \(B\) is countable and dense, so \(Y\) is separable.
+  \end{enumerate}
+  
+  %--------------------------------------------------------------------
+  \item \textbf{The statement fails for completeness.}
+  
+  Consider
+  \[
+     X=\mathbb{R}, 
+     \qquad    
+     Y=\Bigl(-\frac{\pi}{2},\frac{\pi}{2}\Bigr),
+     \qquad    
+     f(x)=\arctan x .
+  \]
+  
+  \begin{enumerate}[]
+  \item \(X=\mathbb{R}\) with the usual metric is a \emph{complete} metric space.
+  
+  \item The map \(f\) is continuous and surjective onto \(Y\).
+  
+  \item \(Y\) is \emph{not} complete: the sequence  
+        \(y_n=\dfrac{\pi}{2}-\dfrac{1}{n}\) is Cauchy in \(Y\) but converges to  
+        \(\dfrac{\pi}{2}\notin Y\).
+  \end{enumerate}
+  
+  Thus a continuous surjective image of a complete metric space need not be complete, so the analogue of part (a) for completeness is \emph{false}.
+  \end{enumerate}
+  \end{solution}
+  \begin{problem}
+    2.\ Let \(M\) be a metric space.  Show that \(M\) is \emph{separable}  
+    (\(\exists\) a countable dense subset) \emph{iff} every collection of pairwise disjoint non-empty open subsets of \(M\) is countable.
+    \end{problem}
+    
+    \begin{solution}
+    \[
+       M\text{ separable}\;\Longleftrightarrow\;
+       \bigl\{\text{disjoint open families in }M\bigr\}\text{ are countable}.
+    \]
+    
+    \begin{enumerate}[]
+    %-------------------------------------------------
+    \item \textbf{Separable \(\boldsymbol{\Rightarrow}\) every disjoint open family is countable.}
+    
+    \begin{enumerate}[]
+    \item Assume \(M\) is separable.  
+          Fix a \emph{countable} dense subset \(D=\{d_1,d_2,\dots\}\subseteq M\).
+    
+    \item Let \(\mathcal{U}=\{U_i\}_{i\in I}\) be any pairwise disjoint family of non-empty open sets in \(M\).
+    
+    \item For each \(i\in I\), choose a point \(x_i\in U_i\cap D\)  
+          (possible because \(D\) is dense and \(U_i\neq\varnothing\)).
+    
+    \item If \(i\neq j\) then \(U_i\cap U_j=\varnothing\), hence \(x_i\neq x_j\).  
+          Thus the map \(i\mapsto x_i\) is injective from \(I\) into \(D\).
+    
+    \item Since \(D\) is countable, its subset \(\{x_i\mid i\in I\}\) is countable, forcing \(I\) to be countable.  
+          Therefore every disjoint open family in a separable metric space is countable.
+    \end{enumerate}
+    
+    %-------------------------------------------------
+    \item \textbf{Every disjoint open family countable \(\boldsymbol{\Rightarrow}\) separable.}
+    
+    \begin{enumerate}[]
+    \item Fix \(n\in\mathbb{N}\).  
+          Construct a \emph{maximal} (with respect to inclusion) subset \(S_n\subseteq M\) such that  
+          \(\operatorname{dist}(x,y)\ge \tfrac1n\) whenever \(x\neq y\) lie in \(S_n\).  
+          (Greedy choice or Zorn’s lemma gives such a maximal set.)
+    
+    \item \emph{Covering property.}  
+          By maximality, the open balls
+          \[
+            \bigl\{B\bigl(x,\tfrac1{2n}\bigr)\;\bigm|\;x\in S_n\bigr\}
+          \]
+          cover \(M\).  
+          Indeed, if some \(p\in M\) lay outside every ball, then  
+          \(S_n\cup\{p\}\) would still be \(1/n\)-separated, contradicting maximality.
+    
+    \item \emph{Disjointness.}  
+          For \(x\neq y\) in \(S_n\) we have \(d(x,y)\ge \tfrac1n\); hence  
+          \(B(x,\tfrac1{2n})\cap B(y,\tfrac1{2n})=\varnothing\).
+    
+    \item The balls \(\{B(x,\frac1{2n})\}_{x\in S_n}\) form a pairwise disjoint open family.  
+          By hypothesis, such a family must be \emph{countable}.  
+          Therefore each \(S_n\) is countable.
+    
+    \item Set \(S:=\bigcup_{n=1}^\infty S_n\).  
+          Being a countable union of countable sets, \(S\) is countable.
+    
+    \item \emph{Density of \(S\).}  
+          Let \(p\in M\) and \(\varepsilon>0\).  
+          Choose \(n\in\mathbb{N}\) with \(\tfrac1n<\varepsilon\).  
+          Because the balls \(B(x,\tfrac1{2n})\) (with \(x\in S_n\)) cover \(M\),  
+          there exists \(x\in S_n\) such that \(d(p,x)<\tfrac1{2n}<\varepsilon\).  
+          Hence every open ball in \(M\) meets \(S\), so \(\overline{S}=M\).
+    
+    \item We have produced a \emph{countable dense set} \(S\subseteq M\); thus \(M\) is separable.
+    \end{enumerate}
+    \end{enumerate}
+    \end{solution}
+    \begin{problem}
+      3.\ Prove that $\ell_\infty$, the space of all bounded real sequences
+      \[
+         \ell_\infty
+         =\Bigl\{(x_n)_{n=1}^\infty \subset \mathbb{R}
+           \,\Bigm|\, \|x\|_\infty:=\sup_{n\in\mathbb{N}} |x_n| < \infty
+           \Bigr\}
+      \]
+      endowed with the norm $\|x\|_\infty$ (and the metric
+      $d(x,y)=\|x-y\|_\infty$), is \emph{not} separable.
+      \end{problem}
+      
+      \begin{solution}
+      We build an \emph{uncountable} family of points in $\ell_\infty$ that are
+      \emph{mutually $1$ apart}.  
+      Open balls of radius $\tfrac12$ around such points are pairwise disjoint,
+      so any dense set must contain \emph{at least one element of each ball},
+      hence cannot be countable.
+      
+      \begin{enumerate}[]
+      %---------------------------------------------------------------
+      \item \textbf{Construct an index set.}
+            Let $\mathcal{P}(\mathbb{N})$ denote the power set of $\mathbb{N}$.
+            Its cardinality is $2^{\aleph_0}$ (uncountable).
+      
+      \item \textbf{Associate a sequence to each subset.}
+            For $A\subseteq\mathbb{N}$ define
+            \[
+               x^{(A)} := (\chi_A(n))_{n=1}^\infty\in\ell_\infty,
+               \qquad
+               \chi_A(n)=
+               \begin{cases}
+                 1,& n\in A,\\[2pt]
+                 0,& n\notin A.
+               \end{cases}
+            \]
+            Each $x^{(A)}$ is bounded ($\|x^{(A)}\|_\infty\le 1$), so
+            $x^{(A)}\in\ell_\infty$.
+      
+      \item \textbf{Compute mutual distances.}
+            For distinct $A,B\subseteq\mathbb{N}$ choose $k\in A\triangle B$
+            (symmetric difference).  
+            Then $\chi_A(k)=1-\chi_B(k)$, so
+            \[
+              \|x^{(A)}-x^{(B)}\|_\infty
+              =\sup_{n\in\mathbb{N}} |\chi_A(n)-\chi_B(n)|
+              =|\chi_A(k)-\chi_B(k)| = 1 .
+            \]
+      
+      \item \textbf{Disjoint open balls.}
+            The open balls
+            \[
+                B\!\Bigl(x^{(A)},\tfrac12\Bigr)
+                :=\bigl\{y\in\ell_\infty:\|y-x^{(A)}\|_\infty<\tfrac12\bigr\},
+                \qquad A\subseteq\mathbb{N},
+            \]
+            are pairwise disjoint, because balls of radius $<\tfrac12$ centred
+            at points $1$ apart cannot intersect.
+      
+      \item \textbf{Contradict countable density.}
+            Suppose $D\subseteq\ell_\infty$ were countable and dense.  
+            Then every ball $B(x^{(A)},\tfrac12)$ must contain \emph{some}
+            element of $D$.  
+            But the balls are pairwise disjoint and there are
+            $2^{\aleph_0}$ of them, so $D$ must have at least
+            $2^{\aleph_0}$ elements—contradiction.
+      
+      \item \textbf{Conclusion.}
+            No countable dense subset exists; hence
+            $\ell_\infty$ is \emph{not separable}.
+      \end{enumerate}
+      \end{solution}
+      \begin{problem}
+        4.\ Let \(X\) be a \emph{compact} metric space and
+        \(f:X\to Y\) a \emph{continuous surjection} onto a metric space \(Y\).
+        Show that \(Y\) is compact.
+        \end{problem}
+        
+        \begin{solution}
+        We verify the \emph{open--cover definition} of compactness for \(Y\).
+        
+        \begin{enumerate}[]
+        %----------------------------------------------------------
+        \item \textbf{Start with an arbitrary open cover of \(Y\).}
+        
+        Let \(\mathcal{V}=\{V_\alpha\}_{\alpha\in A}\) be a family of open
+        subsets of \(Y\) such that \(\displaystyle Y=\bigcup_{\alpha\in A}V_\alpha\).
+        
+        %----------------------------------------------------------
+        \item \textbf{Pull the cover back to \(X\).}
+        
+        Because \(f\) is continuous, each pre-image
+        \(U_\alpha:=f^{-1}(V_\alpha)\subseteq X\) is open.
+        Since \(f\) is surjective, we have
+        \[
+           X
+           =f^{-1}\!\Bigl(\,\bigcup_{\alpha\in A}V_\alpha\Bigr)
+           =\bigcup_{\alpha\in A}f^{-1}(V_\alpha)
+           =\bigcup_{\alpha\in A}U_\alpha .
+        \]
+        Hence \(\mathcal{U}:=\{U_\alpha\}_{\alpha\in A}\) is an \emph{open cover} of \(X\).
+        
+        %----------------------------------------------------------
+        \item \textbf{Use compactness of \(X\).}
+        
+        Because \(X\) is compact, the cover \(\mathcal{U}\) admits a
+        \emph{finite} subcover:
+        there exist indices \(\alpha_1,\dots,\alpha_n\in A\) such that
+        \[
+             X=\bigcup_{k=1}^{n} U_{\alpha_k}.
+        \]
+        
+        %----------------------------------------------------------
+        \item \textbf{Push the finite subcover forward to \(Y\).}
+        
+        Apply \(f\) to the equality above:
+        \[
+           Y=f(X)=f\!\Bigl(\,\bigcup_{k=1}^{n}U_{\alpha_k}\Bigr)
+             =\bigcup_{k=1}^{n} f(U_{\alpha_k})
+             \subseteq\bigcup_{k=1}^{n} V_{\alpha_k}
+             \subseteq Y .
+        \]
+        (The middle inclusion holds because \(f(U_{\alpha_k})\subseteq V_{\alpha_k}\)
+        by definition of \(U_{\alpha_k}\).)
+        
+        Thus the finite family \(\{V_{\alpha_1},\dots,V_{\alpha_n}\}\) still covers \(Y\).
+        
+        %----------------------------------------------------------
+        \item \textbf{Conclusion.}
+        
+        Every open cover of \(Y\) has a finite subcover;
+        hence \(Y\) is \emph{compact}.
+        \end{enumerate}
+        \end{solution}
+\end{document}

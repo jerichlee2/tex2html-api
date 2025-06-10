@@ -1,0 +1,336 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Step-by-Step Solution}
+
+\begin{enumerate}
+    \item \textbf{Identify the band gap of GaAs.} \\
+    GaAs has a band-gap energy $E_g \approx 1.4 \,\text{eV}$.
+
+    \item \textbf{Convert the incident light wavelength to photon energy.} \\
+    The energy of a photon with wavelength $\lambda$ is given by
+    \[
+    E_{\text{photon}} = \frac{hc}{\lambda},
+    \]
+    where $h$ is Planck's constant and $c$ is the speed of light. Numerically, for $\lambda = 1\,\mu\text{m}$ (i.e.\ $1\times 10^{-6}\,\text{m}$),
+    \[
+    E_{\text{photon}} \approx 1.24\,\text{eV}.
+    \]
+    (This comes from the convenient approximation $E[\text{eV}] \approx \frac{1.24\,\text{eV}\cdot\mu\text{m}}{\lambda[\mu\text{m}]}\,.$)
+
+    \item \textbf{Compare the photon energy to the GaAs band gap.} \\
+    Since 
+    \[
+    E_{\text{photon}} \approx 1.24\,\text{eV} \quad < \quad E_g \approx 1.4\,\text{eV},
+    \]
+    the photon energy is \emph{less} than the band-gap energy.
+
+    \item \textbf{Conclude what happens to the light.} \\
+    Because the photon energy is insufficient to excite electrons from the valence band to the conduction band, the light is not absorbed via a single-photon process. At $T \approx 0\,\text{K}$ (and in the absence of strong nonlinear effects or other absorption mechanisms), the wafer is effectively transparent to this 1\,µm light. Hence, the photon passes through the GaAs wafer without being absorbed.
+\end{enumerate}
+\[
+\textbf{Step 1: List the single-electron energy levels.}
+\]
+We are told there are four one-electron energy levels with the following energies (in eV):
+\[
+E_1 = 7 \text{ eV}, \quad
+E_2 = 8 \text{ eV}, \quad
+E_3 = 11 \text{ eV}, \quad
+E_4 = 12 \text{ eV}.
+\]
+
+\[
+\textbf{Step 2: Fill the levels for three electrons (Pauli principle).}
+\]
+\textit{Case (a): No spin degeneracy assumed.}
+
+If each level can hold only one electron (i.e.\ ignoring spin), then for 3 electrons the \emph{ground state} would occupy the three lowest levels:
+\[
+(E_1,\,E_2,\,E_3) \;=\; (7,\,8,\,11)\;\text{eV}.
+\]
+The next (first) excited configuration would be
+\[
+(E_1,\,E_2,\,E_4) \;=\; (7,\,8,\,12)\;\text{eV}.
+\]
+However, in such a scenario, direct transitions from $12\text{ eV}\to 11\text{ eV}$ only give $1\text{ eV}$ photons, which are \emph{not} in the multiple-choice list.
+
+\[
+\textit{Case (b): Spin degeneracy assumed.}
+\]
+More commonly, each single-particle level can hold up to two electrons (spin up and spin down).  Labeling the one-electron energies by $E_1 < E_2 < E_3 < E_4$ as above, the electrons fill from the bottom up, subject to the Pauli principle (no more than 2 electrons per level).  For 3 electrons:
+
+- The \emph{ground-state configuration} is typically
+\[
+\bigl(E_1,\,E_1,\,E_2\bigr) 
+\;=\;
+(7,\,7,\,8)\;\text{eV (total }22\text{ eV).}
+\]
+  (Two electrons in the $7\,\mathrm{eV}$ level, one in the $8\,\mathrm{eV}$ level.)
+
+- One possible low-lying excited configuration is
+\[
+\bigl(E_1,\,E_1,\,E_3\bigr) 
+\;=\;
+(7,\,7,\,11)\;\text{eV (total }25\text{ eV).}
+\]
+  This is $3\,\mathrm{eV}$ above the ground state, so it is often referred to as the “first excited state” that actually allows an interesting photon emission in the set of answers given.
+
+\[
+\textbf{Step 3: Identify which downward transitions are allowed from that excited state.}
+\]
+If the system is in the configuration $(7,\,7,\,11)$:
+- The two $7\,\mathrm{eV}$ slots are fully occupied (spin up and spin down), so an electron in $11\,\mathrm{eV}$ \emph{cannot} drop to $7\,\mathrm{eV}$ unless there is some additional mechanism freeing up a spin state there.  Typically, that is blocked if both spins in $E_1=7\,\mathrm{eV}$ are taken.
+- The $8\,\mathrm{eV}$ level, however, only has \emph{one} electron (the ground-state electron that was there has been promoted to $11\,\mathrm{eV}$), so there is a spare spin state available at $8\,\mathrm{eV}.$
+
+Hence an electron can drop from $E_3 = 11\,\mathrm{eV}$ down to $E_2 = 8\,\mathrm{eV}$, emitting a photon of energy
+\[
+\Delta E \;=\; 11\,\mathrm{eV} - 8\,\mathrm{eV} \;=\; 3\,\mathrm{eV}.
+\]
+That matches one of the multiple-choice answers.
+
+\[
+\textbf{Step 4: Check which of the given answer-choices match actual level differences.}
+\]
+Among the provided options 
+\[
+(9\,\mathrm{eV},\; 8\,\mathrm{eV},\; 4\,\mathrm{eV},\; 3\,\mathrm{eV},\; 5\,\mathrm{eV}),
+\]
+the only differences among the four levels $7,\,8,\,11,\,12$ eV are:
+\[
+\begin{aligned}
+12 - 8 &= 4\,\mathrm{eV}, \\
+12 - 7 &= 5\,\mathrm{eV}, \\
+11 - 8 &= 3\,\mathrm{eV}, \\
+11 - 7 &= 4\,\mathrm{eV}, \\
+8 - 7  &= 1\,\mathrm{eV}.
+\end{aligned}
+\]
+So the set of \emph{possible} single-electron transition energies is actually $\{1,\,3,\,4,\,5\}\,\mathrm{eV}.$  However, from the specific \emph{first excited configuration} $(7,7,11)$, the only allowed drop (given that $7\,\mathrm{eV}$ is fully occupied) is
+\[
+11\,\mathrm{eV} \;\to\; 8\,\mathrm{eV},
+\]
+which yields a $3\,\mathrm{eV}$ photon.
+
+\[
+\textbf{Conclusion:}
+\]
+
+\[
+\textbf{Step 1: Condition for maxima in double-slit interference.}
+\]
+
+For constructive interference (maxima), the path difference between the two slits must be an integer multiple of the wavelength:
+\[
+d \,\sin \theta \;=\; m \,\lambda, 
+\quad m = 0, 1, 2, \ldots
+\]
+Here, \(d\) is the slit separation, \(\theta\) is the angle from the central axis, and \(\lambda\) is the wavelength.
+
+\[
+\textbf{Step 2: First maximum off the central axis.}
+\]
+
+The central (bright) maximum corresponds to \(m=0\). 
+The \emph{first} maximum off-center corresponds to \(m = 1\). 
+Hence,
+\[
+d \,\sin \theta = \lambda.
+\]
+
+\[
+\textbf{Step 3: Relate path difference to phase difference.}
+\]
+
+A path difference of \(\Delta = d \,\sin \theta\) leads to a phase difference 
+\[
+\Delta \phi 
+\;=\; \frac{2\pi}{\lambda}\,\Delta 
+\;=\; \frac{2\pi}{\lambda}\,\bigl(d \,\sin \theta\bigr).
+\]
+
+\[
+\textbf{Step 4: Substitute the first-maximum condition.}
+\]
+
+Since \(d \,\sin \theta = \lambda\) for \(m=1\), we have
+\[
+\Delta \phi 
+\;=\; \frac{2\pi}{\lambda} \,\lambda
+\;=\; 2\pi \text{ radians.}
+\]
+
+\[
+\boxed{\text{Therefore, at the first off-center maximum, the phase difference is }2\pi\text{ radians.}}
+\] 
+
+\[
+\textbf{Condition for maxima: } 
+d \,\sin\theta = m\,\lambda,
+\quad m = 0,1,2,\ldots
+\]
+
+Here, \(d\) is the slit separation, \(\theta\) is the angle from the center (central maximum), and \(\lambda\) is the wavelength.
+
+- \(\mathbf{m=0}\) gives the \textit{central} (zeroth) maximum.
+- \(\mathbf{m=1}\) gives the \textit{first} maximum off-center.
+- \(\mathbf{m=2}\) gives the \textit{second} maximum off-center, and so on.
+
+\[
+\textbf{Step: Finding the second maximum.}
+\]
+The \emph{second} maximum corresponds to \(m = 2\). Hence, we set
+\[
+d\,\sin \theta_2 
+\;=\;
+2\,\lambda.
+\]
+Solving for \(\theta_2\):
+\[
+\theta_2 
+\;=\; 
+\sin^{-1}\!\Bigl(\frac{2\,\lambda}{d}\Bigr).
+\]
+
+\[
+\textbf{Phase difference at the second maximum.}
+\]
+Because a path difference \(\Delta\) corresponds to a phase difference 
+\(\Delta\phi = \tfrac{2\pi}{\lambda}\,\Delta,\)
+we have 
+\[
+\Delta 
+\;=\; 
+d \,\sin \theta_2
+\;=\;
+2\,\lambda 
+\quad\Longrightarrow\quad
+\Delta\phi 
+\;=\;
+\frac{2\pi}{\lambda}\,\bigl(2\,\lambda\bigr)
+\;=\;
+4\pi.
+\]
+Hence, at the second maximum, the phase difference is \(4\pi\) radians (i.e.\ \(2 \times 2\pi\)), corresponding to constructive interference.
+
+\[
+\textbf{Given Data:}
+\]
+\begin{align}
+m &= 10\,\text{kg} \quad(\text{mass of the spaceship}),\\
+\Delta v &= 5\,\text{m/s} \quad(\text{desired change in velocity}),\\
+f &= 9.00\times 10^{14}\,\text{Hz} \quad(\text{photon frequency}),\\
+h &= 6.626\times 10^{-34}\,\text{J}\cdot\text{s} \quad(\text{Planck's constant}),\\
+c &= 3.00\times 10^{8}\,\text{m/s} \quad(\text{speed of light}).
+\end{align}
+
+\[
+\textbf{Step 1: Calculate total momentum change needed.}
+\]
+A mass \(m\) increasing its velocity by \(\Delta v\) requires a momentum change
+\[
+\Delta p_\text{total}
+\;=\;
+m \,\Delta v
+\;=\;
+10\,\text{kg} \;\times\; 5\,\text{m/s}
+\;=\;
+50\,\text{kg}\cdot\text{m/s}.
+\]
+
+\[
+\textbf{Step 2: Momentum of a single photon.}
+\]
+A photon of frequency \(f\) has energy \(E = h\,f\). Its momentum is given by
+\[
+p_\gamma
+\;=\;
+\frac{E}{c}
+\;=\;
+\frac{h\,f}{c}.
+\]
+Substituting numerical values,
+\[
+p_\gamma
+\;=\;
+\frac{(6.626\times 10^{-34}\,\text{J}\cdot\text{s})
+       \,(9.00\times 10^{14}\,\text{s}^{-1})}
+      {3.00\times 10^{8}\,\text{m/s}}
+\;\approx\;
+1.99\times 10^{-27}\,\text{kg}\cdot\text{m/s}.
+\]
+
+\[
+\textbf{Step 3: Number of photons needed.}
+\]
+To achieve the total momentum \(\Delta p_\text{total} = 50\,\text{kg}\cdot\text{m/s}\), we emit \(N\) photons, each with momentum \(p_\gamma\). Hence,
+\[
+N \times p_\gamma
+\;=\;
+\Delta p_\text{total}
+\quad\Longrightarrow\quad
+N
+\;=\;
+\frac{\Delta p_\text{total}}{p_\gamma}
+\;=\;
+\frac{50\,\text{kg}\cdot\text{m/s}}
+     {1.99\times 10^{-27}\,\text{kg}\cdot\text{m/s}}
+\;\approx\;
+2.51\times 10^{28}.
+\]
+Thus, \(\boxed{2.51\times 10^{28}}\) photons of frequency \(9.00\times 10^{14}\,\text{Hz}\) must be emitted to change the spacecraft's velocity by \(5\,\text{m/s}\).
+
+\[
+\textbf{Step 4: Effect of decreasing the frequency on the number of photons.}
+\]
+The momentum of a photon is
+\[
+p_\gamma = \frac{h\,f}{c}.
+\]
+If \(f\) is made smaller, then \(p_\gamma\) is \emph{smaller}. To achieve the same total momentum \(\Delta p_\text{total}\), one must therefore emit \emph{more} photons. Hence, \(\boxed{\text{if the frequency decreases, the number of photons needed increases}.}\)
+\end{document}

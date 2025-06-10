@@ -1,0 +1,1129 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\ord}{ord}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\newtheorem{explanation}{Explanation}
+
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%-----------------------------------------------------------
+%  Requires: amsmath, amssymb, booktabs, geometry (optional)
+%-----------------------------------------------------------
+\section{Euler’s Totient Function \texorpdfstring{$\varphi(n)$}{phi(n)}}
+
+\subsection{Definition}
+Euler’s totient function counts the positive integers not exceeding~$n$
+that are coprime to~$n$:
+\[
+  \varphi(n)=\bigl|\{\,k\in\{1,2,\dots ,n\}\mid\gcd(k,n)=1\,\}\bigr|.
+\]
+
+\subsection{Basic Values}
+\begin{table}[h]
+  \centering
+  \small
+  \setlength\tabcolsep{10pt}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{ccc}
+    \toprule
+    $n$ & Numbers $\le n$ coprime to $n$              & $\varphi(n)$ \\ \midrule
+    1   & 1                                           & 1 \\
+    2   & 1                                           & 1 \\
+    3   & 1,\,2                                       & 2 \\
+    4   & 1,\,3                                       & 2 \\
+    5   & 1,\,2,\,3,\,4                               & 4 \\
+    6   & 1,\,5                                       & 2 \\
+    8   & 1,\,3,\,5,\,7                               & 4 \\
+    9   & 1,\,2,\,4,\,5,\,7,\,8                       & 6 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Illustrative values of $\varphi(n)$.}
+\end{table}
+
+\subsection{Prime‑Factor Formula}
+If 
+\(
+  n=\displaystyle\prod_{i=1}^r p_i^{k_i},
+\)
+then
+\[
+  \boxed{\;
+    \varphi(n)\;=\;
+      n\prod_{i=1}^r\!\left(1-\frac1{p_i}\right)
+      \;=\;
+      \prod_{i=1}^r p_i^{\,k_i-1}(p_i-1)
+  \;}
+\]
+
+\subsection{Example}
+For \(n=60=2^{2}\!\cdot 3 \cdot 5\),
+\[
+  \varphi(60)=60
+     \Bigl(1-\tfrac12\Bigr)
+     \Bigl(1-\tfrac13\Bigr)
+     \Bigl(1-\tfrac15\Bigr)
+  =60\cdot\tfrac12\cdot\tfrac23\cdot\tfrac45
+  =16.
+\]
+
+\subsection{Key Properties}
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Multiplicativity.} If \(\gcd(m,n)=1\) then
+        \(\varphi(mn)=\varphi(m)\varphi(n)\).
+  \item \textbf{Prime and Prime Powers.}
+        \(\varphi(p)=p-1\) for prime~\(p\);\;
+        \(\varphi(p^{k})=p^{\,k-1}(p-1)\).
+  \item \textbf{Divisor‑Sum Identity.}\;
+        \(\displaystyle\sum_{d\mid n}\varphi(d)=n\).
+  \item \textbf{Euler’s Theorem.} If \(\gcd(a,n)=1\) then
+        \(a^{\varphi(n)}\equiv 1\pmod n\).
+\end{enumerate}
+
+\subsection{Remarks}
+The factors \((1-1/p_i)\) show how each distinct prime divisor of~\(n\)
+“thins out’’ the integers coprime to~\(n\).
+Because these factors multiply, \(\varphi\) enjoys the strong
+multiplicativity property that underlies its central role in
+number theory and cryptography (e.g.\ RSA).
+%------------------------------------------------------------
+%  Solution to Problem 5:  Isomorphism classes of the groups
+%------------------------------------------------------------
+\begin{solution}
+  Let us label the six groups for easy reference:
+  \[
+  \begin{aligned}
+  G_1 &= \Bbb Z_{12}, &
+  G_2 &= \Bbb Z_3 \oplus \Bbb Z_2 \oplus \Bbb Z_2, &
+  G_3 &= \Bbb Z_2 \oplus \Bbb Z_3 \oplus \Bbb Z_4,\\
+  G_4 &= \Bbb Z_3 \oplus \Bbb Z_4, &
+  G_5 &= C_{12}, &
+  G_6 &= C_4 \times C_3.
+  \end{aligned}
+  \]
+  
+  \subsection*{1.\;  Invariants provided by the Fundamental Theorem of Finite Abelian Groups}
+  The fundamental theorem states that every finite abelian group is (up to
+  isomorphism) a direct sum of cyclic \(p\)-power groups.  Useful
+  \emph{isomorphism invariants} are:
+  \[
+  \lvert G\rvert,\qquad
+  \text{exponent}(G)=\max\{\lvert g\rvert:g\in G\},\qquad
+  \text{the multiset of invariant factors.}
+  \]
+  
+  \begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{c|c c c c}
+   & Order & Primary decomposition & Exponent & Cyclic?\\\hline
+  \(G_1\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+  \(G_2\) & \(12\) & \(\Bbb Z_2\oplus\Bbb Z_2\oplus\Bbb Z_3\) & \(6\)  & no\\
+  \(G_3\) & \(24\) & \(\Bbb Z_4\oplus\Bbb Z_3\oplus\Bbb Z_2\) & \(12\) & no\\
+  \(G_4\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+  \(G_5\) & \(12\) & \(\Bbb Z_{12}\) (i.e.\ \(\Bbb Z_4\oplus\Bbb Z_3\)) & \(12\) & yes\\
+  \(G_6\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+  \end{tabular}
+  \end{center}
+  
+  \subsection*{2.\;  Classification}
+  \begin{itemize}
+    \item \textbf{Order~24.}\; Only \(G_3\) has order 24, so it is
+          \emph{not} isomorphic to any other group on the list.
+  
+    \item \textbf{Order~12, non‑cyclic.}\;
+          \(G_2\) is the unique non‑cyclic abelian group of order 12
+          (its exponent is~6, not~12), hence it is
+          \emph{not} isomorphic to the cyclic groups below.
+  
+    \item \textbf{Order~12, cyclic.}\;
+          When two integers are coprime, the direct product of the
+          corresponding cyclic groups is cyclic of the product order:
+          \(
+            C_m\times C_n\cong C_{mn}\;(\gcd(m,n)=1).
+          \)
+          Therefore
+          \[
+            G_1\cong G_4\cong G_5\cong G_6\cong C_{12}.
+          \]
+  \end{itemize}
+  
+  \subsection*{3.\;  Pair‑by‑pair verdict}
+  Write “\,\(\cong\)” for “isomorphic” and “\(\not\cong\)” otherwise.
+  \[
+  \begin{array}{c|cccccc}
+          & G_1 & G_2 & G_3 & G_4 & G_5 & G_6\\\hline
+    G_1   &      & \not\cong & \not\cong & \cong & \cong & \cong\\
+    G_2   &      &           & \not\cong & \not\cong & \not\cong & \not\cong\\
+    G_3   &      &           &           & \not\cong & \not\cong & \not\cong\\
+    G_4   &      &           &           &          & \cong & \cong\\
+    G_5   &      &           &           &          &        & \cong
+  \end{array}
+  \]
+  
+  \paragraph{Summary.}
+  \begin{enumerate}[label=\alph*)]
+    \item \(G_1,G_4,G_5,G_6\) form a single isomorphism class (all are cyclic of order 12).
+    \item \(G_2\) is the unique non‑cyclic group of order 12 on the list.
+    \item \(G_3\) is the only group of order 24 and hence stands alone.
+  \end{enumerate}
+  \end{solution}%------------------------------------------------------------
+%  Solution to Problem 5:  Isomorphism classes of the groups
+%------------------------------------------------------------
+\begin{solution}
+Let us label the six groups for easy reference:
+\[
+\begin{aligned}
+G_1 &= \Bbb Z_{12}, &
+G_2 &= \Bbb Z_3 \oplus \Bbb Z_2 \oplus \Bbb Z_2, &
+G_3 &= \Bbb Z_2 \oplus \Bbb Z_3 \oplus \Bbb Z_4,\\
+G_4 &= \Bbb Z_3 \oplus \Bbb Z_4, &
+G_5 &= C_{12}, &
+G_6 &= C_4 \times C_3.
+\end{aligned}
+\]
+
+\subsection*{1.\;  Invariants provided by the Fundamental Theorem of Finite Abelian Groups}
+The fundamental theorem states that every finite abelian group is (up to
+isomorphism) a direct sum of cyclic \(p\)-power groups.  Useful
+\emph{isomorphism invariants} are:
+\[
+\lvert G\rvert,\qquad
+\text{exponent}(G)=\max\{\lvert g\rvert:g\in G\},\qquad
+\text{the multiset of invariant factors.}
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c|c c c c}
+ & Order & Primary decomposition & Exponent & Cyclic?\\\hline
+\(G_1\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+\(G_2\) & \(12\) & \(\Bbb Z_2\oplus\Bbb Z_2\oplus\Bbb Z_3\) & \(6\)  & no\\
+\(G_3\) & \(24\) & \(\Bbb Z_4\oplus\Bbb Z_3\oplus\Bbb Z_2\) & \(12\) & no\\
+\(G_4\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+\(G_5\) & \(12\) & \(\Bbb Z_{12}\) (i.e.\ \(\Bbb Z_4\oplus\Bbb Z_3\)) & \(12\) & yes\\
+\(G_6\) & \(12\) & \(\Bbb Z_4\oplus\Bbb Z_3\) & \(12\) & yes\\
+\end{tabular}
+\end{center}
+
+\subsection*{2.\;  Classification}
+\begin{itemize}
+  \item \textbf{Order~24.}\; Only \(G_3\) has order 24, so it is
+        \emph{not} isomorphic to any other group on the list.
+
+  \item \textbf{Order~12, non‑cyclic.}\;
+        \(G_2\) is the unique non‑cyclic abelian group of order 12
+        (its exponent is~6, not~12), hence it is
+        \emph{not} isomorphic to the cyclic groups below.
+
+  \item \textbf{Order~12, cyclic.}\;
+        When two integers are coprime, the direct product of the
+        corresponding cyclic groups is cyclic of the product order:
+        \(
+          C_m\times C_n\cong C_{mn}\;(\gcd(m,n)=1).
+        \)
+        Therefore
+        \[
+          G_1\cong G_4\cong G_5\cong G_6\cong C_{12}.
+        \]
+\end{itemize}
+
+\subsection*{3.\;  Pair‑by‑pair verdict}
+Write “\,\(\cong\)” for “isomorphic” and “\(\not\cong\)” otherwise.
+\[
+\begin{array}{c|cccccc}
+        & G_1 & G_2 & G_3 & G_4 & G_5 & G_6\\\hline
+  G_1   &      & \not\cong & \not\cong & \cong & \cong & \cong\\
+  G_2   &      &           & \not\cong & \not\cong & \not\cong & \not\cong\\
+  G_3   &      &           &           & \not\cong & \not\cong & \not\cong\\
+  G_4   &      &           &           &          & \cong & \cong\\
+  G_5   &      &           &           &          &        & \cong
+\end{array}
+\]
+
+\paragraph{Summary.}
+\begin{enumerate}[label=\alph*)]
+  \item \(G_1,G_4,G_5,G_6\) form a single isomorphism class (all are cyclic of order 12).
+  \item \(G_2\) is the unique non‑cyclic group of order 12 on the list.
+  \item \(G_3\) is the only group of order 24 and hence stands alone.
+\end{enumerate}
+\end{solution}
+%----------------------------------------------------------------------
+%  Alternative write‑up mirroring the instructor’s solution in the scan
+%  (Problem 5: deciding pair‑wise isomorphisms)
+%----------------------------------------------------------------------
+
+\begin{solution}
+  Let the six groups be
+  \[
+  \Bbb Z_{12},\quad
+  \Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2,\quad
+  \Bbb Z_2\oplus\Bbb Z_3\oplus\Bbb Z_4,\quad
+  \Bbb Z_3\oplus\Bbb Z_4,\quad
+  C_{12},\quad
+  C_4\times C_3 .
+  \]
+  
+  \subsection*{Step 0.  Transitivity of isomorphism}
+  If \(A\cong B\) and \(B\cong C\) then \(A\cong C\):
+  given isomorphisms \(\varphi:A\to B\) and \(\psi:B\to C\),
+  the composite \(\psi\circ\varphi\) is a bijective homomorphism, hence an
+  isomorphism.  We may therefore group the list into isomorphism classes
+  and then check only representatives.
+  
+  \subsection*{Step 1.  A block of four mutually isomorphic groups}
+  \[
+  \boxed{\;
+    \Bbb Z_{12}\;\cong\;
+    \Bbb Z_3\oplus\Bbb Z_4\;\cong\;
+    C_{12}\;\cong\;
+    C_4\times C_3
+  \;}
+  \]
+  
+  \begin{itemize}
+    \item \textbf{Chinese Remainder Theorem (CRT).}\;
+          Because \(\gcd(3,4)=1\),
+          \(
+            \Bbb Z_{12}\cong\Bbb Z_{3}\oplus\Bbb Z_{4}.
+          \)
+    \item \textbf{Notation.}\;
+          \(C_{12}\) is simply another name for \(\Bbb Z_{12}\).
+    \item \textbf{Product of coprime cyclics.}\;
+          Again by the CRT,
+          \(
+            \Bbb Z_4\oplus\Bbb Z_3\cong\Bbb Z_{12},
+          \)
+          so \(C_4\times C_3\) is cyclic of order 12 and
+          lands in the same class.
+  \end{itemize}
+  
+  Consequently any two of these four groups are isomorphic by
+  transitivity.
+  
+  \subsection*{Step 2.  Why \(\Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2\) is not in the class}
+  
+  In a cyclic group of order~12 there exists an element of order~4.
+  In \(\Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2\) we have \(6x=0\) for every
+  \(x\) (check on generators), so the only element orders are
+  \(1,2,3,6\).
+  Since no element reaches order 4, the group cannot be cyclic of
+  order 12 and hence is not isomorphic to \(\Bbb Z_{12}\) or to any of
+  the three groups from Step 1.
+  
+  \subsection*{Step 3.  Why \(\Bbb Z_2\oplus\Bbb Z_3\oplus\Bbb Z_4\) is isolated}
+  
+  Its order is \(2\cdot3\cdot4 = 24\).  
+  All other five groups have order~12.
+  Different orders preclude isomorphism, so
+  \[
+     \Bbb Z_2\oplus\Bbb Z_3\oplus\Bbb Z_4
+     \quad\text{is not isomorphic to any of the remaining five.}
+  \]
+  
+  \subsection*{Conclusion}
+  
+  \[
+  \begin{array}{@{}l}
+  \text{Isomorphism class 1: }
+  \Bbb Z_{12}\;\simeq\;
+  \Bbb Z_3\oplus\Bbb Z_4\;\simeq\;
+  C_{12}\;\simeq\;
+  C_4\times C_3.\\[6pt]
+  \text{Isomorphism class 2: }
+  \Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2
+  \quad(\text{order }12,\;\text{non‑cyclic}).\\[6pt]
+  \text{Isomorphism class 3: }
+  \Bbb Z_2\oplus\Bbb Z_3\oplus\Bbb Z_4
+  \quad(\text{order }24).
+  \end{array}
+  \]
+  \end{solution}
+  %-----------------------------------------------------------------
+%  Step 2 (fully expanded):  why  \Bbb Z_3 \oplus \Bbb Z_2 \oplus \Bbb Z_2
+%  cannot lie in the cyclic‑12 isomorphism class
+%-----------------------------------------------------------------
+\subsubsection*{Step 2.\;  Why \( \Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2 \) is \emph{not} cyclic of order 12}
+
+\paragraph{1.\;  The exponent of \(G=\Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2\).}
+Write elements additively:
+\[
+  x=(a,b,c)\quad 
+  \bigl(a\in\Bbb Z_3,\; b\in\Bbb Z_2,\; c\in\Bbb Z_2\bigr).
+\]
+The order of \(x\) is
+\[
+  \lvert x\rvert=\operatorname{lcm}\bigl(\lvert a\rvert,\lvert b\rvert,\lvert c\rvert\bigr),
+\]
+with \(\lvert a\rvert\mid 3\) and \(\lvert b\rvert,\lvert c\rvert\mid 2\).
+Hence every element order divides
+\[
+  \operatorname{lcm}(3,2,2)=6.
+\]
+\emph{Definition.}  
+The least common multiple of the component moduli is called the
+\emph{exponent} of the group; here  
+\[
+  \exp(G)=6.
+\]
+
+\paragraph{2.\;  The relation \(6x=0\) for all \(x\in G\).}
+Because \(\exp(G)=6\),
+\[
+   6x = x+x+\dots+x = 0
+   \quad\text{for every }x\in G.
+\]
+(This can be checked directly on the generators
+\((1,0,0),\,(0,1,0),\,(0,0,1)\).)
+
+\paragraph{3.\;  Possible element orders in \(G\).}
+An element order must divide \(6\), so the only possibilities are
+\[
+  \boxed{\;1,\;2,\;3,\;6\;}.
+\]
+\emph{Crucial observation: there is \textbf{no} element of order 4.}
+
+\paragraph{4.\;  Cyclic groups of order 12 \(\bigl(\Bbb Z_{12}\bigr)\).}
+A cyclic group of order~12 necessarily contains \emph{all} divisors of~12
+as element orders (because the powers of a generator realise each
+divisor).  
+In particular such a group has an element of order \(4\).
+
+\paragraph{5.\;  Contradiction.}
+Since \(G\) lacks an element of order~4,
+\(G\) \emph{cannot} be cyclic of order 12.
+Consequently
+\[
+  G\;\not\cong\;\Bbb Z_{12},
+  \quad
+  \text{nor to any of the other three cyclic groups from Step 1.}
+\]
+
+\paragraph{6.\;  Alternate quick test.}
+\[
+   \exp(G)=6 \;<\; \lvert G\rvert=12
+   \;\Longrightarrow\;
+   G\text{ is not cyclic.}
+\]
+(For a finite group, cyclicity \(\Leftrightarrow\exp(G)=\lvert G\rvert\).)
+
+\bigskip
+\noindent
+\emph{Therefore} \(
+  \Bbb Z_3\oplus\Bbb Z_2\oplus\Bbb Z_2
+\) forms its own isomorphism class, distinct from the cyclic‑12 class.
+\begin{problem}
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item Let $n\in\mathbb{N}$ and $k\in\mathbb{Z}_n$.  Find $\operatorname{ord}_{\mathbb{Z}_n}(k)$.
+    \item Let $n,d\in\mathbb{N}$ with $d\mid n$.  Show that
+          \[
+            \mathbb{Z}_n\big/\{0,d,2d,\dots,(n/d-1)d\}\;\cong\;\mathbb{Z}_d .
+          \]
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item
+      The \emph{order} of $k\in\mathbb{Z}_n$ is the least $m\in\mathbb{N}$ such that
+      $mk \equiv 0 \pmod{n}$.
+      Write $d=\gcd(n,k)$ and set $n'=\tfrac{n}{d}$ and $k'=\tfrac{k}{d}$,
+      so $(n',k')=1$.
+      \[
+        mk\equiv 0 \pmod{n}
+        \;\Longleftrightarrow\;
+        n \mid mk
+        \;\Longleftrightarrow\;
+        \frac{n}{d}\;\Bigm|\; m\,\frac{k}{d}
+        \;\Longleftrightarrow\;
+        n' \mid m k'.
+      \]
+      Because $n'$ and $k'$ are coprime, $n'\mid m$.
+      The smallest such $m$ is therefore $n'$,
+      giving
+      \[
+        \boxed{\operatorname{ord}_{\mathbb{Z}_n}(k)=\frac{n}{\gcd(n,k)}}.
+      \]
+
+    \item
+      Define
+      \[
+        \psi:\mathbb{Z}_n \longrightarrow \mathbb{Z}_d, \qquad
+        \psi\bigl([a]_n\bigr)=[a]_d.
+      \]
+      \begin{description}
+        \item[Well‑definedness.]
+          If $[a]_n=[b]_n$ then $n\mid a-b$.  Since $d\mid n$, we also have
+          $d\mid a-b$, so $[a]_d=[b]_d$.
+        \item[Homomorphism.]
+          \(
+            \psi([a]_n+[b]_n)=\psi([a+b]_n)=[a+b]_d=[a]_d+[b]_d
+          \).
+        \item[Surjectivity.]
+          For any $[r]_d\in\mathbb{Z}_d$, $\psi([r]_n)=[r]_d$.
+        \item[Kernel.]
+          \[
+            \ker\psi
+              =\{[a]_n : d\mid a\}
+              =\{0,d,2d,\dots,(n/d-1)d\}.
+          \]
+      \end{description}
+
+      The First Isomorphism Theorem yields
+      \[
+        \mathbb{Z}_n/\ker\psi \;\cong\; \operatorname{im}\psi = \mathbb{Z}_d,
+      \]
+      which is exactly the claimed isomorphism.
+      \qedhere
+  \end{enumerate}
+\end{solution}
+\begin{example}
+  We illustrate Problem 2 with the concrete choice
+  \[
+    n=12,\quad k=8,\quad d=4\;(=\!4\mid 12).
+  \]
+
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+    %-----------------------------------------------------------------------
+    \item \textbf{Order of $k$ in $\mathbf Z_{12}$.}
+
+          First compute the greatest common divisor:
+          \[
+            \gcd(12,8)=4.
+          \]
+          The theorem predicts
+          \[
+            \operatorname{ord}_{\mathbf Z_{12}}(8)=\frac{12}{4}=3.
+          \]
+          Check directly by taking successive multiples of $8$ modulo $12$:
+          \[
+            8\equiv 8,\quad
+            2\cdot 8=16\equiv 4,\quad
+            3\cdot 8=24\equiv 0\pmod{12}.
+          \]
+          No smaller positive multiple hits $0$, so the order really is~$3$.
+
+    %-----------------------------------------------------------------------
+    \item \textbf{Quotient $\mathbf Z_{12}\big/\{0,4,8\}\cong \mathbf Z_{4}$.}
+
+          Let
+          \[
+            H=\{0,4,8\}\subseteq\mathbf Z_{12},
+          \]
+          the set of all classes in $\mathbf Z_{12}$ that are divisible by $d=4$.
+          The cosets of $H$ are
+          \[
+            \begin{aligned}
+              [0] &= \{0,4,8\}, &
+              [1] &= \{1,5,9\},\\
+              [2] &= \{2,6,10\}, &
+              [3] &= \{3,7,11\}.
+            \end{aligned}
+          \]
+          Thus the quotient group $\mathbf Z_{12}/H$ has exactly \(\lvert\mathbf Z_{12}\rvert/\lvert H\rvert=12/3=4\) elements.
+
+          Define the map
+          \[
+            \psi : \mathbf Z_{12}\longrightarrow \mathbf Z_{4},
+            \qquad
+            \psi([a]_{12})=[a]_{4}.
+          \]
+          \begin{itemize}
+            \item \emph{Homomorphism:}\;
+                  $\psi([a+b]_{12})=[a+b]_{4}=[a]_{4}+[b]_{4}=\psi([a]_{12})+\psi([b]_{12})$.
+            \item \emph{Kernel:}\;
+                  $\ker\psi = \{[a]_{12}:4\mid a\}=H$.
+            \item \emph{Surjective:}\;
+                  Every class in $\mathbf Z_{4}$ is hit, e.g.\ $\psi([r]_{12})=[r]_{4}$.
+          \end{itemize}
+          By the First Isomorphism Theorem,
+          \[
+            \mathbf Z_{12}/H \;\cong\; \mathbf Z_{4}.
+          \]
+
+          Concretely, the isomorphism sends each coset to the corresponding
+          residue modulo~\(4\):
+          \[
+            [0]\!\mapsto\!0,\;
+            [1]\!\mapsto\!1,\;
+            [2]\!\mapsto\!2,\;
+            [3]\!\mapsto\!3.
+          \]
+  \end{enumerate}
+\end{example}
+\begin{problem}
+  Let $G_1,\dots,G_s$ be groups and let $G=G_1\times\dots\times G_s$ be
+  their direct product.
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+    \item For finite–order elements $a_i\in G_i$ show that
+          \[
+            \ord_G\bigl((a_1,\dots,a_s)\bigr)
+            \;=\;
+            \lcm\bigl(\ord_{G_1}(a_1),\dots,\ord_{G_s}(a_s)\bigr).
+          \]
+    \item Show that
+          \(
+            \mathbb Z_4\oplus\mathbb Z_4
+            \not\cong
+            \mathbb Z_4\oplus\mathbb Z_2\oplus\mathbb Z_2.
+          \)
+          (Hint in the text: compare how many elements of order \(2\) each
+          group has.)
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+    %---------------------------------------------------------------------
+    \item
+      Let
+      \[
+        n_i=\ord_{G_i}(a_i)\qquad(i=1,\dots,s),\qquad
+        n=\lcm(n_1,\dots,n_s).
+      \]
+      Then \(n_i\mid n\) for every~\(i\), so
+      \[
+        (a_1,\dots,a_s)^{\!n}
+        =\bigl(a_1^{\;n},\dots,a_s^{\;n}\bigr)
+        =(e_{G_1},\dots,e_{G_s})=e_G,
+      \]
+      which shows \(\ord_G(a_1,\dots,a_s)\le n\).
+
+      Conversely, write \(m=\ord_G(a_1,\dots,a_s)\).
+      Because \((a_1,\dots,a_s)^{\!m}=e_G\),
+      we have \(a_i^{\,m}=e_{G_i}\) for each \(i\),
+      hence \(n_i\mid m\).
+      Therefore \(n=\lcm(n_1,\dots,n_s)\mid m\),
+      so \(m\ge n\).
+      Combining the two inequalities gives \(m=n\), i.e.
+      \[
+        \boxed{\ord_G(a_1,\dots,a_s)=\lcm\bigl(\ord(a_1),\dots,\ord(a_s)\bigr)}.
+      \]
+
+      \paragraph{Concrete illustration.}
+      Take
+      \(G_1=\mathbb Z_4\), \(G_2=\mathbb Z_6\), \(G_3=\mathbb Z_8\) and
+      \[
+        a_1=2\pmod 4,\qquad
+        a_2=3\pmod 6,\qquad
+        a_3=4\pmod 8.
+      \]
+      Their individual orders are
+      \(\ord(a_1)=2\), \(\ord(a_2)=2\), \(\ord(a_3)=2\),
+      so the formula predicts
+      \[
+        \ord\bigl((2,3,4)\bigr)=\lcm(2,2,2)=2.
+      \]
+      Indeed
+      \((2,3,4)^2=(4,6,8)\equiv(0,0,0)\), and no smaller positive power
+      annihilates the element.
+
+    %---------------------------------------------------------------------
+    \item
+      By part (a) (in its additive language) and the formula from Problem 2,
+      an element \((a,b)\in\mathbb Z_4\oplus\mathbb Z_4\) has order
+      \[
+        \ord\bigl((a,b)\bigr)=\lcm\!\left(
+          \frac{4}{\gcd(a,4)},\;
+          \frac{4}{\gcd(b,4)}
+        \right).
+      \]
+      This equals \(2\) **iff**
+      \(\frac{4}{\gcd(a,4)}=2=\frac{4}{\gcd(b,4)}\), i.e.
+      \(\gcd(a,4)=\gcd(b,4)=2\).
+      The only residues modulo \(4\) with \(\gcd(\,\cdot\, ,4)=2\)
+      are \(2\) and \(2\) itself, so \(a,b\in\{2\}\).
+      But \(a\) and \(b\) cannot *both* be \(0\) or \(2\) simultaneously
+      (that would make the lcm equal to \(1\) or \(2\) incorrectly),
+      hence the order‑\(2\) elements are
+      \[
+        (2,0),\;(0,2),\;(2,2).
+      \]
+      Thus \(\mathbb Z_4\oplus\mathbb Z_4\) has **exactly 3**
+      elements of order \(2\).
+
+      Now let \((a,b,c)\in\mathbb Z_4\oplus\mathbb Z_2\oplus\mathbb Z_2\).
+      Again using part (a),
+      \[
+        \ord(a,b,c)=\lcm\!\left(
+          \frac{4}{\gcd(a,4)},\;
+          \frac{2}{\gcd(b,2)},\;
+          \frac{2}{\gcd(c,2)}
+        \right).
+      \]
+      To obtain order \(2\) we need
+      \[
+        \frac{4}{\gcd(a,4)},\;
+        \frac{2}{\gcd(b,2)},\;
+        \frac{2}{\gcd(c,2)}
+        \;\in\;\{1,2\}
+        \quad\text{and not all equal to }1.
+      \]
+      Concretely, \(a\) must be \(0\) or \(2\), while
+      \((b,c)\neq(0,0)\).
+      That gives
+      \[
+        2\ \text{choices for }a\;\times\;(2^2-1)=3\ \text{choices for }(b,c)
+        =6
+      \]
+      elements—but we must exclude the one case where \((a,b,c)=(0,0,0)\),
+      so altogether there are **7** elements of order \(2\).
+
+      Because isomorphisms preserve element orders, the two groups cannot be
+      isomorphic:
+      \[
+        \boxed{
+          \mathbb Z_4\oplus\mathbb Z_4
+          \ \not\cong\
+          \mathbb Z_4\oplus\mathbb Z_2\oplus\mathbb Z_2
+        }.
+      \]
+      (One has \(3\) elements of order \(2\), the other \(7\).)
+  \end{enumerate}
+\end{solution}
+\begin{theorem}[Chinese Remainder Theorem – integer version]
+  \label{thm:CRT-integers}
+  Let $n_{1},\dots,n_{k}\in\mathbb Z_{>0}$ be pairwise coprime
+  ($\gcd(n_{i},n_{j})=1$ for $i\neq j$).
+  Set $N=n_{1}n_{2}\dots n_{k}$.
+  \begin{enumerate}[label=\textup{(\roman*)}]
+    \item For any integers $a_{1},\dots,a_{k}$ the system of congruences
+    \[
+      x\equiv a_{1}\pmod{n_{1}},\;
+      \dots,\;
+      x\equiv a_{k}\pmod{n_{k}}
+    \]
+    has a solution $x\in\mathbb Z$.
+    \item The solution is unique modulo $N$:
+          if $x$ and $y$ both satisfy the system, then $x\equiv y\pmod{N}$.
+  \end{enumerate}
+  Equivalently,
+  \[
+    \boxed{\;
+      \mathbb Z/N\mathbb Z
+      \;\;\cong\;\;
+      \mathbb Z/n_{1}\mathbb Z\;\times\;\dots\;\times\;
+      \mathbb Z/n_{k}\mathbb Z
+    \;}
+  \]
+  via the map $[x]_{N}\mapsto\bigl([x]_{n_{1}},\dots,[x]_{n_{k}}\bigr)$.
+  \end{theorem}
+  
+  \begin{theorem}[Chinese Remainder Theorem – ring version]
+  \label{thm:CRT-rings}
+  Let $R$ be a commutative ring with $1$, and let $I_{1},\dots,I_{k}$ be
+  pairwise comaximal ideals
+  ($I_{i}+I_{j}=R$ whenever $i\neq j$).
+  Then
+  \[
+    \boxed{\;
+      R\Bigl/\bigl(\,I_{1}\cap\dots\cap I_{k}\bigr)
+      \;\;\cong\;\;
+      R/I_{1}\;\times\;\dots\;\times\;R/I_{k}
+    \;}
+  \]
+  by the canonical homomorphism
+  \(
+    r \;\mapsto\; (\,r+I_{1},\,\dots,\,r+I_{k}\,).
+  \)
+  \end{theorem}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  All elements of A_4 and their orders
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+  Recall that the alternating group
+  \(
+    A_{4}\subset S_{4}
+  \)
+  consists of the \emph{even} permutations of four letters.
+  A permutation is even iff its cycle decomposition contains an \emph{even}
+  number of cycles of even length.
+  
+  \subsection*{1.\;Classification of even permutations in $S_{4}$}
+  \begin{itemize}
+    \item \textbf{Identity.} One element \(e\) (order 1).
+    \item \textbf{3–cycles.}  
+          A cycle of length 3 is even:
+          its disjoint‑cycle form has one cycle of length 3 and
+          one fixed point (cycle of length 1), so the total number of even‑length
+          cycles is \(0\) (even).
+          Counting: each 3‑element subset of \(\{1,2,3,4\}\) gives two
+          orientations, hence
+          \(4\choose 3\)\(\times 2 = 8\) such cycles.
+    \item \textbf{Double transpositions.}  
+          A product of two disjoint transpositions
+          \(\bigl((ab)(cd)\bigr)\) is even because it has \emph{two}
+          cycles of even length.
+          There are exactly three of them:
+          \((12)(34),\,(13)(24),\,(14)(23)\).
+  \end{itemize}
+  
+  Thus
+  \[
+    A_{4}\;=\;
+    \Bigl\{
+      e,\,
+      (12)(34),\,(13)(24),\,(14)(23),\,
+      (123),\,(132),\,(124),\,(142),\,(234),\,(243),\,(134),\,(143)
+    \Bigr\},
+  \]
+  and \(|A_{4}|=1+3+8=12\).
+  
+  \subsection*{2.\;Orders of the elements}
+  
+  \begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{|c|c|}
+  \hline
+  \textbf{Type} & \textbf{Order} \\ \hline
+  Identity \(e\)                         & \(1\) \\ \hline
+  3‑cycles \((123),(132),(124),(142),(234),(243),(134),(143)\) & \(3\) \\ \hline
+  Double transpositions
+  \((12)(34),(13)(24),(14)(23)\)         & \(2\) \\ \hline
+  \end{tabular}
+  \end{center}
+  
+  \medskip\noindent
+  In summary:
+  \[
+    \boxed{\;
+      \text{identity (1 element) of order }1,\;
+      \text{three double transpositions of order }2,\;
+      \text{eight 3‑cycles of order }3
+    \;}
+  \]
+  which exhausts the 12 elements of \(A_{4}\).
+  \end{solution}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Chinese Remainder Theorem applied to 3 and 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{example}[CRT for coprime cyclic groups]
+  We show explicitly that 
+  \[
+    \boxed{\;\mathbb Z_{3}\times\mathbb Z_{5}\;\cong\;\mathbb Z_{15}\;}
+  \]
+  using the Chinese Remainder Theorem (CRT).
+  
+  \subsection*{1.  CRT statement (two moduli)}
+  For coprime integers $m,n$ the map
+  \[
+    \varphi:\mathbb Z_{mn}\longrightarrow 
+            \mathbb Z_{m}\times\mathbb Z_{n},
+    \qquad
+    \varphi\bigl([x]_{mn}\bigr)=\bigl([x]_{m},[x]_{n}\bigr)
+  \]
+  is a group isomorphism (additive notation).
+  
+  \subsection*{2.  Specialise to $m=3$, $n=5$}
+  Set $N=mn=15$.  Then
+  \[
+    \varphi:\mathbb Z_{15}\;\longrightarrow\;
+            \mathbb Z_{3}\times\mathbb Z_{5},
+    \qquad
+    [x]_{15}\;\longmapsto\;\bigl([x]_{3},[x]_{5}\bigr).
+  \]
+  
+  \begin{enumerate}[label=\textup{(\roman*)}]
+    \item \textbf{Homomorphism:} 
+          $\varphi([x+y]_{15})=(\,[x+y]_{3},[x+y]_{5}\,)
+          =( \,[x]_{3},[x]_{5}\,)+( \,[y]_{3},[y]_{5}\,)
+          =\varphi([x]_{15})+\varphi([y]_{15})$.
+  
+    \item \textbf{Kernel:} 
+          \[
+            \ker\varphi
+            =\{[x]_{15}\mid x\equiv0\pmod3\text{ and }x\equiv0\pmod5\}
+            =[0]_{15},
+          \]
+          because $0$ is the only residue $\le14$ divisible by both $3$ and $5$.
+  
+    \item \textbf{Surjectivity:} 
+          Given any pair $\bigl([a]_{3},[b]_{5}\bigr)$,
+          the CRT guarantees a unique $x\pmod{15}$ solving
+          $x\equiv a\pmod3$, $x\equiv b\pmod5$.
+          Hence every element of $\mathbb Z_{3}\times\mathbb Z_{5}$ is hit.
+  \end{enumerate}
+  
+  Since $\varphi$ is a bijective homomorphism, it is an isomorphism, proving
+  \[
+    \mathbb Z_{15}\;\cong\;\mathbb Z_{3}\times\mathbb Z_{5}.
+  \]
+  
+  \subsection*{3.  Cyclic reinterpretation}
+  \begin{itemize}
+    \item $\mathbb Z_{15}$ is cyclic, generated by $[1]_{15}$.
+    \item Under $\varphi$, this generator maps to $(1,1)$.
+          Its order is $\operatorname{lcm}(3,5)=15$, so 
+          $(1,1)$ itself generates $\mathbb Z_{3}\times\mathbb Z_{5}$.
+  \end{itemize}
+  Thus the direct product of two \emph{coprime} cyclic groups is again cyclic,
+  and the CRT provides the explicit bridge between the two descriptions.
+  \end{example}
+  \paragraph{Why every \(3\)-cycle is an \emph{even} permutation.}
+
+There are two common ways to see this.
+
+\medskip
+\textbf{(1)  Transposition count.}
+Any cycle of length \(r\) can be expressed as a product of \(r-1\)
+transpositions:
+\[
+  (a_{1}\,a_{2}\,\dots\,a_{r})
+  \;=\;
+  (a_{1}\,a_{r})\,(a_{1}\,a_{r-1})\cdots(a_{1}\,a_{2}).
+\]
+For \(r=3\) that is  
+\[
+  (a\,b\,c)=(a\,c)\,(a\,b),
+\]
+which involves \emph{exactly two} transpositions.
+Because the parity of a permutation equals the parity of any transposition
+decomposition, a \(3\)-cycle is even (two is an even number).
+
+\medskip
+\textbf{(2)  Even–cycle criterion.}
+Another characterization says a permutation is even
+iff its disjoint‑cycle decomposition contains an \emph{even number of
+even‑length cycles}.
+In \(S_{4}\) a \(3\)-cycle always appears as
+\[
+  (a\,b\,c)\;(d),
+\]
+namely one cycle of length \(3\) and one fixed point \((d)\), which is a cycle
+of length \(1\).
+Here the count of \emph{even‑length} cycles is
+\[
+  \underbrace{0}_{\text{from the 3‑cycle}}
+  \;+\;
+  \underbrace{0}_{\text{from the 1‑cycle}}
+  \;=\;0,
+\]
+and \(0\) is itself even.
+Hence the permutation is even.
+
+\medskip
+Either viewpoint confirms that every \(3\)-cycle in \(S_{4}\)
+belongs to the alternating group \(A_{4}\).
+\[
+\boxed{\;
+  D_{n}\;=\;
+  \langle\, r,s \;\bigm|\; r^{\,n}=e,\; s^{2}=e,\; srs = r^{-1}\,\rangle
+\;}
+\]
+
+\begin{itemize}
+  \item $r$ represents a counter‑clockwise rotation of a regular $n$‑gon,
+        so $r^{\,n}=e$.
+  \item $s$ represents any one reflection (a flip across an axis),
+        so $s^{2}=e$.
+  \item The relation $srs=r^{-1}$ captures the geometric fact that a
+        reflection reverses the orientation of a rotation.
+\end{itemize}
+
+A convenient normal form for the $2n$ elements is
+\[
+  D_{n}
+  =\bigl\{\,r^{k}\;(0\le k\le n-1),\;\;
+           s\,r^{k}\;(0\le k\le n-1)\bigr\}.
+\]
+Rotations $r^{k}$ have order $\tfrac{n}{\gcd(n,k)}$,
+while each reflection $sr^{k}$ has order $2$.
+\begin{solution}
+  Let 
+  \[
+    Q_{8}= \{\pm 1,\pm i,\pm j,\pm k \mid i^{2}=j^{2}=k^{2}=-1,\; ij=k,\; jk=i,\; ki=j\}
+  \]
+  act on the set of its subgroups by conjugation:
+  \[
+    g\cdot H \;=\; gHg^{-1}\quad (g\in Q_{8},\, H\le Q_{8}).
+  \]
+
+  \begin{enumerate}
+    \item \textbf{Identify the subgroup.}\\
+          Set 
+          \[
+            H=\{1,-1,i,-i\}= \langle i\rangle \cong C_{4}.
+          \]
+
+    \item \textbf{Check normality.}\\
+          $Q_{8}$ is a \emph{Hamiltonian} group, so \emph{every} subgroup is normal.  
+          Equivalently, for any $g\in Q_{8}$,
+          \[
+            g\,i\,g^{-1}\in\{\pm i\}\subseteq H
+            \quad\Longrightarrow\quad
+            gHg^{-1}=H.
+          \]
+
+    \item \textbf{Determine the stabilizer.}\\
+          The stabilizer (normalizer) of $H$ in $Q_{8}$ is
+          \[
+            N_{Q_{8}}(H)=\{g\in Q_{8}\mid gHg^{-1}=H\}=Q_{8}.
+          \]
+          Hence the entire group fixes $H$ setwise.
+  \end{enumerate}
+
+  \vspace{0.5em}
+  \textbf{Result.}\;
+  The stabilizer of the subgroup $\{1,-1,i,-i\}$ under conjugation by $Q_{8}$ is the whole quaternion group $Q_{8}$ itself.
+\end{solution}
+\begin{explanation}
+  A (non-abelian) group in which \emph{every} subgroup is normal is called
+  a \textbf{Hamiltonian group}.
+  To see why the quaternion group
+  \[
+    Q_8=\{\pm1,\pm i,\pm j,\pm k\mid i^2=j^2=k^2=-1,\;
+           ij=k,\; jk=i,\; ki=j\}
+  \]
+  is Hamiltonian—and hence why \emph{every} subgroup, including
+  $H=\{1,-1,i,-i\}$, is normal—we can argue in two complementary ways.
+
+  %--------------------------------------------------------------------
+  \subsection*{1.\  Direct element-by-element verification}
+  The centre of $Q_8$ is $Z(Q_8)=\{\pm1\}$.  
+  For any $g\in Q_8\smallsetminus Z(Q_8)$ we have
+  $g^2=-1\in Z(Q_8)$, so
+  \[
+      g h g^{-1}=g h\,(-g)=-(ghg)\qquad(h\in Q_8).
+  \]
+  In particular, conjugation by \emph{any} element merely flips the sign
+  of the element being conjugated:
+  \[
+     g\,(\pm i)\,g^{-1}=\pm i,\qquad
+     g\,(\pm j)\,g^{-1}=\pm j,\qquad
+     g\,(\pm k)\,g^{-1}=\pm k.
+  \]
+  Hence the sets
+  $\langle i\rangle=\{1,-1,i,-i\}$,
+  $\langle j\rangle=\{1,-1,j,-j\}$,
+  $\langle k\rangle=\{1,-1,k,-k\}$
+  are all invariant under conjugation, i.e.\ \emph{normal}.
+  Because \emph{every} subgroup of $Q_8$ is one of
+  \[
+    \{1\},\;
+    \{\pm1\},\;
+    \langle i\rangle,\;
+    \langle j\rangle,\;
+    \langle k\rangle,\;
+    Q_8,
+  \]
+  all subgroups are normal.
+
+  %--------------------------------------------------------------------
+  \subsection*{2.\  Structural classification}
+  A classical theorem (Baer\,–\,Hall) says that the only finite
+  non-abelian groups in which \emph{all} subgroups are normal are the
+  direct products
+  \[
+     Q_8\times C_2^{\,r}\times A,
+  \]
+  where $r\ge 0$ and $A$ is an abelian group of odd order.
+  In particular, $Q_8$ itself is the \emph{smallest} non-abelian
+  Hamiltonian group, so by definition every subgroup is normal.
+
+  %--------------------------------------------------------------------
+  \paragraph{Conclusion.}
+  Since $Q_8$ is Hamiltonian, the subgroup
+  $H=\{1,-1,i,-i\}$ is normal, i.e.
+  $gHg^{-1}=H$ for all $g\in Q_8$.
+  Therefore its stabiliser (normaliser) under the conjugation action is
+  the whole group:
+  \[
+     N_{Q_8}(H)=Q_8.\qedhere
+  \]
+\end{explanation}
+\begin{explanation}
+  The statement  
+  \[
+     Q_{8} \text{ is the semidirect product of }
+     H=\{1,-1\}\cong C_{2} 
+     \text{ and }
+     K=\{1,-1,j,-j\}\cong C_{4}
+  \]
+  is \textbf{false}, because \(H\) and \(K\) fail the defining
+  conditions for an \emph{internal semidirect product}.
+
+  \medskip
+  Recall that, for subgroups \(H,K\le G\), we have
+  \[
+     G = H\rtimes K
+     \quad\Longleftrightarrow\quad
+     \begin{cases}
+        \text{(i)} & H\unlhd G,\\
+        \text{(ii)}& H\cap K=\{1\},\\
+        \text{(iii)}& HK=G.
+     \end{cases}
+  \]
+
+  \paragraph{Failure of condition (ii).}
+  For \(H=\{1,-1\}\) and \(K=\{1,-1,j,-j\}\subseteq Q_{8}\),
+  \[
+     H\cap K = \{1,-1\}= H \neq \{1\},
+  \]
+  so the intersection is \emph{not} trivial.
+
+  \paragraph{Failure of condition (iii).}
+  Because \(H\subseteq K\), we obtain
+  \[
+     HK = K = \{1,-1,j,-j\},
+  \]
+  whose order is \(4\), whereas \(|Q_{8}|=8\).
+  Hence \(HK\neq Q_{8}\).
+
+  \medskip
+  Since conditions (ii) and (iii) both fail, \(Q_{8}\) cannot be
+  expressed as the semidirect product \(H\rtimes K\).
+\end{explanation}
+\end{document}

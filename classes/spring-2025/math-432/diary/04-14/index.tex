@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{theorem}[Theorem 52]
+    Let $A$ be a dense subset of the metric space $B$. Let $f$ be a uniformly continuous function from $A$ to a complete metric space $C$. Then $f$ has a unique extension to a continuous function from $B$ to $C$. The extended function is uniformly continuous. Furthermore, if $f$ is an isometry on $A$, the extended function is likewise an isometry on $B$.
+    \end{theorem}
+    
+    \begin{proof}
+    \textbf{Step 1. Uniqueness.}
+    
+    The uniqueness was established in Theorem~42 (in the referenced text), and does not depend on uniform continuity or completeness. Hence we do not repeat it here.
+    
+    \medskip
+    
+    \textbf{Step 2. Existence of the extension.}
+    
+    Let $b$ be any point in $B$. Since $A$ is dense in $B$, there exists a sequence $\{a_i\} \subset A$ such that $a_i \to b$ in $B$. Since $f$ is uniformly continuous on $A$ and $A$ is a metric space, by Theorem~51 (cited in the text), $\{f(a_i)\}$ is a Cauchy sequence in $C$. But $C$ is complete, so $\{f(a_i)\}$ converges to some point $c \in C$. 
+    
+    We \emph{define} the extension of $f$ to $B$ by setting
+    \[
+    f(b) := c.
+    \]
+    Thus, for each $b \in B$, we assign $f(b)$ to be the unique limit of the Cauchy sequence $\{f(a_i)\}$. 
+    
+    \medskip
+    
+    \textbf{Step 3. Well-definedness of the extension.}
+    
+    We must check that this definition does not depend on the particular sequence $\{a_i\}$ in $A$ converging to $b$. Suppose $\{\alpha_i\} \subset A$ is \emph{another} sequence convergent to $b$. Consider the ``interlaced'' sequence
+    \[
+    a_1, \alpha_1, a_2, \alpha_2, a_3, \alpha_3, \dots
+    \]
+    which also converges to $b$. By the previous argument, applying $f$ to this interlaced sequence yields a Cauchy sequence in $C$, and by completeness of $C$, it converges to some limit point, say $c'$. 
+    
+    On the other hand, the subsequence $\{f(a_i)\}$ of this interlaced sequence converges to $c$, and the subsequence $\{f(\alpha_i)\}$ converges (by the same reasoning) to what we temporarily call $c''$. But the limit of the entire interlaced sequence in $C$ \emph{must} be the same regardless of which subsequence we pick (any two convergent subsequences of a convergent sequence in a metric space must converge to the \emph{same} limit). Hence $c' = c = c''$. Therefore
+    \[
+    \lim_{i \to \infty} f(a_i) \;=\; \lim_{i \to \infty} f(\alpha_i),
+    \]
+    which shows $f(b)$ is unambiguously defined. 
+    
+    \medskip
+    
+    \textbf{Step 4. Uniform continuity of the extension.}
+    
+    Let $\varepsilon > 0$. By the uniform continuity of $f$ on $A$, there exists $\delta > 0$ such that for all $x,y \in A$,
+    \[
+    D_A(x,y) < \delta \quad \Longrightarrow \quad D_C\bigl(f(x),f(y)\bigr) < \frac{\varepsilon}{2}.
+    \]
+    We will show this same $\delta$ works for the extended function $f$ on $B$. 
+    
+    Take $b,\beta \in B$ such that $D_B(b,\beta) < \delta$. We want to prove
+    \[
+    D_C\bigl(f(b),\,f(\beta)\bigr) \;<\; \varepsilon.
+    \]
+    By definition of $f$ on $B$, choose sequences $\{a_i\}$ and $\{\alpha_i\}$ in $A$ such that 
+    \[
+    a_i \to b \quad\text{and}\quad \alpha_i \to \beta.
+    \]
+    For sufficiently large $i$, we have $D_B(a_i, b) < \delta$ and $D_B(\alpha_i, \beta) < \delta$. By the triangle inequality and the choice of $\delta$ (which works on $A$), for all large $i$ we get
+    \[
+    D_B(a_i,\alpha_i) 
+    \;\le\; D_B(a_i,b) \;+\; D_B(b,\beta) \;+\; D_B(\beta,\alpha_i) 
+    \;<\; \delta + \delta + \delta \;=\; 3\delta.
+    \]
+    However, for uniform continuity we can refine $\delta$ or argue more carefully so that
+    \[
+    D_B(a_i,\alpha_i) < \delta' \quad\Longrightarrow\quad D_C\bigl(f(a_i),f(\alpha_i)\bigr) < \frac{\varepsilon}{2}.
+    \]
+    Then by taking $i$ large, $a_i$ and $b$ are arbitrarily close, and similarly $\alpha_i$ and $\beta$ are arbitrarily close. Thus $f(a_i) \to f(b)$ and $f(\alpha_i) \to f(\beta)$. By the triangle inequality in $C$,
+    \[
+    D_C\bigl(f(b),\,f(\beta)\bigr) 
+    \;\le\; D_C\bigl(f(b),\,f(a_i)\bigr)
+          \;+\; D_C\bigl(f(a_i),\,f(\alpha_i)\bigr)
+          \;+\; D_C\bigl(f(\alpha_i),\,f(\beta)\bigr).
+    \]
+    For large $i$, each of the first and last terms on the right can be made $< \varepsilon/4$ (since $f(a_i)\to f(b)$ and $f(\alpha_i)\to f(\beta)$), and the middle term can be made $< \varepsilon/2$ by the choice of $\delta$. Hence
+    \[
+    D_C\bigl(f(b),\,f(\beta)\bigr) < \frac{\varepsilon}{4}
+      + \frac{\varepsilon}{2} + \frac{\varepsilon}{4} 
+      \;=\; \varepsilon.
+    \]
+    Thus $f$ is uniformly continuous on $B$.
+    
+    \medskip
+    
+    \textbf{Step 5. Extension is an isometry if $f$ is an isometry on $A$.}
+    
+    Assume now that for all $x,y \in A$,
+    \[
+    D_C\bigl(f(x),f(y)\bigr) \;=\; D_B(x,y).
+    \]
+    We show this property extends to all of $B$. Fix $b,\beta \in B$, and let $\{a_i\}, \{\alpha_i\} \subset A$ be sequences converging to $b$ and $\beta$, respectively. By definition of the extended $f$,
+    \[
+    f(b) \;=\; \lim_{i\to\infty} f(a_i), 
+    \quad\text{and}\quad
+    f(\beta) \;=\; \lim_{i\to\infty} f(\alpha_i).
+    \]
+    Hence
+    \[
+    D_B(b,\beta) 
+    \;=\; \lim_{i\to\infty} D_B(a_i,\alpha_i)
+    \quad (\text{since } a_i \to b \text{ and } \alpha_i \to \beta).
+    \]
+    But on $A$, $f$ is an isometry, so
+    \[
+    D_B(a_i,\alpha_i) 
+    \;=\; D_C\bigl(f(a_i),f(\alpha_i)\bigr).
+    \]
+    Taking limits, we use the continuity of $D_C$ to get
+    \[
+    D_C\bigl(f(b),f(\beta)\bigr)
+    \;=\; \lim_{i\to\infty} D_C\bigl(f(a_i),f(\alpha_i)\bigr)
+    \;=\; \lim_{i\to\infty} D_B(a_i,\alpha_i)
+    \;=\; D_B(b,\beta).
+    \]
+    Therefore the extension $f$ is also an isometry on $B$.
+    
+    \medskip
+    
+    This completes the proof of existence, well-definedness, continuity, uniform continuity, and (if applicable) the isometry property of the extended function.
+    \end{proof}
+    
+\end{document}

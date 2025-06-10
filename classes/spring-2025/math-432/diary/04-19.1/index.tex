@@ -1,0 +1,552 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432: HW 9}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  Let $(M,D)$ be a metric space and let $A\subseteq M$.  
+  Define the \emph{distance–to–$A$ function}
+  \[
+      f:M\longrightarrow\mathbb R,\qquad 
+      f(x):=D(x,A):=\inf_{a\in A}D(x,a).
+  \]
+  Show that $f$ is continuous on $M$.
+\end{problem}
+
+\begin{proof}
+  We break the argument into two parts.
+
+  \begin{enumerate}
+      \item \textbf{Lipschitz estimate.}  
+            For arbitrary $x,y\in M$ we claim
+            \begin{align}
+                |f(x)-f(y)|\le D(x,y). \tag{1}
+            \end{align}
+
+            \begin{enumerate}
+                \item Fix $x,y\in M$ and an element $a\in A$.  
+                      By the triangle inequality,
+                      \[
+                          D(x,a)\le D(x,y)+D(y,a).
+                      \]
+                      Taking the infimum over $a\in A$ on both sides yields
+                      \[
+                          f(x)=\inf_{a\in A}D(x,a)\le D(x,y)+\inf_{a\in A}D(y,a)=D(x,y)+f(y),
+                      \]
+                      i.e.\ $f(x)-f(y)\le D(x,y)$.
+                \item Interchanging the roles of $x$ and $y$ gives
+                      $f(y)-f(x)\le D(x,y)$.
+                \item Combining the two inequalities we obtain (1).
+            \end{enumerate}
+
+      \item \textbf{Continuity of $f$.}  
+            Fix $x\in M$ and $\varepsilon>0$.  
+            Choose $\delta:=\varepsilon$.  
+            If $y\in M$ satisfies $D(x,y)<\delta$, then by (1)
+            \[
+                |f(x)-f(y)|\le D(x,y)<\delta=\varepsilon.
+            \]
+            Hence $f$ is continuous at $x$.  
+            Because $x$ was arbitrary, $f$ is continuous on all of $M$.
+  \end{enumerate}
+\end{proof}
+
+\begin{problem}
+  Let $(M,D)$ be a metric space, let $A\subseteq M$ be \emph{closed},
+  and choose a point $y\in M\setminus A$.  
+  Show that there exists a \textbf{continuous}
+  function $f:M\to\Bbb R$ such that
+  \[
+      f\!\restriction_{A}=0
+      \quad\text{but}\quad 
+      f(y)\neq 0 .
+  \]
+\end{problem}
+%------------------------------------------------
+% Distance–to–A map: concrete illustrations
+%------------------------------------------------
+\begin{example}
+  Let $(M,D)$ be a metric space and $A\subseteq M$.  
+  Define the \emph{distance–to–$A$} map
+  \begin{align}
+      f_A:M\longrightarrow\mathbb R_{\ge 0},\qquad 
+      f_A(x)=D(x,A)=\inf_{a\in A} D(x,a).
+  \end{align}
+  Below are several explicit instances.
+
+  \begin{enumerate}
+      \item \textbf{Single point in $\mathbb R$.}\\
+            $M=\mathbb R$, $A=\{0\}$.  Then
+            \begin{align}
+                f_A(x)=|x|.
+            \end{align}
+
+      \item \textbf{Closed interval in $\mathbb R$.}\\
+            $M=\mathbb R$, $A=[a,b]$ with $a<b$.  Then
+            \begin{align}
+                f_A(x)=
+                \begin{cases}
+                    0,     & a\le x\le b,\\[4pt]
+                    a-x,   & x<a,\\[4pt]
+                    x-b,   & x>b.
+                \end{cases}
+            \end{align}
+
+      \item \textbf{Integers inside $\mathbb R$.}\\
+            $M=\mathbb R$, $A=\mathbb Z$.  Then
+            \begin{align}
+                f_A(x)=\min_{n\in\mathbb Z}|x-n|
+            \end{align}
+            is the distance from $x$ to the nearest integer.
+
+      \item \textbf{Line in the plane.}\\
+            $M=\mathbb R^{2}$ with the Euclidean metric,  
+            $A=\{(x,0)\mid x\in\mathbb R\}$ (the $x$‑axis).  Then
+            \begin{align}
+                f_A(x,y)=|y|.
+            \end{align}
+
+      \item \textbf{Circle in the plane.}\\
+            $M=\mathbb R^{2}$,  
+            $A=\{(x,y)\mid x^{2}+y^{2}=r^{2}\}$ (radius $r>0$ centred at the origin).  
+            Then
+            \begin{align}
+                f_A(x,y)=\Bigl|\sqrt{x^{2}+y^{2}}-r\Bigr|.
+            \end{align}
+
+      \item \textbf{Discrete metric space.}\\
+            Let $D(x,y)=\begin{cases}0,&x=y,\\ 1,&x\neq y.\end{cases}$ on $M$.  
+            For any $A\subseteq M$,
+            \begin{align}
+                f_A(x)=
+                \begin{cases}
+                    0, & x\in A,\\[4pt]
+                    1, & x\notin A.
+                \end{cases}
+            \end{align}
+
+      \item \textbf{Closed ball in $\mathbb R^{n}$.}\\
+            $M=\mathbb R^{n}$,   
+            $A=\overline{B}(c,R)=\{x\in\mathbb R^{n}\mid \|x-c\|\le R\}$.  Then
+            \begin{align}
+                f_A(x)=\max\{\|x-c\|-R,\,0\}.
+            \end{align}
+  \end{enumerate}
+\end{example}
+\begin{proof}
+  \textbf{Step 1 – Define the candidate function.}  
+  For every $x\in M$ set
+  \[
+      f(x):=D(x,A):=\inf_{a\in A}D(x,a).
+  \]
+  In the previous problem we proved that the map
+  $x\mapsto D(x,A)$ is \emph{1‑Lipschitz}, hence continuous on $M$.
+
+  \medskip
+  \textbf{Step 2 – Verify that $f$ vanishes on $A$.}  
+  If $x\in A$, then the infimum in the definition of $f(x)$ is attained at
+  $a=x$, so
+  \[
+      f(x)=D(x,x)=0 .
+  \]
+  Thus $f\!\restriction_{A}=0$.
+
+  \medskip
+  \textbf{Step 3 – Show that $f(y)>0$.}  
+  Because $A$ is closed and $y\notin A$, the point $y$ has positive
+  distance from $A$:
+  \[
+      d:=D(y,A)=\inf_{a\in A}D(y,a)\;>\;0.
+  \]
+  Indeed, if $d$ were $0$ there would exist a sequence $(a_n)\subseteq A$
+  with $D(y,a_n)<\tfrac1n$, whence $a_n\to y$.  
+  Closedness of $A$ would then force $y\in A$, contradicting $y\notin A$.
+  Consequently $f(y)=d\neq 0$.
+
+  \medskip
+  \textbf{Step 4 – Conclusion.}  
+  The function $f$ is continuous on $M$, satisfies $f|_{A}=0$, and takes
+  the non‑zero value $f(y)=d$ at the prescribed point $y$.  This completes
+  the proof.
+\end{proof}
+\begin{problem}
+  Let $X$ and $Y$ be metric spaces and $f:X\to Y$ be a map.
+
+  \begin{enumerate}
+      \item[(a)]  Suppose $X=\bigcup_{i\in I}U_i$ where each $U_i\subseteq X$ is
+      \emph{open} and the restriction $f\!\restriction_{U_i}$ is continuous for
+      every $i\in I$.  
+      Show that $f$ is continuous on $X$.
+
+      \item[(b)]  Let $n\in\Bbb N$ and suppose
+      $
+          X=\bigcup_{i=1}^{n}F_i
+      $
+      where each $F_i\subseteq X$ is \emph{closed} and 
+      $f\!\restriction_{F_i}$ is continuous for $i=1,\dots,n$.
+      Prove that $f$ is continuous on $X$.
+
+      \item[(c)]  Decide whether the conclusion of part~(b) remains true if
+      the finite family $\{F_i\}_{i=1}^{n}$ is replaced by an \emph{infinite}
+      family of closed sets.  Justify your answer.
+  \end{enumerate}
+\end{problem}
+
+\begin{proof}
+  Throughout, recall the \emph{open–set characterisation} of continuity:
+  $f$ is continuous on $X$ iff $f^{-1}(V)$ is open in $X$ for every open
+  $V\subseteq Y$.
+
+  \medskip
+  \noindent\textbf{(a)  Union of open sets.}
+  Let $V\subseteq Y$ be open.  Then
+  \[
+      f^{-1}(V)
+      =\bigcup_{i\in I}\!\bigl(f^{-1}(V)\cap U_i\bigr)
+      =\bigcup_{i\in I}\!\bigl(f\!\restriction_{U_i}\bigr)^{-1}(V).
+  \]
+  For each $i$, $f\!\restriction_{U_i}$ is continuous, so
+  $\bigl(f\!\restriction_{U_i}\bigr)^{-1}(V)$ is open in $U_i$, and thus
+  open in $X$ because $U_i$ itself is open.
+  The union of \emph{any} collection of open subsets of $X$ is open, hence
+  $f^{-1}(V)$ is open.  Therefore $f$ is continuous on~$X$.
+
+  \medskip
+  \noindent\textbf{(b)  Finite union of closed sets.}
+  Let $G\subseteq Y$ be open.  Write
+  \[
+      f^{-1}(G)
+      =\bigcup_{i=1}^{n}\!\bigl(f^{-1}(G)\cap F_i\bigr)
+      =\bigcup_{i=1}^{n}\!\bigl(f\!\restriction_{F_i}\bigr)^{-1}(G).
+  \]
+  Because each $f\!\restriction_{F_i}$ is continuous,
+  $\bigl(f\!\restriction_{F_i}\bigr)^{-1}(G)$ is open in $F_i$; i.e.\ its
+  complement in $F_i$ is closed in $F_i$ and hence closed in $X$ (subspace
+  closed $\;\Rightarrow\;$ closed in the ambient space).
+  Consequently each \(
+      \bigl(f\!\restriction_{F_i}\bigr)^{-1}(G)
+  \) is closed in $X$.
+  The union of \emph{finitely many} closed subsets of a metric
+  space is closed, so $f^{-1}(G)$ is closed in $X$, i.e.\ open in $X$.
+  Therefore $f$ is continuous on $X$.
+
+  \medskip
+  \noindent\textbf{(c)  Infinite union of closed sets – \emph{not} sufficient.}
+  The conclusion of~(b) \emph{fails} for countably or arbitrarily many
+  closed sets.
+
+  \begin{example}
+      Let $X=Y=\Bbb R$ with the usual metric, and set
+      \[
+          F_m:=\{m\},\qquad m\in\Bbb Z.
+      \]
+      Each $F_m$ is closed in $\Bbb R$.  
+      Define
+      \[
+          f(x):=
+          \begin{cases}
+              1 & \text{if }x\in\Bbb Z,\\[4pt]
+              0 & \text{otherwise.}
+          \end{cases}
+      \]
+      \emph{Observation.}  
+      For every $m\in\Bbb Z$ the restriction $f\!\restriction_{F_m}$ is
+      trivially continuous (its domain is a singleton), yet $f$ is
+      \emph{discontinuous} at every integer point.  Indeed,
+      $\Bbb Z=\bigcup_{m\in\Bbb Z}F_m$ is an \emph{infinite} union of
+      closed sets on which $f$ is continuous, but $f$ fails to be
+      continuous on $X$ as a whole.
+  \end{example}
+
+  The key obstruction is that an arbitrary union of closed
+  sets need not be closed; the proof technique in~(b) breaks down when
+  the family is infinite because the pre–image $f^{-1}(G)$ becomes a union
+  of infinitely many closed sets, which need \emph{not} be closed.
+\end{proof}
+\begin{theorem}[Finite intersection of open sets is open]    % 2.24 (c)
+  Let $(X,d)$ be a metric space and let $G_{1},\dots,G_{n}\subseteq X$
+  be \emph{open}.  Then their intersection
+  \[
+      H:=\bigcap_{i=1}^{n}G_{i}
+  \]
+  is also an open subset of $X$.
+\end{theorem}
+
+\begin{proof}
+  The idea is to show that every point of $H$ possesses a radius
+  neighbourhood which remains inside \emph{all} the sets $G_{i}$ at once.
+
+  \medskip
+  \noindent\textbf{Step 1 – Pick an arbitrary point of the intersection.}\\
+  Fix $x\in H$.  
+  By definition of $H$ this means $x\in G_{i}$ for \emph{each}
+  index $i\in\{1,\dots,n\}$.
+
+  \medskip
+  \noindent\textbf{Step 2 – Exploit the openness of every $G_{i}$.}\\
+  Because each $G_{i}$ is open, there exists a positive
+  radius $r_{i}>0$ such that the open ball
+  \[
+      B(x,r_{i})=\{\,y\in X\mid d(x,y)<r_{i}\,\}
+  \]
+  is contained in $G_{i}$:
+  \[
+      B(x,r_{i})\subseteq G_{i}\qquad(i=1,\dots,n).
+  \]
+
+  \medskip
+  \noindent\textbf{Step 3 – Choose a \emph{uniform} radius.}\\
+  Define
+  \[
+      r:=\min\{\,r_{1},r_{2},\dots,r_{n}\,\}\;>\;0.
+  \]
+  (The minimum exists and is strictly positive because we are taking the
+  minimum of finitely many positive numbers.)
+
+  \medskip
+  \noindent\textbf{Step 4 – Verify inclusion for the common ball.}\\
+  For any point $y\in B(x,r)$ we have $d(x,y)<r\le r_{i}$ for
+  \emph{every} $i$, hence
+  \[
+      y\in B(x,r_{i})\subseteq G_{i}\quad\text{for all }i.
+  \]
+  Consequently $y\in\bigcap_{i=1}^{n}G_{i}=H$; that is,
+  \[
+      B(x,r)\subseteq H.
+  \]
+
+  \medskip
+  \noindent\textbf{Step 5 – Conclude openness of $H$.}\\
+  We have shown that for the arbitrary point $x\in H$ there exists a
+  neighbourhood \(B(x,r)\) fully contained in $H$.  
+  Therefore every point of $H$ is an interior point of $H$, which by
+  definition means that \(H\) is open in \(X\).
+\end{proof}
+
+\begin{problem}
+  Show that every metric space $(M,D)$ is \textbf{homeomorphic} to a metric
+  space of \emph{finite diameter} (e.g.\ $\le 1$).
+\end{problem}
+
+\begin{proof}
+  We proceed in five steps.
+
+  \begin{enumerate}
+      \item \textbf{Compress the non–negative reals into a bounded
+            interval.}
+
+            Define 
+            \[
+                f:[0,\infty)\longrightarrow[0,1), 
+                \qquad 
+                f(t)=\frac{t}{1+t}.
+            \]
+
+            \begin{enumerate}
+                \item $f(0)=0$ and $\displaystyle\lim_{t\to\infty}f(t)=1$, so
+                      $f$ maps \([0,\infty)\) onto \([0,1)\).
+                \item $f'(t)=\dfrac{1}{(1+t)^2}>0$ for all $t\ge0$
+                      $\;\Rightarrow\;$ \emph{strictly increasing}.
+                \item $f''(t)=-\dfrac{2}{(1+t)^3}<0$
+                      $\;\Rightarrow\;$ \emph{concave}.
+            \end{enumerate}
+
+      \item \textbf{Define a new metric of diameter $<1$.}
+
+            Put
+            \[
+                \widetilde D(x,y):=f\!\bigl(D(x,y)\bigr),
+                \qquad
+                x,y\in M.
+            \]
+            Since $D(x,y)\ge0$, we have $0\le\widetilde D(x,y)<1$; hence
+            $(M,\widetilde D)$ has \emph{diameter} at most~$1$.
+
+      \item \textbf{$\widetilde D$ is indeed a metric.}
+
+            Let $x,y,z\in M$ be arbitrary.
+
+            \begin{enumerate}
+                \item[(i)] \emph{Positivity \& identity of indiscernibles:}\\
+                      Because $f(0)=0$ and $f(t)>0$ for $t>0$, we get
+                      $\widetilde D(x,y)=0\iff D(x,y)=0\iff x=y$.
+                \item[(ii)] \emph{Symmetry:}  
+                      $D(x,y)=D(y,x)\ \Rightarrow\ 
+                      \widetilde D(x,y)=\widetilde D(y,x)$.
+                \item[(iii)] \emph{Triangle inequality:}\\
+                      By the triangle inequality for $D$,
+                      $D(x,z)\le D(x,y)+D(y,z)$.
+                      Because $f$ is increasing,
+                      \[
+                          \widetilde D(x,z)=f\!\bigl(D(x,z)\bigr)
+                          \le f\!\bigl(D(x,y)+D(y,z)\bigr).
+                      \]
+                      It therefore suffices to prove the \textbf{sub–additivity}
+                      \[
+                          f(a+b)\le f(a)+f(b),
+                          \qquad a,b\ge0. \tag{$\ast$}
+                      \]
+                      A direct calculation yields
+                      \[
+                          f(a)+f(b)-f(a+b)
+                          =\frac{a}{1+a}+\frac{b}{1+b}-\frac{a+b}{1+a+b}
+                          =\frac{ab}{(1+a)(1+b)(1+a+b)}\;\ge\;0,
+                      \]
+                      verifying $(\ast)$.  Hence
+                      $\widetilde D(x,z)\le
+                      \widetilde D(x,y)+\widetilde D(y,z)$.
+            \end{enumerate}
+
+      \item \textbf{The identity map is a bi–continuous bijection.}
+
+            The underlying sets of $(M,D)$ and $(M,\widetilde D)$ coincide, so
+            the identity map $\operatorname{id}_M$ is bijective.
+            To see it is continuous $(M,D)\to(M,\widetilde D)$, fix $x\in M$
+            and $\varepsilon>0$; choose $\delta:=\dfrac{\varepsilon}{1-\varepsilon}$.
+            If $D(x,y)<\delta$, then
+            \[
+                \widetilde D(x,y)
+                =\frac{D(x,y)}{1+D(x,y)}
+                <\frac{\delta}{1+\delta}=\varepsilon.
+            \]
+            Thus $\operatorname{id}_M$ is continuous.
+            Since $f$ is strictly increasing, the same argument with
+            $f^{-1}(s)=\dfrac{s}{1-s}$ shows continuity of the inverse
+            identity map $(M,\widetilde D)\to(M,D)$.
+
+      \item \textbf{Conclusion.}
+
+            The identity map furnishes a \emph{homeomorphism}
+            \[
+                (M,D)\;\longleftrightarrow\;(M,\widetilde D),
+            \]
+            and the latter space has finite (in fact $\le1$) diameter.
+            Therefore \emph{every} metric space is homeomorphic to one of
+            finite diameter.
+  \end{enumerate}
+\end{proof}
+\begin{problem}
+  Let $X$ be a \emph{dense} subset of a metric space $(M,D)$.  
+  Assume that \textbf{every} Cauchy sequence whose terms lie in $X$
+  converges to a point of $M$.  
+  Prove that $M$ is complete; that is, every Cauchy sequence in $M$
+  converges in $M$.
+\end{problem}
+
+\begin{proof}
+  Let $(y_n)_{n\ge1}$ be an \emph{arbitrary} Cauchy sequence in $M$.  
+  We construct an auxiliary sequence in $X$ that “shadows’’ $(y_n)$ and
+  then show that both sequences have the same limit.
+
+  \begin{enumerate}
+      \item[\textbf{Step 1.}] \textbf{Approximate each $y_n$ by a point in $X$.}  
+            Density of $X$ guarantees, for every $n\in\Bbb N$,  
+            the existence of $x_n\in X$ with
+            \[
+                D(x_n,y_n)<\frac1n. \tag{1}
+            \]
+
+      \item[\textbf{Step 2.}] \textbf{$(x_n)$ is Cauchy in $X$.}  
+            Fix $\varepsilon>0$.  
+            Because $(y_n)$ is Cauchy, choose $N_0\in\Bbb N$ such that
+            \[
+                D(y_m,y_n)<\frac{\varepsilon}{2}
+                \quad\text{for all }m,n\ge N_0. \tag{2}
+            \]
+            Pick $N\in\Bbb N$ satisfying
+            \(
+                N\ge N_0\ \text{and}\ N\ge\dfrac{2}{\varepsilon}. 
+            \)
+            For $m,n\ge N$ we combine (1) and (2) with the triangle
+            inequality:
+            \[
+                D(x_m,x_n)
+                \le D(x_m,y_m)+D(y_m,y_n)+D(y_n,x_n)
+                <\frac1m+\frac{\varepsilon}{2}+\frac1n
+                \le\frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+                =\varepsilon.
+            \]
+            Hence $(x_n)$ is a Cauchy sequence in $X$.
+
+      \item[\textbf{Step 3.}] \textbf{Convergence of $(x_n)$.}  
+            By hypothesis, every Cauchy sequence in $X$ converges in $M$;
+            therefore there exists $y\in M$ with
+            \[
+                \lim_{n\to\infty}x_n=y. \tag{4}
+            \]
+
+      \item[\textbf{Step 4.}] \textbf{Show that $y_n\to y$.}  
+            Let $\varepsilon>0$ be given.  
+            Choose $N_1\in\Bbb N$ so large that
+            \(
+                D(x_n,y)<\dfrac{\varepsilon}{2}
+            \)
+            for all $n\ge N_1$ (possible by (4)).
+            Pick $N_2\in\Bbb N$ with $N_2\ge\max\{N_1,\,2/\varepsilon\}$.
+            For $n\ge N_2$ we have, by (1),
+            \[
+                D(y_n,y)
+                \le D(y_n,x_n)+D(x_n,y)
+                <\frac1n+\frac{\varepsilon}{2}
+                \le\frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+                =\varepsilon.
+            \]
+            Since $\varepsilon$ was arbitrary, $y_n\to y$.
+
+      \item[\textbf{Step 5.}] \textbf{Completion of the proof.}  
+            The original Cauchy sequence $(y_n)$ converges in $M$ to $y$.
+            Because $(y_n)$ was arbitrary, \emph{every} Cauchy sequence in
+            $M$ converges; thus $(M,D)$ is complete.
+  \end{enumerate}
+\end{proof}
+\end{document}

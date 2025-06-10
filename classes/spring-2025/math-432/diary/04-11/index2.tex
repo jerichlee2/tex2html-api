@@ -1,0 +1,2165 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+    \begin{align}
+        \text{Let } d,e_1,e_2 \text{ be cardinals.  Prove that } 
+        d^{\,e_1+e_2}=d^{\,e_1}\,d^{\,e_2}.
+    \end{align}
+
+    \begin{enumerate}
+        \item\textbf{Choose representatives of the cardinals.}\\
+              Pick pairwise disjoint sets $D,E_1,E_2$ such that 
+              $|D|=d,\;|E_1|=e_1,$ and $|E_2|=e_2$.
+
+        \item\textbf{Translate the cardinal equation into a statement about sets of functions.}\\
+              For any sets $X$ and $Y$ write $H(X,Y)$ for the set of all functions $X\to Y$.  
+              Set
+              \begin{align}
+                  A&=H(E_1\cup E_2,D),\\
+                  B&=H(E_1,D)\times H(E_2,D).
+              \end{align}
+              Then 
+              \begin{align}
+                  |A|&=d^{\,e_1+e_2}, &
+                  |B|&=d^{\,e_1}\,d^{\,e_2}.
+              \end{align}
+              Hence it suffices to construct a bijection $F:A\to B$.
+
+        \item\textbf{Define the forward map $F$.}\\
+              Given $f\in A$ (so $f:E_1\cup E_2\to D$), define its restrictions
+              \begin{align}
+                  f_1&=f|_{E_1}:E_1\to D, &
+                  f_2&=f|_{E_2}:E_2\to D,
+              \end{align}
+              and set 
+              \begin{align}
+                  F(f)=(f_1,f_2)\in B.
+              \end{align}
+
+        \item\textbf{Define the inverse map $G$.}\\
+              For $(g_1,g_2)\in B$ (so $g_1:E_1\to D$ and $g_2:E_2\to D$), define
+              \begin{align}
+                  G(g_1,g_2)(a)=
+                  \begin{cases}
+                      g_1(a), & a\in E_1,\\[4pt]
+                      g_2(a), & a\in E_2.
+                  \end{cases}
+              \end{align}
+              Because $E_1\cap E_2=\varnothing$, the definition is unambiguous and
+              $G(g_1,g_2)\in A$.
+
+        \item\textbf{Verify that $F$ and $G$ are inverse to each other.}\\
+              \begin{align}
+                  (F\circ G)(g_1,g_2)
+                  &=F\!\bigl(G(g_1,g_2)\bigr)
+                    =(g_1,g_2)
+                    =\operatorname{id}_B(g_1,g_2),\\
+                  (G\circ F)(f)
+                  &=G\!\bigl(F(f)\bigr)
+                    =f
+                    =\operatorname{id}_A(f),
+              \end{align}
+              for all $(g_1,g_2)\in B$ and all $f\in A$.
+
+        \item\textbf{Conclude.}\\
+              Since $F$ is a bijection between $A$ and $B$, their cardinalities are equal:
+              \begin{align}
+                  d^{\,e_1+e_2}=|A|=|B|=d^{\,e_1}\,d^{\,e_2}.
+              \end{align}
+              \qedhere
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \begin{align}
+        \text{Suppose } e \text{ is an infinite cardinal and } 2\le d\le 2^{\,e}.
+        \text{ Prove that } d^{\,e}=2^{\,e}.
+    \end{align}
+
+    %--- parameters (as requested) --------------------------------------------
+    \begin{align}
+        &e \colon \text{infinite cardinal},\\
+        &d \colon \text{cardinal with } 2\le d\le 2^{\,e}.
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Lower bound.}\\
+              Because $2\le d$ and exponentiation by a fixed infinite
+              cardinal is \emph{monotone}, we have
+              \begin{align}
+                  2^{\,e}\;\le\;d^{\,e}.
+              \end{align}
+
+        \item \textbf{Upper bound.}\\
+              From $d\le 2^{\,e}$ and the same monotonicity property,
+              \begin{align}
+                  d^{\,e}\;\le\;(2^{\,e})^{\,e}.
+              \end{align}
+
+        \item \textbf{Simplify the right‐hand side.}\\
+              Cardinal arithmetic gives
+              \begin{align}
+                  (2^{\,e})^{\,e}=2^{\,e\cdot e}.
+              \end{align}
+              For an \emph{infinite} cardinal $e$ we have $e\cdot e=e$
+              (there is a bijection between $e\times e$ and $e$), so
+              \begin{align}
+                  (2^{\,e})^{\,e}=2^{\,e}.
+              \end{align}
+
+        \item \textbf{Combine the inequalities.}\\
+              Putting the previous steps together,
+              \begin{align}
+                  2^{\,e}\;\le\;d^{\,e}\;\le\;2^{\,e},
+              \end{align}
+              whence
+              \begin{align}
+                  d^{\,e}=2^{\,e}.
+              \end{align}
+              \qedhere
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \begin{align}
+        \text{Let $D$ be an infinite set with $|D|=d$.  Prove that $D$ possesses $2^{d}$ distinct subsets of cardinality $d$.}
+    \end{align}
+
+    %----------------------- parameters ---------------------------------------
+    \begin{align}
+        D &: \text{infinite set},\\
+        d &= |D|.
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Split $D$ into two large pieces.}\\
+              For any infinite cardinal $d$ we have $d+d=d$.  
+              Hence we can choose disjoint subsets
+              \begin{align}
+                  D_1,\;D_2\subseteq D
+              \end{align}
+              such that
+              \begin{align}
+                  |D_1|=|D_2|=d
+                  \quad\text{and}\quad
+                  D_1\cup D_2=D.
+              \end{align}
+
+        \item \textbf{Inject $P(D_1)$ into the family of $d$–element subsets of $D$.}\\
+              Define
+              \begin{align}
+                  F:P(D_1)\longrightarrow P(D),
+                  \qquad
+                  F(B)=B\cup D_2.
+              \end{align}
+
+        \item \textbf{$F$ is injective.}\\
+              If $B_1\neq B_2$ then $B_1\cup D_2\neq B_2\cup D_2$ because 
+              $D_2$ is common to both unions while $B_1$ and $B_2$ differ inside $D_1$.
+
+        \item \textbf{Each image has size $d$.}\\
+              For any $B\subseteq D_1$
+              \begin{align}
+                  |F(B)|
+                  &=|B\cup D_2|
+                    =|B|+|D_2|
+                    =d,
+              \end{align}
+              since $|B|\le d$ and $|D_2|=d$.  
+              Thus
+              \begin{align}
+                  \operatorname{Im}F\subseteq 
+                  Y=\{A\subseteq D:\,|A|=d\}.
+              \end{align}
+
+        \item \textbf{Cardinality bounds for $Y$.}\\
+              Injectivity yields
+              \begin{align}
+                  2^{d}=|P(D_1)|\le |Y|.
+              \end{align}
+              Trivially $Y\subseteq P(D)$, so $|Y|\le 2^{d}$.
+
+        \item \textbf{Conclusion.}\\
+              Combining the inequalities,
+              \begin{align}
+                  2^{d}\le |Y|\le 2^{d}\;\Longrightarrow\;|Y|=2^{d}.
+              \end{align}
+              Hence $D$ has exactly $2^{d}$ subsets whose cardinality is $d$.
+              \qedhere
+    \end{enumerate}
+\end{problem}
+%--- clarification of the notation used in Step 2 ----------------------------
+\begin{enumerate}
+    \setcounter{enumi}{1}  % so it shows up as item 2.
+    \item \textbf{Inject $P(D_1)$ into the family of $d$–element subsets of $D$.}
+
+          \medskip\noindent
+          \emph{What is $B$?}\;
+          By definition $P(D_1)$ is the power set of $D_1$, so its elements
+          are \emph{all} subsets of $D_1$.  We use the letter
+          $B$ to denote a \emph{generic} element of $P(D_1)$:
+          \[
+              B\;\subseteq\;D_1.
+          \]
+
+          \medskip\noindent
+          \emph{What is the map $F$?}\;
+          \[
+              F : P(D_1)\longrightarrow P(D),
+              \qquad
+              F(B)=B\cup D_2.
+          \]
+          \begin{itemize}
+              \item \textbf{Domain:} every subset $B$ of $D_1$.
+              \item \textbf{Codomain:} the power set $P(D)$.
+              \item \textbf{Rule:} adjoin the fixed block $D_2$ to $B$.
+          \end{itemize}
+
+          Because $D_2$ is contained in \emph{every} image, two different
+          subsets $B_1\neq B_2$ of $D_1$ yield different unions:
+          \[
+              F(B_1)=B_1\cup D_2\;\neq\;B_2\cup D_2=F(B_2),
+          \]
+          so $F$ is injective.
+
+          Moreover, for each $B\subseteq D_1$ we have
+          \[
+              |F(B)|=|B\cup D_2|=|B|+|D_2|=d,
+          \]
+          using $|B|\le d$, $|D_2|=d$, and $d+d=d$ (valid for infinite
+          cardinals).  Hence the image of $F$ lies inside the set
+          \(
+              Y=\{A\subseteq D:|A|=d\},
+          \)
+          and the injection establishes the lower bound
+          $2^{d}=|P(D_1)|\le |Y|$ used later in the proof.
+\end{enumerate}
+%---------------------------------------------------------------------------
+% Continuation / elaboration of Steps 4 and 5
+\begin{enumerate}
+    \setcounter{enumi}{3}  % start at 4.
+    \item \textbf{Each image has size $d$.}\\
+          For any $B\subseteq D_{1}$ we have
+          \begin{align}
+              |F(B)| &= |B\cup D_{2}| \\
+                     &= |B| + |D_{2}| \tag{$B,D_{2}$ disjoint}.
+          \end{align}
+          Now $|B|\le d$ and $|D_{2}|=d$, and for infinite cardinals
+          $d+d=d$ and $|B|+d=d$, so $|F(B)|=d$.  Hence
+          \[
+              \operatorname{Im}F \subseteq
+              Y=\{A\subseteq D : |A|=d\}.
+          \]
+
+    \item \textbf{Cardinality bounds for $Y$.}\\
+          Since $F$ is injective,
+          \[
+              |P(D_{1})| \le |\operatorname{Im}F| \le |Y|.
+          \]
+          Because $|D_{1}|=d$ we have $|P(D_{1})|=2^{d}$, giving the lower
+          bound $2^{d}\le |Y|$.  Trivially $Y\subseteq P(D)$, so
+          $|Y|\le 2^{d}$.  Combining,
+          \[
+              2^{d}\le |Y|\le 2^{d}\quad\Longrightarrow\quad |Y|=2^{d}.
+          \]
+          \qedhere
+\end{enumerate}
+
+%-------------------------------------------------------------------------------
+% “Big‑picture” summary of the proof that there are $2^{d}$ subsets of $D$
+% having size $d$, together with an explicit description of the set $Y$.
+%-------------------------------------------------------------------------------
+\begin{problem}
+    \begin{align}
+        \text{Let $D$ be an infinite set with } |D|=d
+        \quad\Longrightarrow\quad
+        \bigl|\{A\subseteq D:|A|=d\}\bigr| = 2^{d}.
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Duplicate the set inside itself.}\\
+              Because $d$ is an \emph{infinite} cardinal, 
+              \(
+                  d+d=d.
+              \)
+              Hence we can split $D$ into two disjoint blocks
+              \(
+                  D_{1},D_{2}\subseteq D
+              \)
+              with
+              \(
+                  D_{1}\cap D_{2}=\varnothing,
+                  \;
+                  D_{1}\cup D_{2}=D,
+                  \;
+                  |D_{1}|=|D_{2}|=d.
+              \)
+
+        \item \textbf{Encode subsets of $D_{1}$ by adding the wrapper $D_{2}$.}\\
+              Define
+              \[
+                  F : P(D_{1}) \longrightarrow P(D),
+                  \qquad
+                  F(B)=B\cup D_{2}.
+              \]
+              The fixed “wrapper’’ $D_{2}$ ensures each image still has
+              size $d$, while the variable part $B$ carries the information.
+
+        \item \textbf{Injectivity gives a lower bound.}\\
+              If $B_{1}\neq B_{2}$ then
+              \(
+                  F(B_{1})\neq F(B_{2}),
+              \)
+              so $F$ is injective.  
+              Therefore
+              \(
+                  |P(D_{1})| \le |\operatorname{Im}F|.
+              \)
+              Since $|D_{1}|=d$, we have
+              \(
+                  |P(D_{1})| = 2^{d},
+              \)
+              giving the \emph{lower} bound
+              \(
+                  2^{d} \le |\operatorname{Im}F|.
+              \)
+
+        \item \textbf{Each image has size $d$.}\\
+              For any $B\subseteq D_{1}$,
+              \[
+                  |F(B)|
+                  =|B\cup D_{2}|
+                  =|B|+|D_{2}|
+                  =d,
+              \]
+              because $|B|\le d$, $|D_{2}|=d$, and $d+d=d$ for infinite
+              cardinals.
+
+        \item \textbf{Define the target family $Y$ and squeeze its size.}\\
+              Let
+              \[
+                  Y=\{A\subseteq D : |A|=d\}.
+              \]
+              Step 4 shows
+              \(
+                  \operatorname{Im}F\subseteq Y,
+              \)
+              so
+              \(
+                  2^{d}\le |Y|.
+              \)
+              Trivially
+              \(
+                  Y\subseteq P(D),
+              \)
+              and $|P(D)|=2^{d}$, whence
+              \(
+                  |Y|\le 2^{d}.
+              \)
+              Combining the bounds forces
+              \(
+                  |Y|=2^{d}.
+              \)
+
+        \item \textbf{Conceptual takeaway.}\\
+              The proof exploits the “self‑copying’’ property of infinite
+              cardinals ($d+d=d$) to inject a full power set into the family
+              of $d$‑element subsets, then traps that family between identical
+              cardinal bounds.  In effect, \emph{“most’’} of the $2^{d}$
+              subsets of an infinite set are already as large as the set
+              itself.
+              \qedhere
+    \end{enumerate}
+\end{problem}
+
+%------------------------------------------------------------------------------
+% Concrete illustrations of the statement
+%   “An infinite set $D$ with $|D|=d$ has $2^{d}$ distinct subsets
+%    whose own cardinality is $d$.”
+%------------------------------------------------------------------------------
+\begin{problem}
+    \begin{align}
+        \text{Give explicit examples for several familiar infinite sets $D$.}
+    \end{align}
+
+    \begin{enumerate}
+    %------------------------------------------------------------------------
+    \item \textbf{Countably infinite set: $\;D=\Bbb N$ (the natural numbers).}
+
+          \begin{enumerate}
+              \item Split $\Bbb N$ into two disjoint, countably infinite
+                    blocks:
+                    \[
+                        D_{1}=2\Bbb N=\{0,2,4,\dots\},
+                        \qquad
+                        D_{2}=2\Bbb N+1=\{1,3,5,\dots\}.
+                    \]
+              \item Map every subset $B\subseteq D_{1}$ to
+                    \[
+                        F(B)=B\cup D_{2}.
+                    \]
+              \item Each image $F(B)$ is an \emph{infinite} subset of $\Bbb N$
+                    (because it contains the whole block $D_{2}$), and
+                    distinct $B$’s give distinct images.  Hence there are
+                    \[
+                        2^{\aleph_{0}}
+                    \]
+                    different countably–infinite subsets of $\Bbb N$.
+          \end{enumerate}
+
+    %------------------------------------------------------------------------
+    \item \textbf{Uncountable set of size continuum: $\;D=\Bbb R$.}
+
+          \begin{enumerate}
+              \item Let
+                    \(
+                        D_{1}=(-\infty,0),\;
+                        D_{2}=[0,\infty).
+                    \)
+                    Both have cardinality $\frak c=2^{\aleph_{0}}$.
+              \item For every subset $B\subseteq D_{1}$ put
+                    \(
+                        F(B)=B\cup D_{2}.
+                    \)
+              \item Distinct $B$’s give distinct images, each of which still
+                    has size $\frak c$.  Thus there are $2^{\frak c}$ many
+                    subsets of $\Bbb R$ whose size is \emph{also} $\frak c$.
+          \end{enumerate}
+
+    %------------------------------------------------------------------------
+    \item \textbf{Vector‑space flavour: $\;D=\Bbb Q$ (the rationals).}
+
+          \begin{enumerate}
+              \item Write $\Bbb Q=\Bbb Z\cup\bigl(\Bbb Q\setminus\Bbb Z\bigr)$.
+                    Both pieces are countably infinite.
+              \item For each subset $B\subseteq\Bbb Z$ define
+                    \(
+                        F(B)=B\cup\bigl(\Bbb Q\setminus\Bbb Z\bigr).
+                    \)
+              \item The map $B\mapsto F(B)$ is injective and every image is
+                    countably infinite, giving again $2^{\aleph_{0}}$ many
+                    countably–infinite subsets of $\Bbb Q$.
+          \end{enumerate}
+
+    %------------------------------------------------------------------------
+    \item \textbf{General pattern (summary).}
+
+          For \emph{any} infinite set $D$ we can choose disjoint
+          $D_{1},D_{2}\subseteq D$ with
+          $|D_{1}|=|D_{2}|=|D|=d$ and set
+          \[
+              F:P(D_{1})\to P(D),\qquad F(B)=B\cup D_{2}.
+          \]
+          This injects $P(D_{1})$ (size $2^{d}$) into
+          \(
+              Y=\{A\subseteq D:|A|=d\},
+          \)
+          and since $Y\subseteq P(D)$, we trap $|Y|$ between two identical
+          bounds:
+          \(
+              2^{d}\le |Y|\le 2^{d}\;\Longrightarrow\;|Y|=2^{d}.
+          \)
+          \qedhere
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \begin{align}
+        \text{Let $C$ be a chain (totally ordered set) in which every \emph{countable}
+        subset is well‑ordered.  Prove that $C$ itself is well‑ordered.}
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Recall the definition.}\\
+              A chain $C$ is \emph{well‑ordered} when every non‑empty
+              subset of $C$ possesses a least element.
+
+        \item \textbf{Argue by contradiction.}\\
+              Assume, toward a contradiction, that $C$ is \emph{not}
+              well‑ordered.
+
+        \item \textbf{Extract a subset without a least element.}\\
+              Under this assumption there exists a non‑empty subset
+              $S\subseteq C$ that has no least element.
+
+        \item \textbf{Build an infinite descending sequence inside $S$.}\\
+              Choose $c_{0}\in S$.  
+              Because $S$ lacks a least element, there is
+              $c_{1}\in S$ with $c_{1}<c_{0}$.
+              Repeating inductively, we obtain
+              \[
+                  c_{0}>c_{1}>c_{2}>\dotsb
+              \]
+              with every $c_{n}\in S$.
+
+        \item \textbf{Form a countable subset that is \emph{not} well‑ordered.}\\
+              Let
+              \[
+                  B=\{c_{n}:n\in\Bbb N\}.
+              \]
+              $B$ is countable, yet it contains the infinite
+              descending sequence above, so $B$ has no least element and is
+              therefore \emph{not} well‑ordered.
+
+        \item \textbf{Contradiction.}\\
+              The existence of such a set $B$ contradicts the hypothesis that
+              \emph{every} countable subset of $C$ is well‑ordered.
+
+        \item \textbf{Conclude.}\\
+              Hence our assumption was false and $C$ must be well‑ordered.
+              \qedhere
+    \end{enumerate}
+\end{problem}
+
+\begin{example}
+    Consider the chain $\bigl((0,1),<\bigr)$, the open interval of real numbers
+    between $0$ and $1$ equipped with the usual order.
+
+    \begin{enumerate}
+        \item It is a \emph{chain} (total order) because for any two real
+              numbers $x,y\in(0,1)$ we have exactly one of $x<y$, $x=y$, or
+              $y<x$.
+
+        \item It is \textbf{not well‑ordered}.  
+              The subset itself $(0,1)$ has no least element:
+              for every $x\in(0,1)$ the number $x/2$ is also in $(0,1)$ and
+              satisfies $x/2<x$.  Hence no element can serve as a minimum.
+
+        \item An explicit infinite descending sequence is
+              \[
+                  1>\tfrac12>\tfrac14>\tfrac18>\dotsb,
+              \]
+              showing again that the order is not well‑founded.
+    \end{enumerate}
+\end{example}
+
+\begin{example}
+    Take the set of natural numbers $\bigl(\Bbb N,<\bigr)$ with the usual order.
+
+    \begin{enumerate}
+        \item It is a \emph{chain} (total order) because for any $m,n\in\Bbb N$
+              exactly one of $m<n$, $m=n$, or $n<m$ holds.
+
+        \item It is \textbf{well‑ordered}.  
+              Every non‑empty subset $S\subseteq\Bbb N$ has a least element,
+              namely $\min S$; this follows from the standard well‑ordering
+              principle for the natural numbers.
+
+        \item Consequently there can be no infinite strictly descending
+              sequence in $\Bbb N$, and the usual induction arguments apply
+              without modification.
+    \end{enumerate}
+\end{example}
+
+\begin{problem}
+    \begin{align}
+        \text{(a) Let $C$ be a \emph{well‑ordered} set and let }
+        f:C\longrightarrow C
+        \text{ be an \emph{injective}, order‑preserving map}\\
+        (\forall a,b\in C)\,[\,a\le b \;\Longrightarrow\; f(a)\le f(b)\,].
+        \quad\text{Show that } a\le f(a)\text{ for every }a\in C.\\[6pt]
+        \text{(b) Deduce Theorem~20: a well‑ordered set is \emph{never}
+        order‑isomorphic to one of its proper initial segments.}
+    \end{align}
+
+    \begin{enumerate}
+    %---------------------------------------------------------------------
+    \item \textbf{Part (a): prove $a\le f(a)$.}
+
+          \begin{enumerate}
+              \item \emph{Assume the contrary.}  
+                    Suppose there exists $a_{0}\in C$ with
+                    $a_{0}>f(a_{0})$.
+
+              \item \emph{Iterate the map.}  
+                    Define inductively
+                    $a_{n+1}=f(a_{n})\;(n\in\Bbb N)$.  
+                    Because $f$ is order‑preserving,
+                    \[
+                        a_{0}>a_{1}>a_{2}>\dotsb
+                    \]
+                    is a strictly descending sequence in $C$.
+
+              \item \emph{Contradiction with well‑ordering.}  
+                    A well‑ordered set cannot contain an infinite
+                    descending chain.  
+                    Hence our assumption was impossible, and we must have
+                    \[
+                        a\le f(a)\quad\text{for all }a\in C.\qedhere
+                    \]
+          \end{enumerate}
+
+    %---------------------------------------------------------------------
+    \item \textbf{Part (b): deduce Theorem~20.}
+
+          Let $A$ be a well-ordered set and fix $a\in A$.
+          Denote its \emph{initial segment}
+          \(
+              S(a)=\{x\in A : x<a\}\subsetneq A.
+          \)
+          Suppose, toward a contradiction, that $A$ is order-isomorphic
+          to $S(a)$.  
+          Then there exists an order-isomorphism
+          \[
+              f:A\longrightarrow S(a)\subseteq A.
+          \]
+          In particular $f$ is injective and order-preserving, so Part (a)
+          applies:
+          \[
+              a\le f(a).
+          \]
+          But $f(a)\in S(a)$ implies $f(a)<a$, a contradiction.
+          Therefore no such order‑isomorphism can exist, proving
+          Theorem~20.
+    \end{enumerate}
+\end{problem}
+
+\section*{Order-Isomorphism}
+
+Let \((A, \le_A)\) and \((B, \le_B)\) be two ordered sets (i.e., sets equipped with a total order).
+
+\medskip
+
+\textbf{Definition:} An \emph{order-isomorphism} is a function 
+\[
+    f : A \longrightarrow B
+\]
+that satisfies the following properties:
+\begin{enumerate}
+    \item \textbf{Bijection:} \(f\) is a one-to-one and onto function.
+    \item \textbf{Order Preservation:} For all \(x,y \in A\), 
+          \[
+             x \le_A y \quad\Longleftrightarrow\quad f(x) \le_B f(y).
+          \]
+\end{enumerate}
+If such an \(f\) exists, we say that the ordered sets \(A\) and \(B\) are \emph{order-isomorphic} and write:
+\[
+    A \cong B.
+\]
+
+\medskip
+
+\textbf{Why is this important?}\\[4pt]
+Order-isomorphisms are significant because they show that two ordered sets have the same \emph{order type}; that is, they have identical structural properties concerning order. Many properties (e.g., being well-ordered) are preserved under order-isomorphism.
+
+\bigskip
+
+\textbf{Example:} The set of natural numbers \(\Bbb{N}\) with the usual order is order-isomorphic to the set of non-negative even numbers, \(2\Bbb{N}\), via the mapping:
+\[
+    f(n)=2n.
+\]
+One can easily verify that \(f\) is bijective and for any \(m, n\in \Bbb{N}\),
+\[
+    m \le n \quad\Longleftrightarrow\quad 2m \le 2n,
+\]
+hence \(f\) preserves the order.
+
+\begin{problem}
+    \begin{align}
+        &\text{Let } A \text{ be a chain (totally ordered set).  Assume }  
+          B,C\subseteq A \text{ with } A=B\cup C, \\[-2pt]
+        &\text{and suppose that both } (B,\le) \text{ and } (C,\le)
+          \text{ are well‑ordered in the order inherited from } A.\\[4pt]
+        &\text{Show that } A \text{ itself is well‑ordered.}
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Recall the goal.}\\
+              A chain \(A\) is well‑ordered iff it contains \emph{no}
+              infinite strictly descending sequence.  We will prove the
+              contrapositive:  
+              \[
+                 \text{If } A \text{ is \emph{not} well‑ordered, then at
+                 least one of } B,C \text{ is not well‑ordered.}
+              \]
+
+        \item \textbf{Assume \(A\) is \emph{not} well‑ordered.}\\
+              Then there exists an infinite descending sequence
+              \(
+                  a_{1}>a_{2}>a_{3}>\dotsb
+              \)
+              in \(A\).  
+              Let
+              \[
+                  X=\{a_{1},a_{2},a_{3},\dotsc\}\subseteq A.
+              \]
+
+        \item \textbf{Pigeonhole step.}\\
+              Because \(A=B\cup C\), each \(a_{n}\) lies in either \(B\)
+              or \(C\).  
+              The set \(X\) is infinite, so at least one of the intersections
+              \(X\cap B\) or \(X\cap C\) must be infinite.  
+              Without loss of generality, assume
+              \(
+                  X\cap B
+              \)
+              is infinite.
+
+        \item \textbf{Contradiction inside \(B\).}\\
+              The elements of \(X\cap B\) inherit the same strict
+              inequalities from the sequence \((a_{n})\), so they form an
+              infinite strictly descending sequence \emph{inside} \(B\).  
+              This contradicts the assumption that \(B\) is well‑ordered.
+
+        \item \textbf{Conclude.}\\
+              The assumption that \(A\) is not well‑ordered led to a
+              contradiction.  
+              Therefore \(A\) \emph{must} be well‑ordered.
+              \qedhere
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \begin{align}
+        \text{Prove that } \aleph_{1}^{\aleph_{0}} \;=\; 2^{\aleph_{0}}
+        \;=\; \mathfrak c,
+    \end{align}
+    where $\mathfrak c$ denotes the cardinality of the continuum.
+\end{problem}
+
+\begin{enumerate}
+%-----------------------------------------------------------------------------
+\item \textbf{Lower bound: $\displaystyle 2^{\aleph_{0}}\le
+        \aleph_{1}^{\aleph_{0}}$.}
+
+      Because $2\le\aleph_{1}$ and cardinal–exponentiation is monotone in
+      the \emph{base} (for any fixed exponent $\lambda\neq0$),
+      \[
+          2^{\aleph_{0}}
+          \;\le\;
+          \aleph_{1}^{\aleph_{0}}.
+      \]
+      But $2^{\aleph_{0}}$ is, by definition, the continuum~$\mathfrak c$,
+      so we already have
+      \[
+          \mathfrak c\;\le\;\aleph_{1}^{\aleph_{0}}.
+      \]
+
+%-----------------------------------------------------------------------------
+\item \textbf{Upper bound: $\displaystyle \aleph_{1}^{\aleph_{0}}\le
+        \mathfrak c$.}
+
+      \begin{enumerate}
+          \item \emph{First note:}  
+                $\aleph_{1}\le \mathfrak c$.  
+                Indeed, $\aleph_{1}$ is the least uncountable
+                cardinal, while the set of real numbers is uncountable, so
+                its cardinality $\mathfrak c$ must dominate~$\aleph_{1}$.
+
+          \item \emph{Apply monotonicity again.}  
+                With the same monotonicity property,
+                \[
+                    \aleph_{1}^{\aleph_{0}}
+                    \;\le\;
+                    \mathfrak c^{\aleph_{0}}.
+                \]
+
+          \item \emph{Compute $\mathfrak c^{\aleph_{0}}$.}  
+                Since $\mathfrak c = 2^{\aleph_{0}}$,
+                \[
+                    \mathfrak c^{\aleph_{0}}
+                    \;=\;
+                    (2^{\aleph_{0}})^{\aleph_{0}}
+                    \;=\;
+                    2^{\aleph_{0}\cdot\aleph_{0}}
+                    \;=\;
+                    2^{\aleph_{0}}
+                    \;=\;
+                    \mathfrak c,
+                \]
+                because $\aleph_{0}\cdot\aleph_{0}=\aleph_{0}$.
+                Hence
+                \[
+                    \aleph_{1}^{\aleph_{0}}
+                    \;\le\;
+                    \mathfrak c.
+                \]
+      \end{enumerate}
+
+%-----------------------------------------------------------------------------
+\item \textbf{Squeeze to equality.}
+
+      Combining the two inequalities,
+      \[
+          \mathfrak c
+          \;\le\;
+          \aleph_{1}^{\aleph_{0}}
+          \;\le\;
+          \mathfrak c,
+      \qquad\Longrightarrow\qquad
+          \aleph_{1}^{\aleph_{0}}=\mathfrak c.
+      \]
+      Because $\mathfrak c=2^{\aleph_{0}}$, we obtain
+      \[
+          \boxed{\;
+            \aleph_{1}^{\aleph_{0}} = 2^{\aleph_{0}}\;}.
+      \]
+      \qedhere
+\end{enumerate}
+
+\begin{problem}
+    \textbf{Ordinal addition.}\;
+    Let $\alpha$ and $\beta$ be ordinals.  
+    Pick disjoint well–ordered sets $A,B$ with
+    $\operatorname{ord}(A)=\alpha$ and $\operatorname{ord}(B)=\beta$,
+    and give $A\cup B$ the \emph{lexicographic} order in which every
+    element of $B$ is declared \emph{larger} than every element of $A$.
+    Because $A\cup B$ is well‑ordered, its order type is an ordinal
+    denoted $\alpha+\beta$.
+
+    \begin{enumerate}
+    %---------------------------------------------------------------------
+    \item \textbf{Is $\alpha+\beta=\beta+\alpha$ always true?}
+
+          \emph{No.}  
+          Take
+          \(
+             \alpha=\omega=\operatorname{ord}(\Bbb N),\;
+             \beta=1.
+          \)
+          Then
+          \[
+              \alpha+\beta
+              =\omega+1,
+              \qquad
+              \beta+\alpha
+              =1+\omega
+              =\omega,
+          \]
+          and $\omega+1\neq\omega$.  Hence ordinal addition is
+          \emph{not} commutative.
+
+    %---------------------------------------------------------------------
+    \item \textbf{If $\alpha+\beta=\alpha+\gamma$, prove $\beta=\gamma$.}
+
+          \smallskip
+          \emph{Setup.}\;
+          Choose pairwise disjoint well‑ordered sets
+          $A,B,C$ with
+          \[
+              \operatorname{ord}(A)=\alpha,\qquad
+              \operatorname{ord}(B)=\beta,\qquad
+              \operatorname{ord}(C)=\gamma,
+          \]
+          and order $A\cup B$ and $A\cup C$ as in the definition of
+          ordinal addition.  
+          Let
+          \(
+              f:A\cup B\to A\cup C
+          \)
+          be an order‑isomorphism (it exists because the two unions have
+          the same order type $\alpha+\beta=\alpha+\gamma$).
+
+          \smallskip
+          \emph{Notation.}\;
+          Let
+          \[
+              b=\min B,\qquad
+              c=\min C .
+          \]
+
+          \smallskip
+          \emph{Case analysis.}
+
+          \begin{description}
+              \item[Case 1:] $f(b)=a\in A$.  
+                  Because $f$ preserves order,
+                  \(
+                      f(A)=S(a)=\{x\in A:x<a\},
+                  \)
+                  making $A$ order-isomorphic to a \emph{proper} initial
+                  segment of itself—impossible for a well-ordered set.
+              \item[Case 2:] $f^{-1}(c)=a\in A$.  
+                  Symmetric to Case 1 and equally impossible.
+              \item[Case 3:] $f(b)\in C$ and $f^{-1}(c)\in B$.  
+                  Then $f(b)\ge c$ and $f^{-1}(c)\ge b$.
+                  Applying $f$ again gives
+                  \(
+                      f(f^{-1}(c))\ge f(b),
+                  \)
+                  hence $c\ge f(b)$.  
+                  Together with $f(b)\ge c$ we obtain $f(b)=c$.
+                  Now
+                  \(
+                      f(B)\subseteq C,\;
+                      f^{-1}(C)\subseteq B
+                  \)
+                  and $f$ is bijective, so actually $f(B)=C$ and
+                  $f|_{B}:B\to C$ is an order-isomorphism.  
+                  Therefore
+                  \(
+                      \beta=\operatorname{ord}(B)=\operatorname{ord}(C)=\gamma.
+                  \)
+          \end{description}
+
+          All possibilities except Case 3 are impossible; Case 3 forces
+          $\beta=\gamma$.  Hence
+          \[
+              \boxed{\;\alpha+\beta=\alpha+\gamma\;\Longrightarrow\;
+              \beta=\gamma\;}.
+          \]
+
+    %---------------------------------------------------------------------
+    \item \textbf{Show that $\beta+\alpha=\gamma+\alpha$ need \emph{not}
+          imply $\beta=\gamma$.}
+
+          Take
+          \[
+              \alpha=\omega,\qquad
+              \beta=1,\qquad
+              \gamma=2 .
+          \]
+          Then
+          \[
+              \beta+\alpha
+              =1+\omega
+              =\omega
+              =2+\omega
+              =\gamma+\alpha,
+          \]
+          yet $1\neq2$.  Thus the cancellation law in part (b) fails
+          when the common term $\alpha$ is on the \emph{right}.
+          \qedhere
+    \end{enumerate}
+\end{problem}
+\section*{What does \texorpdfstring{$\operatorname{ord}(A)$}{ord(A)} mean?}
+
+Let $(A,\le_A)$ be a \textbf{well‑ordered set}—that is, $\le_A$ is a total order and every non‑empty subset of $A$ has a least element.
+
+\begin{definition}
+The \emph{order type} (or \emph{ordinal}) of $A$ is the unique ordinal
+\[
+    \operatorname{ord}(A)
+\]
+such that $(A,\le_A)$ is \textbf{order‑isomorphic} to that ordinal when the ordinal is viewed with its natural well‑ordering.  Concretely, there exists a bijection
+\[
+    f:A \longrightarrow \operatorname{ord}(A)
+\]
+satisfying
+\(
+    x\le_A y \;\Longleftrightarrow\; f(x)\le f(y)
+\)
+for all $x,y\in A$.
+\end{definition}
+
+\subsection*{Key points}
+\begin{itemize}
+    \item Every well‑ordered set is \emph{classified} (up to isomorphism) by a \emph{unique} ordinal; this ordinal is what $\operatorname{ord}(A)$ denotes.
+    \item If $A$ and $B$ are well‑ordered, then
+          \[
+              \operatorname{ord}(A)=\operatorname{ord}(B)
+              \quad\Longleftrightarrow\quad
+              A \text{ and } B \text{ are order‑isomorphic.}
+          \]
+    \item Familiar examples:
+          \begin{align*}
+              \operatorname{ord}(\mathbb N) &= \omega,\\
+              \operatorname{ord}(\{0,1,\dots,n-1\}) &= n\quad (n\in\mathbb N),\\
+              \operatorname{ord}(\omega\!+\!1) &= \omega+1 \text{ (itself an ordinal)}.
+          \end{align*}
+    \item In ordinal arithmetic we often write expressions like
+          $\alpha+\beta$ or $\alpha\cdot\beta$, where $\alpha,\beta$ are
+          ordinals; when we build those sums or products from concrete
+          well‑ordered sets, we label the sets by their order types using
+          $\operatorname{ord}(\,\cdot\,)$.
+\end{itemize}
+
+\bigskip
+\textbf{Summary:} \;
+$\boxed{\operatorname{ord}(A)=\text{ ``the ordinal that has the same well‑ordering as }A\text{''}}$
+\subsubsection*{Clarifying Case 1}
+
+Recall the set‑up:
+
+\begin{itemize}
+    \item $A,B,C$ are pairwise disjoint well‑ordered sets with
+          \(\operatorname{ord}(A)=\alpha,\;
+            \operatorname{ord}(B)=\beta,\;
+            \operatorname{ord}(C)=\gamma.\)
+    \item Both $A\cup B$ and $A\cup C$ are ordered so that every element
+          of $B$ (respectively $C$) is \emph{greater} than every element of
+          $A$.
+    \item An order‑isomorphism
+          \[
+              f : A\cup B \longrightarrow A\cup C
+          \]
+          exists because
+          \(\alpha+\beta=\alpha+\gamma.\)
+    \item $b=\min B$ and $c=\min C$.
+\end{itemize}
+
+\paragraph{Case 1: \(f(b)=a\in A\).}
+
+\begin{enumerate}
+    \item Since \(f\) is an order-isomorphism, it preserves and reflects the order.  
+          Because every element of $A$ is \emph{smaller} than $b$ in
+          $A\cup B$, their images under $f$ must be \emph{smaller} than
+          \(f(b)=a\) in $A\cup C$.  
+          Hence
+          \[
+              f(A)\;\subseteq\;S(a)
+              :=\{x\in A : x<a\},
+          \]
+          the initial segment of $A$ determined by $a$.
+
+    \item Conversely, for any \(x<a\) (so \(x\in S(a)\)) we have
+          \(x<f(b)\) in $A\cup C$.  
+          Applying \(f^{-1}\), which is also order‑preserving,
+          gives \(f^{-1}(x)<b\) in $A\cup B$.  
+          But every element that is $<b$ in $A\cup B$ lies in $A$.
+          Therefore \(f^{-1}(x)\in A\), and thus \(x=f\bigl(f^{-1}(x)\bigr)
+          \in f(A)\).
+          This shows
+          \[
+              S(a)\;\subseteq\;f(A).
+          \]
+
+    \item Combining the two inclusions,
+          \[
+              f(A)=S(a).
+          \]
+          So \(A\) is order-isomorphic to the \emph{proper} initial
+          segment \(S(a)\subsetneq A\).
+
+    \item \textbf{Why is that impossible?}  
+          A fundamental property of well-ordered sets (proved earlier as
+          Theorem 20) states that no well-ordered set can be order-isomorphic
+          to one of its \emph{proper} initial segments.  
+          Intuitively, if such an isomorphism existed, you could shift the
+          whole order "downward" and create an infinite descending chain,
+          contradicting well-foundedness.
+
+    \item Hence our assumption \(f(b)=a\in A\) leads to a contradiction,
+          so Case 1 cannot occur.
+\end{enumerate}
+
+\begin{problem}
+    Let $f:A\twoheadrightarrow B$ be a surjective function between two sets.
+    Use the Axiom of Choice to show that
+    \[
+        \operatorname{o}(B)\;\le\;\operatorname{o}(A),
+    \]
+    i.e.\ there exists an \emph{injective} map $g:B\hookrightarrow A$.
+\end{problem}
+
+\begin{enumerate}
+%-----------------------------------------------------------------------------
+\item \textbf{Form a family of non–empty sets.}
+
+      For each $b\in B$ the fibre
+      \[
+          A_{b}\;:=\;f^{-1}(\{b\})
+          =\{\,a\in A : f(a)=b\,\}
+      \]
+      is non–empty because $f$ is surjective.  
+      Collect these fibres into a family
+      \(
+          \mathcal{F}=\{A_{b}\}_{b\in B}.
+      \)
+
+%-----------------------------------------------------------------------------
+\item \textbf{Invoke the Axiom of Choice.}
+
+      The Axiom of Choice asserts that for any family of non–empty sets
+      there exists a \emph{choice function}.  
+      Hence we may select a function
+      \[
+          s:\mathcal{F}\longrightarrow A
+          \qquad\text{with}\qquad
+          s(A_{b})\in A_{b}\quad(\forall\,b\in B).
+      \]
+      Equivalently, define
+      \[
+          g:B\longrightarrow A,
+          \qquad
+          g(b):=s\bigl(A_{b}\bigr)\in A_{b}.
+      \]
+
+%-----------------------------------------------------------------------------
+\item \textbf{$g$ is injective.}
+
+      Suppose $g(b_{1})=g(b_{2})$ for $b_{1},b_{2}\in B$.  
+      Then
+      \[
+          f\!\bigl(g(b_{1})\bigr)
+          =b_{1},
+          \qquad
+          f\!\bigl(g(b_{2})\bigr)
+          =b_{2},
+      \]
+      but the left‑hand sides are equal, so $b_{1}=b_{2}$.  
+      Therefore $g$ is one‑to‑one.
+
+%-----------------------------------------------------------------------------
+\item \textbf{Conclude the cardinal inequality.}
+
+      An injection $g:B\hookrightarrow A$ witnesses that
+      \(
+          |B|\le |A|.
+      \)
+      In the notation of the problem,
+      \[
+          \boxed{\;
+            \operatorname{o}(B)\;\le\;\operatorname{o}(A)
+          \;} .
+      \]
+      \qedhere
+\end{enumerate}
+\paragraph{3.\; $g$ is injective.}
+
+Assume $g(b_{1})=g(b_{2})$ for some $b_{1},b_{2}\in B$.  
+Write $a:=g(b_{1})=g(b_{2})\in A$.  
+By construction of $g$ we know
+\[
+    a \in A_{b_{1}}
+    \quad\text{and}\quad
+    a \in A_{b_{2}},
+\]
+where $A_{b}=f^{-1}(\{b\})$ is the fibre over $b$.  
+But the fibres are pairwise disjoint, so an element of $A$ can belong to
+\emph{only one} of them.  Hence
+\[
+    b_{1}=b_{2}.
+\]
+Therefore distinct elements of $B$ have distinct images under $g$; that
+is, $g$ is one‑to‑one (injective).
+
+\begin{problem}
+    Let $D$ be an infinite set with cardinality $|D|=d$.  
+    Let
+    \[
+        F=\{A\subseteq D : A\text{ is finite}\}.
+    \]
+    Show that $|F|=d$.
+\end{problem}
+
+\begin{enumerate}
+%---------------------------------------------------------------------------
+\item \textbf{Build a surjection onto $F$.}
+
+      For each $n\ge 1$ let $D^{n}=D\times\dotsm\times D$ ($n$ factors).  
+      Define
+      \[
+          f:\;\bigsqcup_{n=1}^{\infty} D^{\,n}\longrightarrow F,
+          \qquad
+          f\bigl((a_{1},\dots,a_{n})\bigr)=\{a_{1},\dots,a_{n}\}.
+      \]
+      Every finite subset of $D$ can be listed as an $n$‑tuple for some
+      $n$, so $f$ is \emph{surjective}.
+
+%---------------------------------------------------------------------------
+\item \textbf{Cardinality of the domain.}
+
+      Because $d$ is infinite,
+      \[
+          |D^{\,n}|=d^{\,n}=d\qquad(n\ge 1).
+      \]
+      The domain of $f$ is a \emph{countable} disjoint union of sets of
+      size $d$, hence
+      \[
+          \Bigl|\bigsqcup_{n=1}^{\infty} D^{\,n}\Bigr|
+          \;=\;
+          \aleph_{0}\cdot d
+          \;=\;
+          d.
+      \]
+      (Multiplying an infinite cardinal by $\aleph_{0}$ leaves it
+      unchanged.)
+
+%---------------------------------------------------------------------------
+\item \textbf{Upper bound for $|F|$.}
+
+      Since $f$ is onto,
+      \[
+          |F|\;\le\;\Bigl|\bigsqcup_{n=1}^{\infty} D^{\,n}\Bigr|
+          \;=\;
+          d.
+      \]
+
+%---------------------------------------------------------------------------
+\item \textbf{Lower bound for $|F|$.}
+
+      Define
+      \[
+          g:D\longrightarrow F,
+          \qquad
+          g(a)=\{a\}.
+      \]
+      The map $g$ is injective, so $|D|\le |F|$, i.e.\ $d\le |F|$.
+
+%---------------------------------------------------------------------------
+\item \textbf{Conclude.}
+
+      Combining the bounds
+      \[
+          d\;\le\;|F|\;\le\;d
+          \quad\Longrightarrow\quad
+          |F|=d.
+          \qedhere
+      \]
+\end{enumerate}
+\section*{The Disjoint Union Symbol}
+
+The symbol 
+\[
+   \bigsqcup
+\]
+is called the \emph{disjoint union} (or \emph{coproduct}) symbol. It typically means that one is taking the union of several sets in such a way that each set is understood (or made) to be pairwise disjoint from the others, even if they originally were not.
+
+\subsection*{Example of usage}
+\[
+  \bigsqcup_{n=1}^{\infty} D^{n}
+\]
+means ``the disjoint union of the sets $D^{n}$ (the Cartesian product of $D$ with itself $n$ times), for $n=1,2,3,\dots$''. Each $D^{n}$ is treated as if it had no overlap with $D^{m}$ for $m\neq n$, by using distinct tagging or indexing for each component.
+
+\subsection*{Why a Disjoint Union?}
+In many arguments, especially when constructing a surjective map onto a family of finite subsets, one wants to ensure that elements coming from $D^n$ are kept distinct from those in $D^m$ when $m\ne n$. The disjoint union $\bigsqcup$ accomplishes this formally.
+
+\subsection*{LaTeX Command}
+To produce the symbol in LaTeX, type:
+\[
+  \bigsqcup
+\]
+There is also a smaller inline version: 
+\[
+  \sqcup.
+\]
+\section*{Understanding the Notation \texorpdfstring{$D^n$}{D^n}}
+
+In our context, if \(D\) is an infinite set and \(n\) is a positive integer, then 
+\[
+    D^n
+\]
+denotes the \emph{n‑fold Cartesian product} of \(D\) with itself.  
+That is,
+\[
+    D^n = \underbrace{D \times D \times \cdots \times D}_{n\text{ factors}},
+\]
+which is the set of all \(n\)-tuples
+\[
+    (a_{1}, a_{2}, \dots, a_{n})
+\]
+with each \(a_{i}\in D\).
+
+\bigskip
+
+\textbf{Important Points:}
+\begin{itemize}
+    \item Although \(D\) is infinite, \(D^n\) involves only a \emph{finite} number of factors.
+    \item Consequently, if \(D\) is an infinite set, one typically has 
+          \[
+              |D^n| = |D|,
+          \]
+          because the cardinality does not change when taking a finite product of an infinite set.
+    \item In contrast, an \emph{infinite Cartesian product} would be written as
+          \[
+              \prod_{i\in I} D_i,
+          \]
+          where \(I\) is an infinite index set (and, usually, each \(D_i\) is a copy of \(D\)).
+\end{itemize}
+
+\bigskip
+\textbf{Summary:}  
+\(D^n\) represents the finite Cartesian product of \(D\) with itself \(n\) times, not the infinite Cartesian product.
+
+\section*{Why the Infinity Symbol?}
+
+When you see
+\[
+   \bigsqcup_{n=1}^{\infty} D^n,
+\]
+the ``\(\infty\)'' refers to the fact that we are \emph{indexing} over
+\emph{all positive integers} \(n\).  Specifically, we are taking the
+\emph{disjoint union} of
+\[
+   D^1, \quad D^2, \quad D^3, \quad \dots
+\]
+\emph{finitely many factors at a time}, but for \emph{every} natural number \(n\).
+
+\bigskip
+
+\textbf{Key Points:}
+\begin{itemize}
+\item Each individual set \(D^n\) is a \emph{finite Cartesian product} of \(D\) with itself \(n\) times.
+\item Because \(n\) runs from \(1\) to \(\infty\), we have \emph{infinitely many} such finite products.
+\item We then form the \emph{disjoint union} of all these sets.  That is not the same as an infinite product 
+      \(\prod_{i=1}^\infty D\). 
+      Instead, we have a countable family of finite products, all combined with no overlap (except for having the same underlying set \(D\)).
+\item The ``\(\infty\)'' is \emph{not} telling you to take an ``infinite Cartesian product''; 
+      it’s simply saying ``do this for all \(n=1,2,3,\dots\).”
+\end{itemize}
+
+\bigskip
+\textbf{Summary:}
+\[
+   \boxed{
+     \text{The symbol ``\(\infty\)'' indicates a countably infinite index over which we take a disjoint union 
+           of finite products }D^n.
+   }
+\]
+\begin{problem}
+    Prove that every chain \(C\) in a partially ordered set \((L,\le)\)
+    is contained in a \emph{maximal} chain.
+\end{problem}
+
+\begin{proof}
+    \textbf{Step 1:  Build a poset of chains that extend \(C\).}
+
+    Let
+    \[
+        \mathcal L
+        \;=\;
+        \bigl\{\,A\subseteq L \;:\; C\subseteq A
+              \text{ and } A \text{ is a chain in }(L,\le)\bigr\}.
+    \]
+    Order \(\mathcal L\) by set‑inclusion:
+    \[
+        A\preceq B \;\Longleftrightarrow\; A\subseteq B.
+    \]
+    Clearly \(\preceq\) is a partial order on \(\mathcal L\).
+
+    \bigskip
+    \textbf{Step 2:  Show that every chain of chains has an upper bound.}
+
+    Let \(\mathcal C=\{A_{\alpha}\}_{\alpha\in I}\subseteq\mathcal L\)
+    be a \(\preceq\)-chain (that is, the \(A_{\alpha}\) themselves are
+    totally ordered by inclusion).
+    Define
+    \[
+        C_{0}\;=\;\bigcup_{\alpha\in I} A_{\alpha}.
+    \]
+    We claim \(C_{0}\in\mathcal L\).
+
+    \begin{itemize}
+        \item \(C\subseteq C_{0}\) because each \(A_{\alpha}\) contains \(C\).
+        \item To see \(C_{0}\) is a chain, take any \(a,b\in C_{0}\).
+              Then \(a\in A_{\alpha}\) and \(b\in A_{\beta}\) for some
+              indices \(\alpha,\beta\).
+              Because \(\mathcal C\) is a chain under inclusion, either
+              \(A_{\alpha}\subseteq A_{\beta}\) or
+              \(A_{\beta}\subseteq A_{\alpha}\).
+              Without loss of generality, assume
+              \(A_{\alpha}\subseteq A_{\beta}\); then
+              \(a,b\in A_{\beta}\), and since \(A_{\beta}\) is a chain in
+              \(L\) we have \(a\le b\) or \(b\le a\).
+              Hence \(C_{0}\) is a chain.
+    \end{itemize}
+    Thus \(C_{0}\in\mathcal L\) and \(A_{\alpha}\subseteq C_{0}\)
+    for every \(\alpha\in I\); i.e.\ \(C_{0}\) is an upper bound of
+    \(\mathcal C\) in \((\mathcal L,\preceq)\).
+
+    \bigskip
+    \textbf{Step 3:  Apply Zorn's Lemma.}
+
+    Every \(\preceq\)-chain in \(\mathcal L\) has an upper bound, so by
+    Zorn’s Lemma there exists a \(\preceq\)-maximal element
+    \(C^{\ast}\in\mathcal L\).
+    \begin{lemma}[Zorn's Lemma]
+        Let $P$ be a partially ordered set (poset) in which every totally ordered subset 
+        (i.e., every chain) has an upper bound in $P$. Then $P$ contains at least 
+        one maximal element.
+        \end{lemma}
+
+    \bigskip
+    \textbf{Step 4:  Verify maximality in \(L\).}
+
+    By construction \(C^{\ast}\) is a chain containing \(C\).
+    Suppose there were an element \(x\in L\setminus C^{\ast}\) such that
+    \(C^{\ast}\cup\{x\}\) is still a chain.
+    Then \(C^{\ast}\cup\{x\}\in\mathcal L\) and strictly contains
+    \(C^{\ast}\), contradicting maximality in \(\mathcal L\).
+    Therefore no such \(x\) exists, and \(C^{\ast}\) is a
+    \emph{maximal} chain of \(L\) that contains \(C\).
+
+    \bigskip
+    \textbf{Conclusion.}\;
+    Every chain in a partially ordered set can be extended to a maximal
+    chain.
+\end{proof}
+\section*{Extending a Function Using the Axiom of Choice}
+
+Let \(f:X\to X\) be a function. We wish to prove, using the Axiom of Choice, that there exists a function \(g:X\to X\) such that
+\[
+  f \circ g \circ f \;=\; f.
+\]
+
+\textbf{Sketch of the Proof:}
+\begin{enumerate}
+    \item Factor \(f\) through its image:
+          Define \(Y=f(X)\) so that \(f\) may be written as 
+          \[
+              f:X \xrightarrow{\;f\;} Y \hookrightarrow X.
+          \]
+    \item Use the Axiom of Choice:
+          For each \(y\in Y\) the fibre 
+          \[
+              f^{-1}(\{y\})
+          \]
+          is non‑empty. The Axiom of Choice guarantees the existence of a choice function 
+          \[
+              s:Y\to X,\quad s(y)\in f^{-1}(\{y\}) \quad (\forall\, y\in Y),
+          \]
+          so that
+          \[
+              f\circ s = \operatorname{id}_Y.
+          \]
+    \item \textbf{Extend \(s\) to a function \(g:X\to X\).}  
+          We define \(g\) by considering two cases. It is convenient to express this using a \texttt{cases} environment. To avoid the "Missing \$ inserted" error, we wrap the whole construction in math mode:
+          \[
+          g(x)=
+          \begin{cases}
+             s(x), & \text{if } x\in Y, \\[3mm]
+             x_0, & \text{if } x\in X\setminus Y,
+          \end{cases}
+          \]
+          where \(x_{0}\in X\setminus Y\) is a fixed element chosen arbitrarily (if \(Y\neq X\); if \(Y=X\), then simply take \(g(x)=s(x)\) for all \(x\in X\)).
+    \item \textbf{Check the identity:}  
+          For any \(x\in X\), note that \(f(x)\in Y\). Hence,
+          \[
+              (f\circ g\circ f)(x) = f\Bigl(g\bigl(f(x)\bigr)\Bigr)
+              = f\bigl(s(f(x))\bigr)
+              = (f\circ s)(f(x))
+              = \operatorname{id}_Y\bigl(f(x)\bigr)
+              = f(x).
+          \]
+\end{enumerate}
+
+Thus, we have constructed a function \(g:X\to X\) with \(f\circ g\circ f = f\).
+
+\bigskip
+
+\begin{problem}
+    Let $M$ be a non‑empty set and let $D:M\times M\to\mathbb R$ satisfy
+    \begin{enumerate}
+    \item[(a)] $D(a,a)=0$ for every $a\in M$;
+    \item[(b)] $D(a,b)\ne0$ whenever $a\ne b$;
+    \item[(c)] $D(a,b)+D(b,c)\ge D(a,c)$ for all $a,b,c\in M$.
+    \end{enumerate}
+    Prove that $D$ is a metric on $M$.
+    \end{problem}
+    
+    \begin{proof}
+    To show that $D$ is a metric we must verify, for all $a,b,c\in M$,
+    \[
+    \text{(i) } D(a,b)\ge0,\quad
+    \text{(ii) } D(a,b)=0\iff a=b,\quad
+    \text{(iii) } D(a,b)=D(b,a),\quad
+    \text{(iv) } D(a,c)\le D(a,b)+D(b,c).
+    \]
+    
+    \smallskip
+    \noindent\textbf{Triangle inequality (iv).}  
+    This is exactly assumption~(c).
+    
+    \smallskip
+    \noindent\textbf{Symmetry (iii).}  
+    Set $c=b$ in~(c):
+    \[
+      D(a,b)+D(b,b)\;\ge\;D(a,b).
+    \]
+    Because $D(b,b)=0$ by~(a), we actually get
+    \[
+      D(a,b)\;\ge\;D(b,a).
+    \]
+    Exchanging $a$ and $b$ gives the reverse inequality, hence
+    $D(a,b)=D(b,a)$.
+    
+    \smallskip
+    \noindent\textbf{Non‑negativity (i).}  
+    Put $c=a$ in~(c):
+    \[
+      D(a,b)+D(b,a)\;\ge\;D(a,a)=0.
+    \]
+    The left side is a sum of two equal terms (by symmetry), so
+    $2D(a,b)\ge0$, i.e.\ $D(a,b)\ge0$.
+    
+    \smallskip
+    \noindent\textbf{Identity of indiscernibles (ii).}  
+    If $a\ne b$, assumption~(b) says $D(a,b)\ne0$, and by the
+    non‑negativity just proved this means $D(a,b)>0$.  
+    Conversely, $D(a,a)=0$ by~(a).  
+    Hence $D(a,b)=0\iff a=b$.
+    
+    \smallskip
+    \noindent
+    Having verified (i)–(iv), we conclude that $D$ satisfies all metric
+    axioms; therefore $D$ is a metric on $M$.
+    \end{proof}
+    \begin{theorem}
+        Let $M = \mathbb{R}$ with the distance function $D(a,b) = |a - b|$ for all $a,b \in \mathbb{R}$. 
+        Fix a point $x_0 \in \mathbb{R}$.  Show that there exist exactly two isometries $f : \mathbb{R}\to \mathbb{R}$ 
+        such that $f(x_0) = x_0$, namely
+        \[
+        f(x) = x \quad \text{and} \quad f(x) = 2x_0 - x.
+        \]
+        \end{theorem}
+        
+        \begin{proof}[Proof (Step by Step)]
+        \textbf{Step 1: Reduction to the case $x_0=0$.}
+        
+        Since we are looking for isometries that fix $x_0$, we can reduce to the case $x_0=0$ by a simple translation.  
+        Define 
+        \[
+        g(x) = x - x_0 
+        \quad \text{and hence} \quad 
+        g^{-1}(x) = x + x_0.
+        \]
+        Both $g$ and $g^{-1}$ are isometries (they just translate by $x_0$).  
+        If $f : \mathbb{R} \to \mathbb{R}$ is an isometry that fixes $x_0$, then the map 
+        \[
+        h = g \circ f \circ g^{-1}
+        \]
+        is an isometry that fixes $0$, because 
+        \[
+        f(x_0) = x_0
+        \;\;\Longleftrightarrow\;\;
+        h(0) = g(f(g^{-1}(0))) = g(f(x_0)) = g(x_0) = 0.
+        \]
+        Moreover, $f_1 = f_2$ if and only if $h_1 = h_2$ for the corresponding $h_i$.  
+        Thus it suffices to classify all isometries $h$ fixing $0$.  Translating back will give the classification of the original $f$ fixing $x_0$.
+        
+        \medskip
+        
+        \textbf{Step 2: Classifying isometries $f : \mathbb{R} \to \mathbb{R}$ that fix $0$.}
+        
+        Let $f : \mathbb{R} \to \mathbb{R}$ be an isometry with $f(0)=0$.  
+        First, observe that
+        \[
+        D\bigl(f(1), f(0)\bigr) = D(f(1),0) = D(1,0) = 1.
+        \]
+        Hence $|f(1)| = 1$, so $f(1)$ must be either $1$ or $-1$.
+        
+        \medskip
+        
+        \textbf{Case 1: $f(1) = 1$.}
+        
+        Pick any $x \in \mathbb{R}$.  Set $y = f(x)$.  Since $f$ preserves distances from $0$ and from $1$, we have
+        \[
+        |y| \;=\; D(f(x), 0) \;=\; D(x,0) \;=\; |x|,
+        \]
+        and
+        \[
+        |y - 1| \;=\; D(f(x), f(1)) \;=\; D(x,1) \;=\; |x - 1|.
+        \]
+        From $|y| = |x|$, we know $y$ is either $x$ or $-x$.  Then from 
+        \[
+        |y - 1| = |x - 1|,
+        \]
+        we see that if $y = -x$, then 
+        \[
+        |-x - 1| = |x - 1|.
+        \]
+        Squaring, $(x+1)^2 = (x-1)^2 \implies x^2 + 2x + 1 = x^2 - 2x + 1 \implies 2x = -2x \implies x=0.$  
+        But for $x=0$, we already have $y=0$.  In all other cases $x \neq 0$, the only possibility consistent with the above distances is $y=x$.  Hence $f(x)=x$ for all $x$.  
+        
+        Thus, if $f(1)=1$, we conclude $f(x) = x$ for all $x$.  
+        
+        \medskip
+        
+        \textbf{Case 2: $f(1) = -1$.}
+        
+        Define 
+        \[
+        \varphi(x) = -\,f(x).
+        \]
+        Clearly, $\varphi(0) = -f(0)=0$.  Also 
+        \[
+        \varphi(1) = -f(1)= -(-1)=1.
+        \]
+        Thus $\varphi$ is another isometry (it is the composition of $f$ with a reflection $x \mapsto -x$) that fixes $0$ and sends $1$ to $1$.  By the argument in Case~1, such an isometry must be the identity map.  Hence $\varphi(x)=x$ for all $x$, which implies 
+        \[
+        -\,f(x) = x 
+        \quad\Longrightarrow\quad 
+        f(x) = -\,x.
+        \]
+        Therefore, if $f(1)=-1$, we conclude $f(x) = -x$ for all $x$.  
+        
+        \medskip
+        
+        \textbf{Step 3: Conclusion.}
+        
+        From the two cases, any isometry fixing $0$ must be either $f(x)=x$ or $f(x)=-x$.  
+        Recalling the translation argument in Step~1, if we want an isometry $F$ that fixes a general $x_0$, it must come from 
+        \[
+        f(x) = \pm x
+        \]
+        by 
+        \[
+        F(x) = g^{-1}\bigl(f(g(x))\bigr) = x_0 \pm (x - x_0).
+        \]
+        Hence the only two possibilities are
+        \[
+        F(x) = x 
+        \quad\text{or}\quad 
+        F(x) = 2x_0 - x.
+        \]
+        These are exactly two isometries that fix $x_0$.  This completes the proof.
+        \end{proof}
+        \begin{theorem}
+            Let $(M,D)$ be a metric space, let $x$ be a point in $M$, and let $r,s$ be real numbers with
+            \[
+            0 < r < s.
+            \]
+            Define the set 
+            \[
+            A(x,r,s) \;:=\; \bigl\{\,y \in M : r < D(x,y) < s\,\bigr\}.
+            \]
+            Show that $A(x,r,s)$ is open in $M$.
+            \end{theorem}
+            
+            \begin{proof}[Proof (Step by Step)]
+            \textbf{Step 1: Fix a point $y$ in $A(x,r,s)$.}
+            
+            By the definition of $A(x,r,s)$, we have
+            \[
+            r < D(x,y) < s.
+            \]
+            Therefore, both of the quantities
+            \[
+            D(x,y) - r
+            \quad \text{and} \quad
+            s - D(x,y)
+            \]
+            are strictly positive.
+            
+            \medskip
+            
+            \textbf{Step 2: Define a suitable radius for an open ball around $y$.}
+            
+            Let
+            \[
+            \delta \;=\; \min\bigl(D(x,y) - r, \; s - D(x,y)\bigr).
+            \]
+            Since both $D(x,y) - r > 0$ and $s - D(x,y) > 0$, it follows that $\delta > 0.$
+            
+            \medskip
+            
+            \textbf{Step 3: Check that all points $z$ within $B_\delta(y)$ remain in $A(x,r,s)$.}
+            
+            Consider any point $z \in M$ such that $D(y,z) < \delta.$  
+            We want to show that 
+            \[
+            r < D(x,z) < s.
+            \]
+            Using the triangle inequality, we have
+            \[
+            D(x,z) \;\le\; D(x,y) + D(y,z)
+            \;\;<\;\; D(x,y) + \delta.
+            \]
+            Since $\delta \le s - D(x,y)$, we get
+            \[
+            D(x,y) + \delta \;\le\; D(x,y) + \bigl(s - D(x,y)\bigr) \;=\; s.
+            \]
+            Hence,
+            \[
+            D(x,z) < s.
+            \]
+            On the other hand, using the reverse triangle inequality or the fact that $D(x,z) \ge |D(x,y) - D(y,z)|$, we get
+            \[
+            D(x,z) \;\ge\; D(x,y) - D(y,z)
+            \;\;>\;\; D(x,y) - \delta.
+            \]
+            Since $\delta \le D(x,y) - r$, it follows
+            \[
+            D(x,y) - \delta \;\ge\; D(x,y) - \bigl(D(x,y) - r\bigr) \;=\; r.
+            \]
+            Thus,
+            \[
+            D(x,z) > r.
+            \]
+            
+            Putting these together gives
+            \[
+            r < D(x,z) < s.
+            \]
+            Therefore, $z \in A(x,r,s)$.
+            
+            \medskip
+            
+            \textbf{Step 4: Conclude that $A(x,r,s)$ is open.}
+            
+            Because every point $y \in A(x,r,s)$ has some $\delta>0$ such that the open ball $B_\delta(y)$ is contained in $A(x,r,s)$, it follows by definition that $A(x,r,s)$ is an open set in $M$.
+            
+            \end{proof}
+            \begin{theorem}
+                Let $(M,D)$ be an infinite metric space. Show that there exists an open set $U \subset M$ such that both $U$ and $M \setminus U$ are infinite.
+                \end{theorem}
+                
+                \begin{proof}[Proof (Step by Step)]
+                \textbf{Step 1. Define $E$, the set of isolated points of $M$.}
+                
+                Recall that a point $x \in M$ is \emph{isolated} if there exists some $r>0$ such that $B_r(x) = \{x\}$.  
+                Let $E$ be the set of all isolated points in $M$, i.e.
+                \[
+                E = \{\, x \in M : x \text{ is isolated}\}.
+                \]
+                
+                \medskip
+                
+                \textbf{Step 2. Case 1: $E$ is infinite.}
+                
+                If $E$ is infinite, we can choose a subset $U \subset E$ such that $U$ is infinite and $E \setminus U$ is also infinite.  
+                Because every point of $E$ is isolated, each $x \in E$ has some open ball $B_{r_x}(x)$ containing no other points of $M$.  In particular, each $x \in E$ is an interior point of $E$.  
+                Hence if $U \subset E$, each $x \in U$ is also an interior point of $U$, making $U$ open in $M$.  
+                Since $U$ and $E \setminus U$ are both infinite, we also see that $M\setminus U$ (which contains at least $E \setminus U$) must be infinite.  
+                Thus in this case, $U$ is an open set in $M$ with $U$ infinite and $M\setminus U$ infinite, as desired.
+                
+                \medskip
+                
+                \textbf{Step 3. Case 2: $E$ is finite.}
+                
+                If $E$ is finite, there must exist a point $x \in M$ that is \emph{not} isolated (otherwise, $E$ would be all of $M$, contradicting the infinitude of $M$ when $E$ is finite).
+                
+                \medskip
+                
+                \textbf{Step 4. Construct an open ball with infinitely many points.}
+                
+                Since $x$ is not isolated, for every $r>0$, the ball $B_r(x)$ contains infinitely many points of $M$.  
+                In particular, pick any $r>0$.  The set $B_r(x)$ is infinite.  
+                We claim there is another point $y \in M$ with $D(x,y) = 2r$ and $y \notin B_r(x)$.  
+                Because $M$ is infinite, we can choose $y$ so that $D(x,y) > r$; by scaling $r$ if needed, we ensure $D(x,y) = 2r$.  
+                
+                \medskip
+                
+                \textbf{Step 5. Two disjoint infinite open balls.}
+                
+                Observe that $B_r(x)$ and $B_r(y)$ are disjoint: if $z$ were in both, then by the triangle inequality,
+                \[
+                D(x,y) \; \le \; D(x,z) + D(z,y) < r + r = 2r,
+                \]
+                which contradicts $D(x,y) = 2r$.  
+                Hence each of $B_r(x)$ and $B_r(y)$ is infinite and they are disjoint subsets of $M$.
+                
+                \medskip
+                
+                \textbf{Step 6. Conclude with the required open set $U = B_r(x)$.}
+                
+                Take $U := B_r(x)$.  Then $U$ is open in $M$, and since $U$ is infinite, it remains only to check that $M \setminus U$ is also infinite.  But $B_r(y)\subset M \setminus U$, and $B_r(y)$ is infinite.  
+                Hence $M \setminus U$ is infinite as well.
+                
+                \medskip
+                
+                \textbf{Step 7. Final conclusion.}
+                
+                In both cases ($E$ infinite or $E$ finite), we have produced an open set $U$ such that both $U$ and $M \setminus U$ are infinite.  This completes the proof.
+                \end{proof}
+                \begin{theorem}
+                    Let $A$ and $B$ be subsets of a metric space $(M,D)$.  Then
+                    \begin{itemize}
+                    \item[(a)] If $A \subset B$, then $\overline{A} \subset \overline{B}$.
+                    \item[(b)] $\overline{A \cup B} = \overline{A} \;\cup\; \overline{B}$.
+                    \item[(c)] Does $\overline{A \cap B} \;=\; \overline{A}\,\cap\,\overline{B}$ always hold?
+                    \end{itemize}
+                    \end{theorem}
+                    
+                    \begin{proof}[Proof (Step by Step)]
+                    \textbf{Part (a).} Assume $A \subset B$.  
+                    
+                    \begin{itemize}
+                    \item Since $B \subset \overline{B}$ (the closure of $B$), it follows from $A \subset B$ that $A \subset \overline{B}$.  
+                    \item The closure $\overline{A}$ is the \emph{smallest} closed set containing $A$.  Because $\overline{B}$ is itself a closed set containing $A$, we conclude $\overline{A} \subset \overline{B}$.  
+                    \end{itemize}
+                    
+                    Hence $A \subset B \implies \overline{A} \subset \overline{B}$.
+                    
+                    \medskip
+                    
+                    \textbf{Part (b).} We claim that
+                    \[
+                    \overline{A \cup B} \;=\; \overline{A}\,\cup\,\overline{B}.
+                    \]
+                    
+                    \begin{itemize}
+                    \item \emph{First, we show} $\overline{A \cup B} \;\subset\; \overline{A}\,\cup\,\overline{B}$.  
+                    
+                    Since $A \cup B \subset \overline{A}\,\cup\,\overline{B}$ and $\overline{A}\,\cup\,\overline{B}$ is closed (union of two closed sets is closed), it follows that the closure of $A \cup B$ (the smallest closed set containing $A \cup B$) must be contained in any closed set that contains $A \cup B$.  In particular,
+                    \[
+                    \overline{A \cup B} \;\subset\; \overline{A}\,\cup\,\overline{B}.
+                    \]
+                    
+                    \item \emph{Next, we show} $\overline{A}\,\cup\,\overline{B} \;\subset\; \overline{A \cup B}$.  
+                    
+                    Let $F$ be any closed set containing $A \cup B$.  Then clearly $F \supset A$ and $F \supset B$.  
+                    Since $F$ is closed and contains $A$, we have $F \supset \overline{A}$.  Similarly, $F \supset \overline{B}$.  
+                    Hence $F \supset \overline{A}\,\cup\,\overline{B}$.  
+                    
+                    Because $\overline{A \cup B}$ is defined as the \emph{intersection} of all closed sets containing $A \cup B$, it must be that
+                    \[
+                    \overline{A \cup B}
+                    \;\supset\;
+                    \overline{A}\,\cup\,\overline{B}.
+                    \]
+                    \end{itemize}
+                    
+                    Combining both inclusions gives
+                    \[
+                    \overline{A \cup B} \;=\; \overline{A}\,\cup\,\overline{B}.
+                    \]
+                    
+                    \medskip
+                    
+                    \textbf{Part (c).} Does
+                    \[
+                    \overline{A \cap B} \;=\; \overline{A}\,\cap\,\overline{B}
+                    \]
+                    always hold? The answer is \emph{no} in general.
+                    
+                    \medskip
+                    
+                    \textbf{Counterexample:}
+                    
+                    Take $M = \mathbb{R}$ with the usual metric.  Let 
+                    \[
+                    A = \mathbb{Q} \quad\text{(the set of rationals)}, 
+                    \qquad
+                    B = \mathbb{R} \setminus \mathbb{Q} \quad\text{(the set of irrationals)}.
+                    \]
+                    Then 
+                    \[
+                    A \cap B = \varnothing,
+                    \]
+                    so 
+                    \[
+                    \overline{A \cap B} = \overline{\varnothing} = \varnothing.
+                    \]
+                    On the other hand,
+                    \[
+                    \overline{A} = \overline{\mathbb{Q}} = \mathbb{R}
+                    \quad\text{and}\quad
+                    \overline{B} = \overline{\mathbb{R} \setminus \mathbb{Q}} = \mathbb{R}.
+                    \]
+                    Hence 
+                    \[
+                    \overline{A} \;\cap\; \overline{B}
+                    = \mathbb{R} \cap \mathbb{R}
+                    = \mathbb{R}.
+                    \]
+                    Clearly, $\varnothing \neq \mathbb{R}$.  
+                    Thus $\overline{A \cap B} \neq \overline{A}\,\cap\,\overline{B}$ in this example.
+                    
+                    \end{proof}
+                    \begin{theorem}
+                        Let $(M,D)$ be a metric space, $x \in M$, and $r,s$ real numbers with $0 < r < s$. Then:
+                        \begin{itemize}
+                        \item[(a)] The closed ball $\overline{B}_r(x) = \{\,y \in M : D(y,x) \le r\}$ is closed in $M$.
+                        \item[(b)] The sphere $\{\,y \in M : D(y,x) = r\}$ is closed in $M$.
+                        \item[(c)] The closed annulus
+                        \[
+                        A(x,r,s) := \{\,y \in M : r \,\le\, D(y,x) \,\le\, s\}
+                        \]
+                        is closed in $M$.
+                        \end{itemize}
+                        \end{theorem}
+                        
+                        \begin{proof}[Proof (Step by Step)]
+                        
+                        \textbf{(a) The closed ball $\overline{B}_r(x)$ is closed.}
+                        
+                        Define
+                        \[
+                        \overline{B}_r(x) \;=\; \{\, y \in M : D(y,x) \,\le\, r\}.
+                        \]
+                        We show that its complement $M \setminus \overline{B}_r(x)$ is open.  
+                        
+                        \begin{itemize}
+                        \item Take any $y \in M \setminus \overline{B}_r(x)$.  
+                           By definition, $D(y,x) > r$.  
+                           Set $\delta := D(y,x) - r$, which is strictly positive.  
+                        \item Then for any $z \in M$ with $D(y,z) < \delta$, the triangle inequality yields
+                        \[
+                        D(z,x) \;\ge\; D(y,x) - D(y,z) \;>\; D(y,x) - \delta \;=\; r.
+                        \]
+                        Hence $z \notin \overline{B}_r(x)$, i.e.\ $z \in M \setminus \overline{B}_r(x)$.  
+                        \item This shows that the open ball $B_\delta(y)$ around $y$ lies entirely in $M \setminus \overline{B}_r(x)$.  
+                           Consequently, $M \setminus \overline{B}_r(x)$ is open.  
+                        \end{itemize}
+                        
+                        Since the complement of $\overline{B}_r(x)$ is open, we conclude that $\overline{B}_r(x)$ is closed.
+                        
+                        \medskip
+                        
+                        \textbf{(b) The sphere $\{y : D(y,x) = r\}$ is closed.}
+                        
+                        Let 
+                        \[
+                        S_r(x) := \{\,y \in M : D(y,x) = r\}.
+                        \]
+                        We can write this sphere as 
+                        \[
+                        S_r(x) \;=\; \overline{B}_r(x) \;\cap\; \bigl(M \setminus B_r(x)\bigr),
+                        \]
+                        where $B_r(x)$ is the (open) ball of radius $r$.  
+                        
+                        \begin{itemize}
+                        \item $\overline{B}_r(x)$ is closed by part (a).  
+                        \item $M \setminus B_r(x)$ is also closed, because $B_r(x)$ is open.  
+                        \end{itemize}
+                        
+                        Hence the intersection of two closed sets, $\overline{B}_r(x)\,\cap\,[M \setminus B_r(x)]$, is itself closed.  
+                        Therefore, the set $\{y : D(y,x) = r\}$ is closed in $M$.
+                        
+                        \medskip
+                        
+                        \textbf{(c) The closed annulus $A(x,r,s)$ is closed.}
+                        
+                        Define
+                        \[
+                        A(x,r,s) \;=\; \{\,y \in M : r \,\le\, D(y,x) \,\le\, s\}.
+                        \]
+                        Note that we may write
+                        \[
+                        A(x,r,s)
+                        \;=\;
+                        \overline{B}_s(x) 
+                        \;\cap\; 
+                        \bigl(M \setminus B_r(x)\bigr).
+                        \]
+                        In other words, it is the intersection of the closed ball of radius $s$ (which is closed by part (a)) and the complement of the open ball of radius $r$ (which is again a closed set).  
+                        
+                        Since the intersection of two closed sets is closed, $A(x,r,s)$ is closed in $M$.  
+                        \end{proof}
+                        \begin{theorem}
+                            Let $(M,D)$ be a metric space, and let $A \subset M$. Denote by $\overline{A}$ the closure of $A$. 
+                            Show that 
+                            \[
+                            \mathrm{diam}(A) \;=\; \mathrm{diam}\bigl(\overline{A}\bigr).
+                            \]
+                            \end{theorem}
+                            
+                            \begin{proof}[Proof (Step by Step)]
+                            Recall that the \emph{diameter} of a set $A$ is defined by
+                            \[
+                            \mathrm{diam}(A) 
+                            \;=\; 
+                            \sup\{\,D(x,y) : x,y \in A\}.
+                            \]
+                            
+                            \medskip
+                            
+                            \textbf{Step 1: Show $\mathrm{diam}(A) \,\le\, \mathrm{diam}(\overline{A})$.}
+                            
+                            Since $A \subset \overline{A}$, any pair of points $x,y \in A$ also lies in $\overline{A}$. Therefore,
+                            \[
+                            \sup_{x,y \in A} D(x,y)
+                            \;\le\;
+                            \sup_{x,y \in \overline{A}} D(x,y).
+                            \]
+                            Hence
+                            \[
+                            \mathrm{diam}(A) 
+                            \;\le\; 
+                            \mathrm{diam}(\overline{A}).
+                            \]
+                            
+                            \medskip
+                            
+                            \textbf{Step 2: Show $\mathrm{diam}(\overline{A}) \,\le\, \mathrm{diam}(A)$.}
+                            
+                            Take any $x,y \in \overline{A}$. By definition of closure, there exist sequences $\{x_n\}\subset A$ and $\{y_n\}\subset A$ such that $x_n \to x$ and $y_n \to y$ as $n \to \infty$.  
+                            
+                            \medskip
+                            
+                            \textit{Goal:} We want to show $D(x,y) \le \mathrm{diam}(A)$.  
+                            
+                            For any $\varepsilon > 0$, we can choose $N$ such that for all $n \ge N$,
+                            \[
+                            D(x_n,x) < \varepsilon
+                            \quad\text{and}\quad
+                            D(y_n,y) < \varepsilon.
+                            \]
+                            Then for $n \ge N$, by the triangle inequality:
+                            \[
+                            D(x,y)
+                            \;\le\; 
+                            D(x,x_n) + D(x_n,y_n) + D(y_n,y).
+                            \]
+                            Since $x_n, y_n \in A$, we know $D(x_n,y_n) \le \mathrm{diam}(A)$.  
+                            Thus
+                            \[
+                            D(x,y)
+                            \;\le\;
+                            \underbrace{D(x,x_n)}_{<\,\varepsilon}
+                            \;+\;
+                            \underbrace{D(x_n,y_n)}_{\le\,\mathrm{diam}(A)}
+                            \;+\;
+                            \underbrace{D(y_n,y)}_{<\,\varepsilon}
+                            \;\le\;
+                            \mathrm{diam}(A) \;+\; 2\,\varepsilon.
+                            \]
+                            Because $\varepsilon>0$ was arbitrary, we deduce
+                            \[
+                            D(x,y) \;\le\; \mathrm{diam}(A).
+                            \]
+                            Taking the supremum over all $x,y\in \overline{A}$ then gives
+                            \[
+                            \mathrm{diam}(\overline{A})
+                            \;\le\;
+                            \mathrm{diam}(A).
+                            \]
+                            
+                            \medskip
+                            
+                            \textbf{Step 3: Combine the two inequalities.}
+                            
+                            From Step~1 and Step~2, we conclude
+                            \[
+                            \mathrm{diam}(A) 
+                            \;\le\; 
+                            \mathrm{diam}(\overline{A})
+                            \quad\text{and}\quad
+                            \mathrm{diam}(\overline{A})
+                            \;\le\;
+                            \mathrm{diam}(A).
+                            \]
+                            Hence 
+                            \[
+                            \mathrm{diam}(A) \;=\; \mathrm{diam}(\overline{A}).
+                            \]
+                            This completes the proof.
+                            \end{proof}
+
+                            \begin{theorem}
+                                \label{thm:equivalences}
+                                The following statements are equivalent (over ZF set theory):
+                                \begin{itemize}
+                                  \item[\textnormal{(1)}] \textbf{Well‐Ordering Theorem (WOT):} Every set can be well‐ordered.
+                                  \item[\textnormal{(2)}] \textbf{Axiom of Choice (AC):} For every family $\{X_i : i \in I\}$ of nonempty sets,
+                                  there exists a choice function $f$ picking one element $f(i) \in X_i$ for each $i \in I$.
+                                  \item[\textnormal{(3)}] \textbf{Zorn’s Lemma (ZL):} Every partially ordered set in which every chain
+                                  (totally ordered subset) has an upper bound contains at least one maximal element.
+                                \end{itemize}
+                                \end{theorem}
+                                
+                                \begin{proof}
+                                We will show (1) $\implies$ (2) $\implies$ (3) $\implies$ (1).
+                                
+                                \medskip
+                                
+                                \noindent
+                                \textbf{(1) \;WOT $\implies$ AC.}
+                                
+                                Suppose every set can be well‐ordered. Let $\{X_i : i \in I\}$ be a family of nonempty sets. 
+                                Define
+                                \[
+                                X \;=\; \bigcup_{i \in I} X_i.
+                                \]
+                                By hypothesis, there exists a well‐order $<$ on the entire set $X$. Since each $X_i$ is nonempty, pick its least element with respect to the well‐order $<$. Formally, for each $i \in I$:
+                                \[
+                                f(i) := \min_{<}(X_i).
+                                \]
+                                This defines a function $f: I \to X$ such that $f(i) \in X_i$ for all $i$. Thus $f$ is a \emph{choice function} for the family $\{X_i\}$. Hence the Axiom of Choice holds.
+                                
+                                \medskip
+                                
+                                \noindent
+                                \textbf{(2) \;AC $\implies$ ZL.}
+                                
+                                Assume the Axiom of Choice. Let $(P,\le)$ be a partially ordered set in which every chain has an upper bound in $P$. We want to prove that $P$ has a maximal element.
+                                
+                                We use a standard “chain‐extension” argument. Consider the set 
+                                \[
+                                \mathcal{C} = \{\, C \subset P : C \text{ is a chain in }(P,\le) \}.
+                                \]
+                                We partially order $\mathcal{C}$ by inclusion $\subseteq$. We aim to show $\mathcal{C}$ has a maximal element under inclusion; that will correspond to a maximal chain in $P$. Once we have a maximal chain in $P$, any upper bound of that chain must lie in $P$; by a standard argument, such a chain will lead to or contain a maximal element of $P$ itself.
+                                
+                                \textit{Step:} Show that every chain (by inclusion) in $\mathcal{C}$ has an upper bound.  
+                                If $\mathcal{T} \subset \mathcal{C}$ is totally ordered by inclusion, then let 
+                                \[
+                                C^* = \bigcup_{C \in \mathcal{T}} C.
+                                \]
+                                Clearly, $C^*$ is still a chain in $P$: any two elements in $C^*$ come from some $C \in \mathcal{T}$, and there they are comparable. Thus $C^* \in \mathcal{C}$, and $C^*$ is an upper bound of $\mathcal{T}$ (in the sense of inclusion).
+                                
+                                By the Axiom of Choice (in a form often called Kuratowski's Lemma or “maximal chain argument”), this implies $\mathcal{C}$ has a maximal element under inclusion, say $M \subset P$. But $M$ is a chain in $P$ which is maximal with respect to inclusion, i.e.\ a \emph{maximal chain}. A standard argument then shows $M$ yields (or directly contains) a maximal element of $P$:
+                                
+                                - If no point in $M$ is maximal in $P$, we could always extend $M$ by adding an element bigger than some element in $M$, contradicting the maximality of $M$ as a chain. 
+                                
+                                Therefore, $P$ contains a maximal element. This proves Zorn’s Lemma.
+                                
+                                \medskip
+                                
+                                \noindent
+                                \textbf{(3) \;ZL $\implies$ WOT.}
+                                
+                                Assume Zorn’s Lemma. Let $X$ be any set. Our goal is to show that $X$ can be well‐ordered.
+                                
+                                Consider the set 
+                                \[
+                                \mathcal{W} = \{\,(Y, \prec)\colon Y \subseteq X,\; \prec \text{ is a well‐order on }Y\}.
+                                \]
+                                We say \((Y,\prec) \subseteq (Z,\prec')\) if $Y \subseteq Z$ and $\prec$ is the restriction of $\prec'$ to $Y$. In simpler terms, we are partially ordering these well‐ordered subsets of $X$ by “extension”: one is less than another if it is literally the same ordering on a smaller set.
+                                
+                                By Zorn’s Lemma, it suffices to show that every chain of well‐ordered subsets in $\mathcal{W}$ has an upper bound in $\mathcal{W}$. If $\{\,(Y_i,\prec_i)\}_{i\in I}$ is a chain in $\mathcal{W}$, define 
+                                \[
+                                Y^* = \bigcup_{i\in I} Y_i.
+                                \]
+                                We can define an order $\prec^*$ on $Y^*$ naturally, by saying that $y \prec^* z$ if and only if $y \prec_i z$ in one (and hence any) of the well‐ordered sets $(Y_i,\prec_i)$ containing both $y$ and $z$. Because the $Y_i$ form a chain under inclusion, this is well‐defined. One can check $\prec^*$ is a well‐ordering of $Y^*$.
+                                
+                                Hence $(\,Y^*,\,\prec^*)$ is an upper bound of our chain in $\mathcal{W}$ (by inclusion). By Zorn’s Lemma, there is a maximal element $(M,\prec_M)$ in $\mathcal{W}$. 
+                                
+                                To finish, we argue that $M = X$. If $M \neq X$, pick some $x_0 \in X\setminus M$. We can extend $\prec_M$ to a new well‐ordering on $M \cup \{x_0\}$ by placing $x_0$ above all elements of $M$ or, if you wish, integrate $x_0$ in any well‐ordered way you like (e.g.\ treat $x_0$ as a “new greatest” element, or insert it in the appropriate place if $X$ is not set‐like). This strictly extends $(M,\prec_M)$, contradicting its maximality. 
+                                
+                                Thus $M = X$ and $\prec_M$ well‐orders the entire set $X$. Therefore $X$ can be well‐ordered.
+                                
+                                \medskip
+                                
+                                Combining all three directions gives the equivalence: 
+                                \[
+                                \text{Well-Ordering Theorem} 
+                                \;\iff\;
+                                \text{Axiom of Choice} 
+                                \;\iff\;
+                                \text{Zorn's Lemma}.
+                                \]
+                                \end{proof}
+\end{document}
+

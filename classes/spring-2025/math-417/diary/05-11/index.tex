@@ -1,0 +1,578 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Aut}{Aut}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\newtheorem{explanation}{Explanation}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  Let $G$ be a group of order $63 = 3^{2}\cdot7$.
+  \begin{enumerate}[]
+      \item Use Sylow’s theorems to show that $G$ has a \emph{unique} Sylow–$7$ subgroup, which is therefore normal in $G$.
+      \item Is $G$ necessarily abelian?  Prove your claim or give a counter-example.
+  \end{enumerate}
+  \end{problem}
+  
+  \begin{solution}
+  \textbf{(a) A unique Sylow--$7$ subgroup.}
+  
+  \begin{enumerate}[]
+      \item \emph{Apply Sylow’s divisibility and congruence conditions.}\\
+            Let $n_{7}$ be the number of Sylow--$7$ subgroups of $G$.  
+            By Sylow’s theorems
+            \[
+                n_{7}\mid 3^{2}=9
+                \quad\text{and}\quad 
+                n_{7}\equiv 1 \pmod{7}.
+            \]
+      \item \emph{List the possibilities.}\\
+            The divisors of $9$ are $\{1,3,9\}$; among these, only
+            \[
+                1\equiv 1\pmod{7},\qquad
+                3\equiv 3\pmod{7},\qquad
+                9\equiv 2\pmod{7}.
+            \]
+            Hence the \emph{only} value satisfying both conditions is $n_{7}=1$.
+      \item \emph{Conclude normality.}\\
+            A Sylow subgroup that is the \emph{only} one of its order is fixed under conjugation by every element of $G$; therefore it is normal.  Thus $G$ contains a unique normal subgroup
+            \[
+                P_{7}\;\trianglelefteq\;G,
+                \qquad |P_{7}|=7.
+            \]
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{(b)  $G$ is \emph{not} necessarily abelian.}
+  
+  \begin{enumerate}[]
+      \item \emph{Reduce the problem via the normal Sylow--$7$ subgroup.}\\
+            Because $P_{7}\lhd G$, the quotient group $G/P_{7}$ has order
+            $|G|/|P_{7}| = 63/7 = 9$.  Hence
+            \[
+                G/P_{7}\cong
+                \begin{cases}
+                     \;\Bbb Z_{9}, &\text{cyclic of order }9,\\
+                     \;\Bbb Z_{3}\times\Bbb Z_{3}, &\text{elementary abelian of order }9.
+                \end{cases}
+            \]
+            In either case $G$ is a \emph{semidirect} product
+            \[
+                G \;\cong\; P_{7}\rtimes_{\!\varphi}H,
+                \qquad H\;\le G,\; |H|=9,
+            \]
+            where $\varphi:H\to\operatorname{Aut}(P_{7})$ describes the action of~$H$ on~$P_{7}$ by conjugation.
+      \item \emph{Determine the possible actions.}\\
+            Since $P_{7}\cong\Bbb Z_{7}$ is cyclic,
+            \[
+                \operatorname{Aut}(P_{7})\;\cong\;\Bbb Z_{6}.
+            \]
+            Any homomorphism $\varphi:H\to\Bbb Z_{6}$ must have image whose order divides both $|H|=9$ and $|\Bbb Z_{6}|=6$; hence $|\operatorname{im}\varphi|\mid 3$.
+            There are two possibilities:
+            \begin{itemize}
+                \item $\operatorname{im}\varphi = \{1\}$ (the trivial action) $\;\Longrightarrow\;$ the semidirect product is actually the \emph{direct} product
+                      \[
+                          G\;\cong\;P_{7}\times H\;\cong\;\Bbb Z_{7}\times H,
+                      \]
+                      which is abelian.
+                \item $\operatorname{im}\varphi \cong \Bbb Z_{3}$ (a non-trivial action) $\;\Longrightarrow\;$ the semidirect product is \emph{non-abelian}.
+            \end{itemize}
+      \item \emph{An explicit non-abelian example.}\\
+            Let $H=\Bbb Z_{9}=\langle b\rangle$ and let
+            \(
+               \alpha\in\operatorname{Aut}(\Bbb Z_{7})\cong\Bbb Z_{6}
+            \)
+            be the automorphism $\alpha(a)=a^{2}$, which has order~$3$ because
+            $2^{3}=8\equiv 1\pmod{7}$.
+            Define $\varphi(b)=\alpha$.  Then
+            \[
+                G \;=\; \bigl\langle
+                       a,b \;\bigm|\;
+                       a^{7}=1,\; b^{9}=1,\;
+                       b\,a\,b^{-1}=a^{2}
+                     \bigr\rangle
+            \]
+            has order $7\cdot9=63$ and is \emph{non-abelian} (the relation
+            $b\,a = a^{2}b$ forces $ab\ne ba$).
+  \end{enumerate}
+  
+  \paragraph{Conclusion.}
+  Every group of order $63$ contains a normal Sylow–$7$ subgroup, but it
+  need \emph{not} be abelian; the semidirect product above furnishes a
+  counter-example.
+  \end{solution}
+  \begin{explanation}
+    \textbf{Definition (external semidirect product).}
+    Let $N$ and $H$ be groups and let $\varphi:H\to\Aut(N)$ be a
+    homomorphism.  
+    The \emph{(external) semidirect product} of $N$ by $H$ with respect to
+    $\varphi$ is the set
+    \[
+       N\rtimes_{\!\varphi} H \;=\; \{(n,h)\mid n\in N,\;h\in H\},
+    \]
+    equipped with the multiplication
+    \[
+       (n_{1},h_{1})\,(n_{2},h_{2})
+         \;=\;
+       \bigl(n_{1}\,\varphi(h_{1})(n_{2}),\;h_{1}h_{2}\bigr).
+    \]
+    Under this operation
+    \[
+       N\;\cong\;\{(n,1_{H})\}\;\trianglelefteq\;N\rtimes_{\!\varphi}H,
+       \qquad
+       H\;\cong\;\{(1_{N},h)\}\;\le\;N\rtimes_{\!\varphi}H,
+    \]
+    and $N\rtimes_{\!\varphi}H$ has order $|N|\,|H|$.
+    
+    \bigskip
+    \textbf{Applying the definition to $|G|=63$.}
+    
+    \begin{enumerate}[]
+       \item \emph{Choose $N$ and $H$.}\\
+             Let 
+             \[
+                N=P_{7}=\langle a\rangle\cong\Bbb Z_{7},
+                \qquad
+                H=\langle b\rangle\cong\Bbb Z_{9}.
+             \]
+       \item \emph{Describe $\Aut(N)$.}\\
+             Because $N$ is cyclic of prime order, 
+             \[
+                \Aut(N)\;\cong\;\Bbb Z_{7}^{\times}
+                          \;=\;\{1,2,3,4,5,6\}\;\cong\;\Bbb Z_{6}.
+             \]
+       \item \emph{Define a homomorphism $\varphi:H\to\Aut(N)$.}\\
+             Pick the automorphism
+             \(
+                 \alpha\in\Aut(N),\; \alpha(a)=a^{2}.
+             \)
+             It has order~$3$ because $2^{3}=8\equiv1\pmod{7}$.  
+             Send the generator of $H$ to~$\alpha$:
+             \[
+                \varphi(b)=\alpha,
+                \qquad\text{so}\qquad
+                \varphi\bigl(b^{k}\bigr)=\alpha^{k}.
+             \]
+             Since $\alpha^{9}=1$ (order~$3$ divides $9$), $\varphi$ is well
+             defined and a homomorphism.
+       \item \emph{Form the semidirect product.}\\
+             Set 
+             \[
+                G \;=\; N\rtimes_{\!\varphi} H.
+             \]
+             Elements of $G$ are pairs $(a^{i},b^{j})$
+             with $0\le i<7,\;0\le j<9$ and multiplication
+             \[
+                (a^{i},b^{j})\,(a^{u},b^{v})
+                  \;=\;
+                \bigl(a^{\,i}\,\alpha^{\,j}(a^{u}),\;b^{\,j+v}\bigr)
+                  \;=\;
+                \bigl(a^{\,i+2^{\,j}u},\;b^{\,j+v}\bigr).
+             \]
+             In particular,
+             \[
+                (1,b)\,(a,1)\,(1,b)^{-1}
+                  \;=\;
+                \bigl(\alpha(a),1\bigr)
+                  \;=\;
+                (a^{2},1),
+             \]
+             which translates to the single–relation presentation
+             \[
+               G\;=\;
+               \Bigl\langle
+                      a,b
+                      \;\Bigm|\;
+                      a^{7}=1,\;b^{9}=1,\;
+                      b\,a\,b^{-1}=a^{2}
+               \Bigr\rangle.
+             \]
+    \end{enumerate}
+    
+    \bigskip
+    \textbf{Why this \emph{is} a semidirect product.}
+    
+    \begin{itemize}
+       \item $N=\langle a\rangle\cong\Bbb Z_{7}$
+             sits inside $G$ as the normal subgroup
+             $\{(a^{i},1)\}$.
+       \item $H=\langle b\rangle\cong\Bbb Z_{9}$
+             sits inside $G$ as the subgroup $\{(1,b^{j})\}$.
+       \item Every element of $G$ factors uniquely as $(a^{i},1)(1,b^{j})$,
+             so $|G|=7\cdot9=63$.
+       \item The conjugation rule $b\,a\,b^{-1}=a^{2}\ne a$
+             shows $G$ is \emph{not} abelian; hence we genuinely obtain the
+             non-trivial semidirect product prescribed by~$\varphi$.
+    \end{itemize}
+    \end{explanation}
+    \begin{theorem}
+      For every prime $p$, the multiplicative group of units
+      \[
+         \bigl(\Bbb Z/p\Bbb Z\bigr)^{\times}
+           \;=\;
+         \{\,\overline{1},\overline{2},\ldots,\overline{p-1}\}
+      \]
+      is (i) cyclic of order $p-1$ and hence
+      (ii) isomorphic to the additive cyclic group
+      $\Bbb Z_{p-1}=\Bbb Z/(p-1)\Bbb Z$.
+      \end{theorem}
+      
+      \begin{proof}[Proof in four steps]
+      \textbf{1.\;Order of the group.}
+      Because the non–zero residues modulo $p$ are exactly
+      $\{\overline{1},\dots,\overline{p-1}\}$,
+      \[
+         \bigl|(\Bbb Z/p\Bbb Z)^{\times}\bigr|=p-1.
+      \]
+      
+      \smallskip
+      \textbf{2.\;Choose an element of maximal order.}
+      Since the group is finite, there exists some element
+      $g\in(\Bbb Z/p\Bbb Z)^{\times}$ whose order
+      \[
+          m=\operatorname{ord}(g)
+      \]
+      is \emph{maximal} among all element orders in the group.
+      Necessarily $m\mid(p-1)$ by Lagrange’s theorem.
+      
+      \smallskip
+      \textbf{3.\;Show the maximal order is $p-1$ (i.e.\ $g$ is a primitive root).}
+      
+      \begin{enumerate}[label=(\alph*),leftmargin=*]
+         \item
+         Every element $a\in(\Bbb Z/p\Bbb Z)^{\times}$ satisfies
+         $a^{p-1}=1$ (Fermat’s little theorem), so
+         $\operatorname{ord}(a)\mid p-1$.
+         \item
+         Write $p-1=m\cdot r$.
+         Suppose, for contradiction, that $r>1$.
+         Then every element $a$ satisfies $a^{m}=1$
+         because $a^{m}$ raised to the power $r$
+         is $(a^{p-1})=1$.
+         Therefore \emph{every} element’s order
+         divides $m$, contradicting the maximality of $m$
+         unless $m=p-1$.
+      \end{enumerate}
+      
+      Thus $g$ has order $p-1$ and the group is cyclic:
+      \[
+         (\Bbb Z/p\Bbb Z)^{\times}=\langle g\rangle.
+      \]
+      
+      \smallskip
+      \textbf{4.\;Explicit isomorphism to $\Bbb Z_{p-1}$.}
+      Define
+      \[
+         \Phi:\Bbb Z_{p-1}\;\longrightarrow\;(\Bbb Z/p\Bbb Z)^{\times},
+         \qquad
+         \Phi\bigl(\,\overline{k}\,\bigr)=g^{\,k}.
+      \]
+      \begin{itemize}
+         \item $\Phi$ is well defined because $g^{\,k+p-1}=g^{\,k}$.
+         \item $\Phi$ is a homomorphism:
+               $\Phi(\overline{k_1}+\overline{k_2})=g^{k_1+k_2}
+               =g^{k_1}\,g^{k_2}
+               =\Phi(\overline{k_1})\,\Phi(\overline{k_2})$.
+         \item $\Phi$ is injective (kernel is $\{\overline{0}\}$ since
+               $g$ has full order $p-1$) and therefore, by cardinality,
+               bijective.
+      \end{itemize}
+      Hence $\Phi$ is an isomorphism, establishing
+      \[
+         (\Bbb Z/p\Bbb Z)^{\times}\;\cong\;\Bbb Z_{p-1}.
+      \]
+      \end{proof}
+      
+      \begin{remark}
+      An element $g\in(\Bbb Z/p\Bbb Z)^{\times}$ that generates the whole
+      group is called a \emph{primitive root modulo $p$}.
+      The existence of such a root for every prime~$p$ is precisely
+      the statement proved above.
+      \end{remark}
+      \begin{align*}
+        \bigl(a^{i},b^{j}\bigr)\bigl(a^{u},b^{v}\bigr)
+            &=\Bigl(a^{i}\,\varphi\bigl(b^{j}\bigr)\!\bigl(a^{u}\bigr),\,b^{j+v}\Bigr) \\[4pt]
+            &=\Bigl(a^{i}\,\alpha^{\,j}\!\bigl(a^{u}\bigr),\,b^{j+v}\Bigr)
+               \qquad\bigl(\text{because }\varphi(b)=\alpha\bigr) \\[4pt]
+            &=\Bigl(a^{i}\,a^{\,2^{\,j}u},\,b^{j+v}\Bigr)     % \alpha^j raises exponents by 2^j
+               =\bigl(a^{\,i+2^{\,j}u},\,b^{\,j+v}\bigr).
+        \end{align*}
+        
+        Here $\alpha$ is the automorphism of $N=\langle a\rangle\cong\Bbb Z_{7}$
+        defined by $\alpha(a)=a^{2}$, so
+        $\alpha^{\,j}(a^{u})=a^{\,2^{\,j}u}$.
+        
+        \bigskip
+        \textbf{Conjugating $(a,1)$ by $(1,b)$.}
+        
+        \[
+           (1,b)(a,1)(1,b)^{-1}
+           =\bigl(1,b\bigr)\bigl(a,1\bigr)\bigl(1,b^{-1}\bigr),
+        \]
+        because the inverse of $(n,h)$ in a semidirect product is
+        \(
+           (n,h)^{-1}=\bigl(\varphi(h^{-1})(n^{-1}),h^{-1}\bigr).
+        \)
+        
+        \begin{align*}
+        (1,b)(a,1)
+           &=\Bigl(1\;\varphi(b)(a),\,b\cdot1\Bigr)
+             =\bigl(\alpha(a),\,b\bigr), \\[6pt]
+        \bigl(\alpha(a),b\bigr)(1,b^{-1})
+           &=\Bigl(\alpha(a)\;\varphi(b)(1),\,b\,b^{-1}\Bigr)
+             =\bigl(\alpha(a),1\bigr)
+             =\bigl(a^{2},1\bigr).
+        \end{align*}
+        
+        Thus the conjugation relation in $G=N\rtimes_{\!\varphi}H$ is
+        \[
+           (1,b)(a,1)(1,b)^{-1}=(a^{2},1),
+        \]
+        which is exactly the relation $\,bab^{-1}=a^{2}\,$ in the usual
+        presentation
+        \(
+           G=\langle a,b\mid a^{7}=b^{9}=1,\;bab^{-1}=a^{2}\rangle.
+        \)
+        \begin{explanation}
+          \textbf{Why pick $\alpha(a)=a^{2}$ and why does it have order $3$?}
+          
+          \smallskip
+          \emph{1.  The ambient group of automorphisms.}
+          For a cyclic group $N=\langle a\rangle\cong\Bbb Z_{7}$ every automorphism
+          is determined by where it sends the generator~$a$.
+          Because
+          \[
+             \Aut(N)\;\cong\;\Bbb Z_{7}^{\times}
+               =\{1,2,3,4,5,6\}
+          \]
+          under the correspondence
+          \[
+             k\;\longleftrightarrow\;
+             \bigl(a\longmapsto a^{k}\bigr),
+          \]
+          the \emph{order} of such an automorphism is the multiplicative order of
+          $k$ modulo~$7$.
+          
+          \smallskip
+          \emph{2.  We need an automorphism of order \(\mathbf{3}\).}
+          The map $\varphi:H\to\Aut(N)$ must have image whose order divides BOTH
+          $|H|=9$ and $|\Aut(N)|=6$.
+          Hence the image can only be $\{1\}$ or a subgroup of order~$3$.
+          To obtain a \textbf{non-trivial} semidirect product we want the latter,
+          so we must pick a $k\in\{1,\dots,6\}$ whose multiplicative order
+          modulo~$7$ is exactly~$3$.
+          
+          \smallskip
+          \emph{3.  Which $k$ work?}
+          Compute powers $\bmod 7$:
+          \[
+             2^{1}=2,\;2^{2}=4,\;2^{3}=8\equiv1,
+          \qquad
+             4^{1}=4,\;4^{2}=16\equiv2,\;4^{3}=8\equiv1.
+          \]
+          Thus \(k=2\) and \(k=4\) have order~$3$ in $\Bbb Z_{7}^{\times}$.
+          We arbitrarily choose \(k=2\), giving the automorphism
+          \[
+             \alpha:N\longrightarrow N,
+             \qquad
+             \alpha(a)=a^{2}.
+          \]
+          
+          \smallskip
+          \emph{4.  Clarifying the ``$2^{3}=8$’’ versus ``$(a^{2})^{3}=a^{6}$’’ issue.}
+          
+          \begin{itemize}
+             \item The relation $2^{3}=8\equiv1\pmod7$ is used
+                   to verify \emph{the \underline{order of the automorphism}}, i.e.
+                   \[
+                       \alpha^{3}(a)
+                         \;=\;
+                       a^{\,2^{3}}
+                         \;=\;
+                       a^{\,8}
+                         =a.
+                   \]
+                   Hence \(\alpha^{3}=\operatorname{id}_{N}\), so $\alpha$ indeed has
+                   order~$3$.
+          
+             \item When you compute \((a^{2})^{3}=a^{6}\), you are instead raising
+                   \emph{the \underline{group element} $a^{2}$} to the $3$rd power
+                   \emph{inside~$N$}.
+                   That has nothing to do with the order of the automorphism
+                   $\alpha$; it simply uses the rule \( (a^{r})^{s}=a^{rs}\).
+          
+             \item In contrast, applying the automorphism repeatedly multiplies
+                   the \emph{exponent} by successive powers of~$2$:
+                   \[
+                      \alpha^{2}(a)=\alpha\!\bigl(\alpha(a)\bigr)=\alpha\!\bigl(a^{2}\bigr)
+                         =(a^{2})^{2}=a^{4},\quad
+                      \alpha^{3}(a)=\alpha\!\bigl(a^{4}\bigr)=a^{8}=a.
+                   \]
+                   The key point is that the exponents \emph{compose
+                   multiplicatively} (\(2^{2},2^{3},\ldots\)) rather than additively.
+          \end{itemize}
+          
+          \smallskip
+          \emph{5.  Any $k$ of order $3$ would work.}
+          Choosing $k=4$ would give another non-abelian group
+          \(
+             G=\langle a,b\mid a^{7}=b^{9}=1,\;bab^{-1}=a^{4}\rangle,
+          \)
+          isomorphic to the one with $k=2$ (indeed, $\,4\equiv2^{-1}\pmod7$), but
+          $k=1$ (the identity automorphism) would make the semidirect product a
+          direct product and hence abelian.
+          
+          \bigskip
+          \textbf{Summary.}  
+          We pick $\alpha(a)=a^{2}$ because \(2\) has order~$3$ in
+          $\Bbb Z_{7}^{\times}$, giving an automorphism of order~$3$.  
+          Applying $\alpha$ three times multiplies the exponent of~$a$ by
+          \(2^{3}=8\equiv1\), so $\alpha^{3}=\mathrm{id}$,
+          whereas \((a^{2})^{3}=a^{6}\) is simply the cube of a \emph{group
+          element} inside~$N$.
+          \end{explanation}
+          \begin{problem}
+            Let $F$ be the (unique) field with $16$ elements.
+            \begin{enumerate}[]
+               \item Show that $F$ contains \emph{exactly three} subfields and
+                     describe each one explicitly.
+               \item How many elements of order $15$ does $F^{\times}$ have?
+            \end{enumerate}
+            \end{problem}
+            
+            \begin{solution}
+            Throughout we view $F$ as the finite field $\Bbb F_{16}$ of
+            characteristic $2$.
+            
+            \bigskip
+            \noindent\textbf{(a)  The subfields of $\Bbb F_{16}$.}
+            
+            \begin{enumerate}[]
+               \item \emph{Possible sizes.}\\
+                     Any subfield $K$ of $\Bbb F_{16}$ must itself be a finite
+                     field of characteristic $2$, hence has order
+                     $|K| = 2^{\,m}$ for some $m\mid4$.
+                     The divisors of $4$ are $1,2,4$, so the only candidate sizes
+                     are
+                     \[
+                        2^{1}=2,\qquad
+                        2^{2}=4,\qquad
+                        2^{4}=16.
+                     \]
+               \item \emph{Existence and uniqueness for each size.}\\
+                     For each $m\mid4$ there is \emph{exactly one}
+                     subfield of order $2^{m}$:
+                     \[
+                        \Bbb F_{2}\subset\Bbb F_{4}\subset\Bbb F_{16}.
+                     \]
+                     This follows from the Galois–correspondence
+                     for the (Galois) extension $\Bbb F_{16}/\Bbb F_{2}$ and the fact
+                     that there is a \emph{unique} finite field of a given order.
+               \item \emph{Explicit descriptions.}\\[-3pt]
+                     \begin{itemize}
+                        \item $\displaystyle\Bbb F_{2}
+                               =\{\,0,1\,\}.$
+                        \item Choose an element
+                              $\beta\in\Bbb F_{16}$ satisfying
+                              $\beta^{2}+\beta+1=0$.
+                              Then
+                              \[
+                                 \Bbb F_{4}=\Bbb F_{2}(\beta)
+                                   =\{\,0,1,\beta,\beta+1\,\},
+                                   \qquad
+                                 \beta^{3}=1.
+                              \]
+                        \item $\displaystyle\Bbb F_{16}$ itself is obtained by adjoining
+                              a root $\alpha$ of some irreducible quartic,
+                              e.g.\ $\alpha^{4}+\alpha+1=0$:
+                              \[
+                                 \Bbb F_{16}=\Bbb F_{2}(\alpha)
+                                 \quad\bigl(|\Bbb F_{16}|=16\bigr).
+                              \]
+                     \end{itemize}
+            \end{enumerate}
+            
+            Hence $\Bbb F_{16}$ has \emph{exactly three} subfields:
+            $\Bbb F_{2}$, $\Bbb F_{4}$ and $\Bbb F_{16}$.
+            
+            \bigskip
+            \noindent\textbf{(b)  Elements of order $15$ in $F^{\times}$.}
+            
+            The multiplicative group
+            \[
+               F^{\times}=\Bbb F_{16}^{\times}
+            \]
+            is cyclic of order $16-1=15$.  
+            In a finite cyclic group of order $n$, the number of elements of exact
+            order $n$ equals Euler’s totient
+            \(
+               \varphi(n).
+            \)
+            Therefore
+            \[
+               \#\{\,x\in F^{\times}\mid\operatorname{ord}(x)=15\,\}
+                  =\varphi(15)
+                  =\varphi(3)\,\varphi(5)
+                  =(3-1)(5-1)
+                  =2\cdot4
+                  =8.
+            \]
+            
+            \paragraph{Answer.}
+            There are $\boxed{8}$ elements of order $15$ in $F^{\times}$.
+            \end{solution}
+\end{document}

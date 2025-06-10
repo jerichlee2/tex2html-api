@@ -1,0 +1,231 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%--------------------------
+% Chapter 1
+%--------------------------
+\noindent \textbf{Chapter 1: Origins of Mechanical Energy}
+
+\noindent A. Kinetic Energy and Work \dotfill 1\\
+\noindent B. Extension to Many-Particle Systems \dotfill 3\\
+\noindent C. Internal Energy \dotfill 5\\
+\noindent D. Potential Energy \dotfill 7\\
+\noindent E. Vibrational Energy---Kinetic plus Potential \dotfill 8
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 2
+%--------------------------
+\noindent \textbf{Chapter 2: Irreversibility and the Second Law of Thermodynamics}
+
+\noindent A. Thermal Energy \dotfill 13\\
+\noindent B. Irreversibility of Many-Body Systems \dotfill 14\\
+\noindent C. Entropy and the Approach to Equilibrium \dotfill 16\\
+\noindent D. Entropy Maximization and the Calculus of Several Variables \dotfill 19
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 3
+%--------------------------
+\noindent \textbf{Chapter 3: Kinetic Theory of the Ideal Gas}
+
+\noindent A. Common Particles \dotfill 21\\
+\noindent B. Pressure and Kinetic Energy \dotfill 22\\
+\noindent C. Equipartition Theorem \dotfill 23\\
+\noindent D. Equipartition Applied to a Solid \dotfill 25\\
+\noindent E. Ideal Gas Law \dotfill 26\\
+\noindent F. Distribution of Energies in a Gas \dotfill 27
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 4
+%--------------------------
+\noindent \textbf{Chapter 4: Ideal-Gas Heat Engines}
+
+\noindent A. The First Law of Thermodynamics \dotfill 31\\
+\noindent B. Quasi-static Processes and State Functions \dotfill 32
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 5
+%--------------------------
+\noindent \textbf{Chapter 5: Statistical Processes I: Two-State Systems}
+
+\noindent A. Macrostates and Microstates \dotfill 45\\
+\noindent B. Multiple Spins \dotfill 46\\
+\noindent C. The Random Walk Problem---Diffusion of Particles \dotfill 50\\
+\noindent D. Heat Conduction \dotfill 54
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 6
+%--------------------------
+\noindent \textbf{Chapter 6: Statistical Processes II: Entropy and the Second Law}
+
+\noindent A. Meaning of Equilibrium \dotfill 59\\
+\noindent B. Objects in Multiple Bins \dotfill 60\\
+\noindent C. Application to a Gas of Particles \dotfill 62\\
+\noindent D. Volume Exchange and Entropy \dotfill 64\\
+\noindent E. Indistinguishable Particles \dotfill 68\\
+\noindent F. Maximum Entropy in Equilibrium \dotfill 68
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 7
+%--------------------------
+\noindent \textbf{Chapter 7: Energy Exchange}
+
+\noindent A. Model System for Exchanging Energy \dotfill 73\\
+\noindent B. Thermal Equilibrium and Absolute Temperature \dotfill 78\\
+\noindent C. Equipartition Revisited \dotfill 79\\
+\noindent D. Why Energy Flows from Hot to Cold \dotfill 80\\
+\noindent E. Entropy of the Ideal Gas---Temperature Dependence \dotfill 82
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 8
+%--------------------------
+\noindent \textbf{Chapter 8: Boltzmann Distribution}
+
+\noindent A. Concept of a Thermal Reservoir \dotfill 87\\
+\noindent B. The Boltzmann Factor \dotfill 88\\
+\noindent C. Paramagnetism \dotfill 91\\
+\noindent D. Elasticity in Polymers \dotfill 92\\
+\noindent E. Harmonic Oscillator \dotfill 95
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 9
+%--------------------------
+\noindent \textbf{Chapter 9: Distributions of Molecules and Photons}
+
+\noindent A. Applying the Boltzmann Factor \dotfill 99\\
+\noindent B. Particle States in a Classical Gas \dotfill 100\\
+\noindent C. Maxwell-Boltzmann Distribution \dotfill 102\\
+\noindent D. Photons \dotfill 103\\
+\noindent E. Thermal Radiation \dotfill 105\\
+\noindent F. Global Warming \dotfill 107
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 10
+%--------------------------
+\noindent \textbf{Chapter 10: Work and Free Energy}
+
+\noindent A. Heat Flow and Entropy \dotfill 111\\
+\noindent B. Ideal Heat Engines \dotfill 112\\
+\noindent C. Free Energy and Available Work \dotfill 114\\
+\noindent D. Free Energy Minimum in Equilibrium \dotfill 115\\
+\noindent E. Principle of Minimum Free Energy \dotfill 116\\
+\noindent F. Paramagnetism---the Free Energy Approach \dotfill 117
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 11
+%--------------------------
+\noindent \textbf{Chapter 11: Equilibrium Between Particles I}
+
+\noindent A. Free Energy and the Chemical Potential \dotfill 121\\
+\noindent B. Absolute Entropy of an Ideal Gas \dotfill 125\\
+\noindent C. Chemical Potential of an Ideal Gas \dotfill 128\\
+\noindent D. Law of Atmospheres \dotfill 129\\
+\noindent E. Chemical Potentials \dotfill 130
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 12
+%--------------------------
+\noindent \textbf{Chapter 12: Equilibrium Between Particles II}
+
+\noindent A. Ionization of Atoms \dotfill 135\\
+\noindent B. Chemical Equilibrium in gases \dotfill 137\\
+\noindent C. Carrier Densities in a semiconductor \dotfill 138\\
+\noindent D. Doped Semiconductors \dotfill 139\\
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 13
+%--------------------------
+\noindent \textbf{Chapter 13: Adsorption of Atoms and Phase Transitions}
+
+\noindent A. Adsorption of Atoms on a Solid Surface \dotfill 145\\
+\noindent B. Oxygen in Myoglobin \dotfill 147\\
+\noindent C. Why Gases Condense \dotfill 148\\
+\noindent D. Vapor Pressure of a Solid \dotfill 149\\
+\noindent E. Solid/Liquid/Gas Phase Transitions \dotfill 151\\
+\noindent F. Model of Liquid--Gas Condensation \dotfill 154
+
+\vspace{1em}
+
+%--------------------------
+% Chapter 14
+%--------------------------
+\noindent \textbf{Chapter 14: Processes at Constant Pressure}
+
+\noindent A. Gibbs Free Energy \dotfill 157\\
+\noindent B. Vapor Pressures of Liquids---General Aspects \dotfill 160\\
+\noindent C. Chemical Reactions at Constant Pressure \dotfill 161
+
+\end{document}

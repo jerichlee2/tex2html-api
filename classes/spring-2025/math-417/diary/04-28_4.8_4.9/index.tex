@@ -1,0 +1,2197 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ---------------------------------------------------------------------------
+% Principal, Prime, and Maximal Ideals – Definitions and Key Proposition
+% ---------------------------------------------------------------------------
+\subsection*{Proper, Principal, and Prime Ideals}
+
+\begin{definition}[Proper ideal]
+  Let \(R\) be a ring.  
+  An ideal \(I\subset R\) is called \emph{proper} if \(I\neq R\).
+  Equivalently, \(I\subset R\) is proper  \(\Longleftrightarrow\)
+  the factor ring \(R/I\) is \emph{non-trivial} (i.e.\ \(0\neq1\) in \(R/I\)).
+\end{definition}
+
+\begin{definition}[Principal ideal]
+  Let \(R\) be a \emph{commutative} ring.  
+  An ideal \(I\subset R\) is \emph{principal} if there exists an element \(a\in R\) such that  
+  \[
+    I \;=\; (a)\;=\;\{\,ra \mid r\in R\,\}.
+  \]
+\end{definition}
+
+\begin{definition}[Prime ideal]
+  Let \(R\) be a \emph{commutative} ring.  
+  A proper ideal \(I\subset R\) is called \emph{prime} if for every \(a,b\in R\)
+  \[
+    ab\in I \quad\Longrightarrow\quad a\in I \;\text{ or }\; b\in I .
+  \]
+\end{definition}
+
+\subsection*{Prime Ideals via Integral Domains}
+
+\begin{proposition}
+  Let \(R\) be a commutative ring and \(I\subset R\) an ideal.  
+  Then \(I\) is prime \textbf{iff} the quotient ring \(R/I\) is an \emph{integral domain}.
+\end{proposition}
+
+\begin{proof}
+  We prove the two implications separately.
+
+  \paragraph{(\(\Longrightarrow\)) If \(I\) is prime, then \(R/I\) is an integral domain.}
+  \begin{enumerate}
+    \item Because \(I\) is proper, \(R/I\) is non-trivial, so \(0\neq 1\) in \(R/I\).
+    \item Take any cosets \((a+I),(b+I)\in R/I\) with \((a+I)(b+I)=0+I\).  
+          That is, \((ab)+I = 0+I\), so \(ab\in I\).
+    \item Since \(I\) is \emph{prime} and \(ab\in I\), we must have \(a\in I\) or \(b\in I\).
+          Equivalently, \(a+I=0+I\) or \(b+I=0+I\).
+    \item Hence \(R/I\) has \emph{no zero divisors}.  
+          Together with commutativity, \(R/I\) is an integral domain.
+  \end{enumerate}
+
+  \paragraph{(\(\Longleftarrow\)) If \(R/I\) is an integral domain, then \(I\) is prime.}
+  \begin{enumerate}
+    \item Suppose \(I\) were \emph{not} prime.  
+          Then there exist \(a,b\in R\) such that \(ab\in I\) but \(a\notin I\) and \(b\notin I\).
+    \item In the quotient ring this means
+          \[
+            (a+I)\neq 0+I,\qquad (b+I)\neq 0+I,\qquad
+            (a+I)(b+I)=ab+I = 0+I .
+          \]
+          Thus \((a+I)\) and \((b+I)\) are non-zero elements whose product is zero.
+    \item That contradicts the fact that \(R/I\) is an integral domain (which has no zero divisors).
+          Therefore such \(a,b\) cannot exist, and \(I\) \emph{must} be prime.
+  \end{enumerate}
+\end{proof}
+% ---------------------------------------------------------------------------
+% Maximal Ideals – Definition, Characterisation, and Corollary
+% ---------------------------------------------------------------------------
+\subsection*{Maximal Ideals}
+
+\begin{definition}[Maximal ideal]
+  Let \(R\) be a \emph{commutative} ring and let \(I\subset R\) be a proper ideal.
+  We say that \(I\) is \emph{maximal} if it is maximal in the poset of proper ideals
+  under inclusion; that is,
+  \[
+     I\subset J\subset R\quad\Longrightarrow\quad J=I\ \text{or}\ J=R.
+  \]
+\end{definition}
+
+\begin{proposition}
+  Let \(R\) be a commutative ring and \(I\subset R\) an ideal.
+  Then \(I\) is maximal \emph{iff} the quotient ring \(R/I\) is a \emph{field}.
+\end{proposition}
+
+\begin{proof}
+  The ring \(R/I\) is automatically commutative, so we only need to verify the field
+  axioms concerning multiplicative inverses of non-zero elements.
+
+  \paragraph{(\(\Longrightarrow\)) If \(I\) is maximal, then \(R/I\) is a field.}
+  \begin{enumerate}
+    \item Let \(a+I\in R/I\) be non-zero; equivalently, \(a\notin I\).
+    \item Consider the ideal generated by \(a\) together with \(I\):
+          \[
+             (a)+I \;=\; \{\,ra+b\mid r\in R,\ b\in I\,\}.
+          \]
+          Clearly \(I\subset (a)+I\) and \(a\in (a)+I\).
+    \item Because \(a\notin I\), the containment is strict: \(I\subsetneq (a)+I\).
+          Since \(I\) is \emph{maximal}, we must have \((a)+I = R\).
+    \item Hence there exist \(r\in R\) and \(b\in I\) such that
+          \[
+             ra + b = 1 .
+          \]
+          Passing to the quotient gives \((r+I)(a+I)=1+I\), so \(r+I\) is the
+          multiplicative inverse of \(a+I\).
+          % ---------------------------------------------------------------------------
+% Expanded justification of Step 4 in the proof “maximal ⇒ field”
+% ---------------------------------------------------------------------------
+\paragraph*{Detailed justification of Step 4.}
+
+From Step 3 we have shown that 
+\[
+  (a)+I \;=\; R .
+\]
+Recall the meaning of ideal equality:
+
+\[
+  J = R 
+  \;\Longleftrightarrow\; 
+  1 \in J .
+\]
+
+Because \((a)+I = R\), the unit \(1\in R\) \emph{must} lie inside the ideal \((a)+I\).
+By definition of \((a)+I\),
+\[
+  (a)+I 
+  \;=\; 
+  \{\, ra + b \mid r\in R,\; b\in I \,\}.
+\]
+Hence there exist elements \(r\in R\) and \(b\in I\) such that
+\[
+  1 \;=\; ra + b .
+\]
+
+Intuitively, the equality \((a)+I = R\) tells us that every element of \(R\)—in particular the multiplicative identity \(1\)—can be written as an \(R\!\)-linear combination of \(a\) and an element of \(I\).  This explicit representation of \(1\) is precisely what we need in the next step to show that \(r+I\) is the inverse of \(a+I\) in the quotient ring \(R/I\).
+
+(If you prefer to see it in a single line: \(1\in(a)+I\) \(\Longrightarrow\) \(1=ra+b\) for some \(r\in R,\; b\in I\).)
+\begin{lemma}
+  Let \(R\) be a ring and \(J\subset R\) an ideal.  
+  Then
+  \[
+      J = R \quad\Longleftrightarrow\quad 1\in J .
+  \]
+\end{lemma}
+
+\begin{proof}
+  \begin{description}
+    \item[\(\boldsymbol{\Rightarrow}\)]  
+      If \(J = R\) then every element of \(R\) lies in \(J\); in particular \(1\in J\).
+
+    \item[\(\boldsymbol{\Leftarrow}\)]  
+      Conversely, suppose \(1\in J\).  
+      Because \(J\) is an \emph{ideal}, it is closed under multiplication by arbitrary ring
+      elements: for every \(r\in R\),
+      \[
+        r = r\cdot 1 \in J .
+      \]
+      Hence every element of \(R\) belongs to \(J\), i.e.\ \(R\subset J\).
+      But we already have \(J\subset R\), so \(J = R\).
+  \end{description}
+\end{proof}
+% ---------------------------------------------------------------------------
+% Why does the element \(1\) (a multiplicative identity) exist in \(R\;\)?
+% ---------------------------------------------------------------------------
+\paragraph*{Why \(1\) is available in our discussion.}
+
+\begin{itemize}
+  \item \textbf{Convention in these notes.}  
+        Throughout the foregoing definitions and proofs we have been using
+        standard terminology such as “\emph{field}’’ and “\emph{integral
+        domain}.’’  
+        Both objects are \emph{by definition} commutative rings \emph{with}
+        a multiplicative identity~\(1\).  
+        Consequently, whenever we say
+        \[
+             \text{``Let }R\text{ be a ring.''}
+        \]
+        in this context, we are implicitly assuming \emph{unital} (a.k.a.\ \emph{unitary})
+        rings; i.e.\ rings that possess a distinguished element
+        \(1\in R\) satisfying \(1\cdot r = r\cdot 1 = r\) for all \(r\in R\).
+
+  \item \textbf{Why the identity matters in the proof.}  
+        Step~4 of the proof required us to write
+        \[
+           1 \;=\; ra + b
+           \quad\text{with}\quad
+           r\in R,\; b\in I.
+        \]
+        That manipulation only makes sense if an element called ``\(1\)’’
+        already exists in \(R\).  Because we are working with a unital ring,
+        such an element is guaranteed.
+
+  \item \textbf{If you adopt the ``rings need not have \(1\)’’ convention.}  
+        Some algebra texts define a ring merely as an abelian group under
+        addition equipped with an associative multiplication (no requirement
+        of a multiplicative identity).  
+        Under that convention, one must \emph{add} the hypothesis that
+        \(R\) has an identity to state the proposition “\(I\) maximal 
+        \(\Longleftrightarrow R/I\) is a field,’’ because a field (or
+        integral domain) \emph{necessarily} contains a unit element.
+
+  \item \textbf{Bottom line.}  
+        In these notes we are using the common modern definition:
+        \[
+           \text{Ring} \;=\; \text{``associative\, +\, distributive\, +\, has \(1\)’’}.
+        \]
+        Hence the multiplicative identity \(1\) is part of the starting
+        data of \(R\), so Step~4 (and the lemma \(J=R\iff 1\in J\)) is
+        perfectly valid.
+\end{itemize}
+    \item Thus every non-zero element of \(R/I\) is invertible; hence \(R/I\) is a field.
+  \end{enumerate}
+
+  \paragraph{(\(\Longleftarrow\)) If \(R/I\) is a field, then \(I\) is maximal.}
+  \begin{enumerate}
+    \item Suppose \(J\) is an ideal with \(I\subsetneq J\subsetneq R\).
+    \item Choose \(a\in J\setminus I\).  
+          Then \(a+I\neq 0+I\) in \(R/I\), so \(a+I\) is \emph{invertible}:
+          there exists \(b\in R\) with \((a+I)(b+I)=1+I\), i.e.\ \(ab-1\in I\subset J\).
+    \item Since \(a\in J\) and \(ab-1\in J\), we have
+          \[
+             1 = ab-(ab-1)\in J .
+          \]
+          \textbf{Expanded justification of Step 3.}
+
+Recall the situation so far:
+
+* \(J\) is an ideal with \(I\subsetneq J\subsetneq R\).
+* We picked \(a\in J\setminus I\).
+* Because \(R/I\) is a field, \(a+I\) is invertible, so there exists \(b\in R\) such that
+  \[
+    (a+I)(b+I)=1+I
+    \;\;\Longrightarrow\;\;
+    ab-1\in I\subset J .
+  \]
+
+Now we show \(1\in J\).
+
+\begin{enumerate}
+  \item Since \(a\in J\) and \(b\in R\) while \(J\) is an \emph{ideal}, the product
+        \(ab\) lies in \(J\);
+        \[
+          a\in J,\; b\in R 
+          \quad\Longrightarrow\quad
+          ab\in J 
+          \quad
+          (\text{closure of }J\text{ under }R\text{-multiplication}).
+        \]
+  \item We also have \(ab-1\in J\) from the previous step.
+  \item Ideals are additive subgroups, hence closed under subtraction:
+        \[
+          ab\in J,\; ab-1\in J
+          \;\Longrightarrow\;
+          \bigl(ab\bigr) \;-\; \bigl(ab-1\bigr)
+          \;=\;
+          1 
+          \;\in\; J .
+        \]
+        % ---------------------------------------------------------------------------
+% Why “\(\,ab\in J\) and \(ab-1\in J\)  ⇒  \(1\in J\)” forces \(J=R\)
+% ---------------------------------------------------------------------------
+\paragraph*{Additive–subgroup property of an ideal.}
+By definition an ideal \(J\subset R\) satisfies
+\begin{enumerate}
+  \item \(J\) is an \emph{additive subgroup} of the underlying abelian
+        group \((R,+)\).  
+        Concretely, for all \(x,y\in J\)
+        \[
+            x+y\in J,
+            \qquad
+            -x\in J
+            \quad\Longrightarrow\quad
+            x-y = x + (-y)\in J .
+        \]
+        \emph{Hence ideals are closed under subtraction.}
+
+  \item (Absorption) For all \(r\in R\) and \(x\in J\), we have 
+        \(rx\in J\) (and \(xr\in J\) if \(R\) is not assumed commutative).
+\end{enumerate}
+
+\paragraph*{Applying these facts to the proof.}
+We were given two elements already in \(J\):
+\[
+    ab\;\in\;J
+    \quad\text{and}\quad
+    ab-1\;\in\;J .
+\]
+
+\begin{align*}
+  \text{Since }J\text{ is additive } &\Rightarrow
+    \bigl(ab\bigr) - \bigl(ab-1\bigr)\;\in\;J .
+    \\[4pt]
+  \text{But } 
+    \bigl(ab\bigr) - \bigl(ab-1\bigr) 
+    &= ab - ab + 1
+      \;=\;1 .
+\end{align*}
+
+Therefore
+\[
+    1\;\in\;J .
+\]
+
+\paragraph*{Why \(1\in J\) implies \(J=R\).}
+Assume \(1\in J\).  
+For \emph{every} element \(r\in R\) we have
+\[
+   r 
+   \;=\; r\cdot 1
+   \;\in\; J
+   \qquad\text{(by the absorption property).}
+\]
+Hence \(R\subset J\).  As the reverse inclusion \(J\subset R\) is automatic,
+we conclude \(J = R\).
+
+\bigskip
+Because this contradicted the standing assumption \(J\subsetneq R\),
+no such strictly larger ideal \(J\) can exist; consequently the original
+ideal \(I\) must be maximal.
+\end{enumerate}
+
+Thus \(1\in J\), which forces \(J=R\) (because any ideal containing \(1\) is the whole ring).  
+This contradicts the assumption \(J\subsetneq R\), so no such \(J\) exists and \(I\) is maximal.
+    \item But \(1\in J\) implies \(J=R\), contradicting \(J\subsetneq R\).
+          Therefore no such \(J\) exists and \(I\) is maximal.
+  \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+  If \(I\) is a maximal ideal in a commutative ring \(R\), then \(I\) is prime.
+\end{corollary}
+
+\begin{proof}
+  From the proposition, maximal \(\Longrightarrow\) \(R/I\) is a \emph{field};
+  every field is an \emph{integral domain}.  
+  By the earlier characterisation of prime ideals
+  (\(I\) prime \(\Longleftrightarrow R/I\) integral domain),
+  it follows that \(I\) is prime.
+\end{proof}
+% ---------------------------------------------------------------------------
+% 4.9  Factorisation in Integral Domains
+% ---------------------------------------------------------------------------
+\subsection*{Divisibility, Association, and a Characterisation}
+
+Throughout this section \(R\) denotes an \emph{integral domain}  
+(commutative, \(1\neq0\), and with no zero–divisors).
+
+\paragraph{Divisibility.}
+For \(a,b\in R\) we write
+\[
+   a\mid b
+   \quad\Longleftrightarrow\quad
+   \exists\,c\in R\;\text{such that}\; b = ac .
+\]
+
+\begin{definition}[Associated elements]
+  Two \emph{non-zero} elements \(a,b\in R\) are called \emph{associated},
+  written \(a\sim b\), if
+  \[
+      a\mid b
+      \quad\text{and}\quad
+      b\mid a .
+  \]
+  Equivalently, there exist \(c,d\in R\) with
+  \(
+     b = ac
+     \text{ and }
+     a = bd .
+  \)
+\end{definition}
+
+\begin{theorem}
+  Let \(R\) be an integral domain and \(a,b\in R\setminus\{0\}\).  
+  Then
+  \[
+     a \sim b
+     \;\Longleftrightarrow\;
+     a = bu
+     \quad\text{for some unit }u\in R^{\times}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  We prove both implications.
+
+  %---------------------------------------------
+  \paragraph*{\((\Rightarrow)\)}
+  Assume \(a\sim b\).  
+  Then \(a\mid b\) and \(b\mid a\); hence there exist \(c,d\in R\) such that
+  \[
+      b = ac,
+      \qquad
+      a = bd .
+  \]
+  Substituting \(b=ac\) into \(a=bd\) gives
+  \[
+      a
+      \;=\;
+      (ac)d
+      \;=\;
+      a(cd).
+  \]
+  Since \(a\neq0\) and \(R\) is an integral domain, we may cancel \(a\):
+  \[
+      cd = 1 .
+  \]
+  Thus \(c\) and \(d\) are \emph{mutual inverses}; in particular
+  \(c\) is a \emph{unit}.  
+  But \(b = ac\) now reads \(a = b\,c^{-1}\), so
+  \[
+      a = bu
+      \quad\text{with}\quad
+      u := c^{-1}\in R^{\times}.
+  \]
+
+  %---------------------------------------------
+  \paragraph*{\((\Leftarrow)\)}
+  Conversely, suppose \(a = bu\) for some unit \(u\in R^{\times}\).
+  Let \(v:=u^{-1}\) be its inverse.
+  \[
+      \underbrace{a}_{=bu}\;=\;bu 
+      \quad\Longrightarrow\quad
+      b\;\mid\; a ,
+      \qquad
+      \underbrace{b}_{=av}\;=\;av 
+      \quad\Longrightarrow\quad
+      a\;\mid\; b .
+  \]
+  Hence \(a\) and \(b\) divide each other, so \(a\sim b\).
+
+  %---------------------------------------------
+  Both directions have been established; the theorem follows.
+\end{proof}
+
+\paragraph{Remark.}
+In an integral domain, “associated’’ is an equivalence relation whose
+equivalence classes correspond to non-zero elements up to multiplication by units.
+This notion is fundamental in studying unique factorisation:
+prime/irreducible factors are only unique up to association.
+% ---------------------------------------------------------------------------
+%  Principal Ideals and Associated Elements in an Integral Domain
+% ---------------------------------------------------------------------------
+\begin{theorem}
+  Let \(R\) be an integral domain and let \(a,b\in R\) be \emph{non-zero} elements.  
+  Then
+  \[
+     (a) \subseteq (b)
+     \;\Longleftrightarrow\;
+     b \mid a .
+  \]
+  Consequently,
+  \[
+     a \text{ and } b \text{ are associated}
+     \;\Longleftrightarrow\;
+     (a) = (b).
+  \]
+  In particular, for \(m,n\in\mathbb Z\setminus\{0\}\) we have
+  \[
+     m \sim n
+     \;\Longleftrightarrow\;
+     n=\pm m .
+  \]
+\end{theorem}
+
+\begin{proof}
+  Recall the notation \((x)=\{rx \mid r\in R\}\) for the principal ideal generated by \(x\).
+
+  %-----------------------------------------------------------------
+  \paragraph{\(\boldsymbol{(a)\subseteq(b)\ \Rightarrow\ b\mid a}\)}
+  If \((a)\subseteq(b)\), then in particular \(a\in(a)\subseteq(b)\).  
+  Therefore there exists an element \(r\in R\) such that
+  \[
+      a = br ,
+  \]
+  i.e.\ \(b\mid a\).
+
+  %-----------------------------------------------------------------
+  \paragraph{\(\boldsymbol{b\mid a\ \Rightarrow\ (a)\subseteq(b)}\)}
+  Suppose \(b\mid a\); so \(a = br\) for some \(r\in R\).  
+  Take an arbitrary element \(x\in(a)\); by definition \(x = sa\) for some \(s\in R\).  
+  Substitute \(a=br\):
+  \[
+      x = s(br) = (sr)\,b \in (b) .
+  \]
+  Hence every element of \((a)\) lies in \((b)\), so \((a)\subseteq(b)\).
+
+  %-----------------------------------------------------------------
+  \paragraph{Association \(\Longleftrightarrow\) Ideal Equality.}
+  By definition \(a\) and \(b\) are \emph{associated} if \(a\mid b\) and \(b\mid a\).  
+  Using the equivalence already proved,
+  \[
+     a\mid b \Longleftrightarrow (b)\subseteq(a),
+     \qquad
+     b\mid a \Longleftrightarrow (a)\subseteq(b).
+  \]
+  Both inclusions hold simultaneously \(\Longleftrightarrow\) the two ideals
+  coincide, i.e.\ \((a)=(b)\).
+
+  %-----------------------------------------------------------------
+  \paragraph{Specialisation to \(\mathbb Z\).}
+  In \(\mathbb Z\) the \emph{units} are exactly \(\pm1\).  
+  Two integers \(m,n\neq0\) generate the same principal ideal precisely when
+  \(n=\pm m\).  Thus \(m\sim n\) \(\iff\) \(n=\pm m\).
+\end{proof}
+% ---------------------------------------------------------------------------
+%  What does the notation  (a)  mean?
+% ---------------------------------------------------------------------------
+\paragraph{Principal ideal generated by \(a\).}
+For an element \(a\) of a ring \(R\) we write
+\[
+  (a)\;=\;\{\,r\,a \mid r\in R\,\}.
+\]
+
+\begin{itemize}
+  \item \textbf{Terminology.}  
+        The set \((a)\) is called the \emph{principal ideal generated by \(a\)}.
+        In a \emph{commutative} ring it is automatically a (two-sided) ideal.
+        In a non-commutative ring, \((a)=Ra\) is the \emph{left} ideal generated by \(a\);
+        the corresponding right ideal is \(aR=\{\,a\,r \mid r\in R\,\}\).
+
+  \item \textbf{Why is \((a)\) an ideal?}  
+        \begin{enumerate}
+          \item \emph{Additive subgroup.}  
+                If \(r_1a,r_2a\in (a)\) then
+                \(
+                   (r_1a)-(r_2a) = (r_1-r_2)a \in (a),
+                \)
+                so \((a)\) is closed under addition and additive inverses.
+          \item \emph{Absorption.}  
+                For any \(s\in R\) and any \(ra\in(a)\),
+                \(
+                   s\,(ra) = (sr)\,a \in (a).
+                \)
+                Hence multiplying by any element of \(R\) (on the left) keeps you inside \((a)\).
+        \end{enumerate}
+
+  \item \textbf{Concrete examples.}
+        \begin{itemize}
+          \item In the integers \(\Bbb Z\) we have
+                \[
+                  (6) = \{\,\dots,-12,-6,0,6,12,18,\dots\} 
+                       = 6\Bbb Z .
+                \]
+          \item In the polynomial ring \(k[x]\) (over a field \(k\)),
+                \(
+                  (x^2) = \{\,p(x)\,x^2 \mid p(x)\in k[x]\}
+                \)
+                consists of all polynomials with at least a double root at \(x=0\).
+        \end{itemize}
+
+  \item \textbf{Key property in integral domains.}  
+        For non-zero \(a,b\) in an \emph{integral domain},
+        \[
+           (a)\subseteq(b) \;\Longleftrightarrow\; b\mid a,
+           \quad\text{and}\quad
+           (a)=(b) \;\Longleftrightarrow\; a \text{ and } b \text{ are associated}.
+        \]
+        These equivalences underlie the factorisation theory you are studying.
+\end{itemize}
+% ---------------------------------------------------------------------------
+%  Ideal  vs.  Principal Ideal –  What is the difference?
+% ---------------------------------------------------------------------------
+\begin{definition}[Ideal]
+  Let \(R\) be a ring (associative, commutative, with \(1\)).  
+  A subset \(I\subseteq R\) is an \emph{ideal} if
+  \[
+    \begin{aligned}
+      &\text{(i) } I \text{ is an additive subgroup of } (R,+), \\[-2pt]
+      &\text{(ii) } r\,x \in I \quad\text{for all } r\in R,\;x\in I .
+    \end{aligned}
+  \]
+  In words, ideals are the additive subgroups of \(R\) that are
+  ``absorbing’’ under multiplication by arbitrary ring elements.
+\end{definition}
+
+\begin{definition}[Principal ideal]
+  An ideal \(I\subseteq R\) is \emph{principal} if it can be generated by a
+  \emph{single} element; i.e.\ there exists \(a\in R\) with
+  \[
+      I \;=\; (a)
+      \;:=\;
+      \{\,r\,a \mid r\in R\,\}.
+  \]
+  We call \(a\) a \emph{generator} of the ideal and write \(I=(a)\).
+\end{definition}
+
+\paragraph{Key distinction.}
+\[
+  \boxed{\text{Every principal ideal is an ideal,\; but not every ideal is principal.}}
+\]
+
+\begin{itemize}
+  \item An \textbf{ideal} may need many generators.
+        For example, in the polynomial ring \(\Bbb Q[x,y]\) the set
+        \(
+          J = (x,y) = \{\,f(x,y)\,x + g(x,y)\,y \mid f,g\in\Bbb Q[x,y]\}
+        \)
+        is an ideal generated by \emph{two} elements; \(J\) is \emph{not} principal.
+  \item A \textbf{principal ideal} is the ``simplest’’ kind of ideal:
+        it is completely determined by one element.
+        In a \emph{principal ideal domain} (PID) \emph{every} ideal happens to be principal
+        (e.g.\ \(\Bbb Z\) or \(k[x]\) for a field \(k\)), but this is a special property of the
+        underlying ring, not of the notion ``ideal’’ itself.
+\end{itemize}
+
+\paragraph{Concrete examples.}
+
+\[
+\begin{array}{|l|l|l|}\hline
+   \text{Ring }R              & \text{Ideal }I                              & \text{Principal?} \\ \hline
+   \Bbb Z                     & (12)=12\Bbb Z                               & \text{Yes (generator }12) \\ 
+   \Bbb Z[\sqrt{-5}]         & (2,\,1+\sqrt{-5})                            & \text{No (needs both)} \\ 
+   k[x]                       & (x^3)                                       & \text{Yes (generator }x^3) \\
+   k[x,y]                     & (x,y)                                       & \text{No (at least two)} \\ \hline
+\end{array}
+\]
+
+\paragraph{Summary.}
+\[
+  \text{ideal } = \text{``absorbent additive subgroup''},\quad
+  \text{principal ideal } = \text{ideal generated by one element.}
+\]
+Thinking of ideals as “generalised multiples’’ of a set of elements,
+a principal ideal is the case where the entire set of multiples of a
+\emph{single} element already captures all the absorption properties we need.
+% ---------------------------------------------------------------------------
+%  Why the ideal  \(\;(2,\;1+\sqrt{-5})\;\subset\;\Bbb Z[\sqrt{-5}]\)  is \emph{not} principal
+% ---------------------------------------------------------------------------
+
+\subsection*{The ring and the ideal}
+
+Throughout this note let
+\[
+    R \;=\; \Bbb Z[\sqrt{-5}]
+    \;=\;
+    \{\,a+b\sqrt{-5}\mid a,b\in\Bbb Z\,\}.
+\]
+
+Inside \(R\) consider the ideal
+\[
+    \mathfrak a \;:=\; (\,2,\;1+\sqrt{-5}\,)
+    \;=\;
+    \bigl\{\,2x + (1+\sqrt{-5})y \mid x,y\in R\,\bigr\}.
+\]
+
+We will prove that \(\mathfrak a\) cannot be generated by a single element of \(R\),
+i.e.\ \(\mathfrak a\) is \emph{not principal}.
+
+\subsection*{Step 1 – The norm map}
+
+Define the (multiplicative) \emph{norm}
+\[
+    N\colon R \longrightarrow \Bbb Z_{\ge 0},
+    \qquad
+    N(a+b\sqrt{-5}) \;=\; a^2 + 5b^2 .
+\]
+
+Key properties we will use:
+
+\begin{enumerate}
+  \item \(N(\alpha\beta)=N(\alpha)\,N(\beta)\) \quad for all \(\alpha,\beta\in R\);
+  \item \(N(\alpha)=1\) \(\Longleftrightarrow\) \(\alpha\) is a \emph{unit}
+        (indeed the units of \(R\) are \(\pm1\) only).
+\end{enumerate}
+
+\subsection*{Step 2 – Consequences if \(\mathfrak a\) were principal}
+
+Assume, for contradiction, that \(\mathfrak a\) is principal:  
+there exists \(\alpha\in R\) such that \(\mathfrak a=(\alpha)\).
+
+Because \(\alpha\) generates \(\mathfrak a\), it must divide \emph{each} generator
+of \(\mathfrak a\):
+
+\[
+      \alpha \mid 2,
+      \qquad
+      \alpha \mid 1+\sqrt{-5}.
+\]
+
+Write \(2=\alpha\beta\) and \(1+\sqrt{-5}=\alpha\gamma\) for some
+\(\beta,\gamma\in R\).
+Apply the norm map:
+
+\[
+    \underbrace{N(2)}_{=4}=N(\alpha)\,N(\beta),
+    \qquad
+    \underbrace{N(1+\sqrt{-5})}_{=1^2+5\cdot1^2=6}=N(\alpha)\,N(\gamma).
+\]
+
+Hence \(N(\alpha)\) divides both \(4\) and \(6\),
+so \(N(\alpha)\) divides \(\gcd(4,6)=2\).
+Therefore
+\[
+    N(\alpha)\in\{1,\,2\}.
+\]
+
+\subsection*{Step 3 – Eliminate \(N(\alpha)=1\)}
+
+If \(N(\alpha)=1\) then \(\alpha\) is a \emph{unit}.  
+But the ideal generated by a unit is the whole ring:
+\(
+   (\alpha)=R \neq\mathfrak a
+\).
+Therefore \(N(\alpha)\ne1\); we must have \(N(\alpha)=2\).
+
+\subsection*{Step 4 – No element of norm \(2\) exists in \(R\)}
+
+Solve \(a^2 + 5b^2 = 2\) with \(a,b\in\Bbb Z\).
+
+\[
+\begin{array}{@{}rcll@{}}
+b = 0      &\Longrightarrow& a^{2}=2      &\text{(impossible in }\mathbb Z)\\[4pt]
+|b| = 1    &\Longrightarrow& a^{2}=2-5=-3 &\text{(impossible)}\\[4pt]
+|b|\ge 2   &\Longrightarrow& 5b^{2}\ge 20>2 &\text{(impossible)}
+\end{array}
+\]
+
+Thus \emph{no} element of \(R\) has norm \(2\).
+Consequently \(N(\alpha)=2\) is impossible.
+
+\subsection*{Step 5 – Contradiction}
+
+We deduced that \(N(\alpha)\) must be \(2\), but such an \(\alpha\) does not exist.
+Hence our original assumption that \(\mathfrak a\) is principal is false.
+
+\[
+    \boxed{\;\mathfrak a = (2,\;1+\sqrt{-5}) \text{ is \emph{not} principal in } \Bbb Z[\sqrt{-5}].\;}
+\]
+
+\paragraph{Why this example matters.}
+\(\Bbb Z[\sqrt{-5}]\) fails to be a \emph{principal ideal domain} (PID);
+indeed, the lack of unique factorisation of \(6\)
+\[
+   6 = 2\cdot3 = (1+\sqrt{-5})(1-\sqrt{-5})
+\]
+is intimately connected to the existence of non-principal ideals like \(\mathfrak a\).
+In Dedekind–domain language, the ideal class of \(\mathfrak a\) is non-trivial,
+witnessing that the class group of \(\Bbb Z[\sqrt{-5}]\) is \(\cong\Bbb Z/2\Bbb Z\).
+% ---------------------------------------------------------------------------
+%  Definition of a Unit in a Ring
+% ---------------------------------------------------------------------------
+\begin{definition}[Unit]
+  Let \(R\) be a ring with multiplicative identity \(1\neq 0\).
+  An element \(u\in R\) is called a \emph{unit} if there exists
+  \(v\in R\) such that
+  \[
+      uv = vu = 1 .
+  \]
+  In this situation \(v\) is uniquely determined and is denoted \(u^{-1}\).
+  The set of all units in \(R\) is written
+  \[
+      R^{\times}
+      \;=\;
+      \{\,u\in R \mid \exists\,v\in R,\; uv=1\,\},
+  \]
+  and forms a group under multiplication, called the \emph{group of units}.
+\end{definition}
+
+% ---------------------------------------------------------------------------
+%  Illustrative examples
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item \(\mathbb Z\):  the units are \(\pm 1\).
+  \item \(\mathbb Q,\;\mathbb R,\;\mathbb C\):  
+        every non-zero element is a unit, so \(R^{\times}=R\setminus\{0\}\).
+  \item Polynomial ring \(k[x]\) over a field \(k\):
+        the units are the non-zero constants from \(k\).
+  \item Matrix ring \(M_n(k)\):  
+        the units are exactly the invertible matrices, i.e.\ those with
+        non-zero determinant.
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+%  Useful facts
+% ---------------------------------------------------------------------------
+\begin{itemize}
+  \item Units are never zero divisors.
+  \item In an integral domain, units are the elements with multiplicative
+        inverses that stay inside the domain.
+  \item A principal ideal \((u)\) generated by a unit \(u\) is the whole
+        ring: \((u)=R\).
+\end{itemize}
+% ---------------------------------------------------------------------------
+%  Irreducible Elements, Prime Elements, and Unique Factorisation Domains
+% ---------------------------------------------------------------------------
+\subsection*{1.  Irreducible vs.\ Prime}
+
+\begin{definition}[Irreducible element]
+  Let \(R\) be an integral domain.  
+  A non–unit \(a\in R\) is \emph{irreducible} if, whenever
+  \(
+      a = bc
+  \)
+  with \(b,c\in R\), then \emph{one of} \(b\) or \(c\) is a unit.
+\end{definition}
+
+\begin{definition}[Prime element]
+  A non–unit \(p\in R\) is \emph{prime} if
+  \[
+     p \mid bc \;\Longrightarrow\; p\mid b \text{ or } p\mid c
+     \qquad
+     (\forall\,b,c\in R).
+  \]
+\end{definition}
+
+\textbf{Fact.}  
+In every integral domain: \(\text{prime}\;\;\Longrightarrow\;\;\text{irreducible}\).  
+The converse holds in PIDs (and hence in UFDs), but not in general.
+
+\medskip
+
+\subsection*{2.  Association}
+
+\begin{definition}[Associated elements]
+  Two non–zero elements \(a,b\in R\) are \emph{associated},
+  written \(a\sim b\), if \(a\mid b\) and \(b\mid a\).
+  Equivalently, \(a=bu\) for some unit \(u\in R^{\times}\).
+\end{definition}
+
+\textbf{Example in \(\mathbb Z\).}  
+\(10\) has the factorisations
+\(
+   10 = 2\cdot 5 = (-2)\cdot(-5),
+\)
+but \(\pm2\) are associated, as are \(\pm5\); so “essentially’’ there is
+only one list \(\{2,5\}\) of irreducible factors.
+
+\medskip
+
+\subsection*{3.  Unique Factorisation Domains (UFDs)}
+
+\begin{definition}[UFD]
+  An integral domain \(R\) is a \emph{unique factorisation domain}
+  (UFD) if
+  \begin{enumerate}
+    \item every non–zero, non–unit \(x\in R\) can be written as
+          a finite product of irreducibles:
+          \(
+             x = a_{1}\cdots a_{n},
+          \)
+          and
+    \item given two such factorizations
+          \(
+             x = a_{1}\cdots a_{n} = b_{1}\cdots b_{m},
+          \)
+          we have \(m=n\) and, after re–ordering, each \(a_{i}\) is
+          \emph{associated} to the corresponding \(b_{i}\).
+  \end{enumerate}
+\end{definition}
+
+\paragraph{Key consequences.}
+\begin{itemize}
+  \item \textbf{Fundamental Theorem of Arithmetic.}  
+        \(\mathbb Z\) is a UFD; its irreducibles are the (positive) primes.
+  \item \textbf{Every PID is a UFD.}  
+        Examples: \(\mathbb Z\), \(k[x]\) for a field \(k\).
+  \item \textbf{Not every integral domain is a UFD.}  
+        A classical counter-example is
+        \(\mathbb Z[\sqrt{-5}]\), where
+        \(
+           6 = 2\cdot3 = (1+\sqrt{-5})(1-\sqrt{-5})
+        \)
+        gives two non-associate, irreducible factorizations.
+\end{itemize}
+
+\medskip
+
+\subsection*{4.  Summary table}
+
+\[
+\begin{array}{|c|c|c|c|}\hline
+  \text{Ring} & \text{PID?} & \text{UFD?} & \text{Remarks}\\ \hline
+  \mathbb Z                      & \checkmark & \checkmark & \text{classic FTA}\\
+  k[x]\,(\text{field }k)         & \checkmark & \checkmark & \deg \text{ gives Euclidean algo.}\\
+  \mathbb Z[\sqrt{-5}]          & \times     & \times     & 6=2\cdot3=(1+\sqrt{-5})(1-\sqrt{-5})\\ \hline
+\end{array}
+\]
+
+\bigskip
+\noindent
+These notions—unit, irreducible, prime, UFD—form the backbone of
+modern commutative algebra and algebraic number theory, generalising
+the unique prime factorisation familiar from the integers.
+% ---------------------------------------------------------------------------
+%  What is a \emph{non–unit}?  —  Definition, intuition, and concrete examples
+% ---------------------------------------------------------------------------
+
+\subsection*{1.  Formal definition}
+
+Let $R$ be a (unital) ring.  
+An element $x\in R$ is called a \textbf{unit} if there exists
+$y\in R$ such that $xy=yx=1$.  
+A \textbf{non–unit} is simply an element of $R$ that \emph{fails} to have such
+a two–sided multiplicative inverse.
+
+\vspace{4pt}
+\[
+  x\text{ non–unit }\;\Longleftrightarrow\;
+  \nexists\,y\in R\text{ with }xy=yx=1 .
+\]
+
+\subsection*{2.  Intuitive picture}
+
+* Units are the “invertible” elements; they behave like $\pm1$ in
+  $\Bbb Z$ or non–zero scalars in a field.
+* A non–unit lacks a multiplicative inverse \emph{inside the ring}.
+  Sometimes that is because $x$ is a \emph{zero–divisor}
+  (e.g.\ $\bar 2$ in $\Bbb Z/4\Bbb Z$);  
+  sometimes because it merely has the “wrong size’’ (e.g.\ $2$ in $\Bbb Z$,
+  or $x$ in $k[x]$).
+
+\medskip
+
+\subsection*{3.  Canonical examples of non–units}
+
+\begin{enumerate}
+  \item \textbf{Integers \boldmath$\Bbb Z$.}  
+        The units are $\{\pm1\}$.  
+        Hence \fbox{$2,\;3,\;6,\dots$ are all non–units}.
+
+  \item \textbf{Polynomial ring \boldmath$k[x]$ over a field $k$.}  
+        The units are the non–zero \emph{constants} $k^{\times}$.  
+        Any \emph{non–constant} polynomial, say \fbox{$x^2+1$}, is a non–unit.
+
+  \item \textbf{Residue ring \boldmath$\Bbb Z/4\Bbb Z$.}  
+        The units are the classes whose representatives are coprime to $4$,
+        namely $\{\bar1,\bar3\}$.  
+        The class \fbox{$\bar2$} is a non–unit (and also a zero–divisor,
+        since $\bar2\cdot\bar2=\bar0$).
+
+  \item \textbf{Matrix ring $M_2(\Bbb R)$.}  
+        Units are the invertible matrices ($\det\neq0$).
+        A singular matrix such as
+        \[
+           \begin{pmatrix}1&0\\0&0\end{pmatrix}
+        \]
+        has determinant $0$ and is therefore a \fbox{non–unit}.
+\end{enumerate}
+
+\subsection*{4.  Key facts and common misconceptions}
+
+\begin{itemize}
+  \item \emph{All units are non–zero and never zero–divisors.}  
+        The converse fails: you can have a non–unit that is \emph{not} a
+        zero–divisor (e.g.\ $2$ in $\Bbb Z$).
+  \item In an \emph{integral domain}, the group of units is always a proper
+        subset of $R\setminus\{0\}$ (unless $R$ happens to be a field).
+  \item If $u$ is a unit and $x$ is \emph{any} element, then $ux$ and $xu$
+        are units $\Longleftrightarrow$ $x$ is a unit.  
+        Thus “multiplying by a unit’’ does not change unit–status; it does,
+        however, move you among \emph{associates}.
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{Take-away.}  
+A \emph{non–unit} is simply an element that cannot be “undone’’
+multiplicatively \emph{within the ring you are working in}.  
+Recognising non–units is essential for factorisation theory, since
+\emph{only} non–units qualify as potential factors in decompositions
+into irreducibles or primes.
+% ---------------------------------------------------------------------------
+%  Highest Common Factor (HCF) and Lowest Common Multiple (LCM) in UFDs
+% ---------------------------------------------------------------------------
+\subsection*{1.  Definitions in an arbitrary integral domain \(\,R\)}
+
+\begin{definition}[Highest common factor]
+  For non–zero elements \(a,b\in R\), an element \(d\in R\) is a
+  \emph{highest common factor} (HCF) of \(a\) and \(b\) if
+  \begin{enumerate}
+    \item \(d\mid a\) and \(d\mid b\);
+    \item for any \(d'\in R\) with \(d'\mid a\) and \(d'\mid b\), we have \(d'\mid d\).
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Lowest common multiple]
+  For non–zero \(a,b\in R\), an element \(c\in R\) is a
+  \emph{lowest common multiple} (LCM) of \(a\) and \(b\) if
+  \begin{enumerate}
+    \item \(a\mid c\) and \(b\mid c\);
+    \item for any \(c'\in R\) with \(a\mid c'\) and \(b\mid c'\), we have \(c\mid c'\).
+  \end{enumerate}
+\end{definition}
+
+\paragraph{Remarks.}
+\begin{enumerate}
+  \item In a general integral domain an HCF or LCM \emph{need not exist}.
+  \item If \(d\) is an HCF, then so is every element \(d'\) \emph{associated} to \(d\)
+        (i.e.\ \(d'=du\) for a unit \(u\)).  
+        Thus HCF/LCM are well–defined only \emph{up to association}.
+\end{enumerate}
+
+% ---------------------------------------------------------------------------
+%  2.  Existence & explicit form of an HCF in a UFD
+% ---------------------------------------------------------------------------
+\subsection*{2.  Existence of HCF in a UFD}
+
+\begin{theorem}
+  Let \(R\) be a unique factorisation domain (UFD).
+  Then every pair of non–zero elements \(a,b\in R\) has an HCF.
+  Moreover, if
+  \[
+      a \;=\; u\,p_{1}^{\alpha_{1}}\cdots p_{r}^{\alpha_{r}},
+      \qquad
+      b \;=\; v\,p_{1}^{\beta_{1}}\cdots p_{r}^{\beta_{r}},
+  \]
+  with \(u,v\) units, the \(p_{i}\) pairwise non–associate irreducibles,
+  and exponents \(\alpha_{i},\beta_{i}\ge0\),
+  then an HCF is given by
+  \[
+      \operatorname{HCF}(a,b)
+      \;=\;
+      p_{1}^{\gamma_{1}}\cdots p_{r}^{\gamma_{r}},
+      \qquad
+      \gamma_{i} \;=\; \min(\alpha_{i},\beta_{i}).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \textbf{Step 1 – Factorise \(a\) and \(b\).}  
+  Because \(R\) is a UFD, each non–zero element admits a factorisation
+  into irreducibles that is unique up to units and ordering.
+  We therefore write \(a,b\) as above, padding exponents with zeros so the
+  same list of pairwise non–associate irreducibles \(\{p_{1},\dots,p_{r}\}\)
+  appears in both products.
+
+  \textbf{Step 2 – Candidate for the HCF.}  
+  Define
+  \[
+      d \;:=\; p_{1}^{\gamma_{1}}\cdots p_{r}^{\gamma_{r}}
+      \quad\text{with}\quad
+      \gamma_{i}=\min(\alpha_{i},\beta_{i}).
+  \]
+
+  \textbf{Step 3 – \(d\) divides \(a\) and \(b\).}  
+  Since \(\gamma_{i}\le\alpha_{i}\) and \(\gamma_{i}\le\beta_{i}\) for all \(i\),
+  each exponent in \(d\) is not larger than the corresponding exponent in
+  \(a\) or \(b\), hence \(d\mid a\) and \(d\mid b\).
+
+  \textbf{Step 4 – Maximality property.}  
+  Let \(d'\) be any common factor of \(a\) and \(b\).
+  Factor \(d'\) (again unique up to units):
+  \[
+      d' \;=\; w\,p_{1}^{\delta_{1}}\cdots p_{r}^{\delta_{r}} .
+  \]
+  The divisibility \(d'\mid a\) forces \(\delta_{i}\le\alpha_{i}\), and
+  \(d'\mid b\) forces \(\delta_{i}\le\beta_{i}\); therefore
+  \(\delta_{i}\le\gamma_{i}\) for every \(i\).
+  Consequently \(d'\mid d\).
+
+  \textbf{Step 5 – Conclusion.}  
+  The two properties above show that \(d\) satisfies the defining
+  universal property of an HCF.  
+  Any other HCF differs from \(d\) by a unit, i.e.\ is \emph{associated} to \(d\).
+\end{proof}
+
+% ---------------------------------------------------------------------------
+%  3.  Worked example in \(\mathbb Z\)
+% ---------------------------------------------------------------------------
+\subsection*{3.  Example in \(\mathbb Z\)}
+
+Let \(a = 2^{3}\,3^{2}\,5 = 360\) and \(b = 2^{4}\,3\,7 = 336\).
+\[
+  \begin{aligned}
+     \operatorname{HCF}(a,b)
+     &= 2^{\min(3,4)}\,3^{\min(2,1)}\,5^{\min(1,0)}\,7^{\min(0,1)}
+      = 2^{3}\,3^{1}\,5^{0}\,7^{0} \\
+     &= 2^{3}\,3 = 24 .
+  \end{aligned}
+\]
+Indeed \(24\mid360\) and \(24\mid336\); any larger common divisor would
+necessarily contain a higher power of either \(2\) or \(3\), contradicting
+minimality.
+
+% ---------------------------------------------------------------------------
+%  4.  Non–existence in a non–UFD
+% ---------------------------------------------------------------------------
+\subsection*{4.  When an HCF can fail to exist}
+
+In \(R=\Bbb Z[\sqrt{-5}]\) (not a UFD) take
+\[
+    a = 2,\qquad b = 1+\sqrt{-5}.
+\]
+The only common divisors of \(a\) and \(b\) are the \emph{units}
+\(\pm1\), so there is no \emph{non–unit} element satisfying the
+maximality property.  Thus HCF\((a,b)\) does \emph{not} exist in this
+ring, illustrating the necessity of the UFD hypothesis in the theorem.
+
+% ---------------------------------------------------------------------------
+%  Least Common Multiple in a UFD  +  Euclidean Domains
+% ---------------------------------------------------------------------------
+\subsection*{1.  Least Common Multiple (LCM) in a UFD}
+
+\begin{proposition}
+  Let \(R\) be a \emph{unique factorisation domain} (UFD) and let
+  \(a,b\in R\setminus\{0\}\).  
+  Then \(a\) and \(b\) possess a least common multiple.
+  Writing the unique factorisations
+  \[
+     a \;=\; u\,p_{1}^{\alpha_{1}}\cdots p_{r}^{\alpha_{r}},
+     \qquad
+     b \;=\; v\,p_{1}^{\beta_{1}}\cdots p_{r}^{\beta_{r}},
+  \]
+  where \(u,v\) are units, the \(p_{i}\) are pairwise non–associate irreducibles
+  and \(\alpha_{i},\beta_{i}\ge0\), an LCM is given by
+  \[
+       \operatorname{LCM}(a,b)
+       \;=\;
+       p_{1}^{\gamma_{1}}\cdots p_{r}^{\gamma_{r}},
+       \qquad
+       \gamma_{i} \;=\; \max(\alpha_{i},\beta_{i}).
+  \]
+\end{proposition}
+
+\begin{proof}[Step–by–step outline]
+  \textbf{1.~Factorise \(a\) and \(b\).}\;
+  Uniqueness of factorisation in a UFD lets us expand both elements using the
+  same irreducible list \(\{p_{1},\dots,p_{r}\}\), padding missing exponents
+  with zeros as needed.\\[-2pt]
+
+  \textbf{2.~Candidate \(c\) for the LCM.}\;
+  Define
+  \(
+       c := p_{1}^{\gamma_{1}}\cdots p_{r}^{\gamma_{r}}
+  \)
+  with \(\gamma_{i}=\max(\alpha_{i},\beta_{i})\).
+
+  \textbf{3.~Show \(a,b\mid c\).}\;
+  Because \(\alpha_{i}\le\gamma_{i}\) and \(\beta_{i}\le\gamma_{i}\),
+  each prime power in \(a\) or \(b\) divides the corresponding power in \(c\);
+  hence \(a\mid c\) and \(b\mid c\).
+
+  \textbf{4.~Minimality.}\;
+  Let \(c'\) be any common multiple of \(a\) and \(b\).
+  Factor
+  \(c' = w\,p_{1}^{\delta_{1}}\cdots p_{r}^{\delta_{r}}\).
+  The divisibilities \(a\mid c'\) and \(b\mid c'\) imply
+  \(\alpha_{i}\le\delta_{i}\) and \(\beta_{i}\le\delta_{i}\) for all \(i\),
+  whence \(\gamma_{i}\le\delta_{i}\).
+  Thus \(c\mid c'\).  \\[-2pt]
+
+  \textbf{5.~Conclusion.}\;
+  The element \(c\) satisfies the universal property of an LCM, and any other
+  LCM is associated to \(c\).
+\end{proof}
+
+\paragraph{Quick corollary.}
+If \(a\) is a \emph{unit}, then \(\operatorname{HCF}(a,b)=1\) and
+\(\operatorname{LCM}(a,b)=b\) for all \(b\neq0\), because units neither
+affect \(\min\) nor \(\max\) of the exponent lists.
+
+\bigskip
+% ---------------------------------------------------------------------------
+%  2.  Euclidean Domains
+% ---------------------------------------------------------------------------
+\subsection*{2.  Euclidean domains}
+
+\begin{definition}[Euclidean domain]
+  An integral domain \(R\) is \emph{Euclidean} if there exists a function
+  \(\varphi:R\setminus\{0\}\to\Bbb N\cup\{0\}\) (called a \emph{Euclidean
+  valuation}) such that
+  \begin{enumerate}
+    \item \(\varphi(ab)\;\ge\;\varphi(a)\) for all non–zero \(a,b\in R\);
+    \item For any \(a,b\in R\) with \(b\neq0\) there exist \(q,r\in R\) satisfying
+          \[
+             a = bq + r,
+             \qquad
+             \text{either } r = 0 \text{ or } \varphi(r)<\varphi(b).
+          \]
+  \end{enumerate}
+\end{definition}
+
+\paragraph{Intuition.}
+A Euclidean valuation allows a \emph{division algorithm} analogous to that for
+integers, enabling a gcd–style algorithm that rapidly computes HCFs (and
+hence LCMs) without full factorisation.
+
+\begin{itemize}
+  \item \(\Bbb Z\): \(\varphi(n)=|n|\).
+  \item Polynomial ring \(k[x]\) over a field \(k\):
+        \(\varphi(f)=\deg f\).
+  \item Every Euclidean domain is a PID \(\Longrightarrow\) a UFD,
+        but the converses fail in general (\(\Bbb Z[\tfrac{1+\sqrt{-19}}{2}]\)
+        is a PID but not Euclidean).
+\end{itemize}
+
+\bigskip
+% ---------------------------------------------------------------------------
+%  3.  Worked example  (Euclidean algorithm in \(\Bbb Z\))
+% ---------------------------------------------------------------------------
+\subsection*{3.  Example: computing \(\gcd(360,336)\) in \(\Bbb Z\)}
+
+\[
+\begin{aligned}
+360 &= 1\cdot336 + 24\\
+336 &= 14\cdot24 + 0
+\end{aligned}
+\quad\Longrightarrow\quad
+\gcd(360,336)=24.
+\]
+
+The quotient–remainder steps terminate because each remainder
+has strictly smaller absolute value than its divisor, precisely condition~(2)
+of the Euclidean definition.
+
+% ---------------------------------------------------------------------------
+%  End
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+%  Lemma –  Recasting the Euclidean “division” axiom
+% ---------------------------------------------------------------------------
+\subsection*{Lemma}
+Let \(R\) be an integral domain equipped with a Euclidean valuation
+\(\varphi:R\setminus\{0\}\to\Bbb N\cup\{0\}\).
+The standard \emph{division axiom}
+
+\[
+\tag{2}\label{E2}
+\forall\,a,b\in R\;(b\neq0)\;\;\exists\,q,r\in R
+\quad
+a = bq + r,
+\quad
+\text{with }r=0\text{ or }\varphi(r)<\varphi(b)
+\]
+
+is equivalent to the following alternative formulation:
+
+\[
+\tag{2'}\label{E2p}
+\forall\,a,b\in R\setminus\{0\},\;
+\varphi(a)\ge\varphi(b)
+\;\Longrightarrow\;
+\exists\,c\in R
+\text{ such that either } a = bc
+\text{ or }\varphi(a-bc)<\varphi(a).
+\]
+
+\bigskip
+\begin{proof}
+\textbf{\eqref{E2} \(\Longrightarrow\) \eqref{E2p}.}\;
+Assume \eqref{E2}.  
+Take \(a,b\in R\setminus\{0\}\) with \(\varphi(a)\ge\varphi(b)\).
+Apply \eqref{E2} to obtain \(q,r\) with \(a=bq+r\) and either \(r=0\) or
+\(\varphi(r)<\varphi(b)\le\varphi(a)\).
+\begin{itemize}
+  \item If \(r=0\) set \(c:=q\); then \(a=bc\).
+  \item Otherwise set \(c:=q\) again; we have
+        \(
+           \varphi(a-bc)
+           =\varphi(r)
+           <\varphi(a).
+        \)
+\end{itemize}
+Thus \eqref{E2p} holds.
+
+\medskip
+\textbf{\eqref{E2p} \(\Longrightarrow\) \eqref{E2}.}\;
+Fix \(a,b\in R\) with \(b\neq0\).
+If \(b\mid a\) we are done with \(q=\tfrac{a}{b}\) and \(r=0\).
+Otherwise \(b\nmid a\).
+
+\smallskip
+Choose \(q\in R\) such that 
+\[
+    \varphi(a-bq) \;\text{ is minimal among }\;
+    \{\varphi(a-bc)\mid c\in R\}.
+\]
+By minimality we have \(b\nmid (a-bq)\) (else remainder would be \(0\)).
+If \(\varphi(a-bq)\ge\varphi(b)\) then hypothesis \eqref{E2p}
+(with \(c=q\)) would give some \(c'\) such that
+\(\varphi\bigl(a-bc'\bigr)<\varphi(a-bq)\),
+contradicting minimality.
+Hence \(\varphi(r)<\varphi(b)\) for \(r:=a-bq\).
+
+Thus we have written \(a=bq+r\) with either \(r=0\)
+(if \(b\mid a\)) or \(\varphi(r)<\varphi(b)\), which is exactly \eqref{E2}.
+\end{proof} 
+% ---------------------------------------------------------------------------
+%  Explaining the “Remarks” after the definition of a Euclidean domain
+% ---------------------------------------------------------------------------
+\paragraph*{Remark 1 — Why \(\varphi(a)=|a|\) on \(\mathbb Z\) is the prototype.}
+\begin{itemize}
+  \item For each non–zero integer \(a\) set \(\varphi(a)=|a|\in\mathbb N\cup\{0\}\).
+        \begin{enumerate}
+          \item \emph{Monotonicity.}\;
+                \(|ab|\ge|a|\) for all \(a,b\neq0\), so condition (1) of a
+                Euclidean valuation holds.
+          \item \emph{Division algorithm.}\;
+                Given integers \(a,b\neq0\) the usual quotient–remainder
+                theorem produces \(q,r\) with \(a=bq+r\) and
+                \(0\le r<|b|\).
+                Translating, \(r=0\) or \(\varphi(r)<\varphi(b)\),
+                which is condition (2).
+        \end{enumerate}
+  \item Hence \(\mathbb Z\) satisfies both axioms with this \(\varphi\); it is a
+        \textbf{Euclidean domain}.  
+        All other Euclidean valuations generalise the same “size–
+        decreases-when-you-take-remainders’’ idea.
+\end{itemize}
+
+\bigskip
+\paragraph*{Remark 2 — Why allow the value \(0\) in the codomain.}
+\begin{itemize}
+  \item If we restricted \(\varphi\) to land in \(\mathbb N=\{1,2,3,\dots\}\),
+        some perfectly serviceable valuations would be ruled out.
+        \[
+           \varphi:R\setminus\{0\}\;\to\;\mathbb N\cup\{0\}
+        \]
+        is therefore more flexible.
+  \item Two common situations where the value \(0\) is indispensable:
+        \begin{enumerate}
+          \item \textbf{Polynomial rings.}\;
+                For \(k[x]\) the Euclidean valuation \(\varphi(f)=\deg f\)
+                gives \(\varphi(f)=0\) precisely for \emph{non–zero constants}.
+          \item \textbf{Fields.}\;
+                If \(R\) is already a field, the
+                “trivial’’ valuation \(\varphi\equiv0\) fulfils both axioms,
+                making every field a (degenerate) Euclidean domain.
+        \end{enumerate}
+        Allowing \(0\) therefore \emph{enlarges} the class of rings that fit
+        the definition without harming the classical examples.
+\end{itemize}
+% ------------------------------------------------------------
+%  Theorem:  F field  ⇒  F[X] Euclidean
+% ------------------------------------------------------------
+\begin{theorem}
+  Let \(F\) be a field.  
+  Then the polynomial ring \(F[X]\) is a \emph{Euclidean domain}.
+  \end{theorem}
+  
+  \begin{proof}
+  We must exhibit a function
+  \[
+    \varphi : F[X]\setminus\{0\}\;\longrightarrow\;\mathbb N\cup\{0\}
+  \]
+  satisfying the two Euclidean axioms.
+  
+  \medskip
+  \textbf{Step 1.  Define the valuation.}  
+  For a non-zero polynomial \(f\in F[X]\) set
+  \[
+     \boxed{\; \varphi(f) := \deg(f). \;}
+  \]
+  
+  \medskip
+  \textbf{Step 2.  Verify Axiom (1)  (\(\varphi(fg) \ge \varphi(f)\)).}
+  
+  Because \(F\) is a field, \(F[X]\) is an integral domain, so
+  \[
+     \deg(fg) = \deg(f) + \deg(g) \;\ge\; \deg(f)
+     \quad\Longrightarrow\quad
+     \varphi(fg)\;\ge\;\varphi(f)
+     \quad\forall\,f,g\in F[X]\setminus\{0\}.
+  \]
+  
+  \medskip
+  \textbf{Step 3.  Verify Axiom (($2^\prime$  ))}  
+  (the equivalent “remainder-drop” version of the division axiom):
+  
+  \[
+     \forall\,f,g\in F[X]\setminus\{0\},\;
+     \varphi(f)\ge\varphi(g)
+     \;\Longrightarrow\;
+     \exists\,c\in F[X]\;
+     \text{with either } f = gc \text{ or } \varphi(f-gc)<\varphi(f).
+  \]
+  
+  \emph{Proof of ($2^\prime$  ).}  
+  Write
+  \[
+    f = a_0 + a_1X + \dots + a_nX^{\,n},
+    \qquad
+    g = b_0 + b_1X + \dots + b_mX^{\,m},
+  \]
+  where \(n=\deg(f),\;m=\deg(g)\) and \(a_n,b_m\neq0\).
+  Assume \(\varphi(f)=n\ge m=\varphi(g)\).
+  Then \(n-m\ge 0\) and the monomial \(X^{\,n-m}\in F[X]\).
+  
+  Consider
+  \[
+    c \;:=\; a_n\,b_m^{-1}\,X^{\,n-m}\in F[X],
+  \]
+  which is well-defined because \(b_m\) is invertible in the field \(F\).
+  The leading term of \(gc\) is
+  \(
+      b_m\,X^{\,m}\cdot a_n\,b_m^{-1}\,X^{\,n-m} = a_n\,X^{\,n},
+  \)
+  exactly matching the leading term of \(f\).
+  Hence
+  \[
+     \deg\!\bigl(f-gc\bigr)\;<\;\deg(f).
+  \]
+  Consequently
+  \(
+     \varphi(f-gc) = \deg(f-gc) < \deg(f) = \varphi(f),
+  \)
+  so property ($2^\prime$  ) is satisfied.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Where does the line
+%     “$X^{\,n-m}b_m^{-1}a_n g$ has leading term $a_nX^n$”
+%  come from?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Setup.}  
+Write the polynomials with their leading coefficients:
+
+\[
+   f = a_0 + a_1X + \dots + a_nX^{\,n},
+   \qquad
+   g = b_0 + b_1X + \dots + b_mX^{\,m},
+\]
+where \(a_n\neq0,\;b_m\neq0\) and \(n=\deg f,\;m=\deg g\).
+
+Assume \(\varphi(f)=\deg(f)\ge\varphi(g)=\deg(g)\); hence \(n\ge m\).
+
+\bigskip
+\textbf{1.  Shift $g$ up to degree $n$.}
+
+Because \(n-m\ge0\), the monomial \(X^{\,n-m}\) lies in \(F[X]\) and
+
+\[
+   X^{\,n-m}g
+   \quad\text{has degree}\quad
+   m + (n-m) = n.
+\]
+
+So \(X^{\,n-m}g\) is “high enough’’ to compete with \(f\)’s leading term.
+
+\bigskip
+\textbf{2.  Match the leading coefficient.}
+
+The leading term of \(X^{\,n-m}g\) is \(b_mX^{\,n}\).
+Since \(F\) is a \emph{field}, \(b_m\) is \underline{invertible}.  
+Multiplying by \(b_m^{-1}a_n\) rescales that leading term to
+\(a_nX^{\,n}\):
+
+\[
+   \underbrace{\bigl(b_m^{-1}a_n\bigr)}_{\text{scalar in }F}
+   \times
+   b_mX^{\,n}
+   \;=\;
+   a_nX^{\,n}.
+\]
+
+\bigskip
+\textbf{3.  Define $c$ and check the claim.}
+
+Set
+\[
+     c \;:=\; b_m^{-1}a_n\,X^{\,n-m}\in F[X].
+\]
+Then
+\[
+     cg
+     \;=\;
+     \bigl(b_m^{-1}a_n\,X^{\,n-m}\bigr)g
+\]
+indeed has leading term \(a_nX^{\,n}\).
+
+\bigskip
+\textbf{4.  Consequence for the degree drop.}
+
+Subtracting this multiple from \(f\) cancels the highest-degree term:
+
+\[
+   f - cg
+   \quad\text{has no }X^{\,n}\text{ term}
+   \;\Longrightarrow\;
+   \deg(f-cg) < \deg(f).
+\]
+
+This is exactly the inequality
+\(
+   \varphi(f-cg) < \varphi(f)
+\)
+used to verify Euclidean property $(2^\prime )$.
+
+\bigskip
+\textbf{Mnemonic.}  
+“\emph{Shift \(g\) to match the degree, then scale by the ratio of leading
+coefficients.}’’
+Because \(F\) is a field, that ratio \(a_n/b_m\) lives inside \(F\),
+so the construction stays within \(F[X]\).
+  \medskip
+  \textbf{Step 4.  Conclude Axiom (2).}  
+  Since ($2^\prime$  ) is equivalent to the ordinary division axiom (lemma proved
+  earlier), \(F[X]\) admits quotient-remainder division with the degree
+  strictly dropping at each step.
+  
+  \medskip
+  \textbf{Step 5.  Finish.}  
+  Both Euclidean axioms hold for \(\varphi(f)=\deg(f)\); therefore \(F[X]\)
+  is Euclidean.
+  \end{proof}
+  
+  \begin{remark}
+  The argument uses that \(b_m\neq0\) has a multiplicative inverse
+  \(b_m^{-1}\) in \(F\).  If \(F\) were merely a commutative ring without
+  every non-zero element invertible, the construction of \(c\) would fail
+  and \(F[X]\) need not be Euclidean.
+  \end{remark}
+  % ---------------------------------------------------------------------------
+%  Euclidean Domains  ▸  Existence of the Highest Common Factor (HCF)
+%                      and the Bézout Representation
+% ---------------------------------------------------------------------------
+\begin{theorem}
+  Let \(R\) be a Euclidean domain with Euclidean valuation
+  \(\varphi : R\setminus\{0\}\to\mathbb N\cup\{0\}\).
+  For any non-zero \(a,b\in R\) there exists a highest common factor
+  \[
+     (a,b)\;=\;\operatorname{HCF}(a,b)\;\in R,
+  \]
+  and it can be written in \emph{Bézout form}
+  \[
+     (a,b)\;=\;au + bv
+     \quad\text{for some }u,v\in R .
+  \]
+  \end{theorem}
+  
+  \begin{proof}
+  \textbf{1.  Start the Euclidean algorithm.}  
+  Without loss of generality assume \(\varphi(a)\ge\varphi(b)\).
+  Apply the division axiom (property~(2)):
+  
+  \[
+     a \;=\; bq_{1} + r_{1},
+     \qquad
+     \text{where either } r_{1}=0 \text{ or } \varphi(r_{1})<\varphi(b).
+  \]
+  
+  \smallskip
+  \textbf{2.  If \(r_{1}=0\) we are done.}  
+  Then \(b\mid a\) so \((a,b)=b\), and setting \(u=0,\;v=1\) gives the
+  Bézout expression.
+  
+  \smallskip
+  \textbf{3.  Otherwise continue recursively.}  
+  Repeat the division step:
+  
+  \[
+     b \;=\; q_{2}r_{1} + r_{2},
+     \qquad
+     r_{2}=0 \text{ or } \varphi(r_{2})<\varphi(r_{1}),
+  \]
+  \[
+     r_{1} \;=\; q_{3}r_{2} + r_{3}, \quad \dots
+  \]
+  
+  At each stage we obtain a strictly decreasing chain
+  \[
+     \varphi(b) \;>\; \varphi(r_{1}) \;>\; \varphi(r_{2}) \;>\; \dots
+  \]
+  in the well-ordered set \(\mathbb N\cup\{0\}\), so the process
+  \emph{must} terminate after finitely many steps:
+  \[
+     r_{n-2} \;=\; q_{n}r_{n-1} + r_{n},
+     \qquad
+     r_{n}=0.
+  \]
+  
+  \smallskip
+  \textbf{4.  The last non-zero remainder \(r_{n-1}\) divides both \(a\) and \(b\).}  
+  Inductively from the recursion one shows \(r_{k}\mid r_{k-1}\) for
+  all \(k\).  In particular \(r_{n-1}\mid r_{n-2}\mid\cdots\mid r_{1}\mid b\)
+  and \(r_{n-1}\mid r_{n-2}\mid\cdots\mid a\); hence \(r_{n-1}\) is a
+  \emph{common} divisor of \(a\) and \(b\).
+  % ---------------------------------------------------------------------------
+%  Expanded explanation of the “divisibility–chain’’ step
+%  inside the Euclidean–algorithm proof of  HCF$(a,b)$
+% ---------------------------------------------------------------------------
+
+We keep the notation from the proof:
+
+\[
+\begin{aligned}
+   a      &= bq_{1}+r_{1}, &          &0\le\varphi(r_{1})<\varphi(b),\\
+   b      &= q_{2}r_{1}+r_{2}, &      &0\le\varphi(r_{2})<\varphi(r_{1}),\\
+          &\vdots& &\\
+   r_{n-3}&= q_{n-1}r_{n-2}+r_{n-1}, & &0\le\varphi(r_{n-1})<\varphi(r_{n-2}),\\
+   r_{n-2}&= q_{n}\,r_{n-1}+r_{n},   & &0\le\varphi(r_{n})  <\varphi(r_{n-1}),\\
+   r_{n-1}&= q_{n+1}r_{n}+0 .
+\end{aligned}
+\]
+
+Hence \(r_{n}\neq0\) is the \emph{last non–zero remainder}.
+
+\bigskip
+\subsection*{1.\;Why \(r_{n}\mid r_{n-1}\)}
+
+The final line is \(r_{n-1}=q_{n+1}r_{n}\).  
+This is literally the definition of divisibility, so
+\[
+   r_{n}\;\mid\;r_{n-1}.
+\]
+
+\bigskip
+\subsection*{2.\;Backward induction: \(r_{n}\mid r_{k}\) for all \(k\le n-1\)}
+
+\textbf{Inductive claim.}  
+If \(r_{n}\mid r_{k}\) and \(r_{n}\mid r_{k+1}\), then \(r_{n}\mid r_{k-1}\).
+
+\emph{Proof of the claim.}  
+From the recurrence
+\(
+   r_{k-1}=q_{k}r_{k}+r_{k+1},
+\)
+any common divisor of \(r_{k}\) and \(r_{k+1}\) also divides \(r_{k-1}\).
+
+\medskip
+\textbf{Base step.}  
+We already have \(r_{n}\mid r_{n}\) (trivial) and \(r_{n}\mid r_{n-1}\).
+
+\textbf{Inductive step.}  
+Assume \(r_{n}\mid r_{k}\) and \(r_{n}\mid r_{k+1}\).
+Apply the claim to deduce \(r_{n}\mid r_{k-1}\).
+By descending induction this holds for every remainder \(r_{i}\) and in
+particular
+\[
+   r_{n}\mid r_{1},
+   \qquad
+   r_{n}\mid b.
+\]
+% ---------------------------------------------------------------------------
+%  Detailed expansion of the \emph{inductive step} in the divisibility chain
+%  (showing $\,r_n\mid r_k\,$ for every $k\le n-1$)
+% ---------------------------------------------------------------------------
+
+\subsubsection*{Recap of the recurrence}
+For each $i\ge1$ the Euclidean algorithm furnishes
+\[
+   r_{i-1}=q_{i+1}r_{i}+r_{i+1},
+   \qquad
+   0\le \varphi(r_{i+1})<\varphi(r_{i}),
+\]
+with $r_{n}$ the \emph{last non–zero} remainder.
+
+\bigskip
+\textbf{Inductive claim.}\;
+If $r_{n}\mid r_{k}$ \emph{and} $r_{n}\mid r_{k+1}$, then $r_{n}\mid r_{k-1}$.
+
+\begin{proof}[Proof of the claim]
+From the recurrence for index $k$ we have
+\[
+   r_{k-1}=q_{k+1}r_{k}+r_{k+1}.
+\]
+Any element that divides \emph{both} $r_{k}$ and $r_{k+1}$ must also
+divide their $R$–linear combination $q_{k+1}r_{k}+r_{k+1}=r_{k-1}$.
+Hence $r_{n}\mid r_{k-1}$.
+\end{proof}
+
+\bigskip
+\textbf{Establishing the induction}
+
+\begin{enumerate}
+  \item \emph{Base cases.}
+        \[
+          r_{n}\mid r_{n}\quad\text{(trivial)},\qquad
+          r_{n}\mid r_{n-1}\quad\text{(because }r_{n-1}=q_{n+1}r_{n}).
+        \]
+  \item \emph{Inductive step.}\;
+        Assume $r_{n}\mid r_{k}$ and $r_{n}\mid r_{k+1}$ for some
+        $2\le k\le n-1$.  
+        The claim then gives $r_{n}\mid r_{k-1}$.
+\end{enumerate}
+
+By descending induction this property propagates all the way down the
+chain of remainders:
+
+\[
+   r_{n}\mid r_{n-1}\;\Rightarrow\;
+   r_{n}\mid r_{n-2}\;\Rightarrow\;\dots\;\Rightarrow\;
+   r_{n}\mid r_{1}.
+\]
+
+Since $r_{1}$ divides $b$ and the first division equation
+$a=bq_{1}+r_{1}$ shows that $r_{n}\mid a$ as well, we conclude
+
+\[
+   r_{n}\;\mid\; a
+   \quad\text{and}\quad
+   r_{n}\;\mid\; b.
+\]
+
+Thus $r_{n}$ is a common divisor of $a$ and $b$; the subsequent Bézout
+argument completes the proof that it is the \emph{highest} common
+factor.
+% ---------------------------------------------------------------------------
+%  Why the Euclidean Algorithm Must Terminate
+% ---------------------------------------------------------------------------
+\section*{Setup}
+
+Let \(R\) be a Euclidean domain with valuation  
+\[
+   \varphi : R\setminus\{0\}\longrightarrow \mathbb N\cup\{0\},
+   \qquad
+   \text{and let } a,b\in R\;(b\ne0).
+\]
+At each step the algorithm produces
+\[
+   a_0 = a,\quad a_1 = b,\quad 
+   a_{k-1} \;=\; q_{k}a_k + a_{k+1},
+   \qquad
+   0\;\le\;\varphi(a_{k+1})\;<\;\varphi(a_{k}),
+\]
+with \(a_{n+1}=0\) signalling termination.
+
+\medskip
+\section*{Key observation}
+
+\[
+   \boxed{\;
+      \varphi(a_{0}) > \varphi(a_{1}) > \varphi(a_{2}) > \dots
+   \;}
+\]
+
+\begin{align}
+\text{Why?}\quad
+  &\varphi(a_{k+1}) < \varphi(a_{k})
+    &&\text{by Euclidean axiom (division with \(\varphi\)-drop).}
+\end{align}
+
+\medskip
+\section*{Termination proof}
+
+\begin{enumerate}
+  \item The image of \(\varphi\) lies in \(\mathbb N\cup\{0\}\),  
+        a \emph{well–ordered} set:  
+        every non-empty subset has a least element, and
+        there is no infinite strictly decreasing sequence.
+  \item The chain  
+        \(\varphi(a_{0})>\varphi(a_{1})>\varphi(a_{2})>\dots\)  
+        is strictly decreasing inside \(\mathbb N\cup\{0\}\).
+  \item Well-ordering therefore forces the chain to be \emph{finite}.  
+        Equivalently, some remainder must be \(0\) after finitely many steps.
+\end{enumerate}
+
+\medskip
+\section*{Concrete integer illustration}
+
+For \(\mathbb Z\) take \(\varphi(n)=|n|\).
+
+\[
+   \begin{aligned}
+   1071 &= 2\cdot 462 + 147 \quad &\Longrightarrow& \;|147|<|462|,\\
+    462 &= 3\cdot 147 +  21 \quad &\Longrightarrow& \;| 21|<|147|,\\
+    147 &= 7\cdot  21 +   0 \quad &\Longrightarrow& \; 0 < |21|.
+   \end{aligned}
+\]
+
+Absolute values drop from \(462\) to \(147\) to \(21\) and cannot keep
+decreasing indefinitely inside \(\mathbb N\cup\{0\}\); the algorithm
+must stop—here after three steps.
+
+\medskip
+\section*{Take-away}
+
+The Euclidean algorithm terminates because its controlling
+measure \(\varphi\) produces a strictly decreasing sequence of
+\emph{natural numbers}.  
+Since the naturals cannot sustain an infinite descent, the process
+reaches remainder \(0\) in finitely many steps.
+\bigskip
+\subsection*{3.\;Why \(r_{n}\mid a\)}
+
+The first division equation is \(a=bq_{1}+r_{1}\).
+Since \(r_{n}\mid b\) and \(r_{n}\mid r_{1}\), we get \(r_{n}\mid a\).
+
+Thus \(r_{n}\) divides \emph{both} \(a\) and \(b\); i.e.\ it is a
+\emph{common divisor}.
+
+\bigskip
+\subsection*{4.\;Why \(r_{n}\) is the \textbf{highest} common factor}
+
+Let \(d\) be \emph{any} common divisor of \(a\) and \(b\).
+Because \(d\mid a\) and \(d\mid b\), every Bézout combination
+\(ua+vb\) is also divisible by \(d\).
+From the earlier part of the proof we already expressed
+\[
+   r_{n}=ua+vb.
+\]
+Hence \(d\mid r_{n}\).
+
+Therefore \(r_{n}\) is divisible by every common divisor and is itself a
+common divisor; it satisfies the universal property of an \emph{HCF}:
+
+\[
+     \boxed{\;\operatorname{HCF}(a,b)=r_{n}=ua+vb\;}
+\]
+
+\bigskip
+\paragraph{Key take-aways.}
+\begin{enumerate}
+  \item The step \(r_{n}\mid r_{n-1}\) comes directly from the \emph{last}
+        division equation.
+  \item Successive backward substitution propagates this divisibility
+        all the way to \(b\) and \(r_{1}\), and hence to \(a\).
+  \item Bézout’s identity finishes the “maximality’’ argument.
+\end{enumerate}
+  
+  \smallskip
+  \textbf{5.  Maximality $\implies$   \(r_{n-1}\) is the HCF.}  
+  Let \(d\in R\) be any common divisor of \(a\) and \(b\).
+  Tracing the remainder equations backwards shows \(d\mid r_{1},d\mid r_{2},
+  \dots,d\mid r_{n-1}\).  Thus \(d\mid r_{n-1}\).
+  Therefore \(r_{n-1}\) satisfies the universal property of an HCF:
+  \[
+     (a,b)=r_{n-1}.
+  \]
+  
+  \smallskip
+  \textbf{6.  Bézout representation \(r_{n-1}=au+bv\).}  
+  Write the remainder equations explicitly:
+  
+  \[
+  \begin{aligned}
+     r_{1} &= a - bq_{1},\\
+     r_{2} &= b - q_{2}r_{1},\\
+     r_{3} &= r_{1} - q_{3}r_{2},\\[-2pt]
+           &\ \vdots
+  \end{aligned}
+  \]
+  
+  An induction on the index shows that every remainder \(r_{k}\) is an
+  \(R\)-linear combination of \(a\) and \(b\).
+  In particular, for \(k=n-1\) there exist \(u,v\in R\) such that
+  \(
+     r_{n-1}=au+bv.
+  \)
+  Hence
+  \[
+     \boxed{\;(a,b)=au+bv\;}
+  \]
+  as required.
+  \end{proof}
+  % ---------------------------------------------------------------------------
+%  Concrete integer example of the Euclidean algorithm
+%  (gcd and explicit Bézout coefficients)
+% ---------------------------------------------------------------------------
+\[
+  \boxed{\;\gcd(1071,\;462)\;}
+  \]
+  
+  \begin{align}
+  1071 &=  2\cdot 462 + 147    &\qquad&(1) \\[2pt]
+  462  &=  3\cdot 147 +  21    &      &(2) \\[2pt]
+  147  &=  7\cdot  21 +   0    &      &(3)
+  \end{align}
+  
+  \smallskip
+  Because the last non–zero remainder is \(21\), we have
+  \[
+  \gcd(1071,462)=21.
+  \]
+  
+  \bigskip
+  % ---------------------------------------------------------------------------
+  %  Extended Euclidean algorithm  –  back–substitution
+  % ---------------------------------------------------------------------------
+  From (2):\quad \(21 = 462 - 3\cdot 147\).
+  
+  From (1):\quad \(147 = 1071 - 2\cdot 462\).
+  
+  Substitute the expression for \(147\) into the first line:
+  \begin{align*}
+  21
+    &= 462 - 3\bigl(1071 - 2\cdot 462\bigr) \\[2pt]
+    &= 462 - 3\cdot1071 + 6\cdot462 \\[2pt]
+    &= -3\cdot1071 + 7\cdot462 .
+  \end{align*}
+  
+  \[
+  \boxed{\;21 = (-3)\,1071 \;+\; 7\,462\;}
+  \]
+  
+  Thus Bézout coefficients are \(u=-3,\;v=7\):
+  \[
+  1071(-3)+462(7)=21.
+  \]
+  
+  % ---------------------------------------------------------------------------
+  %  Sanity check
+  % ---------------------------------------------------------------------------
+  \begin{align*}
+  -3\cdot1071 &= -3213,\\
+  7\cdot462   &=  3234,\\
+              &\underline{\smash{+}}\ \phantom{21}\\[-4pt]
+              &\; 21\;\checkmark
+  \end{align*}
+  
+  \bigskip
+  \textbf{Summary.}\;
+  The Euclidean algorithm produced the sequence of remainders
+  \(147,21,0\) and terminated because each remainder’s absolute value
+  is \emph{strictly} smaller than its divisor.  
+  Back-substitution then expressed the gcd as a linear
+  combination \(1071u+462v\), confirming Bézout’s theorem.
+  \begin{remark}
+  The constructive part of the proof \emph{is} the classical
+  \textbf{Euclidean (extended) algorithm}.  
+  The sequence of quotients \(q_{i}\) yields the coefficients
+  \(u,v\) by back-substitution.
+  \end{remark}
+  % ---------------------------------------------------------------------------
+%  Why every remainder \(r_i\) is a Bézout combination of \(a\) and \(b\)
+%  (expanded induction inside the Euclidean–algorithm proof)
+% ---------------------------------------------------------------------------
+\subsection*{Goal}
+Show that for every index \(i\) produced by the Euclidean algorithm  
+there exist coefficients \(u_i,v_i\in R\) such that
+\[
+      r_i \;=\; u_i\,a \;+\; v_i\,b .
+\]
+In particular, the \emph{last} non–zero remainder \(r_n\) satisfies  
+\(r_n = ua+vb\) and hence is the Bézout representation of
+\(\operatorname{HCF}(a,b)\).
+
+\bigskip
+\subsection*{Euclidean recursion recalled}
+\[
+\begin{aligned}
+   r_0 &= a,\\[2pt]
+   r_1 &= b,\\[4pt]
+   r_{i-1} &= q_{i+1}\,r_{i} \;+\; r_{i+1}, 
+   \qquad (0\le i\le n-1),
+\end{aligned}\tag{$\star$}
+\]
+with the convention \(r_{\,n+1}=0\).
+
+\bigskip
+\subsection*{Induction on the index \(i\)}
+
+\paragraph{Base cases.}
+\[
+    r_0 = 1\cdot a + 0\cdot b,
+    \qquad
+    r_1 = 0\cdot a + 1\cdot b ,
+\]
+so the desired representation holds for \(i=0,1\).
+
+\paragraph{Inductive hypothesis.}
+Assume for some \(i\ge2\) we already have
+\[
+   r_{i-1}=u_{i-1}a+v_{i-1}b,
+   \qquad
+   r_{i-2}=u_{i-2}a+v_{i-2}b .
+\]
+
+\paragraph{Inductive step.}
+From the recurrence $(\star)$ we know
+\[
+   r_i = -\,q_i\,r_{i-1} + r_{i-2}.
+\]
+Insert the inductive expressions for \(r_{i-1}\) and \(r_{i-2}\):
+\[
+\begin{aligned}
+   r_i
+   &= -q_i\bigl(u_{i-1}a+v_{i-1}b\bigr) 
+      \;+\;
+       \bigl(u_{i-2}a+v_{i-2}b\bigr)\\[4pt]
+   &= \underbrace{\bigl(-q_i u_{i-1}+u_{i-2}\bigr)}_{=:u_i}\;a
+      \;+\;
+      \underbrace{\bigl(-q_i v_{i-1}+v_{i-2}\bigr)}_{=:v_i}\;b .
+\end{aligned}
+\]
+
+Both \(u_i,v_i\) lie in \(R\), so \(r_i= u_i a+ v_i b\).  
+Thus the property holds for index \(i\).
+
+\paragraph{Conclusion.}
+By mathematical induction the representation
+\(r_i=u_i a+v_i b\) is valid for \emph{every} remainder \(r_i\).
+In particular, for the last non–zero remainder \(r_n\) we have
+\[
+      r_n = u_n a + v_n b .
+\]
+Because \(r_n\) divides both \(a\) and \(b\) (shown earlier in the proof),
+and every other common divisor divides \(r_n\),
+we conclude
+\[
+      \operatorname{HCF}(a,b)=r_n = u_n a + v_n b .
+\]
+This completes the expanded justification of the inductive step.
+  % ------------------------------------------------------------
+
+% ------------------------------------------------------------
+% ---------------------------------------------------------------------------
+%  Corollary:  In a Euclidean domain, every pair has an LCM
+% ---------------------------------------------------------------------------
+\begin{corollary}
+  Let \(R\) be a Euclidean domain and let \(a,b\in R\setminus\{0\}\).
+  Then \(a\) and \(b\) possess a \emph{least common multiple}
+  \[
+        \operatorname{LCM}(a,b)\in R,
+  \]
+  and it can be chosen in the explicit form
+  \[
+        m \;=\; \frac{ab}{\operatorname{HCF}(a,b)}.
+  \]
+  \end{corollary}
+  
+  \begin{proof}
+  Denote \(d := \operatorname{HCF}(a,b)\).
+  From the Euclidean algorithm (previous theorem) we already know that
+  \(d = au + bv\) for some \(u,v\in R\) and that \(d\mid a,\;d\mid b\).
+  
+  \smallskip
+  \textbf{1.\;Definition of the candidate.}
+  Because \(d\mid a\) (and \(R\) is an integral domain), the fraction
+  \(
+     m := \dfrac{ab}{d}
+  \)
+  lies in \(R\).
+  
+  \smallskip
+  \textbf{2.\;\(a\mid m\) and \(b\mid m\).}
+  Write \(a = da'\) and \(b = db'\) with \(a',b'\in R\).  Then
+  \[
+      m = \tfrac{ab}{d} = \tfrac{da' \, db'}{d} = a \, b'
+      \quad\Longrightarrow\quad
+      a\mid m ,
+  \]
+  and symmetrically \(m = b\,a'\) gives \(b\mid m\).
+  
+  \smallskip
+  \textbf{3.\;Minimality (universal property).}
+  Let \(m'\) be \emph{any} common multiple: \(a\mid m'\) and \(b\mid m'\).
+  Hence \(ab\mid ab\,m'\).
+  
+  Because \(d=\operatorname{HCF}(a,b)\) divides both \(a\) and \(b\),
+  it divides every common multiple, so \(d\mid m'\).
+  Consequently,
+  \[
+     m = \frac{ab}{d} \;\mid\; \frac{ab\,m'}{d} = m'
+  \]
+  in the integral domain \(R\).
+  Thus \(m\) divides every common multiple and is itself a common multiple,
+  so \(m\) satisfies the defining property of \(\operatorname{LCM}(a,b)\).
+  
+  \smallskip
+  All conditions are met; therefore \(m\) is an LCM of \(a\) and \(b\).
+  \end{proof}
+  
+  \begin{remark}
+  The construction shows:
+  \[
+     \operatorname{HCF}(a,b)\cdot \operatorname{LCM}(a,b)
+     = a\,b
+     \qquad(\text{up to multiplication by a unit}).
+  \]
+  This familiar identity from elementary number theory extends to every
+  Euclidean domain.
+  \end{remark}
+% ---------------------------------------------------------------------------
+%  Theorem: Every Euclidean Domain is a Principal Ideal Domain (PID)
+% ---------------------------------------------------------------------------
+\subsection*{Statement}
+
+\begin{theorem}
+  Let \(R\) be a Euclidean domain with Euclidean valuation
+  \(\varphi:R\setminus\{0\}\to\mathbb N\cup\{0\}\).
+  Then \(R\) is a \emph{principal ideal domain} (PID);
+  i.e.\ every ideal \(I\subseteq R\) is generated by a single element.
+\end{theorem}
+
+\subsection*{Expanded proof}
+
+\paragraph{Step 0.  Handle the zero ideal.}
+If \(I=\{0\}\) we are done, since \(I=(0)\).  
+Henceforth assume \(I\neq(0)\).
+
+\medskip
+\paragraph{Step 1.  Pick an element of \emph{minimal valuation}.}
+Because \(I\setminus\{0\}\) is non–empty and
+\(\varphi\bigl(I\setminus\{0\}\bigr)\subset\mathbb N\cup\{0\}\)
+is a finite, non–empty subset, it has a least element.
+Choose \(a\in I\setminus\{0\}\) with
+\[
+      \boxed{\;
+        \varphi(a)=\min\!\bigl\{\varphi(b)\mid b\in I\setminus\{0\}\bigr\}.
+      \;}
+\]
+Our goal is to show \(I=(a)\).
+
+\medskip
+\paragraph{Step 2.  Show \((a)\subseteq I\).}
+This is immediate because \(a\in I\) and \(I\) is an \emph{ideal},
+so every multiple \(ra\;(r\in R)\) lies in \(I\).
+
+\medskip
+\paragraph{Step 3.  Prove the reverse inclusion \(I\subseteq(a)\).}
+Suppose, for contradiction, that there exists an element
+\[
+      r\;\in\; I\setminus(a).
+\]
+Then \(a\nmid r\).
+
+\smallskip
+\textbf{Apply the Euclidean division:}  
+Because \(a\neq0\), there exist \(q,s\in R\) with
+\[
+   r = qa + s,
+   \quad
+   \text{where either } s=0 \text{ or } \varphi(s)<\varphi(a).
+\]
+
+\smallskip
+\textbf{Case \(s=0\).}\;
+Then \(r=qa\in(a)\), contradicting the assumption \(r\notin(a)\).
+
+\smallskip
+\textbf{Case \(s\neq0\).}\;
+Observe:
+\[
+  s = r - qa\;\in\;I
+  \quad (\text{since }I\text{ is an ideal and }r,\,qa\in I).
+\]
+But then \(s\in I\setminus\{0\}\) and
+\(\varphi(s)<\varphi(a)\), contradicting the \emph{minimality} of
+\(\varphi(a)\).
+
+\smallskip
+Hence no such \(r\) exists and \(I\subseteq(a)\).
+
+\medskip
+\paragraph{Step 4.  Conclude principalness.}
+Combining Step 2 and Step 3 gives \(I=(a)\).  
+Since \(I\) was arbitrary, every ideal of \(R\) is principal;  
+thus \(R\) is a PID. \(\square\)
+
+\bigskip
+\subsection*{Key take-aways}
+
+\begin{itemize}
+  \item The proof uses \emph{well-ordering} of the image of \(\varphi\)
+        to pick an element of minimal “size’’ inside an ideal.
+  \item The Euclidean division inequality
+        \(\varphi(s)<\varphi(a)\) enables a contradiction unless
+        the remainder \(s\) vanishes, forcing divisibility.
+  \item Minimal valuation \(a\) \(\Longrightarrow\) \(I=(a)\) —
+        this is the essence of why Euclidean domains are principal.
+\end{itemize}
+\end{document}

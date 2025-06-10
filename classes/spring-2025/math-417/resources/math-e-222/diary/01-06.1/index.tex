@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+Exercises $2.10.1, 2.10.3, 2.10.5, 2.10.6$ \\
+Read $\S\S 3.1, 3.2$ for next lecture 
+\begin{problem}[2.10.1]
+    Let $G$ be the group of invertible real upper triangular $2\times 2$ matrices. Determine whether or not the following conditions describe normal subgroups $H$ of $G$ . If they do, use the First Isomorphism Theorem to identify the quotient group $\frac{G}{H}$
+    \noindent
+    \begin{enumerate}
+        \item $a_{11}=1 $
+        \item $a_{12}=0 $
+        \item $a_{11} =a_{22} $
+        \item $a_{11} =a_{22} =1$    
+    \end{enumerate}  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.10.3]
+   Let $P$ be a partition of a group $G$ with the property that for any pair of elements $A,B$ of the partition, the product set $AB$ is contained entirely within another element $C$ of the partition. Let $N$ be the element of $P$ which contains $1$ . Prove that $N$ is a normal subgroup of $G$ and that $P$ is the set of its cosets. 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.10.5]
+   Identify the quotient group $\frac{\mathbb{{R}}^{\times}}{P}$, where $P$ denotes the subgroup of positive real numbers.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.10.6]
+  Let $H=\left\{ \pm 1, \pm i \right\} $  be the subgroup of $G=\mathbb{{C}}^{\times}$ of fourth roots of unity. Describe the cosets of $H$ in $G$ explicitly, and prove that $\frac{G}{H}$   is isomorphic to $G$. 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\end{document}

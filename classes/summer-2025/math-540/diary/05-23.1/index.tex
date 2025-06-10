@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 540 Cheatsheet}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{definition}[Sigma-Algebra]
+  \begin{enumerate}
+    \noindent
+      \item[(a)] A collection $\mathcal{M}$ of subsets of a set $X$ is said to be a \emph{$\sigma$-algebra in $X$} if $\mathcal{M}$ has the following properties:
+      \begin{itemize}
+          \item[(i)] $X \in \mathcal{M}$.
+          \item[(ii)] If $A \in \mathcal{M}$, then $A^c \in \mathcal{M}$, where $A^c$ is the complement of $A$ relative to $X$.
+          \item[(iii)] If $A = \bigcup_{n=1}^{\infty} A_n$ and if $A_n \in \mathcal{M}$ for $n = 1, 2, 3, \dots$, then $A \in \mathcal{M}$.
+      \end{itemize}
+  
+      \item[(b)] If $\mathcal{M}$ is a $\sigma$-algebra in $X$, then $X$ is called a \emph{measurable space}, and the members of $\mathcal{M}$ are called the \emph{measurable sets} in $X$.
+  
+      \item[(c)] If $X$ is a measurable space, $Y$ is a topological space, and $f$ is a mapping of $X$ into $Y$, then $f$ is said to be \emph{measurable} provided that $f^{-1}(V)$ is a measurable set in $X$ for every open set $V$ in $Y$.
+  \end{enumerate}
+  \end{definition}
+  \begin{theorem}[1.8]
+    Let $u$ and $v$ be real measurable functions on a measurable space $X$, let $\Phi$ be a continuous mapping of the plane into a topological space $Y$, and define
+    \[
+    h(x) = \Phi(u(x), v(x))
+    \]
+    for $x \in X$. Then $h \colon X \to Y$ is measurable.
+    \end{theorem}
+    
+    \begin{proof}
+    Put $f(x) = (u(x), v(x))$. Then $f$ maps $X$ into the plane. Since $h = \Phi \circ f$, Theorem 1.7 shows that it is enough to prove the measurability of $f$.
+    
+    If $R$ is any open rectangle in the plane, with sides parallel to the axes, then $R$ is the cartesian product of two segments $I_1$ and $I_2$, and
+    \[
+    f^{-1}(R) = u^{-1}(I_1) \cap v^{-1}(I_2),
+    \]
+    which is measurable, by our assumption on $u$ and $v$. Every open set $V$ in the plane is a countable union of such rectangles $R_i$, and since
+    \[
+    f^{-1}(V) = f^{-1} \left( \bigcup_{i=1}^{\infty} R_i \right) = \bigcup_{i=1}^{\infty} f^{-1}(R_i),
+    \]
+    $f^{-1}(V)$ is measurable.
+    \end{proof}
+    \begin{definition}[1.13 Definition]
+      Let $\{a_n\}$ be a sequence in $[-\infty, \infty]$, and put
+      \begin{equation}
+          b_k = \sup \{a_k, a_{k+1}, a_{k+2}, \ldots\} \qquad (k = 1, 2, 3, \ldots)
+      \end{equation}
+      and
+      \begin{equation}
+          \beta = \inf \{b_1, b_2, b_3, \ldots\}.
+      \end{equation}
+      We call $\beta$ the \textit{upper limit} of $\{a_n\}$, and write
+      \begin{equation}
+          \beta = \limsup_{n \to \infty} a_n.
+      \end{equation}
+      
+      The following properties are easily verified: First, $b_1 \ge b_2 \ge b_3 \ge \cdots$, so that $b_k \to \beta$ as $k \to \infty$; secondly, there is a subsequence $\{a_{n_i}\}$ of $\{a_n\}$ such that $a_{n_i} \to \beta$ as $i \to \infty$, and $\beta$ is the largest number with this property.
+      
+      The \textit{lower limit} is defined analogously: simply interchange $\sup$ and $\inf$ in (1) and (2). Note that
+      \begin{equation}
+          \liminf_{n \to \infty} a_n = - \limsup_{n \to \infty} (-a_n).
+      \end{equation}
+      If $\{a_n\}$ converges, then evidently
+      \begin{equation}
+          \limsup_{n \to \infty} a_n = \liminf_{n \to \infty} a_n = \lim_{n \to \infty} a_n.
+      \end{equation}
+      
+      Suppose $\{f_n\}$ is a sequence of extended-real functions on a set $X$. Then $\sup_n f_n$ and $\limsup_{n \to \infty} f_n$ are the functions defined on $X$ by
+      \begin{equation}
+          \left(\sup_n f_n\right)(x) = \sup_n (f_n(x)),
+      \end{equation}
+      \begin{equation}
+          \left(\limsup_{n \to \infty} f_n\right)(x) = \limsup_{n \to \infty} (f_n(x)).
+      \end{equation}
+      If
+      \begin{equation}
+          f(x) = \lim_{n \to \infty} f_n(x),
+      \end{equation}
+      the limit being assumed to exist at every $x \in X$, then we call $f$ the \textit{pointwise limit} of the sequence $\{f_n\}$.
+      \end{definition}
+\end{document}

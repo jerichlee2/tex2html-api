@@ -1,0 +1,168 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 2}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+\begin{problem}[Values and properties of elementary functions]
+  \begin{enumerate}
+    \item[(a)] Compute \emph{all} values of 
+      \[
+        (1-i\sqrt{3})^{\,\tfrac52}
+      \]
+      and express each value in the form $re^{i\theta}$ with
+      $-\pi<\theta\le\pi$.
+    \item[(b)] Find every branch value of 
+      \[
+        \Log\!\bigl(-\sqrt{2}+i\sqrt{2}\bigr)
+      \]
+      (principal value included).  List them explicitly as
+      $\,\ln r + i\Theta_k\,$, $k\in\mathbb{Z}$.
+  \end{enumerate}
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 2. Isolated singularities
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Isolated singularities]
+  For 
+  \[
+    f(z)=\frac{z^{2}}{(z+1)^{2}\sin z},
+  \]
+  \begin{enumerate}
+    \item[(i)] locate and classify \emph{all} isolated singularities
+          in $\mathbb{C}$ as removable, poles (state the order),
+          or essential;
+    \item[(ii)] compute the residue $\operatorname{Res}\!\bigl(f,0\bigr)$.
+  \end{enumerate}
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 3. Taylor / Laurent series
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Taylor / Laurent series]
+  Find the Laurent expansion of
+  \[
+    \frac{\cos z-1}{z^{3}}
+  \]
+  about $z=0$ and write out the first four non‑zero terms explicitly.
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 4. Closed‑contour integral
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Closed‑contour integral]
+  Evaluate
+  \[
+    \oint_{\lvert z-2\rvert = 1}
+          \frac{e^{z}}{(z-1)(z-3)}\,dz .
+  \]
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 5. Improper integral
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Improper integral]
+  Show that
+  \[
+    I=\int_{0}^{\infty}\frac{x^{2}}{x^{4}+1}\,dx
+  \]
+  converges and determine its exact value.
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 6. Number of zeros
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Counting zeros with Rouché / Argument Principle]
+  Using an appropriate theorem, determine how many zeros of
+  \[
+    f(z)=z^{4}+4z+3
+  \]
+  lie in the upper half‑plane $\operatorname{Im}z>0$.
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 7. Conformal map
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Conformal mapping]
+  Construct an explicit conformal map $T$ that sends the vertical strip
+  \[
+    S=\bigl\{\,z\in\mathbb{C}:0<\operatorname{Re}z<1\,\bigr\}
+  \]
+  onto the open unit disc $\mathbb{D}=\{w:|w|<1\}$.
+  (You may describe $T$ as a composition of elementary maps.)
+  \end{problem}
+  
+  % ---------------------------------------------------------
+  % 8. Theoretical question
+  % ---------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Entire functions of quadratic growth]
+  Let $f$ be entire and suppose there exist constants $A,B>0$ such that
+  \[
+    |f(z)|\le A|z|^{2}+B
+    \qquad\text{for all } z\in\mathbb{C}.
+  \]
+  Prove that $f$ is a polynomial of degree at most $2$.
+  \end{problem}
+\end{document}

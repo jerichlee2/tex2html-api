@@ -1,0 +1,1050 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+\usepackage{mathtools} % <-- THIS defines \xmapsto
+
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Conformal Map Cheat Sheet}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%--------------------------------------------------------------------
+%  Mapping the upper semicircle $\{|z|<1,\; \Im z>0\}$ to $\mathbb{H}$
+%--------------------------------------------------------------------
+\begin{solution}
+  We decompose the map
+  \[
+     w \;=\; -\Bigl[\,(z+1)^{-1}-\tfrac12\Bigr]^{2}
+  \tag{$\ast$}\label{eq:fullmap}
+  \]
+  into four elementary conformal steps.  At each stage we describe the
+  image of the \emph{interior} domain
+  \[
+     \Omega := \{\,z\in\mathbb{C} : |z|<1,\;\Im z>0\,\}
+     \qquad
+     \bigl(\text{upper semicircle from $-1$ to $1$}\bigr)
+  \]
+  and the image of its \emph{boundary} (the diameter $(-1,1)$ and the arc
+  $\{|z|=1,\Im z=0\}$).
+  
+  \medskip
+  \begin{enumerate}[label=\textbf{Step~\arabic*.},wide,labelwidth=!,labelindent=0pt]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Translate left by $1$:}
+        \[
+           \zeta := z+1 .
+        \]
+        \emph{Effect.}
+        \begin{itemize}
+           \item Centre of the semicircle moves from $0$ to $-1$.
+           \item Diameter $(-1,1)$ becomes $(0,2)$ on the real axis.
+           \item The semicircle $\Omega$ becomes
+                 \[
+                   \Omega_1
+                   = \bigl\{\zeta : |\zeta-1|<1,\;\Im\zeta>0\bigr\},
+                 \]
+                 still a semicircle but now centred at $\zeta=1$.
+        \end{itemize}
+  
+  %----------------------------------------------------------------
+  \item \textbf{Invert in the unit circle:}
+        \[
+           \eta := \frac{1}{\zeta}\;=\;\frac{1}{\,z+1\,}.
+        \]
+        \emph{Effect.}
+        \begin{itemize}
+           \item The circle $|\zeta|=1$ (passing through $0$ and $2$)
+                 maps to itself.
+           \item Points inside that circle map outside and vice‑versa.
+                 Consequently the semicircle $\Omega_1$ maps to the
+                 \emph{right half–plane}
+                 \[
+                    \Omega_2 = \{\,\eta : \mathbb{R}e\eta> \tfrac12\,\}.
+                 \]
+           \item The diameter $(0,2)$ becomes the vertical line
+                 $\mathbb{R}e\eta=\tfrac12$.
+        \end{itemize}
+  
+  %----------------------------------------------------------------
+  \item \textbf{Translate so the boundary line becomes $\mathbb{R}e\xi=0$:}
+        \[
+           \xi := \eta - \tfrac12.
+        \]
+        \emph{Effect.}
+        \[
+           \Omega_3
+           = \{\,\xi : \mathbb{R}e\xi>0\,\}
+           \quad\text{(open right half–plane).}
+        \]
+        The boundary $\mathbb{R}e\eta=\tfrac12$ slides to $\mathbb{R}e\xi=0$.
+  
+  %----------------------------------------------------------------
+  \item \textbf{Square and rotate:}
+        \[
+           w := -\xi^{\,2}.
+        \]
+        \emph{Effect.}
+        \begin{itemize}
+          \item Squaring maps the right half–plane conformally onto
+                $\mathbb{C}\setminus(-\infty,0]$ (a slit plane whose boundary is
+                the non‑positive real axis).
+          \item Multiplying by $-1$ rotates this slit plane by $\pi$,
+                sending it to the \emph{upper half–plane}
+                \[
+                   \Omega_4
+                   = \mathbb{H}
+                   = \{\,w\in\mathbb{C} : \Im w>0\,\}.
+                \]
+          \item The boundary line $\mathbb{R}e\xi=0$ (imaginary axis) maps onto
+                the real axis under $w=-\xi^{2}$.
+        \end{itemize}
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{Conclusion.}
+  The composition of these steps is exactly the map
+  \eqref{eq:fullmap}, and it carries the upper semicircle $\Omega$
+  \emph{bijectively and conformally} onto the upper half–plane
+  $\mathbb{H}$, while the semicircle’s boundary goes to $\mathbb{R}$.
+  \end{solution}
+  %--------------------------------------------------------------------
+%  Mapping the vertical strip  $\{-1<\mathbb{R}e z<1,\; \Im z>0\}$
+%  onto the upper semicircle  $\{|w|<1,\; \Im w>0\}$
+%--------------------------------------------------------------------
+\begin{solution}
+  We factor the map
+  \[
+     w \;=\; i\,e^{\frac{\pi i z}{2}}
+  \tag{$\ast$}\label{eq:stripmap}
+  \]
+  into two elementary steps and track the image of the
+  \emph{half–strip}
+  \[
+     S \;:=\;\{\,z\in\mathbb{C} : -1<\mathbb{R}e z<1,\; \Im z>0\,\}.
+  \]
+  
+  \begin{enumerate}[label=\textbf{Step~\arabic*.},wide,labelwidth=!,labelindent=0pt]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Exponential map with scaling:}
+        \[
+           \zeta := e^{\frac{\pi i z}{2}}.
+        \]
+  
+        Write $z=x+iy$ with $-1<x<1$ and $y>0$.
+        Then
+        \[
+           \zeta
+           = e^{\frac{\pi i}{2}(x+iy)}
+           = e^{-\frac{\pi y}{2}}\,
+             e^{\,i\frac{\pi x}{2}}.
+        \]
+  
+        \emph{Geometry.}
+        \begin{itemize}
+          \item \emph{Magnitude:} $|\zeta| = e^{-\pi y/2}<1$  
+                (since $y>0$).  Hence the image lies \emph{inside} the
+                unit circle.
+          \item \emph{Argument:} $\arg\zeta = (\pi x/2)\in(-\tfrac{\pi}{2},
+                \tfrac{\pi}{2})$.  
+                Thus the image lies in the \emph{right half} of the unit disc.
+        \end{itemize}
+  
+        Consequently
+        \[
+          \zeta(S)
+          = \bigl\{\zeta : |\zeta|<1,\; \mathbb{R}e\zeta>0\bigr\}
+          \quad
+          \text{(open right half of the unit disc).}
+        \]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Rotation by \boldmath$+\tfrac{\pi}{2}$:}
+        \[
+           w := i\,\zeta.
+        \]
+  
+        Multiplication by $i$ rotates every point
+        counter‑clockwise by $90^{\circ}$:
+        \[
+           \mathbb{R}e\zeta>0
+           \quad\Longrightarrow\quad
+           \Im(i\zeta)>0.
+        \]
+        The radius $|\zeta|$ is unchanged, so
+        \[
+           w(S)
+           = \bigl\{\,w : |w|<1,\; \Im w>0\,\bigr\},
+        \]
+        exactly the \emph{upper semicircle} of the unit disc—the domain
+        used as the starting point in \textbf{Case 1}.
+  
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{Conclusion.}
+  The composition \eqref{eq:stripmap} sends the vertical half–strip $S$
+  \emph{conformally and bijectively} onto the upper semicircle
+  $\{|w|<1,\Im w>0\}$.
+  From Case 1, that semicircle is mapped further to the upper half–plane
+  $\mathbb{H}$, completing the reduction.
+  
+  \end{solution}
+  %--------------------------------------------------------------------
+%  Mapping  $\displaystyle U:=\bigl\{z\in\mathbb{C} : \Im z>0\bigr\}\setminus[0,i]$
+%          onto the upper half–plane  $\mathbb{H}=\{\,w:\Im w>0\,\}$
+%--------------------------------------------------------------------
+\begin{solution}
+  We factor the map
+  \[
+     w \;=\; \bigl(z^{2}+1\bigr)^{1/2}
+  \tag{$\ast$}\label{eq:full}
+  \]
+  into three elementary conformal steps and track the image of both the
+  \emph{interior} and the \emph{boundary}.
+  
+  \medskip
+  \begin{enumerate}[label=\textbf{Step~\arabic*.},wide,labelwidth=!,labelindent=0pt]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Square:}
+        \[
+           \zeta := z^{2}.
+        \]
+  
+        \emph{Effect on the domain.}
+        \begin{itemize}
+          \item The upper half–plane $\Im z>0$ folds across the imaginary
+                axis; the image is still the upper half–plane
+                \[
+                   \Im\zeta>0.
+                \]
+          \item The removed segment $[0,i]$ (imaginary axis) maps to the
+                \emph{negative real interval} $[-1,0]$ via
+                $z=it\;(0\le t\le1)\;\mapsto\;\zeta=-t^{2}$.
+          \item Hence
+                \[
+                   U_1
+                   :=\zeta(U)
+                   = \bigl\{\Im\zeta>0\bigr\}\setminus[-1,0].
+                \]
+                Geometrically: upper half–plane minus a horizontal slit on
+                the \emph{negative} real axis.
+        \end{itemize}
+  
+  %----------------------------------------------------------------
+  \item \textbf{Translate right by \(1\):}
+        \[
+           \xi := \zeta + 1.
+        \]
+  
+        \emph{Effect.}
+        \begin{itemize}
+          \item The slit $[-1,0]$ is shifted to the \emph{positive}
+                interval $[0,1]$.
+          \item The half–plane $\Im\zeta>0$ remains $\Im\xi>0$.
+          \item Thus
+                \[
+                   U_2
+                   = \bigl\{\Im\xi>0\bigr\}\setminus[0,1].
+                \]
+                We now have an upper half–plane with a slit on the
+                positive real axis.
+        \end{itemize}
+  
+  %----------------------------------------------------------------
+  \item \textbf{Principal square root (branch cut along \([0,\infty)\)):}
+        \[
+           w := \sqrt{\xi}.
+        \]
+  
+        \emph{Effect.}
+        \begin{itemize}
+          \item The function $\sqrt{\bullet}$ (principal branch) is
+                conformal on the slit plane
+                $\mathbb{C}\setminus[0,\infty)$ and maps it onto
+                the upper half–plane $\mathbb{H}$.
+          \item Because $U_2$ lies entirely in that slit plane, its image
+                is
+                \[
+                   w(U)
+                   = \mathbb{H}.
+                \]
+          \item The boundary slit \([0,1]\) maps to the segment
+                \([0,1]\) on the \emph{real} axis, which forms part of
+                the boundary of $\mathbb{H}$.
+        \end{itemize}
+  
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{Conclusion.}
+  The composition \eqref{eq:full}—square, translate by \(1\),
+  then take the principal square root—carries the upper half–plane
+  with the vertical slit \([0,i]\) removed \emph{bijectively and
+  conformally} onto the pure upper half–plane~\(\mathbb{H}\).
+  
+  \end{solution}
+  %--------------------------------------------------------------------
+%  Mapping  $\displaystyle 
+%            D\;=\;\mathbb{C}\setminus\bigl((-\infty,-1]\cup[1,\infty)\bigr)$
+%  onto the upper half–plane  $\mathbb{H}=\{\,w\in\mathbb{C}:\Im w>0\,\}$
+%--------------------------------------------------------------------
+\begin{solution}
+  The composite map
+  \[
+     w
+     \;=\;
+     \sqrt{2}\,i\,
+     \Bigl[(z+1)^{-1}-\tfrac12\Bigr]^{1/2}
+  \tag{$\ast$}\label{eq:full}
+  \]
+  is dissected into four elementary conformal steps.
+  At every stage we describe the image of the domain and the behaviour of
+  the two removed rays.
+  
+  \bigskip
+  \begin{enumerate}[label=\textbf{Step~\arabic*.},wide,labelwidth=!,labelindent=0pt]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Translate right by $1$:}
+        \[
+           \zeta:=z+1.
+        \]
+  
+        \emph{Effect on the deleted rays.}
+        \[
+           (-\infty,-1]\longmapsto(-\infty,0], 
+           \qquad
+           [1,\infty)\longmapsto[2,\infty).
+        \]
+        So
+        \[
+           D_1
+           \;=\;
+           \mathbb{C}\setminus\bigl((-\infty,0]\cup[2,\infty)\bigr).
+        \]
+  
+  %----------------------------------------------------------------
+  \item \textbf{Invert in the unit circle:}
+        \[
+           \eta:=\frac{1}{\zeta}.
+        \]
+  
+        \emph{Effect.}
+        \begin{itemize}
+          \item For $\zeta\le 0$ (negative real axis) we get
+                $\eta\le 0$; thus $(-\infty,0]$ becomes
+                $(-\infty,0]$ again, but with \emph{finite} endpoint
+                (the point $\zeta=0$ goes to $\eta=-\infty$).
+          \item For $\zeta\ge 2$ we have $0<\eta\le\tfrac12$; hence
+                $[2,\infty)$ is mapped to $\bigl(0,\tfrac12\bigr]$.
+        \end{itemize}
+        The two images now lie \emph{on the same real axis}:
+        \[
+           D_2
+           =\mathbb{C}\setminus\bigl((-\infty,0]\cup[0,\tfrac12]\bigr)
+           =\mathbb{C}\setminus(-\infty,\tfrac12].
+        \]
+        Geometrically this is the plane slit along the real axis from
+        $-\infty$ to $\tfrac12$.
+  
+  %----------------------------------------------------------------
+  \item \textbf{Translate left by $\tfrac12$:}
+        \[
+           \xi:=\eta-\tfrac12.
+        \]
+  
+        \emph{Effect.}
+        The slit moves to the \emph{negative} real axis:
+        \[
+           (-\infty,\tfrac12]\;\longmapsto\;(-\infty,0],
+           \qquad
+           D_3=\mathbb{C}\setminus(-\infty,0].
+        \]
+        This is the standard branch–cut plane for the principal square
+        root.
+  
+  %----------------------------------------------------------------
+  \item \textbf{Principal square root and rotation:}
+        \[
+           w:=\sqrt{2}\,i\,\sqrt{\xi}.
+        \]
+  
+        \emph{Effect.}
+        \begin{itemize}
+          \item $\sqrt{\xi}$ (principal branch) maps 
+                $\mathbb{C}\setminus(-\infty,0]$ \emph{conformally} onto the
+                \emph{right half–plane} $\{\,u:\Re u>0\,\}$, because the
+                argument range $(-\pi,\pi)$ of $\xi$ is halved.
+          \item Multiplication by $i$ rotates the right half–plane
+                counter‑clockwise by $90^{\circ}$, giving the upper
+                half–plane $\mathbb{H}$.
+          \item The additional real factor $\sqrt{2}$ merely scales
+                distances and has no effect on the image domain.
+        \end{itemize}
+        Hence
+        \[
+           w(D)=\mathbb{H}.
+        \]
+  
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{Conclusion.}
+  The composition \eqref{eq:full} sends the doubly–slit plane
+  $D=\mathbb{C}\setminus\bigl((-\infty,-1]\cup[1,\infty)\bigr)$ 
+  \emph{bijectively and conformally} onto the upper half–plane
+  $\mathbb{H}$, while the two original rays are taken to the real axis,
+  the boundary of~$\mathbb{H}$.
+  
+  \end{solution}
+  \begin{solution}
+    Below we build, \emph{piece-by-piece}, a conformal map that sends  
+    
+    \[
+    \boxed{\; 
+       \mathcal D
+         = \bigl\{\,z\in\mathbb{C} : |z|<1,\; \Im z>0 \bigr\}
+           \setminus
+           \bigl\{\,it : 0\le t\le \tfrac12 \bigr\}
+       \;}
+    \]
+    
+    (the upper half of the unit disc with the vertical slit
+    $[0,i/2]$ removed) onto the \emph{standard upper half-plane}
+    $\mathcal H=\{w\in\mathbb{C}:\Im w>0\}$.
+    The composite map consists of four elementary steps:
+    
+    \[
+    F(z)
+      \;=\;
+      \underbrace{\sqrt{\,
+            e^{i\vartheta}\,
+            \frac{\displaystyle\Psi(z)-\alpha}
+                 {\displaystyle\Psi(z)-\overline{\alpha}}
+          }}_{\text{Steps \,2--4}}
+      ,\qquad
+      \Psi(z)
+         = i\,\frac{1+z}{1-z}\, .
+    \]
+    
+    %-------------------------------
+    \begin{enumerate}[label=\textbf{Step \arabic*:}, itemsep=1.4ex]
+    
+    %---------------------------------
+    \item \textbf{Cayley transform to the upper half-plane.}\;
+    Set
+    \[
+    w_1 \;=\; \Psi(z) \;=\; i\,\frac{1+z}{1-z}\, .
+    \]
+    The classical Cayley map carries the \emph{entire} unit disc
+    conformally onto $\mathcal H$.
+    Because $\partial\mathcal D$ is a subset of $\partial\Bbb D$,
+    the upper semicircular arc $|z|=1$ ($0<\arg z<\pi$) goes to the
+    \emph{real} axis,
+    whereas the interval $[-1,1]$ on the real axis maps to the
+    positive imaginary axis.
+    Hence $w_1$ already lands in $\mathcal H$, but the image of the slit
+    \[
+    S=\{it:0\le t\le\tfrac12\}
+    \]
+    becomes the circular arc
+    \(
+    \Gamma_1 := \Psi(S)
+    \)
+    joining the two interior points
+    \[
+    w_A = \Psi(0)=i, 
+    \qquad
+    w_B = \Psi\!\bigl(\tfrac{i}{2}\bigr)
+          = i\,\frac{1+\tfrac{i}{2}}{1-\tfrac{i}{2}}
+          =: \alpha
+          \;.
+    \]
+    
+    %---------------------------------
+    \item \textbf{Straighten the arc into a ray.}\;
+    Because Möbius transformations map (generalised) circles to
+    circles or lines, we can send the arc $\Gamma_1$ to a straight ray.
+    Define
+    \[
+    w_2
+       \;=\;
+       \frac{\,w_1-\alpha\,}{\,w_1-\overline{\alpha}\,},
+    \]
+    where
+    $\displaystyle
+       \alpha = i\,\frac{1+\tfrac{i}{2}}{1-\tfrac{i}{2}}
+              \approx -0.471 + 0.882\,i
+    $.
+    The coefficients are complex conjugates, so
+    $w_2$ maps $\mathcal H$ to itself.
+    Moreover
+    \[
+    w_2(\alpha)=0,
+    \quad
+    w_2(\overline{\alpha})=\infty,
+    \]
+    so the circular arc $\Gamma_1$ is now the \emph{positive real} ray
+    $[0,\infty)$.
+    
+    %---------------------------------
+    \item \textbf{Rotate so the slit lies on the imaginary axis.}\;
+    At this point the slit is the real ray;
+    we want it on the \emph{imaginary} axis so that the next square-root
+    will act as a two-to-one “unwinding’’ map.
+    Set
+    \[
+    w_3
+       \;=\;
+       e^{i\vartheta}\,w_2,
+       \quad
+       \vartheta
+         := \frac{\pi}{2}-\arg\bigl(w_2(i)\bigr),
+    \]
+    so that $w_3(i)$ is pure imaginary and
+    \(
+       w_3\bigl([0,\infty)\bigr) = [0,\,\infty)\,i
+    \)
+    (the positive imaginary axis).
+    Again $\vartheta$ is a real constant, hence $w_3$
+    keeps $\mathcal H$ invariant.
+    
+    %---------------------------------
+    \item \textbf{Square-root to the full half-plane.}\;
+    Finally apply the principal square root
+    \[
+    w \;=\; w_4
+       = \sqrt{\,w_3\,},
+       \quad 0<\arg w_3<\pi,
+    \]
+    whose branch cut is the \emph{non-positive} imaginary axis.
+    Because the slit of $w_3$ sits on the \emph{positive} imaginary axis,
+    taking the square root maps
+    $\mathcal H\setminus[0,i\infty)$ onto the \emph{whole}
+    upper half-plane~$\mathcal H$.
+    
+    \end{enumerate}
+    
+    %---------------------------------
+    \noindent
+    \textbf{Result.}\;
+    The composite map
+    \[
+    \boxed{
+       F(z)
+         = \sqrt{\,e^{i\vartheta}\,
+                  \frac{\Psi(z)-\alpha}{\Psi(z)-\overline{\alpha}}
+                },
+       \qquad
+       \Psi(z)=i\,\frac{1+z}{1-z}
+     }
+    \]
+    is conformal on $\mathcal D$ and furnishes a bijection
+    \(
+       F:\mathcal D \to \mathcal H.
+    \)
+    
+    \medskip
+    \noindent
+    \textbf{Why this helps.}\;
+    Under $F$ the original integrand
+    \[
+    f(z)
+       = i\,\frac65\!
+         \left(\frac{1}{z^{2}+1}-\frac12\right)
+    \]
+    can be rewritten in the $w$-variable and integrated over a
+    \emph{straight} contour in~$\mathcal H$
+    (the ``Case~3’’ integral in your notes), avoiding the delicate slit
+    geometry in the $z$-plane.
+    \end{solution}
+    \begin{solution}
+      We build the map  
+      \[
+      F(z)\;=\;i\bigl(e^{\pi z}-1\bigr)^{\tfrac12}
+      \]
+      as the composition of four elementary conformal maps.  Throughout,
+      the \emph{principal branch} of every multi–valued function is used.
+      
+      \medskip
+      %-------------------------------
+      \textbf{Domain to be mapped.}
+      \[
+      \boxed{
+         \mathcal S
+         =\bigl\{\,z\in\mathbb{C} : -1<\Im z<1\bigr\}
+          \setminus (-\infty,0)
+       }
+      \]
+      is the horizontal strip of height~$2$, with the \emph{negative real
+      axis} removed.
+      
+      \medskip
+      %-------------------------------
+      \begin{enumerate}[label=\textbf{Step \arabic*:}, itemsep=1.4ex]
+      
+      %---------------------------------
+      \item  \textbf{Exponentiation to a slit plane.}  
+      \[
+      u \;=\; e^{\pi z}.
+      \]
+      Write $z=x+iy$; then  
+      $u=e^{\pi x}\,e^{i\pi y}$ with
+      \(
+      -\pi<\arg u<\pi.
+      \)
+      Hence
+      \[
+      \mathcal S
+      \;\xrightarrow{\,e^{\pi z}\,}\;
+      \mathcal D_1
+        = \mathbb{C}\setminus(-\infty,0],
+      \]
+      the plane cut along the \emph{non–positive} real axis.  
+      The strip’s excluded set $(-\infty,0)$ (real, $y=0$) is mapped to the
+      interval $(0,1)$ on the \emph{positive} real axis, so that
+      \(
+      \mathcal D_1
+      =\mathbb{C}\setminus(-\infty,1].
+      \)
+      
+      %---------------------------------
+      \item \textbf{Translate the cut so it starts at the origin.}  
+      \[
+      v \;=\; u-1.
+      \]
+      This sends the point $u=1$ to the origin, converting the slit
+      $(-\infty,1]$ into
+      \[
+      (-\infty,0].
+      \]
+      Thus
+      \[
+      \mathcal D_2
+        = \mathbb{C}\setminus(-\infty,0],
+      \]
+      a plane cut exactly along the \emph{negative} real axis.
+      
+      %---------------------------------
+      \item \textbf{Principal square root to the right half–plane.}  
+      \[
+      w_0 \;=\; \sqrt{v},
+      \qquad
+      -\pi<\arg v<\pi.
+      \]
+      Because $\sqrt{\;}$ halves arguments,
+      \(
+      -\tfrac{\pi}{2}<\arg w_0<\tfrac{\pi}{2},
+      \)
+      so
+      \[
+      \mathcal D_2
+      \;\xrightarrow{\,\sqrt{\;}\,}\;
+      \mathcal D_3
+        = \{w_0\in\mathbb{C} : \Re w_0>0\},
+      \]
+      the \emph{right half–plane}.  
+      (The negative real cut becomes the imaginary axis,
+      which is the branch cut of the square root.)
+      
+      %---------------------------------
+      \item \textbf{Quarter-turn into the upper half–plane.}  
+      \[
+      w \;=\; i\,w_0.
+      \]
+      Multiplying by $i$ rotates the right half–plane
+      counter-clockwise by~$90^{\circ}$:
+      \[
+      \mathcal D_3
+      \;\xrightarrow{\,i\cdot\,}\;
+      \boxed{
+         \mathcal H
+         = \{w\in\mathbb{C} : \Im w>0\}
+       }.
+      \]
+      
+      \end{enumerate}
+      
+      \medskip
+      %-------------------------------
+      \textbf{Summary.}  
+      The composite map
+      \[
+      \boxed{\;
+         F(z)=i\bigl(e^{\pi z}-1\bigr)^{\tfrac12}
+       \;}
+      \]
+      is analytic and one–to–one on the strip
+      $\mathcal S$, and carries $\mathcal S$ \emph{onto} the standard
+      upper half–plane~$\mathcal H$.
+      \end{solution}
+      \begin{solution}
+        We construct, \emph{piece–by–piece}, a conformal map that sends the
+        upper part of the ellipse passing through $-1$ and $1$
+        (with boundary tangents meeting the real axis at the common angle
+        $\alpha>0$) onto the \emph{upper half–plane}
+        \[
+        \mathcal H \;=\;\{\,w\in\mathbb{C} : \Im w>0\}.
+        \]
+        The composite map required in your notes is  
+        
+        \[
+        \boxed{\;
+           w \;=\;-\Bigl(\tfrac{2}{z+1}-1\Bigr)^{\pi/2}
+         \;},
+        \]
+        and we now explain why it works.
+        
+        \bigskip
+        \noindent
+        \textbf{Starting domain.}
+        \[
+        \mathcal E
+          \;=\;
+          \Bigl\{\,z\in\mathbb{C} :
+             \text{$z$ lies \emph{inside} the ellipse
+             meeting the real axis at $-1$ and $1$,}
+             \;
+             \arg\bigl(\tfrac{dz}{dx}\bigr)\big|_{x=\pm1}=\pm\alpha,
+             \;
+             \Im z>0
+          \Bigr\}.
+        \]
+        At each endpoint $\pm1$ the interior of $\mathcal E$
+        meets the real axis in a wedge of opening
+        angle~$\alpha$ (see the figure below).
+        Consequently, \emph{after} we remove the two interior points,
+        the boundary touching the real axis forms a total interior angle
+        of~$2\alpha$ at~$z=1$ and a straight angle ($\pi$) at $z=-1$.
+        
+        \medskip
+        \begin{enumerate}[label=\textbf{Step \arabic*:}, itemsep=1.4ex]
+        
+        %------------------------------------------------------------
+        \item  \textbf{Translate the left endpoint to the origin.}  
+        \[
+        \zeta
+           \;=\;z+1.
+        \]
+        Now $\zeta=0$ corresponds to $z=-1$, while the right endpoint
+        moves to $\zeta=2$.
+        The strip $\bigl\{\Im z=0,\, -1<x<1\bigr\}$ is carried to the segment
+        $\bigl\{\Im\zeta=0,\, 0<\Re\zeta<2\bigr\}$,
+        and the interior angle at $\zeta=2$ is still $2\alpha$.
+        
+        %------------------------------------------------------------
+        \item  \textbf{Invert and scale so that the \emph{finite} endpoint
+              becomes the origin.}  
+        \[
+        \eta
+           \;=\;
+           \frac{2}{\zeta}.
+        \]
+        This Möbius map sends
+        \(
+           \zeta=0\longmapsto\eta=\infty,
+        \quad
+           \zeta=2\longmapsto\eta=1,
+        \)
+        so the finite endpoint lands at~$1$.
+        Because inversion reverses orientation, the arc of $\mathcal E$
+        is taken to a smooth curve meeting the unit
+        circle at $\eta=1$ with the \emph{same} interior angle~$2\alpha$.
+        
+        %------------------------------------------------------------
+        \item  \textbf{Shift the unit point to the origin.}  
+        \[
+        \mu
+           \;=\;
+           \eta-1
+           \;=\;\frac{2}{z+1}-1.
+        \]
+        Now the endpoint that had angle~$2\alpha$ lies at $\mu=0$,
+        while the other endpoint is pushed to~$\mu=-1$.
+        In a neighbourhood of $\mu=0$
+        the domain is a wedge of opening angle~$2\alpha$.
+        
+        %------------------------------------------------------------
+        \item  \textbf{Raise to a power to open the wedge to a half–plane.}  
+        Let
+        \[
+        \nu
+           \;=\;
+           \mu^{\,\pi/(2\alpha)}.
+        \]
+        In general, if $\mu$ subtends an angle $2\alpha$ at the origin,
+        then $\nu$ subtends
+        \(
+           \bigl(\tfrac{\pi}{2\alpha}\bigr)\!\cdot 2\alpha=\pi,
+        \)
+        i.e.\ a straight angle.
+        Hence $\nu$ maps the wedge \emph{conformally} onto the right
+        half–plane $\Re\nu>0$.
+        In your particular formula the power has already been
+        \emph{specialised} to $\tfrac{\pi}{2}$,
+        so it is implicit that the ellipse meets the real axis at
+        \[
+        \alpha
+           \;=\;1\;{\rm rad}\approx57.3^{\circ},
+        \]
+        for which $2\alpha=2$ and
+        \(
+           (2)\!\cdot(\tfrac{\pi}{2})=\pi.
+        \)
+        
+        %------------------------------------------------------------
+        \item  \textbf{Quarter–turn into the \emph{upper} half–plane.}  
+        \[
+        w
+           \;=\;
+           -\,\nu
+           \;=\;
+           -\Bigl(\tfrac{2}{z+1}-1\Bigr)^{\pi/2}.
+        \]
+        Multiplying by $-1$ (a $180^{\circ}$ rotation) sends the right
+        half–plane onto the upper half–plane
+        $\mathcal H=\{w:\Im w>0\}$.
+        \end{enumerate}
+        
+        \bigskip
+        \noindent
+        \textbf{Conclusion.}\;
+        The composite map
+        \[
+        \boxed{\;
+          w \;=\;
+          -\bigl[\tfrac{2}{z+1}-1\bigr]^{\,\pi/2}
+         \;}
+        \]
+        is analytic and one–to–one on the upper half of the ellipse
+        segment~$\mathcal E$, and it
+        carries $\mathcal E$ conformally onto the standard
+        upper half–plane~$\mathcal H$.
+        \end{solution}
+        \begin{solution}
+          We explain why the composite map  
+          
+          \[
+          \boxed{\;
+             w
+             \;=\;
+             i\Bigl(
+                  \frac{3}{\,4\bigl(\dfrac{2}{z+1}-1\bigr)^{2}-1}-1
+                \Bigr)^{\tfrac12}
+           \;}
+          \]
+          
+          sends the domain  
+          
+          \[
+          \mathcal D_0
+            \;=\;
+            \{z\in\mathbb{C}:\;|z|<1\}
+            \;\setminus\;
+            \Bigl(
+               (-\infty,0]\cup [\tfrac13,1)
+            \Bigr)
+          \]
+          
+          (the open unit disc with two slits: the
+          \emph{negative} real axis and the segment $(\tfrac13,1)$ on the real
+          axis) conformally onto the \emph{upper half–plane}
+          $\displaystyle\mathcal H=\{w\in\mathbb{C}:\Im w>0\}$.
+          
+          Throughout we use the \emph{principal branch}
+          of every multi-valued function (argument in $(-\pi,\pi)$).
+          
+          \medskip
+          \begin{enumerate}[label=\textbf{Step \arabic*:}, itemsep=1.4ex]
+          
+          %------------------------------------------------------------
+          \item  \textbf{Translate the disc so that $-1$ moves to the origin.}
+          \[
+          \zeta = z+1.
+          \]
+          Now $\zeta( -1)=0$ and the slits become
+          \[
+          \zeta\bigl((-\infty,0]\bigr)=(-1,1],
+          \qquad
+          \zeta\bigl([\tfrac13,1)\bigr)=[\tfrac43,2).
+          \]
+          Hence
+          \[
+          \mathcal D_1
+            = \bigl\{\zeta:|\zeta-1|<1\bigr\}
+              \setminus\bigl(( -1,1]\cup [\tfrac43,2)\bigr).
+          \]
+          
+          %------------------------------------------------------------
+          \item  \textbf{Invert and scale so the finite slit–endpoint $\,\zeta=2$ goes to $0$.}
+          \[
+          \eta=\frac{2}{\zeta}.
+          \]
+          This Möbius map interchanges $0\leftrightarrow\infty$ and sends
+          \[
+          \zeta=2\;\longmapsto\;\eta=1,
+          \qquad
+          \zeta=-1\;\longmapsto\;\eta=-2.
+          \]
+          The image
+          \(
+             \mathcal D_2
+             =\mathbb{C}\setminus\bigl(( -\infty,-2]\cup [1,\infty)\bigr)
+          \)
+          is the plane with two symmetric \emph{horizontal} slits.
+          
+          %------------------------------------------------------------
+          \item  \textbf{Translate so the right-hand slit starts at the origin.}
+          \[
+          \mu=\eta-1
+            =\frac{2}{z+1}-1.
+          \]
+          Now the slits are
+          \(
+             (-\infty,-3] \cup [0,\infty).
+          \)
+          Thus $\mu=0$ corresponds to $z=\tfrac13$; the interval $[0,\infty)$
+          is the former $(\tfrac13,1)$-slit.
+          
+          %------------------------------------------------------------
+          \item  \textbf{Open the symmetric slits into a single line.}
+          Square, then scale and shift:
+          \[
+          \sigma
+             =4\mu^{2}-1.
+          \]
+          Because $\mu\mapsto\mu^{2}$ doubles arguments,
+          the two rays $(-\infty,-3]$ and $[0,\infty)$ are glued into the
+          \emph{negative} real axis $(-\infty,-1]$.
+          Multiplying by $4$ and subtracting $1$ merely rescales the cut,
+          so
+          \[
+          \mathcal D_3
+            = \mathbb{C}\setminus(-\infty,-1].
+          \]
+          
+          %------------------------------------------------------------
+          \item  \textbf{Invert and translate so the cut lies on $(0,\infty)$.}
+          \[
+          \rho=\frac{3}{\sigma}-1
+              =\frac{3}{4\mu^{2}-1}-1.
+          \]
+          The transformation $u\mapsto\frac{3}{u}$ swaps $0\leftrightarrow\infty$
+          and keeps the ray $(-\infty,-1]$ on the real axis; the shift $-1$
+          moves it to the \emph{positive} ray $(0,\infty)$.
+          Hence
+          \[
+          \mathcal D_4
+            = \mathbb{C}\setminus(0,\infty).
+          \]
+          
+          %------------------------------------------------------------
+          \item \textbf{Take the principal square root.}
+          \[
+          \eta=\sqrt{\rho},
+          \qquad -\pi<\arg\rho<\pi.
+          \]
+          Since the branch cut of $\sqrt{\;}$ is \emph{the negative real axis},
+          the slit $(0,\infty)$ is carried onto the
+          \emph{imaginary} axis, giving the right half–plane
+          \[
+          \mathcal D_5=\{\eta\in\mathbb{C}:\Re\eta>0\}.
+          \]
+          
+          %------------------------------------------------------------
+          \item  \textbf{Quarter-turn into the upper half-plane.}
+          \[
+          w=i\eta.
+          \]
+          Multiplication by $i$ rotates the right half–plane
+          counter-clockwise through $90^{\circ}$, producing
+          \[
+          \boxed{\;
+             w\in\mathcal H=\{w:\Im w>0\}
+           }.
+          \]
+          
+          \end{enumerate}
+          
+          \medskip
+          \noindent
+          \textbf{Conclusion.}\;
+          The chain of conformal maps  
+          
+          \[
+          z\xmapsto{\;1\;}\zeta
+          \xmapsto{\;2\;}\eta
+          \xmapsto{\;3\;}\mu
+          \xmapsto{\;4\;}\sigma
+          \xmapsto{\;5\;}\rho
+          \xmapsto{\;6\;}\eta
+          \xmapsto{\;7\;}w
+          \]
+          
+          is precisely the single formula  
+          
+          \[
+          w
+            = i\Bigl(
+                  \tfrac{3}{4\bigl(\tfrac{2}{z+1}-1\bigr)^{2}-1}-1
+                \Bigr)^{\tfrac12},
+          \]
+          which is analytic and one-to-one on $\mathcal D_0$
+          and maps $\mathcal D_0$ conformally onto the
+          standard upper half-plane~$\mathcal H$.
+          \end{solution}
+\end{document}

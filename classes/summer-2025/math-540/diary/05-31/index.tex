@@ -1,0 +1,250 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% Motivation of the Radon–Nikodym / Lebesgue Decomposition Theorem
+\begin{enumerate}
+  \item \textbf{A derivative for measures.}\\
+  Classical calculus measures the rate of change of a function $f$ with respect to the Lebesgue measure $dx$ via the derivative $f'(x)$.  
+  The Radon–Nikodym theorem provides an analogue for \emph{measures}:
+  \begin{align}
+      \mu(A) \;=\; \int_A \frac{d\mu}{d\nu}(x)\,d\nu(x),
+  \end{align}
+  where $\dfrac{d\mu}{d\nu}$ is the \emph{Radon–Nikodym derivative} (or \emph{density}) of $\mu$ with respect to a dominating measure $\nu$.
+  It answers: “How much $\mu$–mass sits inside a small $\nu$–ball?”
+
+  \item \textbf{A canonical decomposition.}\\
+  Lebesgue’s refinement splits any measure into two orthogonal parts:
+  \begin{align}
+      \mu \;=\; \mu_{\text{ac}} + \mu_{\text{s}},
+      \qquad
+      \mu_{\text{ac}}\ll\nu,
+      \quad
+      \mu_{\text{s}}\perp\nu.
+  \end{align}
+  Thus we study the absolutely continuous component through its density and treat the singular remainder independently—just as one separates a linear map into diagonal and nilpotent pieces.
+
+  \item \textbf{Changing the baseline measure.}\\
+  Once a density $f = \dfrac{d\mu}{d\nu}$ is known, every $\mu$–integral becomes a $\nu$–integral:
+  \begin{align}
+      \int_X g\,d\mu
+      \;=\;
+      \int_X g\,f\,d\nu.
+  \end{align}
+  This drives tools such as likelihoods in probability, Bayes’ rule, duality of $L^{p}$ spaces, and geometric surface measure formulas.
+
+  \item \textbf{A unifying generalisation.}\\
+  The substitution rule in calculus is recovered by viewing $\varphi'(x)$ as the Radon–Nikodym derivative of the push-forward measure $\varphi_{\#}(dx)$ with respect to $dx$.  
+  Conditional expectation $E[X\,|\,\mathcal{G}]$ is defined precisely as a Radon–Nikodym derivative relative to the $\sigma$–algebra $\mathcal{G}$.
+
+  \item \textbf{An essential pillar of modern analysis.}\\
+  The theorem underlies the Bochner integral, Riesz–Markov representation of $C_0(X)^{*}$, martingale theory and Girsanov’s theorem, as well as information–theoretic quantities such as the Kullback–Leibler divergence.
+\end{enumerate}
+
+\bigskip
+\noindent\textbf{In one sentence:}  
+The Radon–Nikodym/Lebesgue theorem supplies the \emph{calculus of measures}: it furnishes a derivative, a canonical decomposition, and a practical change-of-measure formula—indispensable tools across analysis, probability, and geometry.
+% Purpose of the (Radon–Nikodym) canonical decomposition
+\begin{enumerate}
+  \item \textbf{Isolation of the ``regular'' part.}\\
+  Writing $\mu=\mu_{\mathrm{ac}}+\mu_{\mathrm{s}}$ with $\mu_{\mathrm{ac}}\ll\nu$ and $\mu_{\mathrm{s}}\perp\nu$ separates the portion that \emph{can be handled by a density} 
+  $\dfrac{d\mu_{\mathrm{ac}}}{d\nu}$ from the portion that cannot.  
+  All routine tasks (integration, differentiation, limit theorems) are then reduced to the well-understood absolutely continuous case.
+
+  \item \textbf{Classification and uniqueness.}\\
+  The split is \emph{unique}.  
+  Hence two measures are equal iff both their absolutely continuous parts and their singular parts coincide.  
+  This gives a precise taxonomy analogous to the Jordan decomposition for signed measures or the spectral decomposition of an operator.
+
+  \item \textbf{Structural clarity in proofs.}\\
+  Many theorems are proved by treating $\mu_{\mathrm{ac}}$ and $\mu_{\mathrm{s}}$ separately.  
+  Example: to show $\mu\!\ll\!\nu\;\Rightarrow\;$some property, it suffices to verify the property for the density;  
+  if a counter-example exists, it often hides inside the singular part.
+
+  \item \textbf{Change-of-measure technology.}\\
+  In probability we frequently switch from $\mathbb P$ to $\mathbb Q$.  
+  The canonical decomposition tells us exactly when this is feasible (the event ``$\dfrac{d\mathbb P}{d\mathbb Q}$ exists’’) and what to do with the leftover singular mass (often forced to be zero in applications).
+
+  \item \textbf{Bridge to geometry and harmonic analysis.}\\
+  Surface measure on a submanifold is singular with respect to ambient Lebesgue measure except on the manifold itself.  
+  The decomposition isolates that surface component while leaving an $n$-dimensional density for the rest of the space.
+
+  \item \textbf{Functional-analytic dualities.}\\
+  The identification $L^{q}(X,\nu)\cong (L^{p}(X,\nu))^{*}$ relies on expressing every finite signed measure absolutely continuous w.r.t.\ $\nu$.  
+  The singular part vanishes precisely when the functional extends continuously to $L^{p}$.
+\end{enumerate}
+
+\bigskip
+\noindent\textbf{Summary:}\;
+The canonical (Lebesgue) decomposition is a bookkeeping device that singles out the part of a measure amenable to density calculus, classifies measures uniquely, and streamlines proofs and applications across probability, geometry, and functional analysis.
+\pagebreak
+% Radon–Nikodym / Lebesgue–Decomposition in Elasticity Theory
+\begin{enumerate}
+  \item \textbf{Volume forces versus concentrated loads} \\
+        In the balance of linear momentum one treats external actions as a measure
+        $F\!:\mathcal B\to\mathbb R^{3}$.
+        Lebesgue–decomposition gives
+        $
+            F = f_{\text{vol}}\,\mathcal L^{3} + f_{\text{surf}}\,\mathcal H^{2}\!\llcorner\Sigma
+        $
+        where $\mathcal L^{3}$ is Lebesgue measure in the bulk and
+        $\mathcal H^{2}\!\llcorner\Sigma$ is $2$-D Hausdorff measure on a surface $\Sigma$.
+        The Radon–Nikodym derivatives
+        $f_{\text{vol}}=\dfrac{dF}{d\mathcal L^{3}}$ (body–force density) and
+        $f_{\text{surf}}=\dfrac{dF}{d\mathcal H^{2}}$ (surface traction)
+        let one write the weak form of equilibrium with \emph{both} distributed and
+        concentrated loads in a single integral statement. 
+
+  \item \textbf{Homogenisation of heterogeneous solids} \\
+        In two–scale convergence the elastic energy of a composite sequence
+        $\{u_\varepsilon\}$ is encoded in measures
+        $
+            \mu_\varepsilon(A)=\int_A W\!\bigl(\tfrac{x}{\varepsilon},\nabla u_\varepsilon\bigr)\,dx .
+        $
+        Compactness gives a limit measure $\mu$; its absolutely-continuous part
+        admits a density
+        $
+           Q_{\text{hom}}(x,\nabla u) = \dfrac{d\mu}{d\mathcal L^{3}}(x),
+        $
+        the classical {\it homogenised energy density}.
+        The singular part records possible micro-crack energy that does \emph{not}
+        vanish in the limit.  
+
+  \item \textbf{Griffith–type brittle fracture in $\mathrm{SBV}$} \\
+        For a displacement $u\in\mathrm{SBV}(\Omega;\mathbb R^{3})$ the distributional
+        strain $E u$ is a finite $\mathbb R^{3\times3}_{\mathrm{sym}}$–valued measure.
+        Its Lebesgue decomposition reads
+        $
+            Eu = e(u)\,\mathcal L^{3} + [u]\otimes n\,\mathcal H^{2}\!\llcorner\Gamma ,
+        $
+        where $e(u)=\dfrac{dEu}{d\mathcal L^{3}}$ is the classical small strain and
+        $\Gamma$ the crack set.
+        Elastic energy is integrated over the absolutely continuous density, while
+        $\mathcal H^{2}(\Gamma)$ gives the Griffith surface energy.
+        Thus the Radon–Nikodym derivative separates \emph{bulk elasticity} from
+        \emph{surface fracture} in a variational setting.  
+
+  \item \textbf{Measure-valued plastic strain and slip lines} \\
+        In single-crystal and gradient plasticity one encounters plastic strain
+        measures $p$ that concentrate on slip surfaces.
+        Writing $p = p_{\text{ac}}\mathcal L^{3} + p_{\text{s}}$
+        allows constitutive updates to employ the plastic strain
+        density $p_{\text{ac}} = \dfrac{dp}{d\mathcal L^{3}}$ in smooth regions,
+        while the singular part $p_{\text{s}}$ captures discrete slips and
+        ensures energy balance across evolving discontinuities.
+
+  \item \textbf{$\Gamma$–convergence proofs and finite-element error analysis} \\
+        Many convergence proofs for nonlinear elasticity pass through energy
+        measures of the form
+        $
+            \mu_h(A)=\int_A W(\nabla u_h)\,dx .
+        $
+        Radon–Nikodym differentiation extracts pointwise
+        energy densities from a weakly convergent sequence;
+        the singular component localises mesh-dependent spikes and justifies
+        adaptive refinement indicators based on residual measures.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Take-away:}
+in continuum mechanics the Radon–Nikodym/Lebesgue decomposition is the
+mathematical lens that separates \emph{bulk} (absolutely continuous) from
+\emph{concentrated or interfacial} (singular) phenomena—crucial for modelling
+forces, energies and defects in engineering elasticity.
+% Big Ideas of Differential Geometry
+\pagebreak
+\begin{enumerate}
+  \item \textbf{Smooth manifolds — geometry without coordinates}\\
+        A smooth $n$-dimensional manifold looks locally like $\mathbb{R}^{n}$ but has no preferred global chart.  
+        This abstraction lets geometry escape the confines of Euclidean space and supplies the arena for every other idea below.
+
+  \item \textbf{Tangent spaces and bundles — linearisation of the nonlinear}\\
+        At each point $p\in M$, the \emph{tangent space} $T_{p}M$ is the best linear approximation to $M$.  
+        Collecting these spaces forms vector bundles (tangent, cotangent, tensor, frame …), enabling the tools of linear algebra and calculus on curved spaces.
+
+  \item \textbf{Connections, covariant derivatives and parallel transport}\\
+        To compare vectors at distinct points, a \emph{connection} specifies how to “slide’’ them along curves.  
+        Its infinitesimal version is the \emph{covariant derivative}; its integral form is \emph{parallel transport}, whose failure to be path-independent reveals curvature.
+
+  \item \textbf{Metrics and curvature — quantifying shape}\\
+        A (pseudo-)Riemannian metric turns each $T_{p}M$ into an inner-product space, giving meaning to lengths, angles, volumes and geodesics.  
+        The \emph{Riemann curvature tensor} records how parallel transport around infinitesimal loops fails to return vectors unchanged.  
+        Global theorems such as \emph{Gauss–Bonnet} link integrated curvature to topological invariants like the Euler characteristic.
+
+  \item \textbf{Differential forms and Stokes-type theorems — coordinate-free calculus}\\
+        Exterior calculus packages multivariable integration into algebra: the exterior derivative $d$, wedge product $\wedge$ and integration satisfy the single identity  
+        $\displaystyle \int_{\partial\Omega}\!\omega = \int_{\Omega} d\omega$  
+        (generalised Stokes).  This formalism underlies Hodge theory, electromagnetism and fluid mechanics.
+
+  \item \textbf{Topology meets geometry — global constraints on local data}\\
+        Integrating local curvature or characteristic forms often yields integers (Euler class, Chern numbers …), constraining what geometric structures can exist.  
+        Example: a torus cannot admit everywhere-positive Gaussian curvature.
+
+  \item \textbf{Symmetry and Lie groups — geometry of continuous transformation}\\
+        Lie groups are manifolds equipped with a group law; their Lie algebras encode infinitesimal symmetries.  
+        Homogeneous spaces, representation theory and Killing fields (infinitesimal isometries) grow from this algebra–geometry interplay.
+
+  \item \textbf{Fibre bundles and gauge theory — geometry as “fields of spaces’’}\\
+        A fibre bundle replaces each base point with an attached fibre (vector space, Lie group, …).  
+        Connections on principal bundles model gauge potentials; their curvature two-forms are gauge field strengths, unifying electromagnetism, Yang–Mills theory and general relativity, and providing the natural home for characteristic classes.
+\end{enumerate}
+
+\bigskip
+\noindent\textbf{One-sentence summary:}\;
+Differential geometry studies smooth spaces by linearising them (tangent bundles), measuring them (metrics and curvature), transporting data across them (connections), and relating their local shape to global topology—often illuminated by symmetry and expressed through fibre bundles and differential forms.
+\end{document}

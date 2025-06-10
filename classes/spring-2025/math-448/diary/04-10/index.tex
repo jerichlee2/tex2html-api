@@ -1,0 +1,708 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+    \begin{align}
+        f(z) &= z^{4}-3z^{2}+3
+    \end{align}
+
+    \begin{enumerate}
+
+        \item \textbf{Contour and strategy (recap).}  
+              Take the quarter‑circle
+              $$
+                  C \;=\; [0,R]\;\cup\;[iR,0]\;\cup\;C_R,
+              $$
+              where $C_R=\{Re^{i\theta}\mid0\le\theta\le\pi/2\}$.  
+              We pick $R>\sqrt6$ so large that $f$ has no zeros on $C$.  
+              By the Argument Principle, the number $N_{Q_1}$ of zeros in the first quadrant equals
+              $$
+                  N_{Q_1}\;=\;\frac1{2\pi}\,\Delta_C\arg f(z).
+              $$
+              We therefore compute the change in $\arg f$ along each piece of $C$.
+
+        \item \textbf{(a) Positive real axis $\,[0,R]$.}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] \emph{Rewrite $f$ as a real function.}  
+                        Put $z=x>0$ and $t=x^{2}$.  Then
+                        $$
+                            f(x)=x^{4}-3x^{2}+3 \;=\;t^{2}-3t+3.
+                        $$
+                  \item[$\triangleright$] \emph{Show $f(x)>0$.}  
+                        The quadratic $t^{2}-3t+3$ has discriminant
+                        $$
+                            \Delta=(-3)^{2}-4\cdot1\cdot3 = 9-12 = -3<0,
+                        $$
+                        so it has no real roots.  Because the leading coefficient is $+1$, the parabola opens upward; hence $t^{2}-3t+3>0$ for all $t\in\mathbb R$, and in particular $f(x)>0$ for $x\in[0,R]$.
+                  \item[$\triangleright$] \emph{Consequences for the argument.}  
+                        A positive real number has argument $0$.  Since $f(x)$ never crosses the negative real axis or $0$, the argument of $f$ stays constant along $[0,R]$.  
+                        $$\Delta_{[0,R]}\arg f = 0.$$
+              \end{enumerate}
+
+        \item \textbf{(b) Positive imaginary axis $\,[iR,0]$.}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] \emph{Rewrite $f$ as a real function of $y$.}  
+                        Put $z=iy$ with $y>0$.  Then
+                        $$
+                            f(iy) = (iy)^{4}-3(iy)^{2}+3 = y^{4}+3y^{2}+3.
+                        $$
+                  \item[$\triangleright$] \emph{Show $f(iy)>0$.}  
+                        Each term $y^{4},\,3y^{2},\,3$ is non‑negative and at least one is strictly positive, so $f(iy)>0$ for all $y>0$.
+                  \item[$\triangleright$] \emph{Consequences for the argument.}  
+                        Again $f(iy)$ stays on the positive real axis, so the argument is constant:
+                        $$\Delta_{[iR,0]}\arg f = 0.$$
+              \end{enumerate}
+
+        \item \textbf{(c) Quarter‑circle arc $C_R$.}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] \emph{Factor $f$ to separate a known winding.}  
+                        Write
+                        $$
+                            f(z) = z^{4}\,g(z), \qquad
+                            g(z)=1-\frac{3}{z^{2}}+\frac{3}{z^{4}}.
+                        $$
+                        Along $C_R$ we have $|z|=R$, so
+                        $$
+                            |g(z)-1|
+                            \;\le\;
+                            \frac{3}{R^{2}}+\frac{3}{R^{4}}
+                            \;<\;
+                            \frac12
+                            \quad\text{for }R>\sqrt6.
+                        $$
+                        Thus $g(C_R)$ lies inside the open disc of radius $\tfrac12$ centred at $1$, which does not encircle the origin.
+                  \item[$\triangleright$] \emph{Compute the argument change of each factor.}  
+                        \begin{align}
+                            \Delta_{C_R}\arg z^{4} &= 4\;\Delta_{C_R}\arg z
+                                                    = 4\Bigl(\frac{\pi}{2}\Bigr)
+                                                    = 2\pi,\\
+                            |\Delta_{C_R}\arg g(z)| &< \frac{\pi}{6}
+                            \quad\text{(no winding around $0$).}
+                        \end{align}
+                        Hence
+                        $$
+                            \Delta_{C_R}\arg f(z)
+                            = 2\pi + \varepsilon,
+                            \qquad |\varepsilon|<\frac{\pi}{6}.
+                        $$
+              \end{enumerate}
+
+        \item \textbf{Putting the pieces together.}  
+              Summing:
+              $$
+                  \Delta_C\arg f(z)
+                  = 0 + 0 + (2\pi+\varepsilon)
+                  = 2\pi+\varepsilon,
+                  \qquad |\varepsilon|<\frac{\pi}{6}.
+              $$
+              Therefore
+              $$
+                  N_{Q_1}
+                  = \frac{1}{2\pi}\,\Delta_C\arg f(z)
+                  \in \Bigl(\tfrac56,\tfrac76\Bigr)\cap\mathbb Z
+                  = \{1\}.
+              $$
+              So $f$ possesses \textbf{exactly one zero in the first quadrant}.
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \begin{align}
+        f(z)&=z^{4}-3z^{2}+3
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Arc parameterisation.}  
+              Along $C_{R}$ we write
+              \[
+                  z = R e^{i\theta},
+                  \qquad 0\le\theta\le\frac{\pi}{2}.
+              \]
+              Hence
+              \[
+                  \arg z = \theta
+                  \quad\Longrightarrow\quad
+                  \Delta_{C_R}\arg z
+                  = \theta\Big|_{0}^{\pi/2}
+                  = \frac{\pi}{2}.
+              \]
+
+        \item \textbf{Argument change of the first factor \(z^{4}\).}
+
+              \begin{enumerate}
+                  \item[$\triangleright$]  
+                        Because \(\arg z=\theta\), we have
+                        \(\arg z^{4}=4\theta\).
+                  \item[$\triangleright$]  
+                        As \(\theta\) runs from \(0\) to \(\pi/2\),
+                        \[
+                            \Delta_{C_R}\arg z^{4}
+                            = 4\theta\Big|_{0}^{\pi/2}
+                            = 4\left(\frac{\pi}{2}\right)
+                            = 2\pi.
+                        \]
+                        Intuitively, \(z^{4}\) winds once counter‑clockwise
+                        around the origin while we traverse the quarter‑circle.
+              \end{enumerate}
+
+        \item \textbf{Argument change of the perturbation factor \(g(z)\).}
+
+              \begin{enumerate}
+                  \item[$\triangleright$]  
+                        Along \(C_{R}\) we have \(|z|=R\), so
+                        \[
+                            |g(z)-1|
+                            = \left|-\frac{3}{z^{2}}+\frac{3}{z^{4}}\right|
+                            \le \frac{3}{R^{2}}+\frac{3}{R^{4}}
+                            =: \rho(R).
+                        \]
+                  \item[$\triangleright$]  
+                        Choose \(R>\sqrt6\).  Then
+                        \(\rho(R)<\dfrac12\), so the entire image \(g(C_{R})\)
+                        is contained in the open disc
+                        \[
+                            D\Bigl(1,\tfrac12\Bigr)
+                            =\{w\in\mathbb C : |w-1|<\tfrac12\},
+                        \]
+                        which lies strictly to the right of the imaginary axis
+                        and does **not** enclose the origin.
+                  \item[$\triangleright$]  
+                        Because \(g(z)\) never crosses the negative real axis
+                        (indeed, \(\Re g(z) > \tfrac12\) on \(C_{R}\)),
+                        its argument can vary only within the angle subtended by
+                        that disc:
+                        \[
+                            |\Delta_{C_R}\arg g(z)|
+                            < \arcsin\!\Bigl(\tfrac12\Bigr)
+                            = \frac{\pi}{6}.
+                        \]
+                        Any tighter bound (e.g.\ \(\pi/10\)) is also valid; we
+                        merely need “\emph{small enough}’’ so that the sum with
+                        \(2\pi\) still sits between \((5/6)\pi\) and \((7/6)\pi\).
+              \end{enumerate}
+
+        \item \textbf{Combine the two contributions.}
+              \[
+                  \Delta_{C_R}\arg f(z)
+                  = \underbrace{2\pi}_{\text{from }z^{4}}
+                    \;+\;
+                    \underbrace{\varepsilon}_{|\varepsilon|<\pi/6\text{ from }g}
+                  = 2\pi+\varepsilon,
+                  \qquad |\varepsilon|<\frac{\pi}{6}.
+              \]
+              This completes the detailed justification of the arc
+              calculation used in the earlier proof.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \begin{align}
+        g(z) &= z^{3}-3z+1
+    \end{align}
+
+    \begin{enumerate}
+
+        \item \textbf{Goal.}  
+              Determine how many zeros of $g$ lie in the annulus  
+              $$1<|z|<2.$$
+              The plan is to use \emph{Rouché’s theorem} on the two circles  
+              $|z|=1$ and $|z|=2$ so that we can compare $g$ with simpler
+              polynomials whose zeros are already known.
+
+        \item \textbf{Inside the unit disc $|z|<1$.}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] \emph{Comparison function.}  
+                        Take
+                        $$f_{1}(z)=3z.$$
+                        On the circle $|z|=1$ we have $|f_{1}(z)|=3$.
+
+                  \item[$\triangleright$] \emph{Estimate the perturbation.}  
+                        Write $g$ as $g=f_{1}+h_{1}$ where
+                        $$h_{1}(z)=z^{3}+1.$$
+                        Then on $|z|=1$
+                        $$|h_{1}(z)|\le|z|^{3}+1 = 1+1 = 2.$$
+
+                  \item[$\triangleright$] \emph{Rouché’s inequality.}  
+                        Because $|h_{1}(z)|<|f_{1}(z)|$ on $|z|=1$,  
+                        Rouché’s theorem says $f_{1}$ and $g$ have the
+                        \emph{same number of zeros (counting multiplicity)}
+                        inside $|z|<1$.
+
+                  \item[$\triangleright$] \emph{Count the zeros of $f_{1}$.}  
+                        $f_{1}(z)=3z$ has exactly \textbf{one} zero, namely $z=0$,
+                        of multiplicity 1.
+
+                  \item[$\triangleright$] \emph{Conclusion for $|z|<1$.}  
+                        Hence $g$ has precisely  
+                        $$N_{g}\bigl(|z|<1\bigr)=1$$
+                        zero in the open unit disc.  
+                        (The strict inequality $|h_{1}|<|f_{1}|$ also guarantees
+                        $g$ has \emph{no} zeros on the circle $|z|=1$.)
+              \end{enumerate}
+
+        \item \textbf{Inside the disc $|z|<2$.}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] \emph{Comparison function.}  
+                        Now set
+                        $$f_{2}(z)=z^{3},\qquad |f_{2}(z)|=|z|^{3}=8
+                                                     \quad\text{on }|z|=2.$$
+
+                  \item[$\triangleright$] \emph{Estimate the perturbation.}  
+                        Express $g$ as $g=f_{2}-h_{2}$ where
+                        $$h_{2}(z)=3z-1.$$
+                        On $|z|=2$
+                        $$|h_{2}(z)|\le 3|z|+1 = 3\cdot2+1 = 7.$$
+
+                  \item[$\triangleright$] \emph{Rouché’s inequality.}  
+                        Because $|h_{2}(z)|<|f_{2}(z)|$ on $|z|=2$,  
+                        Rouché’s theorem gives that $f_{2}$ and $g$ share the
+                        same number of zeros in $|z|<2$.
+
+                  \item[$\triangleright$] \emph{Count the zeros of $f_{2}$.}  
+                        $f_{2}(z)=z^{3}$ has \textbf{three} zeros at $z=0$
+                        (multiplicity 3).
+
+                  \item[$\triangleright$] \emph{Conclusion for $|z|<2$.}  
+                        Thus
+                        $$N_{g}\bigl(|z|<2\bigr)=3,$$
+                        and again the strict inequality ensures $g$ has no
+                        zeros \emph{on} the circle $|z|=2$.
+              \end{enumerate}
+
+        \item \textbf{Zeros in the annulus $1<|z|<2$.}  
+              Subtracting the two counts,
+              \[
+                  N_{g}\bigl(1<|z|<2\bigr)
+                  = N_{g}\bigl(|z|<2\bigr) - N_{g}\bigl(|z|<1\bigr)
+                  = 3-1 = 2.
+              \]
+              Therefore $g(z)=z^{3}-3z+1$ has
+              \[
+                  \boxed{\text{exactly two zeros in }1<|z|<2.}
+              \]
+    \end{enumerate}
+\end{problem}
+
+\begin{theorem}[Rouch\'e]
+    \begin{align}
+        \text{Let }&C\text{ be a positively oriented, simple, closed contour} \\
+        &\text{and let }f,g\text{ be analytic on and inside }C. \\
+        &\text{If }|g(z)|<|f(z)|\quad\text{for every }z\in C, \\
+        &\text{then }f\text{ and }f+g\text{ have the same number of zeros} \\
+        &\text{inside }C,\text{ counted with multiplicity.}
+    \end{align}
+
+    \begin{enumerate}
+        \item Equivalently, writing $h=f+g$, the hypothesis can be phrased as
+              $|h(z)-f(z)|<|f(z)|$ on $C$.
+        \item The conclusion applies to poles as well if one first multiplies
+              by a suitable analytic factor that clears the poles; in most
+              practical uses, however, $f$ and $g$ are polynomials or entire
+              functions, so no poles are present.
+    \end{enumerate}
+\end{theorem}
+
+\begin{problem}
+    \begin{align}
+        g(z) &= z^{3}-3z+1
+    \end{align}
+
+    \begin{enumerate}
+
+        \item \textbf{Why compare with $f_{1}(z)=3z$ on $|z|=1$?}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] On the unit circle we have
+                        $|3z|=3,\;|z^{3}|=1,\;|1|=1$.
+                  \item[$\triangleright$] Thus the linear term \emph{dominates}:
+                        \[
+                            |g(z)-3z|
+                            =|z^{3}+1|
+                            \le 1+1=2 < 3 = |3z|.
+                        \]
+                  \item[$\triangleright$] Choosing $f_{1}(z)=3z$ therefore
+                        satisfies Rouché’s inequality
+                        $|g-f_{1}|<|f_{1}|$ on $|z|=1$, while $f_{1}$ has an
+                        easy zero count (exactly one, at $z=0$).
+              \end{enumerate}
+
+        \item \textbf{Why compare with $f_{2}(z)=z^{3}$ on $|z|=2$?}
+
+              \begin{enumerate}
+                  \item[$\triangleright$] On the circle $|z|=2$ we find
+                        $|z^{3}|=8,\;|3z|=6,\;|1|=1$.
+                  \item[$\triangleright$] The cubic term now dominates:
+                        \[
+                            |g(z)-z^{3}|
+                            =|{-}\,3z+1|
+                            \le 6+1 = 7 < 8 = |z^{3}|.
+                        \]
+                  \item[$\triangleright$] Hence $f_{2}(z)=z^{3}$ fulfils
+                        $|g-f_{2}|<|f_{2}|$ on $|z|=2$, and $f_{2}$’s zero
+                        count is also trivial (three at the origin).
+              \end{enumerate}
+
+        \item \textbf{General heuristic.}
+              For a polynomial $p(z)=\sum_{k=0}^{n}a_{k}z^{k}$ and a fixed
+              radius $r$, the term with the largest value of $|a_{k}|\,r^{k}$
+              usually controls the size of $p$ on $|z|=r$.  Picking that term
+              as $f$ often makes Rouché’s inequality automatic and leaves us
+              with a comparison function whose zeros are straightforward to
+              enumerate.
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \begin{align}
+        f(z) &= 2z^{4}-2iz^{3}+z^{2}+2iz-1
+    \end{align}
+
+    \begin{enumerate}
+    \item \textbf{Objective.}  
+          Count the zeros of $f$ in the open upper half–plane  
+          $$\Im z>0.$$
+          We use the Argument Principle with the contour
+          \[
+              C \;=\;[-R,R]\;\cup\;C_{R},
+              \qquad
+              C_{R}=\{Re^{i\theta}\mid0\le\theta\le\pi\},
+          \]
+          oriented counter‑clockwise and with $R\gg1$ so that $f$ has no zeros
+          on $C$.
+
+    \item \textbf{Contribution of the semicircle $C_{R}$.}
+
+          \begin{enumerate}
+          \item[$\triangleright$] \emph{Dominant term.}  
+                Factor
+                \[
+                    f(z)=2z^{4}\,g(z),
+                    \quad
+                    g(z)=1-\frac{i}{z}+\frac{1}{2z^{2}}+\frac{i}{z^{3}}
+                          -\frac{1}{2z^{4}}.
+                \]
+          \item[$\triangleright$] \emph{Bounding $g(z)$.}  
+                On $C_{R}$ we have $|z|=R$, so
+                \(
+                    |g(z)-1|\le\frac1R+\frac{1}{2R^{2}}+\frac1{R^{3}}
+                             +\frac{1}{2R^{4}}
+                           <\frac12
+                \)
+                when $R>2$.  Thus $g(C_{R})$ stays in the disc
+                $D(1,\tfrac12)$, which never encircles $0$, and
+                $|\Delta_{C_{R}}\arg g(z)|<\pi/3$.
+          \item[$\triangleright$] \emph{Argument of the $z^{4}$ factor.}  
+                Along $C_{R}$, $\arg z$ increases from $0$ to $\pi$, so
+                \[
+                    \Delta_{C_{R}}\arg z^{4}=4\pi.
+                \]
+          \item[$\triangleright$] \emph{Total for $C_{R}$.}  
+                \[
+                    \Delta_{C_{R}}\arg f(z)
+                    = 4\pi + \varepsilon,
+                    \qquad |\varepsilon|<\frac{\pi}{3}.
+                \]
+          \end{enumerate}
+
+    \item \textbf{Contribution of the real segment $[-R,R]$.}
+
+          Write $z=x\in\mathbb R$.  Then
+          \[
+              f(x)=\underbrace{\bigl(2x^{4}+x^{2}-1\bigr)}_{\displaystyle
+                      \Re f(x)}
+                   +\,i\,\underbrace{\bigl(-2x^{3}+2x\bigr)}_{\displaystyle
+                      \Im f(x)}.
+          \]
+
+          \begin{enumerate}
+          \item[$\triangleright$] \emph{Zeros of the real and imaginary parts.}
+                \[
+                    \Re f(x)=0
+                    \;\Longleftrightarrow\;
+                    2x^{4}+x^{2}-1=0
+                    \;\Longleftrightarrow\;
+                    x=\pm\frac{\sqrt2}{2},
+                \]
+                \[
+                    \Im f(x)=0
+                    \;\Longleftrightarrow\;
+                    2x(1-x^{2})=0
+                    \;\Longleftrightarrow\;
+                    x\in\{-1,0,1\}.
+                \]
+                These five points split $[-R,R]$ into six sub‑intervals, but
+                only the central three lie between $-\tfrac{\sqrt2}{2}$ and
+                $\tfrac{\sqrt2}{2}$, where $\Re f$ changes sign; the outer
+                parts behave uniformly.  We therefore track the argument in
+                three blocks:
+
+                \[
+                    L_{1}=(-R,-\tfrac{\sqrt2}{2}],\quad
+                    L_{2}=(-\tfrac{\sqrt2}{2},\tfrac{\sqrt2}{2}),\quad
+                    L_{3}=[\tfrac{\sqrt2}{2},R).
+                \]
+
+          \item[$\triangleright$] \emph{Endpoints’ arguments.}
+                \[
+                    f(\pm R)\approx 2R^{4}>0
+                    \;\Longrightarrow\;
+                    \arg f(\pm R)\approx 0,
+                \]
+                \[
+                    f\!\Bigl(\pm\frac{\sqrt2}{2}\Bigr)
+                    = \pm i\,\frac{\sqrt2}{2}
+                    \;\Longrightarrow\;
+                    \arg f\Bigl(\pm\frac{\sqrt2}{2}\Bigr)
+                    = \pm\frac{\pi}{2}.
+                \]
+
+          \item[$\triangleright$] \emph{Block $L_{1}$ ($\Re f>0$).}  
+                Here $f$ lies in the right half‑plane, crossing from
+                $\arg f(-R)\approx0$ down to
+                $\arg f(-\tfrac{\sqrt2}{2})=-\pi/2$.  Hence
+                \[
+                    \Delta_{L_{1}}\arg f=-\frac{\pi}{2}.
+                \]
+
+          \item[$\triangleright$] \emph{Block $L_{3}$ (symmetry).}  
+                By the same reasoning,
+                \(
+                    \Delta_{L_{3}}\arg f
+                    =\arg f(R)-\arg f(\tfrac{\sqrt2}{2})
+                    \approx 0-\frac{\pi}{2}=-\frac{\pi}{2}.
+                \)
+
+          \item[$\triangleright$] \emph{Block $L_{2}$ ($\Re f\le0$).}  
+                Between the two points where $\Re f=0$ the real part is
+                non‑positive while $\Im f$ changes sign twice ($x=-1,0,1$).  
+                A direct plot or sign table shows the image of $L_{2}$ lies in
+                the left half‑plane and swings from angle $+\pi/2$ down to
+                $-\pi/2$ and back to $+\pi/2$, giving
+                \[
+                    \Delta_{L_{2}}\arg f=-\pi.
+                \]
+
+          \item[$\triangleright$] \emph{Total for $[-R,R]$.}
+                \[
+                    \Delta_{[-R,R]}\arg f
+                    = -\frac{\pi}{2}-\pi-\frac{\pi}{2}
+                    = -2\pi.
+                \]
+          \end{enumerate}
+
+    \item \textbf{Putting it all together.}
+
+          \[
+              \Delta_{C}\arg f(z)
+              = (4\pi+\varepsilon) + (-2\pi)
+              = 2\pi+\varepsilon,
+              \qquad |\varepsilon|<\frac{\pi}{3}.
+          \]
+          Hence
+          \[
+              N_{\Im z>0}
+              =\frac{1}{2\pi}\,\Delta_{C}\arg f(z)
+              \in\Bigl(\tfrac{2\pi-\pi/3}{2\pi},\tfrac{2\pi+\pi/3}{2\pi}\Bigr)
+              \cap\mathbb Z
+              =\{1\}.
+          \]
+          Therefore $f(z)$ has exactly \textbf{one zero in the upper
+          half–plane}.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}
+    \begin{align}
+        \text{Claim: }\;
+        \nexists\,\text{entire }F\text{ such that }
+        F(x)=1-e^{2\pi i/x}\quad\text{for all }x\in[1,2].
+    \end{align}
+
+    \begin{enumerate}
+        \item \textbf{Suppose, for contradiction, that such an $F$ exists.}
+              Define
+              \[
+                  G(z)=1-e^{2\pi i/z}.
+              \]
+              The function $G$ is analytic on $\Bbb C\setminus\{0\}$.
+
+        \item \textbf{$F$ and $G$ agree on a set with a limit point in the domain of analyticity.}
+              The closed interval $[1,2]\subset\Bbb R$ lies inside
+              $\Bbb C\setminus\{0\}$ and contains infinitely many points,
+              hence has an accumulation point in that domain.
+              By hypothesis $F(x)=G(x)$ for every $x\in[1,2]$.
+
+        \item \textbf{Apply the Identity (Uniqueness) Theorem.}
+              Because $F$ and $G$ are analytic on $\Bbb C\setminus\{0\}$
+              and coincide on a set with an accumulation point there,
+              the Identity Theorem yields
+              \[
+                  F(z)=G(z)\quad\text{for all }z\in\Bbb C\setminus\{0\}.
+              \]
+
+        \item \textbf{Examine the behaviour at $z=0$.}
+              \begin{enumerate}
+                  \item[$\triangleright$] $F$ is assumed \emph{entire},
+                        so it must be analytic at $0$; in particular
+                        $\displaystyle\lim_{z\to0}F(z)$ exists and is finite.
+                  \item[$\triangleright$] $G$ has an \emph{essential singularity}
+                        at $z=0$ because $e^{2\pi i/z}$ does.
+                        Consequently $\displaystyle\lim_{z\to0}G(z)$
+                        does \emph{not} exist.
+              \end{enumerate}
+              Since $F(z)=G(z)$ for $z\neq0$, their limits as $z\to0$
+              must coincide, which is impossible.
+
+        \item \textbf{Contradiction and conclusion.}
+              The contradiction shows the initial assumption was false.
+              Therefore
+              \[
+                  \boxed{\text{no entire function }F\text{ satisfies }
+                         F(x)=1-e^{2\pi i/x}\text{ on }[1,2].}
+              \]
+    \end{enumerate}
+\end{problem}
+count the zeros of $f$ in the open upper complex half-plane such that $Im>0$ 
+\begin{align}
+    f(z) = z^{4}-16+i(-z^{3}+z)
+\end{align}
+
+\renewcommand{\arraystretch}{1.2}   % set once, outside math‑mode
+
+\begin{problem}
+    %---------- definition of the polynomial -------------------------------
+    \begin{align}
+        f(z) &= z^{4}-16 + i\!\bigl(-z^{3}+z\bigr)
+    \end{align}
+
+    \begin{enumerate}
+    %================= 1. Contour & strategy =================================
+        \item \textbf{Contour and strategy (Argument Principle).}\;
+              Use the counter‑clockwise contour
+              \[
+                  C=[-R,R]\cup C_R,
+                  \qquad
+                  C_R=\{\,Re^{i\theta}\mid 0\le\theta\le\pi\},
+              \]
+              and choose $R>2$ so $f$ has no zeros on $C$.
+              The number $N_{+}$ of zeros in the upper half–plane satisfies
+              \[
+                  N_{+}=\frac{1}{2\pi}\,\Delta_{C}\arg f(z).
+              \]
+
+    %================= 2. Semicircle contribution ===========================
+        \item \textbf{Semicircle $C_{R}$.}\;
+              Factor
+              \[
+                  f(z)=z^{4}\,g(z),
+                  \qquad
+                  g(z)=1-\frac{16}{z^{4}}+i\!\Bigl(-\frac{1}{z}+\frac{1}{z^{3}}\Bigr).
+              \]
+              On $C_R$ we have $|g(z)-1|\le 16R^{-4}+R^{-1}+R^{-3}<\tfrac12$,
+              so $g(C_R)$ never winds around $0$ and
+              \[
+                  \Delta_{C_R}\arg f(z)=4\pi+\varepsilon,
+                  \qquad |\varepsilon|<\frac{\pi}{3}.
+              \]
+
+    %================= 3. Real‑axis contribution ============================
+        \item \textbf{Real segment $[-R,R]$.}
+
+              \[
+                  f(x)=\underbrace{\bigl(x^{4}-16\bigr)}_{=:R(x)}
+                       +\,i\,\underbrace{\bigl(-x^{3}+x\bigr)}_{=:I(x)}
+                  \quad (x\in\mathbb R).
+              \]
+
+              The zeros of $R$ and $I$ are
+              \[
+                  R(x)=0\iff x=\pm2,
+                  \qquad
+                  I(x)=0\iff x\in\{-1,0,1\}.
+              \]
+
+              \[
+              \begin{array}{c|ccccccc}
+                  x & -R & -2 & -1 & 0 & 1 & 2 & R\\\hline
+                  R(x) & + & 0 & - & - & - & 0 & +\\
+                  I(x) & + & + & 0 & 0 & 0 & - & -
+              \end{array}
+              \]
+
+              Reading off the quadrant changes one finds
+              \[
+                  \Delta_{[-R,R]}\arg f(z)=0.
+              \]
+
+    %================= 4. Tally & conclusion =================================
+        \item \textbf{Total change and zero count.}\;
+              \[
+                  \Delta_{C}\arg f(z)=\bigl(4\pi+\varepsilon\bigr)+0
+                                      =4\pi+\varepsilon,
+                  \qquad |\varepsilon|<\frac{\pi}{3}.
+              \]
+              Hence
+              \[
+                  N_{+}
+                  =\frac{1}{2\pi}\,\Delta_{C}\arg f(z)
+                  \in\Bigl(2-\tfrac16,\,2+\tfrac16\Bigr)\cap\mathbb Z
+                  =2.
+              \]
+              Therefore $f$ has exactly \textbf{two zeros in the open upper
+              half–plane} $\Im z>0$.
+    \end{enumerate}
+\end{problem}
+\end{document}

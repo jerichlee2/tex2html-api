@@ -1,0 +1,2176 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+
+
+\title{Exam 2 Prep: MATH 448}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Complex Integration}
+
+In complex analysis, we use the integral
+\[
+\int_{\gamma} f(z)\,dz
+\]
+of a complex-valued function $f$ along a curve $\gamma$.
+
+This integral is a special case of the line integral
+\[
+\int_{\gamma} P\,dx + Q\,dy,
+\]
+where $P$ and $Q$ are functions (possibly vector-valued) on $\mathbb{R}^2$.
+
+Then,
+\[
+\int_{\gamma} f(z)\,dz = \int_{\gamma} (P(x,y)\,dx + Q(x,y)\,dy)
+\]
+where $f(z) = P(x,y) + iQ(x,y)$ and $z = x + iy$.
+
+We rely on techniques learned in the line integral section of Calculus III.
+
+\section*{Curves}
+
+A \textbf{curve} (also called an \textbf{arc}, \textbf{path}, or \textbf{contour}) is a continuous mapping
+\[
+\gamma : [a, b] \to \mathbb{C}.
+\]
+
+\begin{itemize}
+    \item The domain $[a, b] \subset \mathbb{R}$ with $a < b$.
+    \item $\gamma(t)$ is a complex-valued function defined on $[a, b]$.
+\end{itemize}
+
+A curve $\gamma$ is called \textbf{simple} if it is injective (one-to-one), except possibly at the endpoints, i.e.,
+\[
+\gamma(a) = \gamma(b).
+\]
+
+A curve $\gamma$ is called \textbf{closed} if $\gamma(a) = \gamma(b)$.
+
+\section*{Jordan Curve Theorem}
+
+By Jordan’s theorem, a simple closed curve $\gamma$ splits the plane $\mathbb{R}^2$ into exactly two connected components:
+\[
+\mathbb{C} \setminus \gamma = D \cup D',
+\]
+where:
+\begin{itemize}
+    \item $D$ is a bounded component (interior),
+    \item $D'$ is an unbounded component (exterior).
+\end{itemize}
+
+We make an abuse of notation and use the same letter $\gamma$ for the range of $\gamma: [a, b] \to \mathbb{C}$.
+
+\section*{Orientation}
+
+We say that a curve has \textbf{positive} or \textbf{counterclockwise orientation} if the interior $D$ lies on the left as the curve is traversed.
+
+Let $\gamma_1, \gamma_2$ be two curves such that
+\[
+\gamma_1(t) = \gamma_2(a + b - t).
+\]
+
+Then, of course,
+\[
+\int_{\gamma_1} f(z)\,dz = -\int_{\gamma_2} f(z)\,dz.
+\]
+
+We say $\gamma$ is given by $z(t) = x(t) + iy(t)$. We can extend the definition of the integral to sums of more than one curve.
+
+\section*{Smooth and Piecewise Smooth Curves}
+
+A curve $\gamma$ is called $C^1$ (smooth) if $\gamma$ has a continuous derivative $\gamma'(t)$ on $[a, b]$ (including the endpoints $a$ and $b$).
+
+A curve is called \textbf{piecewise smooth} if it is composed of finitely many smooth curves.
+
+Let $\gamma_1, \gamma_2: [a,b] \to \mathbb{C}$ be two curves. We say that they \textbf{differ by a reparametrization} if there exists a continuous, increasing function $\phi : [a,b] \to [a,b]$ such that
+\[
+\gamma_2(t) = \gamma_1(\phi(t)) \quad \text{for all } t.
+\]
+
+Then the two curves trace the same figure, and we say that the curve $\gamma$ has multiple parametrizations.
+
+\section*{Examples of Parametrizations}
+
+\begin{itemize}
+    \item The unit circle $|z| = 1$ has the standard parametrization:
+    \[
+    \gamma(t) = e^{it}, \quad 0 < t < 2\pi \quad (\text{or say } -\pi < t < \pi).
+    \]
+    This traversal has \textbf{positive} (counterclockwise) orientation.
+    
+    \item The unit circle $|z| = 1$ also has the standard parametrization:
+    \[
+    \gamma(t) = e^{-it}, \quad -\pi < t < \pi,
+    \]
+    which corresponds to the \textbf{negative} (clockwise) orientation.
+
+    \item Another possible parametrization is:
+    \[
+    \gamma(t) = \frac{1 + it}{1 - it},
+    \]
+    as $t \to \pm \infty$, this approaches points on the unit circle.
+    
+    This differs by parametrization since it traces the same geometric curve but via a Möbius transformation.
+\end{itemize}
+
+\section*{Line Integrals}
+
+Let $\gamma: [a,b] \to \mathbb{C}$ be a smooth curve, and let $P(x,y)$ and $Q(x,y)$ be continuous functions on the range of $\gamma$. Then,
+\[
+\int_\gamma P(x,y)\,dx + Q(x,y)\,dy = \int_a^b \left[ P(x(t), y(t))x'(t) + Q(x(t), y(t))y'(t) \right]\,dt.
+\]
+
+If $\gamma$ is a piecewise smooth curve made up of smooth segments $\gamma_1, \gamma_2, \dots, \gamma_n$, then:
+\[
+\int_\gamma f(z)\,dz = \sum_{i=1}^n \int_{\gamma_i} f(z)\,dz.
+\]
+\section*{Properties of Complex Line Integrals}
+
+\subsection*{Independence of Parametrization}
+
+If two curves $\gamma_1$ and $\gamma_2$ differ only by reparametrization, then:
+\[
+\int_{\gamma_1} f(z)\,dz = \int_{\gamma_2} f(z)\,dz.
+\]
+
+\textit{Proof}: Immediate by substitution into definite integrals.
+
+\subsection*{Additivity}
+
+If $\gamma$ is the union of two curves $\gamma_1$ and $\gamma_2$ such that the endpoint of $\gamma_1$ is the start of $\gamma_2$, then:
+\[
+\int_{\gamma} f(z)\,dz = \int_{\gamma_1} f(z)\,dz + \int_{\gamma_2} f(z)\,dz.
+\]
+
+\textit{Proof}: Follows from additivity of definite integrals.
+
+\subsection*{Dependence on Orientation}
+
+Let $\gamma_1$ be the reverse of $\gamma_2$, i.e., $\gamma_1(t) = \gamma_2(a + b - t)$. Then:
+\[
+\int_{\gamma_1} f(z)\,dz = -\int_{\gamma_2} f(z)\,dz.
+\]
+
+\subsection*{Linearity}
+
+For constants $c_1, c_2$ and functions $f_1, f_2$:
+\[
+\int_{\gamma} \left( c_1 f_1 + c_2 f_2 \right)\,dz = c_1 \int_{\gamma} f_1(z)\,dz + c_2 \int_{\gamma} f_2(z)\,dz.
+\]
+
+\textit{Proof}: Immediate from linearity of definite integrals.
+
+\section*{Example: Circle Integral}
+
+Let $f(z) = \frac{1}{(z - a)^n}$ with $|z - a| = r$ a circle of radius $r$ centered at $a$, oriented counterclockwise.
+
+We parametrize the curve as:
+\[
+z(t) = a + re^{it}, \quad 0 < t < 2\pi.
+\]
+Then:
+\[
+dz = ire^{it}dt.
+\]
+So,
+\[
+\int_{|z - a| = r} \frac{1}{(z - a)^n}\,dz = \int_0^{2\pi} \frac{1}{(re^{it})^n} \cdot ire^{it}\,dt = ir^{1-n} \int_0^{2\pi} e^{i(1-n)t}\,dt.
+\]
+
+Evaluating:
+\[
+\int_0^{2\pi} e^{i(1-n)t}\,dt =
+\begin{cases}
+0 & \text{if } n \neq 1, \\
+2\pi & \text{if } n = 1.
+\end{cases}
+\]
+
+Thus:
+\[
+\int_{|z - a| = r} \frac{1}{(z - a)^n}\,dz =
+\begin{cases}
+0 & \text{if } n \neq 1, \\
+2\pi i & \text{if } n = 1.
+\end{cases}
+\]
+
+\section*{Remarks on Parametrization}
+
+Sometimes it's convenient to allow $t$ to run in the negative direction.
+
+For example, we might take:
+\[
+z(t) = a + re^{-it}
+\]
+which corresponds to $t$ running from $0$ to $2\pi$, but tracing the circle clockwise.
+
+This alternative parametrization of the circle is often more convenient and simplifies calculations.
+
+\subsection*{Arc Length and Integration}
+
+The integral
+\[
+\int_{\gamma} |dz| = \int_a^b |z'(t)|\,dt
+\]
+is the integral with respect to arc length.
+
+The \textbf{length} of a curve $\gamma$ is defined as:
+\[
+\text{length}(\gamma) = \int_a^b |z'(t)|\,dt.
+\]
+
+(See Calculus III for derivation.)
+
+\section*{Example}
+
+Estimate
+\[
+\left| \int_{\gamma} f(z)\,dz \right|
+\]
+along a straight line segment.
+
+Let $\gamma$ be the straight line from $z_0$ to $z_1$.
+
+Then:
+\[
+\left| \int_{\gamma} f(z)\,dz \right| \leq \max_{\gamma} |f(z)| \cdot \text{length}(\gamma).
+\]
+
+In this example, if $|f(z)| \leq 2$ along $\gamma$ and $\text{length}(\gamma) = \sqrt{2}$, then:
+\[
+\left| \int_{\gamma} f(z)\,dz \right| \leq 2\sqrt{2}.
+\]
+
+\section*{Fundamental Theorem of Calculus (Complex Version)}
+
+Let $D \subset \mathbb{C}$ be a domain, and let $P(x,y), Q(x,y)$ be continuous functions in $D$.
+
+We say that the line integral
+\[
+\int_{\gamma} P\,dx + Q\,dy
+\]
+is \textbf{path-independent} in $D$ if it depends only on the endpoints of $\gamma$, and not the path taken.
+
+Equivalently, for every closed curve $\gamma$ in $D$:
+\[
+\int_{\gamma} P\,dx + Q\,dy = 0.
+\]
+Or:
+\[
+\oint_{\gamma} f(z)\,dz = 0.
+\]
+
+\section*{Path Independence and the Fundamental Theorem}
+
+(From Calculus III) Let $P(x,y), Q(x,y)$ be continuous functions on a domain $D$. Then the line integral
+\[
+\int_{\gamma} P\,dx + Q\,dy
+\]
+is path-independent in $D$ if and only if there exists a scalar function $F$ on $D$ such that:
+\[
+\frac{\partial F}{\partial x} = P, \quad \frac{\partial F}{\partial y} = Q.
+\]
+In this case, we say the vector field is \textbf{exact}, and $F$ is called the \textbf{potential function}.
+
+Then,
+\[
+\int_{\gamma} P\,dx + Q\,dy = F(x_1, y_1) - F(x_0, y_0),
+\]
+where $(x_0, y_0)$ and $(x_1, y_1)$ are the endpoints of $\gamma$.
+
+We now prove the analogue in complex analysis:
+
+Let $f$ be a complex-valued function on $D \subset \mathbb{C}$ and suppose that $f$ has an antiderivative $F$ on $D$ such that:
+\[
+F'(z) = f(z).
+\]
+Then for any piecewise smooth curve $\gamma$ from $z_0$ to $z_1$, we have:
+\[
+\int_{\gamma} f(z)\,dz = F(z_1) - F(z_0).
+\]
+
+\subsection*{Proof of the Forward Direction (If)}
+
+Suppose $F$ exists on $D$ and is differentiable, and let $\gamma(t) = x(t) + iy(t)$ be a parametrization from $z_0 = \gamma(a)$ to $z_1 = \gamma(b)$. Then:
+\[
+\int_{\gamma} f(z)\,dz = \int_a^b f(\gamma(t)) \gamma'(t)\,dt = \int_a^b F'(\gamma(t)) \gamma'(t)\,dt.
+\]
+
+This is the same as:
+\[
+F(\gamma(b)) - F(\gamma(a)) = F(z_1) - F(z_0).
+\]
+
+This follows from the chain rule and the fundamental theorem of calculus, since the derivative $F'(\gamma(t)) \gamma'(t)$ is continuous. Hence, the integral is independent of path.
+
+If $\gamma$ is piecewise smooth, the result follows by additivity of line integrals.
+
+\subsection*{Proof of the Converse (Only If)}
+
+Suppose the integral $\int_{\gamma} f(z)\,dz$ is independent of path.
+
+Fix a point $z_0 \in D$, and define:
+\[
+F(z) := \int_{\gamma} f(w)\,dw,
+\]
+where the integral is taken over any piecewise smooth path from $z_0$ to $z$.
+
+Since the integral is path-independent, this definition is consistent.
+
+To show that $F$ is differentiable and $F'(z) = f(z)$, consider the limit:
+\[
+\frac{F(z+h) - F(z)}{h} = \frac{1}{h} \int_{z}^{z+h} f(w)\,dw.
+\]
+
+As $h \to 0$, we approximate the curve from $z$ to $z+h$ by a straight line and estimate:
+\[
+\left| \frac{1}{h} \int_{z}^{z+h} f(w)\,dw - f(z) \right| \leq \frac{1}{|h|} \int_{z}^{z+h} |f(w) - f(z)|\,|dw|.
+\]
+
+Because $f$ is continuous, this difference tends to $0$ as $h \to 0$, so:
+\[
+\lim_{h \to 0} \frac{F(z+h) - F(z)}{h} = f(z),
+\]
+i.e., $F'(z) = f(z)$.
+
+\section*{More on Path Independence}
+
+If a function $f$ has an antiderivative $F$ in a domain $D$, then
+\[
+\int_{\gamma} f(z)\,dz
+\]
+is independent of the path between endpoints in $D$.
+
+\subsection*{Example}
+
+Let
+\[
+f(z) = e^z.
+\]
+
+This function has an antiderivative $F(z) = e^z$, so the integral is path-independent.
+
+Let $\gamma(t) = t + i\sin(t)$ from $z = 0$ to $z = \pi + i\sin(\pi) = \pi$. Then,
+\[
+\int_{\gamma} e^z\,dz = e^{\pi} - 1.
+\]
+
+\section*{Non-Path-Independent Example}
+
+Now consider
+\[
+f(z) = \frac{1}{z}.
+\]
+We cannot define a continuous antiderivative of $f$ on a domain containing the origin (i.e., $\mathbb{C} \setminus \{0\}$). Hence, the integral of $f$ may depend on the path.
+
+\subsection*{Example:}
+
+Evaluate
+\[
+\int_{\gamma} \frac{1}{z}\,dz
+\]
+along a straight line from $-1 - i$ to $1 + i$.
+
+We know that $f(z) = \frac{1}{z}$ has the antiderivative $\log z$, but $\log z$ is multi-valued and depends on the branch.
+
+If we attempt to write:
+\[
+\int_{\gamma} \frac{1}{z}\,dz = \log(1+i) - \log(-1-i),
+\]
+we must be cautious about the domain and branch of the logarithm function.
+
+\subsection*{More Caution on Branch Cuts}
+
+Let $\gamma$ be a curve from $-1 - i$ to $1 + i$, crossing the imaginary axis.
+
+We define a branch of $\log z$:
+\[
+\text{Log}(z) = \ln|z| + i\arg(z), \quad 0 < \arg(z) < 2\pi.
+\]
+
+Suppose $\arg(1+i) = \frac{\pi}{4}$ and $\arg(-1 - i) = \frac{5\pi}{4}$.
+
+Then:
+\[
+\int_{\gamma} \frac{1}{z}\,dz = \text{Log}(1+i) - \text{Log}(-1 - i) = \ln\left( \frac{|1+i|}{|-1 - i|} \right) + i\left( \frac{\pi}{4} - \frac{5\pi}{4} \right)
+= 0 - i\pi = -i\pi.
+\]
+
+\section*{Example: Log Integral on a Semicircle}
+
+Evaluate
+\[
+\int_{\gamma} \log z\,dz
+\]
+where $\gamma$ is the upper semicircle from $-1$ to $1$ in the upper half-plane.
+
+Let us specify the branch of the logarithm function:
+\[
+\text{Log}(z) = \ln|z| + i \arg(z), \quad 0 < \arg(z) < 2\pi.
+\]
+
+Since $\gamma$ lies in the upper half-plane, $\arg(z)$ goes from $\pi$ to $0$ as we move along the semicircle.
+
+\subsection*{Parametrization}
+
+Let:
+\[
+\gamma(t) = e^{it}, \quad \pi \leq t \leq 0.
+\]
+Then:
+\[
+\log(\gamma(t)) = \log(e^{it}) = it, \quad \text{and } dz = i e^{it}\,dt.
+\]
+
+Now compute:
+\[
+\int_{\gamma} \log z\,dz = \int_{\pi}^0 it \cdot i e^{it}\,dt = -\int_0^{\pi} -t e^{it}\,dt = \int_0^{\pi} t e^{it}\,dt.
+\]
+
+This can be evaluated by integration by parts or numerical approximation. In practice, such integrals require choosing the correct branch and parameterization to avoid discontinuities.
+
+\subsection*{Conclusion}
+
+This example reinforces the importance of:
+\begin{itemize}
+    \item Choosing a suitable branch of $\log z$,
+    \item Using correct parametrization,
+    \item Observing the orientation of the curve.
+\end{itemize}
+
+
+\section*{Cauchy Theorem (Section 2.3)}
+
+\subsection*{Green’s Theorem (Formula)}
+
+Let $D \subset \mathbb{R}^2$ be a region with piecewise smooth boundary $\partial D$. Then:
+\[
+\iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy = \oint_{\partial D} P\,dx + Q\,dy.
+\]
+
+We consider $D \subset \mathbb{R}^2$ with piecewise smooth boundary $\partial D$. Suppose $\partial D = \gamma_0 \cup \gamma_1 \cup \dots \cup \gamma_n$, where each $\gamma_j$ is a simple closed piecewise smooth curve.
+
+By default, we choose counterclockwise orientation for all these curves. Let $\gamma_0$ be the outer boundary of $D$ and the rest be “holes” inside $D$ (if any). Then $D$ lies to the left as $\gamma_0$ is traversed, and $D$ lies to the right as the interior holes are traversed. Thus we define the positively oriented boundary of $D$ and write:
+\[
+\partial D = \gamma_0 - \gamma_1 - \gamma_2 - \cdots - \gamma_n.
+\]
+
+\subsection*{Theorem (Green’s Theorem / Formula)}
+
+Let $D \subset \mathbb{R}^2$ be a region with piecewise smooth boundary $\partial D$.
+
+Let $P, Q \in C^1(\overline{D})$, i.e., $P$ and $Q$ are functions with continuous partial derivatives on $D$ and its boundary. If $\gamma = \partial D$ is the positively oriented boundary of $D$, then:
+\[
+\oint_{\gamma} P\,dx + Q\,dy = \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy.
+\]
+
+This theorem is covered in Calculus III. For completeness, we provide a proof in the appendix.
+
+Note: If $v = Q$, $u = P$, then:
+\[
+\oint P\,dx + Q\,dy = \iint \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy.
+\]
+
+\subsection*{Corollary}
+
+Let $D \subset \mathbb{C}$ be a bounded domain with positively oriented smooth boundary $\gamma = \partial D$. Let $f \in C^1(\overline{D})$. Then:
+\[
+\oint_{\gamma} f(z)\,dz = \iint_D \frac{\partial f}{\partial \overline{z}}\,dA,
+\]
+where $\frac{\partial}{\partial \overline{z}} = \frac{1}{2} \left( \frac{\partial}{\partial x} + i\frac{\partial}{\partial y} \right)$.
+
+\subsection*{Example}
+
+Let $D$ be the disc $\{z \in \mathbb{C} : |z| < 1\}$, and $f(z) = \overline{z}$. Then:
+\[
+\oint_{\partial D} f(z)\,dz = \oint_{\partial D} \overline{z}\,dz.
+\]
+
+We compute:
+\[
+\iint_D \frac{\partial \overline{z}}{\partial \overline{z}}\,dA = \iint_D 1\,dx\,dy = \text{Area}(D) = \pi.
+\]
+\section*{The Cauchy Theorem}
+
+Let $D \subset \mathbb{C}$ be a bounded domain with piecewise smooth boundary $\partial D$. Let $f \in C^1(D) \cap \text{Hol}(D)$.
+
+If $\partial D$ is the positively oriented boundary of $D$, then:
+\[
+\int_{\partial D} f(z)\,dz = 0.
+\]
+
+\subsection*{Proof}
+
+Since $f \in \text{Hol}(D)$, it satisfies the Cauchy–Riemann equations, and hence $\frac{\partial f}{\partial \overline{z}} = 0$.
+
+Then, by Green’s Theorem:
+\[
+\int_{\partial D} f(z)\,dz = \iint_D \frac{\partial f}{\partial \overline{z}}\,dA = 0.
+\]
+
+\subsection*{Example:}
+
+Let $f(z) = z \log z$. Then:
+\[
+\int_{\gamma} z \log z\,dz = 0,
+\]
+where $\gamma$ is any simple closed curve avoiding the branch cut of $\log z$, for example $\{x \in \mathbb{R} \mid x < 0\}$.
+
+This integral vanishes because $f$ is analytic in the region bounded by $\gamma$.
+
+\section*{Example: Partial Fraction and Cauchy}
+
+Evaluate:
+\[
+\int_{\gamma} \frac{z}{(z-1)(z+2)}\,dz.
+\]
+
+Using partial fractions:
+\[
+\frac{z}{(z-1)(z+2)} = \frac{A}{z - 1} + \frac{B}{z + 2}.
+\]
+Solving gives $A = \frac{2}{3}, B = \frac{1}{3}$, so:
+\[
+\int_{\gamma} \frac{z}{(z-1)(z+2)}\,dz = \frac{2}{3} \int_{\gamma} \frac{1}{z-1}\,dz + \frac{1}{3} \int_{\gamma} \frac{1}{z+2}\,dz.
+\]
+
+If $\gamma$ encloses $z = 1$ but not $z = -2$, then:
+\[
+\int_{\gamma} \frac{1}{z-1}\,dz = 2\pi i, \quad \int_{\gamma} \frac{1}{z+2}\,dz = 0.
+\]
+Thus,
+\[
+\int_{\gamma} \frac{z}{(z-1)(z+2)}\,dz = \frac{2}{3} \cdot 2\pi i = \frac{4\pi i}{3}.
+\]
+
+\section*{Alternative Solution via Contour Deformation}
+
+Suppose $D = \{ z \in \mathbb{C} : R_1 < |z| < R_2 \}$ and let $f(z) = \frac{1}{(z - 1)(z + 2)}$.
+
+If $R_1 < 1 < R_2$ and $-2 < -R_1$, then the contour encloses both singularities. By Cauchy’s theorem and residue calculus, the integral depends only on enclosed poles.
+
+Hence, contour integrals in annuli or rings can be computed using linearity and Cauchy’s theorem:
+\[
+\int_{\gamma} f(z)\,dz = 2\pi i \left( \text{Res}_{z=1} f + \text{Res}_{z=-2} f \right).
+\]
+\section*{Example: Real Integral via Complex Methods}
+
+Evaluate
+\[
+I = \int_{-\infty}^{\infty} \frac{\cos(ax)}{x^2 + b^2}\,dx, \quad a > 0, b > 0.
+\]
+
+We assume this is known to be:
+\[
+I = \frac{\pi}{b} e^{-ab}.
+\]
+
+Since the integrand is an even function, we may write:
+\[
+I = 2 \int_{0}^{\infty} \frac{\cos(ax)}{x^2 + b^2}\,dx.
+\]
+
+This integral can be computed using contour integration by considering the function
+\[
+f(z) = \frac{e^{iaz}}{z^2 + b^2}
+\]
+and integrating over a semicircular contour in the upper half-plane. The integral over the arc vanishes as $R \to \infty$, and the result follows by applying the residue theorem.
+
+\section*{Theorem: Path Independence in Simply Connected Domains}
+
+Let $D \subset \mathbb{C}$ be a simply connected domain (no holes). Let $f \in \text{Hol}(D)$.
+
+Then:
+\[
+\int_{\gamma} f(z)\,dz
+\]
+is independent of path in $D$, and for any closed curve $\gamma$ in $D$:
+\[
+\oint_{\gamma} f(z)\,dz = 0.
+\]
+
+\subsection*{Proof}
+
+If $\gamma$ is a simple closed curve in $D$, then $\gamma$ is the boundary of a region $D_0 \subset D$.
+
+By the Cauchy theorem:
+\[
+\oint_{\gamma} f(z)\,dz = 0.
+\]
+
+For a general closed curve, write it as a combination of simple closed curves. Then by additivity of integrals and the result above, the total integral is $0$.
+
+\section*{Corollary: Existence of Antiderivative}
+
+Let $D \subset \mathbb{C}$ be a simply connected domain, and $f \in \text{Hol}(D)$. Then there exists a function $F$ on $D$ such that:
+\[
+F'(z) = f(z).
+\]
+
+\subsection*{Proof}
+
+From the previous theorem, the integral $\int f(z)\,dz$ is path-independent in $D$. So we may define:
+\[
+F(z) = \int_{z_0}^{z} f(w)\,dw,
+\]
+and $F$ is the desired antiderivative.
+
+\subsection*{Counterexample}
+
+Let $D = \mathbb{C} \setminus \{0\}$.
+
+This domain is not simply connected. The previous theorem and corollary do not apply. For $f(z) = 1/z$, we have:
+\[
+\oint_{\gamma} \frac{1}{z}\,dz \neq 0,
+\]
+and $f$ does not admit an antiderivative on $D$.
+
+\section*{Appendix: Proof of Green’s Theorem}
+
+We aim to prove:
+\[
+\oint_{\partial D} P\,dx + Q\,dy = \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy.
+\]
+
+We assume that $D$ is bounded and has a piecewise smooth boundary composed of finitely many smooth curves.
+
+We first prove the identity in a special case.
+
+\subsection*{Step 1: Vertical Simple Region}
+
+Let $D$ be a vertically simple region:
+\[
+D = \{ (x, y) \in \mathbb{R}^2 \mid a \leq x \leq b, \ \phi(x) \leq y \leq \psi(x) \},
+\]
+where $\phi(x)$ and $\psi(x)$ are continuous on $[a, b]$.
+
+We prove the identity:
+\[
+\oint_{\partial D} P\,dx = \int_a^b P(x, \psi(x))\,dx - \int_a^b P(x, \phi(x))\,dx.
+\]
+
+The vertical sides of $D$ contribute nothing because on these segments, $dx = 0$.
+
+On the other hand, the double integral over $D$ becomes:
+\[
+\iint_D \left( -\frac{\partial P}{\partial y} \right) dx\,dy = - \int_a^b \left[ \int_{\phi(x)}^{\psi(x)} \frac{\partial P}{\partial y}(x,y)\,dy \right] dx.
+\]
+
+Using the Fundamental Theorem of Calculus, this equals:
+\[
+\int_a^b P(x, \phi(x))\,dx - \int_a^b P(x, \psi(x))\,dx = - \oint_{\partial D} P\,dx.
+\]
+
+This confirms the $P\,dx$ part of the theorem.
+
+\subsection*{Step 2: Horizontal Simple Region}
+
+A similar argument works for $Q\,dy$ when $D$ is horizontally simple:
+\[
+D = \{ (x, y) \in \mathbb{R}^2 \mid c \leq y \leq d, \ \alpha(y) \leq x \leq \beta(y) \}.
+\]
+
+Then:
+\[
+\oint_{\partial D} Q\,dy = \int_c^d Q(\beta(y), y)\,dy - \int_c^d Q(\alpha(y), y)\,dy,
+\]
+and again the integral equals:
+\[
+\iint_D \frac{\partial Q}{\partial x} dx\,dy.
+\]
+
+\subsection*{Step 3: Additivity}
+
+The formula holds for regions that can be decomposed into finitely many vertically or horizontally simple subregions, using the additivity of the line and double integrals.
+
+\subsection*{Conclusion}
+
+Putting all parts together:
+\[
+\oint_{\partial D} P\,dx + Q\,dy = \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy,
+\]
+completing the proof.
+
+\subsection*{Final Note on General Domains}
+
+Thus, the formula
+\[
+\oint_{\partial D} P\,dx + Q\,dy = \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dx\,dy
+\]
+holds for any region $D$ that can be split into finitely many vertically or horizontally simple domains with piecewise smooth boundaries.
+
+\textbf{Remark:} For general (or exotic) domains, a more advanced argument is required, which we will not include here.
+\section*{The Cauchy Integral Formula (Section 2.3)}
+
+\textbf{Theorem.} Let $D \subset \mathbb{C}$ be a bounded domain with piecewise smooth positively oriented boundary $\partial D$.
+
+Let $f \in \text{Hol}(D) \cap C(\overline{D})$ and let $z \in D$. Then:
+\[
+f(z) = \frac{1}{2\pi i} \oint_{\partial D} \frac{f(w)}{w - z} \, dw.
+\]
+
+\subsection*{Proof Sketch}
+
+Fix $z \in D$. Define
+\[
+F(w) = \frac{f(w) - f(z)}{w - z},
+\]
+which is holomorphic in $D \setminus \{z\}$ and continuous on $\overline{D} \setminus \{z\}$.
+
+Let $C = \{ w : |w - z| = r \}$ be a small circle centered at $z$ with positive (counterclockwise) orientation, lying entirely within $D$.
+
+By the Cauchy theorem, applied to $D \setminus \overline{B_r(z)}$:
+\[
+\oint_{\partial D} \frac{f(w)}{w - z} \, dw - \oint_{C} \frac{f(w)}{w - z} \, dw = 0.
+\]
+
+Then:
+\[
+f(z) = \frac{1}{2\pi i} \oint_{C} \frac{f(w)}{w - z} \, dw,
+\]
+and the term involving $F(w)$ vanishes as $r \to 0$.
+
+\section*{Example}
+
+Evaluate:
+\[
+\oint_{|z| = 2} \frac{e^z}{z}\, dz.
+\]
+
+We apply the formula:
+\[
+f(z) = e^z, \quad \Rightarrow f(0) = 1.
+\]
+
+Then:
+\[
+\oint_{|z|=2} \frac{e^z}{z}\,dz = 2\pi i \cdot f(0) = 2\pi i.
+\]
+
+\section*{Example}
+
+Evaluate:
+\[
+\oint_{|z - i| = 2} \frac{e^z}{(z - z_1)(z - z_2)}\,dz,
+\]
+where $z_1 = i + \sqrt{2}, z_2 = i - \sqrt{2}$.
+
+We factor the denominator:
+\[
+(z - z_1)(z - z_2) = z^2 - 2iz + (1 + 2).
+\]
+
+Using partial fractions or the extended Cauchy formula, this integral is computed via residue calculus:
+\[
+\oint_{\gamma} \frac{e^z}{(z - z_1)(z - z_2)}\,dz = 2\pi i \left( \text{Res}_{z_1} + \text{Res}_{z_2} \right),
+\]
+depending on which singularities lie inside the contour.
+
+\section*{Example}
+
+Evaluate:
+\[
+\oint_{\gamma} \frac{e^z}{(z - 1)(z + 2)}\,dz
+\]
+where $\gamma$ is a positively oriented simple closed curve containing both $z = 1$ and $z = -2$.
+
+We use the Cauchy Integral Formula.
+
+Let:
+\[
+f(z) = e^z, \quad \text{and} \quad \gamma = \partial D \text{ encloses } z_1 = 1, z_2 = -2.
+\]
+
+By Cauchy's formula:
+\[
+\oint_{\gamma} \frac{f(z)}{(z - z_1)(z - z_2)}\,dz = 2\pi i \left( \frac{f(z_1)}{z_1 - z_2} + \frac{f(z_2)}{z_2 - z_1} \right).
+\]
+
+Substitute:
+\[
+\frac{e^1}{1 + 2} + \frac{e^{-2}}{-2 - 1} = \frac{e}{3} - \frac{e^{-2}}{3}.
+\]
+
+So:
+\[
+\oint_{\gamma} \frac{e^z}{(z - 1)(z + 2)}\,dz = 2\pi i \left( \frac{e - e^{-2}}{3} \right).
+\]
+
+\section*{Differentiation Under the Integral Sign}
+
+This technique is common in analysis, differential equations, and mathematical physics. We will use it to derive properties of analytic functions.
+
+Let:
+\[
+F(x, y) = \int_a^b f(x, y, t)\,dt.
+\]
+
+Here, the integral defines a function depending on parameters $x$ and $y$.
+
+Let $D \subset \mathbb{R}^2$ be a domain, and suppose $f(x, y, t)$ is continuous on $D \times [a, b]$.
+
+Then:
+\[
+\frac{\partial}{\partial x} \left( \int_a^b f(x, y, t)\,dt \right) = \int_a^b \frac{\partial f}{\partial x}(x, y, t)\,dt.
+\]
+
+\subsection*{Proof Sketch}
+
+We omit dependence on $y$ for clarity.
+
+Let $h$ be small. Then:
+\[
+\frac{F(x + h) - F(x)}{h} = \frac{1}{h} \int_a^b \left( f(x + h, t) - f(x, t) \right)\,dt.
+\]
+
+If $f_x$ is continuous, the integrand converges uniformly, and:
+\[
+\lim_{h \to 0} \frac{F(x + h) - F(x)}{h} = \int_a^b \frac{\partial f}{\partial x}(x, t)\,dt.
+\]
+
+Hence, differentiation under the integral is justified.
+
+\section*{The Cauchy Integral Formula for Derivatives}
+
+We recall: $\mathcal{A}(D)$ denotes the set of analytic (holomorphic) functions on a domain $D \subset \mathbb{C}$.
+
+We also use the standard notation $C^k(D)$ for the set of functions (real or complex-valued) with continuous partial derivatives up to order $k$ on $D$.
+
+Similarly, $C^k(\overline{D})$ denotes functions with continuous partial derivatives up to order $k$ on the closure of $D$ (including the boundary).
+
+\textbf{Theorem.} Let $f \in \mathcal{A}(D) \cap C(\overline{D})$. Then $f \in C^\infty(D)$.
+
+Moreover, for all $k \geq 0$ and $z \in D$,
+\[
+f^{(k)}(z) = \frac{k!}{2\pi i} \oint_{\partial D} \frac{f(w)}{(w - z)^{k+1}}\,dw.
+\]
+
+\subsection*{Proof Outline}
+
+We know $f$ is analytic in $D$ and continuous up to the boundary $\partial D$.
+
+Let $z \in D$, and let $C$ be a positively oriented circle centered at $z$ and fully contained in $D$. Then,
+\[
+f(z) = \frac{1}{2\pi i} \oint_C \frac{f(w)}{w - z}\,dw.
+\]
+
+This integral representation allows differentiation under the integral sign. For example, let:
+\[
+f^{(k)}(z) = \frac{k!}{2\pi i} \oint_C \frac{f(w)}{(w - z)^{k+1}}\,dw.
+\]
+
+We can verify this using differentiation under the integral and Cauchy's theorem.
+
+\subsection*{Smoothness and Consequences}
+
+From the expression above, since all derivatives exist and are given by integrals involving $f$, which is continuous on $\overline{D}$, it follows that $f \in C^\infty(D)$.
+
+To check that $f$ is analytic, we note that partial derivatives of all orders exist and are continuous. Therefore, $f \in \mathcal{A}(D)$.
+
+By repeated application of the Cauchy formula and integration theory, we conclude that for all $k \in \mathbb{N}$:
+\[
+f^{(k)}(z) = \frac{k!}{2\pi i} \oint_{\partial D} \frac{f(w)}{(w - z)^{k+1}}\,dw,
+\]
+and $f \in \mathcal{A}(D)$.
+
+\section*{Cauchy Integral Formula for Derivatives (Restated)}
+
+\textbf{Theorem.} Let $D \subset \mathbb{C}$ be a bounded domain with piecewise smooth, positively oriented boundary $\partial D$.
+
+Let $f \in \mathcal{A}(D) \cap C^1(\overline{D})$ and let $z \in D$. Then:
+\[
+f^{(n)}(z) = \frac{n!}{2\pi i} \oint_{\partial D} \frac{f(w)}{(w - z)^{n+1}}\,dw.
+\]
+
+\subsection*{Proof Outline}
+
+Since all derivatives of $f$ exist and are continuous on $\overline{D}$, we differentiate under the integral sign. The formula follows by standard differentiation rules applied to:
+\[
+f(z) = \frac{1}{2\pi i} \oint_{\partial D} \frac{f(w)}{w - z}\,dw.
+\]
+
+\section*{Example}
+
+Evaluate:
+\[
+\oint_{|z| = 2} \frac{e^z}{(z - 1)^3}\,dz.
+\]
+
+Let $f(z) = e^z$. Using the derivative version of the Cauchy Integral Formula:
+\[
+f^{(2)}(1) = e^1 = e,
+\]
+so:
+\[
+\oint_{|z| = 2} \frac{e^z}{(z - 1)^3}\,dz = \frac{2\pi i}{2!} f^{(2)}(1) = \pi i e.
+\]
+
+\section*{Morera's Theorem}
+
+\textbf{Theorem.} Let $f \in C(D)$ and suppose
+\[
+\oint_{\gamma} f(z)\,dz = 0
+\]
+for every closed triangle $\gamma$ inside $D$. Then $f \in \mathcal{A}(D)$.
+
+\subsection*{Proof Sketch}
+
+Since the conclusion is local, we may assume $D$ is a small disk.
+
+Fix $z_0 \in D$. Define:
+\[
+F(z) = \int_{z_0}^z f(w)\,dw
+\]
+where the integral is taken over any path from $z_0$ to $z$.
+
+By the path independence result from Lecture 7, this is well-defined.
+
+Then:
+\[
+F'(z) = f(z),
+\]
+so $f$ is the derivative of a holomorphic function $F$, and hence $f \in \mathcal{A}(D)$.
+
+\section*{Cauchy–Goursat Theorem}
+
+\textbf{Theorem.} Let $f \in \mathcal{A}(D)$, and let $T \subset D$ be a (solid) triangle. Then:
+\[
+\oint_{\partial T} f(z)\,dz = 0.
+\]
+
+\subsection*{Proof Outline (by contradiction)}
+
+Assume the integral is nonzero over some triangle.
+
+Split the triangle into four sub-triangles by joining midpoints of sides. One of these smaller triangles must have an integral of larger or equal magnitude than $\frac{1}{4}$ of the original. Repeat the process infinitely.
+
+This creates a nested sequence of triangles with vanishing diameter but bounded integral value.
+
+This leads to a contradiction because $f$ is analytic and continuous; hence the integral must go to zero over sufficiently small paths. Thus, the original assumption must be false.
+
+\section*{Corollary}
+
+If $f \in \mathcal{A}(D)$, then $f \in C^\infty(D)$.
+
+\subsection*{Proof}
+
+By the Cauchy–Goursat theorem, for every solid triangle $T \subset D$, we have:
+\[
+\oint_{\partial T} f(z)\,dz = 0.
+\]
+Then by Morera’s Theorem (Thm 5), $f \in \mathcal{A}(D) \cap C(D)$.
+
+\section*{Remarks}
+
+\begin{enumerate}
+    \item In many earlier results (e.g., Theorems 1, 3 in Lecture 8 and Theorems 1, 3, 4 of this lecture), we assumed $f \in \mathcal{A}(D) \cap C^1(D)$ because Green’s formula required differentiability.
+
+    \item The power of the Cauchy–Goursat theorem (Theorem 6) is that it shows $f \in \mathcal{A}(D)$ automatically implies $f \in C^\infty(D)$.
+
+    \item In the derivation of the Cauchy formula (Theorem 1.4), we can now relax the assumption $f \in C^1(D)$ and only assume $f \in \mathcal{A}(D)$. This is because $f$ can be approximated uniformly by smooth functions (e.g., mollified or smoothed versions).
+
+    \item Without the Cauchy–Goursat theorem, we would have to build up all of complex function theory under the assumption that $f \in C^1(D)$, which would be too restrictive for many applications.
+\end{enumerate}
+
+
+\section*{Smoothness and Power Series Expansion}
+
+Cauchy's integral formula implies $C^\infty$ smoothness and analyticity for functions in $\mathcal{A}(D)$.
+
+Beyond local smoothness, Cauchy's formula provides powerful consequences such as Taylor expansions and control over contour integrals.
+
+\subsection*{Theorem (Taylor Series)}
+
+Let $D \subset \mathbb{C}$ be a domain, and let $f \in \mathcal{A}(D)$. Let $B(a, R) \subset D$ be a closed disk. Then $f$ is represented in $B(a, R)$ by its Taylor series centered at $a$:
+\[
+f(z) = \sum_{n=0}^\infty a_n (z - a)^n,
+\]
+where
+\[
+a_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2\pi i} \oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw.
+\]
+
+(This theorem was already used implicitly when we computed Laurent series expansions in previous examples.)
+
+\section*{Proof Sketch}
+
+Let $z \in B(a, R)$ and fix $r$ such that $|z - a| < r < R$.
+
+Using Cauchy’s formula:
+\[
+f(z) = \frac{1}{2\pi i} \oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.
+\]
+
+Then express:
+\[
+\frac{1}{w - z} = \sum_{n=0}^\infty \frac{(z - a)^n}{(w - a)^{n+1}}, \quad \text{for } |z - a| < |w - a|.
+\]
+
+This series converges uniformly on the contour, allowing term-by-term integration:
+\[
+f(z) = \sum_{n=0}^\infty \left( \frac{1}{2\pi i} \oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw \right)(z - a)^n.
+\]
+
+So each coefficient is:
+\[
+a_n = \frac{f^{(n)}(a)}{n!}.
+\]
+
+\section*{Remarks}
+
+\begin{enumerate}
+    \item For $C^\infty$ functions of real variables, the Taylor series need not converge to the function (e.g., bump functions). These are smooth but not analytic.
+
+    \item A function $f$ of a real variable is called \textbf{real-analytic} if it is equal to its Taylor series on some neighborhood. For such functions, analytic techniques still apply.
+
+    \item For $f(x) = \frac{1}{1 + x^2}$, which is real-analytic on $\mathbb{R}$, the radius of convergence of its Taylor series at $x = 0$ is less than the distance to the nearest singularity in the complex plane.
+
+    \item The nearest complex singularities of $f(x) = \frac{1}{1 + x^2}$ are at $z = \pm i$, so the radius of convergence of its Taylor series centered at 0 is 1.
+\end{enumerate}
+\section*{Example: Radius of Convergence}
+
+Find the radius of convergence $R$ of the Taylor series of $f(z) = \frac{1}{1 + z^2}$ centered at $z = i$.
+
+We observe that $f$ is analytic on $\mathbb{C} \setminus \{\pm i\}$.
+
+Let’s examine the largest disk centered at $z = i$ which avoids the singularities $\pm i$. The distance from $i$ to $-i$ is $2$, so the radius of convergence is $R = 2$.
+
+More generally, the radius of convergence of a Taylor series is the distance to the nearest singularity in the complex plane.
+
+This justifies why the series converges on $B(i, 2)$ but not beyond.
+
+\section*{Cauchy Estimates}
+
+\textbf{Theorem 2 (Cauchy Estimates).} Let $f \in \mathcal{A}(D)$ and $B(a, R) \subset D$. Let $M = \max_{|z - a| = R} |f(z)|$.
+
+Then:
+\[
+|f^{(n)}(a)| \leq \frac{n! \cdot M}{R^n}, \quad n = 0, 1, 2, \dots
+\]
+
+\textit{Proof.} By the Cauchy integral formula for derivatives:
+\[
+f^{(n)}(a) = \frac{n!}{2\pi i} \oint_{|z - a| = R} \frac{f(z)}{(z - a)^{n+1}}\,dz.
+\]
+
+Take the modulus:
+\[
+|f^{(n)}(a)| \leq \frac{n!}{2\pi} \cdot \frac{M \cdot 2\pi R}{R^{n+1}} = \frac{n! \cdot M}{R^n}.
+\]
+
+\section*{Theorem 3 (Liouville’s Theorem)}
+
+Let $f \in \mathcal{A}(\mathbb{C})$ be an entire function. Suppose $f$ is bounded. Then $f$ is constant.
+
+\textit{Proof.} Let $M$ be an upper bound for $|f(z)|$ on $\mathbb{C}$. Then by Cauchy estimates:
+\[
+|f^{(n)}(0)| \leq \frac{n! \cdot M}{R^n}.
+\]
+
+As $R \to \infty$, the bound goes to 0. So $f^{(n)}(0) = 0$ for $n \geq 1$, and hence $f$ is constant.
+
+\section*{Theorem 4 (Fundamental Theorem of Algebra)}
+
+Every non-constant polynomial $p(z) = a_n z^n + \cdots + a_0$ with complex coefficients has at least one root in $\mathbb{C}$.
+
+\textit{Proof (by contradiction).} Suppose $p(z)$ has no root. Then:
+\[
+\frac{1}{p(z)} \in \mathcal{A}(\mathbb{C})
+\]
+is entire. Since $|p(z)| \to \infty$ as $|z| \to \infty$, we have:
+\[
+\left| \frac{1}{p(z)} \right| \to 0.
+\]
+
+So $\frac{1}{p(z)}$ is bounded and entire, hence constant by Liouville’s Theorem. This contradicts that $p(z)$ is non-constant.
+
+\section*{Weierstrass Theorem}
+
+\textbf{Theorem (Weierstrass).} Let $D \subset \mathbb{C}$ be an open set. Let $\{f_n\}$ be a sequence of functions in $\mathcal{A}(D)$, and suppose $f_n \to f$ uniformly on compact subsets of $D$. Then:
+\begin{enumerate}
+    \item[(a)] $f \in \mathcal{A}(D)$,
+    \item[(b)] $f_n^{(k)} \to f^{(k)}$ uniformly on compact subsets of $D$ for each $k \in \mathbb{N}$.
+\end{enumerate}
+
+\subsection*{Proof Sketch}
+
+Let $B(a, r) \subset D$. Since $f_n \to f$ uniformly on compact subsets, and since each $f_n$ is analytic, we use the Cauchy integral formula to obtain:
+\[
+f(z) = \frac{1}{2\pi i} \oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.
+\]
+
+The right-hand side defines an analytic function, so $f \in \mathcal{A}(D)$.
+
+\subsection*{Part (b)}
+
+Fix $B(a, r) \subset D$, and let $M = \max_{|z - a| = r} |f_n(z) - f(z)| \to 0$ as $n \to \infty$.
+
+Using the Cauchy derivative formula:
+\[
+f_n^{(k)}(z) = \frac{k!}{2\pi i} \oint_{|w - a| = r} \frac{f_n(w)}{(w - z)^{k+1}}\,dw,
+\]
+and similarly for $f^{(k)}(z)$.
+
+So:
+\[
+|f_n^{(k)}(z) - f^{(k)}(z)| \leq \frac{k!}{r^{k+1}} \max_{|w - a| = r} |f_n(w) - f(w)| \to 0,
+\]
+uniformly in $z \in B(a, r)$.
+
+Hence $f_n^{(k)} \to f^{(k)}$ uniformly on compact subsets.
+
+\section*{Remarks}
+
+\begin{enumerate}
+    \item This theorem completes the justification for term-by-term differentiation of power series (cf. Lecture 6, p. 6). The partial sums are analytic and converge uniformly on compact sets inside the disk of convergence.
+
+    \item Uniform convergence on compact sets is the correct hypothesis. Uniform convergence on all of $D$ is too strong and often fails, especially near the boundary.
+
+    \item The Weierstrass theorem does not hold for merely $C^\infty$ functions or for general real-analytic functions. For example:
+    \[
+    f_n(x) = \frac{x^n}{n!}
+    \]
+    converges uniformly on $\mathbb{R}$, but the derivatives converge only on compact intervals—not uniformly on all of $\mathbb{R}$.
+\end{enumerate}
+\section*{Logarithms and Branches}
+
+\textbf{Theorem 6.} Let $D \subset \mathbb{C}$ be a simply connected domain, and let $f \in \mathcal{A}(D)$ be a nonvanishing function. Then there exists $g \in \mathcal{A}(D)$ such that:
+\[
+f = e^g.
+\]
+
+That is, $f$ has a logarithm (i.e., a holomorphic branch of $\log f$) in $D$.
+
+\textit{Proof.} Since $f$ has no zeros in $D$ and $f \in \mathcal{A}(D)$, by Corollary of Lecture 8 (page 9), there exists $g \in \mathcal{A}(D)$ such that:
+\[
+g'(z) = \frac{f'(z)}{f(z)}.
+\]
+
+We choose $g$ such that $g(z_0) = \log f(z_0)$ for some fixed $z_0 \in D$. Then:
+\[
+\frac{d}{dz}(e^{-g(z)} f(z)) = 0.
+\]
+
+Hence $e^{-g(z)} f(z)$ is constant. Plugging in $z_0$, we find:
+\[
+e^{-g(z)} f(z) = 1 \Rightarrow f(z) = e^{g(z)}.
+\]
+
+\subsection*{Remarks}
+
+\begin{enumerate}
+    \item This is a simple case of Riemann's monodromy theorem: every multiple-valued analytic function has a branch on a simply connected domain.
+    \item If $D$ is not simply connected, the conclusion may fail. For instance, $f(z) = z$ has no continuous branch of $\log z$ on $\mathbb{C} \setminus \{0\}$.
+\end{enumerate}
+
+\section*{Theorem 7 (Uniqueness Theorem, Weak Version)}
+
+Let $D \subset \mathbb{C}$ be a domain (open and connected), and let $f \in \mathcal{A}(D)$. Suppose there exists a sequence $\{z_n\} \subset D$ such that $z_n \to z_0$ and $f(z_n) = 0$ for all $n$. Then $f \equiv 0$ on $D$.
+
+\textit{Proof.} Let $E := \{ z \in D : f(z) = 0 \}$.
+
+Since $f$ is continuous, $E$ is closed in $D$. Since $f$ is analytic, for $z \in E$ there exists a neighborhood where $f$ has a power series expansion:
+\[
+f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n.
+\]
+
+But $f(z) = 0$ for a sequence converging to $z_0$, so all coefficients vanish, i.e., $f \equiv 0$ locally.
+
+Hence $E$ is open. Therefore, $E$ is non-empty, open, and closed in the connected domain $D$, so $E = D$.
+\section*{Continuation of the Uniqueness Theorem}
+
+Let $f \in \mathcal{A}(D)$ and suppose $f(p) = 0$. Let $\gamma : [0,1] \to D$ be a continuous path from $z_0$ (where $f(z_0) = 0$) to $p$. Since $D$ is connected, such a path exists.
+
+Let $\{z_k\}$ be a sequence along the path $\gamma$, where $z_0 = z$, $z_n = p$. Since $f$ is continuous and vanishes in a neighborhood of $z_k$, we can cover the path by overlapping disks where $f = 0$.
+
+This chain of overlapping disks shows $f = 0$ in a neighborhood of $p$. Hence $f = 0$ throughout $D$.
+
+\subsection*{Corollary (Identity Theorem)}
+
+Let $D \subset \mathbb{C}$ be a domain. Let $f, g \in \mathcal{A}(D)$. If $f = g$ on a set $U \subset D$ having an accumulation point in $D$, then $f \equiv g$ on $D$.
+
+\textit{Proof.} Apply the previous theorem to $f - g$.
+
+\subsection*{Remark}
+
+This theorem fails for $C^\infty$ functions of a real variable. For example, define:
+\[
+f(x) = 
+\begin{cases}
+e^{-1/x^2} & x > 0, \\
+0 & x \leq 0.
+\end{cases}
+\]
+Then $f \in C^\infty(\mathbb{R})$ and $f(x) = 0$ for all $x \leq 0$, but $f \not\equiv 0$.
+
+\section*{Zeros of Analytic Functions}
+
+Let $f \in \mathcal{A}(E)$ for some set $E$. We say $f$ is analytic on $E$ even if $E$ is not open, provided $f$ is the restriction of an analytic function to $E$.
+
+Let $f \in \mathcal{A}(D)$ and $a \in D$.
+
+\begin{itemize}
+    \item $f$ has a \textbf{zero at} $a$ if $f(a) = 0$.
+    \item $f$ has a \textbf{zero of order $m \geq 1$} at $a$ if:
+    \[
+    f(a) = f'(a) = \cdots = f^{(m-1)}(a) = 0, \quad f^{(m)}(a) \neq 0.
+    \]
+\end{itemize}
+
+That is, the Taylor series of $f$ at $a$ begins with the term $(z - a)^m$.
+
+If $f$ is not identically zero, then such an $m$ exists and is called the order of the zero at $a$.
+\section*{Zeros and Orders}
+
+We write:
+\[
+f(z) = (z - z_0)^m g(z), \quad g(z_0) \neq 0,
+\]
+to indicate that $f$ has a zero of order $m$ at $z_0$.
+
+\subsection*{Examples}
+
+\begin{itemize}
+    \item $\text{ord}_{z=0}(z^4) = 4$.
+    \item $\text{ord}_{z=0}((z - 2)^2) = 0$.
+    \item $\text{ord}_{z=2}((z - 2)^2) = 2$.
+\end{itemize}
+
+\section*{Theorem 8: Characterization of Zeros}
+
+Let $f \in \mathcal{A}(D)$ and $z_0 \in D$. Then the following are equivalent:
+\[
+f(z) = (z - z_0)^m g(z), \quad g \in \mathcal{A}(D), \ g(z_0) \neq 0.
+\]
+
+\textit{Proof.} Let $\text{ord}_{z_0} f = m$, then $f$ has the form:
+\[
+f(z) = \sum_{n=m}^\infty a_n (z - z_0)^n = (z - z_0)^m g(z), \quad g(z) = \sum_{n=0}^\infty a_{n+m} (z - z_0)^n.
+\]
+
+Then $g \in \mathcal{A}(D)$ and $g(z_0) = a_m \neq 0$.
+
+\section*{Algebra of Orders of Zeros}
+
+\textbf{Theorem 9.} Let $f, g \in \mathcal{A}(D)$ and $z_0 \in D$.
+
+Suppose $f(z) = (z - z_0)^m \phi(z)$, $g(z) = (z - z_0)^n \psi(z)$ with $\phi(z_0), \psi(z_0) \neq 0$.
+
+Then:
+\[
+\text{ord}_{z_0}(fg) = \text{ord}_{z_0} f + \text{ord}_{z_0} g = m + n.
+\]
+
+\textit{Proof.} Multiply:
+\[
+f(z)g(z) = (z - z_0)^{m+n} \phi(z)\psi(z),
+\]
+with $\phi(z)\psi(z) \in \mathcal{A}(D)$ and nonzero at $z_0$.
+
+\section*{Examples}
+
+\begin{itemize}
+    \item $\text{ord}_{z=1}((z - 1)(\sin(z - 2))) = 1$.
+    \item $\text{ord}_{z=2}((z - 1)^2(\sin(z - 2))) = 3$.
+    \item $\text{ord}_{z=1}(\sin^2(z - 2)) = \text{undefined (zero of order 0)}$.
+\end{itemize}
+
+\section*{Theorem 10}
+
+Let $f, g \in \mathcal{A}(D)$, $f(z_0) = g(z_0) = 0$.
+
+Then:
+\[
+\text{ord}_{z_0}(f \cdot g) = \text{ord}_{z_0}(f) + \text{ord}_{z_0}(g).
+\]
+
+\textit{Proof.} Exercise—use Theorem 8 and algebra of orders.
+\section*{Theorem 11 (Identity Theorem – Strong Version)}
+
+Let $D \subset \mathbb{C}$ be a domain and let $f \in \mathcal{A}(D)$.
+
+Let $E \subset D$ have a limit point in $D$ (i.e., there exists a sequence $\{z_n\} \subset E$, $z_n \to z_0 \in D$, with $z_n \neq z_0$). Suppose $f(z) = 0$ for all $z \in E$. Then $f \equiv 0$ on $D$.
+
+\textit{Proof.} If $f \not\equiv 0$, then $\text{ord}_{z_0} f = m < \infty$. So $f(z) = (z - z_0)^m g(z)$ with $g \in \mathcal{A}(D)$, $g(z_0) \neq 0$.
+
+Since $f(z_n) = 0$, we have $g(z_n) = 0$ for infinitely many $z_n \to z_0$. But $g$ is continuous and analytic, so this contradicts $g(z_0) \neq 0$.
+
+Therefore, $f \equiv 0$.
+
+\section*{Corollary}
+
+Let $f$ be an analytic function on $D$, and not identically zero. Then its zeros are isolated points.
+
+\textit{Remark.} For $C^\infty$ functions of a real variable, this is false: such functions can vanish to infinite order on a non-discrete set (e.g., $f(x) = e^{-1/x^2}$ for $x > 0$, and $f(x) = 0$ for $x \leq 0$).
+
+Thus $f$ has infinitely many zeros in every neighborhood of $x = 0$ but is not identically zero.
+
+\section*{Remarks and Applications}
+
+As we noted earlier, many formulas for $C^\infty$ functions of a real variable carry over to complex analytic functions.
+
+\subsection*{Example}
+
+Let:
+\[
+f(z) = \cos z + \sinh^2 z - 1.
+\]
+
+Then $f \in \mathcal{A}(\mathbb{C})$. We know $f(x) = 0$ for all $x \in \mathbb{R}$. Since $\mathbb{R}$ has a limit point in $\mathbb{C}$, by the identity theorem, $f \equiv 0$.
+
+\subsection*{Example}
+
+Prove:
+\[
+\text{sinh}(z + w) = \text{sinh}(z)\cosh(w) + \cosh(z)\text{sinh}(w).
+\]
+
+Let:
+\[
+f(z) = \text{sinh}(z + w) - \text{sinh}(z)\cosh(w) - \cosh(z)\text{sinh}(w).
+\]
+
+Then $f \in \mathcal{A}(\mathbb{C})$, and $f(x) = 0$ for all $x \in \mathbb{R}$, since the identity holds for real arguments.
+
+Thus, by the identity theorem, $f(z) = 0$ for all $z \in \mathbb{C}$.
+\section*{Isolated Singularities}
+
+Let $B(z_0, r) = \{ z \in \mathbb{C} : 0 < |z - z_0| < r \}$, i.e., a punctured disk.
+
+\textbf{Definition.} We say a function $f$ has an \textbf{isolated singularity} at $z_0 \in \mathbb{C}$ if $f \in \mathcal{A}(B(z_0, r))$ for some $r > 0$.
+
+We write $f \in \mathcal{A}^\times(z_0)$.
+
+\subsection*{Example}
+
+Let $f(z) = \frac{1}{z}$. Then $f$ is analytic on $\mathbb{C} \setminus \{0\}$, so $f$ has an isolated singularity at $0$.
+
+\subsection*{Removable Singularities}
+
+\textbf{Definition.} Let $f \in \mathcal{A}^\times(z_0)$. We say $f$ has a \textbf{removable singularity} at $z_0$ if $f$ can be extended to an analytic function on a neighborhood of $z_0$.
+
+That is, $f \in \mathcal{A}(z_0)$, and there exists $g \in \mathcal{A}(B(z_0, r))$ for some $r > 0$, such that $g(z) = f(z)$ for $z \neq z_0$.
+
+\subsection*{Example}
+
+Let
+\[
+f(z) = 
+\begin{cases}
+\frac{\sin z}{z} & z \neq 0, \\
+1 & z = 0.
+\end{cases}
+\]
+Then $f$ has a removable singularity at $0$.
+
+\subsection*{Example}
+
+Let $f(z) = \frac{z^2 - 1}{z - 1} = z + 1$ for $z \neq 1$.
+
+Then $f$ extends to $f(1) = 2$, so $f$ has a removable singularity at $1$.
+
+\subsection*{Example}
+
+Let $f(z) = \sum_{n=1}^\infty \frac{z^n}{n^2}$.
+
+Then $f$ is defined and analytic on the unit disk, and continuous on the closed disk. So if we consider the restriction to $B(0,1)$ punctured at $0$, the singularity at $0$ is removable.
+
+\section*{Theorem (Riemann's Removable Singularity Theorem)}
+
+Let $f \in \mathcal{A}^\times(z_0)$ and $\lim_{z \to z_0} f(z)$ exists and is finite.
+
+Then $f$ has a removable singularity at $z_0$.
+
+\textit{Proof.} Define:
+\[
+g(z) = 
+\begin{cases}
+f(z), & z \neq z_0, \\
+\lim_{z \to z_0} f(z), & z = z_0.
+\end{cases}
+\]
+Then $g$ is continuous at $z_0$, and since $f$ is analytic on $B(z_0, r) \setminus \{z_0\}$, we can apply Morera's theorem to conclude $g \in \mathcal{A}(B(z_0, r))$.
+\section*{Removable Singularities (continued)}
+
+\textbf{Theorem.} Let $f \in \mathcal{A}^\times(z_0)$ and suppose $\lim_{z \to z_0} f(z)$ exists and is finite. Then $f$ has a removable singularity at $z_0$.
+
+\textit{Example.} Let $f \in \mathcal{A}^\times(0)$ and suppose $f(z) = \frac{\sin z}{z}$ for $z \neq 0$. Then $f$ is bounded near $z = 0$, and $\lim_{z \to 0} f(z) = 1$, so $f$ has a removable singularity at $z = 0$.
+
+Let $f(z) = \frac{z^2 - 2}{z^2 - 1}$. Then $f$ has removable singularities at points where the function simplifies and the denominator does not vanish.
+
+From the Taylor series theorem, if $f$ is analytic in a punctured disk and bounded near $z_0$, then the singularity at $z_0$ is removable.
+
+\section*{Poles}
+
+\textbf{Definition.} Let $f \in \mathcal{A}^\times(z_0)$. We say $f$ has a \textbf{pole at $z_0$} if:
+\[
+\lim_{z \to z_0} |f(z)| = \infty.
+\]
+
+\textbf{Theorem.} Let $f \in \mathcal{A}^\times(z_0)$. Then the following are equivalent:
+\begin{enumerate}
+    \item $f$ has a pole at $z_0$ of order $m$.
+    \item There exists $g \in \mathcal{A}(D)$ such that $f(z) = \frac{g(z)}{(z - z_0)^m}$ and $g(z_0) \neq 0$.
+\end{enumerate}
+
+We write:
+\[
+\text{ord}_{z_0} f = -m.
+\]
+
+\textit{Proof Sketch.} If $f$ has a pole at $z_0$, then $1/f$ has a zero of order $m$ at $z_0$. Hence:
+\[
+\frac{1}{f(z)} = (z - z_0)^m h(z), \quad h(z_0) \neq 0,
+\]
+so:
+\[
+f(z) = \frac{1}{(z - z_0)^m h(z)} = \frac{g(z)}{(z - z_0)^m},
+\]
+with $g(z_0) \neq 0$.
+
+\section*{Algebra of Zeros and Poles}
+
+\textbf{Corollary.} Let $f \in \mathcal{A}(D)$. Then $f$ has a zero of order $m$ at $z_0$ if and only if $\frac{1}{f}$ has a pole of order $m$ at $z_0$.
+
+\textbf{Theorem 3.} Let $f, g \in \mathcal{A}^\times(D)$ and each have either a removable singularity, zero, or pole at $z_0$ with $f(z_0), g(z_0) \neq 0$. Then:
+\[
+\text{ord}_{z_0}(f \cdot g) = \text{ord}_{z_0}(f) + \text{ord}_{z_0}(g),
+\]
+\[
+\text{ord}_{z_0}\left(\frac{f}{g}\right) = \text{ord}_{z_0}(f) - \text{ord}_{z_0}(g).
+\]
+
+\subsection*{Example}
+
+Let $f(z) = \frac{1}{(1 - z)^2}$, and let $g(z) = \frac{1}{(z - 2)^3}$. Then $f$ has a pole of order 2 at $z = 1$, $g$ has a pole of order 3 at $z = 2$, and $f \cdot g$ has a pole of order 5 at the appropriate point.
+
+Thus,
+\[
+\text{ord}_{z_0}(f \cdot g) = -2 + (-3) = -5.
+\]
+
+\section*{Essential Singularities}
+
+Let $f \in \mathcal{A}^\times(z_0)$. Suppose $z_0$ is neither a removable singularity nor a pole. Then we say $f$ has an \textbf{essential singularity} at $z_0$.
+
+\textbf{Theorem.} Let $f \in \mathcal{A}^\times(z_0)$. Then:
+\begin{enumerate}
+    \item $z_0$ is removable if and only if $\lim_{z \to z_0} f(z)$ exists and is finite.
+    \item $z_0$ is a pole if and only if $\lim_{z \to z_0} |f(z)| = \infty$.
+    \item $z_0$ is essential if neither (1) nor (2) holds.
+\end{enumerate}
+
+\textit{Example.} Let $f(z) = e^{1/z}$. Then $f \in \mathcal{A}^\times(0)$, but:
+\[
+\lim_{z \to 0} f(z) \text{ does not exist, and } \lim_{z \to 0} |f(z)| \not= \infty.
+\]
+Hence $f$ has an essential singularity at $z = 0$.
+
+\section*{Casorati–Weierstrass Theorem (a.k.a. Sokhotski's Theorem)}
+
+\textbf{Theorem.} Let $f$ have an essential singularity at $z_0$. Then there exists a sequence $\{z_n\} \to z_0$ such that $f(z_n)$ becomes dense in $\mathbb{C}$.
+
+\textit{Compare with Great Picard’s Theorem:} If $f$ has an essential singularity at $z_0$, then in any neighborhood of $z_0$, the image of $f$ covers all of $\mathbb{C}$ except possibly one value.
+
+\textit{Proof:} Exercise (See Ahlfors or your textbook).
+
+\section*{Singularity at Infinity}
+
+We say that $f$ has a removable singularity, a pole, or an essential singularity at $\infty$ if the function $g(w) = f(1/w)$ has the corresponding singularity at $w = 0$.
+
+\textbf{Examples:}
+\begin{itemize}
+    \item $f(z) = \frac{1}{z}$ has a removable singularity at $\infty$.
+    \item $f(z) = z^2 + 1$ has a pole at $\infty$.
+    \item $f(z) = e^z$ has an essential singularity at $\infty$.
+\end{itemize}
+
+\section*{Laurent Series}
+
+We consider the series:
+\[
+f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n + \sum_{n=1}^\infty \frac{b_n}{(z - z_0)^n}
+\]
+
+This is a Laurent series centered at $z_0$.
+
+\subsection*{Definition}
+
+The domain of convergence of a Laurent series is the set on which both the positive and negative parts of the series converge.
+
+We define the \textbf{annulus} centered at $z_0$ with inner radius $r$ and outer radius $R$ as:
+\[
+\text{Ann}(z_0; r, R) = \{ z \in \mathbb{C} : r < |z - z_0| < R \}.
+\]
+
+\textbf{Theorem 4.} For the Laurent series
+\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n (z - z_0)^n,
+\]
+we define:
+\[
+r = \limsup_{n \to \infty} |a_{-n}|^{1/n}, \quad R = \frac{1}{\limsup_{n \to \infty} |a_n|^{1/n}}.
+\]
+
+Then the domain of convergence is the annulus:
+\[
+\text{Ann}(z_0; r, R).
+\]
+
+If $r \geq R$, then the domain is empty.
+
+\textit{Proof:} Exercise. Use comparison with a geometric series.
+
+\section*{Theorem 5}
+
+Let $f$ be holomorphic on an annulus $A = \text{Ann}(z_0; r, R)$. Then $f$ has a Laurent series expansion valid on the annulus:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n,
+\]
+where:
+\[
+a_n = \frac{1}{2\pi i} \oint_{|z - z_0| = \rho} \frac{f(z)}{(z - z_0)^{n+1}}\,dz,
+\]
+for any $\rho$ with $r < \rho < R$.
+
+The Laurent series is \textbf{unique} on the annulus of convergence.
+
+\textit{Proof:} Suppose we have two different Laurent series for $f$. Subtract the two expressions and integrate term-by-term on a circle inside the annulus to isolate each coefficient, concluding they must be equal.
+\section*{Laurent Series and Integral Formula}
+
+Let $f$ be holomorphic on $A = \text{Ann}(z_0; r, R)$, with $r < \rho < R$.
+
+Then for $z$ in the annulus,
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n, \quad \text{with} \quad a_n = \frac{1}{2\pi i} \oint_{|w - z_0| = \rho} \frac{f(w)}{(w - z_0)^{n+1}} \, dw.
+\]
+
+This follows from Cauchy's integral formula adapted to annuli.
+
+The function $f$ can be decomposed into:
+\[
+f(z) = f_+(z) + f_-(z),
+\]
+where $f_+(z)$ is analytic in a neighborhood of $z_0$, and $f_-(z)$ has a pole at $z_0$ (if any), represented by negative powers in the Laurent series.
+
+By analyticity and term-by-term integration, the coefficients $a_n$ are independent of $\rho$.
+
+\section*{Existence of Laurent Series}
+
+Let $f$ be holomorphic on $A = \text{Ann}(z_0; r, R)$. Then there exists a Laurent series:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n,
+\]
+that converges to $f(z)$ in $A$.
+
+Let $g(w) = f(w)$ on $A$. Then $g \in \mathcal{A}(A)$. If $g$ has a removable singularity at $z_0$, we define $g(z_0) = \lim_{w \to z_0} g(w)$.
+
+Then by contour integration and term-by-term expansion:
+\[
+f(z) = \sum_{n=-\infty}^{\infty} \left( \frac{1}{2\pi i} \oint_{|w - z_0| = \rho} \frac{f(w)}{(w - z_0)^{n+1}} \, dw \right) (z - z_0)^n,
+\]
+as desired.
+
+\section*{Remarks}
+
+\begin{enumerate}
+    \item The proof above used the statement of the Taylor series theorem. Alternatively (see textbook), one can derive it directly using the Cauchy integral formula.
+
+    \item Let $f$ be a periodic function on $\mathbb{R}$. Define $g(z) = f(e^{iz})$. Then $g$ is a function on the unit circle $|z| = 1$.
+
+    The Fourier series of $f$ corresponds to the Laurent series of $g$:
+    \[
+    f(x) = \sum_{n=-\infty}^\infty c_n e^{inx} \quad \leftrightarrow \quad g(z) = \sum_{n=-\infty}^\infty c_n z^n.
+    \]
+
+    That is, Fourier coefficients $c_n$ become Laurent coefficients for $g$.
+
+    \item The coefficients are given by:
+    \[
+    c_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-inx} \, dx \quad \leftrightarrow \quad a_n = \frac{1}{2\pi i} \oint \frac{g(w)}{w^{n+1}} \, dw.
+    \]
+\end{enumerate}
+\section*{Laurent Series: Review and Properties}
+
+Recall the Taylor series:
+\[
+f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n.
+\]
+
+For Laurent series, this formula does not apply near an isolated singularity at $z_0$, since $f$ is not analytic at $z_0$.
+
+The Laurent expansion:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n
+\]
+allows negative powers to accommodate behavior near singularities.
+
+\textbf{Remark:} One obtains Laurent series of functions by combining other Laurent series and using algebraic operations and differentiation.
+
+\section*{Theorem}
+
+Let $f$ be analytic on an annulus $\text{Ann}(z_0; r, R)$ for some $0 < r < R$.
+
+Suppose
+\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n (z - z_0)^n,
+\]
+then:
+\[
+a_n = \frac{1}{2\pi i} \oint_{|w - z_0| = \rho} \frac{f(w)}{(w - z_0)^{n+1}}\, dw
+\]
+for any $r < \rho < R$.
+
+\section*{Example}
+
+Let $f(z) = \frac{1}{z^2 - 1} = \frac{1}{(z - 1)(z + 1)}$.
+
+Suppose $f$ is defined on the annulus $A = \{ z : 1 < |z| < 2 \}$. Then we can write:
+\[
+\frac{1}{z^2 - 1} = \frac{1}{2} \left( \frac{1}{z - 1} - \frac{1}{z + 1} \right).
+\]
+
+For $|z| > 1$, we can expand:
+\[
+\frac{1}{z + 1} = \frac{1}{z} \cdot \frac{1}{1 + \frac{1}{z}} = \sum_{n=0}^\infty (-1)^n \frac{1}{z^{n+1}}.
+\]
+
+So:
+\[
+f(z) = \frac{1}{2} \left( \frac{1}{z - 1} - \sum_{n=0}^\infty (-1)^n \frac{1}{z^{n+1}} \right).
+\]
+
+\section*{General Expansion}
+
+Given:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n,
+\]
+then:
+\[
+a_n = \frac{1}{2\pi i} \oint_{C} \frac{f(w)}{(w - z_0)^{n+1}}\, dw,
+\]
+and for $n < 0$, the integral gives the principal part of the expansion.
+
+\textbf{Coefficients:}
+\[
+a_n =
+\begin{cases}
+\frac{1}{2\pi i} \oint \frac{f(w)}{(w - z_0)^{n+1}}\,dw & \text{for } n \in \mathbb{Z} \\
+\end{cases}
+\]
+
+The residue of $f$ at $z_0$ is $a_{-1}$.
+
+This concludes the Laurent expansion and example derivation.
+\section*{Laurent Series Examples and Principal Part}
+
+\subsection*{Example}
+
+Let
+\[
+f(z) = \frac{1}{(z - 2)^2 (z + 3)}.
+\]
+
+We want the Laurent series centered at $z = 0$ in the annulus $A = \{1 < |z| < 3\}$.
+
+First, write the function as:
+\[
+f(z) = \frac{1}{(z - 2)^2 (z + 3)}.
+\]
+
+We expand each factor appropriately:
+\[
+\frac{1}{z + 3} = \frac{1}{3} \cdot \frac{1}{1 + \frac{z}{3}} = \sum_{k=0}^\infty (-1)^k \frac{z^k}{3^{k+1}} \quad \text{for } |z| < 3.
+\]
+
+Similarly,
+\[
+\frac{1}{(z - 2)^2} = \left( \frac{-1}{2 - z} \right)^2 = \sum_{n=1}^\infty n \cdot \frac{z^{n-1}}{2^{n+1}} \quad \text{for } |z| < 2.
+\]
+
+Thus, $f(z)$ has a Laurent series on the annulus $1 < |z| < 3$ formed by multiplying these two series.
+
+\subsection*{Principal Part}
+
+Let
+\[
+f(z) = \sum_{n = -\infty}^\infty a_n (z - z_0)^n
+\]
+be a Laurent series valid in an annulus $\text{Ann}(z_0; r, R)$.
+
+Then we write:
+\[
+f(z) = f_{\text{reg}}(z) + f_{\text{sing}}(z),
+\]
+where:
+\[
+f_{\text{reg}}(z) = \sum_{n=0}^\infty a_n (z - z_0)^n
+\quad \text{(regular part)},
+\]
+\[
+f_{\text{sing}}(z) = \sum_{n=1}^\infty \frac{a_{-n}}{(z - z_0)^n}
+\quad \text{(principal part)}.
+\]
+
+The principal part contains the singular behavior at $z_0$. The residue of $f$ at $z_0$ is:
+\[
+\text{Res}_{z_0}(f) = a_{-1}.
+\]
+
+This decomposition is useful in classifying isolated singularities and computing contour integrals.
+\section*{Classification of Isolated Singularities (Theorem 6)}
+
+Let $f$ have an isolated singularity at $z_0 \in \mathbb{C}$. Then:
+
+\begin{enumerate}
+    \item[(a)] $z_0$ is a \textbf{removable singularity} if and only if $a_{-n} = 0$ for all $n \geq 1$.
+
+    \item[(b)] $z_0$ is a \textbf{pole of order $m$} if $a_{-m} \neq 0$ and $a_{-n} = 0$ for all $n > m$. Then $m$ is the order of the pole.
+
+    \item[(c)] $z_0$ is an \textbf{essential singularity} if $a_{-n} \neq 0$ for infinitely many $n$.
+\end{enumerate}
+
+\textit{Proof.}
+\begin{itemize}
+    \item[(a)] If all negative-index terms vanish, the Laurent series reduces to a Taylor series, and $z_0$ is removable.
+
+    \item[(b)] If $f(z) = \sum_{n=-m}^{\infty} a_n (z - z_0)^n$ with $a_{-m} \neq 0$ and $a_{-n} = 0$ for $n > m$, then $f$ has a pole of order $m$ at $z_0$.
+
+    \item[(c)] If neither (a) nor (b) holds, then there are infinitely many non-zero negative-index coefficients, so $z_0$ is essential.
+\end{itemize}
+
+\section*{Example}
+
+Let
+\[
+f(z) = \frac{z}{(z + 1)(z - 2)^2}.
+\]
+
+We are interested in the Laurent series centered at $z = 2$.
+
+Let $g(z) = f(z) = \frac{z}{(z + 1)(z - 2)^2}$.
+
+Let’s compute the principal part of $f$ about $z = 2$. Write:
+\[
+f(z) = \frac{z}{(z + 1)(z - 2)^2}.
+\]
+
+We perform partial fraction decomposition or use known expansions.
+
+Let us write:
+\[
+f(z) = \frac{1}{z + 1} \cdot \frac{1}{(z - 2)^2}.
+\]
+
+Now expand:
+\[
+\frac{1}{z + 1} = \sum_{n=0}^\infty (-1)^n (z - 2)^n \cdot \frac{1}{(2 + 1)^{n+1}} \quad \text{for } |z - 2| < 1.
+\]
+
+Combining with $\frac{1}{(z - 2)^2}$, we get:
+\[
+f(z) = \sum_{n=0}^\infty \frac{(-1)^n}{3^{n+1}} (z - 2)^{n - 2},
+\]
+so the terms with negative powers give the principal part:
+\[
+\frac{a_{-2}}{(z - 2)^2} + \frac{a_{-1}}{(z - 2)}.
+\]
+
+In this case:
+\[
+a_{-2} = \frac{1}{3}, \quad a_{-1} = -\frac{1}{9}, \quad \text{etc.}
+\]
+
+Therefore, the principal part is:
+\[
+\frac{1}{3(z - 2)^2} - \frac{1}{9(z - 2)} + \cdots
+\]
+\section*{Algebra of Essential and Non-Essential Singularities}
+
+Let $E$ denote any function that has an \textbf{essential singularity} at $z_0$.
+
+Let $N$ denote any function that has a \textbf{non-essential singularity} (i.e., removable or pole) at $z_0$.
+
+Then we have:
+
+\[
+E + N = E, \quad E \cdot N = E, \quad \frac{E}{N} = E
+\]
+
+These follow from the representation of $N$ as a Laurent series with only finitely many negative power terms, while $E$ has infinitely many.
+
+Thus, the algebraic operations preserve essential singularities.
+
+\section*{Example}
+
+Let:
+\[
+f(z) = e^{1/z} + \frac{1}{z^2}.
+\]
+
+Then $e^{1/z}$ has an essential singularity at $z = 0$.
+
+Since $\frac{1}{z^2}$ is a non-essential singularity (pole), we have:
+\[
+f(z) = E + N = E \quad \text{at } z = 0.
+\]
+
+\section*{Example}
+
+Let:
+\[
+f(z) = z^2 e^{1/z}.
+\]
+
+Then $e^{1/z}$ is essential, and $z^2$ is entire (analytic everywhere).
+
+So:
+\[
+f(z) = N \cdot E = E \quad \text{at } z = 0.
+\]
+
+\section*{Example}
+
+Let:
+\[
+f(z) = \frac{e^z - 1}{z}.
+\]
+
+At $z = 0$, $e^z - 1$ has a zero (Taylor series starts at $z$), so:
+\[
+f(z) = \frac{z + \frac{z^2}{2!} + \cdots}{z} = 1 + \frac{z}{2!} + \cdots.
+\]
+
+Thus, $f$ is analytic at $z = 0$, and the singularity is removable.
+
+\section*{Example}
+
+Let:
+\[
+f(z) = \frac{(z - 1)^2 e^z}{\sin z}.
+\]
+
+At $z = 0$, $\sin z$ has a zero, but $e^z$ and $(z - 1)^2$ are analytic and nonzero at $z = 0$.
+
+So:
+\[
+f(z) = \frac{M}{N} = E,
+\]
+since the denominator vanishes to order 1 and numerator is nonzero, and $\sin z$ has a Taylor expansion with infinitely many nonzero terms.
+
+Hence, this function has an essential singularity at $z = 0$.
+\section*{Residue at an Isolated Singularity}
+
+Let $f$ have an isolated singularity at $z_0$. We define the \textbf{residue} of $f$ at $z_0$ as:
+\[
+\text{Res}(f, z_0) = a_{-1},
+\]
+where $a_{-1}$ is the coefficient in the Laurent series expansion:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n
+\]
+valid in a punctured neighborhood of $z_0$.
+
+\section*{Theorem: Residue from Integral}
+
+Let $f$ have a Laurent series in a punctured neighborhood of $z_0$, and let $C$ be a positively oriented simple closed contour enclosing $z_0$. Then:
+\[
+\text{Res}(f, z_0) = \frac{1}{2\pi i} \oint_C f(z) \, dz.
+\]
+
+\textit{Proof.} Suppose $f$ is analytic on the annulus $r < |z - z_0| < R$, and $C$ is a positively oriented circle $|z - z_0| = \rho$ with $r < \rho < R$.
+
+Then the Laurent series converges uniformly on $C$, and we can integrate term-by-term:
+\[
+\oint_C f(z)\,dz = \sum_{n=-\infty}^\infty a_n \oint_C (z - z_0)^n dz.
+\]
+
+But:
+\[
+\oint_C (z - z_0)^n dz =
+\begin{cases}
+0 & \text{if } n \neq -1, \\
+2\pi i & \text{if } n = -1.
+\end{cases}
+\]
+
+Therefore:
+\[
+\oint_C f(z) \, dz = 2\pi i \cdot a_{-1},
+\]
+which proves the result.
+
+\section*{Example}
+
+Let $f(z) = \frac{1}{z(z - 1)^2}$.
+
+We want $\text{Res}(f, 0)$. Write:
+\[
+f(z) = \frac{1}{z} \cdot \frac{1}{(z - 1)^2}.
+\]
+
+Expand $\frac{1}{(z - 1)^2}$ as a power series around $z = 0$:
+\[
+\frac{1}{(1 - z)^2} = \sum_{n=1}^\infty n z^{n-1}.
+\]
+
+Then:
+\[
+f(z) = \left( \sum_{n=1}^\infty n z^{n - 2} \right),
+\]
+so the coefficient of $z^{-1}$ is $a_{-1} = 1$.
+
+Hence:
+\[
+\text{Res}(f, 0) = 1.
+\]
+
+\section*{Residue Theorem}
+
+Let $D$ be a domain bounded by a finite number of simple, closed, piecewise smooth curves. Let $f$ be analytic on $D$ except for isolated singularities $z_1, z_2, \dots, z_n \in D$.
+
+Then:
+\[
+\oint_{\partial D} f(z)\,dz = 2\pi i \sum_{j=1}^n \text{Res}(f, z_j).
+\]
+
+This is the \textbf{residue theorem}.
+\section*{Residue Theorem (continued)}
+
+Let $f$ be analytic on a domain $D$ except at finitely many isolated singularities $z_1, z_2, \dots, z_n$ in $D$, and suppose the boundary $\partial D$ is positively oriented.
+
+Then:
+\[
+\oint_{\partial D} f(z)\,dz = 2\pi i \sum_{j=1}^n \text{Res}(f, z_j).
+\]
+
+\subsection*{Remark}
+
+We assume that the disks $B(z_j, r)$ are disjoint and contained in $D$. By the Cauchy theorem applied to the punctured domain (excluding singularities), the integral over the boundary is equal to the sum of the integrals over small circles around each singularity.
+
+\[
+\oint_{\partial D} f(z)\,dz = \sum_{j=1}^n \oint_{\gamma_j} f(z)\,dz = 2\pi i \sum_{j=1}^n \text{Res}(f, z_j).
+\]
+
+\section*{(3) Residue at a Pole}
+
+Let $f$ have a pole of order $m$ at $z_0$. Then:
+\[
+f(z) = \frac{g(z)}{(z - z_0)^m}, \quad \text{where } g \in \mathcal{A}(z_0), g(z_0) \neq 0.
+\]
+
+Then:
+\[
+\text{Res}(f, z_0) = \frac{1}{(m-1)!} \lim_{z \to z_0} \frac{d^{m-1}}{dz^{m-1}} \left[ (z - z_0)^m f(z) \right].
+\]
+
+\textbf{Remarks:}
+\begin{enumerate}
+    \item This formula is only useful if $g(z)$ is easily differentiable.
+    \item For simple poles (i.e., $m = 1$), the formula simplifies to:
+    \[
+    \text{Res}(f, z_0) = \lim_{z \to z_0} (z - z_0) f(z).
+    \]
+\end{enumerate}
+
+\section*{Example}
+
+Let:
+\[
+f(z) = \frac{e^z}{(z - 1)^2 (z - 2)}.
+\]
+
+We want to compute $\text{Res}(f, 1)$. Note that $z = 1$ is a pole of order 2.
+
+Set:
+\[
+f(z) = \frac{e^z}{(z - 1)^2 (z - 2)} = \frac{h(z)}{(z - 1)^2}, \quad h(z) = \frac{e^z}{z - 2}.
+\]
+
+Then:
+\[
+\text{Res}(f, 1) = \frac{d}{dz} h(z) \Big|_{z=1} = h'(1).
+\]
+
+Compute:
+\[
+h(z) = \frac{e^z}{z - 2}, \quad h'(z) = \frac{e^z (z - 2) - e^z}{(z - 2)^2} = \frac{e^z (z - 3)}{(z - 2)^2}.
+\]
+
+So:
+\[
+\text{Res}(f, 1) = \frac{e}{1^2} = e.
+\]
+
+By the residue theorem, if we integrate around a positively oriented circle $|z| = 3$, enclosing both singularities at $z = 1$ and $z = 2$, then:
+\[
+\oint_{|z|=3} f(z)\,dz = 2\pi i \left( \text{Res}(f, 1) + \text{Res}(f, 2) \right).
+\]
+
+\section*{Residue at a Pole of Order $m$}
+
+Let $f(z) = \frac{P(z)}{Q(z)}$ where:
+\begin{itemize}
+    \item $Q(z)$ has a zero of order $m$ at $z = a$,
+    \item $P(a) \neq 0$, and
+    \item $P$ and $Q$ are analytic near $a$.
+\end{itemize}
+
+Then $f$ has a pole of order $m$ at $z = a$, and:
+\[
+\text{Res}(f, a) = \frac{1}{(m-1)!} \lim_{z \to a} \frac{d^{m-1}}{dz^{m-1}} \left[ (z - a)^m f(z) \right].
+\]
+
+\subsection*{Special Case (Simple Pole)}
+
+If $Q(a) = 0$ and $Q'(a) \neq 0$, then $f(z) = \frac{P(z)}{Q(z)}$ has a simple pole at $z = a$, and:
+\[
+\text{Res}(f, a) = \frac{P(a)}{Q'(a)}.
+\]
+
+\subsection*{Proof (Sketch)}
+
+Since $Q(z)$ has a simple zero at $z = a$, we write:
+\[
+Q(z) = (z - a) R(z), \quad R(a) \neq 0.
+\]
+Then:
+\[
+f(z) = \frac{P(z)}{(z - a) R(z)} \Rightarrow (z - a) f(z) = \frac{P(z)}{R(z)} \to \frac{P(a)}{R(a)} = \frac{P(a)}{Q'(a)}.
+\]
+
+\section*{Example}
+
+Let:
+\[
+f(z) = \frac{\tan z}{z^3}.
+\]
+
+We know:
+\[
+\tan z = \frac{\sin z}{\cos z}, \quad \text{and } \cos(0) = 1.
+\]
+
+Then $f(z)$ has a pole of order 3 at $z = 0$, and we can expand:
+\[
+\tan z = z + \frac{z^3}{3} + \dots \Rightarrow f(z) = \frac{z + \frac{z^3}{3} + \cdots}{z^3}.
+\]
+
+So the Laurent expansion is:
+\[
+f(z) = \frac{1}{z^2} + \frac{1}{3} + \cdots,
+\]
+and the residue is $a_{-1} = 0$.
+
+\section*{Another Example}
+
+Let:
+\[
+f(z) = \frac{z}{(e^z - 1)^2}.
+\]
+
+Note $e^z - 1 = z + \frac{z^2}{2} + \frac{z^3}{6} + \cdots$, so:
+\[
+f(z) = \frac{z}{z^2 (1 + \frac{z}{2} + \frac{z^2}{6} + \cdots)^2}.
+\]
+
+This function has a pole of order 2 at $z = 0$.
+
+Use the derivative formula:
+\[
+\text{Res}(f, 0) = \lim_{z \to 0} \frac{d}{dz} \left[ z^2 f(z) \right].
+\]
+\section*{Residue Example with Derivative}
+
+Suppose:
+\[
+f(z) = \frac{z}{(e^z - 1)^2}
+\]
+
+We expand $e^z$:
+\[
+e^z = 1 + z + \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots,
+\quad \Rightarrow \quad e^z - 1 = z + \frac{z^2}{2!} + \frac{z^3}{3!} + \cdots.
+\]
+
+Thus:
+\[
+(e^z - 1)^2 = z^2 \left( 1 + \frac{z}{2} + \cdots \right)^2.
+\]
+
+Then:
+\[
+f(z) = \frac{z}{z^2 (1 + \frac{z}{2} + \cdots)^2}
+= \frac{1}{z (1 + \frac{z}{2} + \cdots)^2}.
+\]
+
+So the singularity at $z = 0$ is a simple pole, and the residue is:
+\[
+\text{Res}(f, 0) = \lim_{z \to 0} (z) f(z) = \frac{1}{(1 + 0)^2} = 1.
+\]
+
+Or use:
+\[
+\text{Res}(f, 0) = a_{-1} \quad \text{from Laurent expansion.}
+\]
+
+\subsection*{Application of Residue Theorem}
+
+Let $f$ have simple poles at $z_1, z_2, \dots, z_n$ inside a positively oriented closed contour $C$. Then:
+\[
+\oint_C f(z) \, dz = 2\pi i \sum_{j=1}^n \text{Res}(f, z_j).
+\]
+
+\textbf{Example Setup:}
+\[
+\oint_{\gamma} f(z)\, dz = 2\pi i \cdot \text{Res}(f, z_0),
+\quad \text{if } f \text{ has a single pole inside } \gamma.
+\]
+\end{document}

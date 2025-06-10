@@ -1,0 +1,378 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 HW 2}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  Let \(f:A\to B\) and \(g:B\to C\) be functions.
+  
+  \begin{enumerate}[label=(\alph*)]
+      \item If \(f\) and \(g\) are \emph{one–to–one} (injective), prove that
+            the composition \(g\circ f\) is one–to–one.
+      \item If \(g\circ f\) is one–to–one, prove that \(f\) is one–to–one.
+      \item If \(f\) is \emph{onto} (surjective) and \(g\circ f\) is one–to–one,
+            prove that \(g\) is one–to–one.
+      \item Give an explicit example in which \(g\circ f\) is one–to–one
+            while \(g\) itself is \emph{not} one–to–one.
+  \end{enumerate}
+  \end{problem}
+  
+  \begin{solution}
+  Remember that a map \(h:X\to Y\) is \emph{one–to–one} (injective) iff
+  \[
+  h(x_{1})=h(x_{2})\;\Longrightarrow\;x_{1}=x_{2}\qquad(x_{1},x_{2}\in X),
+  \]
+  and it is \emph{onto} (surjective) iff for every \(y\in Y\) there exists
+  \(x\in X\) with \(h(x)=y\).
+  
+  \begin{enumerate}[label=(\alph*)]
+  %--------------------------------------------------------------
+  \item \textbf{\(f\) and \(g\) injective \(\Longrightarrow\) \(g\circ f\) injective.}
+  
+      Let \(a_{1},a_{2}\in A\) and assume
+      \((g\circ f)(a_{1})=(g\circ f)(a_{2})\).
+      Then \(g\bigl(f(a_{1})\bigr)=g\bigl(f(a_{2})\bigr)\).
+      Since \(g\) is injective, we deduce \(f(a_{1})=f(a_{2})\);
+      injectivity of \(f\) now yields \(a_{1}=a_{2}\).
+      Hence \(g\circ f\) is injective.
+  
+  %--------------------------------------------------------------
+  \item \textbf{\(g\circ f\) injective \(\Longrightarrow\) \(f\) injective.}
+  
+      Suppose, toward a contradiction, that \(f\) is \emph{not} injective.
+      Then there exist \(a_{1},a_{2}\in A\) with
+      \(a_{1}\ne a_{2}\) yet \(f(a_{1})=f(a_{2})\).
+      Applying \(g\) we get
+      \[
+         (g\circ f)(a_{1})=g\bigl(f(a_{1})\bigr)
+                         =g\bigl(f(a_{2})\bigr)
+                         =(g\circ f)(a_{2}),
+      \]
+      contradicting injectivity of \(g\circ f\).
+      Therefore \(f\) must be injective.
+  
+  %--------------------------------------------------------------
+  \item \textbf{\(f\) surjective and \(g\circ f\) injective \(\Longrightarrow\) \(g\) injective.}
+  
+      Take any \(b_{1},b_{2}\in B\) with \(g(b_{1})=g(b_{2})\).
+      Surjectivity of \(f\) provides \(a_{1},a_{2}\in A\) such that
+      \(f(a_{1})=b_{1}\) and \(f(a_{2})=b_{2}\).
+      Then
+      \[
+           (g\circ f)(a_{1}) = g(b_{1}) = g(b_{2}) = (g\circ f)(a_{2}),
+      \]
+      so injectivity of \(g\circ f\) forces \(a_{1}=a_{2}\),
+      which in turn implies \(b_{1}=b_{2}\).
+      Hence \(g\) is injective.
+  
+  %--------------------------------------------------------------
+  \item \textbf{An example with \(g\circ f\) injective but \(g\) not injective.}
+  
+      Let
+      \[
+          A=(0,\infty),\qquad
+          B=\mathbb{R},\qquad
+          C=[0,\infty).
+      \]
+      Define
+      \[
+          f:A\longrightarrow B,\quad f(x)=x
+          \quad(\text{the inclusion map}),
+          \qquad
+          g:B\longrightarrow C,\quad g(x)=|x|.
+      \]
+      \begin{itemize}
+          \item \(g\) is \emph{not} injective because \(g(-1)=g(1)=1\) but \(-1\ne 1\).
+          \item For \(x\in(0,\infty)\) we have \((g\circ f)(x)=g(x)=|x|=x\);
+                thus \(g\circ f\) is the identity on \((0,\infty)\), and is therefore
+                injective.
+      \end{itemize}
+      This furnishes the desired example.
+  \end{enumerate}
+  \end{solution}
+  \begin{problem}
+    Let \(f:A\to B\) and \(g:B\to C\) be functions.
+    
+    \begin{enumerate}[label=(\alph*)]
+        \item If \(f\) and \(g\) are \emph{onto} (surjective), show that \(g\circ f\) is onto.
+        \item If \(g\circ f\) is onto, show that \(g\) is onto.
+        \item If \(g\circ f\) is onto and \(g\) is \emph{one–to–one} (injective), show that \(f\) is onto.
+        \item Give an example where \(g\circ f\) is onto, but \(f\) is not.
+    \end{enumerate}
+    \end{problem}
+    
+    \begin{solution}
+    Recall that a map \(h:X\to Y\) is \emph{onto} if for every \(y\in Y\)
+    there exists \(x\in X\) with \(h(x)=y\).
+    
+    \begin{enumerate}[label=(\alph*)]
+    %--------------------------------------------------------------
+    \item \textbf{\(f\) and \(g\) surjective \(\Longrightarrow\) \(g\circ f\) surjective.}
+    
+        Fix any \(c\in C\).
+        Surjectivity of \(g\) provides \(b\in B\) with \(g(b)=c\).
+        Surjectivity of \(f\) provides \(a\in A\) with \(f(a)=b\).
+        Then
+        \[
+           (g\circ f)(a)=g\bigl(f(a)\bigr)=g(b)=c,
+        \]
+        so every \(c\in C\) is hit by \(g\circ f\); hence \(g\circ f\) is onto.
+    
+    %--------------------------------------------------------------
+    \item \textbf{\(g\circ f\) surjective \(\Longrightarrow\) \(g\) surjective.}
+    
+        Let \(c\in C\).
+        Because \(g\circ f\) is onto, there exists \(a\in A\) with
+        \((g\circ f)(a)=c\).
+        Set \(b:=f(a)\in B\); then \(g(b)=c\), showing \(g\) is onto.
+    
+    %--------------------------------------------------------------
+    \item \textbf{\(g\circ f\) surjective and \(g\) injective \(\Longrightarrow\) \(f\) surjective.}
+    
+        Take any \(b\in B\) and define \(c:=g(b)\in C\).
+        Since \(g\circ f\) is onto, there exists \(a\in A\) such that
+        \((g\circ f)(a)=c\); i.e.\ \(g\bigl(f(a)\bigr)=c=g(b)\).
+        Because \(g\) is injective, we must have \(f(a)=b\).
+        Thus every \(b\in B\) has a preimage under \(f\), proving \(f\) is onto.
+    
+    %--------------------------------------------------------------
+    \item \textbf{Example where \(g\circ f\) is onto but \(f\) is not.}
+    
+        Let
+        \[
+           f:\mathbb{R}\longrightarrow\mathbb{R}^{2},\quad f(x)=(x,0),
+           \qquad
+           g:\mathbb{R}^{2}\longrightarrow\mathbb{R},\quad g(x,y)=x.
+        \]
+        Then \((g\circ f)(x)=g(x,0)=x\), the identity map on \(\mathbb{R}\),
+        which is onto \(\mathbb{R}\).
+        However, \(f\) maps \(\mathbb{R}\) into the \(x\)-axis of \(\mathbb{R}^{2}\)
+        and therefore is \emph{not} onto \(\mathbb{R}^{2}\).
+    \end{enumerate}
+    \end{solution}
+    \begin{solution}
+      Let \(f:A\to B\) be any function.  
+      For a subset \(X\subseteq A\) write \(X^{\prime}:=A\setminus X\)  
+      and for \(Y\subseteq B\) write \(Y^{\prime}:=B\setminus Y\).
+      
+      \begin{enumerate}[label=(\alph*)]
+      
+      %--------------------------------------------------------------
+      \item \textbf{\(f^{-1}\) respects unions.}
+      
+      For all \(B_{1},B_{2}\subseteq B\) we have
+      \[
+          f^{-1}(B_{1}\cup B_{2})
+          =\{\,a\in A : f(a)\in B_{1}\cup B_{2}\,\}
+          =\{\,a\in A : f(a)\in B_{1}\text{ or }f(a)\in B_{2}\,\}
+          =f^{-1}(B_{1})\cup f^{-1}(B_{2}).
+      \]
+      
+      %--------------------------------------------------------------
+      \item \textbf{\(f^{-1}\) respects complements.}
+      
+      For every \(T\subseteq B\):
+      \[
+          \begin{aligned}
+              a\in f^{-1}(T^{\prime})
+              &\;\Longleftrightarrow\;
+              f(a)\in T^{\prime}
+              &&\text{(definition of the inverse image)}\\
+              &\;\Longleftrightarrow\;
+              f(a)\notin T\\
+              &\;\Longleftrightarrow\;
+              a\notin f^{-1}(T)\\
+              &\;\Longleftrightarrow\;
+              a\in\bigl(f^{-1}(T)\bigr)^{\prime}.
+          \end{aligned}
+      \]
+      Hence \(f^{-1}(T^{\prime})=\bigl(f^{-1}(T)\bigr)^{\prime}\).
+      
+      %--------------------------------------------------------------
+      \item \textbf{\(f\) respects unions.}
+      
+      For all \(A_{1},A_{2}\subseteq A\):
+      \[
+          f(A_{1}\cup A_{2})
+          =\{\,f(a):a\in A_{1}\text{ or }a\in A_{2}\,\}
+          =\{\,f(a):a\in A_{1}\,\}\cup\{\,f(a):a\in A_{2}\,\}
+          =f(A_{1})\cup f(A_{2}).
+      \]
+      
+      %--------------------------------------------------------------
+      \item \textbf{Images and complements generally \emph{do not} commute.}
+      
+      \begin{enumerate}[label=\roman*.]
+          \item \emph{A case where \(f^{-1}(A_{1}^{\prime})\nsubseteq(f(A_{1}))^{\prime}\).}
+      
+                Take \(A=\{0,1\}\), \(B=\{0\}\) and let
+                \[
+                    f:A\to B,\qquad f(0)=0,\;f(1)=0\quad(\text{a constant map}).
+                \]
+                Put \(A_{1}=\{0\}\).
+                Then
+                \[
+                    f(A_{1})=\{0\},\qquad (f(A_{1}))^{\prime}=\varnothing,
+                    \qquad A_{1}^{\prime}=\{1\},\qquad
+                    f^{-1}(A_{1}^{\prime})=\{1\},
+                \]
+                so \(f^{-1}(A_{1}^{\prime})\not\subseteq(f(A_{1}))^{\prime}\).
+      
+          \item \emph{A case where \((f(A_{1}))^{\prime}\nsubseteq f^{-1}(A_{1}^{\prime})\).}
+      
+                Let \(A=\{0\}\), \(B=\{0,1\}\) and define
+                \[
+                    f:A\to B,\qquad f(0)=0.
+                \]
+                Again choose \(A_{1}=\{0\}\).
+                Then
+                \[
+                    f(A_{1})=\{0\},\qquad (f(A_{1}))^{\prime}=\{1\},\qquad
+                    A_{1}^{\prime}=\varnothing,\qquad f^{-1}(A_{1}^{\prime})=\varnothing,
+                \]
+                giving \((f(A_{1}))^{\prime}\not\subseteq f^{-1}(A_{1}^{\prime})\).
+      \end{enumerate}
+      
+      These two counter-examples show that neither inclusion  
+      \(f^{-1}(A_{1}^{\prime})\subseteq(f(A_{1}))^{\prime}\) nor  
+      \((f(A_{1}))^{\prime}\subseteq f^{-1}(A_{1}^{\prime})\) holds in general.
+      \end{enumerate}
+      \end{solution}
+      \begin{solution}
+        Let $R\subseteq A\times A$ be a relation that is \emph{reflexive} and \emph{transitive}.
+        Define
+        \[
+           \widetilde R\;:=\;\bigl\{(a,b)\in A\times A : (a,b)\in R\ \text{and}\ (b,a)\in R\bigr\}.
+        \]
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \begin{enumerate}[label=(\alph*)]
+        
+        %-------------------------------------------------------------------------------
+        \item \textbf{$\widetilde R$ is an equivalence relation on $A$.}
+        
+        \begin{enumerate}[label=\textbf{\roman*.},wide=0pt, itemsep=4pt]
+          \item \emph{Reflexive.}  
+                Because $R$ is reflexive, $(a,a)\in R$ for every $a\in A$.
+                Hence $(a,a)\in\widetilde R$ and $\widetilde R$ is reflexive.
+        
+          \item \emph{Symmetric.}  
+                Suppose $(a,b)\in\widetilde R$.  
+                Then $(a,b)\in R$ \emph{and} $(b,a)\in R$.  
+                Interchanging $a$ and $b$ we see that $(b,a)\in\widetilde R$; thus
+                $\widetilde R$ is symmetric.
+        
+          \item \emph{Transitive.}  
+                Let $(a,b),(b,c)\in\widetilde R$.  
+                This means $(a,b),(b,c)\in R$ and $(b,a),(c,b)\in R$.
+                By transitivity of $R$ we have
+                \[
+                    (a,c)\in R
+                    \quad\text{and}\quad
+                    (c,a)\in R.
+                \]
+                Hence $(a,c)\in\widetilde R$, so $\widetilde R$ is transitive.
+        \end{enumerate}
+        Since $\widetilde R$ is reflexive, symmetric, and transitive, it is an
+        \emph{equivalence relation} on $A$.
+        
+        %-------------------------------------------------------------------------------
+        \item \textbf{A partial order on the $\widetilde R$--equivalence classes.}
+        
+        For $a\in A$ denote by
+        \(
+           S_a:=\{\,x\in A : (a,x)\in \widetilde R\,\}
+        \)
+        the $\widetilde R$--equivalence class of $a$.
+        Define a binary relation $\le$ on the set
+        \(\mathcal{S}:=\{S_a:a\in A\}\) by
+        \[
+           S_a\;\le\;S_b
+           \;\;\Longleftrightarrow\;\;
+           (a,b)\in R.
+        \]
+        
+        \smallskip
+        \emph{Well-definedness.}  
+        If $a'\in S_a$ and $b'\in S_b$ then $(a,a')\in\widetilde R$ and
+        $(b,b')\in\widetilde R$; hence $(a,a'),(a',a),(b,b'),(b',b)\in R$.
+        Assuming $(a,b)\in R$, transitivity of $R$ yields
+        \((a',b')\in R\).  
+        Thus the definition of $\le$ does not depend on the chosen representatives.
+        
+        \bigskip
+        We verify that $\le$ is a \emph{partial order} on $\mathcal{S}$.
+        
+        \begin{enumerate}[label=\textbf{\roman*.},wide=0pt, itemsep=4pt]
+          \item \emph{Reflexive.}  
+                For any class $S_a$ we have $(a,a)\in R$ (reflexivity of $R$),
+                so $S_a\le S_a$.
+        
+          \item \emph{Antisymmetric.}  
+                Suppose $S_a\le S_b$ and $S_b\le S_a$.
+                Then $(a,b)\in R$ and $(b,a)\in R$, i.e.\ $(a,b)\in\widetilde R$,
+                whence $S_a=S_b$.
+        
+          \item \emph{Transitive.}  
+                If $S_a\le S_b$ and $S_b\le S_c$, then $(a,b)\in R$ and $(b,c)\in R$.
+                By transitivity of $R$, $(a,c)\in R$, so $S_a\le S_c$.
+        \end{enumerate}
+        Therefore $\le$ is a partial order on the set of
+        $\widetilde R$–equivalence classes.
+        \end{enumerate}
+        \end{solution}
+\end{document}

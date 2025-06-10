@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Kernels, normality; Examples; Centers and inner autos}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\subsubsection*{HW: 1.4.5} 
+\subsubsection*{Reading: 1.4} 
+
+\begin{problem}[]
+   Let $V$ denote the Klein $4$-group. Show that $\text{Aut}(V)$ is isomorphic to $S_3$.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[]
+   Define $f:\text{GL}_{n} (\mathbb{{R}})\to \text{GL}_n(\mathbb{{R}})  $  by $f(A)=^{t}A^{-1}$ (where $^{t}A$ is the transpose of $A$). Show that $f$ is an automorphism, but not an inner automorphism for $n\geq 1$. 
+\end{problem}
+\begin{solution}
+   How do I solve $^{T}A^{-1}= gAg^{-1}$ to show that $f:\text{GL}_{n} (\mathbb{{R}})\to \text{GL}_n(\mathbb{{R}})  $  by $f(A)=^{t}A^{-1}$ (where $^{t}A$ is the transpose of $A$). Show that $f$ is an automorphism, but not an inner automorphism for $n\geq 1$?
+\end{solution}
+\begin{problem}[1.4.5]
+    Prove that the transpose of a permutation matrix $P$ is its inverse.
+
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\end{document}

@@ -1,0 +1,307 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\[
+I \;=\; \int_{-1 - i}^{\,i} \frac{1}{z}\,dz.
+\]
+
+\section*{Step-by-Step Solution}
+
+\subsection*{1. Parameterize the line segment}
+
+We integrate along the straight line from 
+\[
+z_0 = -1 - i 
+\quad\text{to}\quad 
+z_1 = i.
+\]
+A convenient parameterization is
+\[
+z(t) \;=\; z_0 + t\,[\,z_1 - z_0\,], 
+\quad 0 \le t \le 1.
+\]
+Concretely,
+\[
+z_1 - z_0 \;=\; i - (-1 - i) \;=\; 1 + 2i,
+\]
+so
+\[
+z(t) \;=\; (-1 - i) + t\,(1 + 2i).
+\]
+Then
+\[
+\frac{dz}{dt} \;=\; 1 + 2i,
+\quad
+dz \;=\; (1 + 2i)\,dt.
+\]
+
+\subsection*{2. Substituting into the integral}
+
+Along this path, 
+\[
+\frac{1}{z} \;=\; \frac{1}{\,z(t)\,} 
+\;=\; \frac{1}{\,(-1 - i) + t\,(1+2i)\,}.
+\]
+Hence,
+\[
+I 
+\;=\;
+\int_{-1-i}^{\,i} \frac{1}{z}\,dz
+\;=\;
+\int_{0}^{1} 
+\frac{1}{z(t)} 
+\,\frac{dz}{dt}
+\,dt
+\;=\;
+\int_{0}^{1}
+\frac{1 + 2i}{\,(-1 - i) + t\,(1+2i)\,}
+\,dt.
+\]
+
+\subsection*{3. Simplify the integrand}
+
+Notice that
+\[
+(-1 - i) + t\,(1+2i)
+\;=\;
+(1 + 2i)\left(\,
+t + \frac{-1 - i}{\,1 + 2i\,}
+\right).
+\]
+Thus,
+\[
+\frac{1 + 2i}{\,(-1 - i) + t\,(1 + 2i)\,}
+\;=\;
+\frac{1 + 2i}{\,(1 + 2i)\,\Bigl(\,t + \frac{-1 - i}{1 + 2i}\Bigr)}
+\;=\;
+\frac{1}{\,t + A\,},
+\]
+where we set
+\[
+A 
+\;=\;
+\frac{-1 - i}{\,1 + 2i\,}.
+\]
+Hence,
+\[
+I 
+\;=\;
+\int_{0}^{1}
+\frac{1}{\,t + A\,}\,dt
+\;=\;
+\left.
+\ln\bigl(t + A\bigr)
+\right|_{t=0}^{t=1}
+\;=\;
+\ln(1 + A) \;-\; \ln(A).
+\]
+
+\subsection*{4. Compute $A$ explicitly}
+
+First, we simplify $A$:
+\[
+A 
+\;=\;
+\frac{-1 - i}{\,1 + 2i\,}
+\,\cdot\,
+\frac{1 - 2i}{\,1 - 2i\,}
+\;=\;
+\frac{(-1 - i)\,(1 - 2i)}{\,1 + (2i)(-2i)\,}
+\;=\;
+\frac{(-1 - i)\,(1 - 2i)}{1 + 4}.
+\]
+The denominator is $5$, so
+\[
+(-1 - i)\,(1 - 2i)
+\;=\;
+-1(1 - 2i)\;-\;i(1 - 2i)
+\;=\;
+(-1 + 2i)\;+\;(-i + 2i^2).
+\]
+Recall $i^2 = -1$, so
+\[
+(-1 + 2i)\;+\;(-i + 2(-1))
+\;=\;
+-1 + 2i - i - 2
+\;=\;
+-3 + i.
+\]
+Hence,
+\[
+A = \frac{-3 + i}{5} 
+= -\frac{3}{5} + \frac{1}{5}i
+= -0.6 + 0.2\,i.
+\]
+
+\subsection*{5. Polar forms of $A$ and $1+A$}
+
+\paragraph{(a) $A$ in polar form.}
+
+\[
+\lvert A\rvert 
+\;=\;
+\sqrt{(-0.6)^2 + 0.2^2} 
+= \sqrt{0.36 + 0.04}
+= \sqrt{0.40}
+\;=\;
+0.6324555\ldots
+\]
+The argument $\theta_A$ satisfies
+\[
+\theta_A = \arg(A),
+\]
+where $\Re(A) < 0$ and $\Im(A) > 0$, placing $A$ in the second quadrant. Numerically:
+\[
+\alpha = \arctan\!\bigl(\tfrac{0.2}{0.6}\bigr)
+= \arctan\!\bigl(\tfrac{1}{3}\bigr) 
+\approx 0.32175,
+\]
+so
+\[
+\theta_A = \pi - \alpha
+\approx 3.14159 - 0.32175 
+\approx 2.81984.
+\]
+Therefore,
+\[
+\ln(A)
+= \ln\!\bigl(\lvert A\rvert\bigr) \;+\; i\,\theta_A.
+\]
+
+\paragraph{(b) $1 + A$ in polar form.}
+
+Since
+\[
+1 + A 
+= 1 + \bigl(-0.6 + 0.2\,i\bigr)
+= 0.4 + 0.2\,i,
+\]
+we get
+\[
+\lvert 1 + A\rvert
+= \sqrt{0.4^2 + 0.2^2}
+= \sqrt{0.16 + 0.04}
+= \sqrt{0.20}
+= 0.4472136\ldots
+\]
+and
+\[
+\arg\bigl(1 + A\bigr) 
+= \arctan\!\bigl(\tfrac{0.2}{0.4}\bigr)
+= \arctan(0.5)
+\approx 0.4636476.
+\]
+Hence,
+\[
+\ln(1 + A)
+= \ln\!\bigl(\lvert 1 + A\rvert\bigr)
++ i\,\arg(1 + A).
+\]
+
+\subsection*{6. Difference of logarithms}
+
+Putting it all together:
+\[
+\ln(1 + A) - \ln(A)
+\;=\;
+\bigl[\ln\lvert 1 + A\rvert - \ln\lvert A\rvert\bigr]
+\;+\;
+i\,\bigl[\arg(1 + A) - \arg(A)\bigr].
+\]
+
+\paragraph{(a) Real part.}
+
+\[
+\ln\lvert 1 + A\rvert 
+- \ln\lvert A\rvert
+\;=\;
+\ln\!\Bigl(\frac{0.4472136}{0.6324555}\Bigr).
+\]
+One can show that this ratio equals 
+\(\tfrac{1/\sqrt{5}}{( \sqrt{0.4} )}\) which simplifies to \(1/\sqrt{2}\). Thus
+\[
+\ln\lvert 1 + A\rvert 
+- \ln\lvert A\rvert
+= \ln\!\Bigl(\tfrac{1}{\sqrt{2}}\Bigr)
+= -\tfrac12\,\ln(2).
+\]
+
+\paragraph{(b) Imaginary part.}
+
+\[
+\arg(1 + A) - \arg(A)
+\;=\;
+0.4636476 - 2.819842
+\approx -2.3561944
+= -\frac{3\pi}{4}.
+\]
+Thus the imaginary part is 
+\(-\,i\,\tfrac{3\pi}{4}\).
+
+\subsection*{7. Final value of the integral}
+
+Combining both parts, we obtain:
+\[
+I
+\;=\;
+\ln(1 + A) \;-\; \ln(A)
+\;=\;
+-\;\tfrac12\,\ln(2)
+\;-\;
+i \,\frac{3\pi}{4}.
+\]
+Hence, the value of the integral is
+\[
+\boxed{
+\int_{-1 - i}^{\,i} \frac{dz}{z}
+\;=\;
+-\;\tfrac12\,\ln(2)
+\;-\;
+i\,\frac{3\pi}{4}.
+}
+\]
+\end{document}

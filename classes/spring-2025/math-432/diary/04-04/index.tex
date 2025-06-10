@@ -1,0 +1,438 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 HW 8}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}[1]
+    
+\end{problem}
+\begin{solution}
+    Let $(M,D)$ be a metric space, and let $x\in M$ be a fixed point. Suppose $r,s$ are real numbers with $0 < r < s$. Define the set
+\[
+A(x,r,s) \;=\; \{\,y\in M : r < D(x,y) < s \}.
+\]
+We want to show that $A(x,r,s)$ is open in $M$. By definition of openness in a metric space, it suffices to show that for each $y\in A(x,r,s)$, there exists some $\varepsilon>0$ such that the open ball
+\[
+B(y,\varepsilon) \;=\; \{\, z \in M : D(y,z) < \varepsilon \}
+\]
+is contained in $A(x,r,s)$.
+
+\medskip
+
+\noindent \textbf{Step 1.} Pick any point $y\in A(x,r,s)$. Then by definition:
+\[
+r < D(x,y) < s.
+\]
+
+\noindent \textbf{Step 2.} Define
+\[
+\alpha \;=\; \min\bigl\{\,D(x,y) - r,\; s - D(x,y)\bigr\}.
+\]
+Note that both $D(x,y) - r$ and $s - D(x,y)$ are strictly positive (since $r < D(x,y) < s$), so $\alpha>0$.
+
+\medskip
+
+\noindent \textbf{Step 3.} We claim that if $z \in M$ satisfies $D(y,z) < \alpha$, then $z \in A(x,r,s)$, i.e., $r < D(x,z) < s$.
+
+\smallskip
+
+\noindent \emph{(a) Lower bound: $D(x,z) > r$.}
+
+Using the reverse triangle inequality,
+\[
+D(x,y) \; \le\; D(x,z) + D(z,y).
+\]
+Hence
+\[
+D(x,z) \;\ge\; D(x,y) - D(y,z).
+\]
+Since $D(y,z) < \alpha$ and $\alpha \leq D(x,y) - r$, it follows that
+\[
+D(x,z) \;>\; D(x,y) - \alpha \;\ge\; D(x,y) - (D(x,y) - r) \;=\; r.
+\]
+Thus $D(x,z) > r$.
+
+\smallskip
+
+\noindent \emph{(b) Upper bound: $D(x,z) < s$.}
+
+Using the usual triangle inequality,
+\[
+D(x,z) \;\le\; D(x,y) + D(y,z).
+\]
+Since $D(y,z) < \alpha$ and $\alpha \leq s - D(x,y)$, it follows that
+\[
+D(x,z) \;<\; D(x,y) + \alpha \;\le\; D(x,y) + \bigl(s - D(x,y)\bigr) \;=\; s.
+\]
+Hence $D(x,z) < s$.
+
+\medskip
+
+\noindent \textbf{Step 4.} Putting parts (a) and (b) together shows:
+\[
+r \;<\; D(x,z) \;<\; s,
+\]
+which means $z \in A(x,r,s)$. Since $z$ was any point with $D(y,z)<\alpha$, this proves
+\[
+B(y,\alpha) \;\subseteq\; A(x,r,s).
+\]
+
+\medskip
+
+\noindent \textbf{Conclusion.} We have shown that for every $y \in A(x,r,s)$ there exists an $\alpha>0$ such that $B(y,\alpha) \subset A(x,r,s)$. Hence $A(x,r,s)$ is open in $M$. \qed
+\end{solution}
+\begin{problem}[2]
+    
+\end{problem}
+\begin{solution}
+    \medskip
+\noindent
+\underline{\textit{Case 1: $M$ is a \emph{discrete} metric space.}}
+
+\smallskip
+\noindent
+If $M$ is discrete, then \emph{every} subset of $M$ is open.  (Recall that in a discrete metric space, all singleton sets $\{x\}$ are open; hence arbitrary unions of singletons are open as well.)
+
+Since $M$ is infinite, choose any partition of $M$ into two \emph{infinite} subsets, say
+\[
+  M \;=\; A \,\cup\, B
+\]
+where $A$ and $B$ are disjoint, each infinite.  Define
+\[
+  U \;=\; A.
+\]
+Because $A\subseteq M$ is a subset of a discrete metric space, $U=A$ is open.  By construction:
+\[
+  U \;=\; A \quad\text{is infinite,}
+  \quad\text{and}\quad
+  M\setminus U \;=\; B \quad\text{is infinite.}
+\]
+Hence $U$ is the required open set with infinite complement.
+
+\bigskip
+\noindent
+\underline{\textit{Case 2: $M$ is \emph{not} a discrete metric space.}}
+
+\smallskip
+\noindent
+If $M$ is not discrete, then there exists at least one \emph{limit point} $x \in M$.  By definition of limit point, every open ball around $x$ contains infinitely many distinct points.  That is,
+\[
+  \forall r>0,\quad B(x,r) \;=\; \{\,y\in M : D(x,y)<r\}
+  \quad\text{is infinite.}
+\]
+We now argue that one can choose $r>0$ so that $B(x,r)$ does \emph{not} cover all of $M$.  Indeed, if $D$ is an unbounded metric, then there exist points arbitrarily far from $x,$ so certainly not all of $M$ can lie in some small ball $B(x,r).$  If instead $M$ is bounded with \emph{diameter} $d = \sup\{D(a,b) : a,b\in M\}$, then simply pick $r = \tfrac{d}{2}$ (or any number strictly between $0$ and $d$).  Because $d$ is the \emph{supremum} of distances, there must be some point $y\in M$ with $D(x,y)$ close to $d,$ so $y\notin B(x,r).$
+
+Hence, we obtain an $r>0$ such that:
+\[
+  B(x,r)\quad\text{is infinite}
+  \quad\text{and}\quad
+  M \setminus B(x,r)\;\neq\;\varnothing.
+\]
+But in fact $M \setminus B(x,r)$ must also be infinite: either the space is unbounded and thus has infinitely many points outside $B(x,r)$, or (in the bounded case) by picking $y_1,y_2,\dots$ all nearly at distance $d$ from $x$, infinitely many such points lie outside a smaller ball.
+
+Hence we can take
+\[
+  U \;=\; B(x,r).
+\]
+This $U$ is open by definition of an open ball, it is infinite, and its complement $M\setminus U$ is also infinite.  This completes the proof in the second case.
+
+\medskip
+\noindent
+\textbf{Conclusion.} In both cases (discrete or not), we have produced an open set
+$U \subseteq M$ with the property that $U$ is infinite and $M \setminus U$ is infinite.
+\qed
+\end{solution}
+\begin{problem}[3]
+    
+\end{problem}
+\begin{solution}
+    \noindent
+    \textbf{(a) Monotonicity of closure: $A \subset B \implies \overline{A} \subset \overline{B}$.}
+    
+    \smallskip
+    \noindent
+    \emph{Proof.} Assume $A \subset B$. We want to show $\overline{A} \subset \overline{B}$.
+    \begin{itemize}
+    \item Take any point $x \in \overline{A}$. By definition of closure, \emph{every} open ball (or open set) around $x$ intersects $A$.
+    \item Since $A \subset B$, any open ball around $x$ that meets $A$ must also meet $B$. Hence $x$ is also in the closure of $B$.
+    \end{itemize}
+    Thus $x \in \overline{B}$, proving $\overline{A} \subset \overline{B}$. \qed
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(b) Union property of closures: $\overline{A \cup B} = \overline{A} \cup \overline{B}$.}
+    
+    \smallskip
+    \noindent
+    \emph{Proof.} We prove the two inclusions:
+    
+    \begin{enumerate}
+    \item[\textbf{(i)}] $\overline{A \cup B} \supset \overline{A} \cup \overline{B}$.
+    
+    \smallskip
+    Any set is contained in its own union, i.e.\ $A \subset A \cup B$ and $B \subset A \cup B$. Hence by part (a) (monotonicity),
+    \[
+    \overline{A} \;\subset\; \overline{A \cup B}
+    \quad\text{and}\quad
+    \overline{B} \;\subset\; \overline{A \cup B}.
+    \]
+    Taking the union of both sides,
+    \[
+    \overline{A} \,\cup\, \overline{B}
+    \;\subset\;
+    \overline{A \cup B}.
+    \]
+    
+    \item[\textbf{(ii)}] $\overline{A \cup B} \subset \overline{A} \cup \overline{B}$.
+    
+    \smallskip
+    Suppose, for contradiction, there exists a point $x \in \overline{A \cup B}$ such that 
+    \[
+    x \;\notin\; \overline{A} \cup \overline{B}.
+    \]
+    Then $x \notin \overline{A}$ and $x \notin \overline{B}$. By definition of closure, this means:
+    \[
+    \exists\;U_x \;\text{(open) with } x \in U_x, \text{ such that } U_x \cap A = \varnothing,
+    \]
+    and similarly
+    \[
+    \exists\;V_x \;\text{(open) with } x \in V_x, \text{ such that } V_x \cap B = \varnothing.
+    \]
+    Hence the intersection $U_x \cap V_x$ is an open neighborhood of $x$ that meets neither $A$ nor $B$, so it meets neither $A \cup B$. Thus
+    \[
+    (U_x \cap V_x)\;\cap\;(A \cup B) \;=\;\varnothing,
+    \]
+    contradicting $x \in \overline{A \cup B}$ (which would require \emph{every} open set around $x$ to intersect $A \cup B$).
+    
+    Therefore no such $x$ can exist, and we conclude
+    \[
+    \overline{A \cup B} \;\subset\; \overline{A} \,\cup\, \overline{B}.
+    \]
+    \end{enumerate}
+    
+    Since both inclusions hold, we get
+    \[
+    \overline{A \cup B}
+    \;=\;
+    \overline{A} \,\cup\, \overline{B}.
+    \]
+    \qed
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(c) Intersection property: does $\overline{A \cap B} = \overline{A} \cap \overline{B}$ always hold?}
+    
+    \smallskip
+    \noindent
+    \emph{Answer:} In general, we do \emph{not} have equality. However, we always have
+    \[
+    \overline{A \cap B}
+    \;\subset\;
+    \overline{A} \,\cap\, \overline{B}.
+    \]
+    \emph{Proof of the inclusion:} If $x \in \overline{A \cap B}$, then every open neighborhood of $x$ intersects $A \cap B$, and thus meets \emph{both} $A$ and $B$. Hence every open neighborhood of $x$ intersects $A$ and also intersects $B$, implying $x \in \overline{A}$ and $x \in \overline{B}$. Thus $x \in \overline{A} \cap \overline{B}$.
+    
+    \smallskip
+    \noindent
+    \emph{Why not equality in general?} A standard counterexample in $\mathbb{R}$ with the usual metric is:
+    \[
+    A \;=\;(0,1), \quad B \;=\;(1,2).
+    \]
+    Then
+    \[
+    A \cap B \;=\;\varnothing \quad\Longrightarrow\quad
+    \overline{A \cap B} \;=\;\varnothing,
+    \]
+    while
+    \[
+    \overline{A} \;=\;[0,1],
+    \quad
+    \overline{B} \;=\;[1,2],
+    \quad
+    \overline{A} \cap \overline{B} \;=\;\{\,1\,\}.
+    \]
+    Thus
+    \[
+    \varnothing \;=\;\overline{A \cap B}
+    \;\neq\;
+    \{\,1\}
+    \;=\;
+    \overline{A} \cap \overline{B}.
+    \]
+    Hence $\overline{A \cap B} = \overline{A} \cap \overline{B}$ does \emph{not} hold in general.     
+\end{solution}
+\begin{problem}[4]
+    
+\end{problem}
+\begin{solution}
+    \smallskip
+    \noindent
+    Consider the function $f : M \to \mathbb{R}$ given by 
+    \[
+    f(y) \;=\; D(y,x).
+    \]
+    This function is continuous because the metric $D$ itself satisfies the triangle inequality; more explicitly, for any $y,z \in M$,
+    \[
+    |f(y) - f(z)| \;=\; \bigl|D(y,x) - D(z,x)\bigr|
+    \;\le\; D(y,z).
+    \]
+    Hence if $D(y,z)$ is small, then $|f(y)-f(z)|$ is also small, showing continuity of $f$.
+    
+    \bigskip
+    \noindent
+    \textbf{(a)}~\emph{Closed ball is closed.}
+    
+    \smallskip
+    \noindent
+    The set
+    \[
+    \overline{B}_r(x)
+    \;=\;
+    \{\,y \in M : D(y,x) \le r\}
+    \;=\;
+    f^{-1}\bigl((-\infty,r]\bigr).
+    \]
+    Since $(-\infty,r]$ is a closed subset of $\mathbb{R}$, its preimage under a continuous map is closed in $M$. Thus $\overline{B}_r(x)$ is closed.
+    
+    \bigskip
+    \noindent
+    \textbf{(b)}~\emph{Sphere is closed.}
+    
+    \smallskip
+    \noindent
+    The sphere of radius $r$ is
+    \[
+    \{\,y \in M : D(y,x) = r\}
+    \;=\;
+    f^{-1}\bigl(\{\,r\,\}\bigr).
+    \]
+    Since $\{\,r\,\}$ is closed in $\mathbb{R}$, its preimage under $f$ is closed in $M$. Hence the sphere is closed.
+    
+    \bigskip
+    \noindent
+    \textbf{(c)}~\emph{Closed annulus is closed.}
+    
+    \smallskip
+    \noindent
+    The closed annulus is
+    \[
+    A(x;r,s)
+    \;=\;
+    \{\,y \in M : r \le D(y,x) \le s\}
+    \;=\;
+    f^{-1}\bigl([\,r,s\,]\bigr).
+    \]
+    Since $[\,r,s\,]$ is a closed interval in $\mathbb{R}$, again its preimage under the continuous map $f$ is closed in $M$. Therefore $A(x;r,s)$ is closed.
+    
+    \bigskip
+    \noindent
+    \textbf{Conclusion.} In each case, the given set is the inverse image of a closed set in $\mathbb{R}$ under the continuous function $y \mapsto D(y,x)$. Hence it is closed in $M$. \quad $\Box$     
+\end{solution}
+\begin{problem}[5]
+    
+\end{problem}
+\begin{solution}
+    We break it down into two inequalities:
+
+\medskip
+\noindent
+\textbf{Step 1:} 
+\(
+\mathrm{diam}(A) \;\le\; \mathrm{diam}(\overline{A}).
+\)
+Since $A \subseteq \overline{A}$, any pair of points $x,y \in A$ are also in $\overline{A}$. Hence
+\[
+\sup\{\,D(x,y)\colon x,y\in A\}
+\;\le\;
+\sup\{\,D(x,y)\colon x,y\in \overline{A}\}.
+\]
+This means $\mathrm{diam}(A) \le \mathrm{diam}(\overline{A})$.
+
+\medskip
+\noindent
+\textbf{Step 2:}
+\(
+\mathrm{diam}(\overline{A}) \;\le\; \mathrm{diam}(A).
+\)
+Take any $x,y \in \overline{A}$. By definition of closure, there exist sequences $(x_n)$ and $(y_n)$ in $A$ such that $x_n \to x$ and $y_n \to y$. The distance function $D$ is continuous, so
+\[
+D(x,y)
+\;=\;
+\lim_{n\to\infty} D(x_n,y_n).
+\]
+But for each $n$, $D(x_n,y_n) \le \mathrm{diam}(A)$ (since $x_n,y_n \in A$). Hence taking the limit as $n\to\infty$,
+\[
+D(x,y)
+\;\le\;
+\mathrm{diam}(A).
+\]
+Because $x,y$ were arbitrary in $\overline{A}$, we conclude
+\[
+\sup\{\,D(x,y)\colon x,y\in \overline{A}\}
+\;\le\;
+\mathrm{diam}(A),
+\]
+i.e.\ $\mathrm{diam}(\overline{A}) \le \mathrm{diam}(A)$.
+
+\medskip
+\noindent
+\textbf{Conclusion.}
+Combining both inequalities yields
+\[
+\mathrm{diam}(A)
+\;=\;
+\mathrm{diam}(\overline{A}),
+\]
+as required. \quad $\Box$
+
+\end{solution}
+\end{document}

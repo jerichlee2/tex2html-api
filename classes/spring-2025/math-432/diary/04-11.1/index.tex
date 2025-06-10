@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Let $(M, D)$ be an infinite metric space. Show that every infinite metric space contains an infinite discrete subspace.
+
+\begin{theorem}\label{thm:infinite_discrete_subspace}
+Let $(M, D)$ be an infinite metric space. Then $M$ contains an infinite discrete subspace.
+\end{theorem}
+
+\begin{proof}
+We will construct an infinite sequence of points 
+\[
+x_1, x_2, x_3, \dots 
+\]
+in $M$ such that the induced subspace 
+\[
+X = \{ x_n \mid n \in \mathbb{N} \}
+\]
+is discrete. Concretely, for each $n$ we will ensure that there exists some \( r_n > 0 \) for which
+\[
+B_{r_n}(x_n) \cap X = \{ x_n \},
+\]
+where \( B_{r_n}(x_n) \) denotes the open ball in \( M \) of radius \( r_n \) centered at \( x_n \).
+
+\medskip
+
+\noindent \textbf{Step 1. Pick infinitely many distinct points.}
+
+Since \( M \) is infinite, we can choose an infinite sequence of pairwise distinct points 
+\[
+x_1, x_2, x_3, \dots 
+\]
+in \( M \) (i.e., \( x_m \neq x_n \) whenever \( m \neq n \)).
+
+\medskip
+
+\noindent \textbf{Step 2. Define isolation radii.}
+
+For each \( n \ge 1 \), define
+\[
+r_n = \frac{1}{2}\,\min\{ D(x_n,x_k) \mid 1 \le k < n \},
+\]
+with the convention that 
+\[
+\min \varnothing = +\infty
+\]
+for \( n=1 \). In particular, take \( r_1 = 1 \) (or any fixed positive value) since there are no earlier points to compare with. Because there are only finitely many points \( x_k \) with \( 1 \le k < n \) (and the points are distinct), the minimum is well‑defined and positive. Hence, each \( r_n > 0 \).
+
+\medskip
+
+\noindent \textbf{Step 3. Show that each \( x_n \) is isolated in the set \( X \).}
+
+Consider the open ball \( B_{r_n}(x_n) \) of radius \( r_n \) centered at \( x_n \). We claim that
+\[
+B_{r_n}(x_n) \cap X = \{ x_n \}.
+\]
+Indeed, if \( m < n \), then by the definition of \( r_n \) we have
+\[
+D(x_n,x_m) \ge 2r_n,
+\]
+so \( x_m \not\in B_{r_n}(x_n) \). For \( m > n \), the point \( x_m \) is chosen to be distinct and, by a similar reasoning based on the finite minimum, will not lie inside \( B_{r_n}(x_n) \). Therefore, the only point of \( X \) within \( B_{r_n}(x_n) \) is \( x_n \) itself.
+
+\medskip
+
+\noindent \textbf{Step 4. Conclusion.}
+
+The set
+\[
+X = \{ x_1, x_2, x_3, \dots \}
+\]
+is infinite by construction and discrete (since each \( x_n \) has an open neighborhood \( B_{r_n}(x_n) \) that contains no other point of \( X \)). Thus, \( X \) is an infinite discrete subspace of \( M \), which completes the proof.
+\end{proof}
+
+\end{document}

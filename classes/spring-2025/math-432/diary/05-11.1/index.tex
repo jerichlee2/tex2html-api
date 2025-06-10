@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Practice Final Exam 2}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                MATH 432 – Practice Final Examination (B)                %
+%                (Eight problems; show all work.)                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}[Chains in power sets]
+  Let $A$ be a set such that its power set $\mathcal{P}(A)$,
+  ordered by $\subseteq$, is a \emph{chain} (i.e.\ any two subsets are
+  comparable).
+  Determine all possible sets $A$ and justify your answer.
+\end{problem}
+
+\begin{problem}[Equivalence classes induced by a preorder]
+  Let $R\subset A\times A$ be a reflexive and transitive relation.
+  Define
+  \[
+      \widetilde{R}\;:=\;\bigl\{(a,b)\in A\times A: (a,b)\in R
+      \text{ and }(b,a)\in R\bigr\}.
+  \]
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove that $\widetilde{R}$ is an equivalence relation.
+    \item For $a\in A$ let $S_a$ denote its
+          $\widetilde{R}$–equivalence class, and for
+          $a,b\in A$ set $S_a\le S_b$ whenever $(a,b)\in R$.
+          Show that this defines a partial order on the set of
+          equivalence classes.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Linear extensions of partial orders]
+  Let $(L,\le)$ be a finite partially ordered set.
+  Show that there exists a \emph{total} order $\preccurlyeq$ on $L$
+  that extends~$\le$, i.e.\ $x\le y$ implies $x\preccurlyeq y$.
+  \emph{Hint:}  Proceed by induction on~$|L|$ or invoke Zorn’s Lemma
+  for the family of partial orders extending~$\le$.
+\end{problem}
+
+\begin{problem}[Maximal elements from chain conditions]
+  Let $L$ be a lattice in which \emph{every} chain has an upper bound.
+  Prove that $L$ has a \emph{unique} maximal element.
+\end{problem}
+
+\begin{problem}[Removing a finite or countable subset]
+  \begin{enumerate}[label=(\alph*)]
+    \item Let $A$ be an infinite set and $B\subset A$ finite.
+          Put $C:=A\setminus B$.  Construct an explicit bijection
+          between $A$ and $C$.
+    \item Let $A$ be uncountable and $B\subset A$ countable, with
+          $C:=A\setminus B$.  Show that $A$ and $C$ have the same
+          cardinality.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Exponent laws for cardinals]
+  Let $d,e_{1},e_{2}$ be cardinal numbers.
+  Prove, without appealing to Theorems 13–16 in the notes, that
+  \[
+      d^{\,e_{1}+e_{2}}\;=\;
+      d^{\,e_{1}}\cdot d^{\,e_{2}}.
+  \]
+  \emph{Suggestion:}  Exhibit explicit bijections between the sets
+  involved.
+\end{problem}
+
+\begin{problem}[Large and small open sets in an infinite metric space]
+  Let $(M,D)$ be an infinite metric space.
+  Show that there exists an open set $U\subset M$ such that both
+  $U$ and $M\setminus U$ are infinite.
+  (\emph{Hint:}  Consider whether $M$ contains an isolated point or a
+  limit point.)
+\end{problem}
+
+\begin{problem}[Countable well-ordering implies well-ordering]
+  Let $C$ be a chain (i.e.\ a linearly ordered set) with the property
+  that \emph{every countable subset of $C$ is well-ordered}.
+  Prove that $C$ itself is well-ordered.
+\end{problem}
+\end{document}

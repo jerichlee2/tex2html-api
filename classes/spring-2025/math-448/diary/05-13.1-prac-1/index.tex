@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,
+    breakatwhitespace=false,
+    basicstyle=\ttfamily,
+    frame=single,
+    columns=fullflexible,
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+
+% Theorem‑like environments
+\theoremstyle{definition}
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+
+%----------------------------------------------------
+\title{MATH‑448 Practice Final Exam 1}
+\author{Jerich Lee}
+\date{\today}
+\begin{document}
+
+\maketitle
+\pagebreak
+
+%-----------------------------------------------------------
+\begin{problem}[Values and properties of elementary functions]
+\begin{enumerate}[label=(\alph*),itemsep=6pt]
+  \item Find \emph{all} values of \((\sqrt{3}+i)^{15/2}\).  Express each value in the form \(x+iy\) with \(x,y\in\mathbb{R}\).
+  \item Compute the principal value of \(\displaystyle \log(1-i)\).
+  \item Prove the identity
+        \[
+          \arctan z \;=\; \frac{1}{2i}\,
+          \log\!\left(\frac{1+iz}{1-iz}\right),
+          \qquad z\in\mathbb{C}\setminus\{\pm i\},
+        \]
+        where the principal branch of \(\log\) is used.
+\end{enumerate}
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Isolated singularities]
+Let
+\[
+  f(z)\;=\;\frac{\sin z}{z^{3}(1-z)}.
+\]
+\begin{enumerate}[label=(\alph*),itemsep=6pt]
+  \item Classify the isolated singularities of \(f\) at \(z=0\) and \(z=1\) as removable, poles, or essential.
+  \item Compute the residues \(\operatorname*{Res}_{z=0}f(z)\) and \(\operatorname*{Res}_{z=1}f(z)\).
+  \item Write the first three non‑zero terms of the Laurent series of \(f\) about \(z=0\).
+\end{enumerate}
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Find Taylor/Laurent series]
+Obtain the Laurent series of
+\[
+  g(z)\;=\;\frac{1}{z^{2}\sin z}
+\]
+about \(z=0\), listing terms up to and including the \(z^{2}\) term.
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Evaluate an integral over a closed contour]
+Using the residue theorem, evaluate
+\[
+  \int_{\lvert z-2\rvert = 1}
+  \frac{e^{z}}{(z-1)(z-2)^{2}}\,dz.
+\]
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Evaluate an improper integral]
+Evaluate the real integral
+\[
+  \int_{0}^{\infty} \frac{x\cos(2x)}{x^{2}+9}\,dx
+\]
+by extending the integrand to the complex plane and applying contour‑integration techniques.
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Find the number of zeros of a function]
+Determine how many zeros of the polynomial
+\[
+  f(z)\;=\;z^{4}+2z^{2}+2
+\]
+lie in the first quadrant \(\{\operatorname{Re}z>0,\ \operatorname{Im}z>0\}\).
+Justify your answer using an appropriate theorem (e.g.\ Rouché or Argument Principle).
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Find a conformal map]
+Construct an explicit conformal map \(T\) that carries the half‑strip
+\[
+  \Omega=\bigl\{z : 0<\operatorname{Re}z<\pi,\ \operatorname{Im}z>0\bigr\}
+\]
+onto the upper half‑plane \(\operatorname{Im}w>0\).  
+Clearly indicate the intermediate mappings used in your construction.
+\end{problem}
+\pagebreak
+%-----------------------------------------------------------
+\begin{problem}[Theoretical question]
+Prove that if \(f\) is an entire function whose real part is bounded above on \(\mathbb{C}\), then \(f\) is constant.  
+\emph{Hint:} consider the function \(e^{f(z)}\).
+\end{problem}
+
+\end{document}

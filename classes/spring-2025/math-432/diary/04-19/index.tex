@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}
+  \begin{align}
+      &\text{Let $a,b,d$ be \emph{infinite} cardinals.} \\[4pt]
+      &\text{(a) Prove that } d^{d}=2^{d}. \\[4pt]
+      &\text{(b) Prove that if $d=2^{a}\ge 2^{b}$, then $d^{b}=d$.}
+  \end{align}
+
+  \begin{enumerate}
+      \item[(a)] \textbf{Claim:} $d^{d}=2^{d}$.
+
+            \begin{enumerate}
+                \item \textbf{Lower bound $2^{d}\le d^{d}$.}  
+                
+                      Each subset $X\subseteq d$ has a \emph{characteristic function}
+                      $\chi_{X}:d\to\{0,1\}$.  
+                      Because $\{0,1\}\subseteq d$ (infinite cardinals contain a two‑element set),
+                      we may view $\chi_{X}$ as a member of $d^{d}$.  
+                      The map $X\mapsto\chi_{X}$ is injective, whence $2^{d}\le d^{d}$.
+
+                \item \textbf{Upper bound $d^{d}\le 2^{d}$.}  
+                
+                      Cantor’s theorem gives $d\le 2^{d}$.  Exponentiation by $d$ (monotone for cardinals) yields
+                      \[
+                          d^{d}\le (2^{d})^{d}=2^{d\cdot d}.
+                      \]
+                      For every infinite cardinal $d$, we have $d\cdot d=d$, so the right–hand side is $2^{d}$.
+            \end{enumerate}
+
+            Combining the two inequalities, $2^{d}\le d^{d}\le 2^{d}$, proves $d^{d}=2^{d}$.
+
+      \item[(b)] \textbf{Hypotheses:} $d=2^{a}$ and $2^{a}\ge 2^{b}$.
+
+            \begin{enumerate}
+                \item \textbf{First inequality $d\le d^{b}$.}  
+                
+                      Since $2^{b}\le d$, raising both sides to the power $b$ gives
+                      \[
+                          (2^{b})^{b}=2^{b\cdot b}=2^{b}\le d^{b},
+                      \]
+                      and $2^{b}\le d$ implies $d\le d^{b}$.
+
+                \item \textbf{Second inequality $d^{b}\le d$.}  
+                
+                      From $2^{a}\ge 2^{b}$ we deduce $a\ge b$ (strict monotonicity of the power‑set function).  
+                      For infinite cardinals, $a\cdot b=a$, hence
+                      \[
+                          d^{b}=(2^{a})^{b}=2^{a\cdot b}=2^{a}=d.
+                      \]
+            \end{enumerate}
+
+            Having $d\le d^{b}\le d$ gives $d^{b}=d$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Let $A$ be a \emph{chain} (i.e.\ a totally ordered set).  
+  Fix $n\in\Bbb N$ and subsets $A_1,A_2,\dots,A_n\subseteq A$ such that
+  \[
+      A=\bigcup_{i=1}^n A_i,
+  \]
+  and assume each $A_i$ is well--ordered by the order inherited from $A$.  
+  Prove that $A$ itself is well--ordered.
+\end{problem}
+
+\begin{proof}
+  Suppose, for a contradiction, that $A$ is \emph{not} well--ordered.  
+  Then there exists an infinite strictly descending sequence
+  \begin{align}
+      a_1>a_2>a_3>\dots \tag{1}
+  \end{align}
+  in $A$.
+
+  \medskip
+  \noindent\textbf{Step 1:  Package the sequence.}  
+  Let $X=\{a_1,a_2,a_3,\dots\}$.  
+  By construction $X$ is infinite and, because of (1), totally ordered in the same way as $A$.
+
+  \medskip
+  \noindent\textbf{Step 2:  Decompose $X$ into the $A_i$.}  
+  Since $A=\bigcup_{i=1}^n A_i$, we have
+  \begin{align}
+      X=\bigcup_{i=1}^n (X\cap A_i). \tag{2}
+  \end{align}
+
+  \medskip
+  \noindent\textbf{Step 3:  Apply the pigeonhole principle.}  
+  Equality (2) writes the \emph{infinite} set $X$ as a union of only $n$ subsets.  
+  Hence at least one of the intersections, say $X\cap A_j$, must itself be infinite.
+
+  \medskip
+  \noindent\textbf{Step 4:  Find an infinite descending chain in $A_j$.}  
+  The elements of $X\cap A_j$ appear in the order (1), so they form an infinite descending sequence inside $A_j$.
+
+  \medskip
+  \noindent\textbf{Step 5:  Reach a contradiction.}  
+  This contradicts the assumption that $A_j$ is well--ordered, because a well--ordered set cannot contain an infinite strictly descending sequence.
+
+  \medskip
+  \noindent\textbf{Conclusion.}  
+  The assumption that $A$ is not well--ordered leads to a contradiction; therefore $A$ \emph{is} well--ordered.
+\end{proof}
+\begin{problem}
+  Prove that every \emph{infinite} metric space $M$ contains an \emph{infinite
+  discrete} subspace $A\subseteq M$ (that is, every point $x\in A$ is an isolated
+  point of $A$).
+
+  \begin{enumerate}
+      \item[(1)] \textbf{Case 1 – $M$ itself is discrete.}\\
+            If every point of $M$ is isolated, then any infinite subset of $M$
+            (for instance $A:=M$) is an infinite discrete subspace.  
+            Hence the conclusion is immediate in this case.
+
+      \item[(2)] \textbf{Case 2 – $M$ is \emph{not} discrete.}\\
+            Because $M$ is not discrete, there exists a \emph{limit point}
+            $x\in M$.  By definition, every open ball centred at~$x$ contains
+            points of $M\setminus\{x\}$.
+
+            \begin{enumerate}
+                \item[(a)] \textbf{Construct a sequence converging to $x$.}\\
+                      Inductively choose points
+                      $x_1,x_2,\dots\in M\setminus\{x\}$ such that
+                      \[
+                          d(x_n,x)<\frac1{n},
+                          \qquad
+                          x_n\neq x_m\text{ for }n\neq m .
+                      \]
+                      (This is always possible because $x$ is a limit point.)
+                      Then $(x_n)_{n\ge1}$ is a sequence of \emph{distinct}
+                      points converging to $x$.
+
+                \item[(b)] \textbf{Define $A$ and show it is infinite.}\\
+                      Let
+                      $
+                          A:=\{x_n\mid n\ge1\}.
+                      $
+                      Clearly $A$ is infinite.
+
+                \item[(c)] \textbf{$A$ is discrete.}\\
+                      Fix $n\ge1$.  
+                      Because $x_n\neq x$ and $x_n\to x$, the distance
+                      $\varepsilon_n:=\tfrac12 d(x_n,x)$ is \emph{positive}.
+                      Consider the open ball $B(x_n,\varepsilon_n)$.
+                      \begin{align}
+                          B(x_n,\varepsilon_n)\cap A
+                          =\{x_n\}
+                      \end{align}
+                      since every other $x_m$ with $m\neq n$ is closer to $x$
+                      than to $x_n$.  
+                      Thus $x_n$ is isolated in $A$, and because $n$ was
+                      arbitrary, \emph{every} point of $A$ is isolated.
+            \end{enumerate}
+
+            Hence $A$ is an infinite discrete subspace of $M$.
+  \end{enumerate}
+  In both cases we have produced the required infinite discrete subspace,
+  completing the proof.
+\end{problem}
+
+\medskip
+\noindent\textbf{(c) \;The set $A$ is discrete — detailed argument.}
+
+Fix an index $n\in\Bbb N$ and set 
+\[
+    r:=d(x_n,x)\;>\;0 .
+\]
+(The distance is positive because $x_n\neq x$.)  
+We shall manufacture a radius $\varepsilon_n>0$ such that the open ball
+\(B(x_n,\varepsilon_n)\) meets $A$ only in the point $x_n$.
+
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=2.8em]
+    \item \emph{Control the ``tail’’ of the sequence.}\\
+          Because $x_k\to x$, there exists an integer $N>N(n)$ with
+          \[
+              d(x_k,x)<\frac{r}{2}\qquad\text{for all }k>N. \tag{1}
+          \]
+          For indices beyond $N$ we will soon see that the points are
+          \emph{automatically} outside a suitable ball around $x_n$.
+
+    \item \emph{Deal with the finite ``head’’ of the sequence.}\\
+          The set
+          \[
+              F:=\{x_k\mid 1\le k\le N,\;k\neq n\}
+          \]
+          is finite and every distance $d(x_n,x_k)$ is \emph{strictly}
+          positive.  Define
+          \[
+              s:=\min_{x_k\in F} d(x_n,x_k)\;>\;0. \tag{2}
+          \]
+
+    \item \emph{Choose the isolation radius.}\\
+          Put
+          \[
+              \varepsilon_n:=\frac12\min\!\left\{\frac{r}{2},\,s\right\}\;>\;0. \tag{3}
+          \]
+          Note that $\varepsilon_n\le r/4$ and
+          $\varepsilon_n\le s/2$.
+
+    \item \emph{Show that no other sequence term lies in the ball.}\\
+          Let $m\neq n$ be arbitrary.
+
+          \begin{itemize}
+              \item \underline{If $m>N$}, then by (1)
+                    \(d(x_m,x)<r/2\).  The triangle inequality gives
+                    \[
+                        d(x_m,x_n)\;\ge\;
+                        d(x_n,x)-d(x_m,x)\;>\;
+                        r-\frac{r}{2}\;=\;\frac{r}{2}\;\ge\;2\varepsilon_n,
+                    \]
+                    so \(x_m\notin B(x_n,\varepsilon_n)\).
+
+              \item \underline{If $1\le m\le N$}, then $x_m\in F$, and by (2)
+                    \(d(x_m,x_n)\ge s\ge 2\varepsilon_n\),
+                    hence again \(x_m\notin B(x_n,\varepsilon_n)\).
+          \end{itemize}
+\end{enumerate}
+
+Since the index $m$ was arbitrary, the only point of $A$ inside
+\(B(x_n,\varepsilon_n)\) is $x_n$ itself:
+\[
+    B(x_n,\varepsilon_n)\cap A \;=\;\{x_n\}.
+\]
+
+Because $n$ was arbitrary, \emph{every} point of $A$ is isolated, so $A$ is
+a \textbf{discrete} subspace.  Together with parts (a) and (b) this completes
+the proof that an infinite metric space contains an infinite discrete
+subspace.
+
+\end{document}

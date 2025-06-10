@@ -1,0 +1,2305 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Derivation of \(\log(-1 - i)\)}
+
+We want to show that
+\[
+\log(-1 - i) \;=\; \tfrac12 \ln 2 \;-\; \tfrac{3\pi i}{4} \;+\; 2\pi i\,n,
+\quad n \in \mathbb{Z}.
+\]
+
+\subsection*{1. Recall the Definition of the Complex Logarithm}
+For a nonzero complex number \(z\), the (multi-valued) complex log is defined by
+\[
+\log z \;=\; \ln |z| + i\,\bigl(\arg z + 2\pi n\bigr),
+\quad n \in \mathbb{Z}.
+\]
+Here,
+\begin{itemize}
+  \item \(\lvert z\rvert\) is the modulus of \(z\).
+  \item \(\arg z\) is \emph{an} argument of \(z\) (the angle in radians from the positive real axis).
+  \item \(2\pi n\) accounts for the multi-valued nature of the argument.
+\end{itemize}
+The \emph{principal value} of the logarithm (often written \(\Log z\)) restricts \(\arg z \in (-\pi, \pi]\).
+
+\subsection*{2. Compute the Modulus \(\lvert -1 - i\rvert\)}
+Let \(z = -1 - i\). Then
+\[
+\lvert -1 - i\rvert 
+= \sqrt{(-1)^2 + (-1)^2}
+= \sqrt{1 + 1}
+= \sqrt{2}.
+\]
+Hence,
+\[
+\ln\lvert -1 - i\rvert = \ln(\sqrt{2}) = \tfrac12 \ln 2.
+\]
+
+\subsection*{3. Find the Argument \(\arg(-1 - i)\)}
+The point \((-1, -1)\) lies in the third quadrant. Its reference angle from the negative \(x\)-axis is \(\tfrac{\pi}{4}\).  
+In the usual principal branch (where \(\arg\in(-\pi,\pi]\)), the angle is \(-\tfrac{3\pi}{4}\).  
+(Alternatively, one might say the naive angle is \(\tfrac{5\pi}{4}\), but that exceeds \(\pi\), so subtracting \(2\pi\) yields \(-\tfrac{3\pi}{4}\).)
+
+\subsection*{4. Assemble the Logarithm}
+Putting these together:
+\[
+\ln\lvert -1 - i\rvert = \tfrac12 \ln 2, 
+\quad
+\arg(-1 - i) = -\tfrac{3\pi}{4} + 2\pi n, \; n\in\mathbb{Z}.
+\]
+Hence the multi-valued log is
+\[
+\log(-1 - i)
+= \tfrac12 \ln 2 + i\Bigl(-\tfrac{3\pi}{4} + 2\pi n\Bigr)
+= \tfrac12 \ln 2 - \tfrac{3\pi i}{4} + 2\pi i\,n.
+\]
+If one wants the \emph{principal value}, then set \(n=0\), giving
+\[
+\Log(-1 - i) = \tfrac12 \ln 2 - \tfrac{3\pi i}{4}.
+\]
+
+\subsection*{Final Result}
+\[
+\boxed{
+\log(-1 - i) \;=\;
+\tfrac12 \ln 2 
+\;-\;
+\tfrac{3\pi i}{4}
+\;+\;
+2\pi i\,n,
+\quad n\in\mathbb{Z}.
+}
+\]
+
+\section*{Problem Statement}
+
+\textbf{Goal:} Evaluate the integral
+\[
+I \;=\;\int_{\gamma}\frac{dz}{z},
+\]
+where $\gamma$ is the straight line from the point $z=-3+i$ to the point $z=1-2i$, and we use a branch of the logarithm satisfying
+\[
+0 \;<\; \arg(z) \;<\; 2\pi.
+\]
+
+\section*{Solution Outline}
+
+\subsection*{1. Key Idea: Antiderivative Exists}
+
+The integrand $f(z)=\tfrac{1}{z}$ is analytic in any domain that does not include $z=0$. Hence, on a simply connected region of $\mathbb{C}\setminus\{0\}$ that contains the line segment from $-3+i$ to $1-2i$, the function $f$ has the antiderivative 
+\[
+F(z) \;=\;\log(z),
+\]
+where ``$\log(z)$'' is taken to be some continuous branch of the complex logarithm.
+
+\begin{itemize}
+\item In complex analysis, $\log(z)$ is multi-valued:
+\[
+\log(z) \;=\;\ln|z|\;+\; i\,\bigl(\arg(z)+2\pi k\bigr),\quad k\in \mathbb{Z}.
+\]
+\item We must choose a single branch of $\arg(z)$ so that $0<\arg(z)<2\pi$ (i.e., we exclude negative arguments).
+\end{itemize}
+
+Because $F'(z)=1/z$, the Fundamental Theorem of Calculus for line integrals implies
+\[
+\int_{\gamma} \frac{dz}{z}
+\;=\;
+\log\bigl(\,z_{\text{end}}\bigr)
+\;-\;
+\log\bigl(\,z_{\text{start}}\bigr),
+\]
+\emph{provided} $z=0$ is not crossed by the path (which it is not).
+
+\subsection*{2. Apply to Our Specific Endpoints}
+
+Thus, for the line from $z=-3+i$ to $z=1-2i$, we have
+\[
+I \;=\;
+\log(1 - 2i)\;-\;\log(-3 + i).
+\]
+All that remains is to compute each of these logarithms carefully under the branch $0<\arg(z)<2\pi$.
+
+\subsection*{3. Compute \(\log(1-2i)\) under the Branch}
+
+\paragraph{(a) Modulus.}
+\[
+|1-2i| \;=\;\sqrt{\,1^2 +(-2)^2\,}\;=\;\sqrt{1+4}\;=\;\sqrt{5}.
+\]
+Hence $\ln|1-2i| = \ln(\sqrt{5}) = \tfrac12 \ln(5).$
+
+\paragraph{(b) Argument.}
+The point $1-2i$ lies in the \emph{fourth quadrant} (real part $>0$, imaginary part $<0$). For the usual principal argument in $(-\pi,\pi]$, we would get a negative angle. But we want $0<\arg(z)<2\pi$.  
+Let $\theta_0=\arctan\!\bigl|\frac{-2}{1}\bigr|=\arctan(2).$  Normally, the principal argument would be $-\theta_0$, but in the range $(0,2\pi)$ we have
+\[
+\arg(1-2i) = 2\pi - \theta_0,
+\quad
+\text{where }\theta_0=\arctan(2).
+\]
+Thus
+\[
+\arg(1-2i)=2\pi - \arctan(2).
+\]
+Therefore
+\[
+\log(1-2i)
+\;=\;
+\tfrac12 \ln(5)
+\;+\;
+i\,\Bigl(2\pi - \arctan(2)\Bigr).
+\]
+
+\subsection*{4. Compute \(\log(-3 + i)\) under the Branch}
+
+\paragraph{(a) Modulus.}
+\[
+|-3 + i|
+\;=\;\sqrt{(-3)^2 + 1^2}\;=\;\sqrt{9 + 1}\;=\;\sqrt{10}.
+\]
+Hence $\ln|-3+i| = \ln(\sqrt{10}) = \tfrac12\ln(10).$
+
+\paragraph{(b) Argument.}
+The point $-3 + i$ is in the \emph{second quadrant} (real part $<0$, imaginary part $>0$). The usual principal argument would be $\pi - \alpha$ for some $\alpha>0$. But we still want $0<\arg(z)<2\pi$, so in this case the standard principal angle is already in $(0,\pi)$, so that \emph{matches} the requirement $0<\arg(z)<2\pi$.  
+
+Let $\alpha=\arctan\!\bigl|\frac{1}{-3}\bigr|=\arctan\!\bigl(\tfrac{1}{3}\bigr).$  
+Since we are in quadrant~2, the argument is $\pi - \alpha$.  
+Hence
+\[
+\arg(-3 + i)
+\;=\;\pi - \arctan\!\bigl(\tfrac{1}{3}\bigr).
+\]
+Thus
+\[
+\log(-3 + i)
+\;=\;\tfrac12 \ln(10)
+\;+\; i\Bigl(\pi - \arctan(\tfrac13)\Bigr).
+\]
+
+\subsection*{5. Subtract to Find $I$}
+
+Putting it all together:
+\[
+I 
+\;=\;
+\log(1 - 2i)\;-\;\log(-3 + i)
+\;=\;
+\Bigl[\tfrac12\ln(5) + i\bigl(2\pi - \arctan(2)\bigr)\Bigr]
+\;-\;
+\Bigl[\tfrac12\ln(10) + i\bigl(\pi - \arctan(\tfrac13)\bigr)\Bigr].
+\]
+Simplify real and imaginary parts:
+
+\[
+\text{Real part: }
+\tfrac12 \ln(5) \;-\;\tfrac12 \ln(10)
+\;=\;\tfrac12 \ln\!\Bigl(\tfrac{5}{10}\Bigr)
+\;=\;\tfrac12 \ln\!\bigl(\tfrac12\bigr)
+\;=\;
+-\tfrac12 \ln(2).
+\]
+
+\[
+\text{Imag.\ part: }
+\Bigl(2\pi - \arctan(2)\Bigr) - \Bigl(\,\pi - \arctan(\tfrac13)\Bigr)
+\;=\;
+2\pi - \arctan(2) - \pi + \arctan(\tfrac13)
+\;=\;
+\pi \;-\;\arctan(2) \;+\;\arctan(\tfrac13).
+\]
+Hence
+\[
+I
+\;=\;
+-\tfrac12 \ln(2)
+\;+\; i\,\Bigl[\pi - \arctan(2) + \arctan(\tfrac13)\Bigr].
+\]
+
+Depending on how one wishes to combine angles or approximate them, one might get a more numerical form.  In some solutions, you might see further trigonometric manipulations.  The key point is that each log is computed with the specified branch ($0<\arg z<2\pi$), so we carefully add $2\pi$ in the 4th quadrant or keep the angle in $(0,\pi)$ in the 2nd quadrant.
+
+\subsection*{6. Why We Define the Branch $0<\arg(z)<2\pi$}
+
+The integral $\int \tfrac{1}{z}\,dz$ equals $\log z$ only if we pick a \emph{single, continuous} branch of the logarithm on the region containing our path.  Since the path crosses quadrants, we must ensure the argument does not jump or pass through the negative real axis in a way that changes the branch.  
+
+In this problem, the statement ``Use the branch on $\log z$ with $0<\arg z<2\pi$'' is telling us exactly how to measure angles for each point $z$ on the path so that the function $\log z$ is single-valued and continuous there.  That choice avoids conflicts with the principal branch cut (often $(-\infty,0]$) and ensures a consistent definition of $\log z$ from start to end of the path.
+
+\section*{Conclusion}
+
+Thus, the integral is
+\[
+\boxed{
+I \;=\;
+-\tfrac12 \ln(2)
+\;+\;
+i\Bigl[\pi - \arctan(2) + \arctan\bigl(\tfrac13\bigr)\Bigr].
+}
+\]
+This result follows from the fact that $1/z$ has antiderivative $\log z$ \emph{in any simply connected domain not containing $0$}, combined with a careful branch choice for $\log z$.
+\textbf{Problem Statement:} 
+\[
+I \;=\; \int_{-3 + i}^{\,1 - 2i}\,\frac{dz}{z}
+\quad
+\text{(along the straight line from $z=-3+i$ to $z=1-2i$).}
+\]
+
+We want to evaluate this integral step by step as shown in the provided handwritten notes. Below is a line-by-line walkthrough (each ``line'' refers to a step in the derivation):
+
+\begin{enumerate}
+\item \textbf{Set up the branch of the logarithm.}
+
+\[
+\text{Let }\psi(z)\text{ be a branch of }\log z\text{ in a domain }D \subset \mathbb{C}
+\]
+such that the path of integration (the straight line from $-3+i$ to $1-2i$) lies entirely in $D$. We choose $\psi(z)$ so that
+\[
+\Im(\psi(z)) = \arg(z), 
+\quad
+0 < \arg(z) < 2\pi.
+\]
+This ensures that we do not cross the branch cut of $\psi(z)$ while moving along our path.
+
+\item \textbf{Use the fact that $d(\log z)/dz = 1/z$.}
+
+Since
+\[
+\frac{d}{dz}\,\psi(z) \;=\; \frac{1}{z},
+\]
+it follows by the Fundamental Theorem of Calculus for line integrals that
+\[
+I \;=\; \int_{-3+i}^{\,1-2i} \frac{dz}{z}
+\;=\;
+\psi(1-2i) \;-\;\psi(-3+i).
+\]
+
+\item \textbf{Express the integral in terms of logarithms.}
+
+By definition of our chosen branch,
+\[
+\psi(z) \;=\;\log z
+\quad\Longrightarrow\quad
+I \;=\; \log(1-2i)\;-\;\log(-3+i).
+\]
+Hence,
+\[
+I \;=\;\log\!\Bigl(\frac{1-2i}{-3+i}\Bigr).
+\]
+
+\item \textbf{Address the argument (imaginary part) carefully.}
+
+When writing 
+\[
+I = \log\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr),
+\]
+we must be careful about the argument of the complex number $\tfrac{1-2i}{-3+i}$.  In general,
+\[
+\log\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr)
+\;=\;
+\ln\!\Bigl|\tfrac{1-2i}{-3+i}\Bigr|
+\;+\;
+i\,\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr),
+\]
+where $\Arg(\cdot)$ is the chosen branch of the argument (which we keep in $(-\pi,\pi]$, for instance).
+
+\item \textbf{Compute the modulus.}
+
+Compute the magnitude:
+\[
+\left|\frac{1-2i}{-3 + i}\right|
+\;=\;
+\frac{\sqrt{(1)^2 + (-2)^2}}{\sqrt{(-3)^2 + (1)^2}}
+\;=\;
+\frac{\sqrt{1 + 4}}{\sqrt{9 + 1}}
+\;=\;
+\frac{\sqrt{5}}{\sqrt{10}}
+\;=\;
+\sqrt{\frac{5}{10}}
+\;=\;
+\frac{1}{\sqrt{2}}.
+\]
+Thus,
+\[
+\ln\!\Bigl|\tfrac{1-2i}{-3+i}\Bigr|
+\;=\;
+\ln\!\Bigl(\tfrac{1}{\sqrt{2}}\Bigr)
+\;=\;
+-\tfrac{1}{2}\,\ln(2).
+\]
+
+\item \textbf{Compute (and choose) the correct argument.}
+
+We look at the arguments:
+\[
+\arg(1-2i) \quad\text{(4th quadrant)}, 
+\quad
+\arg(-3 + i) \quad\text{(2nd quadrant)}.
+\]
+Numerically or geometrically,
+\[
+\arg(1-2i)\in\bigl(-\tfrac{\pi}{2},0\bigr),
+\quad
+\arg(-3+i)\in\bigl(\tfrac{\pi}{2},\pi\bigr).
+\]
+Hence the difference
+\[
+\arg(1-2i)\;-\;\arg(-3+i)
+\]
+will be somewhere around $-\frac{3\pi}{4}$ or $\frac{3\pi}{4}$ depending on whether we add or subtract $2\pi$.  For the principal value in $(-\pi,\pi]$, one finds
+\[
+\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr) \;=\; \frac{3\pi}{4}
+\]
+(you add $2\pi$ if the naive difference falls outside $(-\pi,\pi]$).
+
+\item \textbf{Combine the real and imaginary parts.}
+
+Putting the modulus and argument together,
+\[
+I
+\;=\;
+\ln\!\Bigl|\tfrac{1-2i}{-3+i}\Bigr|
+\;+\;
+i\,\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr)
+\;=\;
+-\tfrac{1}{2}\ln(2)
+\;+\;
+i\,\frac{3\pi}{4}.
+\]
+This is the value of the integral along the chosen straight-line path, using the chosen branch of the logarithm.
+
+\item \textbf{Final answer.}
+
+Therefore,
+\[
+\boxed{
+I \;=\; \int_{-3 + i}^{1 - 2i} \frac{dz}{z}
+\;=\;
+-\tfrac{1}{2}\ln(2)
+\;+\;
+i\,\tfrac{3\pi}{4}.
+}
+\]
+
+\end{enumerate}
+\textbf{Why we pay attention to the arguments (2nd and 4th quadrants):}
+
+When you evaluate
+\[
+\log\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr)
+\;=\;
+\ln\!\Bigl|\tfrac{1-2i}{-3+i}\Bigr|
+\;+\;
+i\,\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr),
+\]
+the \emph{key point} is that $\Arg(w)$ (the principal argument of a complex number $w$) is only unambiguously defined if we \emph{know which quadrant} $w$ lies in.  Since
+\[
+\Arg\bigl(1-2i\bigr)\quad\text{and}\quad \Arg\bigl(-3+i\bigr)
+\]
+enter the calculation via
+\[
+\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr)
+\;=\;
+\Arg\!\bigl(1-2i\bigr)\;-\;\Arg\!\bigl(-3+i\bigr)
+\;(\bmod\,2\pi),
+\]
+we need to be certain we pick the correct principal values (i.e., the correct angles in the correct quadrants).
+
+\begin{itemize}
+\item $1-2i$ has \(\Re(1-2i) = 1 > 0\) and \(\Im(1-2i) = -2 < 0\). 
+  \[
+  \implies \text{4th quadrant.}
+  \]
+  An approximate measure is
+  \[
+  \Arg(1-2i) \approx -\arctan(2) \approx -1.1071 \text{ radians} \quad(-63.43^\circ).
+  \]
+  
+\item $-3 + i$ has \(\Re(-3+i) = -3 < 0\) and \(\Im(-3+i) = 1 > 0\).
+  \[
+  \implies \text{2nd quadrant.}
+  \]
+  An approximate measure is
+  \[
+  \Arg(-3 + i) \approx \pi - \arctan\!\bigl(\tfrac{1}{3}\bigr) \approx 2.8198 \text{ radians} \quad(161.56^\circ).
+  \]
+
+\end{itemize}
+
+\paragraph{Why does this matter?}
+When we take the difference,
+\[
+\Arg(1-2i) - \Arg(-3+i) \;\approx\; -1.1071 \;-\; 2.8198 \;=\; -3.9269 \;\text{radians},
+\]
+which is about \(-225^\circ\).  The principal argument (the one in \((-\pi,\pi]\)) of a number is \emph{not} allowed to be \(-3.9269\) because that lies outside \(\pm \pi\).  Hence we add \(2\pi\approx 6.2832\) to bring it into the range \((-\pi,\pi]\):
+\[
+-3.9269 \;+\; 6.2832 \;=\; 2.3563 \;\text{radians} \quad\bigl(=135^\circ\bigr),
+\]
+which is exactly \(\frac{3\pi}{4}\).  That is why we say
+\[
+\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr)
+\;=\;
+\frac{3\pi}{4}.
+\]
+
+If you do \emph{not} track the quadrant information, you might incorrectly conclude that the argument is \(-\frac{5\pi}{4}\) (the raw difference) instead of \(\frac{3\pi}{4}\).  Since the integral depends on the \emph{principal value} of the argument (the specific branch we chose for the logarithm), it is crucial to identify the correct quadrant for each factor and then ensure the result lies in the principal range.
+\textbf{How the result changes if we choose the branch with $0 < \arg(z) < 2\pi$:}
+
+In the original solution, we used a branch of the logarithm whose argument lies in $(-\pi,\pi]$.  Suppose instead we define
+\[
+\log z \;=\; \ln|z| + i\,\Arg(z)
+\quad\text{where}\quad
+0 < \Arg(z) < 2\pi.
+\]
+Then for each point $z$ on our path from $-3 + i$ to $1 - 2i$, we must take $\Arg(z)$ in the range $(0,2\pi)$, rather than $(-\pi,\pi]$.
+
+\paragraph{Key observation:}
+\emph{The final value of the line integral}
+\[
+\int_{-3 + i}^{\,1 - 2i} \frac{dz}{z}
+\]
+\emph{does not change (it will be the same numerical value)}.  The reason is that the integral of $1/z$ along a path is given by the \emph{difference} of the chosen branch of $\log z$ between the endpoints:
+\[
+\int_{\gamma}\frac{dz}{z}
+\;=\;
+\log\bigl(z_{\text{end}}\bigr)
+\;-\;
+\log\bigl(z_{\text{start}}\bigr).
+\]
+Even if you switch from the branch $(-\pi,\pi]$ to the branch $(0,2\pi)$, the difference in the \emph{values} of $\log z$ at each endpoint will shift by the same integer multiple of $2\pi i$, provided that:
+
+\begin{itemize}
+\item the path does not cross the branch cut,
+\item and the path does not loop around the origin in such a way as to force a ``jump'' of $2\pi$ in the argument.
+\end{itemize}
+
+In our specific problem, the straight line from $-3+i$ to $1-2i$ \emph{does not} encircle the origin and can be placed in a domain $D$ that avoids the new branch cut (which, for $0<\arg(z)<2\pi$, is typically the positive real axis).  Hence the net effect is that both endpoints' logarithms shift in a way that cancels out.  Concretely:
+
+\begin{itemize}
+\item Under $(-\pi,\pi]$, we might have 
+\[
+\Arg(1 - 2i)\approx -1.107 \quad(\text{radians}), 
+\quad
+\Arg(-3 + i)\approx 2.820,
+\]
+and then we adjust the difference so it lies in $(-\pi,\pi]$ (which gave us $+\frac{3\pi}{4}$ for the final argument difference).
+
+\item Under $(0,2\pi)$, we have
+\[
+\Arg(1 - 2i) \approx 2\pi - 1.107 \;=\; 5.176,
+\quad
+\Arg(-3 + i)\approx 2.820,
+\]
+so their difference is $5.176 - 2.820 = 2.356$ (which is again $\tfrac{3\pi}{4}$).  
+
+Either way, 
+\[
+\Arg\!\Bigl(\tfrac{1-2i}{-3+i}\Bigr) \;=\;\frac{3\pi}{4}.
+\]
+\end{itemize}
+
+Hence the imaginary part of the integral (which comes from the difference of arguments) is the same, and the real part (which comes from the difference of the natural logarithms of the moduli) is also the same.  Therefore, the final answer
+\[
+I
+\;=\;
+-\tfrac{1}{2}\ln(2)
+\;+\;
+i\,\tfrac{3\pi}{4}
+\]
+remains unchanged.  In more general problems, if your path \emph{did} cross or loop around the branch cut, the change in branches could add an integer multiple of $2\pi i$ to your answer.  In this particular problem, it does not.
+\textbf{Interpreting the statement:}\\
+\[
+\text{``Let }\psi(z)\text{ be a branch of }\log z\text{ in }
+D = \mathbb{C} \setminus \{\,x \in \mathbb{C} : x > 0\}\,.'' 
+\]
+This means we are defining a single-valued (continuous) version of the complex logarithm on the entire complex plane \emph{except} for the positive real axis. In other words, the \emph{branch cut} for this logarithm is chosen to be the positive real axis (all real numbers $r>0$). 
+
+\paragraph{Why remove the positive real axis?} 
+The complex logarithm $\log z = \ln|z| + i \,\arg(z)$ is multi-valued, because $\arg(z)$ can differ by multiples of $2\pi$. To make $\log z$ single-valued, we typically remove a line or ray from the plane (the ``branch cut'') and fix the argument to lie within a specific range. If we remove the positive real axis, it is typical to take $0 < \arg(z) < 2\pi$ for all $z$ in the domain. This ensures that as you move around in $D$, the function $\psi(z)$ remains continuous and does not ``jump'' by $2\pi i.$
+\noindent
+\textbf{Short answer:} You \emph{can} say
+\[
+\log(-1 - i) \;=\; \ln\!\bigl|{-1 - i}\bigr| \;+\; i\,\bigl(\tfrac{5\pi}{4}\bigr)
+\]
+\emph{if} your chosen branch of the logarithm is the one with
+\[
+0 \;<\; \arg(z) \;<\; 2\pi.
+\]
+That value is perfectly valid for a single point.  However, when you evaluate a line integral
+\[
+\int \frac{dz}{z},
+\]
+the answer is given by the \emph{difference} of logs at the two endpoints:
+\[
+\log\bigl(z_{\text{end}}\bigr)\;-\;\log\bigl(z_{\text{start}}\bigr).
+\]
+To get the \emph{correct} final answer, you must use the \emph{same branch} consistently for \emph{both} endpoints and ensure your path does not cross the branch cut.  
+
+\paragraph{Why the argument matters.}
+A complex logarithm is multi-valued because
+\[
+\log z \;=\;\ln|z|\;+\;i\,(\arg(z) + 2\pi k),
+\]
+where $k$ is any integer.  When you ``fix a branch,'' you fix which single value of $\arg(z)$ you use for \emph{every} $z$ in your domain.  If your domain is $\mathbb{C}\setminus[0,\infty)$ on the real axis (the ``positive real axis branch cut'') and you choose 
+\[
+0 < \Arg(z) < 2\pi,
+\]
+then for $z=-1-i$ (which lies in the 3rd quadrant), indeed
+\[
+\Arg(-1-i) \;=\;\frac{5\pi}{4}.
+\]
+So in that sense,
+\[
+\log(-1 - i)
+\;=\;
+\ln\!\bigl|{-1 - i}\bigr|
+\;+\;
+i\,\frac{5\pi}{4}
+\]
+is a \emph{legitimate} value for that single point.
+
+\paragraph{But what about an integral or a ratio?}
+If you were computing, for example,
+\[
+\int_{z_1}^{z_2} \frac{dz}{z}
+\;=\;
+\log(z_2) \;-\;\log(z_1),
+\]
+the real question is: \emph{what are $\log(z_1)$ and $\log(z_2)$ \emph{on the same branch}?}  If both $z_1$ and $z_2$ are in the 3rd quadrant, you might well end up with arguments around $\tfrac{5\pi}{4}$ for each.  If your $z_2$ were, say, in the 4th quadrant (argument near $2\pi - \theta$), or the path crosses the positive real axis, then you have to track how $\Arg$ changes consistently to avoid a jump of $2\pi$.
+
+\paragraph{Hence the key point:}
+\begin{itemize}
+\item For a \emph{single} $z$, it is fine to say $\Arg(z)=\tfrac{5\pi}{4}$ if $z$ is in the 3rd quadrant and your branch cut is the positive real axis.
+\item For a \emph{difference} of logs (like in a line integral), you must use the \emph{same} branch for both endpoints and confirm that your path stays in the domain where $\Arg$ is continuous.  
+\item Changing branches can shift the answer by $2\pi i$ (an integer multiple of $2\pi i$ in general).  That is not ``incorrect,'' but it might differ from the \emph{principal value} you started with.  In practice, if the path does not cross the branch cut or encircle the origin, the difference of logs is unique up to a multiple of $2\pi i$.
+\end{itemize}
+
+\noindent
+\textbf{Conclusion:} You are free to pick the argument of $-1 - i$ to be $5\pi/4$ \emph{if and only if} your chosen branch is $0<\Arg(z)<2\pi$ and your path remains in that domain.  That will indeed give you
+\[
+\log(-1 - i)
+\;=\;
+\ln\sqrt{2}
+\;+\;
+i\,\frac{5\pi}{4}
+\;=\;
+\tfrac12\ln(2)
+\;+\;
+i\,\frac{5\pi}{4}.
+\]
+But be sure that \emph{every other} $z$ in your problem (like an integral's start/end point) is treated with the \emph{same} branch so that the difference 
+\(
+\log(z_{\text{end}})-\log(z_{\text{start}})
+\)
+matches the actual integral.  
+\section*{Why Take Derivatives to Find the Order of a Zero?}
+
+\textbf{Definition (Order of a Zero).}  
+Let $f$ be an analytic function in a neighborhood of a point $z_0$, and suppose $f(z_0)=0$. We say \emph{$f$ has a zero of order $m$ at $z_0$} if
+\[
+f(z_0) = f'(z_0) = f''(z_0) = \cdots = f^{(m-1)}(z_0) = 0,
+\]
+but
+\[
+f^{(m)}(z_0) \;\neq\; 0.
+\]
+Equivalently, the first nonzero derivative of $f$ at $z_0$ is the $m$-th derivative.
+
+\medskip
+
+\textbf{Reason for Taking Derivatives.}  
+When we want to determine \emph{how many times} $z_0$ is a root (i.e.\ the \emph{multiplicity} of the zero), we look at successive derivatives of $f$ at $z_0$:
+\begin{itemize}
+  \item If $f(z_0) = 0$ but $f'(z_0) \neq 0$, the zero is \emph{simple} (order 1).
+  \item If $f(z_0) = f'(z_0) = 0$ but $f''(z_0)\neq 0$, then the zero is \emph{order 2}, and so on.
+\end{itemize}
+
+Thus, in your example where $f(z)$ (or $g(z)$) vanishes at $z = 2\pi n$, one checks $f'(2\pi n), f''(2\pi n), \dots$ until the first nonzero derivative appears.  The index of that derivative is the \emph{order} of the zero at $z=2\pi n$.
+\section*{Why We Did Not Take Derivatives in This Example}
+
+\subsection*{1. Two Equivalent Methods for Finding the Order of a Zero}
+
+\textbf{(a) Using Derivatives:}  
+We say $z_0$ is a zero of order $m$ of $f(z)$ if
+\[
+f(z_0) = f'(z_0) = \cdots = f^{(m-1)}(z_0) = 0,
+\quad
+f^{(m)}(z_0) \neq 0.
+\]
+
+\textbf{(b) Using the Power-Series Expansion:}  
+If near $z_0$ the function has a power series
+\[
+f(z) \;=\;\sum_{n=0}^{\infty} a_n (z - z_0)^n,
+\]
+and $a_0 = a_1 = \cdots = a_{m-1} = 0$ but $a_m \neq 0,$ then $f$ has a zero of order $m$ at $z_0$. Essentially, the first nonzero term in the series is $(z - z_0)^m$.
+
+\subsection*{2. Example: $f(z) = 1 - \cos z$ at $z=0$}
+
+If we expand $\cos z$ in its Maclaurin series:
+\[
+\cos z 
+= 1 \;-\; \frac{z^2}{2!} \;+\; \frac{z^4}{4!} \;-\;\cdots
+\]
+then
+\[
+1 - \cos z
+= \bigl(1 - 1\bigr)
++ \frac{z^2}{2!}
+- \frac{z^4}{4!}
++ \cdots
+= \frac{z^2}{2!} - \frac{z^4}{4!} + \cdots
+\]
+Clearly, the first nonzero term in this series is $z^2$, so $1-\cos z$ has a zero of order 2 at $z=0$. We \emph{did not} need to take derivatives explicitly, because the power series made it immediate that $z^2$ is the leading term.
+
+\subsection*{3. Why Sometimes We Just Expand the Series}
+
+\begin{itemize}
+\item \textbf{Speed and Convenience:} If the power‐series expansion is well-known or easy to write down, it's often faster to see the lowest power of $(z - z_0)$ that appears. That directly tells us the order of the zero.
+\item \textbf{Equivalence:} Checking how many derivatives vanish is \emph{equivalent} to looking at the series. Indeed, if the first nonzero term is $(z-z_0)^m$, then all derivatives up to order $m-1$ vanish at $z_0$, but the $m$th derivative is nonzero.
+\end{itemize}
+
+\subsection*{4. Conclusion}
+
+In short, \textbf{both methods} (derivatives or series expansion) determine the order of a zero. If the series is already known or easily computed (like for $\cos z$, $\sin z$, etc.), then just looking at the leading power in the series is the quickest route. In other cases, or if no immediate series is at hand, one might systematically check derivatives at the point.
+
+
+\section*{Zeros vs.\ Singularities}
+
+\subsection*{1. Zeros of a Function}
+
+If $f$ is analytic at $z_0$ (i.e.\ $z_0$ is \emph{inside} the domain of $f$) and $f(z_0)=0$, then $z_0$ is called a \emph{zero} of $f$. The \textbf{order} of the zero is how many derivatives vanish at $z_0$ before the first nonzero derivative appears:
+\[
+\text{order}(z_0) = m
+\quad\Longleftrightarrow\quad
+f(z_0)=f'(z_0)=\dots=f^{(m-1)}(z_0)=0,\;f^{(m)}(z_0)\neq 0.
+\]
+But in this scenario, $z_0$ is \emph{not} a singularity for $f$ itself, because $f$ is defined and analytic there (albeit with the value $0$).  
+
+\subsection*{2. Singularities of a Function}
+
+A \emph{singularity} of $f$ at $z_0$ means $z_0$ is \emph{not} in the domain of $f$, or $f$ fails to be analytic there. For example:
+\begin{itemize}
+  \item \textbf{Removable singularity:} $f$ can be extended analytically to $z_0$.  
+  \item \textbf{Pole:} $|f(z)|\to\infty$ as $z\to z_0$.  
+  \item \textbf{Essential singularity:} neither removable nor a pole (Laurent series has infinitely many negative-power terms).
+\end{itemize}
+
+Hence, \emph{having a zero} at $z_0$ means $z_0$ is \emph{inside} $f$'s domain, not a singularity of $f$.
+
+\subsection*{3. Relation to $1/f$}
+
+Often we do see a link between \emph{zeros} of $f$ and \emph{poles} of $1/f$. Specifically:
+\[
+\text{If $f$ has a zero of order $m$ at $z_0$, then $1/f$ has a pole of order $m$ at $z_0$.}
+\]
+In that sense, the order of a zero of $f$ \emph{does} determine whether $1/f$ has a removable singularity or a pole (and of which order).
+
+\subsection*{4. Conclusion}
+
+\textbf{Answer:} 
+The order of zeros of $f$ does \emph{not} by itself say “$f$ has a removable singularity or a pole” at that same point, because a zero occurs at a point \emph{inside} $f$'s domain (hence not a singularity for $f$). However, if you look at $1/f$, that zero becomes a pole of the same order in $1/f$. 
+
+In other words:
+\[
+\underbrace{\text{Zeros of $f$}}_{\text{points where $f=0$ \; (in domain)}} 
+\quad\longleftrightarrow\quad
+\underbrace{\text{Poles of $1/f$}}_{\text{singularities in $1/f$}}.
+\]
+
+
+\section*{Removable Singularity versus Pole}
+
+\subsection*{Definitions}
+\begin{itemize}
+  \item A point \(z_0\) is called a \textbf{removable singularity} for a function \(f(z)\) if \(f\) is not defined at \(z_0\) but there exists a number \(L\) such that
+  \[
+  \lim_{z\to z_0} f(z) = L.
+  \]
+  In this case, we can redefine \(f(z_0)=L\) so that \(f\) becomes analytic at \(z_0\).
+
+  \item A point \(z_0\) is called a \textbf{pole of order \(m\)} for \(f(z)\) if in the Laurent expansion about \(z_0\) the principal part consists of a finite number of terms,
+  \[
+  f(z) = \sum_{n=-m}^{\infty} a_n (z-z_0)^n,
+  \]
+  with \(a_{-m}\neq 0\) and \(m\ge1\). In this case, \(f(z)\to\infty\) as \(z\to z_0\).
+\end{itemize}
+
+\subsection*{Why \(z_0=0\) Can Be Removable}
+
+Consider a function such as
+\[
+f(z) = \frac{\tan z}{z} = \frac{\sin z}{z\cos z}.
+\]
+For \(z\neq0\), this is defined. To check the nature of the singularity at \(z=0\), we examine the limit:
+\[
+\lim_{z\to0} \frac{\sin z}{z\cos z}.
+\]
+Recall that
+\[
+\lim_{z\to0}\frac{\sin z}{z} = 1 \quad \text{and} \quad \cos z \to 1.
+\]
+Thus,
+\[
+\lim_{z\to0} \frac{\tan z}{z} = \frac{1}{1} = 1.
+\]
+Since the limit exists and is finite, the singularity at \(z=0\) is \emph{removable}. We can define
+\[
+f(0)=1,
+\]
+making \(f(z)\) analytic at \(z=0\).
+
+\subsection*{Why \(z_0=\pi/2+\pi n\) Are Poles}
+
+Again, consider the function
+\[
+f(z) = \frac{\tan z}{z}.
+\]
+The tangent function is defined as
+\[
+\tan z = \frac{\sin z}{\cos z}.
+\]
+The zeros of the denominator \(\cos z\) occur when
+\[
+z = \frac{\pi}{2} + \pi n, \quad n\in\mathbb{Z}.
+\]
+At these points, \(\cos z = 0\) (and typically \(\sin z \neq 0\)), so near \(z_0 = \pi/2+\pi n\) the function behaves like
+\[
+\tan z \approx \frac{\text{nonzero}}{z-z_0},
+\]
+which means
+\[
+f(z) \approx \frac{\text{nonzero}}{z\,(z-z_0)}.
+\]
+The factor \((z-z_0)^{-1}\) in the Laurent series indicates a \emph{pole of order 1} (a simple pole) at \(z_0=\pi/2+\pi n\).
+
+\subsection*{Summary}
+
+\begin{itemize}
+  \item \textbf{Removable singularity:} If the limit exists (and is finite), as in the case of \(z_0=0\) for \(f(z)=\frac{\tan z}{z}\), then the singularity can be removed by defining the function at that point.
+  \item \textbf{Pole:} If the function blows up (and the Laurent series has a finite principal part), as for \(z_0=\pi/2+\pi n\) where \(\cos z=0\) for \(\tan z\), then these points are poles.
+\end{itemize}
+\section*{Laurent Expansion of \(\frac{\tan z}{z}\) near \(z_0=\frac{\pi}{2}+\pi n\)}
+
+Recall that
+\[
+\tan z=\frac{\sin z}{\cos z}.
+\]
+The singularities of \(\tan z\) occur where the denominator \(\cos z=0\). In particular,
+\[
+\cos z=0 \quad\text{when}\quad z_0=\frac{\pi}{2}+\pi n,\quad n\in\mathbb{Z}.
+\]
+At such a point, typically \(\sin z_0\neq 0\). We now show that near \(z=z_0\) the Laurent expansion of \(\tan z\) has a principal part of the form \(-\frac{1}{z-z_0}\), so that when divided by \(z\), the only negative-power term in the expansion comes from \(\frac{1}{z-z_0}\) (making the singularity a simple pole).
+
+\bigskip
+
+\textbf{Step 1. Set Up the Expansion:}\\[1mm]
+Let 
+\[
+z=z_0+w,\quad \text{with } w=z-z_0 \quad \text{and } |w|\ll 1.
+\]
+We then expand \(\sin z\) and \(\cos z\) around \(z=z_0\).
+
+\bigskip
+
+\textbf{Step 2. Expand \(\cos(z)\) near \(z_0\):}\\[1mm]
+Using the Taylor expansion,
+\[
+\cos(z_0+w) = \cos(z_0) - \sin(z_0)\,w + O(w^2).
+\]
+Since \(z_0=\frac{\pi}{2}+\pi n\), we have
+\[
+\cos(z_0)=0,
+\]
+and 
+\[
+\sin(z_0)=\sin\Bigl(\frac{\pi}{2}+\pi n\Bigr)=(-1)^n.
+\]
+Thus,
+\[
+\cos(z_0+w) \approx -\sin(z_0)\,w = -(-1)^n\,w = (-1)^{n+1}w.
+\]
+
+\bigskip
+
+\textbf{Step 3. Expand \(\sin(z)\) near \(z_0\):}\\[1mm]
+Similarly, the Taylor expansion for \(\sin(z)\) is
+\[
+\sin(z_0+w) = \sin(z_0) + \cos(z_0)\,w + O(w^2).
+\]
+Since \(\cos(z_0)=0\), we get
+\[
+\sin(z_0+w) \approx \sin(z_0)=(-1)^n.
+\]
+
+\bigskip
+
+\textbf{Step 4. Expand \(\tan(z)\) near \(z_0\):}\\[1mm]
+Now, since
+\[
+\tan(z)=\frac{\sin(z)}{\cos(z)},
+\]
+we have for \(z=z_0+w\):
+\[
+\tan(z_0+w) \approx \frac{(-1)^n}{(-1)^{n+1}w} = -\frac{1}{w} = -\frac{1}{z-z_0}.
+\]
+Thus, the Laurent expansion for \(\tan z\) near \(z=z_0\) begins as
+\[
+\tan z = -\frac{1}{z-z_0} + \text{(analytic terms in }w\text{)}.
+\]
+
+\section*{Detailed Derivation of the Laurent Expansion for \(\tan z\) near \(z=z_0\)}
+
+Recall that
+\[
+\tan z = \frac{\sin z}{\cos z}.
+\]
+Let
+\[
+z = z_0 + w, \quad \text{with } w = z - z_0 \text{ and } |w|\ll 1.
+\]
+Suppose \(z_0 = \frac{\pi}{2}+\pi n\) for some integer \(n\). Then we have:
+
+\medskip
+\textbf{Step 1. Expand \(\sin(z)\) near \(z_0\):}
+
+Using the Taylor series expansion about \(w=0\):
+\[
+\sin(z_0+w) = \sin(z_0) + \cos(z_0)\,w + O(w^2).
+\]
+At \(z_0 = \frac{\pi}{2}+\pi n\):
+\[
+\sin(z_0) = \sin\Bigl(\frac{\pi}{2}+\pi n\Bigr) = (-1)^n,
+\]
+and
+\[
+\cos(z_0) = \cos\Bigl(\frac{\pi}{2}+\pi n\Bigr) = 0.
+\]
+Thus, to first order,
+\[
+\sin(z_0+w) \approx (-1)^n.
+\]
+
+\medskip
+\textbf{Step 2. Expand \(\cos(z)\) near \(z_0\):}
+
+Similarly, expand \(\cos(z)\) as:
+\[
+\cos(z_0+w) = \cos(z_0) - \sin(z_0)\,w + O(w^2).
+\]
+Since \(\cos(z_0)=0\) and \(\sin(z_0)=(-1)^n\), we get:
+\[
+\cos(z_0+w) \approx -(-1)^n\,w = (-1)^{n+1}w.
+\]
+
+\medskip
+\textbf{Step 3. Form the Ratio for \(\tan(z)\):}
+
+Now, substituting these approximations into the definition of \(\tan z\):
+\[
+\tan(z_0+w) \approx \frac{\sin(z_0+w)}{\cos(z_0+w)} \approx \frac{(-1)^n}{(-1)^{n+1}w}.
+\]
+Simplify the factor:
+\[
+\frac{(-1)^n}{(-1)^{n+1}} = \frac{(-1)^n}{-(-1)^n} = -1.
+\]
+Thus,
+\[
+\tan(z_0+w) \approx -\frac{1}{w}.
+\]
+Since \(w=z-z_0\), we can write:
+\[
+\tan z \approx -\frac{1}{z-z_0}.
+\]
+
+\medskip
+\textbf{Step 4. Conclusion:}
+
+The Laurent expansion of \(\tan z\) near \(z=z_0\) therefore begins with the term
+\[
+-\frac{1}{z-z_0},
+\]
+and the remaining terms (in powers of \(w\)) are analytic. In other words, the Laurent series for \(\tan z\) near \(z=z_0\) is of the form:
+\[
+\tan z = -\frac{1}{z-z_0} + \text{(higher order terms in } (z-z_0) \text{)}.
+\]
+This shows that \(z=z_0\) is a simple pole of \(\tan z\) (and hence of any function that includes \(\tan z\) in a factor).
+
+
+\bigskip
+
+\textbf{Step 5. Expand \(\frac{\tan z}{z}\) near \(z_0\):}\\[1mm]
+We now have
+\[
+\frac{\tan z}{z} = \frac{-\frac{1}{z-z_0} + \cdots}{z}.
+\]
+Since \(z\) is analytic and nonzero at \(z=z_0\) (note that \(z_0\neq 0\) for \(z_0=\frac{\pi}{2}+\pi n\)), the principal part of the Laurent expansion of \(\frac{\tan z}{z}\) around \(z=z_0\) is dominated by the factor
+\[
+-\frac{1}{z(z-z_0)}.
+\]
+In the local variable \(w=z-z_0\), the only negative power in the expansion is \(\frac{-1}{w}\) (multiplied by a nonzero analytic function coming from \(1/z\)). This shows that \(\frac{\tan z}{z}\) has a simple pole (pole of order 1) at \(z=z_0\).
+
+\bigskip
+
+\textbf{Conclusion:}\\[1mm]
+The Laurent series expansion of \(f(z)=\frac{\tan z}{z}\) near \(z_0=\frac{\pi}{2}+\pi n\) includes a principal part with only one term of the form
+\[
+-\frac{1}{z-z_0},
+\]
+indicating that the singularity at \(z=z_0\) is a \emph{simple pole} (a pole of order 1).
+\section*{Why \(\cos(z_0 + w) = \cos(z_0) - \sin(z_0)\,w + O(w^2)\)?}
+
+This is simply the \emph{Taylor expansion} of \(\cos\) around the point \(z_0\). Specifically, for a small increment \(w\), we write
+\[
+\cos(z_0 + w) = \cos(z_0) + w \cdot \cos'(z_0) + \frac{w^2}{2!}\,\cos''(\xi)
+\]
+for some \(\xi\) between \(z_0\) and \(z_0+w\). This is just the usual one‐variable Taylor formula.
+
+\medskip
+
+\textbf{Step 1. Identify derivatives of \(\cos\):}
+\[
+\frac{d}{dz}\bigl[\cos(z)\bigr] = -\sin(z),
+\quad
+\frac{d^2}{dz^2}\bigl[\cos(z)\bigr] = -\cos(z),
+\quad
+\ldots
+\]
+
+\medskip
+
+\textbf{Step 2. Apply Taylor’s Theorem at \(z=z_0\):}
+\[
+\cos(z_0 + w)
+= \cos(z_0) 
++ \bigl(w\cdot \cos'(z_0)\bigr)
++ \frac{w^2}{2!}\,\cos''(\xi), 
+\]
+where \(\xi\) is in \([z_0,\,z_0+w]\) (by the mean‐value form of the remainder). 
+
+Since \(\cos'(z_0)=-\sin(z_0)\),
+\[
+\cos(z_0 + w)
+= \cos(z_0)
+- \sin(z_0)\,w
++ \frac{w^2}{2!}\,\cos''(\xi).
+\]
+
+\medskip
+
+\textbf{Step 3. Interpret the Big‐Oh notation:}
+Writing 
+\[
+\cos''(\xi)\cdot \frac{w^2}{2} 
+\]
+as \(O(w^2)\) means that there is some constant \(M\) such that for sufficiently small \(w\),
+\(\bigl|\cos''(\xi)\bigr|\le M,\)
+so the second‐order (and higher) terms are of the order \(w^2\). Hence
+\[
+\cos(z_0 + w)
+= \cos(z_0)
+- \sin(z_0)\,w
++ O(w^2).
+\]
+\section*{Why Checking the Order of a Singularity Helps Distinguish Removable vs.\ Pole}
+
+\subsection*{1. Laurent Series Classification}
+
+If a function $f(z)$ has an isolated singularity at $z_0$, we can write a Laurent series around $z_0$:
+\[
+f(z) = \sum_{n=-\infty}^\infty a_n (z - z_0)^n.
+\]
+The terms with negative indices $n<0$ form the \emph{principal part}.
+
+\begin{itemize}
+  \item \textbf{Removable Singularity:} The principal part is \emph{empty} (i.e., $a_{-1} = a_{-2} = \cdots = 0$). This means $f$ can be redefined at $z_0$ so as to be analytic there.
+  \item \textbf{Pole of Order $m$:} The principal part is \emph{finite}, with exactly $a_{-m}\neq 0$ but $a_{-k}=0$ for all $k>m$. Hence the function “blows up” like $(z-z_0)^{-m}$ near $z_0$.
+\end{itemize}
+
+\subsection*{2. Why Check “Order”?}
+
+When people say “we check the \emph{order} of the singularity,” they often mean:
+
+\begin{itemize}
+  \item \emph{If there are \textbf{no} negative powers}, i.e.\ the order of the negative term is zero, then the singularity is removable.
+  \item \emph{If there is a leading negative power $(z-z_0)^{-m}$}, that $m$ is the \emph{order of the pole}. 
+\end{itemize}
+
+Thus, “checking the order” is a shorthand for looking at how many negative powers appear in the Laurent expansion. If none appear, the singularity is removable; if one or more appear, it’s a pole (or essential if infinitely many appear).
+
+\subsection*{3. Example Sketch}
+
+Consider 
+\[
+f(z) = \frac{\sin z}{z}.
+\]
+At $z=0$, the naive form is $\frac{0}{0}$, so $z=0$ might be a singularity. But expanding $\sin z \approx z - \tfrac{z^3}{3!} + \dots$, we get
+\[
+\frac{\sin z}{z} \approx \frac{z - \frac{z^3}{6} + \dots}{z} = 1 - \frac{z^2}{6} + \dots
+\]
+which has \emph{no} negative powers in $z$. Hence $z=0$ is \emph{removable}, not a pole.
+
+\subsection*{4. Conclusion}
+
+Hence, the step of “checking the order of the singularity” is basically a systematic way to see whether the Laurent series has a finite principal part (pole), no principal part (removable), or infinitely many negative terms (essential). It’s the most direct way to classify isolated singularities.
+
+\section*{Example: Classifying Singularities of \(\displaystyle f(z) \;=\;\frac{\tan^2(z)}{z}\)}
+
+We want to determine the nature (removable/pole/essential) of the singularities of
+\[
+f(z) \;=\; \frac{\tan^2(z)}{z}.
+\]
+In particular, we examine:
+\begin{itemize}
+  \item the point \(z=0\),
+  \item the points \(z=\frac{\pi}{2} + \pi n\), \(n \in \mathbb{Z}\).
+\end{itemize}
+
+\subsection*{1. Singularity at \(z=0\)}
+
+\paragraph{(a) Expand \(\tan^2(z)\) near \(z=0\).}
+Recall that
+\(\tan z\) has the Maclaurin expansion
+\[
+\tan z = z + \frac{z^3}{3} + O(z^5).
+\]
+Hence
+\[
+\tan^2(z) 
+= \Bigl(z + \tfrac{z^3}{3} + \dots\Bigr)^2
+= z^2 + \tfrac{2}{3}\,z^4 + O(z^6).
+\]
+
+\paragraph{(b) Multiply by \(\frac{1}{z}\).}
+Thus,
+\[
+f(z) = \frac{\tan^2(z)}{z} 
+= \frac{z^2 + \tfrac{2}{3}z^4 + \cdots}{z}
+= z + \frac{2}{3}\,z^3 + O(z^5).
+\]
+As \(z \to 0\), the leading term is \(z\). In particular,
+\[
+\lim_{z\to 0} f(z) = 0.
+\]
+Therefore, \(f(z)\) does not blow up at \(z=0\); instead, it tends to \(0\). So \(z=0\) is \emph{not} actually a pole, but a \emph{removable singularity}.
+
+\paragraph{(c) Removable with value \(0\).}
+We can define
+\[
+f(0) := 0
+\]
+to make \(f\) analytic at \(z=0\). Indeed, the Maclaurin expansion then becomes
+\[
+f(z) = z + \tfrac{2}{3}\,z^3 + \cdots,
+\]
+which is perfectly analytic near \(z=0\).
+
+\subsection*{2. Singularity at \(z = \tfrac{\pi}{2} + \pi n\)}
+
+Let
+\[
+z_0 = \frac{\pi}{2} + \pi n,\quad n\in\mathbb{Z}.
+\]
+Then \(\cos(z_0)=0\), so \(\tan z\) has a simple pole at \(z=z_0\). Indeed, near \(z_0\),
+
+\[
+\tan z \;\approx\; -\frac{1}{z - z_0},
+\]
+so
+\[
+\tan^2(z) \;\approx\; \frac{1}{(z - z_0)^2}.
+\]
+Since \(z_0\neq 0\), the factor \(\tfrac{1}{z}\) is \emph{nonzero and analytic} at \(z_0\).  Hence near \(z_0\),
+\[
+f(z) = \frac{\tan^2(z)}{z}
+\;\approx\; \frac{1}{z}\,\frac{1}{(z - z_0)^2}.
+\]
+This shows a \emph{second-order} negative power in \((z - z_0)\), i.e.\ \(\frac{1}{(z - z_0)^2}\).  Therefore, \(f(z)\) has a \textbf{pole of order 2} at each \(z_0 = \tfrac{\pi}{2}+\pi n\).
+
+\subsection*{3. Summary}
+
+\begin{itemize}
+  \item \(\boxed{z=0 \text{ is a removable singularity (extend }f(0)=0\text{).}}\)
+  \item \(\boxed{z = \tfrac{\pi}{2} + \pi n \text{ is a pole of order 2.}}\)
+\end{itemize}
+
+Hence the singularities of \(f(z) = z^{-1}\tan^2(z)\) are classified accordingly.
+
+\section*{Why a Bounded \(g(z)\) Implies \(f\) is Not Essential}
+
+Suppose $f$ is analytic on $0<|z-z_0|<r$ and has an \emph{isolated singularity} at $z_0$.  Let $w$ be any complex number, and define
+\[
+g(z) \;=\; \frac{1}{f(z) - w}.
+\]
+We assume $g(z)$ is \emph{bounded} in some punctured neighborhood of $z_0$, i.e.\ there is a constant $M>0$ such that
+\[
+|g(z)| \;\le\; M
+\quad\text{for all sufficiently small }|z-z_0|.
+\]
+
+\subsection*{1. Essential Singularity Contradiction}
+
+If $f$ had an \textbf{essential singularity} at $z_0$, the Casorati--Weierstrass theorem says that in any neighborhood of $z_0$, the values $f(z)$ come arbitrarily close to \emph{every} complex value (with at most one exception, in the case of Picard's theorem).  In particular, for the chosen $w$, the expression $f(z)-w$ would take values arbitrarily close to $0$ infinitely often, forcing
+\[
+g(z) = \frac{1}{f(z) - w}
+\]
+to become \emph{unbounded} near $z_0$.  This contradicts the assumption that $g$ is bounded.
+
+\subsection*{2. Classification of Isolated Singularities}
+
+Hence, if $g$ is indeed bounded near $z_0$, $f$ cannot be essential at $z_0$.  By the usual classification theorem for isolated singularities, $f$ has only three possibilities at $z_0$:
+\begin{itemize}
+  \item Removable singularity,
+  \item Pole (of some order),
+  \item Essential singularity.
+\end{itemize}
+We have ruled out “essential.”  Therefore, $f$ must have a \textbf{removable singularity} or a \textbf{pole} at $z_0$.
+
+\subsection*{3. Intuitive Summary}
+
+\begin{itemize}
+\item If $g(z)=\frac{1}{f(z)-w}$ stays bounded near $z_0$, it means $f(z)-w$ never gets too close to $0$ in that region.  An essential singularity, however, would force $f(z)$ to come arbitrarily close to $w$ infinitely often, making $1/(f(z)-w)$ blow up.
+\item Since that does not happen, $f$ is not essential.  The only remaining types of singularities are “removable” or “pole.” 
+\end{itemize}
+
+\section*{Laurent Series of \(\displaystyle f(z)=(z+1)^{-2} + (z-2)^{-3}\) in Terms of Powers of \(z\), for \(1<|z|<2\)}
+
+We want to expand
+\[
+f(z) \;=\; \frac{1}{(z+1)^2} \;+\; \frac{1}{(z-2)^3}
+\]
+as a Laurent series in \emph{powers of \(z\)} valid in the annulus
+\[
+1 < |z| < 2.
+\]
+Below is a step‐by‐step outline.
+
+\bigskip
+
+\subsection*{1. Overview of Strategy}
+
+Since we want powers of \(z\),
+\begin{itemize}
+  \item For \((z+1)^{-2}\), we rewrite \(z+1 = z\bigl(1 + \tfrac{1}{z}\bigr)\).  
+    We then expand \(\bigl(1 + \tfrac{1}{z}\bigr)^{-2}\) in a \emph{power series} in \(\tfrac{1}{z}\).  This is valid if \(\bigl|\tfrac{1}{z}\bigr| < 1\), i.e.\ \(|z|>1\).  That matches the outer part of the annulus condition \((|z|>1)\).
+  \item For \((z-2)^{-3}\), we rewrite \(z-2 = -2\bigl(1 - \tfrac{z}{2}\bigr)\).  
+    We then expand \(\bigl(1 - \tfrac{z}{2}\bigr)^{-3}\) in a \emph{power series} in \(z\).  This is valid if \(\bigl|\tfrac{z}{2}\bigr|<1\), i.e.\ \(|z|<2\).  That matches the inner part of the annulus condition \((|z|<2)\).
+\end{itemize}
+Hence combining these two expansions yields a Laurent series in \emph{positive/negative powers} of \(z\) that is valid precisely for \(1<|z|<2\).
+
+\bigskip
+
+\subsection*{2. Expansion of \((z+1)^{-2}\) in Powers of \(z\)}
+
+\paragraph{(a) Factor out \(z\).}
+\[
+z+1 
+= z\Bigl(1 + \tfrac{1}{z}\Bigr).
+\]
+Thus
+\[
+\frac{1}{(z+1)^2}
+= \frac{1}{z^2}\,\frac{1}{\bigl(1+\tfrac{1}{z}\bigr)^2}.
+\]
+
+\paragraph{(b) Expand \(\bigl(1 + \tfrac{1}{z}\bigr)^{-2}\).}
+Use the binomial‐type series.  Recall a standard identity for integer \(\alpha>0\):
+\[
+(1+u)^{-\alpha}
+= \sum_{n=0}^\infty \binom{n+\alpha-1}{\alpha-1}\,(-u)^n
+\quad\text{(valid for }|u|<1\text{).}
+\]
+For \(\alpha=2\), we get
+\[
+(1+u)^{-2}
+= \sum_{n=0}^\infty \binom{n+1}{1}\,(-u)^n
+= \sum_{n=0}^\infty (n+1)\,(-1)^n\,u^n.
+\]
+Hence, let \(u=\tfrac{1}{z}\). Then \(\bigl|u\bigr|<1\) is equivalent to \(|z|>1\). We obtain
+\[
+\frac{1}{\bigl(1+\tfrac{1}{z}\bigr)^2}
+= \sum_{n=0}^\infty (n+1)\,(-1)^n \,\Bigl(\tfrac{1}{z}\Bigr)^n.
+\]
+
+\paragraph{(c) Combine with \(\tfrac{1}{z^2}\).}
+\[
+\frac{1}{(z+1)^2}
+= \frac{1}{z^2}\,\sum_{n=0}^\infty (n+1)\,(-1)^n\,\frac{1}{z^n}
+= \sum_{n=0}^\infty (n+1)\,(-1)^n \,z^{-2-n}.
+\]
+Hence in “powers of \(z\),” this is
+\[
+(z+1)^{-2} 
+= \sum_{k=-\infty}^{\infty} a_k\,z^k
+\]
+where only negative powers appear (since \(-2-n \le -2\)).  If we let \(k=-2-n\), then \(n=-k-2\).  One can keep it in either form.  The crucial point: for \(|z|>1\), we have a valid expansion
+\[
+(z+1)^{-2} = \sum_{n=0}^\infty (n+1)(-1)^n\,z^{-2-n}.
+\]
+
+\bigskip
+
+\subsection*{3. Expansion of \((z-2)^{-3}\) in Powers of \(z\)}
+
+\paragraph{(a) Factor out \(-2\).}
+\[
+z - 2
+= -2\Bigl(1 - \tfrac{z}{2}\Bigr).
+\]
+Thus
+\[
+\frac{1}{(z-2)^3}
+= \frac{1}{(-2)^3}\,\frac{1}{\bigl(1 - \tfrac{z}{2}\bigr)^3}
+= -\frac{1}{8}\,\bigl(1 - \tfrac{z}{2}\bigr)^{-3}.
+\]
+
+\paragraph{(b) Expand \(\bigl(1 - \tfrac{z}{2}\bigr)^{-3}\).}
+Again, we use a binomial‐type formula for integer exponent \(\alpha=3\):
+\[
+(1 - x)^{-3}
+= \sum_{m=0}^\infty \binom{m+3-1}{3-1}\,x^m
+= \sum_{m=0}^\infty \binom{m+2}{2}\,x^m,
+\quad \text{valid for }|x|<1.
+\]
+Let \(x=\tfrac{z}{2}\). Then \(|x|<1\) means \(|z|<2\).  We get
+\[
+(1 - \tfrac{z}{2})^{-3}
+= \sum_{m=0}^\infty \binom{m+2}{2}\,\Bigl(\tfrac{z}{2}\Bigr)^m
+= \sum_{m=0}^\infty \binom{m+2}{2}\,\frac{z^m}{2^m}.
+\]
+
+\paragraph{(c) Combine with \(-\tfrac{1}{8}\).}
+\[
+\frac{1}{(z-2)^3}
+= -\frac{1}{8}\,\sum_{m=0}^\infty \binom{m+2}{2}\,\frac{z^m}{2^m}
+= \sum_{m=0}^\infty \Bigl[-\frac{1}{8}\,\binom{m+2}{2}\,\frac{1}{2^m}\Bigr]\,z^m.
+\]
+Hence in standard “power series in \(z\)” form,
+\[
+(z-2)^{-3} 
+= \sum_{m=0}^\infty b_m \, z^m,
+\]
+where
+\[
+b_m 
+= -\frac{1}{8}\,\binom{m+2}{2}\,\frac{1}{2^m},
+\quad m\ge 0.
+\]
+This expansion is valid for \(|z|<2\).
+
+\bigskip
+
+\subsection*{4. Combine Both Parts: The Laurent Series in \(1<|z|<2\)}
+
+Hence, in the annulus \(1<|z|<2\), both expansions are valid simultaneously:
+\[
+f(z) = (z+1)^{-2} + (z-2)^{-3}
+= \underbrace{\sum_{n=0}^\infty (n+1)(-1)^n\,z^{-2-n}}_{\text{for }|z|>1}
+\;+\;
+\underbrace{\sum_{m=0}^\infty b_m\,z^m}_{\text{for }|z|<2}.
+\]
+We can rewrite to collect terms in powers \(z^k\). For negative \(k\), only the first sum contributes; for nonnegative \(k\), only the second sum contributes. Symbolically, the final Laurent series is
+\[
+f(z) = \sum_{k=-\infty}^{-1} A_k\,z^k \;+\; \sum_{k=0}^{\infty} B_k\,z^k,
+\]
+where:
+\[
+A_k \;=\; \text{(coefficients from $(z+1)^{-2}$ expansion)},
+\quad
+B_k \;=\; \text{(coefficients from $(z-2)^{-3}$ expansion)}.
+\]
+
+\bigskip
+
+\subsection*{5. Coefficient of \(z^n\) in Terms of \(n\)}
+
+The problem statement says: “Express the coefficient of \(z^n\) in terms of \(n\).”
+
+\begin{itemize}
+\item If \(n<0\), the coefficient of \(z^n\) comes \emph{only} from \((z+1)^{-2}\).  We see that
+  \[
+  (z+1)^{-2} = \sum_{N=0}^\infty (N+1)(-1)^N z^{-2-N}.
+  \]
+  So if \(n=-2-N\), then \(N=-n-2\).  The coefficient is
+  \[
+  a_n = (\,(-n-2)+1)\,(-1)^{-n-2}
+       = (-n-1)\,(-1)^{-n-2}.
+  \]
+  (One might want to simplify $(-1)^{-n-2} = (-1)^{-n}\,(-1)^{-2}=(-1)^{-n}$, etc.)
+
+\item If \(n\ge 0\), the coefficient of \(z^n\) comes \emph{only} from \((z-2)^{-3}\).  In that expansion:
+  \[
+  (z-2)^{-3} = \sum_{m=0}^\infty \Bigl[-\tfrac{1}{8}\,\binom{m+2}{2}\,\tfrac{1}{2^m}\Bigr] z^m.
+  \]
+  So if \(n=m\), the coefficient is
+  \[
+  b_n = -\frac{1}{8}\,\binom{n+2}{2}\,\frac{1}{2^n}.
+  \]
+
+\end{itemize}
+Hence the final result can be summarized as
+\[
+\text{Coeff of }z^n
+=\begin{cases}
+(-n-1)\,(-1)^{-n-2}, & n<0,\\[6pt]
+-\dfrac{1}{8}\,\binom{n+2}{2}\,\dfrac{1}{2^n}, & n\ge 0.
+\end{cases}
+\]
+
+One can rewrite $(-1)^{-n-2}$ if desired.  The main point is that for negative $n$ (the “negative powers”), we get contributions from $(z+1)^{-2}$, and for nonnegative $n$, we get contributions from $(z-2)^{-3}$.
+
+\bigskip
+
+\subsection*{6. Conclusion}
+
+\begin{itemize}
+\item \(\displaystyle (z+1)^{-2}\) expands in negative powers of \(z\) (valid for \(|z|>1\)).
+\item \(\displaystyle (z-2)^{-3}\) expands in nonnegative powers of \(z\) (valid for \(|z|<2\)).
+\item The annulus \(1<|z|<2\) is exactly where both expansions converge, so the full Laurent series is the sum of these two parts.
+\item The coefficient of \(z^n\) depends on whether \(n\) is negative or nonnegative, as detailed above.
+\end{itemize}
+\section*{Why \(\displaystyle \frac{1}{z+1} = \frac{1}{z}\,\frac{1}{1+\frac{1}{z}} = \frac{1}{z}\,\sum_{n=0}^\infty(-1)^n\Bigl(\frac{1}{z}\Bigr)^n\)?}
+
+This identity is a standard \emph{factor‐out‐and‐expand} approach used to get negative powers of \(z\). Here is the reasoning step by step:
+
+\subsection*{1. Factor Out \(z\)}
+
+\[
+z+1 = z\Bigl(1 + \tfrac{1}{z}\Bigr).
+\]
+Hence,
+\[
+\frac{1}{z+1}
+= \frac{1}{z}\,\frac{1}{1 + \frac{1}{z}}.
+\]
+This separates the factor \(\tfrac{1}{z}\) in front, leaving us with a “geometric‐like” expression \(\bigl(1 + \tfrac{1}{z}\bigr)^{-1}\) to be expanded.
+
+\subsection*{2. Expand \(\bigl(1+u\bigr)^{-1}\) via a Power Series}
+
+We know the standard series for \(\frac{1}{1+u}\):
+\[
+\frac{1}{1+u} 
+= \sum_{n=0}^\infty (-1)^n\,u^n,
+\quad \text{valid if } |u|<1.
+\]
+Set \(u = \tfrac{1}{z}\). Then
+\[
+\frac{1}{1+\frac{1}{z}}
+= \sum_{n=0}^\infty (-1)^n \Bigl(\tfrac{1}{z}\Bigr)^n,
+\quad \text{valid if } \bigl|\tfrac{1}{z}\bigr|<1 \,\Leftrightarrow\, |z|>1.
+\]
+
+\subsection*{3. Multiply by \(\frac{1}{z}\)}
+
+So
+\[
+\frac{1}{z+1}
+= \frac{1}{z}\,\sum_{n=0}^\infty (-1)^n \Bigl(\tfrac{1}{z}\Bigr)^n
+= \sum_{n=0}^\infty (-1)^n\,z^{-1-n}.
+\]
+Thus each term becomes a negative power of \(z\), namely \(z^{-1-n}\). 
+
+\subsection*{4. Validity Region: \(\bigl|\tfrac{1}{z}\bigr|<1\)}
+
+The expansion converges if \(\left|\tfrac{1}{z}\right|<1\), i.e.\ \(|z|>1\). In that region, 
+\[
+\frac{1}{z+1} 
+= \sum_{n=0}^\infty (-1)^n \, z^{-1-n}.
+\]
+
+\subsection*{Conclusion}
+
+Hence the factorization 
+\[
+\frac{1}{z+1}
+= \frac{1}{z}\,\frac{1}{1+\frac{1}{z}}
+\]
+followed by the geometric‐type expansion of \(\tfrac{1}{1+u}\) explains why we get a power series in \(\frac{1}{z}\) (i.e.\ negative powers of \(z\)) valid for \(|z|>1\).
+\section*{How \(\displaystyle \frac{1}{1+u} = \sum_{n=0}^\infty (-1)^n\,u^n\) Relates to the Geometric Series}
+
+\subsection*{1. Geometric Series Recap}
+The classic geometric‐series identity is:
+\[
+\frac{1}{1 - x} 
+= \sum_{n=0}^\infty x^n,
+\quad \text{valid if } |x| < 1.
+\]
+In other words, as long as \(|x| < 1\), we have 
+\[
+1 + x + x^2 + x^3 + \dots
+\]
+summing to \(\tfrac{1}{1-x}\).
+
+\subsection*{2. Rewrite \(\tfrac{1}{1+u}\) as a Geometric‐Type Series}
+Observe that:
+\[
+\frac{1}{1+u}
+= \frac{1}{1 - (-u)}.
+\]
+Hence if we apply the geometric‐series formula with \(x = -u\), we get:
+\[
+\frac{1}{1 - (-u)} 
+= \sum_{n=0}^\infty \bigl(-u\bigr)^n
+= \sum_{n=0}^\infty (-1)^n\,u^n,
+\quad \text{valid if } |-u|<1 \Leftrightarrow |u|<1.
+\]
+
+\subsection*{3. Conclusion}
+So \(\displaystyle \frac{1}{1+u}\) is exactly the usual geometric series \(\tfrac{1}{1-x}=\sum x^n\) with \(x=-u\). That is why
+\[
+\frac{1}{1+u} 
+= \sum_{n=0}^\infty (-1)^n u^n
+\]
+is considered a geometric‐type expansion. It is valid whenever \(\bigl|u\bigr|<1\).
+\section*{General Rule: Derivatives of a Power Series and Going from \((1+u)^{-1}\) to \((1+u)^{-2}, (1+u)^{-3},\dots\)}
+
+\subsection*{1. Derivatives of a General Power Series}
+
+Suppose you have a function
+\[
+f(z) \;=\;\sum_{n=0}^\infty a_n\,(z - z_0)^n,
+\]
+which converges for \(|z-z_0|<R\). Then its derivative is obtained by term-by-term differentiation:
+\[
+f'(z) 
+= \sum_{n=1}^\infty n\,a_n\,(z - z_0)^{\,n-1}.
+\]
+Similarly,
+\[
+f''(z) 
+= \sum_{n=2}^\infty n\,(n-1)\,a_n\,(z - z_0)^{\,n-2},
+\]
+and so on.  This is the standard result that you can differentiate power series \emph{term by term} inside the radius of convergence.
+
+\subsection*{2. Example: From \((1+u)^{-1}\) to \((1+u)^{-2}\), \((1+u)^{-3}\), etc.}
+
+\paragraph{(a) Known series for \((1+u)^{-1}\).}
+We know that
+\[
+\frac{1}{1+u}
+= \sum_{n=0}^\infty (-1)^n\,u^n,
+\quad |u|<1.
+\]
+If we differentiate with respect to \(u\), we get:
+\[
+\frac{d}{du}\Bigl(\frac{1}{1+u}\Bigr)
+= -\,\frac{1}{(1+u)^2}
+\quad\Longrightarrow\quad
+\frac{1}{(1+u)^2}
+= -\,\frac{d}{du}\biggl[\sum_{n=0}^\infty (-1)^n\,u^n\biggr].
+\]
+Hence,
+\[
+\frac{1}{(1+u)^2}
+= -\sum_{n=0}^\infty \frac{d}{du}\Bigl[(-1)^n\,u^n\Bigr]
+= -\sum_{n=1}^\infty (-1)^n\,n\,u^{\,n-1}.
+\]
+One can rewrite the index to get a standard power series in \(u\). Similarly, you can differentiate again to obtain \(\frac{1}{(1+u)^3}\), etc.
+
+\paragraph{(b) Alternatively: Binomial / Generalized Binomial Theorem.}
+There is a direct binomial formula for any integer exponent \(\alpha\). For negative integers:
+\[
+(1+u)^{-m}
+= \sum_{n=0}^\infty \binom{n+m-1}{m-1}\,(-u)^n,
+\quad m\ge1.
+\]
+In particular, 
+\[
+(1+u)^{-2}
+= \sum_{n=0}^\infty (n+1)\,(-1)^n\,u^n,
+\]
+\[
+(1+u)^{-3}
+= \sum_{n=0}^\infty \binom{n+2}{2}\,(-1)^n\,u^n,
+\]
+and so on. These can be derived by repeated differentiation of \((1+u)^{-1}\) or directly from the binomial coefficient identity.
+
+\subsection*{3. Conclusion}
+
+\begin{itemize}
+  \item \textbf{General derivative rule:} If $f(z) = \sum_{n=0}^\infty a_n (z-z_0)^n$, then $f^{(k)}(z)$ is given by $\sum_{n=k}^\infty \frac{n!}{(n-k)!}\,a_n\,(z-z_0)^{n-k}$. 
+  \item \textbf{Negative powers from repeated differentiation:} For instance, $(1+u)^{-2} = -\frac{d}{du}[(1+u)^{-1}]$, $(1+u)^{-3} = \tfrac12\,\frac{d^2}{du^2}[(1+u)^{-1}]$, etc. 
+  \item \textbf{Binomial expansions:} Another direct way to get expansions for \((1+u)^{-m}\) uses the binomial theorem with negative integer exponents.
+\end{itemize}
+
+Either way, once you have a power series for \((1+u)^{-1}\), you can systematically differentiate term by term to obtain expansions for higher negative powers like \((1+u)^{-2}\), \((1+u)^{-3}\), and so forth.
+\section*{Why We Can Reindex the Series (e.g.\ from \(\sum_{n=0}^\infty\) to \(\sum_{k=-\infty}^{\dots}\))}
+
+When we have a power series 
+\[
+\sum_{n=0}^\infty (-1)^n\,z^{-n-1},
+\]
+we sometimes want to rewrite it so that the exponent of \(z\) is a single index \(k\). For example,
+\[
+z^{-n-1} = z^k
+\quad\Longleftrightarrow\quad
+k = -n-1.
+\]
+Then as \(n\) goes from \(0\) to \(\infty\), the new index \(k=-n-1\) runs from \(-1\) down to \(-\infty\). We might set
+\[
+k=-1-n \quad \Longrightarrow\quad n=-k-1.
+\]
+Hence the sum 
+\[
+\sum_{n=0}^\infty (-1)^n\,z^{-n-1}
+\]
+can be written as
+\[
+\sum_{k=-\infty}^{-1} \Bigl[\ldots\Bigr]\,z^k,
+\]
+where the bracket \([\ldots]\) is the coefficient in terms of \(k\).
+
+\subsection*{Why is this allowed?}
+
+\begin{itemize}
+  \item \textbf{Absolute convergence in the region:} Inside the annulus (or disk) of convergence, the series converges absolutely. Absolute convergence lets us reorder or reindex the summation without changing its sum.
+  \item \textbf{One-to-one mapping of exponents:} Each integer \(n\ge0\) corresponds exactly to one integer \(k=-n-1\). So we are not losing or duplicating any terms; we are merely relabeling them. 
+  \item \textbf{Standard practice in Laurent expansions:} When turning a series in \(\frac{1}{z}\) into a series in \(z^k\) for negative \(k\), we set \(k=-n\) (or something similar). This is a formal index substitution and is perfectly valid as long as the domain of convergence remains the same.
+\end{itemize}
+
+\subsection*{Summary}
+Reindexing a power (or Laurent) series is simply an \emph{index substitution}:
+\[
+n \;\mapsto\; k=-n-1,
+\]
+which is a one-to-one correspondence. Because the series is absolutely convergent in the region we are considering, rearranging or reindexing the terms does not affect convergence or the sum. Thus we are free to rewrite the sum in whichever index form is more convenient (e.g.\ \(\sum_{k=-\infty}^{-1}\)) to display the powers of \(z\).
+
+\section*{Why Index from \(-\infty\) to \(-1\) Instead of \(-\infty\) to \(0\)?}
+
+When reindexing a series such as
+\[
+\sum_{n=0}^\infty (\text{coefficient}) \, z^{-n-1},
+\]
+we set \(k = -n - 1\). Notice:
+\[
+n = 0 \;\Longrightarrow\; k = -1,\quad
+n = 1 \;\Longrightarrow\; k = -2,\quad
+n = 2 \;\Longrightarrow\; k = -3,\quad \dots
+\]
+Hence \(k\) runs over \(-1, -2, -3, \dots\), i.e. \(k\in\{-1,-2,-3,\ldots\}\). We \emph{never} get \(k=0\) because that would correspond to \(n=-1\), which is not in the domain \(n\ge0\).
+
+\subsection*{Key Point}
+
+- The original sum starts at \(n=0\). Each term has an exponent \(-n-1\). So the largest (least negative) exponent is \(-1\). The next is \(-2\), then \(-3\), etc.
+- Thus the new index \(k\) runs from \(-1\) \emph{downwards} to \(-\infty\). 
+- We do \(\sum_{k=-1}^{-\infty}\) or more neatly \(\sum_{k=-\infty}^{-1}\).
+
+\subsection*{Why Not \(-\infty\) to \(0\)?}
+
+- If you tried “\(-\infty\) to \(0\),” that would \emph{include} the exponent \(k=0\). But from the mapping \(k=-n-1\), we see \(k=0\) would require \(n=-1\), which is not valid because our sum began at \(n=0\). 
+- Therefore the exponents actually appearing are \(-1, -2, -3, \dots\). None of them is \(0\). 
+- That is why the final index is from \(-\infty\) up to \(-1\), not \(-\infty\) up to \(0\).
+\section*{Why \((-1)^n\) becomes \((-1)^{k+1}\) instead of \((-1)^{-k-1}\) when \(n=-k-1\)}
+
+Suppose we set \(n=-k-1\). Then
+\[
+(-1)^n = (-1)^{-k-1}.
+\]
+However, we know for any integer \(m\),
+\[
+(-1)^m = (-1)^{m+2r}, \quad \text{for any integer } r,
+\]
+because adding any even integer to the exponent of \((-1)\) does not change its value (it only contributes factors of \((-1)^2=1\)).
+
+\medskip
+
+Thus
+\[
+(-1)^{-k-1}
+= (-1)^{\,-(k+1) + 2(k+1)}
+= (-1)^{k+1}.
+\]
+We simply added \(2(k+1)\) to the exponent \(-(k+1)\). Since \((-1)^m\) repeats every 2 steps, \((-1)^{-k-1}\) and \((-1)^{k+1}\) are the same number. 
+
+\medskip
+
+\textbf{Hence} when you see an exponent like \(-k-1\), it is often rewritten as \(k+1\) (or a similar shift by an even integer) to make the exponent simpler or to match a certain sign convention.
+\section*{Why Split the Laurent Series into Negative and Nonnegative Powers?}
+
+Let \( f(z) \) be analytic in the annulus 
+\[
+A = \{ z : 1 < |z| < 2 \}.
+\]
+The Laurent series for \( f(z) \) in \( A \) is written as
+\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n z^n
+= \left(\sum_{n=-\infty}^{-1} a_n z^n \right)
++ \left(\sum_{n=0}^{\infty} a_n z^n \right).
+\]
+
+\subsection*{1. The Negative-Power Part (Principal Part)}
+
+The series 
+\[
+\sum_{n=-\infty}^{-1} a_n z^n
+\]
+contains the terms with negative exponents. Such a series converges when the variable \(z\) is sufficiently large, that is, for
+\[
+|z| > R_0,
+\]
+where \(R_0\) is the inner radius of the annulus. In our case, we require convergence for \(|z| > 1\). Thus, the negative-power part of the Laurent series is valid (converges) in the region \(|z|>1\).
+
+\subsection*{2. The Nonnegative-Power Part (Regular Part)}
+
+The series 
+\[
+\sum_{n=0}^{\infty} a_n z^n
+\]
+contains the nonnegative powers of \(z\) and converges when \(z\) is within a disk of radius \(R_1\), i.e., for
+\[
+|z| < R_1.
+\]
+In our case, we need convergence for \(|z| < 2\), which is the outer radius of the annulus.
+
+\subsection*{3. Combining the Two Parts}
+
+Since the annulus \(A\) is defined by \(1<|z|<2\), both of the following hold simultaneously:
+\begin{itemize}
+  \item The negative-power series converges for \(|z|>1\).
+  \item The nonnegative-power series converges for \(|z|<2\).
+\end{itemize}
+Thus, in the annulus \(1<|z|<2\) both parts are convergent and we can write the full Laurent series as the sum of these two parts.
+
+\subsection*{4. Summary}
+
+In summary, the Laurent series in the annulus \(1<|z|<2\) is naturally split as
+\[
+f(z) = \sum_{n=-\infty}^{-1} a_n z^n + \sum_{n=0}^{\infty} a_n z^n,
+\]
+because:
+\begin{itemize}
+  \item The series with negative powers (i.e., with exponents running from \(-\infty\) up to \(-1\)) converges when \(|z|>1\).
+  \item The series with nonnegative powers (i.e., with exponents running from \(0\) to \(\infty\)) converges when \(|z|<2\).
+\end{itemize}
+This ensures that the entire Laurent series converges in the annulus where both conditions hold.
+\section*{Why Use \(\bigl(1 + \tfrac{1}{z}\bigr)\) Instead of \(\bigl(1 - \tfrac{1}{z}\bigr)\) When \(|z|>1\)?}
+
+Consider
+\[
+\frac{1}{z + 1}
+\quad\text{and}\quad |z| > 1.
+\]
+We factor out \(z\) from the denominator:
+\[
+\frac{1}{z + 1}
+= \frac{1}{z \Bigl(1 + \frac{1}{z}\Bigr)}.
+\]
+Then
+\[
+\frac{1}{z + 1}
+= \frac{1}{z} \,\frac{1}{1 + \frac{1}{z}}.
+\]
+Here’s why we choose \(1 + \tfrac{1}{z}\), rather than \(1 - \tfrac{1}{z}\):
+
+\subsection*{1. We Want a Positive Sign in the Denominator for the Geometric Formula}
+
+The well‐known geometric expansion is:
+\[
+\frac{1}{1+u}
+= \sum_{n=0}^\infty (-1)^n u^n, 
+\quad \text{valid if } |u|<1.
+\]
+Hence, to apply it directly, we want the denominator to be \(\,1 + u\), \emph{not} \(1 - u\). 
+
+\subsection*{2. Validity for \(|z|>1\)}
+
+Once we write
+\[
+\frac{1}{1 + \frac{1}{z}},
+\]
+we let \(u = \frac{1}{z}\). Because \(|z|>1\), we have \(\bigl|\tfrac{1}{z}\bigr| < 1\). That exactly matches the radius‐of‐convergence condition \(|u|<1\) for the geometric series. Thus
+\[
+\frac{1}{1 + \frac{1}{z}}
+= \sum_{n=0}^\infty (-1)^n \Bigl(\tfrac{1}{z}\Bigr)^n.
+\]
+Multiplying by \(\frac{1}{z}\) yields a negative‐power series in \(z\).  
+
+\subsection*{3. If We Tried \(\,1 - \tfrac{1}{z}\,\) Instead}
+
+If we forced the factorization to read \(1 - \tfrac{1}{z}\), we would get
+\[
+z + 1 = z\Bigl(1 + \frac{1}{z}\Bigr) 
+\quad\neq\quad
+z\Bigl(1 - \frac{1}{z}\Bigr).
+\]
+The sign in front of \(\tfrac{1}{z}\) must be positive for the expression to remain \(z+1\). So \(\,(z+1)\) does not factor as \(z(1 - 1/z)\) because that would produce \(z - 1\) in the denominator. 
+
+\subsection*{Conclusion}
+
+- We choose \(1 + \tfrac{1}{z}\) because that matches \(\frac{1}{z+1}\) exactly and lines up with the geometric‐type expansion 
+\(\tfrac{1}{1+u} = \sum_{n=0}^\infty (-1)^n u^n\).
+- The region \(|z|>1\) ensures \(\left|\tfrac{1}{z}\right|<1\), so the series converges.  
+
+Hence, it is natural and correct to write
+\[
+\frac{1}{z+1} 
+= \frac{1}{z}\,\frac{1}{1 + \frac{1}{z}}
+\]
+and then expand using \(u = \tfrac{1}{z}\).
+
+\section*{A General Algorithm for Combining and Manipulating Power Series Expansions}
+
+Often, you want to expand a function like
+\[
+f(z) = \bigl(\text{something}\bigr) \;+\; \bigl(\text{something else}\bigr)
+\]
+or a product
+\[
+g(z) = \bigl(\text{series 1}\bigr)\,\bigl(\text{series 2}\bigr)
+\]
+up to a certain order (e.g.\ terms in $z^0, z^1, z^2, z^3, \dots$). Below is the \emph{standard} step‐by‐step approach.
+
+\subsection*{1. Expand Each Piece Individually (Up to the Needed Order)}
+
+If $f$ is a sum or product of simpler functions $f_1, f_2, \dots$, do the following:
+
+\begin{itemize}
+  \item \textbf{Known Maclaurin / Taylor expansions:} For standard functions such as
+  \[
+  e^z,\quad \sin z,\quad \cos z,\quad (1+z)^\alpha,\quad \log(1+z), \quad \dots
+  \]
+  write down (or recall) their power‐series expansions up to a suitable order. For instance:
+  \[
+  \sin z \approx z \;-\;\frac{z^3}{3!} + \cdots, 
+  \quad
+  (1+z)^{-1} \approx 1 - z + z^2 - \dots,
+  \]
+  etc.
+  \item \textbf{Binomial expansions:} If you have terms like $(1+z)^\alpha$, you can use the binomial (or generalized binomial) formula for expansions.  
+  \item \textbf{Small-$z$ or large-$z$ expansions:} Depending on whether $|z|<1$ or $|z|>R$, you factor out an appropriate piece and expand in powers of $z$ or $\tfrac{1}{z}$.
+\end{itemize}
+
+\textbf{Keep expansions up to the order} you need (for example, if you only care about terms through $z^4$, then keep up to that power in each partial expansion).
+
+\subsection*{2. Combine (Add or Multiply) the Truncated Series}
+
+Once each factor is expanded:
+
+\begin{itemize}
+  \item \textbf{Addition:} If $f(z)=f_1(z)+f_2(z)$ and each $f_i(z)$ is expanded,
+  \[
+  f_1(z) = a_0 + a_1 z + a_2 z^2 + \dots, 
+  \quad
+  f_2(z) = b_0 + b_1 z + b_2 z^2 + \dots,
+  \]
+  just add them term by term to get
+  \[
+  f(z) = (a_0 + b_0) + (a_1 + b_1)z + (a_2 + b_2)z^2 + \dots.
+  \]
+  
+  \item \textbf{Multiplication:} If $g(z)=h_1(z)\cdot h_2(z)$ and each $h_i$ is expanded up to some order, \emph{multiply the polynomials} the same way you do in high‐school polynomial multiplication. For instance, if
+  \[
+  h_1(z) \approx a_0 + a_1 z + a_2 z^2 + \dots,
+  \quad
+  h_2(z) \approx b_0 + b_1 z + b_2 z^2 + \dots,
+  \]
+  then
+  \[
+  g(z) = h_1(z)\,h_2(z) \approx \bigl(a_0 b_0\bigr) + \bigl(a_0 b_1 + a_1 b_0\bigr)z + \bigl(a_0 b_2 + a_1 b_1 + a_2 b_0\bigr)z^2 + \dots
+  \]
+  and so on. 
+  \item \textbf{Truncate again if needed:} If you only need terms up to $z^4$, you can discard higher powers after the multiplication.
+\end{itemize}
+
+\subsection*{3. Collect Like Terms and Write the Final Series}
+
+After you do the addition or multiplication, \textbf{collect} coefficients of each power $z^n$. The result is your final power‐series expansion up to the desired order. 
+
+\subsection*{4. Example Sketch}
+
+Suppose
+\[
+f(z) = \Bigl(1 - \tfrac{z^2}{2} + \dots\Bigr)\,\Bigl(1 + \tfrac{z}{2} + \dots\Bigr).
+\]
+You multiply out the partial expansions:
+
+\[
+f(z) 
+\approx 1\cdot 1 
++ 1\cdot\tfrac{z}{2} 
++ \Bigl(-\tfrac{z^2}{2}\Bigr)\cdot 1
++ \dots
+\]
+Then combine like powers of $z$:
+\[
+f(z) 
+\approx 1 
++ \Bigl(\tfrac{1}{2}\Bigr) z 
++ \Bigl(\text{(coefficient)}\Bigr) z^2
++ \dots
+\]
+Stop at the power you care about. 
+
+\subsection*{5. Summary of the General Algorithm}
+
+\begin{enumerate}
+  \item \textbf{Identify expansions} (Maclaurin, binomial, geometric, etc.) for each piece up to needed order.
+  \item \textbf{Rewrite or factor} if necessary (e.g., factor out $z$ or $\frac{1}{z}$, or set $u=\frac{z}{2}$) to get expansions in the right form (powers of $z$ or $\frac{1}{z}$).
+  \item \textbf{Add or multiply} the partial expansions as polynomials in $z$. 
+  \item \textbf{Collect terms} by the same power of $z$. 
+  \item \textbf{Truncate} once you have all terms through the desired order.
+\end{enumerate}
+
+This process works for any function that can be expressed in simpler expansions, letting you systematically build the final series.
+
+\section*{Dividing \(\displaystyle \frac{z}{z^2 - \tfrac{1}{3}z^4 + \tfrac{2}{45}z^6}\) as a Power Series}
+
+We want to form a power‐series expansion (up to some order) for
+\[
+f(z)
+\;=\;
+\frac{z}{\,z^2 - \tfrac{1}{3}z^4 + \tfrac{2}{45}z^6\,}.
+\]
+A convenient approach is:
+\begin{enumerate}
+  \item Factor out \(z^2\) from the denominator,
+  \item Invert the resulting expression with a series expansion,
+  \item Multiply by the leftover factor.
+\end{enumerate}
+
+Below is a step‐by‐step procedure.
+
+\bigskip
+
+\subsection*{1. Factor Out \(z^2\) from the Denominator}
+
+Observe:
+\[
+z^2 - \frac{1}{3}z^4 + \frac{2}{45}z^6
+= z^2\Bigl(1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\Bigr).
+\]
+Hence,
+\[
+\frac{z}{\,z^2 - \tfrac{1}{3}z^4 + \tfrac{2}{45}z^6\,}
+= \frac{z}{\,z^2\Bigl(1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\Bigr)}
+= \frac{1}{z}\,\frac{1}{\,1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\,}.
+\]
+So
+\[
+f(z) 
+= \frac{1}{z} \; \cdot \; \frac{1}{\,1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\,}.
+\]
+Now we only need a power‐series expansion for 
+\(\displaystyle \frac{1}{\,1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\,}\)
+and then multiply by \(\tfrac{1}{z}\).
+
+\bigskip
+
+\subsection*{2. Expand \(\displaystyle \frac{1}{1 - a z^2 + b z^4}\) as a Series}
+
+Let 
+\[
+g(z) := 1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4
+\quad\text{(i.e.\ }a=\tfrac{1}{3},\, b=\tfrac{2}{45}\text{)}.
+\]
+We want a series $G(z)$ such that
+\[
+g(z)\,G(z) = 1 + \text{(higher order terms)}.
+\]
+Specifically, let us propose
+\[
+\frac{1}{\,g(z)\,}
+= G(z)
+= 1 + \alpha_2\,z^2 + \alpha_4\,z^4 + \alpha_6\,z^6 + \dots
+\]
+We will solve for $\alpha_2, \alpha_4, \dots$ by matching coefficients.  (We can truncate as far as we want, e.g.\ up to $z^6$.)
+
+\medskip
+
+\paragraph{(a) Multiply out:}
+\[
+g(z)\,G(z)
+= \Bigl(1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\Bigr)\,\Bigl(1 + \alpha_2 z^2 + \alpha_4 z^4 + \alpha_6 z^6 + \dots\Bigr).
+\]
+We want $g(z)\,G(z) \equiv 1 + 0\,z^2 + 0\,z^4 + 0\,z^6 + \dots$ (i.e.\ equals 1 up to some order, ignoring higher terms).
+
+\medskip
+
+\paragraph{(b) Collect terms up to $z^6$:}
+
+\begin{itemize}
+  \item \(\text{Coefficient of }z^0:\)
+    \[
+    1 \cdot 1 = 1.
+    \]
+    So that matches the “1” we want.
+
+  \item \(\text{Coefficient of }z^2:\)
+    \[
+    (1)\,\alpha_2 \;+\;\Bigl(-\tfrac{1}{3}\Bigr)\,\bigl(1\bigr)
+    = 0 
+    \quad\Longrightarrow\quad
+    \alpha_2 - \tfrac{1}{3} = 0
+    \quad\Longrightarrow\quad
+    \alpha_2 = \tfrac{1}{3}.
+    \]
+
+  \item \(\text{Coefficient of }z^4:\)
+    \[
+    (1)\,\alpha_4 + \Bigl(-\tfrac{1}{3}\Bigr)\,\alpha_2 + \Bigl(\tfrac{2}{45}\Bigr)\,\bigl(1\bigr)
+    = 0.
+    \]
+    Substitute $\alpha_2=\tfrac{1}{3}$:
+    \[
+    \alpha_4 \;-\;\tfrac{1}{3}\,\cdot \tfrac{1}{3} \;+\;\tfrac{2}{45} = 0
+    \quad\Longrightarrow\quad
+    \alpha_4 \;-\;\tfrac{1}{9} + \tfrac{2}{45} = 0.
+    \]
+    Simplify:
+    \[
+    -\tfrac{1}{9} = -\tfrac{5}{45}, 
+    \quad \tfrac{2}{45} - \tfrac{5}{45} = -\tfrac{3}{45} = -\tfrac{1}{15}.
+    \]
+    So
+    \[
+    \alpha_4 = \tfrac{1}{15}.
+    \]
+
+  \item \(\text{Coefficient of }z^6:\)
+    \[
+    (1)\,\alpha_6 + \Bigl(-\tfrac{1}{3}\Bigr)\,\alpha_4 + \Bigl(\tfrac{2}{45}\Bigr)\,\alpha_2 = 0.
+    \]
+    We do not have $z^6$ from $1\cdot(1)$ nor from $(-1/3)z^2\cdot(\alpha_2 z^2)$? Wait, we do from the next expansions. Let's carefully note:
+
+    Up to $z^6$ we get:
+    \[
+    \alpha_6 \;-\;\tfrac{1}{3}\alpha_4 \;+\;\tfrac{2}{45}\alpha_2 = 0.
+    \]
+    Plug in $\alpha_4=\tfrac{1}{15}$, $\alpha_2=\tfrac{1}{3}$:
+    \[
+    \alpha_6 - \tfrac{1}{3}\cdot \tfrac{1}{15} + \tfrac{2}{45}\cdot \tfrac{1}{3} = 0.
+    \]
+    That is
+    \[
+    \alpha_6 - \tfrac{1}{45} + \tfrac{2}{45}\cdot \tfrac{1}{3} = 0.
+    \]
+    Next, $\tfrac{2}{45}\cdot \tfrac{1}{3} = \tfrac{2}{135} = \tfrac{2}{135}$. We might want to combine with $-\tfrac{1}{45}$. Let's put them over a common denominator:
+    \[
+    -\tfrac{1}{45} = -\tfrac{3}{135}, 
+    \quad
+    \tfrac{2}{135} - \tfrac{3}{135} = -\tfrac{1}{135}.
+    \]
+    So
+    \[
+    \alpha_6 - \tfrac{1}{135} = 0
+    \quad\Longrightarrow\quad
+    \alpha_6 = \tfrac{1}{135}.
+    \]
+\end{itemize}
+
+Hence (up to $z^6$) we have
+\[
+\frac{1}{\,1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4\,}
+= 1 + \tfrac{1}{3}z^2 + \tfrac{1}{15}z^4 + \tfrac{1}{135}z^6 + \dots
+\]
+
+\subsection*{3. Multiply by \(\tfrac{1}{z}\) to Get the Final Quotient}
+
+Recall
+\[
+f(z) = \frac{1}{z}\,\frac{1}{1 - \tfrac{1}{3}z^2 + \tfrac{2}{45}z^4}.
+\]
+Hence,
+\[
+f(z)
+= \frac{1}{z}\Bigl(1 + \tfrac{1}{3}z^2 + \tfrac{1}{15}z^4 + \tfrac{1}{135}z^6 + \dots\Bigr)
+= \frac{1}{z}
++ \tfrac{1}{3}\,z
++ \tfrac{1}{15}\,z^3
++ \tfrac{1}{135}\,z^5
++ \dots
+\]
+(We have terms in odd powers of $z$, which makes sense, as each $z^{2n}$ got multiplied by $z^{-1}$.)
+
+\medskip
+
+So the final series up to $z^5$ is:
+\[
+\boxed{
+f(z) = \frac{1}{z} + \frac{1}{3}\,z + \frac{1}{15}\,z^3 + \frac{1}{135}\,z^5 + \cdots
+}
+\]
+where higher terms can be found by continuing the same matching procedure.
+
+\bigskip
+
+\textbf{Summary (Algorithm):}
+\begin{enumerate}
+  \item \emph{Factor out the leading power} in the denominator, so it becomes $z^2(\cdots)$ or something similar.
+  \item \emph{Write} the fraction as $\tfrac{z}{z^2(\cdots)}=\tfrac{1}{z}\cdot\tfrac{1}{(\cdots)}$.
+  \item \emph{Expand} $\frac{1}{(\cdots)}$ as a power series in $z$ up to the desired order, by matching coefficients or using binomial expansions, etc.
+  \item \emph{Multiply} that partial series by $\frac{1}{z}$ to get the final result.
+\end{enumerate}
+how to simplify $\frac{1}{e^{n\pi i}+ e^{-\pi i n}}$ 
+
+
+We start with the expression:
+\[
+\frac{1}{e^{n\pi i} + e^{-n\pi i}}.
+\]
+Since it is known that
+\[
+e^{\pi i} = -1,
+\]
+we can raise both sides to the \(n\)th power to obtain
+\[
+e^{n\pi i} = \bigl(e^{\pi i}\bigr)^n = (-1)^n.
+\]
+Similarly,
+\[
+e^{-n\pi i} = \bigl(e^{\pi i}\bigr)^{-n} = (-1)^{-n}.
+\]
+Because for any integer \(n\) we have
+\[
+(-1)^{-n} = \frac{1}{(-1)^n} = (-1)^n,
+\]
+(since \((-1)^n\) is always either \(1\) or \(-1\)), it follows that
+\[
+e^{n\pi i} + e^{-n\pi i} = (-1)^n + (-1)^n = 2(-1)^n.
+\]
+Therefore, the original expression becomes:
+\[
+\frac{1}{e^{n\pi i} + e^{-n\pi i}} = \frac{1}{2(-1)^n} = \frac{(-1)^n}{2}.
+\]
+
+\subsection*{1. Logarithm on a Certain Branch}
+
+For a nonzero complex number $z$, we define
+\[
+\log(z) = \ln|z| + i\,\arg(z),
+\]
+where $\arg(z)$ is chosen from some interval of length $2\pi$. In many problems, one picks $0 < \arg(z) < 2\pi$ so that negative real numbers have argument $\pi$, and negative imaginary numbers can have argument $\tfrac{3\pi}{2}$, etc.
+
+\subsection*{2. Compute \(\log(-i)\)}
+
+\begin{itemize}
+  \item The modulus: $\bigl|-i\bigr|=1$ so $\ln|-i|=0$.
+  \item The argument: if we pick the branch $0 < \arg(z) < 2\pi$, then $-i$ lies at $-\frac{\pi}{2}$ on the usual principal axis. But to keep it in $(0,2\pi)$, we add $2\pi$, giving $\arg(-i) = \frac{3\pi}{2}$.
+\end{itemize}
+Hence,
+\[
+\log(-i) 
+= 0 + i\left(\tfrac{3\pi}{2}\right)
+= \frac{3\pi i}{2}.
+\]
+
+\subsection*{3. Compute \(\log(-2)\)}
+
+\begin{itemize}
+  \item The modulus: $\bigl|-2\bigr|=2$, so $\ln|-2| = \ln 2$.
+  \item The argument: again, if $0<\arg(z)<2\pi$, then $-2$ is on the negative real axis with argument $\pi$. 
+\end{itemize}
+Hence,
+\[
+\log(-2)
+= \ln 2 + i\,\pi.
+\]
+
+\subsection*{4. The Difference}
+
+Therefore,
+\[
+\log(-i) \;-\; \log(-2)
+= \bigl(\tfrac{3\pi i}{2}\bigr) - \bigl(\ln 2 + i\pi\bigr)
+= -\ln 2 \;+\; i\Bigl(\tfrac{3\pi}{2} - \pi\Bigr)
+= -\ln 2 + i\,\tfrac{\pi}{2}.
+\]
+Sometimes the expression is just left in the form
+\[
+\frac{3\pi i}{2} - \bigl(\ln 2 + i\pi\bigr),
+\]
+which is algebraically the same.
+
+\subsection*{5. Conclusion}
+
+The key point is that the choice $\arg(-i) = \tfrac{3\pi}{2}$ and $\arg(-2) = \pi$ arises from the chosen branch $0<\arg(z)<2\pi$. Then
+\[
+\log(-i) = i\,\tfrac{3\pi}{2},
+\quad
+\log(-2) = \ln(2) + i\pi.
+\]
+Hence their difference is indeed
+\[
+\frac{3\pi i}{2} - \bigl(\ln 2 + i\pi\bigr).
+\]
+
+\section*{Why \(\log(-i) - \log(-2)\) might differ from \(\log\bigl(\tfrac{-i}{-2}\bigr)\) by \(2\pi i\)}
+
+\subsection*{1. Logarithm Property in the Real Case}
+
+For real \(x>0, y>0\), it is always true that
+\[
+\log x - \log y = \log\!\Bigl(\frac{x}{y}\Bigr).
+\]
+No ambiguity arises because the real logarithm is single‐valued.
+
+\subsection*{2. Complex Logarithm is Multi‐Valued}
+
+For complex \(z\neq0\),
+\[
+\log(z) = \ln|z| + i\bigl(\arg(z) + 2\pi k\bigr),
+\quad k \in \mathbb{Z}.
+\]
+Hence, \(\log\!\bigl(\tfrac{x}{y}\bigr)\) might not match \(\log(x) - \log(y)\) \emph{exactly}, but they differ by an integer multiple of \(2\pi i\). In symbols:
+\[
+\log(x) - \log(y) 
+= \log\!\Bigl(\frac{x}{y}\Bigr) + 2\pi i\,n
+\]
+for some integer \(n\), depending on which branches are chosen for \(\log(x)\) and \(\log(y)\).
+
+\subsection*{3. Example: \(\log(-i) - \log(-2)\)}
+
+\[
+\log(-i) = \ln|-i| + i\Arg(-i),
+\quad
+\log(-2) = \ln|-2| + i\Arg(-2).
+\]
+If one chooses a branch with arguments in \((0,2\pi)\), then:
+\[
+\Arg(-i) = \tfrac{3\pi}{2}, 
+\quad
+\Arg(-2) = \pi.
+\]
+Thus:
+\[
+\log(-i) - \log(-2) 
+= \bigl(i\tfrac{3\pi}{2}\bigr) - \bigl(\ln 2 + i\pi\bigr)
+= -\ln 2 + i\Bigl(\tfrac{\pi}{2}\Bigr).
+\]
+Meanwhile,
+\[
+\log\!\Bigl(\frac{-i}{-2}\Bigr)
+= \log\Bigl(\frac{i}{2}\Bigr)
+= \log\bigl(\tfrac{1}{2}e^{i\frac{\pi}{2}}\bigr)
+= \ln\!\bigl(\tfrac12\bigr) + i\Bigl(\frac{\pi}{2}\Bigr)
+= -\ln 2 + i\Bigl(\frac{\pi}{2}\Bigr).
+\]
+In this particular branch choice, they \emph{do} coincide (no $2\pi i$ shift).
+
+\subsection*{4. But Another Branch Might Differ by \(2\pi i\)}
+
+If the branch chosen for $-i$ had $\Arg(-i) = -\frac{\pi}{2}$ (the principal branch in $(-\pi,\pi]$), then 
+\[
+\log(-i) = i\Bigl(-\frac{\pi}{2}\Bigr),
+\quad
+\log(-2)= \ln(2) + i\pi,
+\]
+so
+\[
+\log(-i) - \log(-2)
+= -\ln 2 + i\Bigl(-\frac{\pi}{2} - \pi\Bigr)
+= -\ln 2 - \tfrac{3\pi i}{2}.
+\]
+Meanwhile, 
+\(\log\bigl(\tfrac{-i}{-2}\bigr)\) might produce $-\ln 2 + i(\dots)$ with a different sign, plus possibly $2\pi i$ shift.  
+
+\subsection*{5. Conclusion}
+
+Yes, \(\log(a) - \log(b)\) \emph{should} equal \(\log\!\bigl(\tfrac{a}{b}\bigr)\) \emph{modulo} $2\pi i$. But in complex analysis, each $\log(z)$ is chosen on a specific branch. If you do them separately (one branch for $\log(a)$, possibly another for $\log(b)$), you can end up with differences of $2\pi i$. Hence you can see expressions like
+\[
+\log(-i) - \log(-2) 
+\quad\text{vs.}\quad
+\log\!\Bigl(\frac{-i}{-2}\Bigr),
+\]
+differing by some integer multiple of $2\pi i$, depending on how you assigned arguments individually. 
+
+\section*{Why the Zero at \(z=-1\) Is of Order 1 for \(\displaystyle e^{\frac{4\pi i}{z}} - 1\)}
+
+\subsection*{1. Check that \(z=-1\) is a zero}
+
+First, observe that
+\[
+f(-1) 
+= e^{\frac{4\pi i}{-1}} - 1
+= e^{-4\pi i} - 1
+= 1 - 1
+= 0,
+\]
+since $e^{-4\pi i} = e^{-2\cdot 2\pi i} = 1$.  Hence $z=-1$ is indeed a zero of $f(z)$.
+
+\subsection*{2. Verify it is a \emph{simple} zero (order 1)}
+
+A zero is of order 1 if the first nonzero derivative of $f$ at that point is $f'(z_0)\neq0$.  Let's compute $f'(z)$:
+
+\[
+f(z) 
+= e^{\frac{4\pi i}{z}} - 1,
+\quad
+f'(z) 
+= \frac{d}{dz}\Bigl(e^{\frac{4\pi i}{z}}\Bigr).
+\]
+By chain rule:
+\[
+f'(z)
+= e^{\frac{4\pi i}{z}} 
+  \cdot \frac{d}{dz}\Bigl(\tfrac{4\pi i}{z}\Bigr)
+= e^{\frac{4\pi i}{z}} \cdot \Bigl(-\tfrac{4\pi i}{z^2}\Bigr).
+\]
+Hence,
+\[
+f'(z) 
+= -\frac{4\pi i}{z^2}\, e^{\frac{4\pi i}{z}}.
+\]
+Now evaluate at $z=-1$:
+\[
+f'(-1)
+= -\frac{4\pi i}{(-1)^2} \, e^{\frac{4\pi i}{-1}}
+= -4\pi i \, e^{-4\pi i}.
+\]
+But $e^{-4\pi i}=1$, so
+\[
+f'(-1) 
+= -4\pi i \,\neq\, 0.
+\]
+Hence the derivative at $z=-1$ is nonzero.  This shows $z=-1$ is a \emph{simple} zero (order 1).
+
+\subsection*{3. Conclusion}
+
+Because $f(-1)=0$ and $f'(-1)\neq0$, the zero of $f(z)=e^{4\pi i/z}-1$ at $z=-1$ is of order 1.
+
+What is the integral of $\int_{0}^{2i} \overline{z}^{2} \,\mathrm{d}z $ of the left semi-circle centered at $i$ ? 
+\end{document}

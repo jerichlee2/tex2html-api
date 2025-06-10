@@ -1,0 +1,210 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 8}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Complex Analysis – Practice Final Examination (fresh version)
+%  8 Problems, each problem begins on a new page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+  
+  %======================================================================
+
+  \begin{problem}[Values and properties of elementary functions]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+  
+    \item  Determine \emph{all} complex values of the power
+          \[
+            \Bigl(2 - i\Bigr)^{\,\frac{7}{3}},
+          \]
+          and write every value explicitly in the form $x+iy$ with $x,y\in\mathbb{R}$.
+  
+    \item  Prove the identity
+          \[
+            \operatorname{arccosh}z
+            \;=\;
+            \Log\!\Bigl(z+\sqrt{z-1}\,\sqrt{z+1}\Bigr),
+            \quad z\in\mathbb{C}\setminus(-\infty,1],
+          \]
+          where the principal branch of the logarithm is taken and the branch cuts for the square‑roots are chosen so that
+          $\sqrt{z-1}\sqrt{z+1}=+\sqrt{(z-1)(z+1)}$ for $z>1$.
+  
+  \end{enumerate}
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Isolated singularities, residues, Laurent expansion]
+  Consider the function  
+  \[
+    f(z)=\frac{e^{\frac{1}{z-1}}-\cos z}{(z+3)^{2}(z-2)}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item  Classify the isolated singularities of $f$ at $z=1,\,-3,$ and $2$.
+    \item  Compute the residues $\operatorname*{Res}_{z=1}f(z)$ and
+           $\operatorname*{Res}_{z=-3}f(z)$.
+    \item  Give the first four non‑zero terms of the Laurent series of $f$
+           about $z=1$.
+  \end{enumerate}
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Laurent series in a prescribed annulus (harder series problem)]
+  Let  
+  \[
+    g(z)=\frac{z^{2}}{(z-4)\,(z+2)^{2}}.
+  \]
+  Find the Laurent expansion  
+  \[
+    g(z)=\sum_{n=-\infty}^{\infty}a_{n}(z-1)^{n}
+  \]
+  that is valid in the annulus $2<\lvert z-1\rvert<5$ by carrying out these steps:
+  
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item  Show that on the given annulus  
+          \[
+            \frac{1}{z-4}
+            \;=\;
+            -\frac{1}{3}\,\sum_{k=0}^{\infty}
+            \Bigl(\tfrac{z-1}{3}\Bigr)^{k}.
+          \]
+  
+    \item  Prove that, again on the annulus,  
+          \[
+            \frac{1}{(z+2)^{2}}
+            \;=\;
+            \frac{1}{9}\,
+            \sum_{m=0}^{\infty}(-1)^{m}(m+1)
+            \Bigl(\tfrac{z-1}{3}\Bigr)^{m}.
+          \]
+  
+    \item  Multiply the series from parts (a) and (b), then multiply by $z^{2}$,
+           and reorganise the result into the stated Laurent form.
+  
+    \item  Give a closed‑form formula for the general coefficient $a_{n}$
+           that is valid for all $n\in\mathbb{Z}$.
+  \end{enumerate}
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Integral over a closed contour]
+  Evaluate, by the residue theorem,
+  \[
+    \oint_{\lvert z\rvert=2}
+    \frac{z^{2}\cos z}{(z-1)^{2}(z+3)}\,dz,
+  \]
+  where the circle is positively oriented.
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Improper integral via complex analysis]
+  Show that
+  \[
+    I=\int_{0}^{\infty}
+    \frac{x^{2}\,\cos(5x)}{(x^{2}+9)^{2}}\,dx
+  \]
+  converges and compute its exact value.
+  (\emph{Hint:}  Use a keyhole or upper‑half‑plane contour and Jordan’s lemma.)
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Counting zeros with Rouché]
+  Let
+  \[
+    P(z)=z^{5}+6z^{2}-15.
+  \]
+  Use Rouché’s Theorem to determine how many zeros of $P$ lie inside
+  the circle $\lvert z-1\rvert=2$.
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[Conformal map construction]
+  Find an explicit conformal map
+  \[
+    T:\;
+    \Omega=\bigl\{\,z:\;0<\operatorname{Re}z<2,\;0<\operatorname{Im}z<\pi\bigr\}
+    \longrightarrow
+    \mathbb{H}=\{w:\operatorname{Im}w>0\},
+  \]
+  and indicate clearly each intermediate mapping you use.
+  \end{problem}
+  
+  %======================================================================
+  \pagebreak
+  \begin{problem}[A Schwarz–Pick application]
+  Let $f$ be analytic on the unit disc $\mathbb{D}$ and assume $\lvert f(z)\rvert<1$
+  on $\mathbb{D}$.  Suppose there exists $a\in\mathbb{D}\setminus\{0\}$ such that
+  $f(a)=a$.
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item  Prove that
+           \[
+             \lvert f'(a)\rvert\;\le\;\frac{1-\lvert a\rvert^{2}}{1-\lvert a\rvert^{2}}
+             =1.
+           \]
+    \item  Show that equality holds if and only if $f$ is a Möbius automorphism
+           of $\mathbb{D}$ that fixes $a$.
+  \end{enumerate}
+  \end{problem}
+\end{document}

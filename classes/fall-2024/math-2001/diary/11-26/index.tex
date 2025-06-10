@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+
+% Title information
+\title{Proofs By Calculation}
+\author{Jerich Lee}
+\date{2024-11-26}
+
+\begin{document}
+
+\maketitle
+Cool, so I am starting from the beginning beginning. Let's run it (LRI)—
+
+\begin{problem}
+   Let $a$ and $b$ be rational numbers and suppose that $a-b=4$ and $ab=1$. Show that $(a+b)^{2}=20$. 
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        \begin{align}
+            (a+b)^{2}&=(a-b)^{2}+4ab \\[10pt]
+           &=4^{2}+4 \cdot 1 \\[10pt] 
+           &= 20 
+        \end{align}
+    \end{proof}
+\end{solution}
+Cool, now how do we do this in Lean? Check this out:
+\begin{lstlisting}
+example {a b : \rat} (h1 : a - b = 4) (h2 : a * b = 1) : (a + b) ^ 2 = 20 :=
+  calc
+    (a + b) ^ 2 = (a - b) ^ 2 + 4 * (a * b) := by ring
+    _ = 4 ^ 2 + 4 * 1 := by rw [h1, h2]
+    _ = 20 := by ring
+\end{lstlisting}
+Ok let's do a new proof:
+\begin{proof}
+    \begin{align}
+        d(af-be)&=(ad)f-dbe \\[10pt] 
+        &=(bc)f-dbe \\[10pt] 
+        &=b(cf)-dbe \\[10pt] 
+        &=b(de)-dbe \\[10pt] 
+        &=0
+    \end{align}
+\end{proof}
+Woah. Let's do it in Lean!
+\begin{lstlisting}
+example {a b c d e f : \int} (h1 : a * d = b * c) (h2 : c * f = d * e) :
+    d * (a * f - b * e) = 0 :=
+  calc
+    d * (a * f - b * e)
+      = (a*d)*f-d*b*e := by ring
+    _ = (b*c)*f-d*b*e := by rw [h1]
+    _ = b*(c*f)-d*b*e := by ring
+    _ = b*(d*e)-d*b*e := by rw [h2]
+    _ = 0 := by ring
+\end{lstlisting}
+Fire. Onward. Yuh.
+Last easy example: 
+\begin{problem}
+    
+Let $a$ and $b$ be integers and suppose that $a=2b+5$ and $b=3$. Show that $a=11$.
+\end{problem}
+\begin{solution}
+ \begin{proof}
+    \begin{align}
+        a &= 2b+5 \\[10pt] 
+        &= 2 \cdot 3+ 5\\[10pt] 
+        &= 11
+    \end{align}
+\end{proof}  
+\end{solution}
+Lean:
+\begin{lstlisting}
+    example {a b : \int} (h1: a = 2 * b + 5) (h2 : b = 3) : a = 11:=
+    calc
+      a = 2 * b + 5 := h1
+      _ = 2 * 3 + 5 := by rw [h2]
+      _ = 11 := by ring 
+\end{lstlisting}
+So I need to make sure to explicitly type in like \emph{slash}int and such or it won't work...noted.
+\end{document}

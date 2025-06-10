@@ -1,0 +1,670 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%---------------------------------------------------------------------------
+%  Semicontinuity — definitions and concrete examples
+%---------------------------------------------------------------------------
+
+\begin{definition}[Lower/Upper Semicontinuous Functions]\label{def:lsc-usc}
+  Let $(X,\tau)$ be a topological space and $f\colon X\to[-\infty,\infty]$.
+  \begin{enumerate}
+      \item $f$ is \emph{lower semicontinuous} (l.s.c.) if 
+            \[
+                \{x\in X : f(x)>\alpha\}\in\tau \quad
+                \text{for every }\alpha\in\mathbb{R}.
+            \]
+      \item $f$ is \emph{upper semicontinuous} (u.s.c.) if 
+            \[
+                \{x\in X : f(x)<\alpha\}\in\tau \quad
+                \text{for every }\alpha\in\mathbb{R}.
+            \]
+  \end{enumerate}
+  A function is continuous iff it is both l.s.c.\ and u.s.c.
+  \end{definition}
+  
+  \medskip
+  \noindent\textbf{Concrete examples}
+  
+  \begin{enumerate}[]
+  %-------------------------------------------------------------
+  \item \textbf{Characteristic functions.}
+        Let $X=\mathbb R$ with the usual topology.
+        \begin{enumerate}[]
+            \item $\displaystyle \chi_{(0,1)}(x)=
+                     \begin{cases}
+                         1 & 0<x<1,\\[2pt]
+                         0 & \text{otherwise}
+                     \end{cases}$
+                  is \emph{lower} semicontinuous:
+                  for $\alpha\in(0,1)$ the set $\{x:\chi_{(0,1)}(x)>\alpha\}=(0,1)$
+                  is open.
+            \item $\displaystyle \chi_{[0,1]}(x)=
+                     \begin{cases}
+                         1 & 0\le x\le1,\\[2pt]
+                         0 & \text{otherwise}
+                     \end{cases}$
+                  is \emph{upper} semicontinuous:
+                  for $\alpha\in(0,1)$ the set $\{x:\chi_{[0,1]}(x)<\alpha\}=\mathbb{R}\setminus[0,1]$
+                  is open.
+        \end{enumerate}
+  
+  %-------------------------------------------------------------
+  \item \textbf{A non-trivial l.s.c.\ function.}
+        Define on $\mathbb R$
+        \[
+            f(x)=
+            \begin{cases}
+                0, & x<0,\\
+                x, & x\ge 0.
+            \end{cases}
+        \]
+        Each super-level set $\{x:f(x)>\alpha\}$ is either $(\alpha,\infty)$
+        (if $\alpha\ge0$) or $(-\infty,\infty)$ (if $\alpha<0$),
+        hence open.  
+        $f$ is l.s.c.\ but not u.s.c.\ at $x=0$.
+  
+  %-------------------------------------------------------------
+  \item \textbf{Supremum of l.s.c.\ functions is l.s.c.}
+        For $n\in\mathbb{N}$ let 
+        \[
+            g_n(x)=\max\!\bigl(0,\,x-1/n\bigr),\qquad x\in\mathbb R.
+        \]
+        Each $g_n$ is continuous $\Rightarrow$ l.s.c.  
+        Their pointwise supremum is
+        \[
+            g(x)=\sup_{n\ge1} g_n(x)=\max(0,x),
+        \]
+        which is exactly the l.s.c.\ function in (2).  
+  
+  %-------------------------------------------------------------
+  \item \textbf{Infimum of u.s.c.\ functions is u.s.c.}
+        Let 
+        \[
+            h_n(x)=\min\!\bigl(1,\,x+1/n\bigr),\qquad x\in\mathbb R.
+        \]
+        Each $h_n$ is continuous $\Rightarrow$ u.s.c.  
+        Their pointwise infimum
+        \[
+            h(x)=\inf_{n\ge1} h_n(x)=\min(1,x)
+        \]
+        is u.s.c.\ but fails to be l.s.c.\ at $x=1$.
+  \end{enumerate}
+  
+  \medskip
+  \noindent\textbf{Summary of properties (cf.~Definition~\ref{def:lsc-usc})}
+  \begin{itemize}
+      \item Characteristic functions of \emph{open} sets are l.s.c.;  
+            of \emph{closed} sets are u.s.c.
+      \item $\sup$ of any family of l.s.c.\ functions is l.s.c.  
+            $\inf$ of any family of u.s.c.\ functions is u.s.c.
+  \end{itemize}
+  \pagebreak
+  \paragraph{Why continuity $\;\Longleftrightarrow\;$ (u.s.c.\ \&\ l.s.c.)}
+
+\begin{enumerate}
+%-----------------------------------------------------------------
+\item \textbf{Continuity $\;\Longrightarrow$ upper \& lower semicontinuity.}
+
+      If $f\colon X\to\mathbb{R}$ is continuous, the inverse image of
+      \emph{every} open set is open.  
+      In particular, for any $\alpha\in\mathbb{R}$,
+      \[
+          \{x:f(x)>\alpha\}=f^{-1}((\alpha,\infty)), 
+          \qquad
+          \{x:f(x)<\alpha\}=f^{-1}((-\infty,\alpha))
+      \]
+      are open; hence $f$ is simultaneously
+      lower semicontinuous (l.s.c.) and upper semicontinuous (u.s.c.).
+
+%-----------------------------------------------------------------
+\item \textbf{Upper \& lower semicontinuity $\;\Longrightarrow$ continuity.}
+
+      Assume $f$ is both u.s.c.\ and l.s.c.
+      The basic open sets of $\mathbb{R}$ are open intervals $(\alpha,\beta)$.
+      Observe that
+      \[
+          f^{-1}\bigl((\alpha,\beta)\bigr)
+          \;=\;
+          \underbrace{\{x:f(x)>\alpha\}}_{\text{open by l.s.c.}}
+          \;\cap\;
+          \underbrace{\{x:f(x)<\beta\}}_{\text{open by u.s.c.}},
+      \]
+      which is an intersection of two open sets, hence open.
+      Therefore the inverse image of \emph{every} basic open set is open,
+      and by standard topology $f$ is continuous.
+\end{enumerate}
+
+\noindent
+Consequently \(f\) is continuous \emph{iff} it is both upper and lower
+semicontinuous.
+\pagebreak
+%------------------------------------------------------------------
+%  Urysohn’s Lemma (locally compact Hausdorff version)
+%  \;– detailed step–by–step proof in Rudin’s style
+%------------------------------------------------------------------
+
+\begin{theorem}[Urysohn]\label{thm:urysohn}
+  Let $X$ be a locally compact Hausdorff space.
+  If $K\subset V\subset X$ with $K$ \emph{compact} and $V$ \emph{open},
+  then there exists a continuous function $f\in C_c(X)$ such~that
+  \[
+            K\;<\;f\;<\;V,
+  \qquad\text{i.e.}\qquad
+        \begin{cases}
+            0\le f\le1,\\[2pt]
+            f=1 \text{ on }K,\\[2pt]
+            \operatorname{supp} f \subset V.
+        \end{cases}
+  \]
+  \end{theorem}
+  
+  \begin{proof}[Step‐by‐step construction]
+  
+  \textbf{1.\;Choose a dense sequence of rationals.}
+  Let $\{r_k\}_{k\ge1}$ be an enumeration of the rationals in $(0,1)$ and set
+  $r_1:=0,\; r_2:=1$.
+  Thus we have
+  \[
+     0=r_1<r_2<r_3<\dots<1.
+  \]
+  
+  \medskip
+  \textbf{2.\;First two open sets $V_0\subset V_1$.}
+  Because $X$ is locally compact Hausdorff,
+  theorem~2.7 (Rudin) gives \emph{nested} open sets
+  \[
+       K\subset V_1\subset \overline{V_1}\subset V_0\subset\overline{V_0}\subset V,
+  \]
+  with $\overline{V_0}$ compact.   \hfill(Equation~(2))
+  
+  \medskip
+  \textbf{3.\;Inductive construction of open sets $V_k$ ($k\ge2$).}
+  Assume $V_1,\dots,V_n$ have been chosen so that
+  $r_i<r_j\;\Rightarrow\;\overline{V_{r_j}}\subset V_{r_i}$.
+  Pick $r_i$ \emph{largest} below $r_{n+1}$ and $r_j$ \emph{smallest} above $r_{n+1}$.
+  Local compactness again yields an open set
+  \[
+      \overline{V_{r_j}}\subset V_{n+1}\subset\overline{V_{n+1}}\subset V_{r_i}.
+  \]
+  Iterating produces a collection $\{V_r\}_{r\in\mathbb{Q}\cap[0,1]}$
+  satisfying
+  \[
+     s>r\quad\Longrightarrow\quad \overline{V_s}\subset V_r.
+     \tag{3}
+  \]
+  
+  \medskip
+  \textbf{4.\;Auxiliary semicontinuous functions.}
+  For each rational $r\in[0,1]$ define \hfill(Equation (4))
+  \[
+     f_r(x)=
+     \begin{cases}
+         r,& x\in V_r,\\
+         0,& x\notin V_r,
+     \end{cases}
+     \qquad
+     g_r(x)=
+     \begin{cases}
+         1,& x\in\overline{V_r},\\
+         r,& x\notin \overline{V_r}.
+     \end{cases}
+  \]
+  \emph{Remarks after Definition 2.8:}
+  $V_r$ open $\;\Rightarrow\;$ each $f_r$ is \underline{lower} semicontinuous;
+  $\overline{V_r}$ closed $\;\Rightarrow\;$ each $g_r$ is \underline{upper}
+  semicontinuous.
+  
+  \medskip
+  \textbf{5.\;Take pointwise extremum.}\hfill(Equation (5))
+  \[
+       f(x)=\sup_{r} f_r(x),
+       \qquad
+       g(x)=\inf_{s} g_s(x).
+  \]
+  Hence $f$ is lower and $g$ is upper semicontinuous.  
+  We always have $0\le f\le g\le1$.
+  
+  \medskip
+  \textbf{6.\;Show $f=g$.}
+  Fix $x\in X$.
+  \begin{itemize}
+  \item If $x\in K$, then $x\in V_r$ for \emph{every} $r$ (by $K\subset V_1$),
+        so $f_r(x)=r$ and $f(x)=1$.  
+        Likewise $x\in\overline{V_r}$, hence $g(x)=1$.
+  \item If $x\notin K$, pick rationals $r<s$ close enough that
+        $x\notin\overline{V_r}$ (possible by compactness and (3)).
+        Then $g_s(x)=s$ while $f_r(x)=0$; property (3) ensures
+        $f_r\le g_s$ everywhere, so $f(x)\le r<s\le g(x)$.  
+        Taking $r\uparrow s$ forces $f(x)=g(x)$.
+  \end{itemize}
+  Hence $f\equiv g$ and is \emph{both} l.s.c.\ and u.s.c., therefore
+  \underline{continuous}.
+  
+  \medskip
+  \textbf{7.\;Verify the required properties.}
+  \begin{itemize}
+  \item $0\le f\le1$ by construction.
+  \item $f=1$ on $K$ (step 6).
+  \item If $x\notin\overline{V_0}$ then $x\notin V_{r}$ for \emph{all} $r$,
+        hence $f(x)=0$.
+        Thus $\operatorname{supp}f\subset\overline{V_0}\subset V$.
+  \end{itemize}
+  
+  \medskip\noindent
+  Therefore $f\in C_c(X)$ and $K<f<V$, completing the proof.
+  \end{proof}
+  \pagebreak
+  %------------------------------------------------------------------
+%  Clarifying the choice of the rationals  $\{r_k\}$  in Step 1
+%------------------------------------------------------------------
+
+The text you quoted meant only this:
+
+* “pick a sequence of rationals that is \emph{dense} in $(0,1)$,”  
+* “label two special values $r_1:=0$ and $r_2:=1$ for later use.”
+
+The chain
+\[
+0=r_1 < r_2 < r_3 < r_4 < \cdots < 1
+\]
+is \emph{not} literally correct if $r_2=1$.  
+A perfectly consistent (and explicit) way to set up the rationals is:
+
+\[
+r_1 := 0,\qquad
+r_k := \frac{k-1}{k}\quad(k\ge 2).
+\]
+
+\begin{itemize}
+\item Then
+      \[
+          0=r_1 < r_2=\tfrac12 < r_3=\tfrac23 < r_4=\tfrac34 < \dots < 1,
+      \]
+      so every $r_k$ is strictly between $0$ and $1$ except for $r_1$.
+\item The sequence $\{r_k\}_{k\ge 1}$ is \emph{increasing} and
+      converges to $1$, hence it is dense in $[0,1]$ and
+      certainly dense in $(0,1)$.
+\item If you really want the endpoint $1$ to have its own label,
+      just declare an auxiliary symbol $r_\infty:=1$—it will never be
+      used in the inductive construction, so no ordering conflicts arise.
+\end{itemize}
+
+This fixes the apparent “$1<1$’’ paradox while preserving the idea
+behind Rudin’s proof: we need a countable, \emph{ordered} list of numbers
+getting arbitrarily close to every point of $(0,1)$ so that the nested
+open sets \(V_r\) can be chosen one‐by‐one.
+\pagebreak
+\paragraph{Why do we single out $r_1=0$ and $r_2=1$?}
+
+In Urysohn’s construction we need \emph{at least two} rational numbers:
+
+\begin{enumerate}
+    \item  a \textbf{minimum} level, labelled $r_1$, at which the auxiliary functions will always vanish, and
+    \item  a \textbf{maximum} level, labelled $r_2$, at which they will eventually attain the value $1$ on the compact set $K$.
+\end{enumerate}
+
+Choosing\;\;$r_1=0$ \emph{and}\; $r_2=1$ guarantees that the final function $f$ satisfies
+\[
+   0\;\le\;f\;\le\;1,
+   \qquad
+   f=1 \text{ on }K,
+   \qquad
+   \operatorname{supp}f\subset V,
+\]
+exactly the three inequalities $K<f<V$ required by Urysohn’s lemma.
+
+After those two anchor points are fixed, \emph{any} countable dense
+subset of $(0,1)$ can be appended as $r_3,r_4,\dots$ to drive the
+inductive construction of the nested open sets $V_r$.  The extra
+rationals are used only to refine the “step heights’’ between $0$ and
+$1$; the endpoints $0$ and $1$ themselves are essential to set the lower
+and upper bounds of the function.
+\pagebreak
+%-----------------------------------------------------------------
+%  Why   $f_r$   is lower semicontinuous  and   $g_s$   is upper
+%  semicontinuous — and why the same holds for their pointwise
+%  supremum / infimum
+%-----------------------------------------------------------------
+
+Recall the auxiliary functions introduced in Urysohn’s proof:
+
+\[
+  f_r(x)=
+  \begin{cases}
+      r, & x\in V_r,\\[2pt]
+      0, & x\notin V_r,
+  \end{cases}
+  \qquad
+  g_s(x)=
+  \begin{cases}
+      1, & x\in\overline{V_s},\\[2pt]
+      s, & x\notin\overline{V_s},
+  \end{cases}
+  \tag{4}
+\]
+
+where each \(V_r\) is an \emph{open} set and \(\overline{V_s}\) is its
+\emph{compact} (hence closed) closure.  
+We must check semicontinuity in the sense of Definition~2.8.
+
+\paragraph{1.  Each \(f_r\) is \emph{lower} semicontinuous.}
+
+For any real number \(\alpha\) the super‐level set is
+\[
+  \{x : f_r(x) > \alpha\} =
+  \begin{cases}
+      V_r,          & \alpha<r,\\[4pt]
+      \varnothing,  & \alpha\ge r.
+  \end{cases}
+\]
+Because \(V_r\) is \emph{open} and the empty set is also open, every
+super‐level set is open.  
+Hence \(f_r\) satisfies the defining property of
+\textbf{lower semicontinuity (l.s.c.)}.
+
+\paragraph{2.  Each \(g_s\) is \emph{upper} semicontinuous.}
+
+For any \(\alpha\) the sub‐level set is
+\[
+  \{x : g_s(x) < \alpha\} =
+  \begin{cases}
+      X\setminus \overline{V_s}, & \alpha> s,\\[4pt]
+      \varnothing,               & \alpha\le s.
+  \end{cases}
+\]
+Since \(\overline{V_s}\) is \emph{closed}, its complement
+\(X\setminus\overline{V_s}\) is open; the empty set is open as well.
+Thus every sub‐level set is open, and \(g_s\) meets the definition of
+\textbf{upper semicontinuity (u.s.c.)}.
+
+\paragraph{3.  Extremal property of semicontinuity.}
+
+A basic topological fact (mentioned in Rudin right after
+Definition 2.8) is:
+
+\[
+  \sup_{r}(\text{l.s.c.\ functions})\;\text{ is l.s.c.},\qquad
+  \inf_{s}(\text{u.s.c.\ functions})\;\text{ is u.s.c.}
+\]
+
+Intuitively, taking a pointwise supremum can only introduce new “jumps
+\emph{down}’’ (allowed for l.s.c.) but never “jumps up’’
+(forbidden for l.s.c.); the dual statement holds for infima of u.s.c.
+functions.
+
+Applying this to the definitions
+\[
+    f=\sup_{r} f_r, 
+    \qquad
+    g=\inf_{s} g_s 
+    \tag{5}
+\]
+gives:
+
+* \(f\) is lower semicontinuous because each \(f_r\) is,
+  and a supremum of l.s.c. functions remains l.s.c.
+
+* \(g\) is upper semicontinuous because each \(g_s\) is,
+  and an infimum of u.s.c. functions remains u.s.c.
+
+Hence the semicontinuity assertions in Rudin’s proof are justified.
+\pagebreak
+\paragraph{Meaning of $\alpha$ in the argument}
+
+In the definitions of semicontinuity we test the behaviour of a function against \emph{all real thresholds}.  
+Concretely:
+
+* For \textbf{lower semicontinuity} we require every set
+  \[
+      \{x\in X : f(x)>\alpha\}
+  \]
+  to be open, \emph{for each real number $\alpha$}.  
+  Here $\alpha$ is simply a placeholder for an arbitrary real constant that we compare $f(x)$ with.
+
+* For \textbf{upper semicontinuity} we require every set
+  \[
+      \{x\in X : f(x)<\alpha\}
+  \]
+  to be open, again for \emph{every} real $\alpha$.
+
+So in the step–by–step check we picked an \emph{arbitrary} real
+$\alpha\in\mathbb{R}$ and computed the corresponding super-level (or
+sub-level) set.  
+Showing that this set is open for that arbitrary $\alpha$ proves it is
+open for \emph{all} $\alpha$, hence establishes semicontinuity.
+
+In short, $\alpha$ is just the variable threshold that appears in the
+definition; no special numerical value is assigned to it.
+\pagebreak
+
+\paragraph{Clarifying the role of $\alpha$}
+
+When we test lower semicontinuity we do **not** get to pick
+a different threshold $\alpha$ for each individual point~$x$.
+Instead, we fix one real number $\alpha\in\mathbb{R}$ \emph{once and
+for all}, form the super-level set
+\[
+    U_\alpha \;:=\;\{x\in X : f_r(x)>\alpha\},
+\]
+and ask: \emph{is this whole set open?}
+
+For the particular function
+\[
+    f_r(x)=
+    \begin{cases}
+         r, & x\in V_r,\\
+         0, & x\notin V_r,
+    \end{cases}
+\]
+the answer depends on the \emph{fixed} value of~$\alpha$:
+
+\[
+    U_\alpha =
+    \begin{cases}
+        V_r,          & \alpha<r, \\[6pt]
+        \varnothing,  & \alpha\ge r.
+    \end{cases}
+\]
+
+* If $\alpha<r$, then $f_r(x)>\alpha$ \textbf{only} on $V_r$, so
+  $U_\alpha=V_r$, which is open because $V_r$ is open.
+* If $\alpha\ge r$, the inequality fails everywhere, so
+  $U_\alpha=\varnothing$, and the empty set is open by convention.
+
+Because \emph{for every fixed $\alpha$} the corresponding
+$U_\alpha$ is an open set, the definition of lower semicontinuity is
+satisfied.
+
+In other words, the definition requires openness of \emph{all} these
+threshold sets taken one at a time; it does \emph{not} allow us to
+choose $\alpha$ separately for each point $x$.
+\pagebreak
+
+%--------------------------------------------------------------------
+%  A \textbf{concrete} choice of the auxiliary functions $f_r,\,g_s$
+%  in $\mathbb R$ so you can see them explicitly  
+%--------------------------------------------------------------------
+
+Fix once and for all two sets
+\[
+    K=[0,\tfrac14], 
+    \qquad 
+    V=(-1,1)
+\]
+so that $K$ is compact and $K\subset V\subset\mathbb R$.
+For every rational $r\in(0,1)$ define the open set
+\[
+    V_r := (-r,r).
+\]
+Then
+\[
+   s>r \;\Longrightarrow\; \overline{V_s}=[-s,s]\subset(-r,r)=V_r,
+\]
+exactly the nesting property required in Rudin’s proof.
+
+---
+
+a1.\;Pick a particular rational and write down \(f_r\)
+
+Take \(r=\tfrac12\).  
+With the above rule,
+\[
+   V_{1/2}=(-\tfrac12,\tfrac12).
+\]
+Now apply equation (4):
+\[
+    f_{1/2}(x)=
+    \begin{cases}
+        \tfrac12, & -\tfrac12 < x < \tfrac12,\\[4pt]
+        0,        & \text{otherwise}.
+    \end{cases}
+\]
+
+*Super-level sets.*  
+For any fixed $\alpha\in\mathbb R$,
+\[
+    \bigl\{x: f_{1/2}(x)>\alpha\bigr\}=
+    \begin{cases}
+        (-\tfrac12,\tfrac12) &\text{if }\alpha<\tfrac12,\\
+        \varnothing          &\text{if }\alpha\ge\tfrac12,
+    \end{cases}
+\]
+and both cases are open sets.  
+Hence \(f_{1/2}\) is **lower semicontinuous**.
+
+---
+
+2.\;Pick a particular rational and write down \(g_s\)
+
+Choose \(s=\tfrac34\).  
+Then $\overline{V_{3/4}}=[-\tfrac34,\tfrac34]$ and
+\[
+    g_{3/4}(x)=
+    \begin{cases}
+        1, & -\tfrac34 \le x \le \tfrac34,\\[4pt]
+        \tfrac34, & \text{otherwise}.
+    \end{cases}
+\]
+
+*Sub-level sets.*  
+For any fixed $\alpha\in\mathbb R$,
+\[
+    \bigl\{x: g_{3/4}(x)<\alpha\bigr\}=
+    \begin{cases}
+        \mathbb R\setminus[-\tfrac34,\tfrac34] &\text{if }\alpha>\tfrac34,\\
+        \varnothing                            &\text{if }\alpha\le\tfrac34,
+    \end{cases}
+\]
+and both cases are open.  
+Thus \(g_{3/4}\) is **upper semicontinuous**.
+
+---
+
+3.\;Pointwise extremum gives the final \(f\) and \(g\)
+
+Define
+\[
+    f(x)=\sup_{r\in\mathbb Q\cap(0,1)} f_r(x),
+    \qquad
+    g(x)=\inf_{s\in\mathbb Q\cap(0,1)} g_s(x).
+\]
+
+*What do they look like?*
+
+* **Inside** $(-\tfrac14,\tfrac14)$ (which contains $K$):  
+  for every $r>\tfrac14$ we have $x\in V_r$, so
+  $f_r(x)=r$; taking $\sup_r$ yields $f(x)=1$.
+  Likewise $x\in[-s,s]$ for all $s>\tfrac14$, so $g_s(x)=1$, hence
+  $g(x)=1$.
+
+* **Outside** $(-1,1)$ (the complement of $\overline{V_{1}}$):  
+  $x\notin V_r$ for every $r<1$, so $f_r(x)=0$ and $f(x)=0$.
+  Also $x\notin[-s,s]$ for every $s<1$, so $g_s(x)=s$ and $g(x)=0$.
+
+Thus
+\[
+    f(x)=g(x)=
+    \begin{cases}
+        1, & x\in(-\tfrac14,\tfrac14),\\
+        0, & x\notin(-1,1).
+    \end{cases}
+\]
+Between $x=\pm\tfrac14$ and $x=\pm1$ the value tapers off but always
+lies in $[0,1]$.
+
+---
+
+4.\;Why semicontinuity survives the extremum
+
+Because each $f_r$ is lower semicontinuous, their pointwise supremum $f$
+remains lower semicontinuous; analogously, $g$ is upper semicontinuous.
+Since we have just seen \(f=g\), the common function is actually
+**continuous**, satisfies $f=1$ on $K$, vanishes outside~$V$, and lives
+in $C_c(\mathbb R)$—exactly what Urysohn’s lemma promises.
+
+---
+
+\textbf{Take-away.}  
+The tiny “plateau’’ at height $r$ inside $V_r$ and $0$ elsewhere
+produces an l.s.c.\ block.  
+The “roof’’ at height $1$ over $\overline{V_s}$ and level $s$ elsewhere
+produces a u.s.c.\ block.
+Piling up (\(\sup\)) all the blocks and shaving down (\(\inf\)) all the
+roofs meet precisely at a continuous function separating $K$ from~$V$.
+\end{document}

@@ -1,0 +1,305 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  \textbf{Step 1.\;Size of the group.}
+  \[
+  \bigl|\operatorname{GL}_{2}(\mathbb{Z}_{2})\bigr|
+     =(2^{2}-1)(2^{2}-2)=3\cdot2=6.
+  \]
+  
+  \textbf{Step 2.\;A complete list of matrices.}  Writing matrices by columns,
+  \[
+  \renewcommand{\arraystretch}{1.2}
+  \begin{array}{lll}
+  I=\begin{pmatrix}1&0\\0&1\end{pmatrix},&
+  A=\begin{pmatrix}1&1\\0&1\end{pmatrix},&
+  B=\begin{pmatrix}1&0\\1&1\end{pmatrix},\\[4pt]
+  C=\begin{pmatrix}0&1\\1&0\end{pmatrix},&
+  D=\begin{pmatrix}1&1\\1&0\end{pmatrix},&
+  E=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+  \end{array}
+  \]
+  
+  \textbf{Step 3.\;Orders (quick calculation).}
+  \[
+  \begin{aligned}
+  \operatorname{ord}(I)&=1,\\
+  \operatorname{ord}(A)=\operatorname{ord}(B)=\operatorname{ord}(C)&=2,\\
+  \operatorname{ord}(D)=\operatorname{ord}(E)&=3.
+  \end{aligned}
+  \]
+  
+  \textbf{Step 4.\;Characteristic polynomials.}\;
+  For every \(M\in G\),
+  \[
+  \chi_{M}(x)=x^{2}+\operatorname{tr}(M)\,x+1
+  \quad(\text{since }\det M=1 \text{ in } \mathbb{Z}_{2}).
+  \]
+  \[
+  \operatorname{tr}(I)=\operatorname{tr}(A)=\operatorname{tr}(B)
+            =\operatorname{tr}(C)=0,
+  \qquad
+  \operatorname{tr}(D)=\operatorname{tr}(E)=1.
+  \]
+  
+  \smallskip
+  \textbf{Step 5.\;Conjugacy classes.}
+  
+  \[
+  \renewcommand{\arraystretch}{1.4}
+  \begin{array}{|c|c|c|c|c|}
+  \hline
+  \text{Class} & \text{Size} & \text{Order of elems.} &
+  \text{Characteristic polynomial} & \text{Representative(s)} \\
+  \hline
+  C_{1} & 1 & 1 & x^{2}+1 & I \\
+  \hline
+  C_{2} & 3 & 2 & x^{2}+1 & 
+     \left\{\,A,\;B,\;C\,\right\} \\
+  \hline
+  C_{3} & 2 & 3 & x^{2}+x+1 & 
+     \left\{\,D,\;E\,\right\} \\
+  \hline
+  \end{array}
+  \]
+  
+  \textit{Why they split this way.}
+  \begin{itemize}
+    \item The class of the identity is always singleton.
+    \item All matrices with minimal polynomial \((x+1)^{2}\) but \(\neq I\)
+          are conjugate (they are the “reflections’’ in the
+          $S_{3}\cong G$ picture).  There are exactly three such matrices.
+    \item The remaining two matrices have irreducible polynomial
+          \(x^{2}+x+1\) and order \(3\); they form a single conjugacy class
+          (the “3-cycles’’ of \(S_{3}\)).
+  \end{itemize}
+  
+  \[
+  \boxed{\;
+     \text{There are three conjugacy classes: } 
+     \{I\},\;
+     \{A,B,C\},\;
+     \{D,E\}.
+  \;}
+  \]
+  \end{solution}
+  \begin{theorem}
+    For every positive integer \(n\) the additive group 
+    \(G=\mathbb{Q}/\mathbb{Z}\) contains a \emph{unique} subgroup of order \(n\).
+    \end{theorem}
+    
+    \begin{proof}
+    Throughout, write the group additively and let 
+    \(\overline{q}=q+\mathbb{Z}\) denote the coset of \(q\in\mathbb{Q}\).
+    
+    \smallskip
+    \textbf{1.\;Every element of \(\mathbb{Q}/\mathbb{Z}\) has finite order.}  
+    If \(q=\tfrac ab\) with \(a\in\mathbb{Z}\), \(b\in\mathbb{N}\) and
+    \(\gcd(a,b)=1\), then
+    \[
+       b\;\overline{q}= \overline{\,b\cdot\tfrac ab\,}= \overline{a}=0 ,
+    \]
+    so \(\operatorname{ord}(\overline{q})\mid b\).
+    In fact \(\operatorname{ord}(\overline{q})=b\); otherwise a smaller
+    positive multiple of \(q\) would be an integer, contradicting minimality
+    of \(b\).
+    Thus every element has order equal to the denominator of its reduced
+    fraction.
+    
+    \smallskip
+    \textbf{2.\;Existence of a subgroup of order \(n\).}  
+    Consider
+    \[
+       H_{n}\;:=\;\bigl\langle\,\overline{1/n}\,\bigr\rangle
+                \;=\;
+                \Bigl\{
+                   \overline{0},\,\overline{1/n},\,\overline{2/n},
+                   \dots,\overline{(n-1)/n}
+                \Bigr\}.
+    \]
+    Because \(n\,\overline{1/n}=0\) and no smaller positive multiple
+    vanishes, \(\operatorname{ord}(\overline{1/n})=n\); hence \(H_{n}\)
+    is cyclic of order \(n\).
+    
+    \smallskip
+    \textbf{3.\;Uniqueness.}  
+    Let \(K\le\mathbb{Q}/\mathbb{Z}\) be \emph{any} subgroup of order \(n\).
+    Finite subgroups of an abelian group are cyclic, so
+    \(K=\langle\overline{q}\rangle\) for some \(\overline{q}\) with
+    \(\operatorname{ord}(\overline{q})=n\).
+    Write \(q\) in lowest terms as \(q=\tfrac mn\) (\(\gcd(m,n)=1\)).
+    Because \(\gcd(m,n)=1\), there exists \(s\in\mathbb{Z}\) with
+    \(ms\equiv1\pmod{n}\).  Then
+    \[
+       s\,\overline{q}
+         \;=\;
+         \overline{\tfrac{s\,m}{n}}
+         \;=\;
+         \overline{\tfrac1n}\;\in\;K,
+    \]
+    so \(\overline{1/n}\in K\).  
+    Therefore \(H_{n}\subseteq K\).
+    But \(|H_{n}|=|K|=n\), forcing \(H_{n}=K\).
+    
+    \smallskip
+    \textbf{4.\;Conclusion.}  
+    For each \(n\ge1\) there is exactly one subgroup of order \(n\), namely
+    \[
+       \boxed{\;
+         H_{n}\;=\;
+         \bigl\langle\,\overline{1/n}\,\bigr\rangle
+         \;\cong\;
+         C_{n}}.
+    \]
+    \end{proof}
+    \begin{theorem}
+      Let
+      \[
+         H \;=\; \bigl\{\,A\in\operatorname{GL}_{2}(\mathbb{C})
+                    \;\big|\;
+                    \det(A)\in\mathbb{R}_{>0}\bigr\}, 
+         \qquad
+         B \;=\; S^{1}
+              \;=\;\bigl\{\,z\in\mathbb{C}\;\big|\;|z|=1\bigr\}.
+      \]
+      Then the quotient group
+      \(\operatorname{GL}_{2}(\mathbb{C})/H\) is (canonically) isomorphic to
+      \(B\).
+      \end{theorem}
+      
+      \begin{proof}
+      \textbf{1.\;Reduce to determinants.}
+      The determinant gives a surjective group homomorphism
+      \[
+         \det \;:\;
+         \operatorname{GL}_{2}(\mathbb{C}) \;\longrightarrow\;
+         \mathbb{C}^{\times},
+         \qquad
+         A \;\longmapsto\; \det(A).
+      \]
+      Because \(H=\det^{-1}(\mathbb{R}_{>0})\), the map
+      \[
+         \varphi \;:\;
+         \operatorname{GL}_{2}(\mathbb{C})/H
+         \;\longrightarrow\;
+         \mathbb{C}^{\times}/\mathbb{R}_{>0},
+         \qquad
+         AH \;\longmapsto\; \det(A)\,\mathbb{R}_{>0},
+      \]
+      is well defined, surjective, and a group homomorphism whose kernel is
+      trivial.  Hence
+      \[
+         \operatorname{GL}_{2}(\mathbb{C})/H
+         \;\cong\;
+         \mathbb{C}^{\times}/\mathbb{R}_{>0}.
+      \]
+      
+      \smallskip
+      \textbf{2.\;Identify \(\mathbb{C}^{\times}/\mathbb{R}_{>0}\) with \(S^{1}\).}
+      Every \(z\in\mathbb{C}^{\times}\) can be written uniquely as
+      \(z=re^{i\theta}\) with \(r\in\mathbb{R}_{>0}\) and \(\theta\in(-\pi,\pi]\).
+      Multiplication by a positive real rescales \(r\) but leaves the phase
+      \(e^{i\theta}\) unchanged.  Define
+      \[
+         \psi \;:\;
+         \mathbb{C}^{\times}/\mathbb{R}_{>0}
+         \;\longrightarrow\;
+         S^{1},
+         \qquad
+         z\,\mathbb{R}_{>0}
+         \;\longmapsto\;
+         \frac{z}{|z|}.
+      \]
+      \begin{itemize}
+        \item \emph{Well defined:}  If \(z_{1}=r\,z_{2}\) with \(r>0\) then
+              \(z_{1}/|z_{1}|=z_{2}/|z_{2}|\).
+        \item \emph{Bijective:}  Every \(e^{i\theta}\in S^{1}\) is the image
+              of \(e^{i\theta}\,\mathbb{R}_{>0}\), and the map is clearly
+              injective.
+        \item \emph{Homomorphism:}  Because the operation on the quotient and
+              on \(S^{1}\) is multiplication, $\psi$ preserves it.
+      \end{itemize}
+      Thus \(\psi\) is an isomorphism, giving
+      \[
+         \mathbb{C}^{\times}/\mathbb{R}_{>0} \;\cong\; S^{1}.
+      \]
+      
+      \smallskip
+      \textbf{3.\;Compose isomorphisms.}
+      Combining the isomorphisms from Steps 1 and 2 yields
+      \[
+         \operatorname{GL}_{2}(\mathbb{C})/H
+         \;\cong\;
+         \mathbb{C}^{\times}/\mathbb{R}_{>0}
+         \;\cong\;
+         S^{1}=B.
+      \]
+      Explicitly, the composite map
+      \[
+         AH
+         \;\longmapsto\;
+         \det(A)\,\mathbb{R}_{>0}
+         \;\longmapsto\;
+         \frac{\det(A)}{|\det(A)|}\;\in\;B
+      \]
+      is the desired isomorphism.
+      
+      \end{proof}b
+\end{document}

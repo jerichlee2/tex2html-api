@@ -1,0 +1,482 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417: HW 10}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  \textbf{Step 1. Choose a suitable ring.}  
+  Take the quotient ring
+  \[
+  R \;=\; \mathbb{Z}_8 \;=\; \mathbb{Z}/8\mathbb{Z},
+  \]
+  which is a commutative ring with identity $\overline{1}$.
+  
+  \medskip
+  \textbf{Step 2. Define the polynomial.}  
+  Let
+  \[
+  f(x) \;=\; x^{2}-1\;\in R[x].
+  \]
+  
+  \medskip
+  \textbf{Step 3. Compute all squares in $\mathbb{Z}_8$.}  
+  The elements of $\mathbb{Z}_8$ are
+  \[
+  \overline{0},\overline{1},\overline{2},\overline{3},\overline{4},\overline{5},\overline{6},\overline{7},
+  \]
+  and a quick calculation (working modulo $8$) gives
+  \[
+  \begin{aligned}
+  \overline{0}^{\,2}&=\overline{0}, &\qquad
+  \overline{1}^{\,2}&=\overline{1}, &\qquad
+  \overline{2}^{\,2}&=\overline{4}, &\qquad
+  \overline{3}^{\,2}&=\overline{9}=\overline{1},\\[4pt]
+  \overline{4}^{\,2}&=\overline{16}=\overline{0}, &\qquad
+  \overline{5}^{\,2}&=\overline{25}=\overline{1}, &\qquad
+  \overline{6}^{\,2}&=\overline{36}=\overline{4}, &\qquad
+  \overline{7}^{\,2}&=\overline{49}=\overline{1}.
+  \end{aligned}
+  \]
+  
+  \medskip
+  \textbf{Step 4. Identify the roots of $f(x)$.}  
+  Since
+  \[
+  f(\overline{1})=\overline{1}-\overline{1}=\overline{0},\quad
+  f(\overline{3})=\overline{3}^{\,2}-\overline{1}=\overline{9}-\overline{1}=\overline{0},
+  \]
+  \[
+  f(\overline{5})=\overline{5}^{\,2}-\overline{1}=\overline{25}-\overline{1}=\overline{0},\quad
+  f(\overline{7})=\overline{7}^{\,2}-\overline{1}=\overline{49}-\overline{1}=\overline{0},
+  \]
+  the elements
+  \[
+  \overline{1},\;\overline{3},\;\overline{5},\;\overline{7}
+  \]
+  are distinct roots of $x^{2}-1$ in $R$.
+  
+  \medskip
+  \textbf{Step 5. Count the roots.}  
+  We have found \emph{four} roots, which is strictly greater than the degree $2$ of the polynomial.
+  
+  \medskip
+  \textbf{Conclusion.}  
+  The ring $R=\mathbb{Z}/8\mathbb{Z}$ supplies the desired example: in this ring the polynomial $x^{2}-1$ has more than two roots (indeed, four).
+  
+  \medskip
+  \textbf{Remark (optional).}  
+  Over a field $K$, the usual proof that a non-zero polynomial of degree $d$ has at most $d$ roots relies on the fact that a non-zero polynomial cannot vanish at more than $d$ points without forcing all its non-leading coefficients to be zero \emph{and} on the ability to divide by the leading coefficient (which is guaranteed to be a unit in a field).  When $K$ is merely a commutative ring, the leading coefficient may be a zero divisor or fail to be invertible, and the argument breaks down.
+  \end{solution}
+  \begin{solution}
+    Let $R$ be an integral domain and put
+    \[
+      X \;=\; R \times \bigl(R\setminus\{0\}\bigr), 
+      \qquad
+      (p,q)\sim(p_1,q_1) \;\Longleftrightarrow\; pq_1=p_1q.
+    \]
+    
+    Throughout, write the $\sim$-class of $(p,q)$ as the \emph{formal fraction}
+    \[
+      \frac{p}{q}\;:=\;[(p,q)]_{\sim},
+      \qquad
+      X/\!\sim \;=\;\bigl\{\tfrac{p}{q}\mid(p,q)\in X\bigr\}.
+    \]
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection*{1.  \,$\sim$ is an equivalence relation}
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+      \item \emph{Reflexive:} $(p,q)\sim(p,q)$ because $pq=pq$.
+      \item \emph{Symmetric:} If $pq_{1}=p_{1}q$, then $p_{1}q=pq_{1}$, so
+            $(p_{1},q_{1})\sim(p,q)$.
+      \item \emph{Transitive:}  Suppose $(p,q)\sim(p_{1},q_{1})$ and
+            $(p_{1},q_{1})\sim(p_{2},q_{2})$.  Then
+            \[
+              pq_{1}=p_{1}q
+              \quad\text{and}\quad
+              p_{1}q_{2}=p_{2}q_{1}.
+            \]
+            Multiplying the first equation by $q_{2}$ and the second by $q$
+            gives $pq_{1}q_{2}=p_{1}qq_{2}=p_{2}qq_{1}$.
+            Because $q_{1}\neq0$ in the integral domain $R$, we may cancel
+            $q_{1}$ to obtain $pq_{2}=p_{2}q$, i.e.\ $(p,q)\sim(p_{2},q_{2})$.
+    \end{enumerate}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection*{2.  Addition and multiplication are well-defined}
+    
+    Define for $\tfrac{p_{1}}{q_{1}},\tfrac{p_{2}}{q_{2}}\in X/\!\sim$:
+    \[
+      \frac{p_{1}}{q_{1}}+\frac{p_{2}}{q_{2}}
+      \;:=\;\frac{p_{1}q_{2}+p_{2}q_{1}}{q_{1}q_{2}},
+      \qquad
+      \frac{p_{1}}{q_{1}}\;\cdot\;\frac{p_{2}}{q_{2}}
+      \;:=\;\frac{p_{1}p_{2}}{q_{1}q_{2}}.
+    \]
+    
+    \begin{proof}[Well-definedness of $+$]
+      Let $(p_{1},q_{1})\sim(p_{1}',q_{1}')$ and
+      $(p_{2},q_{2})\sim(p_{2}',q_{2}')$.  Then
+      $p_{1}q_{1}'=p_{1}'q_{1}$ and $p_{2}q_{2}'=p_{2}'q_{2}$.
+      Compute
+      \[
+        (p_{1}q_{2}+p_{2}q_{1})q_{1}'q_{2}'
+        \;=\;
+        p_{1}q_{2}q_{1}'q_{2}' + p_{2}q_{1}q_{1}'q_{2}'
+        \;=\;
+        p_{1}'q_{1}q_{2}q_{2}' + p_{2}'q_{2}q_{1}q_{1}'
+        \;=\;
+        (p_{1}'q_{2}'+p_{2}'q_{1}')q_{1}q_{2}.
+      \]
+      Hence
+      \[
+          (p_{1}q_{2}+p_{2}q_{1},\,q_{1}q_{2})
+          \;\sim\;
+          (p_{1}'q_{2}'+p_{2}'q_{1}',\,q_{1}'q_{2}'),
+      \]
+      so the sum does not depend on the chosen representatives.  
+      The proof for multiplication is similar (and simpler):
+      $(p_{1}p_{2})q_{1}'q_{2}' = p_{1}'p_{2}'q_{1}q_{2}$.
+    \end{proof}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection*{3.  $X/\!\sim$ is a field}
+    
+    We verify the field axioms using the above operations.
+    
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+      \item \emph{Commutativity and associativity of $+$ and $\cdot$.}  
+            These follow from the corresponding properties in $R$ and the
+            formulas for $+$ and $\cdot$.
+      \item \emph{Additive and multiplicative identities.}
+            \[
+              0 \;:=\;\frac{0}{1}, 
+              \qquad
+              1 \;:=\;\frac{1}{1}.
+            \]
+            One checks directly that $\tfrac{p}{q}+0=\tfrac{p}{q}$ and
+            $\tfrac{p}{q}\cdot1=\tfrac{p}{q}$.
+      \item \emph{Additive inverses.}  
+            For $\tfrac{p}{q}\in X/\!\sim$ set
+            \[
+                -\frac{p}{q}\;:=\;\frac{-p}{q}.
+            \]
+            Then
+            $\tfrac{p}{q}+(-\tfrac{p}{q})=\tfrac{p-q+p}{q}=\tfrac{0}{1}=0$.
+      \item \emph{Multiplicative inverses.}  
+            If $\tfrac{p}{q}\neq 0$, then $p\neq0$.  
+            Define
+            \[
+              \bigl(\tfrac{p}{q}\bigr)^{-1}\;:=\;\tfrac{q}{p}.
+            \]
+            Since $R$ is an integral domain (hence $p\neq0$ implies $p$ is not
+            a zero divisor), $q/p$ is a legitimate class and
+            $\tfrac{p}{q}\cdot\tfrac{q}{p}=\tfrac{pq}{qp}=\tfrac{1}{1}=1$.
+      \item \emph{Distributivity.}  Using the explicit formulas:
+            \[
+              \frac{p_{1}}{q_{1}}\bigl(\frac{p_{2}}{q_{2}}+\frac{p_{3}}{q_{3}}\bigr)
+              \;=\;
+              \frac{p_{1}(p_{2}q_{3}+p_{3}q_{2})}{q_{1}q_{2}q_{3}}
+              \;=\;
+              \frac{p_{1}p_{2}}{q_{1}q_{2}}
+              \;+\;
+              \frac{p_{1}p_{3}}{q_{1}q_{3}},
+            \]
+            and similarly on the right.
+    \end{enumerate}
+    All field axioms are satisfied; therefore $X/\!\sim$ is a field, often
+    called \emph{the field of fractions of $R$}.
+    \end{solution}
+    \begin{solution}
+      Let $\Bbb Z_{2}=\{0,1\}$ be the field of two elements and recall the basic fact:
+      
+      \begin{quote}
+      For a field $F$ and $f\in F[x]$, the quotient ring $F[x]/(f)$ is a \emph{field}  
+      iff $f$ is \emph{irreducible} over $F$.
+      \end{quote}
+      
+      We treat parts (a)–(c) one by one.
+      
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \subsection*{(a)  $\Bbb Z_{2}[x]\bigl/\bigl(x^{2}+1\bigr)$ is \emph{not} a field}
+      
+      \begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+        \item \textbf{Check for linear factors.}  
+              In $\Bbb Z_{2}$ we have only $x=0,1$.  
+              \[
+                f(0)=1\neq0,
+                \qquad
+                f(1)=1^{2}+1=0.
+              \]
+              Hence $x=1$ is a root, so $x+1$ divides $x^{2}+1$.
+        \item \textbf{Factorisation.}  
+              Over $\Bbb Z_{2}$ we actually have
+              \[
+                x^{2}+1=(x+1)^{2}.
+              \]
+              Thus $x^{2}+1$ is \emph{reducible}.
+        \item \textbf{Conclusion.}  
+              Because the modulus is reducible, the quotient ring contains
+              zero–divisors and therefore cannot be a field.  
+              For instance
+              \[
+                (x+1)^{2}=0\quad\text{in}\quad
+                \Bbb Z_{2}[x]\bigl/\bigl(x^{2}+1\bigr).
+              \]
+      \end{enumerate}
+      
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \subsection*{(b)  $\Bbb Z_{2}[x]\bigl/\bigl(x^{2}+x+1\bigr)$ is a finite field of order $4$}
+      
+      \begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+        \item \textbf{Root test.}  
+              Evaluate $g(x)=x^{2}+x+1$ at $0$ and $1$:
+              \[
+                g(0)=1,\qquad g(1)=1+1+1=1\quad(\text{mod }2).
+              \]
+              No roots in $\Bbb Z_{2}$ $\Longrightarrow$ no linear factors.
+        \item \textbf{Irreducibility.}  
+              A monic quadratic over a field with no linear factor is irreducible.
+        \item \textbf{Field property.}  
+              Hence $\Bbb Z_{2}[x]/(g)$ \emph{is} a field.
+        \item \textbf{Order count.}  
+              The cosets are represented by
+              \[
+                \{\,0,\;1,\;x,\;x+1\,\},
+              \]
+              so the field has $2^{\deg g}=2^{2}=4$ elements.
+      \end{enumerate}
+      
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \subsection*{(c)  $\Bbb Z_{2}[x]\bigl/\bigl(x^{3}+x+1\bigr)$ is a finite field of order $8$}
+      
+      \begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+        \item \textbf{Root test again.}  
+              For $h(x)=x^{3}+x+1$,
+              \[
+                h(0)=1,\qquad h(1)=1+1+1=1\quad(\text{mod }2).
+              \]
+              No roots $\Longrightarrow$ no linear factors.
+        \item \textbf{Irreducibility.}  
+              A cubic over a field is irreducible iff it has no root, so $h$ is
+              irreducible.
+        \item \textbf{Field property.}  
+              Therefore $\Bbb Z_{2}[x]/(h)$ is a field.
+        \item \textbf{Order count.}  
+              The field has $2^{\deg h}=2^{3}=8$ elements.
+      \end{enumerate}
+      
+      \paragraph{Summary.}
+      \[
+        \boxed{\;
+          \begin{aligned}
+            &\Bbb Z_{2}[x]/(x^{2}+1)\text{ is \emph{not} a field},\\[4pt]
+            &\Bbb Z_{2}[x]/(x^{2}+x+1)\text{ is }\mathbb{F}_{4},\\[4pt]
+            &\Bbb Z_{2}[x]/(x^{3}+x+1)\text{ is }\mathbb{F}_{8}.
+          \end{aligned}
+        \;}
+      \]
+      \end{solution}
+      \begin{solution}
+        \textbf{Goal.}  Count the primitive roots (i.e.\ generators) of the multiplicative group
+        \[
+          \Bbb Z_{101}^{\times}.
+        \]
+        
+        \begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+          \item \textbf{Structure of \(\Bbb Z_{p}^{\times}\).}  
+                For every prime \(p\), the group of units
+                \(\Bbb Z_{p}^{\times}\) is cyclic of order \(p-1\).
+        
+          \item \textbf{Primitive roots \(\Longleftrightarrow\) generators.}  
+                An element \(g\in\Bbb Z_{p}^{\times}\) is a \emph{primitive root}
+                exactly when it generates the entire cyclic group—
+                equivalently, when its order is \(p-1\).
+        
+          \item \textbf{Counting generators of a cyclic group.}  
+                A cyclic group of order \(n\) has precisely
+                \(\varphi(n)\) generators, where \(\varphi\) is Euler’s
+                totient function.
+        
+          \item \textbf{Compute \(\varphi(100)\).}  
+                Since \(101-1=100=2^{2}\cdot5^{2}\),
+                \[
+                  \varphi(100)
+                  \;=\;100\!\bigl(1-\frac12\bigr)\!\bigl(1-\frac15\bigr)
+                  \;=\;100\cdot\frac12\cdot\frac45
+                  \;=\;40.
+                \]
+        
+          \item \textbf{Conclusion.}  
+                The field \(\Bbb Z_{101}\) has
+                \[
+                  \boxed{40}
+                \]
+                primitive roots.
+        \end{enumerate}
+        \end{solution}
+        \begin{solution}
+          \textbf{Claim.} A field of order \(81\) \emph{cannot} contain a subfield of order \(27\).
+          
+          \medskip
+          \begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+          
+            \item \textbf{Structure of finite fields.}  
+                  Every finite field has order \(p^{n}\) for a unique prime \(p\) (its
+                  characteristic) and a positive integer \(n\) (its degree over
+                  \(\Bbb F_{p}\)).  Conversely, for each pair \((p,n)\) there is exactly
+                  one field of order \(p^{n}\) up to isomorphism.
+          
+            \item \textbf{Possible subfield orders.}  
+                  If \(K\) is a subfield of \(F_{p^{n}}\), then
+                  \[
+                    |K|=p^{m}\quad\text{for some }m\mid n,
+                  \]
+                  because \([F_{p^{n}}:K]=n/m\) is the degree of the field extension and
+                  must be an integer.
+          
+            \item \textbf{Apply to the case \(|F|=81\).}  
+                  Since \(81=3^{4}\), any field of order \(81\) is
+                  \(\Bbb F_{3^{4}}\).  Its subfields therefore have orders
+                  \[
+                    3^{m}
+                    \quad\text{with}\quad
+                    m \mid 4 \;\;\Longrightarrow\;\; m\in\{1,2,4\}.
+                  \]
+                  The only possible subfield orders are \(3^{1}=3\), \(3^{2}=9\), and
+                  \(3^{4}=81\) (the field itself).
+          
+            \item \textbf{Check \(|K|=27\).}  
+                  The order \(27=3^{3}\) would correspond to \(m=3\), but
+                  \(3\nmid4\).  Hence no subfield of order \(27\) can exist.
+          
+          \end{enumerate}
+          
+          \medskip
+          \textbf{Conclusion.}  A field of order \(81\) has \emph{no} subfield of
+          order \(27\).
+          \end{solution}
+          \begin{solution}
+            Let
+            \[
+              K \;=\; \Bbb Q\!\bigl(\sqrt{3},\sqrt{2}\bigr),
+              \qquad
+              \Bbb Q \subseteq \Bbb Q\!\bigl(\sqrt{2}\bigr)\subseteq K.
+            \]
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{Step 1.  The tower to be used}
+            
+            Write the tower of fields  
+            \[
+               \Bbb Q \;\subseteq\; \Bbb Q(\sqrt{2}) \;\subseteq\; K .
+            \]
+            By the Tower Theorem,
+            \[
+              [K:\Bbb Q] \;=\; [K:\Bbb Q(\sqrt{2})]\,[\Bbb Q(\sqrt{2}):\Bbb Q].
+            \]
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{Step 2.  Compute \([\Bbb Q(\sqrt{2}):\Bbb Q]\)}
+            
+            Because \(x^{2}-2\) is irreducible over \(\Bbb Q\),  
+            \[
+              [\Bbb Q(\sqrt{2}):\Bbb Q]=2.
+            \]
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{Step 3.  Show that \(\sqrt{3}\notin\Bbb Q(\sqrt{2})\)}
+            
+            Assume for contradiction that \(\sqrt{3}\in\Bbb Q(\sqrt{2})\).
+            Then there exist \(a,b\in\Bbb Q\) such that
+            \[
+              \sqrt{3}=a+b\sqrt{2}.
+            \]
+            Squaring both sides gives
+            \[
+              3 \;=\; a^{2}+2b^{2}+2ab\sqrt{2}.
+            \]
+            Comparing the rational and the \(\sqrt{2}\)-parts yields
+            \(2ab=0\).  
+            
+            \begin{itemize}
+              \item If \(a=0\), then \(3=2b^{2}\), impossible in \(\Bbb Q\).
+              \item If \(b=0\), then \(3=a^{2}\), again impossible in \(\Bbb Q\).
+            \end{itemize}
+            Thus no such \(a,b\) exist, so \(\sqrt{3}\notin\Bbb Q(\sqrt{2})\).
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{Step 4.  Degree of the top extension}
+            
+            Since \(\sqrt{3}\) is not in the intermediate field,
+            its minimal polynomial over \(\Bbb Q(\sqrt{2})\) is \(x^{2}-3\),
+            which is irreducible (it has no root in \(\Bbb Q(\sqrt{2})\)).
+            Therefore
+            \[
+              [K:\Bbb Q(\sqrt{2})]\;=\;2.
+            \]
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{Step 5.  Combine via the tower law}
+            
+            \[
+              [K:\Bbb Q] \;=\; 2\times 2 \;=\; 4.
+            \]
+            
+            \paragraph{Conclusion.}
+            \[
+              \boxed{\, [\,\Bbb Q(\sqrt{3},\sqrt{2}):\Bbb Q\,]=4 \, }.
+            \]
+            \end{solution}
+\end{document}

@@ -1,0 +1,534 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\[
+\textbf{Given:} \quad C_V = \alpha T \quad\text{with}\quad \alpha = 0.3\,\frac{\text{J}}{\text{K}^2}.
+\]
+
+\[
+\textbf{We want the change in entropy as the block cools from } T_i = 302\,\text{K} \text{ to } T_f = 250\,\text{K.}
+\]
+\[
+\Delta S \;=\; \int_{T_i}^{T_f} \frac{C_V}{T}\, dT
+\;=\; \int_{T_i}^{T_f} \frac{\alpha\,T}{T}\, dT
+\;=\; \alpha \int_{T_i}^{T_f} dT
+\;=\; \alpha \,\bigl[T\bigr]_{T_i}^{T_f}
+\;=\; \alpha\,\bigl(T_f - T_i\bigr).
+\]
+
+\[
+\text{Substitute } \alpha = 0.3\,\frac{\text{J}}{\text{K}^2}, \quad
+T_i = 302\,\text{K}, \quad
+T_f = 250\,\text{K}:
+\]
+\[
+\Delta S
+\;=\; 0.3\,\frac{\text{J}}{\text{K}^2}\times (250\,\text{K} - 302\,\text{K})
+\;=\; 0.3 \times (-52)\,\text{J/K}
+\;=\; -15.6\,\text{J/K}.
+\]
+
+\[
+\text{To two significant figures, } \Delta S \approx \boxed{-16\,\text{J/K}}.
+\]
+
+\[
+\textbf{Given:}
+\quad m = 500\,\mathrm{g}
+\quad (\text{silver, with atomic mass }107\,\mathrm{g/mol}),
+\quad Q = 397\,\mathrm{J}.
+\]
+
+\[
+\textbf{Goal:}
+\quad \Delta T = \,?
+\]
+
+\[
+\textbf{Step 1: Number of moles of silver}
+\]
+\[
+n \;=\; \frac{m}{M}
+\;=\;
+\frac{500\,\mathrm{g}}{107\,\mathrm{g/mol}}
+\;\approx\;4.67\,\mathrm{mol}.
+\]
+
+\[
+\textbf{Step 2: Molar heat capacity for a metal at high temperature (Dulong-Petit)}
+\]
+\[
+C_m \;\approx\; 3R 
+\;=\;3 \times 8.314\,\frac{\mathrm{J}}{\mathrm{mol\,K}}
+\;\approx\;24.94\,\frac{\mathrm{J}}{\mathrm{mol\,K}}.
+\]
+
+\[
+\textbf{Step 3: Total (bulk) heat capacity of the 500 g silver sample}
+\]
+\[
+C_{\text{total}}
+\;=\;
+n\,C_m
+\;=\;
+4.67\,\mathrm{mol}\times 24.94\,\frac{\mathrm{J}}{\mathrm{mol\,K}}
+\;\approx\;116.5\,\frac{\mathrm{J}}{\mathrm{K}}.
+\]
+
+\[
+\textbf{Step 4: Temperature change from absorbing } Q=397\,\mathrm{J}
+\]
+\[
+\Delta T
+\;=\;\frac{Q}{C_{\text{total}}}
+\;=\;\frac{397\,\mathrm{J}}{116.5\,\mathrm{J/K}}
+\;\approx\;3.41\,\mathrm{K}.
+\]
+
+\[
+\textbf{Answer (2 sig figs): }\boxed{3.4\,\mathrm{K}}
+\] 
+
+\[
+\textbf{Given Data:}
+\]
+- Mass of block 1: \(m_1 = 5\,\text{kg}\)
+- Initial velocity of block 1: \(v_1 = +1\,\text{m/s}\)
+- Mass of block 2: \(m_2 = 3\,\text{kg}\)
+- Initial velocity of block 2: \(v_2 = -1\,\text{m/s}\)  (opposite direction)
+- After collision: the blocks stick together (perfectly inelastic collision), moving as a single unit.
+- System is thermally isolated (no heat exchange with the environment).
+
+---
+
+1. Momentum of the two-block system after the collision, \(p_f\)
+
+Because **momentum is conserved**, the final momentum of the combined mass must equal the total initial momentum:
+
+\[
+p_i \;=\; m_1 v_1 \;+\; m_2 v_2 
+\;=\; (5\,\mathrm{kg})(+1\,\mathrm{m/s})
+\;+\; (3\,\mathrm{kg})(-1\,\mathrm{m/s})
+\;=\; 5 \;-\; 3
+\;=\; 2\,\mathrm{kg\cdot m/s}.
+\]
+
+In a perfectly inelastic collision, the two masses stick together and move with a common final velocity \(v_f\). Since momentum is conserved:
+
+\[
+p_f \;=\; (m_1 + m_2)\,v_f \;=\; p_i.
+\]
+\[
+\implies (5 + 3)\,\mathrm{kg} \;\times\; v_f 
+\;=\; 2\,\mathrm{kg\cdot m/s}.
+\]
+\[
+\implies v_f 
+\;=\; \frac{2}{8}\;\mathrm{m/s}
+\;=\; 0.25\,\mathrm{m/s}.
+\]
+But the question about \(p_f\) (the final total momentum) is simply:
+\[
+p_f = 2\,\mathrm{kg\cdot m/s}.
+\]
+Hence, the momentum of the two-block system after the collision is:
+\[
+\boxed{2\,\mathrm{kg\cdot m/s}}.
+\]
+
+---
+
+2. Change in internal energy, \(\Delta U\)
+
+**Step 1: Compute initial kinetic energy, \(KE_i\).**
+
+\[
+KE_i 
+\;=\; \tfrac{1}{2} m_1 v_1^2 \;+\;\tfrac{1}{2} m_2 v_2^2
+\;=\; \tfrac{1}{2}(5)(1^2) \;+\; \tfrac{1}{2}(3)(1^2)
+\;=\; 2.5 \;+\; 1.5
+\;=\; 4.0\,\text{J}.
+\]
+
+**Step 2: Compute final kinetic energy, \(KE_f\).**
+
+After collision, the combined mass is \(m_1 + m_2 = 8\,\text{kg}\), and the final velocity is \(v_f = 0.25\,\text{m/s}\). Thus:
+
+\[
+KE_f 
+\;=\; \tfrac{1}{2}\,(m_1 + m_2)\,v_f^2
+\;=\; \tfrac{1}{2}\,(8\,\text{kg})\,(0.25\,\text{m/s})^2.
+\]
+\[
+(0.25\,\text{m/s})^2 = 0.0625\,\text{(m/s)}^2,
+\]
+\[
+\implies KE_f
+\;=\; \tfrac{1}{2}\,\bigl(8 \times 0.0625\bigr)\,\text{J}
+\;=\; \tfrac{1}{2}\,(0.5)\,\text{J}
+\;=\; 0.25\,\text{J}.
+\]
+
+**Step 3: Change in internal energy \(\Delta U\).**
+
+By the conservation of total energy (in a thermally isolated system), any loss in mechanical (kinetic) energy appears as an increase in internal energy of the blocks (e.g., deformation, heat-like vibration, etc.). So:
+
+\[
+\Delta U 
+\;=\; -(KE_f - KE_i) 
+\;=\; KE_i \;-\; KE_f
+\;=\; 4.0\,\text{J} \;-\; 0.25\,\text{J}
+\;=\; 3.75\,\text{J}.
+\]
+
+Therefore, the internal energy of the two-block system **increases** by \(3.75\,\text{J}\). Hence:
+
+\[
+\boxed{\Delta U = +3.75\,\text{J}}.
+\]
+
+---
+
+3. Change in entropy of the two-block system, \(\Delta S\)
+
+This is a **perfectly inelastic** collision in an isolated system; it is an **irreversible** process. Irreversible processes are associated with an **increase** in entropy. Since some macroscopic kinetic energy was irreversibly converted into internal energy (random motion at the microscopic level), the entropy of the system must increase:
+
+\[
+\boxed{\Delta S > 0}.
+\] 
+
+\[
+\textbf{Given:} \quad \Omega = A\,U,
+\quad A = 8.7\,\mathrm{eV}^{-1},
+\quad \text{System at constant volume, temperature } T = 281\,\mathrm{K}.
+\]
+
+\[
+\textbf{We know that:} \quad S = k_B \ln(\Omega) 
+            = k_B \ln\bigl(A U\bigr)
+            = k_B \bigl[\ln(A) + \ln(U)\bigr].
+\]
+Taking the derivative at constant volume,
+\[
+\frac{\partial S}{\partial U}
+= k_B \cdot \frac{1}{U}.
+\]
+From the thermodynamic relation,
+\[
+\frac{1}{T} 
+= \left(\frac{\partial S}{\partial U}\right)_V 
+= \frac{k_B}{U}.
+\]
+Hence,
+\[
+U = k_B\,T.
+\]
+Since we want \(U\) in eV, we use:
+\[
+k_B = 8.617 \times 10^{-5}\,\frac{\mathrm{eV}}{\mathrm{K}}.
+\]
+Thus, at \(T=281\,\mathrm{K}\):
+\[
+U 
+= \bigl(8.617\times 10^{-5}\,\mathrm{eV/K}\bigr)\,\times 281\,\mathrm{K}
+\;\approx\;0.0242\,\mathrm{eV}.
+\]
+
+\[
+\boxed{U \approx 0.024\,\mathrm{eV}} 
+\quad \text{(to three significant figures).}
+\] 
+
+\[
+\textbf{Problem Statement:}
+\]
+A 300000-liter (i.e., \(3.0\times10^5\,\mathrm{L}\)) space station contains:
+- 1000 moles of \(\mathrm{O_2}\) gas (diatomic, at room temperature we ignore vibration, only translational + rotational)
+- 9000 moles of He gas (monatomic, only translational)
+All at an initial temperature of \(20^\circ\mathrm{C}\) (\(T_i = 293\,\mathrm{K}\)). The system is at constant volume.
+
+\[
+\textbf{A)}\quad \text{What is the pressure inside the box?}
+\]
+\[
+\textbf{B)}\quad \text{How much heat is required to raise the temperature to }30^\circ\mathrm{C}
+             \text{ (i.e., }T_f = 303\,\mathrm{K}\text{), at constant volume?}
+\]
+
+---
+
+Part A: Pressure inside the box
+
+Use the ideal gas law in the form
+\[
+pV = nRT.
+\]
+
+1. **Total moles, \(n\):**  
+   \[
+   n_{\mathrm{total}} = n_{\mathrm{O_2}} + n_{\mathrm{He}}
+   = 1000 + 9000
+   = 10000\,\text{moles}.
+   \]
+
+2. **Convert volume to liters and temperature to Kelvin**  
+   Volume \(V = 300000\,\mathrm{L}\).  
+   Temperature \(T = 20^\circ\mathrm{C} = 293\,\mathrm{K}.\)
+
+3. **Use \(R = 0.082057\,\mathrm{L\cdot atm\;mol^{-1}\;K^{-1}}\) to get \(p\) in atm:**  
+   \[
+   p = \frac{nRT}{V}
+     = \frac{(10000)\,\bigl(0.082057\,\mathrm{L\cdot atm/(mol\cdot K)}\bigr)\,(293\,\mathrm{K})}
+            {300000\,\mathrm{L}}.
+   \]
+   First compute \(nR\):
+   \[
+   nR = 10000 \times 0.082057 \approx 820.57.
+   \]
+   Then
+   \[
+   nRT \approx 820.57 \times 293 \;\approx\; 240{,}427\;\mathrm{L\cdot atm}.
+   \]
+   Finally divide by \(V=300000\,\mathrm{L}\):
+   \[
+   p \;=\; \frac{240{,}427}{300{,}000}
+          \;\approx\; 0.80\,\mathrm{atm}.
+   \]
+
+\[
+\boxed{p \approx 0.80\,\mathrm{atm}.}
+\]
+
+---
+
+Part B: Heat required to raise the gas mixture from \(293\,\mathrm{K}\) to \(303\,\mathrm{K}\) at constant volume
+
+At constant volume, the required heat \(Q\) equals the change in internal energy \(\Delta U\). For an ideal gas mixture,  
+\[
+Q = \Delta U = \sum_i n_i\, C_{V,i}\,\Delta T.
+\]
+Here \(\Delta T = 303 - 293 = 10\,\mathrm{K}\). We assume only translational and rotational degrees of freedom are excited:
+
+1. **Helium (He), monatomic:**  
+   - Degrees of freedom: 3 (translational only).  
+   - Hence \(C_{V,\mathrm{He}} = \tfrac{3}{2}R.\)  
+   - Number of moles \(n_{\mathrm{He}} = 9000.\)
+
+   Contribution to heat:
+   \[
+   Q_{\mathrm{He}}
+     = n_{\mathrm{He}}\,C_{V,\mathrm{He}}\,\Delta T
+     = (9000)\,\Bigl(\tfrac{3}{2}R\Bigr)\,(10\,\mathrm{K})
+     = (9000)\times(1.5\,R)\times(10)
+     = 135{,}000\,R.
+   \]
+
+2. **Oxygen (\(\mathrm{O_2}\)), diatomic:**  
+   - At room temperature, vibrational modes are (mostly) not excited, so dof = 3 (translation) + 2 (rotation) = 5 total.  
+   - Hence \(C_{V,\mathrm{O_2}} = \tfrac{5}{2}R.\)  
+   - Number of moles \(n_{\mathrm{O_2}} = 1000.\)
+
+   Contribution to heat:
+   \[
+   Q_{\mathrm{O_2}}
+     = n_{\mathrm{O_2}}\,C_{V,\mathrm{O_2}}\,\Delta T
+     = (1000)\,\Bigl(\tfrac{5}{2}R\Bigr)\,(10\,\mathrm{K})
+     = (1000)\times(2.5\,R)\times(10)
+     = 25{,}000\,R.
+   \]
+
+3. **Total heat:**
+   \[
+   Q_{\mathrm{total}} = Q_{\mathrm{He}} + Q_{\mathrm{O_2}}
+                      = 135{,}000\,R + 25{,}000\,R
+                      = 160{,}000\,R.
+   \]
+   In Joules, use \(R \approx 8.314\,\mathrm{J/(mol\cdot K)}\):
+   \[
+   Q_{\mathrm{total}}
+   \;\approx\; (160{,}000)\,\bigl(8.314\,\mathrm{J/(mol\,K)}\bigr)
+   \;\approx\; 1.330 \times 10^6\,\mathrm{J}.
+   \]
+   More precisely:
+   \[
+   Q_{\mathrm{He}} = 135{,}000 \times 8.314 \approx 1{,}122{,}390\,\mathrm{J},
+   \quad
+   Q_{\mathrm{O_2}} = 25{,}000 \times 8.314 \approx 207{,}850\,\mathrm{J},
+   \]
+   \[
+   Q_{\mathrm{total}} \approx 1{,}122{,}390 \;+\; 207{,}850 
+                       = 1{,}330{,}240\,\mathrm{J}
+                       \;\approx\; 1.33 \times 10^6\,\mathrm{J}.
+   \]
+
+\[
+\boxed{Q \;\approx\; 1.33 \times 10^6\,\mathrm{J}.}
+\]
+
+---
+
+\[
+\textbf{Answers:}
+\]
+1. Pressure inside the box: \(\boxed{0.8\,\mathrm{atm}}\).
+2. Heat needed to raise from \(20^\circ\mathrm{C}\) to \(30^\circ\mathrm{C}\) (at constant volume): \(\boxed{1.33\times 10^6\,\mathrm{J}}\).
+
+\[
+\textbf{Given:}
+\]
+- Copper container mass: \(m_\text{Cu} = 0.3\,\mathrm{kg}\).
+- Specific heat of copper: \(c_\text{Cu} = 386\,\mathrm{J/(kg\cdot K)}\).
+- Helium gas: \(n_\text{He} = 1.5\,\mathrm{mol}\).
+- Molar heat capacity (at constant volume) for helium: \(C_{V,\text{He}} = 12.5\,\mathrm{J/(mol\cdot K)}\).
+- Initial temperature of helium: \(T_{\text{He},i} = 101^\circ\mathrm{C} = 374.15\,\mathrm{K}\).
+- Initial temperature of copper container: \(T_{\text{Cu},i} = 20^\circ\mathrm{C} = 293.15\,\mathrm{K}\).
+- Thermally isolated system \(\implies\) no heat exchange with environment, so \(\Delta U_{\text{total}}=0\).
+
+\[
+\textbf{Goal: find the final equilibrium temperature } T_f.
+\]
+
+---
+
+1. Energy (Heat) Balance
+
+Because the system is isolated, the heat lost by the hotter component (helium) must equal the heat gained by the colder component (copper).  In symbols,
+
+\[
+Q_{\text{He}} + Q_{\text{Cu}} = 0
+\quad\Longrightarrow\quad
+n_\text{He}\,C_{V,\text{He}}\,(T_f - T_{\text{He},i})
+\;+\;
+m_\text{Cu}\,c_\text{Cu}\,(T_f - T_{\text{Cu},i})
+\;=\;0.
+\]
+
+Note that \(T_{\text{He},i} > T_{\text{Cu},i}\), so helium cools down \((T_f - T_{\text{He},i})<0\), and copper warms up \((T_f - T_{\text{Cu},i})>0\).
+
+---
+
+2. Plug in the Numbers
+
+1. Heat capacity of the copper container:
+   \[
+   C_{\text{Cu}}
+   = m_{\text{Cu}}\; c_{\text{Cu}}
+   = (0.3\,\mathrm{kg})\times(386\,\mathrm{J/(kg\cdot K)})
+   \;=\;115.8\,\mathrm{J/K}.
+   \]
+
+2. Total (constant‐volume) heat capacity of the helium gas:
+   \[
+   C_{V,\text{He, total}}
+   = n_{\text{He}}\; C_{V,\text{He}}
+   = (1.5\,\mathrm{mol})\times(12.5\,\mathrm{J/(mol\cdot K)})
+   \;=\;18.75\,\mathrm{J/K}.
+   \]
+
+Hence the energy‐balance equation becomes
+\[
+18.75\,(T_f - 374.15)
+\;+\;
+115.8\,(T_f - 293.15)
+\;=\;0.
+\]
+
+---
+
+3. Solve for \(T_f\)
+
+Combine like terms:
+\[
+(18.75 + 115.8)\, T_f
+\;-\;
+\bigl(18.75\cdot 374.15 + 115.8\cdot 293.15\bigr)
+\;=\;0.
+\]
+\[
+(134.55)\, T_f
+\;=\;
+18.75 \times 374.15 \;+\; 115.8 \times 293.15.
+\]
+
+Calculate the right side numerically:
+
+\[
+18.75\times374.15 \;\approx\; 7015.31,
+\quad
+115.8\times293.15 \;\approx\;33946.77,
+\]
+\[
+\text{So,}
+\quad
+134.55\,T_f 
+\;=\; 7015.31 + 33946.77
+\;=\;40962.08.
+\]
+Finally,
+\[
+T_f
+\;=\;\frac{40962.08}{134.55}
+\;\approx\;304.4\,\mathrm{K}.
+\]
+
+---
+
+4. Conclusion
+
+The final equilibrium temperature of the helium–copper system is
+
+\[
+\boxed{T_f \approx 304.4\;\mathrm{K}\quad (\text{about }31.3^\circ\mathrm{C}).
+}
+\] 
+\end{document}

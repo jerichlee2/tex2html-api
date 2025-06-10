@@ -1,0 +1,825 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+Below is a fully-formatted copy-and-paste LaTeX solution that walks through the problem step-by-step.
+(Everything between the two triple-backtick blocks is ready to drop into your document.)
+
+\section*{Solution: Three–state system in an isolated bath}
+
+We work in the \emph{microcanonical} ensemble because the internal energy \(U\) is fixed.  
+Throughout, \(k_B\) denotes Boltzmann’s constant.
+
+\subsection*{Step 1:  Count the accessible microstates \(\Omega(U)\)}
+
+\begin{itemize}
+  \item \textbf{Energy \(U = 0\).}  
+        Only the single ground state (energy \(0\)) is accessible:  
+        \[
+          \Omega(0)=1 .
+        \]
+        
+  \item \textbf{Energy \(U = \Delta\).}  
+        Two degenerate excited states (each at energy \(\Delta\)) are accessible:  
+        \[
+          \Omega(\Delta)=2 .
+        \]
+\end{itemize}
+
+\subsection*{Step 2:  Compute the entropy \(S(U)=k_B \ln \Omega(U)\)}
+
+\begin{align}
+  S(0)      &= k_B \ln\bigl[\Omega(0)\bigr]      = k_B \ln 1 = 0 ,\\[6pt]
+  S(\Delta) &= k_B \ln\bigl[\Omega(\Delta)\bigr] = k_B \ln 2 .
+\end{align}
+
+\subsection*{Step 3:  Estimate the temperature}
+
+For a system with discrete energy levels we approximate the derivative  
+\(\displaystyle \left(\frac{\partial S}{\partial U}\right)_{V,N}\) by a finite difference:
+\[
+  \frac{1}{T}
+  \;\simeq\;
+  \frac{S(\Delta)-S(0)}{\Delta}
+  \;=\;
+  \frac{k_B\ln 2 - 0}{\Delta}
+  \;=\;
+  \frac{k_B\ln 2}{\Delta}.
+\]
+
+\[
+  \boxed{\, T \;=\; \dfrac{\Delta}{k_B \ln 2}\, }.
+\]
+
+\subsection*{Summary}
+
+\[
+  S(0)=0, 
+  \qquad 
+  S(\Delta)=k_B\ln 2,
+  \qquad
+  T=\frac{\Delta}{k_B\ln 2}.
+\]
+
+The entropy increases by \(k_B\ln 2\) when the system goes from the ground state (\(U=0\)) to one of the two degenerate excited states (\(U=\Delta\)), and the corresponding temperature is positive and finite.
+\section*{Qualitative discussion of energy exchange between System \(A\) and System \(B\)}
+
+\subsection*{1.  Statement of the set-up}
+
+\begin{itemize}
+  \item \textbf{System \(A\)} consists of \(n_A = 100\) identical three–level subsystems, each with
+        energies \(\{0,\;\Delta_1,\;\Delta_1\}\).
+        We denote by \(M_A\) the number of subsystems in \(A\) that are in an excited state
+        (energy \(\Delta_1\)).  Initially, \(\boxed{M_A^{(0)} = 100}\), so
+        \[
+            U_A^{(0)} \;=\; M_A^{(0)} \,\Delta_1 = 100\,\Delta_1 .
+        \]
+
+  \item \textbf{System \(B\)} consists of \(n_B = 200\) identical three–level subsystems, each with
+        energies \(\{0,\;\Delta_2,\;\Delta_2\}\) where \(\displaystyle \Delta_2 = \tfrac12\Delta_1\).
+        Denote by \(M_B\) the number of excited subsystems in \(B\).
+        Initially, \(\boxed{M_B^{(0)} = 0}\), so
+        \[
+            U_B^{(0)} \;=\; M_B^{(0)} \,\Delta_2 = 0 .
+        \]
+
+  \item The two systems are brought into weak thermal contact.
+        Total energy is conserved:
+        \[
+            U_{\text{tot}}
+            \;=\;
+            U_A + U_B
+            \;=\;
+            100\,\Delta_1
+            ,
+            \qquad
+            \text{(always)} .
+        \]
+\end{itemize}
+
+\subsection*{2.  Entropy and temperature of a collection of three–level subsystems}
+
+For a system with \(n\) copies and \(M\) excitations (\(0\le M\le n\)) the number of
+micro\-states is\footnote{%
+Each excited copy has two degenerate states, giving the factor \(2^{M}\);
+the binomial factor counts which \(M\) copies are excited.}
+\[
+    \Omega(n,M)
+    \;=\;
+    \binom{n}{M}\,2^{M}.
+\]
+Using Stirling’s approximation for large \(n\), the entropy becomes
+\[
+  S(n,M)
+  \;=\;
+  k_B\ln\Omega
+  \;\approx\;
+  k_B
+  \!\left[
+      -M\ln\!\frac{M}{n}
+      -(n-M)\ln\!\frac{n-M}{n}
+      +M\ln 2
+  \right].
+\]
+
+The microcanonical temperature follows from
+\(
+  \displaystyle
+  \frac{1}{T}
+  =
+  \frac{\partial S}{\partial U}
+  =
+  \frac{1}{\Delta}\frac{\partial S}{\partial M},
+\)
+giving the compact formula
+\[
+  \boxed{%
+    \frac{1}{T}
+    =
+    \frac{k_B}{\Delta}
+    \,\ln\!\Bigl[\frac{2\,(n-M)}{M}\Bigr]
+  } .
+  \tag{$\ast$}
+\]
+
+\subsection*{3.  Initial temperatures}
+
+\paragraph{System \(A\) (all copies excited).}
+Here \(n=n_A=100\), \(M=M_A^{(0)}=100\Rightarrow n-M=0\).  
+In Eq.\,($\ast$), the argument of the logarithm tends to \(0\), so
+\[
+  \frac{1}{T_A^{(0)}}\;\longrightarrow\; -\infty
+  \quad\Longrightarrow\quad
+  \boxed{T_A^{(0)}<0\ (\text{negative temperature})}.
+\]
+
+\paragraph{System \(B\) (no copies excited).}
+Here \(n=n_B=200\), \(M=M_B^{(0)}=0\Rightarrow n-M=n\).  
+The logarithm diverges to \(+\infty\), so
+\[
+  \frac{1}{T_B^{(0)}}\;\longrightarrow\; +\infty
+  \quad\Longrightarrow\quad
+  \boxed{T_B^{(0)}\approx 0^{+}\ (\text{very low positive temperature})}.
+\]
+
+\subsection*{4.  Direction of energy flow}
+
+Negative temperatures are \emph{hotter} than any positive temperature:
+entropy \emph{decreases} when energy is added at \(T<0\), so the system
+tends to \emph{release} energy to increase total entropy.
+Hence
+\[
+  A\;(T<0)\quad\longrightarrow\quad B\;(T\approx 0^{+}),
+\]
+\emph{energy will flow from system \(A\) to system \(B\).}
+
+\subsection*{5.  Qualitative outcome at equilibrium}
+
+\begin{itemize}
+  \item Some of the \(100\,\Delta_1\) units of energy initially in \(A\)
+        migrate to \(B\).
+  \item \(M_A\) decreases from \(100\) and \(M_B\) increases from \(0\),
+        until both systems share a \emph{common positive} temperature
+        \(T_{\text{eq}}>0\) satisfying Eq.\,($\ast$) for each system.
+  \item Because \(\Delta_2=\tfrac12\Delta_1\) is smaller and
+        \(n_B>n_A\), \(B\) can accommodate many excitations at relatively
+        low energy cost, so in the final state a \emph{majority} of the
+        total energy resides in \(B\).
+\end{itemize}
+
+\subsection*{6.  Final verdict}
+
+\[
+  \boxed{\text{Heat flows from }A\text{ to }B\ \text{until}\ T_A=T_B>0.}
+\]
+
+System \(A\) cools (its population inversion is partially undone),
+while system \(B\) warms up by accepting excitations.  The energy does
+\emph{not} stay in \(A\); equilibrium requires redistributing it so that
+the combined entropy is maximised.
+\section*{Average internal energy \(\langle U\rangle\) of a three–state system in a heat bath}
+
+We work in the \emph{canonical} ensemble, where the temperature \(T\) is fixed and  
+\(\beta \equiv 1/(k_B T)\).
+
+\subsection*{1.  Energies and degeneracies}
+
+\[
+  \begin{array}{c|c|c}
+    \text{Level} & E_i & \text{Degeneracy } g_i\\ \hline
+    0            & 0   & 1 \\
+    1            & \Delta & 2
+  \end{array}
+\]
+
+\subsection*{2.  Partition function}
+
+\[
+  Z
+  \;=\;
+  \sum_i g_i\,e^{-\beta E_i}
+  \;=\;
+  1 + 2\,e^{-\beta\Delta}.
+\]
+
+\subsection*{3.  Canonical average of the energy}
+
+Using \(\langle U\rangle = -\partial(\ln Z)/\partial\beta\):
+
+\begin{align}
+  \langle U\rangle
+  &= -\frac{\partial}{\partial\beta}\!\bigl[\ln(1+2e^{-\beta\Delta})\bigr]
+     \\[6pt]
+  &= \frac{2\Delta\,e^{-\beta\Delta}}{1+2e^{-\beta\Delta}}.
+     \tag{*}
+\end{align}
+
+\subsection*{4.  Simplified closed form}
+
+Multiply numerator and denominator of \((*)\) by \(e^{\beta\Delta}\):
+
+\[
+  \boxed{\;
+    \langle U\rangle(T)
+    \;=\;
+    \frac{2\Delta}{e^{\beta\Delta}+2}
+    \;=\;
+    \frac{2\Delta}{\,e^{\displaystyle\Delta/(k_B T)} + 2}\; }.
+\]
+
+\subsection*{5.  Useful limiting cases}
+
+\[
+  \begin{aligned}
+    T\to 0^{+}\!: &\quad e^{\Delta/(k_B T)}\!\to\!\infty
+                   \;\Longrightarrow\; \langle U\rangle \to 0, \\[4pt]
+    T\to\infty\!: &\quad e^{\Delta/(k_B T)}\!\to\!1
+                   \;\Longrightarrow\; \langle U\rangle \to \dfrac{2}{3}\,\Delta .
+  \end{aligned}
+\]
+
+Thus the mean energy rises smoothly from \(0\) at very low temperatures to
+\(2\Delta/3\) in the high-temperature (equiprobable) limit.
+\section*{Limits \(T\!\to\!0\) and \(T\!\to\!\infty\) for a three–state system}
+
+Throughout, let \(\beta \equiv 1/(k_B T)\) and recall  
+\[
+  Z \;=\; 1 + 2\,e^{-\beta\Delta},
+  \qquad
+  \langle U\rangle(T)
+  \;=\;
+  \frac{2\Delta}{e^{\beta\Delta}+2}.
+\]
+
+The canonical entropy can be written in the compact form  
+\[
+  S(T)\;=\;k_B\bigl[\ln Z + \beta\,\langle U\rangle\bigr].
+  \tag{1}
+\]
+
+%-------------------------------------------------
+\subsection*{1.  Low–temperature limit \(T\to 0^{+}\;\;(\beta\to\infty)\)}
+
+\begin{align}
+  e^{-\beta\Delta} &\;\longrightarrow\; 0, & Z &\to 1, \\[4pt]
+  \langle U\rangle &\;\to\; 0,            & S  &\to 0.
+\end{align}
+
+\[
+  \boxed{\;
+    \langle U\rangle \xrightarrow[T\to 0]{} 0, 
+    \qquad
+    S \xrightarrow[T\to 0]{} 0
+  \;}
+\]
+
+The system resides entirely in its non–degenerate ground state,
+so both the mean energy and the entropy vanish.
+
+%-------------------------------------------------
+\subsection*{2.  High–temperature limit \(T\to\infty\;\;(\beta\to 0)\)}
+
+\begin{align}
+  e^{-\beta\Delta} &\;\longrightarrow\; 1, &
+  Z &\to 3, \\[4pt]
+  \langle U\rangle &\;\to\;
+     \frac{2\Delta}{1+2}= \frac{2}{3}\,\Delta,
+  &
+  S &\;\to\;
+     k_B\ln 3 .
+\end{align}
+
+\[
+  \boxed{\;
+    \langle U\rangle \xrightarrow[T\to\infty]{} \dfrac{2}{3}\,\Delta,
+    \qquad
+    S \xrightarrow[T\to\infty]{} k_B\ln 3
+  \;}
+\]
+
+At very high temperatures the three microstates become equiprobable
+(probability \(1/3\) each), giving the maximal entropy  
+\(S_{\max}=k_B\ln 3\) and a mean energy equal to the
+equipartition value \(2\Delta/3\).
+\subsection*{2.1  Ratio of line intensities as a thermometer}
+
+Let  
+
+\[
+  E_A=-13.6\;\text{eV}, 
+  \quad 
+  E_B=-3.4\;\text{eV},
+  \quad 
+  E_C=-1.5\;\text{eV},
+\qquad
+  g_A=2,\; g_B=8,\; g_C=18 .
+\]
+
+In thermal equilibrium the population (probability) of state \(i\in\{A,B,C\}\) is  
+
+\[
+  P_i \;=\; \frac{g_i\,e^{-\beta E_i}}{\displaystyle\sum_{j=A,B,C} g_j\,e^{-\beta E_j}},
+  \qquad 
+  \beta \equiv \frac{1}{k_B T}.
+\]
+
+The intensity (photon count) of an emission line is proportional to the
+number of atoms initially in the upper state of that transition.
+Hence\footnote{%
+  We assume the spontaneous–emission probabilities for the
+  \(653\;\text{nm}\) (C\(\!\to\)B) and \(121\;\text{nm}\) (B\(\!\to\)A) lines
+  are comparable, or that any difference is already absorbed into the
+  experimental calibration.  The \(102\;\text{nm}\) line from C\(\!\to\)A
+  is neglected as stated in the problem.}
+%
+\[
+  \frac{N(653\;\text{nm})}{N(121\;\text{nm})}
+  \;=\;
+  \frac{P_C}{P_B}
+  \;=\;
+  \frac{g_C}{g_B}\,
+  e^{-\beta\,(E_C-E_B)}.
+\]
+
+Insert the numbers:
+
+\[
+  E_C - E_B \;=\; (-1.5) - (-3.4) = 1.9\;\text{eV},
+  \qquad
+  \frac{g_C}{g_B} \;=\; \frac{18}{8}= \frac{9}{4}.
+\]
+
+\[
+  \boxed{
+  \displaystyle
+  \frac{N(653\;\text{nm})}{N(121\;\text{nm})}
+  \;=\;
+  \frac{9}{4}\,
+  \exp\!\left(
+     -\frac{1.9\ \text{eV}}{k_B T}
+  \right)}
+  \;.
+\]
+
+With \(k_B = 8.617\times10^{-5}\ \text{eV/K}\), this expression lets one extract the
+temperature \(T\) directly from the measured line-intensity ratio.
+\subsection*{2.2  Extracting the temperature from the intensity ratio}
+
+Starting point (derived in §2.1):
+\[
+   R \;\equiv\; 
+   \frac{N(653\;\text{nm})}{N(121\;\text{nm})}
+   \;=\;
+   \frac{g_C}{g_B}
+   \exp\!\Bigl[-\beta\,(E_C-E_B)\Bigr],
+   \qquad 
+   \beta \;=\; \frac{1}{k_B T}.
+\]
+
+\paragraph{1.  Isolate the Boltzmann factor}
+
+\[
+   \exp\!\Bigl[-\beta\,(E_C-E_B)\Bigr]
+   \;=\;
+   R\,\frac{g_B}{g_C}.
+\]
+
+\paragraph{2.  Take the natural logarithm}
+
+\[
+   -\beta\,(E_C-E_B)
+   \;=\;
+   \ln\!\Bigl[R\,\dfrac{g_B}{g_C}\Bigr].
+\]
+
+\paragraph{3.  Solve for \(T\)}
+
+\[
+   T
+   \;=\;
+   \frac{E_C-E_B}{k_B}\;
+   \Biggl[\;
+     -\,\ln\!\Bigl(R\,\dfrac{g_B}{g_C}\Bigr)
+   \Biggr]^{-1}.
+\]
+
+\[
+   \boxed{
+     \displaystyle 
+     T
+     \;=\;
+     \frac{E_C-E_B}{\,k_B\,\ln\!\bigl(\dfrac{g_C}{g_B\,R}\bigr)}
+   }.
+\]
+
+\noindent
+Here
+\(
+   R = N(653\;\text{nm})/N(121\;\text{nm})
+\)
+is the experimentally measured line–intensity ratio,
+\(E_C-E_B\) is the energy difference between the upper levels
+(\(1.9\;\text{eV}\) for hydrogen), \(g_C/g_B=18/8\), and
+\(k_B = 8.617\times10^{-5}\;\text{eV/K}\).
+\subsection*{2.3  Numerical temperatures from the measured line–intensity ratios}
+
+Recall the general result from §2.2
+\[
+   T \;=\;
+   \frac{E_C-E_B}{k_B\,\ln\!\bigl(\dfrac{g_C}{g_B\,R}\bigr)},
+   \qquad
+   R \;\equiv\; \frac{N(653\text{ nm})}{N(121\text{ nm})}.
+\]
+
+\[
+  \begin{aligned}
+    E_C-E_B &= 1.9\;\text{eV}, &
+    k_B &= 8.617\times10^{-5}\;\text{eV/K}, &
+    \frac{g_C}{g_B} &= \frac{18}{8} = 2.25 .
+  \end{aligned}
+\]
+
+\paragraph{Star 1: \(R = 0.005\)}
+
+\[
+  T_1
+  = \frac{1.9\;\text{eV}}
+         {\,k_B\,\ln\!\bigl(\dfrac{2.25}{0.005}\bigr)}
+  = \frac{1.9}
+         {\,\bigl(8.617\times10^{-5}\bigr)\,
+            \ln(450)}
+  \approx \boxed{3.6\times10^{3}\ \text{K}}.
+\]
+
+\paragraph{Star 2: \(R = 0.038\)}
+
+\[
+  T_2
+  = \frac{1.9\;\text{eV}}
+         {\,k_B\,\ln\!\bigl(\dfrac{2.25}{0.038}\bigr)}
+  = \frac{1.9}
+         {\,\bigl(8.617\times10^{-5}\bigr)\,
+            \ln(59.2)}
+  \approx \boxed{5.4\times10^{3}\ \text{K}}.
+\]
+
+\[
+  \boxed{T_1 \approx 3.6\ \text{kk}, \qquad T_2 \approx 5.4\ \text{kk}}
+\]
+(where “kk” denotes kilokelvin).
+\subsection*{2.4  Why no hydrogen‐line emission is seen at room temperature}
+
+\paragraph{1.  Thermal energy versus excitation gaps}
+
+At room temperature \(T\simeq 300\;\text{K}\),
+\[
+  k_B T \;\approx\; (8.617\times10^{-5}\;\text{eV/K})(300\;\text{K})
+  \;\approx\; 2.6\times10^{-2}\;\text{eV}.
+\]
+
+Compare with the excitation energies of atomic hydrogen:
+
+\[
+  \begin{aligned}
+    A\!\to\!B: \;&\; \Delta E_{AB}=10.2\;\text{eV}, \\[4pt]
+    B\!\to\!C: \;&\; \Delta E_{BC}= 1.9\;\text{eV}.
+  \end{aligned}
+\]
+
+\paragraph{2.  Boltzmann population factors}
+
+The probability that an atom thermally occupies an excited level \(i\)
+relative to the ground state \(A\) is
+
+\[
+  \frac{P_i}{P_A} \;=\;
+  \frac{g_i}{g_A}\,
+  e^{-\Delta E_{Ai}/k_B T}.
+\]
+
+\[
+  \begin{aligned}
+    \frac{P_B}{P_A}
+    &=
+    \frac{\,8\,}{2}\,
+    e^{-10.2/0.026}
+    \;\approx\;
+    4\,e^{-390}
+    \;\approx\;
+    0, \\[6pt]
+    \frac{P_C}{P_A}
+    &=
+    \frac{18}{2}\,
+    e^{-12.1/0.026}
+    \;\approx\;
+    9\,e^{-465}
+    \;\approx\;
+    0.
+  \end{aligned}
+\]
+
+Both ratios are astronomically small: essentially \(\!>10^{-150}\).
+
+\paragraph{3.  Consequence for spontaneous emission}
+
+\begin{itemize}
+  \item Virtually every hydrogen atom resides in the ground state \(A\).
+  \item Spontaneous emission at 121\,nm (B\(\!\to\)A) or 653\,nm (C\(\!\to\)B)
+        requires the atom to be \emph{initially} in \(B\) or \(C\),
+        which almost never occurs.
+  \item Hence the photon flux at these wavelengths is far below any
+        realistic detection threshold.
+\end{itemize}
+
+\paragraph{4.  Additional suppression mechanisms}
+
+\begin{itemize}
+  \item At room temperature hydrogen is predominantly molecular
+        (\(\mathrm{H_2}\)), removing the atomic energy levels altogether.
+  \item Collisions in a dense gas more often cause
+        \emph{non-radiative} de-excitation than photon emission.
+\end{itemize}
+
+\[
+  \boxed{\text{Room-temperature thermal energy is too small to populate the excited states, so no detectable line emission occurs.}}
+\]
+\subsection*{3.1  Ratio of \(\mathrm{N_2}\) to \(\mathrm{O_2}\) molecules at sea level}
+
+At sea level (height \(h=0\)), the Boltzmann factor is unity,
+\(f(0)=\exp(-mgh/k_BT)=1\),
+so the relative abundances are set entirely by the
+composition of dry air:
+
+\[
+  x_{\mathrm{N_2}} = 0.80,
+  \qquad
+  x_{\mathrm{O_2}} = 0.20,
+\]
+where \(x_i\) denotes the mole (or number) fraction of species \(i\).
+
+For a volume \(V\) at fixed \(T\) and \(P\)
+the ideal-gas relation gives the same total number density for both
+species, so
+
+\[
+  N_{\mathrm{N_2}} = x_{\mathrm{N_2}}\,N_{\text{tot}},
+  \qquad
+  N_{\mathrm{O_2}} = x_{\mathrm{O_2}}\,N_{\text{tot}}.
+\]
+
+Therefore
+\[
+  \boxed{\;
+    \frac{N_{\mathrm{N_2}}}{N_{\mathrm{O_2}}}
+    = \frac{x_{\mathrm{N_2}}}{x_{\mathrm{O_2}}}
+    = \frac{0.80}{0.20}
+    = 4
+  \;} .
+\]
+
+\[
+  \text{Hence the ratio is }N_{\mathrm{N_2}}:N_{\mathrm{O_2}} = 4:1.
+\]
+\subsection*{3.2  Density ratio between two altitudes}
+
+Let the local number density of a species of mass \(m\) at height \(h\) be
+\(\displaystyle n(h)=n_0\,e^{-mgh/k_BT}\),
+where \(n_0\) is the density at \(h=0\).  
+The number of particles contained in a fixed volume \(V\) at height \(h\) is then  
+
+\[
+  N(h)=n(h)\,V
+       =n_0\,V\,e^{-mgh/k_BT}.
+\]
+
+For two heights \(h_1\) and \(h_2\) (\(h_2>h_1\) without loss of generality):
+
+\begin{align}
+  \frac{N(h_1)}{N(h_2)}
+  &=\frac{n_0 V e^{-mgh_1/k_BT}}{n_0 V e^{-mgh_2/k_BT}}
+    \\[6pt]
+  &=\exp\!\Bigl[-\tfrac{mg}{k_BT}\,(h_1-h_2)\Bigr].
+\end{align}
+
+\[
+  \boxed{\displaystyle
+    \frac{N(h_1)}{N(h_2)}
+    =\exp\!\Bigl[\tfrac{mg}{k_BT}\,(h_2-h_1)\Bigr]}
+  \qquad(\text{same volume }V,\ \text{constant }T).
+\]
+
+In words: moving a volume \(V\) up by \(\Delta h=h_2-h_1\) reduces the particle count by the Boltzmann factor \(\exp[-mg\Delta h/k_BT]\).
+\subsection*{3.3  \(\displaystyle \frac{N_{\mathrm{N_2}}(h_2)}{N_{\mathrm{O_2}}(h_2)}\): composition at a higher altitude}
+
+Let \(h_1=0\) denote sea level and \(h_2>h_1\) the higher elevation.  
+From part 3.2 the particle number in a fixed volume \(V\) obeys  
+
+\[
+  N_i(h) \;=\; N_i(h_1)\,
+               \exp\!\Bigl[-\,m_i g (h-h_1)/k_B T\Bigr],
+  \qquad
+  i\in\{\mathrm{N_2},\mathrm{O_2}\}.
+\]
+
+Hence
+
+\[
+  \begin{aligned}
+      \frac{N_{\mathrm{N_2}}(h_2)}{N_{\mathrm{O_2}}(h_2)}
+      &=\frac{N_{\mathrm{N_2}}(h_1)
+             e^{-m_{\mathrm{N_2}}g(h_2-h_1)/k_B T}}
+            {N_{\mathrm{O_2}}(h_1)
+             e^{-m_{\mathrm{O_2}}g(h_2-h_1)/k_B T}} \\[6pt]
+      &=\frac{N_{\mathrm{N_2}}(h_1)}{N_{\mathrm{O_2}}(h_1)}
+        \,\exp\!\Bigl[-(m_{\mathrm{N_2}}-m_{\mathrm{O_2}})\,
+                       g (h_2-h_1)/k_B T\Bigr].
+  \end{aligned}
+\]
+
+From part 3.1 the sea-level ratio is  
+
+\[
+  \frac{N_{\mathrm{N_2}}(h_1)}{N_{\mathrm{O_2}}(h_1)} = 4 .
+\]
+
+Therefore
+
+\[
+  \boxed{\;
+    \frac{N_{\mathrm{N_2}}(h_2)}{N_{\mathrm{O_2}}(h_2)}
+    = 4\,
+      \exp\!\Bigl[
+        \frac{(m_{\mathrm{O_2}}-m_{\mathrm{N_2}})\,g\,(h_2-h_1)}
+             {k_B T}
+      \Bigr]
+  }.
+\]
+
+\emph{Interpretation.}  
+Because \(\,m_{\mathrm{O_2}}>m_{\mathrm{N_2}}\), the exponent is positive,
+so the \(\mathrm{N_2}/\mathrm{O_2}\) ratio increases with altitude:
+the heavier \(\mathrm{O_2}\) molecules thin out more rapidly than the lighter
+\(\mathrm{N_2}\) molecules.
+\subsection*{3.4  Gas separation in a centrifuge}
+
+A high–speed centrifuge replaces the gravitational acceleration \(g\) by a
+much larger \emph{effective} acceleration  
+\(a = \alpha g\) (with \(\alpha \approx 1.5\times10^{4}\) in this problem).
+If the rotor tube has length \(\ell = 0.50\;\text{m}\) and is held at
+\(T = 300\;\text{K}\), we can treat the “bottom’’ of the tube as
+height \(h_1 = 0\) and the “top’’ as \(h_2 = \ell\).
+
+\paragraph{1.  Percentage of \(\mathrm{O_2}\) at the top}
+
+From part~3.3
+\[
+  \frac{N_{\mathrm{N_2}}(h_2)}{N_{\mathrm{O_2}}(h_2)}
+  \;=\;
+  4\,
+  \exp\!\Bigl[
+      \frac{(m_{\mathrm{O_2}}-m_{\mathrm{N_2}})\,a\,(h_2-h_1)}
+           {k_B T}
+  \Bigr].
+\]
+
+\[
+  \begin{aligned}
+    m_{\mathrm{N_2}} &= 28\,u = 28(1.6605\times10^{-27}) = 4.65\times10^{-26}\;\text{kg},\\[2pt]
+    m_{\mathrm{O_2}} &= 32\,u = 32(1.6605\times10^{-27}) = 5.31\times10^{-26}\;\text{kg},\\[2pt]
+    \Delta m         &= m_{\mathrm{O_2}}-m_{\mathrm{N_2}}
+                      = 6.64\times10^{-27}\;\text{kg},\\[2pt]
+    a                &= 15\,000\,g = 15\,000(9.81) = 1.47\times10^{5}\;\text{m/s}^{2},\\[2pt]
+    k_B T            &= (1.3807\times10^{-23})(300) = 4.14\times10^{-21}\;\text{J},\\[2pt]
+    \Delta h         &= 0.50\;\text{m}.
+  \end{aligned}
+\]
+
+Exponent:
+\[
+  \frac{\Delta m\,a\,\Delta h}{k_B T}
+  = \frac{(6.64\times10^{-27})(1.47\times10^{5})(0.50)}
+         {4.14\times10^{-21}}
+  \;\approx\; 0.12.
+\]
+
+Hence
+\[
+  \frac{N_{\mathrm{N_2}}(h_2)}{N_{\mathrm{O_2}}(h_2)}
+  = 4\,e^{0.12}
+  \approx 4.50.
+\]
+
+The mole fraction of \(\mathrm{O_2}\) at the top is therefore
+\[
+  x_{\mathrm{O_2}}(h_2)
+  = \frac{1}{1 + N_{\mathrm{N_2}}/N_{\mathrm{O_2}}}
+  = \frac{1}{1+4.50}
+  \approx 0.182 \;(\text{or }18.2\%).
+\]
+
+\[
+  \boxed{\text{Only about }18\%\text{ of the gas at the top is } \mathrm{O_2}\;
+          (\text{down from }20\%\text{ at the bottom}).}
+\]
+
+\paragraph{2.  Why uranium–isotope separation requires very large, fast centrifuges}
+
+\begin{itemize}
+  \item For uranium hexafluoride, the relative mass difference between
+        \(\mathrm{^{235}UF_6}\) (\(\approx349\,u\)) and
+        \(\mathrm{^{238}UF_6}\) (\(\approx352\,u\))
+        is barely \(0.9\%\).
+  \item The separation factor in a centrifuge is
+        \(\displaystyle
+          \exp\!\bigl[\Delta m\,a\,\ell/(k_B T)\bigr]\),
+        where \(\Delta m\) is this \emph{tiny} mass difference.
+  \item To obtain an appreciable exponent one must raise either
+        the path length \(\ell\) or the acceleration \(a = \omega^{2}r\).
+        Practically this means:
+        \begin{enumerate}
+          \item very large rotor radii (\(r\)) to increase path length,
+          \item extremely high angular speeds (\(\omega\)) to boost \(a\).
+        \end{enumerate}
+  \item Even so, each centrifuge stage gives only a modest enrichment;
+        thousands of ultra-fast stages (a “cascade’’) are required for
+        reactor-grade or weapons-grade material.
+\end{itemize}
+
+\[
+  \boxed{\text{Tiny mass splittings }\Rightarrow\text{ need huge }a\text{ and long }\ell
+         \;\Rightarrow\; large, very fast centrifuges.}
+\]
+\end{document}

@@ -1,0 +1,191 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 448 Practice Final Exam 9}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Complex Analysis – PRACTICE FINAL (Brand‑new version)
+%  Eight problems, one per required topic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  
+  \bigskip
+  %-----------------------------------------------------------------------
+  % 1. Values / elementary functions
+  %-----------------------------------------------------------------------
+  \begin{problem}[Elementary functions]
+  Compute
+  \[
+  \bigl(\sqrt{2}-i\bigr)^{75}
+  \quad\text{and}\quad
+  \Log\!\bigl(-2+i\sqrt{3}\bigr),
+  \]
+  where $\Log$ denotes the principal branch of the complex logarithm.
+  Express both answers in the form $x+iy$ with real $x,y$.
+  \end{problem}
+  \pagebreak
+  %-----------------------------------------------------------------------
+  % 2. Isolated singularities
+  %-----------------------------------------------------------------------
+  \begin{problem}[Isolated singularities]
+  Consider
+  \[
+  f(z)=\frac{e^{1/z}}{z^{2}(z^{2}+1)}.
+  \]
+  \begin{enumerate}[label=(\alph*)]
+    \item Classify \emph{every} isolated singularity of $f$ in~$\mathbb{C}$
+          as removable, a pole (specify order) or essential.
+    \item Compute $\Res\bigl(f,0\bigr)$ and
+          $\displaystyle \Res\!\bigl(f,i\bigr)$.
+    \item Give the first three non‑zero terms of the Laurent series of
+          $f$ about $z=0$.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------------------
+  % 3. Taylor / Laurent series
+  %-----------------------------------------------------------------------
+  \begin{problem}[Power‑series expansion]        % harder than before
+  Find the Taylor series of
+  \[
+  g(z)=\frac{\log(1+z^{\,3})}{(1-z)^{4}}
+  \]
+  about $z=0$, and write a closed‑form expression for the general
+  coefficient $a_{n}$ in
+  $g(z)=\displaystyle\sum_{n=0}^{\infty}a_{n}z^{n}$.
+  State the radius of convergence.
+  (\emph{Hint: use the Cauchy product of the series for $\log(1+z^{3})$
+  and $(1-z)^{-4}$.})
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------------------
+  % 4. Closed contour integral
+  %-----------------------------------------------------------------------
+  \begin{problem}[Contour integral]
+  Evaluate
+  \[
+  \oint_{\lvert z\rvert = 2}\frac{z^{2}}{(z^{2}+1)^{3}}\;dz
+  \]
+  by residue calculus.  (\emph{Note: all singularities lie inside the
+  circle $\lvert z\rvert=2$.})
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------------------
+  % 5. Improper integral
+  %-----------------------------------------------------------------------
+  \begin{problem}[Improper integral]
+  Using a suitable contour in the complex plane, show that
+  \[
+  \int_{-\infty}^{+\infty}\frac{x^{2}\,dx}{x^{4}+1}\;=\;\frac{\pi}{\sqrt{2}}.
+  \]
+  (\emph{You may quote without proof the standard residues of
+  $\displaystyle \frac{1}{x^{4}+1}$ or compute them directly.})
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------------------
+  % 6. Zeros and poles
+  %-----------------------------------------------------------------------
+  \begin{problem}[Counting zeros]
+  Determine the number of zeros (counting multiplicities) of the
+  polynomial
+  \[
+  p(z)=z^{6}+3z^{3}+6
+  \]
+  inside the annulus $1<\lvert z\rvert<2$.
+  (\emph{Hint: apply Rouché’s theorem on the two circles
+  $\lvert z\rvert=1$ and $\lvert z\rvert=2$.})
+  \end{problem}
+  
+  \pagebreak
+
+  %-----------------------------------------------------------------------
+  % 7. Conformal mapping
+  %-----------------------------------------------------------------------
+  \begin{problem}[Conformal map]
+  Find an explicit conformal mapping that sends the infinite strip
+  \[
+  S=\{\,z\in\mathbb{C} : 0<\operatorname{Im}z<\pi\}
+  \]
+  onto the upper half‑plane
+  $\{w\in\mathbb{C}:\operatorname{Im}w>0\}$ and carries the point $z=i$ to
+  $w=i$.  Describe what happens to the horizontal lines
+  $\operatorname{Im}z=\text{constant}$ under your map.
+  \end{problem}
+  \pagebreak 
+  %-----------------------------------------------------------------------
+  % 8. Theoretical question
+  %-----------------------------------------------------------------------
+  \begin{problem}[Schwarz–Pick lemma (theoretical)]
+  Let $f$ be analytic on the open unit disc $\mathcal{D}=\{\,z:\lvert z\rvert<1\}$
+  with $f(\mathcal{D})\subset\mathcal{D}$.  Show that for all $z_{1},z_{2}\in\mathcal{D}$
+  \[
+  \left|\frac{f(z_{1})-f(z_{2})}{1-\overline{f(z_{2})}\,f(z_{1})}\right|
+  \;\le\;
+  \left|\frac{z_{1}-z_{2}}{1-\overline{z_{2}}\,z_{1}}\right|.
+  \]
+  Deduce that
+  $\displaystyle\lvert f'(0)\rvert\le 1-\lvert f(0)\rvert^{2}$.
+  State the condition for equality and prove your assertions.
+  \end{problem}
+  \pagebreak
+\end{document}

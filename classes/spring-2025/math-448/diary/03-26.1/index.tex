@@ -1,0 +1,821 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Exam 2 MATH 448 Practice Questions}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Exercises for Section 1.6}
+
+Compute the following line integrals.
+\begin{enumerate}
+    \item $\int_\gamma z \, dz$, where $\gamma$ is the semicircle from $i$ to $-i$, which passes through $-1$.
+    \item $\int_\gamma e^z \, dz$, where $\gamma$ is the line segment from $0$ to $z_0$.
+    \item $\int_\gamma |z|^2 \, dz$, where $\gamma$ is the line segment from $2$ to $3 + i$.
+    \item $\int_\gamma 1/(z + 4) \, dz$, where $\gamma$ is the circle of radius $1$ centered at $-4$, oriented counterclockwise.
+    \item $\int_\gamma \text{Re}(z) \, dz$, where $\gamma$ is the line segment from $1$ to $i$.
+    \item $\int_\gamma (z^2 + 3z + 4) \, dz$, where $\gamma$ is the circle $|z| = 2$ oriented counterclockwise.
+    \item Let $\gamma_1$ be the semicircle from $1$ to $-1$ through $i$ and $\gamma_2$ the semicircle from $1$ to $-1$ through $-i$ (Fig.\ 1.36).
+\end{enumerate}
+
+
+Compute $\int_{\gamma_1} z^2 \, dz$ and $\int_{\gamma_2} z^2 \, dz$. Can you account for the fact that they are equal?
+
+Now compute $\int_{\gamma_1} \bar{z} \, dz$ and $\int_{\gamma_2} \bar{z} \, dz$. Can you account for the fact that they are not equal?
+
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item Explicitly verify the conclusion of Example 11 by computing $\int_\gamma z \, dz$ and $\int_\gamma z^2 \, dz$ when $\gamma$ is the square with vertices at $\pm 1 \pm i$.
+    \item 
+    \begin{enumerate}
+        \item Show that 
+        \[
+        \frac{1}{2\pi} \int_0^{2\pi} e^{i k \theta} \, d\theta = 
+        \begin{cases}
+        1, & k = 0 \\
+        0, & k \ne 0
+        \end{cases}
+        \]
+        \item Explicitly verify the conclusion of Example 13 for $\gamma$, the circle of radius $1$ centered at $0$. (Hint:
+        \[
+        \frac{1}{z - p} = \sum_{k = 0}^\infty \frac{p^k}{z^{k + 1}} \quad \text{if } 0 \leq |p| < 1 \text{ and } |z| = 1
+        \]
+        \[
+        \frac{1}{z - p} = -\sum_{k = 0}^\infty \frac{z^k}{p^{k + 1}} \quad \text{if } |z| = 1 \text{ and } 1 < |p| < \infty
+        \]
+        )
+    \end{enumerate}
+    \item Interchange summation and integration; then use (a).)
+    \item Let $f = u + iv$ be a continuous function and $\gamma(t) = x(t) + i y(t)$ be a piecewise smooth curve. Show that
+    \[
+    \text{Re} \left( \int_\gamma f(z) \, dz \right) = \int_\gamma (u \, dx - v \, dy)
+    \]
+    and
+    \[
+    \text{Im} \left( \int_\gamma f(z) \, dz \right) = \int_\gamma (v \, dx + u \, dy).
+    \]
+    Here, $dx = x'(t) \, dt$, $dy = y'(t) \, dt$.
+    \item Use Exercise 10 to show the equivalence of the two formulations of Green’s Theorem: (7) and (8).
+    \item Use the result of (the extension of) Example 11 to compute the following integrals:
+    \begin{enumerate}
+        \item $\int_\gamma (z^3 - 6z^2 + 4) \, dz$, where $\gamma$ is any curve joining $-1 + i$ to $1$.
+        \item $\int_\gamma (z^2 + z^3) \, dz$, where $\gamma$ is any curve joining $-1$ to $2 + i$.
+    \end{enumerate}
+    \item Use Green’s Theorem to derive Green’s Identity:
+    \[
+    \iint_\Omega \left( \frac{\partial u}{\partial x} \frac{\partial v}{\partial x} + \frac{\partial u}{\partial y} \frac{\partial v}{\partial y} \right) dx \, dy = \int_{\partial \Omega} v \frac{\partial u}{\partial n} \, ds - \iint_\Omega v \Delta u \, dx \, dy.
+    \]
+    \item Use Exercise 13 to derive Green’s Formula (9):
+    \[
+    \int_{\partial \Omega} \left( g \frac{\partial f}{\partial n} - f \frac{\partial g}{\partial n} \right) ds = \iint_\Omega (g \Delta f - f \Delta g) \, dx \, dy.
+    \]
+    \item Let $u$ be a continuous function on the complex plane, which is bounded: $|u(z)| \leq C$ for all $z$. Let $\gamma_R$ be the circle $|z| = R$. Show that
+    \[
+    \lim_{R \to \infty} \int_{\gamma_R} \frac{u(z)}{(z - z_0)^m} \, dz = 0,
+    \]
+    for each $z_0$. (Hint: Use (3).)
+    \item Let $z_0$ be outside a piecewise smooth simple closed curve $\gamma$. Extend Example 13 by showing that
+    \[
+    \int_\gamma \frac{dz}{(z - z_0)^m} = 0, \quad m = 2, 3, 4, \ldots
+    \]
+\end{enumerate}
+
+\section*{Exercises for Section 2.1}
+
+\begin{enumerate}
+    \item Establish the following differentiation formulas:
+    \begin{enumerate}
+        \item $(\sin z)' = \cos z$
+        \item $(\cos z)' = -\sin z$
+        \item $(\sinh z)' = \cosh z$
+        \item $(\cosh z)' = \sinh z$
+        \item $(\tan z)' = \sec^2 z$
+        \item $(\tanh z)' = 1 - \tanh^2 z$
+        \item $(\arctan z)' = \frac{1}{1 + z^2}$
+        \item $(\arcsin z)' = \frac{1}{(1 - z^2)^{1/2}}$
+    \end{enumerate}
+    Refer to Section 5 of Chapter 1 for the definitions of these trigonometric functions.
+    
+    \item Use the rules for differentiation, formulas (2) to (6), to find the derivative of each of the functions in Exercises 2 to 7.
+    
+    \item $z^2 + 10z$
+    
+    \item $\exp(z^2 - 2)$
+    
+    \item $[\cos(z^2)]^3$
+    
+    \item $(z^2 + 100)^{-4}$
+    
+    \item $(\log z)^3$ on the plane minus the negative reals
+    
+    \item $\sinh(e^z)$
+    
+    \item For each function $f$ listed in Exercises 8 to 11, find an analytic function $F$ with $F' = f$:
+    \begin{enumerate}
+        \item $f(z) = z^{-2}$
+        \item $f(z) = \frac{z + 1}{z^2 + 1}$
+        \item $f(z) = \sin z \cos z$
+    \end{enumerate}
+    
+    \item Let $f$ and $g$ be analytic on a domain. Show that $(a)$ if $g$ is analytic on $D$ and $f = g'$, then $f$ is analytic on $D$, and $(b)$ if $f = \phi' + i\psi$, i.e., $f/g$ is analytic at all points $z_0$, where $g(z_0) \ne 0$, and
+    \[
+    \left( \frac{f}{g} \right)' = \frac{f'g - fg'}{g^2}.
+    \]
+    
+    \item Show that if $f$ is analytic on a domain $D$ and $g$ is analytic on a domain containing the range of $f$, then $g(f(z))$ is analytic on $D$, and the chain rule holds:
+    \[
+    (g(f(z)))' = g'(f(z)) f'(z).
+    \]
+    
+    \item Let $P(z) = (z - z_1) \cdots (z - z_n)$ where $A$ and $z_1, \dots, z_n$ are complex numbers and $A \ne 0$. Show that
+    \[
+    \frac{P'(z)}{P(z)} = \sum_{k=1}^n \frac{1}{z - z_k}, \quad z \ne z_1, \dots, z_n.
+    \]
+    
+    \item Let $f$ be analytic on a domain $D$ and suppose that $f'(z) = 0$ for all $z \in D$. Show that $f$ is constant on $D$.
+    
+    \item Find the derivative of the linear fractional transformation $T(z) = \frac{az + b}{cz + d}, \, ad - bc \ne 0$. In what way does the condition $ad - bc \ne 0$ enter? Conclude that if $T(z)$ is never zero, $z^n = d/c$.
+    
+    \item Suppose that $f$ is analytic on a domain $D$ and $f'(z) = e^{\psi(z)}$, where $\psi$ is a constant. Show that $f(z) = C \exp(\psi z)$, $C$ a constant. (Hint: Consider $g(z) = e^{-\psi z} f(z)$ and use Exercise 15 or 19.)
+    
+    \item Show that $h(z) = \bar{z}$ is not analytic on any domain. (Hint: Check the Cauchy–Riemann equations.)
+    
+    \item Fill in the details to make the following argument correct. Let $w = g(z) = \log z$ and $w_0 = \log z_0$. Then
+    \[
+    g'(z_0) = \lim_{z \to z_0} \frac{\log z - \log z_0}{z - z_0} = \lim_{w \to w_0} \frac{w - w_0}{e^w - e^{w_0}} = \left( \lim_{w \to w_0} \frac{1}{e^w} \right) = \frac{1}{z_0}.
+    \]
+    
+    \item Let $f = u + iv$ be analytic. In each of the following, find $v$ given $u$.
+    \begin{enumerate}
+        \item $u = x^2 - y^2$
+        \item $u = \frac{x}{x^2 + y^2}$
+        \item $u = x^2 + 2x + 1 - y^2$
+        \item $u = \cosh y \sin x$
+        \item $u = \sinh x \cos y$
+    \end{enumerate}
+    
+    \item Let $\gamma$ be a piecewise smooth simple closed curve, and suppose that $F$ is analytic on some domain containing $\gamma$. Show that
+    \[
+    \int_\gamma F(z) \, dz = 0.
+    \]
+    
+    \item Use the conclusion of Exercise 21 and Example 13 of Section 6, Chapter 1, to prove that $f(z) = \log z$ cannot be analytic on any domain $D$ that contains a piecewise smooth simple closed curve $\gamma$ that surrounds the origin. (Hint: What is the value of $\int_\gamma f(z) \, dz$?)
+    
+    \item Show that if $f$ is analytic on a domain $D$ and if the range of $f$ lies in either a straight line or a circle, then $f$ is a constant.
+    
+    \item If $f(z)$ is a differentiable function of the real variable $t$, $a \le t \le b$, and if $g$ is an analytic function on a domain $D$ that contains the range of $z(t)$, $a \le t \le b$, show that $g(z(t)) = w(t)$ is a differentiable function of $t$ and
+    \[
+    w'(t) = g'(z(t)) z'(t).
+    \]
+\end{enumerate}
+
+\subsection*{Cauchy–Riemann Equations in Polar Coordinates}
+\begin{enumerate}
+    \setcounter{enumi}{24}
+    \item Suppose $f = u + iv$ is analytic in a domain $D$. Show that the Cauchy–Riemann equations in polar coordinates are
+    \[
+    \frac{\partial u}{\partial r} = \frac{1}{r} \frac{\partial v}{\partial \theta}, \quad 
+    \frac{\partial v}{\partial r} = -\frac{1}{r} \frac{\partial u}{\partial \theta}.
+    \]
+
+    \item Suppose that $\gamma$ is a piecewise smooth simple closed curve and $u$ is a continuous function on $\gamma$. Let $D$ be a domain disjoint from $\gamma$, and define a function $h$ on $D$ by the rule
+    \[
+    h(z) = \frac{1}{2\pi i} \int_\gamma \frac{u(\zeta)}{\zeta - z} \, d\zeta, \quad z \in D.
+    \]
+    Show that $h$ is analytic on $D$.
+\end{enumerate}
+
+\section*{Exercises for Section 2.2}
+
+In Exercises 1 to 6, use Theorem 2 or Example 4 to find the radius of convergence of the given power series.
+\begin{enumerate}
+    \item $\sum_{k=1}^\infty k(z - 1)^k$
+    \item $\sum_{k=0}^\infty \frac{(k!)^2}{(2k)!} z^k$
+    \item $\sum_{n=0}^\infty \frac{z^j}{3^j}$
+    \item $\sum_{k=0}^\infty (2k - 1)^k z^k$
+    \item $\sum_{k=1}^\infty 5^{-1/2^k} z^k$
+    \item $\sum_{k=1}^\infty \frac{(2k)(2k - 2) \cdots 4 \cdot 2}{(2k - 1)(2k - 3) \cdots 3 \cdot 1} z^k$
+\end{enumerate}
+
+In Exercises 7 to 13, find the power series about the origin for the given function.
+\begin{enumerate}
+    \setcounter{enumi}{6}
+    \item $e^{-z}$
+    \item $z^2 \cos z$
+    \item $\frac{z^3}{1 - z^3}, \quad |z| < 1$
+    \item $\frac{1}{1 + \frac{1}{z}}, \quad |z| > 1$
+    \item $\frac{1}{(4 - z^2)^2}, \quad |z| < 4$ \hfill (Hint: $\frac{1}{(a - z)^2} = \frac{d}{dz} \left( \frac{1}{a - z} \right)$)
+    \item $\frac{1}{(a - z)^2}$
+    \item $\sinh(z^2)$
+\end{enumerate}
+
+In Exercises 14 to 18, find a closed form (i.e., a simple expression) for each of the given power series.
+\begin{enumerate}
+    \setcounter{enumi}{13}
+    \item $\sum_{n=0}^\infty \frac{z^n}{n!}$
+    \item $\sum_{n=1}^\infty n(2 - 1)^n z^n$ \hfill (Hint: Divide by $z^2$)
+    \item $\sum_{n=0}^\infty (-1)^n z^{2n}$
+    \item $\sum_{n=1}^\infty n(n - 1) z^{n - 2}$
+    \item $\sum_{n=1}^\infty (-1)^n (z - 2\pi i)^n$
+\end{enumerate}
+\noindent
+\begin{enumerate}
+    \item (a) Suppose that the radius of convergence of the power series $f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n$ is $R$, $R > 0$. Show that the radius of convergence of 
+    \[
+    F(z) = \sum_{n=0}^\infty \frac{a_n}{n+1} (z - z_0)^{n+1}
+    \]
+    is at least $R$.
+    
+    (b) Show that $F'(z) = f(z)$ for all $z$ with $|z - z_0| < R$.
+    
+    (c) Use parts (a) and (b) to show that 
+    \[
+    \log(1 - z) = -z - \frac{z^2}{2} - \frac{z^3}{3} - \frac{z^4}{4} - \cdots, \quad \text{if } |z| < 1.
+    \]
+    
+    \item Establish the binomial formula for any pair $(a, b)$ of complex numbers:
+    \[
+    (a + b)^n = \sum_{j=0}^n \binom{n}{j} a^{n - j} b^j, \quad \binom{n}{j} = \frac{n!}{j!(n-j)!}.
+    \]
+    (Hint: One technique is to prove the formula by induction on $n$.)
+    
+    \item Show that
+    \begin{enumerate}
+        \item $\lim_{n \to \infty} \sqrt[n]{n} = 1$
+        \item $\lim_{n \to \infty} n^p r^n = 0$ if $|r| < 1$
+        \item $\lim_{n \to \infty} \sqrt[n]{M} = 1$ if $M$ is positive.
+    \end{enumerate}
+    (Hint: For (a), write $\sqrt[n]{n} = 1 + \epsilon_n$, $\epsilon_n > 0$; then $\ln(1 + \epsilon_n) > \frac{1}{n}$ and $\frac{n(1 + \epsilon_n)^2}{2} > \epsilon_n$ by Exercise 20.)
+    
+    \item (a) If $f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n$ has radius of convergence $R > 0$ and if $f(z) = 0$ for all $z$, $|z - z_0| < r \leq R$, show that $a_0 = a_1 = \cdots = 0$.
+    
+    (b) If $F(z) = \sum_{n=0}^\infty a_n (z - z_0)^n$ and $G(z) = \sum_{n=0}^\infty b_n (z - z_0)^n$ are equal on some disc $|z - z_0| < r$, show that $a_n = b_n$ for all $n$.
+    
+    \item Let $a_0, a_1, a_2, \dots$ be complex numbers with either
+    \[
+    \lim_{n \to \infty} \sqrt[n]{|a_n|} = L \quad \text{or} \quad \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| = L.
+    \]
+    Show that the series 
+    \[
+    \sum_{n=0}^\infty \frac{a_n}{(z - z_0)^n}
+    \]
+    converges absolutely for all $z$ with $|z - z_0| > L$ and diverges for all $z$ with $|z - z_0| < L$.
+    
+    \item Let the radius of convergence of $f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n$ be $R$, $0 < R \le \infty$, and let $r < R$. Set
+    \[
+    f_n(z) = \sum_{k=1}^n a_k (z - z_0)^k, \quad n = 1, 2, \ldots.
+    \]
+    Given $\epsilon > 0$, show that there is an $N$ such that $|f_n(z) - f(z)| < \epsilon$ for all $z$ with $|z - z_0| \le r$ and $n \ge N$.
+    
+    (Hint: The series $\sum_{j=0}^\infty |a_j| r^j$ converges, so there is an $N$ such that $\sum_{j=N+1}^\infty |a_j| r^j < \epsilon$. Hence, for $n \ge N$ and $|z - z_0| \le r$, we have:
+    \[
+    |f_n(z) - f(z)| = \left| \sum_{j=n+1}^\infty a_j (z - z_0)^j \right| \le \sum_{j=n+1}^\infty |a_j| r^j < \epsilon.
+    \])
+    
+    \item Suppose that $\alpha$ is a real number but not a nonnegative integer. Define $\binom{\alpha}{j}$ for each nonnegative integer $j$ by:
+    \[
+    \binom{\alpha}{0} = 1, \quad \binom{\alpha}{1} = \alpha,
+    \]
+    \[
+    \binom{\alpha}{j} = \frac{\alpha(\alpha - 1) \cdots (\alpha - j + 1)}{j!}, \quad j = 1, 2, \ldots.
+    \]
+    Show that 
+    \[
+    \left( \binom{\alpha}{j+1} \middle/ \binom{\alpha}{j} \right) \to 1 \quad \text{as } j \to \infty.
+    \]
+    
+    \item Show that the radius of convergence of the series
+    \[
+    F(z) = \sum_{k=0}^\infty \binom{\alpha}{k} z^k
+    \]
+    is 1.
+    
+    \item (a) Show that the function $F$ defined in Exercise 26 satisfies the differential equation:
+    \[
+    (1 + z) F'(z) = \alpha F(z).
+    \]
+    (Hint: Compute $F'$, then multiply it by $(1 + z)$ and add terms with equal powers of $z$.)
+    
+    (b) Conclude from (a) that $F(z) = (1 + z)^\alpha$, that is,
+    \[
+    (1 + z)^\alpha = \sum_{k=0}^\infty \binom{\alpha}{k} z^k, \quad |z| < 1.
+    \]
+    
+    \subsection*{General Formula for the Radius of Convergence of a Power Series}
+    Let $\{x_n\}$ be a bounded sequence of nonnegative real numbers. Define
+    \[
+    \limsup_{n \to \infty} x_n = \rho
+    \]
+    to be the largest number $\rho$ such that each interval $(\rho - \epsilon, \rho + \epsilon)$ contains $x_n$ for infinitely many indices $n$.
+    
+    \item (a) Show that there are integers $\{n_j\}_{j=1}^\infty$ increasing to $\infty$ such that
+    \[
+    \lim x_{n_j} = \rho.
+    \]
+    
+    (b) If $\{n_j\}_{j=1}^\infty$ is a sequence of integers increasing to $\infty$ and if $\lim_{j \to \infty} x_{n_j} = \sigma$, show that $\sigma \le \rho$.
+    
+    \item Let $\sum a_n (z - z_0)^n$ be a power series with radius of convergence $R$. Show that
+    \[
+    \frac{1}{R} = \limsup_{n \to \infty} \sqrt[n]{|a_n|}.
+    \]
+\end{enumerate}
+\section*{Exercises for Section 2.3}
+
+In Exercises 1 to 4, evaluate the given integral using Cauchy’s Formula or Theorem.
+\begin{enumerate}
+    \item $\int_{|z|=1} \frac{z}{(z - 2)^2} \, dz$
+    \item $\int_{|z-3|=2} \frac{e^z}{z(z - 3)} \, dz$
+    \item $\int_{|z+1|=2} \frac{z^2}{4 - z^2} \, dz$
+    \item $\int_{|z|=1} \frac{\sin z}{z} \, dz$
+\end{enumerate}
+
+In Exercises 5 to 8, evaluate the definite trigonometric integral making use of the technique of Examples 6 and 7 in this section.
+\begin{enumerate}
+    \setcounter{enumi}{4}
+    \item $\int_0^{2\pi} \frac{d\theta}{2 + \cos \theta}$
+    \item $\int_0^{2\pi} \frac{d\theta}{3 + \sin \theta + \cos \theta}$
+    \item $\int_0^{2\pi} \frac{d\theta}{a + b \cos \theta}, \quad a > b > 0$
+    \item $\int_0^{2\pi} \frac{d\theta}{1 + \sin^2 \theta}$
+\end{enumerate}
+
+In Exercises 9 to 12, evaluate the given integral using the technique of Example 10; indicate which theorem or device you used to obtain your answer.
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item $\int_\gamma \frac{dz}{z^2}$, where $\gamma$ is any curve in $\text{Re}\, z > 0$ joining $1 - i$ to $1 + i$.
+    \item $\int_\gamma \left( z + \frac{1}{z} \right) dz$, where $\gamma$ is any curve in $\text{Im}\, z > 0$ joining $-4 + i$ to $6 + 2i$.
+    \item $\int_\gamma e^z \, dz$, where $\gamma$ is the semicircle from $-1$ to $1$ passing through $i$.
+    \item $\int_\gamma \sin z \, dz$, where $\gamma$ is any curve joining $i$ to $\pi$.
+\end{enumerate}
+\noindent
+\begin{enumerate}
+    \item Integrate $e^{iz^2}$ around the contour $\gamma$ shown in Figure 2.8 to obtain the Fresnel integrals:
+    \[
+    \int_0^\infty \cos(x^2) \, dx = \int_0^\infty \sin(x^2) \, dx = \sqrt{\frac{\pi}{8}}.
+    \]
+    
+    \item Specialize Theorem 4 to the case when $z$ is the center of the circle and show that
+    \[
+    f(z) = \frac{1}{2\pi} \int_0^{2\pi} f(z + re^{it}) \, dt.
+    \]
+    
+    \item 
+    \begin{enumerate}
+        \item Use the estimate (3), Section 6, Chapter 1, and (5) above to conclude that
+        \[
+        |f(z)| \le \max_{0 \le t \le 2\pi} |f(z + re^{it})|
+        \]
+        for all sufficiently small $r$.
+        
+        \item Conclude from (a) that $|f|$ cannot have a strict local maximum within its domain of analyticity. That is, the graph in three-dimensional space of $(x, y, |f(x + iy)|)$ has no “peaks.”
+    \end{enumerate}
+    
+    \item Use the conclusion of Exercise 15 to establish the following result. If $f$ is analytic and never zero on a domain $D$, then $|f(z)|$ has no local minima in $D$. That is, the graph $(x, y, |f(x + iy)|)$ has no “pits.”
+    
+    \item Let $f(z) = \sum_{j=0}^\infty a_j(z - z_0)^j$ have a radius of convergence of $R > 0$. Show that for each $r \in (0, R)$,
+    \[
+    f^{(j)}(z_0) = j! a_j = \frac{1}{2\pi i} \int_{|z - z_0| = r} \frac{f(z)}{(z - z_0)^{j+1}} \, dz, \quad j = 0, 1, 2, \ldots.
+    \]
+    (Hint: Substitute the series into the integral and interchange summation and integration.)
+    
+    \item Use the result of Exercise 17 to establish these formulas:
+    \begin{enumerate}
+        \item $\frac{1}{2\pi} \int_0^{2\pi} \sum_{n=0}^\infty \sin(e^{i\theta}) \, d\theta = 
+            \begin{cases}
+            0, & n = 0, 2, 4, \ldots \\
+            \frac{(-1)^{(n - 1)/2}}{n!}, & n = 1, 3, 5, \ldots
+            \end{cases}$
+        \item $\frac{1}{2\pi} \int_0^{2\pi} z^n e^{-i\theta} e^{i\theta} d\theta = \frac{1}{n!}, \quad n = 0, 1, 2, \ldots$
+        \item $\frac{1}{2\pi} \int_0^{2\pi} e^{im(2e^{i\theta} - e^{i(1+\theta)})^{-1}} d\theta = 
+            \begin{cases}
+            0, & n < m \\
+            \frac{1}{2^{m - n}}, & n \ge m
+            \end{cases}$
+    \end{enumerate}
+    
+    \item Let $A$ be the annulus $A = \{ z : 0 < r \le |z| < R \}$. Suppose that $g$ is an analytic function on $A$ (and that $g'$ is continuous) with the property that
+    \[
+    \int_\gamma g(z) \, dz = 0
+    \]
+    where $\gamma$ is the positively oriented circle of radius $s$ centered at the origin, and $s$ is some positive number in the open interval $(r, R)$. Show that there is an analytic function $G$ on $A$ with $G' = g$ throughout $A$.
+    
+    \item Let $I = \int_{-\infty}^\infty e^{-x^2} \, dx$. Then:
+    \[
+    I^2 = \int_{-\infty}^\infty \int_{-\infty}^\infty e^{-(x^2 + y^2)} \, dx \, dy = \int_0^{2\pi} \int_0^\infty e^{-r^2} r \, dr \, d\theta = \pi.
+    \]
+    Hence, $I = \sqrt{\pi}$.
+    
+    \subsection*{The Poisson Kernel}
+    
+    \item Verify each of the statements (a) through (e) below for $z = re^{i\theta}$ and $r < 1$:
+\end{enumerate}
+
+\begin{enumerate}
+    \item $\text{Re} \left( \frac{e^{it} + z}{e^{it} - z} \right) = \frac{1 - r^2}{1 - 2r \cos(\theta - t) + r^2}$
+    \item $\text{Re} \left( \frac{e^{it} + z}{e^{it} - z} \right) = \text{Re} \left( \frac{e^{it}}{e^{it} - z} + \frac{z e^{it}}{1 - z e^{it}} \right)$
+    \item $\frac{1}{2\pi} \int_0^{2\pi} \frac{f(e^{it})}{1 - z e^{it}} dt = 0$, if $f(w)$ is analytic for $|w| < 1 + \epsilon$
+    \item $\frac{1}{2\pi} \int_0^{2\pi} \frac{f(e^{it}) e^{it}}{e^{it} - z} \, dt = f(z)$
+    \item Add (c) and (d); then use (a) and (b) to conclude that
+    \[
+    f(z) = \frac{1}{2\pi} \int_0^{2\pi} f(e^{it}) \cdot \frac{1 - r^2}{1 - 2r \cos(\theta - t) + r^2} \, dt, \quad z = re^{i\theta}.
+    \]
+\end{enumerate}
+\section*{Exercises for Section 2.4}
+
+In Exercises 1 to 8, give the order of each of the zeros of the given function.
+\begin{enumerate}
+    \item $\sin z$
+    \item $(e^z - 1)^3$
+    \item $(z^2 + 1 - 2^z)^3$
+    \item $(z - 4z + 4)^3$
+    \item $z(\cos z - 1)$
+    \item $\log(1 - z^3)$, \quad $|z| < 1$
+    \item $\frac{z}{e^z - 1}$
+    \item $\frac{z^2}{z^2 + 1}$
+\end{enumerate}
+
+In Exercises 9 to 16, find the power-series expansion about the given point for each of the functions, the first four digits of which are visible.
+
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item $e^{z^{-1}}$ about $z = \infty$
+    \item $\frac{1}{z - 1}$ about $z = 0$
+    \item $\frac{1}{z^2 + 1}$ about $z_0 = i$
+    \item $\frac{1}{z^2 + 1}$ about $z_0 = 1$
+    \item $\frac{2z}{z^2 + 1}$ about $z_0 = -1$
+    \item $\frac{2z}{z^2 + 1}$ about $z_0 = 1$
+    \item $\log(1 + z)$ about $z_0 = 0$ (first four terms)
+    \item $\sin z$ about $z_0 = \pi$
+\end{enumerate}
+
+\noindent
+\begin{enumerate}
+    \item Suppose that $f$ is analytic on a domain $D$ and has a zero of order $m$ at $z_0$ in $D$. Show that (a) $f'(z)$ has a zero of order $m - 1$ at $z_0$; (b) $f^2$ has a zero of order $2m$ at $z_0$.
+
+\item Suppose that $f$ is analytic on $D$ and satisfies the Cauchy estimate:
+\[
+|f^{(n)}(z_0)| \le \frac{n!}{r^n} \max_{|z - z_0| = r} |f(z)|, \quad n = 0, 1, 2, \dots
+\]
+whenever $f$ is analytic on a domain containing the set $\{ z : |z - z_0| \le r \}$.
+
+\item Use the Cauchy estimates (Exercise 18) or Theorem 18.1 to give another proof of Liouville’s Theorem by showing that the derivative of a bounded entire function is identically zero.
+
+\item Suppose that $f$ is an entire function and $\text{Re}(f(z)) < e^{-|z|}$ for all $z$. Show that $f$ is constant. (Hint: Consider $\exp(f(z))$)
+
+\item Suppose that $f$ is an entire function and that there are positive constants $A$ and $m$ with $|f(z)| \le A|z|^m$ if $|z| \ge R_0$. Show that $f$ is a polynomial of degree at most $m$. (Hint: Use the Cauchy estimates (Exercise 18) for $r > R$ and let $r \to \infty$.)
+
+\item Let $D$ be a simply-connected domain and $f$ an analytic function on $D$ that has no zeros in $D$. Let $\phi$ be a complex number. $\gamma \ne 0$. Show that there is an analytic function on $D$ with $e^{\phi} = f$. (Hint: Use Application 2.)
+
+\item Suppose that $f$ is analytic in the region $|z| > R$, including at $\infty$ (that is, $G(z) = f(1/z)$ is analytic for $|z| < 1/R$). Show that $f$ can be expressed as a power series in $1/z$:
+\[
+f(z) = \sum_{k=1}^\infty \frac{c_k}{z^k}, \quad |z| > R,
+\]
+and derive a formula for $c_k$, similar to that given in Theorem 1.
+
+\item Use Morera’s Theorem and an interchange of the order of integration to show that each of the following functions is analytic on the indicated domain; find a power-series expansion for each function by using the known power series for the integrand and interchanging the summation and integration.
+\begin{enumerate}
+    \item $\int_0^z \frac{1 - t^2}{1 + t^2} dt$, all $z$
+    \item $\int_0^z \frac{dt}{1 + t^2}$, all $z$
+    \item $\int_0^z \log(1 - tz) \, dt$, on $|z| < 2$
+    \item $\int_0^z \log(1 + t) dt$, all $z$
+    \item $\int_0^z \sin(t^2 + 3t) dt$, all $z$
+\end{enumerate}
+
+\subsection*{Differential Equations in the Complex Plane}
+
+\item Find all solutions to the differential equation:
+\[
+f^{(4)}(z) + \beta^4 f(z) = 0, \quad \text{$f$ is an entire function}.
+\]
+(Hint: Write $f(z) = \sum a_j z^j$ and solve for the coefficients $a_3, a_7, \ldots$ in terms of $a_0, a_1$, and $\beta$.)
+
+\item Use the technique of Exercise 25 to give the solutions of these differential equations:
+\begin{enumerate}
+    \item $f^{(2)}(z) - \frac{3}{z} f'(z) + 2f(z) = 0$, \quad $a_0 = 1$, $a_1 = 2$
+    \item $f^{(2)}(z) - \frac{2}{z} f'(z) = 0$, \quad $a_0 = 1$, $f(0) = 1$, $f'(0) = 0$
+    \item $f^{(2)}(z) + f'(z) = 0$
+\end{enumerate}
+
+\item If $f$ and $A$ are analytic in a simply-connected domain $D$ and
+\[
+f'(z) = A(z) f(z),
+\]
+show that $f(z) = C \exp\left(\int_\gamma A(w) dw\right)$ for a constant $C$, where the integral is taken over any piecewise smooth curve joining a fixed point $z_0$ to $z$. (Hint: Let
+\[
+g(z) = \exp\left(-\int_\gamma A(w) dw\right)
+\]
+and show that $(f(z) g(z))' = 0$ in $D$.)
+
+\subsection*{Bessel Functions}
+
+\item Let $\nu$ be an integer, $\nu > 0$. Show that one solution of the differential equation
+\[
+z^2 f^{(2)}(z) + z f'(z) + (z^2 - \nu^2) f(z) = 0
+\]
+is
+\[
+J_\nu(z) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \, \Gamma(m + \nu + 1)} \left( \frac{z}{2} \right)^{2m + \nu}.
+\]
+$J_\nu$ is the Bessel function of the first kind of order $\nu$.
+
+\item Show that the Bessel functions satisfy the recurrence relation:
+\[
+J_{\nu - 1}(z) - J_{\nu + 1}(z) = 2J_\nu'(z).
+\]
+\end{enumerate}
+\section*{Exercises for Section 2.5}
+
+In Exercises 1 to 6, locate each of the isolated singularities of the given function and tell whether it is a removable singularity, a pole, or an essential singularity. If the singularity is removable, give the value of the function at the point; if the singularity is a pole, give the order of the pole.
+\begin{enumerate}
+    \item $\frac{e^z - 1}{z}$
+    \item $\frac{z^2}{\sin z}$
+    \item $\frac{z^4 - 2z^2 + 1}{(z - 1)^2}$
+    \item $\cot \pi z$
+    \item $\frac{2z + 1}{z + 2}$
+    \item $\frac{e^z}{z^2 - 1}$
+\end{enumerate}
+
+In Exercises 7 to 13, find the Laurent series for the given function about the indicated point. Also, give the residue of the function at the point.
+\begin{enumerate}
+    \setcounter{enumi}{6}
+    \item $\frac{e^z - 1}{z^2}, \quad z_0 = 0$
+    \item $\frac{z^2}{z^3 - 1}, \quad z_0 = 1$
+    \item $\frac{\sin z}{(z - \pi)^2}, \quad z_0 = \pi$
+    \item $\frac{\sin z}{z^2}, \quad z_0 = 0$ (four terms of the Laurent series)
+    \item $\frac{az + b}{cz + d}, \quad c \ne 0$
+    \item $\frac{1}{z \ln(1 + z)}, \quad z_0 = 0$ (four terms of the Laurent series)
+    \item $\frac{1}{1 - \cos z}, \quad z_0 = 0$ (four terms of the Laurent series)
+\end{enumerate}
+
+\noindent
+\begin{enumerate}
+    \item If $f$ is analytic in $|z - z_0| < R$ and has a zero of order $m$ at $z_0$, show that
+\[
+\text{Res}\left( \frac{f'(z)}{f(z)}; z_0 \right) = m.
+\]
+
+\item If $f$ is analytic in $0 < |z - z_0| < R$ and has a pole of order 1 at $z_0$, show that
+\[
+\text{Res}\left( \frac{f'(z)}{f(z)}; z_0 \right) = -1.
+\]
+(Hint: Write $f(z) = \frac{g(z)}{(z - z_0)^l}$, where $g$ is analytic in $|z - z_0| < R$ and $g(z_0) \ne 0$.)
+
+\item Suppose $f$ is analytic in $0 < |z - z_0| < R$ and has a zero of order $l \ge m$ at $z_0$. If $g$ is analytic in $0 < |z - z_0| < R$ and has a pole of order $l, l \le m$, at $z_0$, show that $fg$ has a removable singularity at $z_0$.
+
+\item Let $f$ be analytic in $0 < |z - z_0| < r$ and suppose that $f$ has an essential singularity at $z_0$. Let $w$ be any complex number. Show that
+\[
+g(z) = \frac{1}{f(z) - w}, \quad z \ne z_0
+\]
+is not bounded in any punctured disc $0 < |z - z_0| < \epsilon$. Conclude that the range of $f$ gets arbitrarily close to all points in the complex plane.
+
+\item Here is an alternate proof that
+\[
+\frac{1}{2\pi i} \int_{|z - z_0| = r} f(z) \, dz = \text{Res}(f; z_0)
+\]
+is independent of $r$. Assume $z_0 = 0$ with no loss of generality.
+\begin{enumerate}
+    \item Show that
+    \[
+    \frac{\partial}{\partial t} (f(se^{it})e^{it}) = ie^{it} f'(se^{it}) + is e^{2it} f'(se^{it}).
+    \]
+    \item Show that
+    \[
+    \frac{d}{ds} \left( \frac{1}{2\pi i} \int_0^{2\pi} f(se^{it}) e^{it} \, dt \right) = \frac{1}{2\pi i} \int_0^{2\pi} \frac{\partial}{\partial s} (f(se^{it}) e^{it}) \, dt.
+    \]
+    \item Conclude from (a) and (b) that
+    \[
+    \frac{d}{ds} \left( \frac{1}{2\pi i} \int_{|z| = s} f(z) \, dz \right) = \frac{1}{2\pi i} \int_0^{2\pi} \frac{\partial}{\partial s} (f(se^{it}) e^{it}) \, dt.
+    \]
+\end{enumerate}
+
+\item Suppose that the Laurent series $\sum_{n=-\infty}^{\infty} a_n (z - z_0)^n$ converges for $0 < |z - z_0| < R$ and
+\[
+\sum_{n=-\infty}^{\infty} a_n (z - z_0)^n = 0, \quad 0 < |z - z_0| < r.
+\]
+Show that $a_n = 0$ for all $n = 0, \pm1, \pm2, \ldots$
+
+\item If $f$ is analytic in $0 < r < |z - z_0| < R$, show that its Laurent series is uniquely determined.
+
+\item If $f$ is analytic on $0 < |z - z_0| < R$ and there is an analytic function $G$ on $0 < |z - z_0| < R$ with $G' = f$, then
+\[
+\text{Res}(f; z_0) = 0.
+\]
+
+\item Find the Laurent series about $z_0 = 0$ for the following functions, valid in the indicated regions:
+\begin{enumerate}
+    \item $e^{1/z}$ in $0 < |z| < \infty$
+    \item $z^4 \sin\left( \frac{1}{z} \right)$ in $0 < |z| < \infty$
+    \item $\frac{1}{z - 1} - \frac{1}{z + 1}$ in $0 < |z| < \infty$
+    \item $\exp\left( z + \frac{1}{z} \right)$ in $0 < |z| < \infty$
+    \item $z \cos\left( \frac{1}{z} \right)$ in $0 < |z| < \infty$
+\end{enumerate}
+
+\item Use equations (12) and (13) to find the Laurent expansions of the following rational functions in powers of $z$ and $1/z$ in the indicated region(s):
+\begin{enumerate}
+    \item $f(z) = \frac{z + 2}{z^2 + 1}$ in $1 < |z| < 2$ and then in $2 < |z| < \infty$
+    \item $f(z) = \frac{z^2 - 4}{(z - 2)(z^2 + 1)}$ in $|z| < 1$ and then in $1 < |z| < 3$
+    \item $f(z) = \frac{z}{(z - 2)(z - 3)(z - 5)}$ in $2 < |z| < 3$ and then in $5 < |z| < \infty$
+\end{enumerate}
+
+\item Let $f$ be analytic in $0 < |z - z_0| < r$, and let
+\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n (z - z_0)^n
+\]
+be its Laurent series. Show that
+\begin{enumerate}
+    \item $z_0$ is a removable singularity for $f$ if and only if $a_n = 0$ for all $n = -1, -2, \ldots$
+    \item $z_0$ is a pole of order $m \ge 1$ if and only if $a_{-m} \ne 0$ but $a_{-n} = 0$ for all $n > m + 1$
+    \item $z_0$ is an essential singularity for $f$ if and only if there are infinitely many $a_{-n}$, $n > 0$, that are not zero
+\end{enumerate}
+
+\item Show that $f$ has a removable singularity at $\infty$ if and only if $f(z)$ is bounded for $|z| > R_0$.
+
+\item Classify the nature of the singularity at $\infty$ for each of the following functions. If the singularity is removable, give the value at $\infty$. If the singularity is a pole, give its order; in each case find the first few terms in the Laurent series about $\infty$.
+\begin{enumerate}
+    \item $\frac{3z^2 + 4}{z - 1}$
+    \item $\frac{1}{(1 - z)(z - 4)}$
+    \item $\frac{z^2}{e^z - 4}$
+    \item $\frac{(1 - z^2 - z^3)^2}{e^z}$
+    \item $\left( \frac{z + 1}{z} \right)^2$
+    \item $\frac{\sin 1/z}{z}$
+    \item $\sum_{n=0}^\infty \frac{(-1)^n z^{2n}}{(2n)!}$
+\end{enumerate}
+
+\subsection*{Bessel Functions Continued}
+
+\item Let $\nu$ be a complex number and let
+\[
+G(z; \nu) = \exp\left( \left( \frac{z}{2} \right) \left( t - \frac{1}{t} \right) \right), \quad z \ne 0.
+\]
+Show that $G(z; \nu)$ is an analytic function of $z$ for $z \ne 0$ and has an essential singularity at $z = 0$ (unless $\nu = 0$).
+
+\item Let
+\[
+G(z; \nu) = \sum_{n=0}^\infty J_\nu(z) t^n
+\]
+be the Laurent series of $G(z; \nu)$ about the origin, where the coefficients $J_\nu(z)$ are given by:
+\[
+J_\nu(z) = \frac{1}{2\pi} \int_0^{2\pi} \cos(\nu \theta - z \sin \theta) \, d\theta.
+\]
+Prove this by using the real integral representation and then series expansion.
+
+\item Multiply out the series for $\exp(z/2)$ and the series for $\exp(-z/2)$ and then collect equal powers of $z$. Conclude that
+\[
+J_\nu(z) = \sum_{k=0}^\infty \frac{(-1)^k}{k! \Gamma(k + \nu + 1)} \left( \frac{z}{2} \right)^{2k + \nu}, \quad \text{for } n > 0.
+\]
+Compare this to the conclusion of Exercise 29, Section 4.
+
+\item Show that $J_{-\nu}(z) = (-1)^\nu J_\nu(z)$. (Hint: Replace $\nu$ with $-\nu$ in the Laurent series; then change the summation index $n$ to $-n$ and compare series.)
+\end{enumerate}
+\begin{enumerate}
+    \item Evaluate the line integral
+    \[
+    \int_2^i \bar{z} \, dz
+    \]
+    along the straight line from $2$ to $i$.
+
+    \item Estimate the line integral
+    \[
+    \int_2^{2i} \frac{dz}{\bar{z}^2 - 1}
+    \]
+    along the circular arc with center at $0$ running from $2$ to $2i$ counterclockwise.
+
+    \item Evaluate the line integral
+    \[
+    \int_{-i}^{3i} \frac{dz}{\bar{z}^2}
+    \]
+    along the semicircle with center at $i$ in $\text{Re}\, z > 0$.
+
+    \item Evaluate the line integral
+    \[
+    \int_{1 - 2i}^{-3 + i} \frac{dz}{z}
+    \]
+    along the straight line. (Use the branch on $\log z$ with $0 < \arg z < 2\pi$.)
+\end{enumerate}
+\begin{enumerate}
+    \item Let $f(z) = z^{-1} \tan^2 z$. Characterize all singularities of $f$ as removable, pole, or essential. If removable, then find the value; if pole, then find the order. Find the radius of convergence of the Taylor series at $z = i$.
+    
+    \setcounter{enumi}{2}
+    
+    \item Find the Laurent series of $f(z) = (z + 1)^{-2} + (z - 2)^{-3}$ into powers of $z$ in the annulus $1 < |z| < 2$. Express the coefficient of $z^n$ in terms of $n$.
+
+    \item Let $f$ be an analytic function in $\mathbb{C} \setminus \{0\}$. Suppose $|f(z)| \le |z|^{10} + |z|^{-10}$ for all $z \ne 0$. Prove that $f$ is rational. (Hint: Use Cauchy estimates for Laurent series.)
+\end{enumerate}
+\begin{enumerate}
+    \item Find 4 terms of the Laurent series of the function
+    \[
+    f(z) = \frac{1}{1 - e^z}
+    \]
+    in a punctured neighborhood of $0$. (Use division algorithm.)
+
+    \item Find 3 \textit{nonzero} terms of the Laurent series of the function
+    \[
+    f(z) = \frac{z}{\sin^2 z}
+    \]
+    in a punctured neighborhood of $0$. (Find several terms of the Taylor series of $\sin^2 z$ by multiplying the series of $\sin z$ by itself and then use division algorithm.)
+
+    \item Evaluate
+    \[
+    \int_{|z| = 1} \frac{dz}{e^z - e^{-z}} \quad \text{and} \quad \int_{|z| = 4} \frac{dz}{e^z - e^{-z}}.
+    \]
+    (Use the formula of residue in a pole. Note the second integral has more than one singularity inside the contour!)
+
+    \item Evaluate
+    \[
+    \int_{|z| = 1} \frac{dz}{z^2 (e^z - 1)}.
+    \]
+    (Use the Laurent series.)
+\end{enumerate}
+
+\begin{enumerate}
+    \item (10 points) Evaluate
+    \[
+    \int_{0}^{2} z \, dz
+    \]
+    along the upper semi-circle with center at 1.
+
+    \item (10 points) Evaluate
+    \[
+    \int_{-2}^{-i} \frac{dz}{z}
+    \]
+    along the straight line.
+\end{enumerate}
+
+\begin{enumerate}
+    \item (10 points) Evaluate
+    \[
+    I = \int_{|z+2|=2} \frac{dz}{(z^3 + 1)^2}
+    \]
+    using the Cauchy integral formula for derivatives.
+
+    \item (10 points) Find all zeros and their orders of the function
+    \[
+    f(z) = (z^2 + z - 2)^2 \,\bigl(e^{\pi i z} - 1\bigr).
+    \]
+\end{enumerate}
+\begin{enumerate}
+    \item (10 points) Find all singularities of the function
+    \[
+    f(z) = z^{-2} \,(z+1)^{-1} \,(z-2)^{-3}\,\bigl(e^{4\pi i z} - 1\bigr)
+    \]
+    and determine their types (removable, essential, or a pole of a certain order). 
+    \emph{Caution: While one factor can have a singular point, another factor may vanish at that point.}
+
+    \item (10 points) Find the Laurent series
+    \[
+    \sum_{n=-\infty}^{\infty} a_n (z+1)^n
+    \]
+    of the function 
+    \[
+    f(z) = \frac{1}{z-1}
+    \]
+    in the domain 
+    \[
+    \{\,z : |z+1| > 2\}.
+    \]
+    Express $a_n$ in terms of $n$.
+\end{enumerate}
+\end{document}

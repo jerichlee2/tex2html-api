@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Spectral Methods}
+\author{Jerich Lee}
+\date{2024-12-02}
+
+\begin{document}
+
+\maketitle
+\section{What?}
+\begin{enumerate}
+    \item high degree of accuracy
+    \item combo of sines + cosines
+    \item complex functions
+    \item solving odes + pdes
+    \item fluid dynamics + turbulence modeling :‑O
+\end{enumerate}
+\subsection{Fourier Series (Continuous)}
+\begin{align}
+    f(x)= \sum_{k=-\infty}^{\infty} \hat{f}_{k}e^{ikx}  \\[10pt] 
+    \text{where } e^{ikx} = \cos kx + i\sin kx 
+\end{align}
+$k$ is the wave number such that $k\in \mathbb{\MakeUppercase{n}} $
+The derivative:
+\begin{align}
+    f^{^\prime}(x)= \sum_{k=-\infty }^{\infty }ik \hat{f_k}e^{ikx} 
+\end{align}
+\subsection{Discrete Fourier Series}
+$N-1$ points vs. $N$ points bc the end point is just $f_0$! bc of periodicity 
+\begin{align}
+    f_j = \sum_{k=1}{-\frac{N}{2}}^{\frac{N}{2}} \hat{f_k} e^{ikx_j}, \quad j=0,1,2, \ldots , N-1 
+\end{align}
+\textbf{N is even}
+\subsection{Discrete Orthogonality Property}
+\begin{align}
+    \sum_{j=0}^{N-1} e^{ikx_j}e^{-ik^{^\prime}x_j}= 
+    \begin{cases}
+        N, &\text{ if } k=k^\prime +mN, m=0,\pm 1, \pm 2, \ldots   ;\\
+        0, &\text{ if } else .
+    \end{cases}
+\end{align}
+\subsection{Discrete Fourier Transform}
+\begin{align}
+    \hat{f_k} \frac{1}{N}\sum_{i=0}^{N-1} f_j e^{-\left( ikx \right) }
+\end{align}
+\end{document}

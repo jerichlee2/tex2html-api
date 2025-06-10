@@ -1,0 +1,372 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\textbf{Problem Statement:} Suppose that $f$ is an entire function and $\mathrm{Re}\bigl(f(z)\bigr) < c$ for all $z \in \mathbb{C}$, where $c$ is a real constant. Show that $f$ is constant. (\textit{Hint: Consider $\exp(f(z))$.})
+
+\bigskip
+
+\textbf{Solution:}
+
+\begin{enumerate}
+\item \textbf{Define a new function:} Let 
+\[
+g(z) = \exp\bigl(f(z)\bigr).
+\]
+Since $f(z)$ is entire, the composition $\exp(f(z))$ is also an entire function.
+
+\item \textbf{Bound the magnitude of $g(z)$:} Recall that 
+\[
+\left| g(z) \right| = \left| \exp\bigl(f(z)\bigr) \right|
+= \exp\bigl(\mathrm{Re}\bigl(f(z)\bigr)\bigr).
+\]
+By hypothesis, $\mathrm{Re}\bigl(f(z)\bigr) < c$ for all $z$. Hence,
+\[
+|g(z)| = \exp\bigl(\mathrm{Re}(f(z))\bigr) \le \exp(c).
+\]
+Thus $g(z)$ is bounded in the entire complex plane.
+
+\item \textbf{Apply Liouville's Theorem:} Since $g(z)$ is entire and bounded, Liouville's Theorem implies that $g(z)$ must be constant. In other words, there exists some $K \in \mathbb{C}$ such that
+\[
+g(z) = \exp\bigl(f(z)\bigr) = K
+\]
+for all $z \in \mathbb{C}$.
+
+\item \textbf{Conclude $f$ is constant:} From $\exp(f(z)) = K$, we can write
+\[
+f(z) = \ln(K).
+\]
+Because $K$ is a constant (does not depend on $z$), $\ln(K)$ is also a constant (assuming we choose a principal branch or any fixed branch of the logarithm). Hence $f(z)$ is constant throughout the complex plane.
+
+\end{enumerate}
+
+\textbf{Conclusion:} The assumption that $\mathrm{Re}(f(z))$ is bounded above by a constant $c$ forces $f$ to be constant, completing the proof.
+
+\textbf{Problem Statement:}  
+Suppose that $f$ is an entire function (analytic on all of $\mathbb{C}$) and there are positive constants $A$ and $m$ such that
+\[
+|f(z)| \le A\,|z|^m 
+\quad
+\text{for sufficiently large } |z|.
+\]
+Show that $f$ is a polynomial of degree at most $m$. 
+
+\bigskip
+
+\textbf{Solution:}
+
+\begin{enumerate}
+\item \textbf{Recall the Cauchy estimates for derivatives:}  
+If $f$ is entire, then for any $r > 0$, the $n$th derivative of $f$ at $0$ is given by
+\[
+f^{(n)}(0)
+= 
+\frac{n!}{2\pi i} \int_{|z|=r} \frac{f(z)}{z^{n+1}}\, dz.
+\]
+A well-known consequence (the Cauchy estimate) is:
+\[
+|f^{(n)}(0)|
+\le 
+\frac{n!}{r^n} \,\max_{|z|=r} |f(z)|.
+\]
+
+\item \textbf{Apply the growth condition:}  
+By hypothesis, for sufficiently large $r$, 
+\[
+\max_{|z|=r} |f(z)| \le A\,r^m.
+\]
+Hence, for $r$ large,
+\[
+|f^{(n)}(0)|
+\;\le\; 
+\frac{n!}{r^n}\, A\,r^m
+\;=\;
+A\,n!\,\frac{r^m}{r^n}
+\;=\;
+A\,n!\,r^{\,m-n}.
+\]
+
+\item \textbf{Consider $n > m$:}  
+For $n > m$, we have $m - n < 0$. Let $r \to \infty$:
+\[
+\lim_{r \to \infty} A\,n!\,r^{\,m-n} 
+\;=\;
+A\,n!\,\lim_{r \to \infty} r^{m-n}
+\;=\;
+A\,n!\,\cdot 0
+\;=\;
+0.
+\]
+Thus,
+\[
+|f^{(n)}(0)| \le \lim_{r \to \infty} A\,n!\,r^{\,m-n} 
+= 
+0
+\quad
+\Longrightarrow
+\quad
+f^{(n)}(0) = 0
+\quad
+\text{for all } n > m.
+\]
+
+\item \textbf{Conclude $f$ is a polynomial:}  
+The fact that $f^{(n)}(0) = 0$ for all $n > m$ implies that in the Taylor series expansion of $f$ around $0$,
+\[
+f(z) = \sum_{k=0}^{\infty} \frac{f^{(k)}(0)}{k!} \, z^k,
+\]
+all terms with $k > m$ must vanish. Therefore, $f(z)$ reduces to a finite sum,
+\[
+f(z) = \sum_{k=0}^{m} \frac{f^{(k)}(0)}{k!} \, z^k,
+\]
+which is a polynomial of degree at most $m$.
+
+\end{enumerate}
+
+\bigskip
+
+\textbf{Conclusion:}  
+Under the given growth condition $|f(z)| \le A\,|z|^m$ for large $|z|$, the function $f$ must be a polynomial of degree $\le m$. This follows directly from the Cauchy estimates and letting the radius of integration $r \to \infty$.
+We want to expand $\sin(\pi z)$ about $z = \tfrac12$. Let
+\[
+  z \;=\; \tfrac12 + w,
+\]
+then
+\[
+  \sin(\pi z)
+  \;=\;
+  \sin\!\Bigl(\pi\bigl(\tfrac12 + w\bigr)\Bigr)
+  \;=\;
+  \sin\!\Bigl(\tfrac{\pi}{2} + \pi w\Bigr)
+  \;=\;
+  \cos(\pi w).
+\]
+Next, recall the Maclaurin series expansion for $\cos(\pi w)$:
+\[
+  \cos(\pi w)
+  \;=\;
+  1
+  \;-\;
+  \frac{(\pi w)^{2}}{2!}
+  \;+\;
+  \frac{(\pi w)^{4}}{4!}
+  \;-\;
+  \dots
+\]
+Substituting $w = z - \tfrac12$ back in, we get the Taylor expansion around $z = \tfrac12$:
+\[
+  \sin(\pi z)
+  \;=\;
+  1
+  \;-\;
+  \frac{\pi^2}{2!}\,\bigl(z - \tfrac12\bigr)^2
+  \;+\;
+  \frac{\pi^4}{4!}\,\bigl(z - \tfrac12\bigr)^4
+  \;-\;
+  \cdots
+\]
+When we wish to expand a function $f(z)$ about a point $z_0$, a standard strategy is to define a new variable $w$ such that
+\[
+   z \;=\; z_0 + w.
+\]
+This reformulates the expansion of $f(z)$ around $z=z_0$ as an expansion around $w=0$. 
+
+In this particular case, we want to expand around $z_0 = \tfrac12$, so we set
+\[
+   z \;=\; \tfrac12 + w.
+\]
+Then, expanding around $z = \tfrac12$ is the same as expanding in powers of $w$ around $w = 0$.
+$\sum_{i=0}^{\infty} (-1)^{n}\frac{(\pi z-\frac{1}{2})^{{2n+1}}}{(2n+1)!}$
+
+
+We want to expand 
+\[
+   \sin(\pi z)
+   \quad
+   \text{around}
+   \quad
+   z = \tfrac12.
+\]
+Set
+\[
+   z 
+   \;=\; 
+   \tfrac12 + w
+   \quad\Longrightarrow\quad
+   \sin\bigl(\pi (\tfrac12 + w)\bigr)
+   \;=\;
+   \sin\Bigl(\tfrac{\pi}{2} + \pi w\Bigr)
+   \;=\;
+   \cos(\pi w).
+\]
+Next, we use the Maclaurin series for $\cos(\pi w)$ around $w=0$:
+\[
+   \cos(\pi w)
+   \;=\;
+   1
+   \;-\;
+   \frac{(\pi w)^2}{2!}
+   \;+\;
+   \frac{(\pi w)^4}{4!}
+   \;-\;
+   \cdots
+\]
+which is a series in \emph{even powers} of $w$.
+
+\bigskip
+
+\noindent
+\textbf{Why not a series in odd powers?}
+
+\smallskip
+
+One might ask why we cannot write something like
+\[
+   \sum_{n=0}^{\infty} (-1)^n 
+   \,\frac{\bigl(\pi z-\tfrac{1}{2}\bigr)^{2n+1}}{(2n+1)!}
+   \quad
+   \text{for}
+   \quad
+   \sin(\pi z).
+\]
+Once we have made the shift $z = \tfrac12 + w$, the function becomes $\cos(\pi w)$. Its Taylor expansion about $w=0$ is \emph{necessarily} an even-power series in $\pi w$. In other words, $\cos(x)$ always has the form
+\[
+   \cos(x) 
+   \;=\; 
+   1 
+   \;-\; 
+   \frac{x^2}{2!}
+   \;+\; 
+   \frac{x^4}{4!}
+   \;-\; 
+   \cdots,
+\]
+so $\cos(\pi w)$ cannot be captured by a series of purely odd powers.
+
+Therefore, the series with only odd powers in $\bigl(\pi z - \tfrac{1}{2}\bigr)$ does not match the actual expansion of $\sin(\pi z)$ around $z = \tfrac12$. 
+\textbf{Why introduce a new variable?}
+
+When expanding a function $f(z)$ near a point $z_0$, you can write
+\[
+   f(z)
+   \;=\;
+   \sum_{n=0}^\infty
+   \frac{f^{(n)}(z_0)}{n!}
+   \,\bigl(z - z_0\bigr)^n.
+\]
+There is no strict need to introduce a new variable. However, it is often convenient to set
+\[
+   z
+   \;=\;
+   z_0 + w
+   \quad
+   \Longrightarrow
+   \quad
+   w
+   \;=\;
+   z - z_0,
+\]
+so that the expansion in powers of $\bigl(z - z_0\bigr)$ becomes a standard Maclaurin expansion in $w$.
+
+\medskip
+
+\noindent
+\textbf{Example: Expanding $\sin(\pi z)$ around $z = \tfrac12$.}
+
+We can write
+\[
+   z
+   \;=\;
+   \tfrac12 + w
+   \quad\Longrightarrow\quad
+   \sin(\pi z)
+   \;=\;
+   \sin\Bigl(\tfrac{\pi}{2} + \pi w\Bigr)
+   \;=\;
+   \cos(\pi w).
+\]
+Since the Maclaurin expansion for $\cos x$ is already known,
+\[
+   \cos x
+   \;=\;
+   1
+   \;-\;
+   \frac{x^2}{2!}
+   \;+\;
+   \frac{x^4}{4!}
+   \;-\;\cdots,
+\]
+we substitute $x = \pi w$ to get
+\[
+   \cos(\pi w)
+   \;=\;
+   1
+   \;-\;
+   \frac{(\pi w)^2}{2!}
+   \;+\;
+   \frac{(\pi w)^4}{4!}
+   \;-\;\cdots.
+\]
+Then reverting $w = z - \tfrac12$ yields
+\[
+   \sin(\pi z)
+   \;=\;
+   1
+   \;-\;
+   \frac{\pi^2}{2}
+   \,\bigl(z - \tfrac12\bigr)^2
+   \;+\;
+   \frac{\pi^4}{4!}
+   \,\bigl(z - \tfrac12\bigr)^4
+   \;-\;\cdots.
+\]
+
+If you prefer, you could do everything directly in terms of $(z - \tfrac12)$. The introduction of $w$ just makes it transparent that we are applying a known zero-centered expansion for $\cos(\pi w)$.
+
+\end{document}

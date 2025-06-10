@@ -1,0 +1,345 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+%-----------------------------------------------------------------
+%  Chemical–potential criterion for phase equilibrium
+%-----------------------------------------------------------------
+
+\textbf{Given at \(T=300\;\text{K},\;p=1\;\text{atm}\):}
+\[
+N_L^{\,(0)} = 5\;\text{mol},\qquad
+N_S^{\,(0)} = 2\;\text{mol},
+\]
+\[
+\mu_L = 5.0\times10^{-20}\;\text{J},\qquad
+\mu_S = 9.0\times10^{-21}\;\text{J}.
+\]
+
+\[
+\mu_S < \mu_L
+\quad\Longrightarrow\quad
+\text{solid phase is thermodynamically preferred.}
+\]
+
+\bigskip
+\textbf{Total Gibbs free energy} of the two‑phase system:
+\[
+G = N_L\mu_L + N_S\mu_S,
+\qquad N_L+N_S = N_{\text{tot}} = 7\;\text{mol}.
+\]
+
+Because \(\mu_S\) is a strict minimum, \(G\) decreases whenever a mole
+of liquid converts to solid:
+\[
+\Delta G = \mu_S - \mu_L < 0.
+\]
+
+Hence the global minimum of \(G\) is reached when
+\[
+N_S = N_{\text{tot}},\qquad N_L = 0.
+\]
+
+\bigskip
+\[
+\boxed{N_S^{\;(\text{eq})} = 7\ \text{moles}}
+\]
+
+(All material freezes, corresponding to answer \textbf{(c)}.)
+%---------------------------------------------------------------
+%  Work done by a monatomic ideal gas when heated at constant \(n\)
+%---------------------------------------------------------------
+
+\textbf{Data}
+
+\[
+n = 9\;\text{mol},\quad
+T_i = 250\;\text{K},\quad
+T_f = 280\;\text{K},\quad
+Q = 3523\;\text{J}.
+\]
+
+\[
+\Delta T = T_f - T_i = 30\;\text{K}.
+\]
+
+\textbf{1.\ Change in internal energy \(\Delta U\)}
+
+For a monatomic ideal gas (only translational d.o.f.):
+\[
+\Delta U = \frac{3}{2}\,nR\,\Delta T
+         = \frac32(9)(8.314)(30)\,\text{J}
+         \approx 3.37\times10^{3}\;\text{J}.
+\]
+
+\textbf{2.\ First law to get the work done \emph{by} the gas}
+
+\[
+Q = \Delta U + W
+\quad\Longrightarrow\quad
+W = Q - \Delta U
+  = 3523\;\text{J} - 3.37\times10^{3}\;\text{J}
+  \approx 1.56\times10^{2}\;\text{J}.
+\]
+
+\[
+\boxed{W \;\approx\; 1.56\times10^{2}\ \text{J}}
+\]
+
+\bigskip
+Therefore the work done \emph{by} the gas during the expansion corresponds to answer **(e)**.
+%------------------------------------------------------------------
+%  Problem 22 – \(C_p-C_v\) for a non‑ideal monatomic gas
+%------------------------------------------------------------------
+\textbf{Equation of state}
+\[
+ (P+a)\,V = nRT, \qquad  a = 0.10\;\text{atm}\;(=\text{constant}).
+\]
+
+\textbf{Useful identity (always true)}
+\[
+\boxed{\;
+  C_p - C_v
+  = T\left(\frac{\partial P}{\partial T}\right)_{V}
+      \left(\frac{\partial V}{\partial T}\right)_{P}
+\;}
+\tag{1}
+\]
+
+---
+
+1  Compute the derivatives in (1)
+
+1.  At fixed \(V\):
+    \[
+      \left(\frac{\partial P}{\partial T}\right)_{V}
+      = \frac{nR}{V}.
+    \]
+
+2.  Solve the EOS for \(V\) at fixed \(P\):
+    \[
+      V = \frac{nRT}{P+a}
+      \;\;\Longrightarrow\;\;
+      \left(\frac{\partial V}{\partial T}\right)_{P}
+      = \frac{nR}{P+a}
+      = \frac{V}{T}.
+    \]
+
+---
+
+2  Insert into (1)
+
+\[
+C_p - C_v
+  = T\left(\frac{nR}{V}\right)\!\left(\frac{V}{T}\right)
+  = \boxed{\,nR\,}.
+\]
+
+Remarkably, the constant pressure shift \(+a\) cancels; the
+difference \(C_p-C_v\) is the same as for an ideal gas.
+
+---
+
+3  Numeric value for \(n = 7\) mol
+
+\[
+C_p - C_v = nR = (7)(8.314\ \text{J\,mol}^{-1}\text{K}^{-1})
+           \approx 5.82\times10^{1}\ \text{J\,K}^{-1}.
+\]
+
+---
+
+\[
+\boxed{C_p - C_v \;\approx\; 5.82 \times 10^{1}\ \text{J K}^{-1}}
+\]
+
+This matches option **(a)** in the list.
+%-----------------------------------------------------------------
+%  Entropy of fusion for “Element X” at \(T = 488\;\text{K}\)
+%-----------------------------------------------------------------
+
+\section*{1.  Data (as stated)}
+
+\[
+\begin{aligned}
+T &= 488\;\text{K}, \\
+L &= 121\;\text{J g}^{-1}\quad\text{(latent heat of fusion)},\\
+M &= 35\;\text{g mol}^{-1},\\
+\Delta v &= 0.4\;\text{m}^{3}\,\text{kg}^{-1},\\
+P &= 1.0731\times10^{4}\;\text{Pa}.
+\end{aligned}
+\]
+
+\bigskip
+\section*{2.  Convert the latent heat to a molar \emph{enthalpy} of fusion}
+
+\[
+\boxed{\;
+  \Delta H_{\text{fus}}
+     = L\,M
+     = (121)(35)
+     = 4.235\times10^{3}\;\text{J mol}^{-1}
+\;}
+\]
+(Laboratory measurements of latent heat are done at constant \(P\), so
+they already give an \emph{enthalpy} change.)
+
+\bigskip
+\section*{3.  Entropy change at equilibrium}
+
+At the melting temperature the Gibbs energy change vanishes:
+\( \Delta G = \Delta H - T\Delta S = 0\).
+
+Hence
+\[
+\boxed{\;
+  \Delta S = \frac{\Delta H_{\text{fus}}}{T}
+           = \frac{4.235\times10^{3}}{488}
+           \approx 8.68\;\text{J mol}^{-1}\text{K}^{-1}.
+\;}
+\]
+
+\bigskip
+\section*{4.  Why the \(P\,\Delta V\) term is \emph{not} added}
+
+Because \(L\) was measured at constant pressure, it is already
+\(\Delta H\), not \(\Delta U\).
+Adding \(P\,\Delta V\) again would double‑count that contribution.
+(If \(L\) had been reported as an \emph{internal‑energy} change, one
+would indeed correct by \(P\,\Delta V\).)
+
+\bigskip
+\section*{5.  None of the listed choices matches \(8.7\;\text{J mol}^{-1}\text{K}^{-1}\)}
+
+The multiple‑choice values given—\(4.03, 1.88, 0.248, 147\;\text{J mol}^{-1}\text{K}^{-1}\)
+and \(7.08\times10^{-3}\)—are inconsistent with the thermodynamically
+correct result of
+\[
+\boxed{\Delta S_{\text{liq}-\text{sol}} \simeq 8.7\;\text{J mol}^{-1}\text{K}^{-1}}.
+\]
+
+\textit{Conclusion:} the answer key (or one of the provided numbers)
+contains a typographical error; the physics is unambiguous.
+%-----------------------------------------------------------------
+%  Internal energy of fusion  (\Delta U_\text{fus})
+%-----------------------------------------------------------------
+\section*{1.\  Data (from the problem)}
+\[
+\begin{aligned}
+\Delta H_\text{fus} &= L\,M
+                    = (121\;\text{J\,g}^{-1})(35\;\text{g\,mol}^{-1})
+                    = 4.235\times10^{3}\;\text{J\,mol}^{-1},\\
+P &= 1.0731\times10^{4}\;\text{Pa},\\
+\Delta v &= 0.40\;\text{m}^3\!\,\text{kg}^{-1},\\
+M &= 0.035\;\text{kg\,mol}^{-1}.
+\end{aligned}
+\]
+
+\section*{2.\  Convert the specific volume change to a molar volume change}
+
+\[
+\boxed{\;
+  \Delta V_m
+  = \Delta v\,M
+  = (0.40)(0.035)
+  = 1.40\times10^{-2}\;\text{m}^3\,\text{mol}^{-1}.
+\;}
+\]
+
+\section*{3.\  Use \(\Delta H = \Delta U + P\Delta V\)}
+
+\[
+\Delta U_\text{fus}
+  = \Delta H_\text{fus} - P\,\Delta V_m
+  = 4.235\times10^{3}
+    \;-\;
+    (1.0731\times10^{4})(1.40\times10^{-2})
+  \;\text{J\,mol}^{-1}.
+\]
+
+\[
+P\,\Delta V_m
+  = 1.0731\times10^{4}\times1.40\times10^{-2}
+  \simeq 1.50\times10^{2}\;\text{J\,mol}^{-1}.
+\]
+
+\[
+\boxed{\;
+  \Delta U_\text{fus}
+  \approx 4.235\times10^{3} - 1.50\times10^{2}
+  = 4.09\times10^{3}\;\text{J\,mol}^{-1}
+\;}
+\]
+
+So the internal energy increases by about  
+\[
+\boxed{\; \Delta U_\text{fus}\;\approx\; 4.1\ \text{kJ mol}^{-1}. \;}
+\]
+
+\section*{4.\  Relation to the entropy result}
+
+\[
+\Delta S_\text{fus} = \frac{\Delta H_\text{fus}}{T}
+                    = \frac{4.235\times10^{3}}{488}
+                    \approx 8.68\;\text{J mol}^{-1}\text{K}^{-1},
+\]
+as you already found.  The difference
+\(\Delta H - \Delta U = P\Delta V\) is the mechanical work required to
+push back the external pressure while the substance expands on melting.
+\end{document}

@@ -1,0 +1,266 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% Concrete example of a simple (non-negative) function expressed with characteristic functions
+
+\begin{enumerate}
+  \item Let 
+  \[
+      A_1=[0,1), 
+      \qquad 
+      A_2=[1,2)
+  \]
+  be measurable subsets of $\mathbb{R}$ (endowed with the Lebesgue $\sigma$-algebra).
+
+  \item Define the function $s:\mathbb{R}\to[0,\infty)$ by
+  \begin{align}
+      s(x)=
+      \begin{cases}
+          3 & \text{if } x\in A_1,\\[6pt]
+          1 & \text{if } x\in A_2,\\[6pt]
+          0 & \text{otherwise.}
+      \end{cases}
+  \end{align}
+
+  \item Using characteristic functions $\chi_{A_i}$ we can write
+  \begin{align}
+      s(x)=3\,\chi_{A_1}(x)+1\,\chi_{A_2}(x),
+  \end{align}
+  which is precisely of the form $\displaystyle s=\sum_{i=1}^{2}\alpha_i\chi_{A_i}$ with
+  $\alpha_1=3$, $\alpha_2=1$.
+\end{enumerate}
+% Concrete illustration of Definition 1.23
+\pagebreak
+\begin{enumerate}
+  \item \textbf{Measure space.}  
+        Take the Lebesgue measure space $(X,\mathcal{M},\mu)
+        =(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$,  
+        where $\lambda$ denotes Lebesgue measure.
+
+  \item \textbf{A simple function.}  
+        Define
+        \[
+            s(x)=3\,\chi_{[0,1)}(x)+1\,\chi_{[1,2)}(x),
+        \]
+        so the distinct values are $\alpha_1=3$ on
+        $A_1=[0,1)$ and $\alpha_2=1$ on $A_2=[1,2)$.
+
+  \item \textbf{Set of integration.}  
+        Fix the measurable set
+        \[
+            E=[0.5,1.5]\subset X.
+        \]
+
+  \item \textbf{Integral of the simple function over $E$.}  
+        By Definition 1.23,
+        \begin{align}
+            \int_E s\,d\mu
+            &=\sum_{i=1}^{2} \alpha_i\,\mu(A_i\cap E) \\[4pt]
+            &=3\,\mu\bigl([0,1)\cap[0.5,1.5]\bigr)
+              +1\,\mu\bigl([1,2)\cap[0.5,1.5]\bigr) \\[4pt]
+            &=3\,\mu([0.5,1)) + 1\,\mu([1,1.5]) \\[4pt]
+            &=3\,(1-0.5) + 1\,(1.5-1) \\[4pt]
+            &=3\cdot 0.5 + 1\cdot 0.5 = 1.5 + 0.5 = 2.
+        \end{align}
+
+        Hence \(\displaystyle \int_E s\,d\mu = 2\).
+\end{enumerate}
+
+% ------------------------------------------------------------------
+% Optional: showing how Definition (3) works for a non-simple f
+% ------------------------------------------------------------------
+\medskip
+\noindent
+\textbf{Bonus: approximating an ordinary (non-simple) positive function.}
+
+Let
+\[
+  f(x)=
+  \begin{cases}
+      x, & 0\le x\le 1,\\
+      0, & \text{otherwise}.
+  \end{cases}
+\]
+For each $n\in\mathbb{N}$ define the simple function
+\[
+  s_n(x)=\sum_{k=1}^{n}
+          \frac{k-1}{n}\;
+          \chi_{\,[(k-1)/n,\,k/n)}(x).
+\]
+Then \(0\le s_n\le f\) and
+\[
+  \int_{\mathbb{R}} s_n\,d\mu
+    =\sum_{k=1}^{n}\frac{k-1}{n}\cdot\frac{1}{n}
+    =\frac{n-1}{2n}.
+\]
+As \(n\to\infty\) we have \(\frac{n-1}{2n}\to\frac12\), so by (3)
+\[
+  \int_{\mathbb{R}} f\,d\mu
+  =\sup_{\,0\le s\le f}\int_{\mathbb{R}} s\,d\mu
+  =\frac12,
+\]
+which matches the classical result \(\displaystyle\int_0^1 x\,dx=\tfrac12\).
+\pagebreak
+%------------------------------------------------------------
+%  Why every (positive) measure satisfies  $\mu(\varnothing)=0$
+%------------------------------------------------------------
+
+\begin{problem}
+  Prove that if $\mu$ is a positive measure on a $\sigma$--algebra $\mathcal{M}$, then 
+  $
+      \mu(\varnothing)=0.
+  $
+  \begin{enumerate}
+      \item[\textbf{Step 1.}] 
+            Choose any set $A\in\mathcal{M}$ with a \emph{finite} measure, i.e.\ $0\le \mu(A)<\infty$.  
+            This is always possible because, by definition of a measure, $\mu$ takes only non–negative values and 
+            there is at least one measurable set with finite measure (for instance, the empty union of countably
+            many measurable sets of finite measure, or a bounded interval under Lebesgue measure).
+
+      \item[\textbf{Step 2.}] 
+            Construct a sequence of pairwise–disjoint measurable sets
+            \begin{align}
+                A_1 &= A, &
+                A_2 &= A_3 = A_4 = \dots = \varnothing .
+            \end{align}
+            Notice that the sets $\{A_k\}_{k\ge1}$ are disjoint and
+            their union is exactly $A$:
+            \begin{align}
+                \bigcup_{k=1}^{\infty} A_k 
+                = A_1 \cup \bigl(\bigcup_{k\ge2}\varnothing\bigr)
+                = A.
+            \end{align}
+
+      \item[\textbf{Step 3.}] 
+            Apply the \emph{countable additivity} axiom of a measure (cf.\ Theorem~1.18(1)):
+            \begin{align}
+                \mu(A)
+                &= \mu\!\Bigl(\bigcup_{k=1}^{\infty} A_k\Bigr)
+                = \sum_{k=1}^{\infty} \mu(A_k) \\
+                &= \mu(A_1) + \sum_{k=2}^{\infty} \mu(\varnothing) 
+                = \mu(A) + \underbrace{\mu(\varnothing)+\mu(\varnothing)+\dots}_{\text{countably many terms}} .
+            \end{align}
+
+      \item[\textbf{Step 4.}] 
+            Isolate the infinite tail:
+            \begin{align}
+                0 
+                = \mu(A) - \mu(A) 
+                = \sum_{k=2}^{\infty} \mu(\varnothing)
+                = \mu(\varnothing)\,\sum_{k=2}^{\infty} 1 .
+            \end{align}
+            The geometric series $\sum_{k=2}^{\infty} 1$ diverges to $+\infty$.  
+            Because the left–hand side is $0$ (a finite number) and the measure $\mu$ is \emph{non–negative},
+            the only way this equality can hold is if
+            \begin{align}
+                \mu(\varnothing)=0.
+            \end{align}
+  \end{enumerate}
+  Hence every positive measure assigns measure $0$ to the empty set.
+\end{problem}
+\pagebreak
+\begin{problem}
+  \textbf{Relationship between the motivational paragraph and Theorem 1.36}
+
+  \begin{enumerate}
+
+      \item \textbf{Informal motivation}  
+            \begin{enumerate}
+                \item Sets with measure $0$ are ``negligible'' for integration.
+                \item Intuitively, \emph{every} subset of a negligible set should also be negligible.
+                \item If $N\in\mathcal{M}$ with $\mu(N)=0$ and $E\subset N$ but $E\notin\mathcal{M}$, we would like to declare $\mu(E)=0$ anyway.
+                \item Question: After adding all such subsets, do we still have a $\sigma$--algebra, and can $\mu$ be extended to those new sets while remaining a measure?
+            \end{enumerate}
+
+      \item \textbf{Formal realisation (Theorem 1.36)}  
+            Let $(X,\mathcal{M},\mu)$ be a measure space and define
+            \begin{align}
+                \mathcal{M}^{*}
+                &=
+                \bigl\{E\subset X \;\big|\; \exists\,A,B\in\mathcal{M}\text{ such that }A\subset E\subset B
+                     \text{ and }\mu(B\setminus A)=0\bigr\}, \\[6pt]
+                \mu(E) &:= \mu(A)\quad\text{for any such }A .
+            \end{align}
+            Then:
+            \begin{enumerate}
+                \item $\mathcal{M}^{*}$ is a $\sigma$--algebra containing $\mathcal{M}$.
+                \item $\mu$ extends to a measure on $\mathcal{M}^{*}$ via the above definition.
+                \item In particular, if $E\subset N$ with $\mu(N)=0$, then choosing $A=\varnothing$ and $B=N$ gives $E\in\mathcal{M}^{*}$ and $\mu(E)=0$, fulfilling the original intuition.
+            \end{enumerate}
+
+      \item \textbf{How the pieces fit}  
+
+% --- Place this snippet where you want the comparison table to appear ---
+% Requires: \usepackage{booktabs,adjustbox}  (add to your preamble).
+
+\begin{center}
+  \begin{tabular}{@{}p{.45\textwidth} p{.45\textwidth}@{}}
+  \toprule
+  \textbf{Motivational paragraph} & \textbf{Theorem 1.36} \\ \midrule
+  Every subset of a null set should be null. 
+  & $E\subset N,\; \mu(N)=0 \;\Longrightarrow\; E\in\mathcal{M}^{*},\; \mu(E)=0$ \\[4pt]
+  Will the extension still be a measure on a $\sigma$--algebra? 
+  & $\mathcal{M}^{*}$ is a $\sigma$--algebra and $\mu$ extends to it \\ \bottomrule
+  \end{tabular}
+  \end{center}
+
+            Thus, Theorem 1.36 is the rigorous theorem that executes the informal plan described in the preceding paragraph; it is commonly called the \emph{completion of a measure space}.
+  \end{enumerate}
+\end{problem}
+\end{document}

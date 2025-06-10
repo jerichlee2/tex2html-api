@@ -1,0 +1,442 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 HW 3}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  \textbf{Background facts.}
+  \begin{enumerate}[label=\arabic*.]
+      \item[(F1)] A set is \emph{countable} if it is finite or can be put in
+            bijection with $\mathbb{N}$.
+      \item[(F2)] \emph{(Countable union of countable sets is countable).}  
+            If $\{E_m:m\in\mathbb{N}\}$ is a family of countable sets, then
+            $\displaystyle\bigcup_{m\in\mathbb{N}}E_m$ is countable.
+            (One proof lists the elements of each $E_m$ in a table and reads the
+            table diagonally; another exhibits an explicit injection into
+            $\mathbb{N}$.)
+  \end{enumerate}
+  
+  Throughout, the symbol ``$\sqcup$’’ denotes a \emph{disjoint} union.
+  
+  \bigskip
+  \textbf{(a)  Product of two countable sets.}
+  
+  \smallskip
+  \emph{Step 1:  Reduce to the infinite case.}
+  If either $A$ or $B$ is finite, then $A\times B$ is a finite union of
+  countable (indeed finite) sets, hence countable.
+  So assume both $A$ and $B$ are \emph{countably infinite}.
+  
+  \smallskip
+  \emph{Step 2:  Fix enumerations.}
+  Choose bijections
+  \[
+      A\;\xrightarrow{\;\ \alpha\;\ }\;\mathbb{N},
+      \qquad
+      B\;\xrightarrow{\;\ \beta\;\ }\;\mathbb{N};
+      \quad
+      \alpha^{-1}(n)=:a_n,\;
+      \beta^{-1}(i)=:b_i
+      \quad(n,i\in\mathbb{N}).
+  \]
+  
+  \smallskip
+  \emph{Step 3:  Decompose $A\times B$ into countable slices.}
+  For each $n\in\mathbb{N}$ set
+  \[
+      C_n\;:=\;\{(a_n,b_i): i\in\mathbb{N}\}\subseteq A\times B.
+  \]
+  Because $B$ is countable, each $C_n$ is countable.
+  
+  \smallskip
+  \emph{Step 4:  Reassemble.}
+  Every pair $(a,b)\in A\times B$ equals
+  $(a_n,b_i)$ for the unique $n:=\alpha(a)$ and $i:=\beta(b)$,
+  hence belongs to $C_n$.
+  Thus
+  \[
+     A\times B \;=\; \bigcup_{n\in\mathbb{N}} C_n.
+  \]
+  By fact (F2) the countable union of the countable sets $C_n$
+  is countable.
+  Therefore $A\times B$ is countable.
+  
+  \bigskip
+  \textbf{(b)  Finite Cartesian products of countable sets.}
+  
+  \smallskip
+  Let $n\in\mathbb{N}$ and suppose
+  $A_1,A_2,\dots,A_n$ are countable.
+  We proceed by induction on $n$.
+  
+  \smallskip
+  \emph{Base case $n=1$:} $A_1$ is countable by hypothesis.
+  
+  \smallskip
+  \emph{Inductive step.}
+  Assume the product
+  \(
+     P_{k}:=A_1\times\cdots\times A_k
+  \)
+  is countable for some $k\ge1$.
+  Because $A_{k+1}$ is countable, part~(a) implies
+  \[
+     P_{k+1}=P_k\times A_{k+1}
+  \]
+  is countable.
+  Hence by induction $A_1\times\cdots\times A_n$ is countable for every
+  positive integer $n$.
+  
+  \bigskip
+  \textbf{Conclusion.}
+  \begin{enumerate}[label=\textbullet]
+    \item The Cartesian product of two countable sets is countable.
+    \item Any finite Cartesian product of countable sets is countable.
+  \end{enumerate}
+  \end{solution}
+  \begin{solution}
+    Let \(A\) be a countable set and let  
+    \[
+       X \;:=\;\{\,F\subseteq A : F\ \text{is finite}\,\}
+    \]
+    denote the collection of \emph{all} finite subsets of \(A\).
+    We prove that \(X\) itself is countable.
+    
+    \bigskip
+    \textbf{Step 1.  Decompose \(X\) by cardinality.}
+    
+    For each integer \(n\ge 0\) define
+    \[
+       X_{n}\;:=\;\{\,F\subseteq A : |F|=n\,\},
+    \qquad
+       \text{so that}\quad
+       X \;=\;\bigcup_{n=0}^{\infty} X_{n}.
+    \]
+    
+    \bigskip
+    \textbf{Step 2.  Show that each \(X_{n}\) is countable.}
+    
+    Because \(A\) is countable, there exists a bijective enumeration
+    \(A=\{a_{1},a_{2},\dots\}\).
+    
+    \smallskip
+    \emph{(2a) Countability of \(A^{n}\).}  
+    For fixed \(n\in\mathbb{N}\), the \(n\)-fold Cartesian product
+    \(A^{n}=A\times\cdots\times A\) is countable
+    (by repeated application of the fact that the product of two countable
+    sets is countable).
+    
+    \smallskip
+    \emph{(2b) A subset of \(A^{n}\) with distinct coordinates.}  
+    Set
+    \[
+       A^{(n)}
+         :=\{\, (x_{1},\dots,x_{n})\in A^{n} : x_{1},\dots,x_{n}
+               \text{ are pairwise distinct}\,\}.
+    \]
+    Clearly \(A^{(n)}\subseteq A^{n}\); hence \(A^{(n)}\) is countable.
+    
+    \smallskip
+    \emph{(2c) Surjection onto \(X_{n}\).}  
+    Define
+    \[
+       \pi : A^{(n)} \longrightarrow X_{n},
+       \qquad
+       \pi(x_{1},\dots,x_{n}) \;=\; \{x_{1},\dots,x_{n}\}.
+    \]
+    The map \(\pi\) is \emph{onto} because every \(n\)-element subset
+    \(F=\{y_{1},\dots,y_{n}\}\) of \(A\) arises as
+    \(\pi(y_{1},\dots,y_{n})\).
+    Since \(A^{(n)}\) is countable and \(\pi\) is surjective,
+    its image \(X_{n}\) is countable.
+    
+    \bigskip
+    \textbf{Step 3.  \(X\) is a countable union of countable sets.}
+    
+    We have expressed \(X\) as  
+    \(X=\bigcup_{n=0}^{\infty} X_{n}\)
+    with each \(X_{n}\) countable.
+    A countable union of countable sets is countable,
+    so \(X\) itself is countable.
+    
+    \bigskip
+    \textbf{Conclusion.}
+    The set of all finite subsets of a countable set is countable:
+    \[
+       \boxed{\;
+          A\ \text{countable} \;\Longrightarrow\;
+          X=\{F\subseteq A : F \text{ finite}\}\ \text{countable}.
+       \;}
+    \]
+    \end{solution}
+  \begin{solution}
+
+    \begin{theorem}
+      Let $A$ be an infinite set and let $B\subseteq A$ be finite.
+      Put $C:=A\setminus B$.
+      There exists a bijection $f\colon A\to C$.
+      \end{theorem}
+      
+      \begin{proof}
+      We proceed in detailed steps.
+      
+      \textbf{Step 1 (A countably infinite subset of $C$).}
+      Because $C$ is infinite, it contains a countably infinite subset.
+      Fix such a subset and denote it by
+      \[
+        D=\{d_0,d_1,d_2,\dots\}\subseteq C.
+      \]
+      
+      \textbf{Step 2 ($B\cup D$ is countably infinite).}
+      The union of a finite set $B$ with a countably infinite set $D$ is
+      countably infinite, so we may enumerate
+      \[
+        B\cup D=\{e_0,e_1,e_2,\dots\}.
+      \]
+      
+      \textbf{Step 3 (A bijection $g\colon B\cup D\to D$).}
+      Define
+      \[
+        g(e_k)=d_k\qquad(k\ge 0).
+      \]
+      Since every element of $B\cup D$ appears exactly once as some $e_k$
+      and every element of $D$ appears exactly once as $d_k$,
+      $g$ is a bijection.
+      
+      \textbf{Step 4 (Define $f\colon A\to C$).}
+      \[
+        f(a)=
+        \begin{cases}
+          a,   &\text{if }a\notin B\cup D,\\[6pt]
+          g(a),&\text{if }a\in B\cup D.
+        \end{cases}
+      \]
+      
+      \textbf{Step 5 ($f$ is injective).}
+      Let $a_1,a_2\in A$ and assume $f(a_1)=f(a_2)$.
+      \begin{itemize}
+        \item If $a_1,a_2\notin B\cup D$, then $f(a_i)=a_i$, so $a_1=a_2$.
+        \item If $a_1,a_2\in B\cup D$, then $f(a_i)=g(a_i)$ and the injectivity of $g$
+              implies $a_1=a_2$.
+        \item If exactly one of $a_1,a_2$ lies in $B\cup D$, then
+              $f(a_1)\in D$ while $f(a_2)\notin D$, a contradiction.
+      \end{itemize}
+      Thus $f$ is injective.
+      
+      \textbf{Step 6 ($f$ is surjective onto $C$).}
+      Let $c\in C$.
+      \begin{itemize}
+        \item If $c\in D$, surjectivity of $g$ yields $a\in B\cup D$ with $g(a)=c$,
+              hence $f(a)=c$.
+        \item If $c\in C\setminus D$, then $c\notin B\cup D$ and $f(c)=c$.
+      \end{itemize}
+      Therefore every $c\in C$ is hit by $f$.
+      
+      \textbf{Step 7 (Conclusion).}
+      $f$ is both injective and surjective, hence a bijection $A\to C$.
+      \end{proof}
+    \end{solution}
+    \begin{theorem}
+      Let $A$ be an \emph{uncountable} set and let $B\subseteq A$ be
+      \emph{countable}.  
+      Put $C:=A\setminus B$.
+      There exists a bijection $f\colon A\longrightarrow C$.
+      \end{theorem}
+      
+      \begin{proof}
+      We give a detailed construction.
+      
+      \medskip
+      \textbf{Step 1 (Why $C$ is uncountable).}
+      If $C$ were countable, then the union
+      \(
+      A=C\cup B
+      \)
+      of two countable sets would be countable,
+      contradicting the hypothesis that $A$ is uncountable.
+      Hence $C$ is uncountable and therefore infinite.
+      
+      \medskip
+      \textbf{Step 2 (Choose a countably infinite subset $D\subseteq C$).}
+      Because $C$ is infinite, it contains a countably infinite subset.
+      Fix one and write it as
+      \[
+        D=\{d_0,d_1,d_2,\dots\}\subseteq C .
+      \]
+      
+      \medskip
+      \textbf{Step 3 ($B\cup D$ is countable).}
+      The union of two countable sets is countable,
+      so we may enumerate
+      \[
+        B\cup D = \{e_0,e_1,e_2,\dots\}.
+      \]
+      
+      \medskip
+      \textbf{Step 4 (A bijection $g\colon B\cup D\to D$).}
+      Define
+      \[
+        g(e_k)=d_k\qquad(k\ge 0).
+      \]
+      Because every element of $B\cup D$ appears exactly once as some $e_k$
+      and every $d_k$ appears exactly once in the codomain,
+      $g$ is a bijection.
+      
+      \medskip
+      \textbf{Step 5 (Define the desired map $f\colon A\to C$).}
+      \[
+        f(a)=
+        \begin{cases}
+          a,   &\text{if }a\notin B\cup D,\\[6pt]
+          g(a),&\text{if }a\in B\cup D.
+        \end{cases}
+      \]
+      
+      \medskip
+      \textbf{Step 6 ($f$ is injective).}
+      Let $a_1,a_2\in A$ and assume $f(a_1)=f(a_2)$.
+      
+      \begin{itemize}
+        \item \emph{Both outside $B\cup D$.}
+              Then $f(a_i)=a_i$, so $a_1=a_2$.
+        \item \emph{Both inside $B\cup D$.}
+              Then $f(a_i)=g(a_i)$ and $g$ is injective,
+              hence $a_1=a_2$.
+        \item \emph{Exactly one inside $B\cup D$.}
+              Say $a_1\in B\cup D$ while $a_2\notin B\cup D$.
+              Then $f(a_1)=g(a_1)\in D$, but $f(a_2)=a_2\notin D$,
+              a contradiction.
+      \end{itemize}
+      Thus $f$ is injective.
+      
+      \medskip
+      \textbf{Step 7 ($f$ is surjective onto $C$).}
+      Take any $c\in C$.
+      
+      \begin{itemize}
+        \item If $c\in D$, surjectivity of $g$ yields an $a\in B\cup D$
+              with $g(a)=c$, so $f(a)=c$.
+        \item If $c\in C\setminus D$, then $c\notin B\cup D$
+              and $f(c)=c$.
+      \end{itemize}
+      Hence every element of $C$ is attained by $f$.
+      
+      \medskip
+      \textbf{Step 8 (Conclusion).}
+      $f$ is both injective and surjective, i.e.\ a bijection $A\to C$.
+      \end{proof}
+
+      \begin{solution}
+        \begin{theorem}
+          The open unit cube
+          \[
+            (0,1)^3 \;=\; (0,1)\times(0,1)\times(0,1)\subset\mathbb R^{3}
+          \]
+          has the same cardinality as the open unit interval $(0,1)\subset\mathbb R$.
+          \end{theorem}
+          
+          \begin{proof}
+          We construct injections in both directions and then invoke the
+          Cantor--Schröder--Bernstein theorem.
+          
+          \medskip
+          \textbf{Step 1 (Injection $(0,1)\hookrightarrow(0,1)^3$).}
+          Define
+          \[
+            f:(0,1)\longrightarrow(0,1)^3,
+            \qquad
+            f(a):=\Bigl(a,\;\tfrac12,\;\tfrac12\Bigr).
+          \]
+          If $f(a_1)=f(a_2)$ then $a_1=a_2$, so $f$ is injective.
+          
+          \medskip
+          \textbf{Step 2 (Fixing unique decimal expansions).}
+          Every real $t\in(0,1)$ has a decimal expansion  
+          $t=0.t_1t_2t_3\ldots$ with digits $t_k\in\{0,\dots,9\}$.
+          To make this expansion \emph{unique}, we \emph{forbid}
+          the representation that terminates with an infinite string of $9$’s
+          (e.g.\ we use $0.5000\ldots$ instead of $0.4999\ldots$).
+          
+          \medskip
+          \textbf{Step 3 (Injection $(0,1)^3\hookrightarrow(0,1)$).}
+          Given $(x,y,z)\in(0,1)^3$, write their unique decimal expansions
+          \[
+            x=0.x_1x_2x_3\ldots,\qquad
+            y=0.y_1y_2y_3\ldots,\qquad
+            z=0.z_1z_2z_3\ldots .
+          \]
+          Interleave the digits to form
+          \[
+            h(x,y,z)\;:=\;0.x_1y_1z_1x_2y_2z_2x_3y_3z_3\ldots\;\in(0,1).
+          \]
+          Distinct triples $(x,y,z)$ produce distinct digit strings,
+          so $h$ is injective.
+          
+          \medskip
+          \textbf{Step 4 (Cardinality comparison).}
+          We now have injections
+          \[
+            (0,1)\xrightarrow{\;f\;}(0,1)^3
+            \qquad\text{and}\qquad
+            (0,1)^3\xrightarrow{\;h\;}(0,1).
+          \]
+          By the Cantor--Schröder--Bernstein theorem there exists a \emph{bijection}
+          between $(0,1)$ and $(0,1)^3$.
+          Hence the two sets have the same cardinality.
+          \end{proof}        
+      \end{solution}
+\end{document}

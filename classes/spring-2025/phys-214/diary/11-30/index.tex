@@ -1,0 +1,1713 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{textcomp}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{PHYS 214}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    \begin{enumerate}
+        \item Compare the ground state energy of an electron in a three-dimensional square well (\(E_{3D}\)) to the ground state energy in a two-dimensional square well (\(E_{2D}\)), both with the same width \(L\) and infinite potential walls.
+        \item Determine how the degeneracy of the third energy level (\(D_3\)) compares to the degeneracy of the second energy level (\(D_2\)) for an electron in a two-dimensional infinite square well.
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item \(\hbar\): Reduced Planck's constant.
+        \item \(m\): Mass of the electron.
+        \item \(L\): Width of the square well.
+        \item \(n_x, n_y, n_z\): Quantum numbers in the \(x\), \(y\), and \(z\) directions, respectively.
+        \item \(E_{2D}\): Energy of the electron in a two-dimensional square well.
+        \item \(E_{3D}\): Energy of the electron in a three-dimensional square well.
+        \item \(D_k\): Degeneracy of the \(k\)-th energy level.
+    \end{enumerate}
+    
+The ground state energy in 2D is:
+    $$
+    E_{2D, \text{ground}} = \frac{\hbar^2 \pi^2}{2mL^2} (1^2 + 1^2) = \frac{\hbar^2 \pi^2}{2mL^2} \cdot 2
+    $$
+    The ground state energy in 3D is:
+    $$
+    E_{3D, \text{ground}} = \frac{\hbar^2 \pi^2}{2mL^2} (1^2 + 1^2 + 1^2) = \frac{\hbar^2 \pi^2}{2mL^2} \cdot 3
+    $$
+    Thus:
+    $$
+    E_{3D} = \frac{3}{2} E_{2D}
+    $$
+    
+Energy levels are determined by \(n_x^2 + n_y^2\). Degeneracies are:
+    $$
+    D_1 = 1, \quad D_2 = 2, \quad D_3 = 1
+    $$
+    Thus:
+    $$
+    D_3 < D_2
+    $$
+\end{problem}
+\begin{problem}
+    \textbf{Parameters:}
+\begin{enumerate}
+    \item \(\hbar\): Reduced Planck's constant.
+    \item \(m\): Mass of the electron.
+    \item \(e\): Elementary charge.
+    \item \(\epsilon_0\): Vacuum permittivity.
+    \item \(n\): Principal quantum number (\(n = 1, 2, 3, \dots\)).
+    \item \(E_n\): Energy of the electron in the \(n\)-th energy level.
+\end{enumerate}
+
+\begin{enumerate}
+    \item[3.] Determine whether the energies of the bound states of an electron in the attractive Coulomb potential—i.e., the hydrogen atom potential—are:
+    \begin{enumerate}
+        \item always positive.
+        \item can be positive or negative.
+        \item always negative.
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Solution:} The energy levels of an electron in the hydrogen atom are given by:
+$$
+E_n = -\frac{m e^4}{8 \epsilon_0^2 h^2 n^2} = -\frac{13.6\,\text{eV}}{n^2}
+$$
+where:
+\begin{enumerate}
+    \item \(e\) is the elementary charge.
+    \item \(h = 2\pi\hbar\) is Planck's constant.
+    \item \(n\) is the principal quantum number.
+\end{enumerate}
+Since the expression for \(E_n\) is negative for all positive integer values of \(n\), the energies of the bound states are always negative.
+
+\textbf{Answer:} \textbf{(c)} The energies are always negative.
+
+\end{problem}
+\begin{problem}
+    A material which has only filled energy bands at zero temperature is \textit{always} a metal.
+
+    \begin{enumerate}
+        \item True
+        \item \textbf{False}—If all energy bands are completely filled at zero temperature, the material behaves as an insulator or semiconductor, not a metal.
+        \item Information provided is insufficient to decide.
+    \end{enumerate} 
+\end{problem}
+\begin{problem}
+
+\noindent
+\begin{enumerate}
+    \item[5.] A hydrogen atom undergoes a transition from an excited state \(n = 8\) to a state with \(n = 7\). 
+    What is the wavelength of the emitted photon?
+    \begin{enumerate}
+        \item 190 \(\mu\)m
+        \item 19 \(\mu\)m
+        \item 1.9 \(\mu\)m
+        \item 0.19 \(\mu\)m
+        \item \(1.9 \times 10^{-9}\) \(\mu\)m
+    \end{enumerate}
+\end{enumerate}
+\textbf{Parameters:}
+\begin{enumerate}
+    \item \(R_H\): Rydberg constant for hydrogen (\(R_H = 1.097 \times 10^7 \, \text{m}^{-1}\)).
+    \item \(n\): Principal quantum number (\(n = 1, 2, 3, \dots\)).
+    \item \(\lambda\): Wavelength of the emitted photon.
+    \item \(c\): Speed of light.
+    \item \(E\): Energy difference between states.
+\end{enumerate}
+\textbf{Solution:}
+The wavelength of the emitted photon is determined using the Rydberg formula:
+$$
+\frac{1}{\lambda} = R_H \left( \frac{1}{n_f^2} - \frac{1}{n_i^2} \right)
+$$
+where \(n_i\) and \(n_f\) are the initial and final principal quantum numbers. Substituting \(n_i = 8\) and \(n_f = 7\), we calculate:
+$$
+\frac{1}{\lambda} = R_H \left( \frac{1}{7^2} - \frac{1}{8^2} \right)
+$$
+$$
+\frac{1}{\lambda} = 1.097 \times 10^7 \, \text{m}^{-1} \left( \frac{1}{49} - \frac{1}{64} \right)
+$$
+$$
+\frac{1}{\lambda} = 1.097 \times 10^7 \, \text{m}^{-1} \left( \frac{64 - 49}{49 \cdot 64} \right)
+$$
+$$
+\frac{1}{\lambda} = 1.097 \times 10^7 \, \text{m}^{-1} \cdot \frac{15}{3136}
+$$
+$$
+\frac{1}{\lambda} = 5.25 \times 10^3 \, \text{m}^{-1}
+$$
+$$
+\lambda = \frac{1}{5.25 \times 10^3} = 1.9 \times 10^{-6} \, \text{m} = 19 \, \mu\text{m}.
+$$
+
+\textbf{Answer:} \textbf{(b)} \(19 \, \mu\text{m}\).
+
+\end{problem}
+\begin{problem}
+\begin{enumerate}
+    \item[6.] Which of the following \((n, l, m_l, m_s)\) combinations is impossible for an electron in a hydrogen atom?
+    \begin{enumerate}
+        \item \((3, 2, -1, \frac{1}{2})\)
+        \item \((6, 2, 2, \frac{1}{2})\)
+        \item \((8, 6, -6, -\frac{1}{2})\)
+        \item \((3, 2, 0, -\frac{1}{2})\)
+        \item \((3, 3, -1, -\frac{1}{2})\)
+    \end{enumerate}
+\end{enumerate}
+\textbf{Parameters:}
+\begin{enumerate}
+    \item \(n\): Principal quantum number (\(n = 1, 2, 3, \dots\)).
+    \item \(l\): Azimuthal quantum number (\(l = 0, 1, 2, \dots, n-1\)).
+    \item \(m_l\): Magnetic quantum number (\(m_l = -l, -(l-1), \dots, l\)).
+    \item \(m_s\): Spin quantum number (\(m_s = \pm \frac{1}{2}\)).
+\end{enumerate}
+\textbf{Solution:}
+To determine which combination is impossible:
+\begin{enumerate}
+    \item The azimuthal quantum number \(l\) must satisfy \(0 \leq l \leq n-1\).
+    \item In option \((3, 3, -1, -\frac{1}{2})\), the value \(l = 3\) is invalid because \(l\) cannot be equal to or exceed \(n = 3\). Therefore, this combination is impossible.
+\end{enumerate}
+
+\textbf{Answer:} \textbf{(e)} \((3, 3, -1, -\frac{1}{2})\).
+
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+\begin{enumerate}
+    \item[7.] Suppose a hydrogen atom is prepared in the \((n, l, m_l) = (3, 2, 0)\) state. The radial wave function for this state is 
+    $$
+    R_{32} = N \left(\frac{r}{a_0}\right)^2 e^{-r / 3a_0},
+    $$
+    where \(N\) is the normalization constant. At what radius, \(r_{\text{max}}\), is the electron most likely to be found?
+    \begin{enumerate}
+        \item \(r_{\text{max}} = 0.5a_0\)
+        \item \(r_{\text{max}} = a_0\)
+        \item \(r_{\text{max}} = 1.51a_0\)
+        \item \(r_{\text{max}} = 4.13a_0\)
+        \item \(r_{\text{max}} = 9a_0\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item \(n\): Principal quantum number (\(n = 3\)).
+    \item \(l\): Azimuthal quantum number (\(l = 2\)).
+    \item \(a_0\): Bohr radius.
+    \item \(r_{\text{max}}\): Radius at which the radial probability density is maximized.
+\end{enumerate}
+
+\textbf{Solution:}
+To find \(r_{\text{max}}\), we maximize the radial probability density \(P(r)\), which is proportional to \(r^2 |R_{32}|^2\). For the given wave function:
+$$
+R_{32} = N \left(\frac{r}{a_0}\right)^2 e^{-r / 3a_0}.
+$$
+The probability density is:
+$$
+P(r) \propto r^2 \left(\frac{r}{a_0}\right)^4 e^{-2r / 3a_0}.
+$$
+Simplifying:
+$$
+P(r) \propto \left(\frac{r^6}{a_0^4}\right) e^{-2r / 3a_0}.
+$$
+To maximize \(P(r)\), take the derivative of \(P(r)\) with respect to \(r\), set it equal to zero, and solve:
+$$
+\frac{d}{dr}\left(\frac{r^6}{a_0^4} e^{-2r / 3a_0}\right) = 0.
+$$
+This involves using the product rule and solving for \(r\). The solution yields:
+$$
+r_{\text{max}} = 9a_0.
+$$
+
+\textbf{Answer:} \textbf{(e)} \(r_{\text{max}} = 9a_0\).
+
+\end{problem}
+\begin{problem}
+\begin{enumerate}
+    \item[8.] Which of the following electron configurations violates the Pauli Exclusion Principle?
+    \begin{enumerate}
+        \item \(1s^2 \, 2p^5 \, 3d^1 \, 5f^{10}\)
+        \item \(1s^1 \, 2p^6 \, 3d^3 \, 5f^4\)
+        \item \(1s^2 \, 2p^1 \, 3d^{10} \, 5f^8\)
+        \item \(1s^1 \, 2p^1 \, 3d^{11} \, 5f^{12}\)
+        \item \(1s^2 \, 2p^3 \, 3d^{10} \, 5f^8\)
+    \end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}
+    \item The Pauli Exclusion Principle states that no two electrons in an atom can have the same set of quantum numbers.
+    \item Each subshell has a maximum number of electrons determined by its quantum numbers:
+    \begin{enumerate}
+        \item \(s\)-subshell: maximum \(2\) electrons.
+        \item \(p\)-subshell: maximum \(6\) electrons.
+        \item \(d\)-subshell: maximum \(10\) electrons.
+        \item \(f\)-subshell: maximum \(14\) electrons.
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item For option \(D\), the \(3d\)-subshell contains \(11\) electrons, which exceeds its maximum capacity of \(10\) electrons.
+    \item This violates the Pauli Exclusion Principle because subshells cannot hold more electrons than their maximum allowed capacity.
+\end{enumerate}
+
+\textbf{Answer:} \textbf{(d)} \(1s^1 \, 2p^1 \, 3d^{11} \, 5f^{12}\).
+
+\end{problem}
+\begin{problem}
+An electron sits in the second energy level in an infinite 1-D potential well.
+
+\begin{enumerate}
+    \item[9.] If the energy of the electron in this state is \(E_2 = 24 \, \text{eV}\), what is the width \(L\) of the well?
+    \begin{enumerate}
+        \item \(L = 0.11 \, \text{nm}\)
+        \item \textbf{\(L = 0.25 \, \text{nm}\)}
+        \item \(L = 1.5 \, \text{nm}\)
+        \item \(L = 4.3 \, \text{nm}\)
+        \item \(L = 13 \, \text{nm}\)
+    \end{enumerate}
+    \item[10.] If the electron makes a transition from this second energy level (\(E_2\)) to the ground state energy (\(E_1\)) of this infinite 1-D potential well, a photon of what wavelength \(\lambda\) will be emitted?
+    \begin{enumerate}
+        \item \(\lambda = 3.2 \, \text{nm}\)
+        \item \(\lambda = 18 \, \text{nm}\)
+        \item \textbf{\(\lambda = 69 \, \text{nm}\)}
+        \item \(\lambda = 142 \, \text{nm}\)
+        \item \(\lambda = 326 \, \text{nm}\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The energy levels of an infinite 1-D potential well are given by:
+    $$
+    E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2},
+    $$
+    where \(n = 1, 2, 3, \dots\), \(m\) is the mass of the electron, \(L\) is the width of the well, and \(\hbar\) is the reduced Planck's constant.
+    \item The energy difference between two levels is related to the emitted photon's wavelength by:
+    $$
+    E = \frac{hc}{\lambda},
+    $$
+    where \(h\) is Planck's constant, \(c\) is the speed of light, and \(\lambda\) is the wavelength.
+\end{enumerate}
+
+\textbf{Solution to Problem 9:}
+For the second energy level:
+$$
+E_2 = \frac{2^2 \pi^2 \hbar^2}{2mL^2}.
+$$
+Rearranging for \(L\):
+$$
+L = \sqrt{\frac{4 \pi^2 \hbar^2}{2mE_2}}.
+$$
+Substituting constants and \(E_2 = 24 \, \text{eV}\), we find:
+$$
+L \approx 0.25 \, \text{nm}.
+$$
+
+\textbf{Answer:} \textbf{(b)} \(L = 0.25 \, \text{nm}\).
+
+\textbf{Solution to Problem 10:}
+The energy difference between the second and ground state is:
+$$
+\Delta E = E_2 - E_1.
+$$
+Since \(E_n \propto n^2\):
+$$
+\Delta E = E_2 - E_1 = 24 \, \text{eV} - \frac{24}{4} \, \text{eV} = 18 \, \text{eV}.
+$$
+Using \(\Delta E = \frac{hc}{\lambda}\):
+$$
+\lambda = \frac{hc}{\Delta E}.
+$$
+Substituting constants and \(\Delta E = 18 \, \text{eV}\), we find:
+$$
+\lambda \approx 69 \, \text{nm}.
+$$
+
+\textbf{Answer:} \textbf{(c)} \(\lambda = 69 \, \text{nm}\).
+
+\end{problem}
+\begin{problem}
+    
+\textbf{Problem Description:}
+An electron with an energy \(E = 7 \, \text{eV}\) and traveling in the \(+x\) direction approaches a potential barrier of height \(U_0 = 9 \, \text{eV}\) and width \(L = 0.3 \, \text{nm}\).
+
+\begin{enumerate}
+    \item[11.] What is the wavelength \(\lambda\) of the electron in the region \(x < 0\)?
+    \begin{enumerate}
+        \item \(\lambda = 0.11 \, \text{nm}\)
+        \item \textbf{\(\lambda = 0.46 \, \text{nm}\)}
+        \item \(\lambda = 5.9 \, \text{nm}\)
+        \item \(\lambda = 63 \, \text{nm}\)
+        \item \(\lambda = 177 \, \text{nm}\)
+    \end{enumerate}
+    
+    \item[12.] What is the transmission probability \(T\), i.e., the probability that the electron will penetrate through the barrier?
+    \begin{enumerate}
+        \item \(T = 0\%\)
+        \item \(T = 0.34\%\)
+        \item \textbf{\(T = 1.3\%\)}
+        \item \(T = 7.9\%\)
+        \item \(T = 24\%\)
+    \end{enumerate}
+
+    \item[13.] A muon is a particle with the same charge as the electron but with a larger mass (\(m_{\text{muon}} = 207 \, m_{\text{electron}}\)). If a muon instead of an electron approaches the same barrier under the same conditions, which of the following is true?
+    \begin{enumerate}
+        \item The muon is more likely to penetrate the barrier than the electron.
+        \item \textbf{The muon is less likely to penetrate the barrier than the electron.}
+        \item The muon and the electron are equally likely to penetrate the barrier.
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The wavelength of the electron in the region \(x < 0\) is determined by:
+    $$
+    \lambda = \frac{h}{\sqrt{2mE}},
+    $$
+    where \(h\) is Planck's constant, \(m\) is the mass of the electron, and \(E = 7 \, \text{eV}\) is the energy of the electron.
+    \item The transmission probability \(T\) through a barrier is approximated by:
+    $$
+    T \propto e^{-2 \kappa L}, \quad \text{where } \kappa = \sqrt{\frac{2m(U_0 - E)}{\hbar^2}}.
+    $$
+    \item A heavier particle, like the muon, has a larger \(\kappa\) due to its greater mass, reducing the transmission probability.
+\end{enumerate}
+
+\textbf{Solutions:}
+\begin{enumerate}
+    \item For problem 11, substituting constants into the wavelength equation gives \(\lambda \approx 0.46 \, \text{nm}\).
+    \item For problem 12, using the transmission formula, the probability is \(T \approx 1.3\%\).
+    \item For problem 13, since the muon is heavier, it is less likely to penetrate the barrier.
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[11.] \textbf{(b)} \(\lambda = 0.46 \, \text{nm}\)
+    \item[12.] \textbf{(c)} \(T = 1.3\%\)
+    \item[13.] \textbf{(b)} The muon is less likely to penetrate the barrier than the electron.
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+The wavefunction of a particle in a 1-D infinite square well potential of width \(L\) is given at \(t=0\) by:
+$$
+\psi(x, t=0) = A \{ \sin(\pi x / L) + \sin(3\pi x / L) + \sin(5\pi x / L) \},
+$$
+where \(A\) is a constant.
+
+\begin{enumerate}
+    \item[14.] Which of the following statements best describes the time-dependence of this particle's probability density, 
+    $$
+    \psi^*(x, t) \cdot \psi(x, t) = |\psi(x, t)|^2,
+    $$
+    for \(t > 0\)?
+    \begin{enumerate}
+        \item The probability density is independent of time, because \(\psi(x, t=0)\) IS an eigenstate.
+        \item The probability density is independent of time, because \(\psi(x, t=0)\) IS NOT an eigenstate.
+        \item The probability density changes with time, because \(\psi(x, t=0)\) IS an eigenstate.
+        \item \textbf{The probability density changes with time, because \(\psi(x, t=0)\) IS NOT an eigenstate.}
+        \item There is not enough information given to tell whether or not the particle's probability density changes with time.
+    \end{enumerate}
+
+    \item[15.] If \(E_1\) is the lowest possible energy of the particle in this potential, what are the possible results of a measurement of this particle's energy \(E\) when it is described by the above wavefunction?
+    \begin{enumerate}
+        \item \(E = (E_1 + 4E_1 + 9E_1) / 3\)
+        \item \(E = (E_1 + 9E_1 + 25E_1) / 3\)
+        \item \(E = E_1, 4E_1, \text{ OR } 9E_1\)
+        \item \textbf{\(E = E_1, 9E_1, \text{ OR } 25E_1\)}
+        \item \(E = E_1, 3E_1, \text{ OR } 5E_1\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item For a superposition of eigenstates, the wavefunction evolves in time as:
+    $$
+    \psi(x, t) = \sum c_n \phi_n(x) e^{-i E_n t / \hbar},
+    $$
+    where \(\phi_n(x)\) are the eigenfunctions of the infinite square well and \(E_n\) are the corresponding energy eigenvalues.
+    \item The probability density \(|\psi(x, t)|^2\) depends on the cross-terms between eigenfunctions when \(\psi(x, t=0)\) is not a single eigenstate. Hence, it changes with time.
+    \item The energy eigenvalues for the infinite square well are given by:
+    $$
+    E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}.
+    $$
+    The given wavefunction contains \(\sin(\pi x / L)\), \(\sin(3\pi x / L)\), and \(\sin(5\pi x / L)\), corresponding to \(n=1\), \(n=3\), and \(n=5\), respectively. Thus, the possible energies are \(E_1, 9E_1, \text{ and } 25E_1\).
+\end{enumerate}
+
+\textbf{Solutions:}
+\begin{enumerate}
+    \item For problem 14, since \(\psi(x, t=0)\) is a superposition of eigenstates (\(n=1, 3, 5\)), the probability density depends on time due to interference terms between eigenfunctions.
+    \item For problem 15, the possible energies are given by the squared coefficients of the eigenfunctions, which correspond to \(E_1, 9E_1, \text{ and } 25E_1\).
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[14.] \textbf{(d)} The probability density changes with time, because \(\psi(x, t=0)\) IS NOT an eigenstate.
+    \item[15.] \textbf{(d)} \(E = E_1, 9E_1, \text{ OR } 25E_1\).
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    
+\textbf{Problem Description:}
+A particle is confined in the potential well of width \(L\) shown below and is in its third allowed energy level, i.e., has an energy \(E_3\).
+
+\begin{enumerate}
+    \item[16.] Which of the following wavefunctions best describes the particle in the third energy level of the potential above?
+    \begin{enumerate}
+        \item \(\psi(x)\): Incorrect; it does not have the correct number of nodes for the third energy level.
+        \item \(\psi(x)\): Incorrect; it does not satisfy the boundary conditions.
+        \item \(\psi(x)\): Incorrect; the wavefunction has too many nodes.
+        \item \textbf{\(\psi(x)\): Correct; it has two nodes, consistent with the third energy level.}
+        \item \(\psi(x)\): Incorrect; the wavefunction does not satisfy the boundary conditions.
+    \end{enumerate}
+
+    \item[17.] Now, assume that this same particle is placed in a 1-D infinite square well potential having the same width, \(L\), as the potential shown above. Which statement correctly describes the relationship between the energy of the particle in the third allowed energy level of the 1-D infinite square well potential, \(E_3'\), and the third allowed energy for the potential shown above (\(E_3\))?
+    \begin{enumerate}
+        \item \(E_3' < E_3\): Incorrect; the potential barrier \(U_0\) adds energy to \(E_3\).
+        \item \textbf{\(E_3' > E_3\): Correct; the infinite square well allows higher energy levels.}
+        \item \(E_3' = E_3\): Incorrect; \(E_3\) is reduced due to the finite barrier height.
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The number of nodes in a wavefunction is given by \(n - 1\), where \(n\) is the energy level index.
+    \item For an infinite square well, the energy levels are higher because the particle is confined entirely within the well without tunneling.
+\end{enumerate}
+
+\textbf{Solutions:}
+\begin{enumerate}
+    \item For problem 16, the wavefunction corresponding to the third energy level should have \(n-1 = 2\) nodes. Option \(D\) correctly represents this behavior.
+    \item For problem 17, the infinite square well has higher energy levels than the finite square well because the particle is more confined, resulting in larger \(E_n'\) values.
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[16.] \textbf{(d)} The wavefunction with two nodes.
+    \item[17.] \textbf{(b)} \(E_3' > E_3\).
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+    
+    \begin{enumerate}
+        \item[18.] A particle with a mass of \(10^{-25} \, \text{kg}\) has a spread of velocities \(\Delta v \sim 10 \, \text{m/s}\). Roughly, what is the uncertainty in the particle's position, \(\Delta x\)?
+        \begin{enumerate}
+            \item \(0\)
+            \item \textbf{\(10^{-10} \, \text{m}\)}
+            \item \(10^{-3} \, \text{m}\)
+            \item \(10^3 \, \text{m}\)
+            \item \(10^{10} \, \text{m}\)
+        \end{enumerate}
+        \item[19.] If three identical finite square potential wells are moved closer together, the ground state energy of a particle confined in the wells will:
+        \begin{enumerate}
+            \item \textbf{decrease}
+            \item not change
+            \item increase
+        \end{enumerate}
+    
+        \item[20.] An electron is placed in a \(5 \, \text{T}\) magnetic field. What frequency photon is emitted when the electron switches from its high-energy spin state to its low-energy spin state?
+        \begin{enumerate}
+            \item \(f = 1.4 \times 10^1 \, \text{Hz}\)
+            \item \(f = 1.4 \times 10^4 \, \text{Hz}\)
+            \item \textbf{\(f = 1.4 \times 10^{11} \, \text{Hz}\)}
+            \item \(f = 1.4 \times 10^{47} \, \text{Hz}\)
+            \item \(f = 1.4 \times 10^{64} \, \text{Hz}\)
+        \end{enumerate}
+    
+        \item[21.] The forbidden regions of electron energy in a solid are due to:
+        \begin{enumerate}
+            \item \textbf{the interference of electron waves scattered from the periodic atomic lattice.}
+            \item the vanishing of the electron wavefunctions at the edges of the solid.
+            \item the presence of regions where the electron total energy is less than its potential energy.
+        \end{enumerate}
+    
+        \item[22.] When light of wavelength \(\lambda = 450 \, \text{nm}\) shines on a certain metal, the maximum energy of the emitted electrons is \(1.50 \, \text{eV}\). How big is this metal’s work function \(\Phi\)?
+        \begin{enumerate}
+            \item \(\Phi = 0.17 \, \text{eV}\)
+            \item \textbf{\(\Phi = 1.26 \, \text{eV}\)}
+            \item \(\Phi = 1.89 \, \text{eV}\)
+            \item \(\Phi = 12.12 \, \text{eV}\)
+            \item \(\Phi = 20.11 \, \text{eV}\)
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 18: The uncertainty principle states:
+        $$
+        \Delta x \cdot \Delta p \sim \hbar,
+        $$
+        where \(\Delta p = m \Delta v\). Substituting values gives \(\Delta x \sim 10^{-10} \, \text{m}\).
+        \item Problem 19: Moving potential wells closer together lowers the energy levels due to increased coupling between wells.
+        \item Problem 20: The energy difference due to spin states in a magnetic field is:
+        $$
+        \Delta E = g \mu_B B,
+        $$
+        where \(g = 2\), \(\mu_B = 9.27 \times 10^{-24} \, \text{J/T}\), and \(B = 5 \, \text{T}\). Using \(\Delta E = h f\), solve for \(f \sim 1.4 \times 10^{11} \, \text{Hz}\).
+        \item Problem 21: The band gap arises from the interference of electron waves due to periodic potentials in the atomic lattice.
+        \item Problem 22: The work function is given by:
+        $$
+        \Phi = h f - K_{\text{max}},
+        $$
+        where \(K_{\text{max}} = 1.50 \, \text{eV}\), and \(f = c / \lambda\) gives the photon energy. Substituting, \(\Phi = 1.26 \, \text{eV}\).
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[18.] \textbf{(b)} \(10^{-10} \, \text{m}\)
+        \item[19.] \textbf{(a)} decrease
+        \item[20.] \textbf{(c)} \(f = 1.4 \times 10^{11} \, \text{Hz}\)
+        \item[21.] \textbf{(a)} the interference of electron waves scattered from the periodic atomic lattice
+        \item[22.] \textbf{(b)} \(\Phi = 1.26 \, \text{eV}\)
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+
+\begin{enumerate}
+    \item[23.] An electron and a neutron have the same kinetic energy. Which particle has the longer wavelength?
+    \begin{enumerate}
+        \item \textbf{The electron}
+        \item The neutron
+        \item They are the same
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The de Broglie wavelength of a particle is given by:
+    $$
+    \lambda = \frac{h}{p},
+    $$
+    where \(h\) is Planck's constant, and \(p = \sqrt{2mK}\) is the momentum of the particle, with \(m\) being the mass and \(K\) the kinetic energy.
+    \item For the same kinetic energy, the particle with the smaller mass has the longer wavelength because \(p \propto \sqrt{m}\).
+    \item The electron (\(m_{\text{electron}} \approx 9.11 \times 10^{-31} \, \text{kg}\)) has a much smaller mass than the neutron (\(m_{\text{neutron}} \approx 1.67 \times 10^{-27} \, \text{kg}\)).
+\end{enumerate}
+
+\textbf{Solution:}
+Since the mass of the electron is much smaller than that of the neutron, the electron has the longer de Broglie wavelength for the same kinetic energy.
+
+\textbf{Answer:} \textbf{(a)} The electron.
+
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+
+A resultant wave with an amplitude \(A\) and a phase angle \(\phi\) is the result of the superposition of three waves, as given below:
+$$
+E = A\sin(\omega t + \phi) = 2\sin\omega t + 2\sin(\omega t + 30^\circ) + 2\sin(\omega t + 60^\circ).
+$$
+
+\begin{enumerate}
+    \item[24.] What is the amplitude \(A\) of the resultant wave?
+    \begin{enumerate}
+        \item \(A = 1.0\)
+        \item \(A = 2.1\)
+        \item \(A = 3.2\)
+        \item \(A = 4.0\)
+        \item \textbf{\(A = 5.5\)}
+    \end{enumerate}
+
+    \item[25.] What is the phase angle \(\phi\) of the resultant wave?
+    \begin{enumerate}
+        \item \(\phi = 90^\circ\)
+        \item \(\phi = 60^\circ\)
+        \item \textbf{\(\phi = 30^\circ\)}
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The amplitude of a resultant wave from the superposition of multiple waves is calculated using vector addition in the complex plane. For three waves:
+    $$
+    A = \sqrt{\left(\sum X_i\right)^2 + \left(\sum Y_i\right)^2},
+    $$
+    where \(X_i\) and \(Y_i\) are the components of each wave.
+    \item The phase angle is given by:
+    $$
+    \phi = \tan^{-1}\left(\frac{\sum Y_i}{\sum X_i}\right).
+    $$
+\end{enumerate}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item The three waves can be represented in complex form:
+    $$
+    2e^{i(0^\circ)}, \quad 2e^{i(30^\circ)}, \quad 2e^{i(60^\circ)}.
+    $$
+    Adding their components:
+    $$
+    X = 2\cos(0^\circ) + 2\cos(30^\circ) + 2\cos(60^\circ),
+    $$
+    $$
+    Y = 2\sin(0^\circ) + 2\sin(30^\circ) + 2\sin(60^\circ).
+    $$
+    Solving for \(X\) and \(Y\):
+    $$
+    X = 2 + 1.732 + 1 = 4.732, \quad Y = 0 + 1 + 1.732 = 2.732.
+    $$
+    The amplitude is:
+    $$
+    A = \sqrt{X^2 + Y^2} = \sqrt{(4.732)^2 + (2.732)^2} \approx 5.5.
+    $$
+    \item The phase angle is:
+    $$
+    \phi = \tan^{-1}\left(\frac{Y}{X}\right) = \tan^{-1}\left(\frac{2.732}{4.732}\right) \approx 30^\circ.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[24.] \textbf{(e)} \(A = 5.5\)
+    \item[25.] \textbf{(c)} \(\phi = 30^\circ\)
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+
+\begin{enumerate}
+    \item[26.] A photograph is taken of an object which is placed 6 m in front of the camera. If the camera lens has a diameter of \(2.0 \, \text{cm}\), what is the minimum separation, \(\Delta x\), of two points on the object that can be resolved by the camera lens? Assume that the wavelength of the light used is \(550 \, \text{nm}\).
+    \begin{enumerate}
+        \item \(\Delta x = 0.13 \, \text{nm}\)
+        \item \(\Delta x = 0.1 \, \text{mm}\)
+        \item \textbf{\(\Delta x = 0.2 \, \text{mm}\)}
+        \item \(\Delta x = 0.4 \, \text{mm}\)
+        \item \(\Delta x = 1 \, \text{mm}\)
+    \end{enumerate}
+
+    \item[27.] Consider a 3 cm wide diffraction grating with 2,500 lines. For the first-order spectrum (\(m = 1\)), what is the separation, \(\Delta y\), of light from red (\( \lambda = 650 \, \text{nm} \)) and green (\( \lambda = 550 \, \text{nm} \)) lasers on a screen 2 m from the diffraction grating (you may use the small angle approximation)?
+    \begin{enumerate}
+        \item \(\Delta y = 0.016 \, \text{cm}\)
+        \item \(\Delta y = 0 \, \text{m}\)
+        \item \(\Delta y = 0.016 \, \text{nm}\)
+        \item \(\Delta y = 0.016 \, \text{mm}\)
+        \item \textbf{\(\Delta y = 0.017 \, \text{m}\)}
+    \end{enumerate}
+
+    \item[28.] Consider a five-slit interference pattern. What angle \(\phi\) (in radians) between adjacent phasors corresponds to the first zero in the intensity pattern?
+    \begin{enumerate}
+        \item \(\phi = 0\)
+        \item \(\phi = \pi / 5\)
+        \item \(\phi = \pi / 2\)
+        \item \textbf{\(\phi = 2\pi / 5\)}
+        \item \(\phi = \pi\)
+    \end{enumerate}
+
+    \item[29.] Two \(450 \, \text{Hz}\) sound waves with intensities of \(0.5 \, \text{W/m}^2\) and \(0.3 \, \text{W/m}^2\) arrive at your ear from different sources. The maximum intensity that will result is:
+    \begin{enumerate}
+        \item \(10.12 \, \text{W/m}^2\)
+        \item \(4.32 \, \text{W/m}^2\)
+        \item \textbf{\(1.57 \, \text{W/m}^2\)}
+        \item \(0.51 \, \text{W/m}^2\)
+        \item \(0.11 \, \text{W/m}^2\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 26: The minimum resolvable separation is given by the Rayleigh criterion:
+    $$
+    \Delta x = 1.22 \frac{\lambda L}{D},
+    $$
+    where \(\lambda = 550 \, \text{nm}\), \(L = 6 \, \text{m}\), and \(D = 0.02 \, \text{m}\). Substituting:
+    $$
+    \Delta x \approx 0.2 \, \text{mm}.
+    $$
+    \item Problem 27: The angular separation is:
+    $$
+    \Delta \theta = \lambda \frac{1}{d},
+    $$
+    where \(d = \frac{\text{width of grating}}{\text{number of lines}} = \frac{3 \, \text{cm}}{2500} = 1.2 \times 10^{-6} \, \text{m}\). For small angle approximation, \(\Delta y = L \Delta \theta\), and substituting:
+    $$
+    \Delta y \approx 0.017 \, \text{m}.
+    $$
+    \item Problem 28: For \(N = 5\) slits, the first zero occurs when the phase difference between adjacent phasors is:
+    $$
+    \phi = \frac{2\pi}{N} = \frac{2\pi}{5}.
+    $$
+    \item Problem 29: The maximum intensity is given by:
+    $$
+    I_{\text{max}} = (\sqrt{I_1} + \sqrt{I_2})^2,
+    $$
+    where \(I_1 = 0.5 \, \text{W/m}^2\) and \(I_2 = 0.3 \, \text{W/m}^2\). Substituting:
+    $$
+    I_{\text{max}} = (\sqrt{0.5} + \sqrt{0.3})^2 \approx 1.57 \, \text{W/m}^2.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[26.] \textbf{(c)} \(\Delta x = 0.2 \, \text{mm}\)
+    \item[27.] \textbf{(e)} \(\Delta y = 0.017 \, \text{m}\)
+    \item[28.] \textbf{(d)} \(\phi = 2\pi / 5\)
+    \item[29.] \textbf{(c)} \(1.57 \, \text{W/m}^2\)
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+
+    \begin{enumerate}
+        \item[30.] A slit of width \(a\) is illuminated with light of \(\lambda = 620 \, \text{nm}\). The distance between the slit and the screen is \(L = 2.5 \, \text{m}\), and the distance on the screen between the maximum in the diffraction intensity and the first diffraction minimum on either side of the central maximum is \(y = 20 \, \text{cm}\). What is the slit width, \(a\)? (You may use the small angle approximation.)
+        \begin{enumerate}
+            \item \textbf{\(a = 7.75 \, \mu\text{m}\)}
+            \item \(a = 3.45 \, \mu\text{m}\)
+            \item \(a = 0.44 \, \mu\text{m}\)
+            \item \(a = 1.45 \, \text{nm}\)
+            \item \(a = 0.11 \, \text{nm}\)
+        \end{enumerate}
+    
+        \item[31.] It is possible to place up to six electrons in the ground state of a three-dimensional infinite square well.
+        \begin{enumerate}
+            \item True
+            \item \textbf{False}
+            \item True, if the square well is large enough
+        \end{enumerate}
+    
+        \item[32.] The larger the energy gap between the valence band and the conduction band of a semiconductor, the higher the frequency of the photon needed to excite an electron across the gap.
+        \begin{enumerate}
+            \item \textbf{True}
+            \item False
+            \item Depends on the temperature
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 30: The angular position of the first diffraction minimum is given by:
+        $$
+        \sin \theta = \frac{\lambda}{a}.
+        $$
+        Using the small angle approximation, \(\tan \theta \approx \sin \theta \approx \frac{y}{L}\), we get:
+        $$
+        a = \frac{\lambda L}{y}.
+        $$
+        Substituting \(\lambda = 620 \, \text{nm}\), \(L = 2.5 \, \text{m}\), and \(y = 0.2 \, \text{m}\), we find:
+        $$
+        a \approx 7.75 \, \mu\text{m}.
+        $$
+        \item Problem 31: The ground state of a three-dimensional infinite square well can hold up to two electrons (one with spin up and one with spin down), not six.
+        \item Problem 32: The energy of a photon is proportional to its frequency, \(E = h f\). A larger energy gap requires a higher energy photon, which corresponds to a higher frequency.
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[30.] \textbf{(a)} \(a = 7.75 \, \mu\text{m}\)
+        \item[31.] \textbf{(b)} False
+        \item[32.] \textbf{(a)} True
+    \end{enumerate} 
+\end{problem}
+\begin{problem}
+    \textbf{Problem Description:}
+
+Two speakers are placed in the corners of a room and heard from a chair that is equidistant from each speaker, as shown in the diagram. The speakers are driven in phase at \(2 \, \text{kHz}\).
+
+\begin{enumerate}
+    \item[1.] The power outputs of the speakers are controlled separately. The sound intensity at the chair is \(8 \, \text{W/m}^2\) when only the left speaker is on, and it becomes \(200 \, \text{W/m}^2\) when both speakers are on. What is the intensity at the chair when only the right speaker is on?
+    \begin{enumerate}
+        \item \(14 \, \text{W/m}^2\)
+        \item \(64 \, \text{W/m}^2\)
+        \item \textbf{\(128 \, \text{W/m}^2\)}
+        \item \(192 \, \text{W/m}^2\)
+        \item \(197 \, \text{W/m}^2\)
+    \end{enumerate}
+
+    \item[2.] The frequency of the speakers is now increased to \(4 \, \text{kHz}\) while keeping the intensities from each speaker constant. What happens to the total intensity at the chair when both speakers are on?
+    \begin{enumerate}
+        \item decreases
+        \item increases
+        \item \textbf{stays the same}
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 1: When two sound sources are in phase, the total intensity is related to the amplitudes of the individual sources by:
+    $$
+    I_{\text{total}} = \left( \sqrt{I_{\text{left}}} + \sqrt{I_{\text{right}}} \right)^2.
+    $$
+    Substituting \(I_{\text{total}} = 200 \, \text{W/m}^2\) and \(I_{\text{left}} = 8 \, \text{W/m}^2\):
+    $$
+    \sqrt{200} = \sqrt{8} + \sqrt{I_{\text{right}}}.
+    $$
+    Solving for \(I_{\text{right}}\):
+    $$
+    \sqrt{I_{\text{right}}} = \sqrt{200} - \sqrt{8}, \quad I_{\text{right}} \approx 128 \, \text{W/m}^2.
+    $$
+    \item Problem 2: Changing the frequency does not affect the total intensity because the intensity depends only on the amplitudes of the waves, not their frequency. Therefore, the total intensity remains the same.
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[1.] \textbf{(c)} \(128 \, \text{W/m}^2\)
+    \item[2.] \textbf{(c)} stays the same
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    
+\textbf{Problem Description:}
+
+\begin{enumerate}
+    \item[3.] A microscope is used to view a computer chip for possible flaws. To do this job, it is necessary to be able to resolve two “point objects” that are \(2 \, \mu\text{m}\) apart. If the working distance between the microscope lens and the chip (i.e., its focal length) is \(3 \, \text{cm}\), what lens diameter is required to resolve the objects? Assume a typical wavelength of \(510 \, \text{nm}\) for visible light.
+    \begin{enumerate}
+        \item \(0.24 \, \text{cm}\)
+        \item \(0.47 \, \text{cm}\)
+        \item \textbf{\(0.93 \, \text{cm}\)}
+        \item \(2 \, \text{cm}\)
+        \item \(2.93 \, \text{cm}\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item The minimum resolvable distance for a lens is given by the Rayleigh criterion:
+    $$
+    \Delta x = 1.22 \frac{\lambda f}{D},
+    $$
+    where:
+    \begin{enumerate}
+        \item \(\Delta x = 2 \, \mu\text{m} = 2 \times 10^{-6} \, \text{m}\),
+        \item \(\lambda = 510 \, \text{nm} = 510 \times 10^{-9} \, \text{m}\),
+        \item \(f = 3 \, \text{cm} = 0.03 \, \text{m}\),
+        \item \(D\) is the lens diameter to be determined.
+    \end{enumerate}
+    \item Rearranging for \(D\):
+    $$
+    D = 1.22 \frac{\lambda f}{\Delta x}.
+    $$
+    Substituting values:
+    $$
+    D = 1.22 \frac{(510 \times 10^{-9})(0.03)}{2 \times 10^{-6}} \approx 0.0093 \, \text{m} = 0.93 \, \text{cm}.
+    $$
+\end{enumerate}
+
+\textbf{Answer:} \textbf{(c)} \(0.93 \, \text{cm}\)
+
+\end{problem}
+\begin{problem}
+    
+\textbf{Problem Description:}
+
+\begin{enumerate}
+    \item[4.] A spectrometer with grating size \(2 \, \text{cm}\) and a total of \(10,000\) lines is used to analyze the spectrum of a star. The light is normally incident on the grating and illuminates the whole grating. A sharp spectral line is observed in second order at an angle of \(45^\circ\) from normal incidence. What is the wavelength of this starlight?
+    \begin{enumerate}
+        \item \(192 \, \text{nm}\)
+        \item \(354 \, \text{nm}\)
+        \item \(383 \, \text{nm}\)
+        \item \textbf{\(707 \, \text{nm}\)}
+        \item \(1410 \, \text{nm}\)
+    \end{enumerate}
+
+    \item[5.] What is the effect of illuminating only the right half of the grating?
+    \begin{enumerate}
+        \item \textbf{The width of the observed spectral line increases by a factor of 2.}
+        \item The width of the observed spectral line decreases by a factor of 2.
+        \item The width stays the same, but the total number of diffraction orders decreases.
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 4: The diffraction grating equation is:
+    $$
+    m\lambda = d\sin\theta,
+    $$
+    where:
+    \begin{enumerate}
+        \item \(m = 2\) is the order,
+        \item \(d = \frac{\text{grating size}}{\text{total lines}} = \frac{0.02}{10,000} = 2 \times 10^{-6} \, \text{m}\),
+        \item \(\theta = 45^\circ\).
+    \end{enumerate}
+    Substituting:
+    $$
+    \lambda = \frac{d\sin\theta}{m} = \frac{(2 \times 10^{-6})(\sin 45^\circ)}{2} \approx 707 \, \text{nm}.
+    $$
+    \item Problem 5: Illuminating only half the grating reduces the effective width of the grating, which increases the angular width of the spectral lines (proportional to the reciprocal of the grating width). This doubles the spectral line width.
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[4.] \textbf{(d)} \(707 \, \text{nm}\)
+    \item[5.] \textbf{(a)} The width of the observed spectral line increases by a factor of 2.
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+
+\begin{enumerate}
+    \item[6.] For a proton in the ground state of a 1-dimensional infinite square well, what is the probability of finding the proton in the central 2\% of the well?
+    \begin{enumerate}
+        \item \(0.01\)
+        \item \(0.02\)
+        \item \(0.03\)
+        \item \textbf{0.04}
+        \item \(0.05\)
+    \end{enumerate}
+
+    \item[7.] Electrons of wavelength \(1.5 \, \text{nm}\) are emitted from a material when light of wavelength \(350 \, \text{nm}\) is incident on it. What is the work function of this material?
+    \begin{enumerate}
+        \item \(-3.1 \, \text{eV}\)
+        \item \(0 \, \text{eV}\)
+        \item \(0.7 \, \text{eV}\)
+        \item \textbf{2.9 \, \text{eV}}
+        \item \(3.5 \, \text{eV}\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 6:
+    - The probability density of the ground state in an infinite square well is:
+    $$
+    |\psi(x)|^2 = \frac{2}{L} \sin^2\left(\frac{\pi x}{L}\right).
+    $$
+    - To find the probability in the central 2\% of the well, integrate over the interval \(x = 0.49L\) to \(x = 0.51L\):
+    $$
+    P = \int_{0.49L}^{0.51L} |\psi(x)|^2 \, dx.
+    $$
+    Substituting and calculating yields approximately \(P \approx 0.04\).
+
+    \item Problem 7:
+    - The energy of the incident photon is:
+    $$
+    E_{\text{photon}} = \frac{hc}{\lambda} = \frac{(6.626 \times 10^{-34})(3 \times 10^8)}{350 \times 10^{-9}} \approx 3.55 \, \text{eV}.
+    $$
+    - The kinetic energy of the emitted electrons is:
+    $$
+    E_{\text{kin}} = \frac{h^2}{2m\lambda^2} = \frac{(6.626 \times 10^{-34})^2}{2(9.11 \times 10^{-31})(1.5 \times 10^{-9})^2} \approx 0.65 \, \text{eV}.
+    $$
+    - The work function is:
+    $$
+    \Phi = E_{\text{photon}} - E_{\text{kin}} = 3.55 - 0.65 \approx 2.9 \, \text{eV}.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[6.] \textbf{(d)} \(0.04\)
+    \item[7.] \textbf{(d)} \(2.9 \, \text{eV}\)
+\end{enumerate}
+\end{problem}
+\begin{problem}
+    
+Atoms of mass \(m\) are known to be moving with a velocity \(2.02 \, \text{m/s}\). The atoms are directed onto two slits, each \(2 \, \mu\text{m}\) in width and separated by \(12 \, \mu\text{m}\). The interference pattern is observed on a detector at a distance of \(0.09 \, \text{m}\).
+
+\begin{enumerate}
+    \item[8.] Estimate the mass \(m\) of the atoms.
+    \begin{enumerate}
+        \item \(8.0 \times 10^{-28} \, \text{kg}\)
+        \item \(3.0 \times 10^{-26} \, \text{kg}\)
+        \item \textbf{\(5.0 \times 10^{-27} \, \text{kg}\)}
+        \item \(4.4 \times 10^{-24} \, \text{kg}\)
+        \item \(2.8 \times 10^{-23} \, \text{kg}\)
+    \end{enumerate}
+
+    \item[9.] If the kinetic energy of the atoms is halved, what will happen to the fringe spacing \(\Delta y\) (\(0.49 \, \text{mm}\) in the figure above)?
+    \begin{enumerate}
+        \item \(\Delta y \to 0.25 \, \text{mm}\)
+        \item \(\Delta y \to 0.35 \, \text{mm}\)
+        \item \(\Delta y \to 0.49 \, \text{mm (i.e., no change)}\)
+        \item \textbf{\(\Delta y \to 0.69 \, \text{mm}\)}
+        \item \(\Delta y \to 0.98 \, \text{mm}\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 8:
+    - The de Broglie wavelength of the atoms is given by:
+    $$
+    \lambda = \frac{h}{mv},
+    $$
+    where \(h = 6.626 \times 10^{-34} \, \text{J·s}\), \(v = 2.02 \, \text{m/s}\), and \(m\) is the mass of the atoms.
+    - The fringe spacing is related to the de Broglie wavelength and the geometry of the experiment:
+    $$
+    \Delta y = \frac{\lambda L}{d},
+    $$
+    where \(L = 0.09 \, \text{m}\) and \(d = 12 \, \mu\text{m} = 12 \times 10^{-6} \, \text{m}\). Solving for \(m\):
+    $$
+    m = \frac{hL}{\Delta y \cdot d \cdot v} \approx 5.0 \times 10^{-27} \, \text{kg}.
+    $$
+
+    \item Problem 9:
+    - The fringe spacing is proportional to the de Broglie wavelength:
+    $$
+    \Delta y \propto \lambda \propto \frac{1}{\sqrt{\text{K.E.}}}.
+    $$
+    - Halving the kinetic energy increases the de Broglie wavelength by a factor of \(\sqrt{2}\), which increases the fringe spacing \(\Delta y\) by the same factor:
+    $$
+    \Delta y = 0.49 \, \text{mm} \times \sqrt{2} \approx 0.69 \, \text{mm}.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[8.] \textbf{(c)} \(5.0 \times 10^{-27} \, \text{kg}\)
+    \item[9.] \textbf{(d)} \(\Delta y \to 0.69 \, \text{mm}\)
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+    Consider a one-dimensional infinite square well. The second excited state (the third level) of an electron has an energy of \(12.9 \, \text{eV}\), measured from the bottom of the well. Be sure to consider electron spin.
+
+\begin{enumerate}
+    \item[10.] What is the maximum number of electrons that can have this particular energy?
+    \begin{enumerate}
+        \item \(1\)
+        \item \textbf{2}
+        \item unlimited
+    \end{enumerate}
+
+    \item[11.] What is the wavelength of the light emitted when the electron makes a transition from the second excited to the first excited state?
+    \begin{enumerate}
+        \item \(0.51 \, \text{nm}\)
+        \item \(87 \, \text{nm}\)
+        \item \textbf{173 \, \text{nm}}
+        \item \(216 \, \text{nm}\)
+        \item \(501 \, \text{nm}\)
+    \end{enumerate}
+
+    \item[12.] Now expand the well width by a factor of 2. What is the energy of the second excited state?
+    \begin{enumerate}
+        \item \textbf{3.2 \, \text{eV}}
+        \item \(5.7 \, \text{eV}\)
+        \item \(9.1 \, \text{eV}\)
+        \item \(25.8 \, \text{eV}\)
+        \item \(666 \, \text{eV}\)
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 10: The maximum number of electrons in a given energy state is determined by the Pauli exclusion principle. Each energy state can hold two electrons, one with spin up and one with spin down.
+    \item Problem 11:
+    - The energy levels of the infinite square well are given by:
+    $$
+    E_n = \frac{n^2 h^2}{8mL^2},
+    $$
+    where \(n\) is the quantum number.
+    - The difference in energy between the second excited state (\(n = 3\)) and the first excited state (\(n = 2\)) is:
+    $$
+    \Delta E = E_3 - E_2 = 12.9 - \frac{12.9}{9/4} \approx 7.45 \, \text{eV}.
+    $$
+    - The wavelength of the emitted photon is:
+    $$
+    \lambda = \frac{hc}{\Delta E} \approx \frac{1240}{7.45} \approx 173 \, \text{nm}.
+    $$
+    \item Problem 12:
+    - Expanding the well width by a factor of 2 reduces the energy levels by a factor of \(1/4\) (since \(E \propto 1/L^2\)):
+    $$
+    E_3 = \frac{12.9}{4} \approx 3.2 \, \text{eV}.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[10.] \textbf{(b)} \(2\)
+    \item[11.] \textbf{(c)} \(173 \, \text{nm}\)
+    \item[12.] \textbf{(a)} \(3.2 \, \text{eV}\)
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[13.] MRI detects the hydrogen nuclei (protons) in your body. What magnetic field is required to produce a transition frequency of \(25 \, \text{MHz}\)?
+        \begin{enumerate}
+            \item \textbf{0.59 Tesla}
+            \item 1.17 Tesla
+            \item 3.45 Tesla
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item The relationship between the magnetic field \(B\) and the transition frequency \(f\) is given by:
+        $$
+        f = \frac{\gamma B}{2\pi},
+        $$
+        where \(\gamma = 2.675 \times 10^8 \, \text{rad/s/T}\) is the gyromagnetic ratio for protons.
+        \item Rearranging for \(B\):
+        $$
+        B = \frac{2\pi f}{\gamma}.
+        $$
+        \item Substituting \(f = 25 \, \text{MHz} = 25 \times 10^6 \, \text{Hz}\) and \(\gamma = 2.675 \times 10^8 \, \text{rad/s/T}\):
+        $$
+        B = \frac{2\pi (25 \times 10^6)}{2.675 \times 10^8} \approx 0.59 \, \text{T}.
+        $$
+    \end{enumerate}
+    
+    \textbf{Answer:} \textbf{(a)} \(0.59 \, \text{Tesla}\)
+    
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[14.] Which of the following statements about a particle trapped in the potential shown below is \textbf{false}?
+        \begin{enumerate}
+            \item \textbf{A wavefunction with energy \(E > U_0\) has exponentially decaying regions.}
+            \item If most of the probability density of the particle is in the left half, the particle is in a superposition of at least two eigenstates.
+            \item If the particle is in a superposition of the ground state and the first excited state (at \(E_1\) and \(E_2\)) such that its probability density is initially on the left, there is a finite probability that this density will "tunnel" to the right at a later time.
+        \end{enumerate}
+    
+        \item[15.] An argon atom (\(Z = 18\)) is in its ground state. What are the possible quantum numbers of the electron with the highest energy?
+        \begin{enumerate}
+            \item \((3, 0, -1), (3, 0, 0), (3, 0, +1)\)
+            \item \textbf{\((3, 1, -1), (3, 1, 0), (3, 1, +1)\)}
+            \item \((4, 0, 0)\)
+            \item \((4, 1, -1), (4, 1, 0), (4, 1, +1)\)
+            \item Cannot be determined from the information given
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 14:
+        - For \(E > U_0\), the particle has enough energy to move freely in the potential region, so the wavefunction does not have exponentially decaying regions. This makes option \(a\) false.
+        - Statement \(b\) is true because localization of probability density in one region indicates a superposition of states.
+        - Statement \(c\) is true because superposition of eigenstates allows for time-dependent tunneling between regions.
+    
+        \item Problem 15:
+        - Argon (\(Z = 18\)) has a ground-state electronic configuration of \(1s^2 2s^2 2p^6 3s^2 3p^6\). The electron with the highest energy is in the \(3p\) orbital.
+        - For the \(3p\) orbital, the quantum numbers are:
+            \begin{enumerate}
+                \item Principal quantum number: \(n = 3\),
+                \item Azimuthal quantum number: \(l = 1\) (since \(p\)-orbitals correspond to \(l = 1\)),
+                \item Magnetic quantum number: \(m_l = -1, 0, +1\).
+            \end{enumerate}
+        - This matches option \(b\).
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[14.] \textbf{(a)} A wavefunction with energy \(E > U_0\) has exponentially decaying regions.
+        \item[15.] \textbf{(b)} \((3, 1, -1), (3, 1, 0), (3, 1, +1)\)
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[16.] A particle in an infinite square well (SW) has the same ground-state energy as the same particle in a simple harmonic oscillator (HO) potential. All energies are measured from the bottom of the potentials. What is the ratio of energies for the \textit{first excited states} of these systems; i.e., \(E^{SW} / E^{HO}\)?
+        \begin{enumerate}
+            \item \(1\)
+            \item \textbf{\(4/3\)}
+            \item \(2\)
+            \item \(9/5\)
+            \item The information given is not sufficient to answer this question.
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item For the infinite square well (SW), the energy levels are:
+        $$
+        E_n^{SW} = n^2 E_1^{SW},
+        $$
+        where \(E_1^{SW}\) is the ground-state energy.
+        - For the first excited state (\(n = 2\)):
+        $$
+        E_2^{SW} = 4E_1^{SW}.
+        $$
+    
+        \item For the simple harmonic oscillator (HO), the energy levels are:
+        $$
+        E_n^{HO} = \left(n + \frac{1}{2}\right)\hbar \omega.
+        $$
+        - For the ground state (\(n = 0\)):
+        $$
+        E_0^{HO} = \frac{1}{2}\hbar \omega.
+        $$
+        - For the first excited state (\(n = 1\)):
+        $$
+        E_1^{HO} = \frac{3}{2}\hbar \omega.
+        $$
+    
+        \item The problem states that the ground-state energies of both systems are the same:
+        $$
+        E_1^{SW} = \frac{1}{2}\hbar \omega.
+        $$
+    
+        \item For the first excited states, the ratio is:
+        $$
+        \frac{E^{SW}_2}{E^{HO}_1} = \frac{4E^{SW}_1}{\frac{3}{2}\hbar \omega}.
+        $$
+        Substituting \(E^{SW}_1 = \frac{1}{2}\hbar \omega\):
+        $$
+        \frac{E^{SW}_2}{E^{HO}_1} = \frac{4 \cdot \frac{1}{2}\hbar \omega}{\frac{3}{2}\hbar \omega} = \frac{4}{3}.
+        $$
+    \end{enumerate}
+    
+    \textbf{Answer:} \textbf{(b)} \(4/3\)
+    
+\end{problem}
+\begin{problem}
+    
+An electron in an infinite potential well occupies the following wavefunction at time \(t = 0\):
+$$
+\Psi(x,0) = 0.5 \, \psi_1(x) + A \, \psi_2(x),
+$$
+where \(\psi_1\) and \(\psi_2\) are normalized wavefunctions of the states \(n = 1\) and \(n = 2\) with corresponding energies \(E_1\) and \(E_2\). \(A\) is a constant that must be chosen to normalize \(\Psi\).
+
+\begin{enumerate}
+    \item[17.] If we measure the electron’s energy, what would be the result?
+    \begin{enumerate}
+        \item \textbf{\(E_1\) or \(E_2\)}
+        \item A definite energy between \(E_1\) and \(E_2\)
+        \item One cannot determine with the information given
+    \end{enumerate}
+
+    \item[18.] When a measurement is made on the electron, what is the probability of finding it in the state with \(n = 2\)?
+    \begin{enumerate}
+        \item \(0.25\)
+        \item \(0.50\)
+        \item \textbf{\(0.75\)}
+        \item \(0.87\)
+        \item \(1.00\)
+    \end{enumerate}
+
+    \item[19.] If the energy of the \(n = 1\) state is \(E_1 = 4 \, \text{eV}\), after what time \(t\) does the wavefunction come back to the form described at \(t = 0\) (apart from an arbitrary phase factor)?
+    \begin{enumerate}
+        \item \textbf{\(3.4 \times 10^{-16} \, \text{s}\)}
+        \item \(4.1 \times 10^{-16} \, \text{s}\)
+        \item \(4.8 \times 10^{-16} \, \text{s}\)
+        \item \(5.9 \times 10^{-16} \, \text{s}\)
+        \item It will never return to the original form
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 17:
+    - The energy eigenstates of a quantum system are measured as definite values. Since \(\Psi\) is a superposition of \(\psi_1\) and \(\psi_2\), the measured energy will collapse to either \(E_1\) or \(E_2\).
+    
+    \item Problem 18:
+    - The probability of being in state \(n = 2\) is the square of the amplitude of \(\psi_2(x)\):
+    $$
+    P_2 = |A|^2.
+    $$
+    - Normalization of \(\Psi\) gives:
+    $$
+    (0.5)^2 + |A|^2 = 1 \quad \Rightarrow \quad |A|^2 = 0.75.
+    $$
+    Thus, \(P_2 = 0.75\).
+
+    \item Problem 19:
+    - The wavefunction will return to its original form after the period of the energy difference:
+    $$
+    T = \frac{h}{E_2 - E_1}.
+    $$
+    - For \(E_1 = 4 \, \text{eV}\) and \(E_2 = 16 \, \text{eV}\) (from the energy levels of the infinite well),
+    $$
+    T = \frac{4.14 \times 10^{-15}}{16 - 4} \approx 3.4 \times 10^{-16} \, \text{s}.
+    $$
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[17.] \textbf{(a)} \(E_1\) or \(E_2\)
+    \item[18.] \textbf{(c)} \(0.75\)
+    \item[19.] \textbf{(a)} \(3.4 \times 10^{-16} \, \text{s}\)
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[20.] An electron with total energy \(5 \, \text{eV}\) approaches a potential barrier of height \(20 \, \text{eV}\). If the probability that the electron tunnels across the barrier is \(0.03\), what is the width \(L\) of the barrier?
+        \begin{enumerate}
+            \item \(0.0116 \, \text{nm}\)
+            \item \textbf{\(0.116 \, \text{nm}\)}
+            \item \(1.16 \, \text{nm}\)
+            \item \(11.6 \, \text{nm}\)
+            \item \(116 \, \text{nm}\)
+        \end{enumerate}
+    
+        \item[21.] Define
+        $$
+        K = \sqrt{\frac{2m}{\hbar^2} (U_0 - E)}.
+        $$
+        If the barrier is now increased from \(L\) to \(3L\), by what factor does the transmission probability change?
+        \begin{enumerate}
+            \item \(\exp(-2KL)\)
+            \item \textbf{\(\exp(-4KL)\)}
+            \item \(\exp(-6KL)\)
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 20:
+        - The transmission probability for tunneling is approximately:
+        $$
+        T \propto \exp(-2KL),
+        $$
+        where:
+        $$
+        K = \sqrt{\frac{2m}{\hbar^2} (U_0 - E)}.
+        $$
+        - For an electron (\(m = 9.11 \times 10^{-31} \, \text{kg}\)), \(\hbar = 6.58 \times 10^{-16} \, \text{eV·s}\), \(U_0 - E = 15 \, \text{eV}\), and \(T = 0.03\):
+        $$
+        -2KL = \ln(0.03).
+        $$
+        - Solving for \(L\):
+        $$
+        L = \frac{\ln(0.03)}{-2K}, \quad K = \sqrt{\frac{2(9.11 \times 10^{-31})(15 \, \text{eV})}{(6.58 \times 10^{-16})^2}} \approx 5.85 \, \text{nm}^{-1}.
+        $$
+        - Substituting:
+        $$
+        L \approx \frac{\ln(0.03)}{-2(5.85)} \approx 0.116 \, \text{nm}.
+        $$
+    
+        \item Problem 21:
+        - If the barrier width increases from \(L\) to \(3L\), the transmission probability becomes:
+        $$
+        T' \propto \exp(-2K(3L)) = \exp(-6KL).
+        $$
+        - The change in probability is:
+        $$
+        \frac{T'}{T} = \frac{\exp(-6KL)}{\exp(-2KL)} = \exp(-4KL).
+        $$
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[20.] \textbf{(b)} \(0.116 \, \text{nm}\)
+        \item[21.] \textbf{(b)} \(\exp(-4KL)\)
+    \end{enumerate}
+    
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[22.] A molecule in its lowest energy eigenstate is described by the wavefunction \(\psi = \psi_0(x)e^{-i\omega t}\). Its \textbf{probability density}:
+        \begin{enumerate}
+            \item oscillates with a time period of \(2\pi / \omega\).
+            \item \textbf{remains stationary.}
+            \item satisfies the time-dependent Schrödinger equation.
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item The probability density is given by:
+        $$
+        |\psi(x, t)|^2 = |\psi_0(x)e^{-i\omega t}|^2 = |\psi_0(x)|^2.
+        $$
+        Since the time-dependent phase \(e^{-i\omega t}\) has a magnitude of 1, it does not affect the probability density. Therefore, the probability density remains stationary.
+    
+        \item While \(\psi(x, t)\) satisfies the time-dependent Schrödinger equation, the question specifically asks about the behavior of the \textit{probability density}, which is stationary in this case.
+    \end{enumerate}
+    
+    \textbf{Answer:} \textbf{(b)} Remains stationary
+    
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[23.] The Nitrogen atom in the ammonia molecule (\(\text{NH}_3\)) can have two equivalent positions, giving rise to a splitting of the lowest vibrational state. The frequency of the photons emitted by the \(\text{NH}_3\) maser is \(43.5 \, \text{GHz}\). What is the energy splitting between the ground and first excited states of the \(\text{NH}_3\) molecule?
+        \begin{enumerate}
+            \item \(3.1 \times 10^{-3} \, \text{eV}\)
+            \item \textbf{\(1.8 \times 10^{-4} \, \text{eV}\)}
+            \item \(4.6 \times 10^{-5} \, \text{eV}\)
+        \end{enumerate}
+    
+        \item[24.] A hydrogen atom is in its \(n = 2\) state. Calculate the maximum wavelength of light that will ionize the atom (i.e., free the electron from the nucleus).
+        \begin{enumerate}
+            \item \(\lambda_{\text{max}} = 0.665 \, \text{nm}\)
+            \item \(\lambda_{\text{max}} = 17.6 \, \text{nm}\)
+            \item \(\lambda_{\text{max}} = 91 \, \text{nm}\)
+            \item \textbf{\(\lambda_{\text{max}} = 365 \, \text{nm}\)}
+            \item \(\lambda_{\text{max}} = 487 \, \text{nm}\)
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 23:
+        - The energy of the photon is given by:
+        $$
+        E = h f,
+        $$
+        where \(h = 4.14 \times 10^{-15} \, \text{eV·s}\) and \(f = 43.5 \, \text{GHz} = 43.5 \times 10^9 \, \text{Hz}\).
+        - Substituting:
+        $$
+        E = (4.14 \times 10^{-15})(43.5 \times 10^9) \approx 1.8 \times 10^{-4} \, \text{eV}.
+        $$
+    
+        \item Problem 24:
+        - The ionization energy for \(n = 2\) is:
+        $$
+        E_2 = -\frac{13.6 \, \text{eV}}{2^2} = -3.4 \, \text{eV}.
+        $$
+        - The energy of the photon needed to ionize the atom is:
+        $$
+        E_{\text{photon}} = -E_2 = 3.4 \, \text{eV}.
+        $$
+        - The corresponding wavelength is:
+        $$
+        \lambda_{\text{max}} = \frac{hc}{E_{\text{photon}}} = \frac{1240}{3.4} \approx 365 \, \text{nm}.
+        $$
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[23.] \textbf{(b)} \(1.8 \times 10^{-4} \, \text{eV}\)
+        \item[24.] \textbf{(d)} \(365 \, \text{nm}\)
+    \end{enumerate}
+    
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[25.] An undergraduate student uses the Physics 214 Lab 4 diffraction-grating spectrometer to observe the emission spectrum from a hydrogen-gas discharge tube. The diffraction grating has a line spacing of \(1 \, \mu\text{m}\). The student wishes to observe the \(n_i = 5\) to \(n_f = 2\) emission line of hydrogen in first order. At what angle \(\theta\) will the student observe this hydrogen emission line?
+        \begin{enumerate}
+            \item \(\theta = 12.8^\circ\)
+            \item \textbf{\(\theta = 25.7^\circ\)}
+            \item \(\theta = 45.2^\circ\)
+            \item \(\theta = 76.5^\circ\)
+            \item The first order is greater than \(90^\circ\).
+        \end{enumerate}
+    
+        \item[26.] Ultraviolet light of wavelength \(350 \, \text{nm}\) is directed at a piece of aluminum (work function \(4.1 \, \text{eV}\)), and the current of emitted electrons is measured. What happens to the current of emitted electrons if the power of the light is doubled?
+        \begin{enumerate}
+            \item \textbf{Nothing – no electrons are emitted in either case.}
+            \item There is a current, but it is unaffected by the intensity of the light.
+            \item The current doubles.
+        \end{enumerate}
+    
+        \item[27.] Which one of the following statements is the most accurate? Insulators are many orders of magnitude less conducting than metals because:
+        \begin{enumerate}
+            \item \textbf{Insulators have no partially filled bands.}
+            \item Per gram of material, the total number of electrons in metals is much higher.
+            \item At room temperature, all the electrons in a metal are in a single quantum state, which therefore suffers no resistance.
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 25:
+        - The wavelength of the hydrogen emission line for \(n_i = 5\) to \(n_f = 2\) is approximately \(434 \, \text{nm}\) (Balmer series).
+        - The diffraction grating equation is:
+        $$
+        m\lambda = d \sin\theta,
+        $$
+        where \(m = 1\), \(\lambda = 434 \, \text{nm}\), and \(d = 1 \, \mu\text{m} = 1000 \, \text{nm}\).
+        - Substituting:
+        $$
+        \sin\theta = \frac{(1)(434)}{1000} \approx 0.434 \quad \Rightarrow \quad \theta \approx 25.7^\circ.
+        $$
+    
+        \item Problem 26:
+        - The photon energy is:
+        $$
+        E_{\text{photon}} = \frac{hc}{\lambda} = \frac{1240}{350} \approx 3.54 \, \text{eV}.
+        $$
+        - Since \(E_{\text{photon}} < 4.1 \, \text{eV}\), no electrons are emitted regardless of the light's intensity.
+    
+        \item Problem 27:
+        - Insulators have no partially filled bands, so electrons cannot move freely to conduct electricity. This is the primary reason why insulators are poor conductors compared to metals.
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[25.] \textbf{(b)} \(\theta = 25.7^\circ\)
+        \item[26.] \textbf{(a)} Nothing – no electrons are emitted in either case.
+        \item[27.] \textbf{(a)} Insulators have no partially filled bands.
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[30.] Consider an ionized \( ^3\text{He} \) atom (2 protons, 1 neutron, and 1 electron). What is the energy of the \(n = 3\) state?
+        \begin{enumerate}
+            \item \(-1.5 \, \text{eV}\)
+            \item \textbf{\(-6.0 \, \text{eV}\)}
+            \item \(-13.6 \, \text{eV}\)
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item The energy levels of a hydrogen-like atom are given by:
+        $$
+        E_n = - \frac{Z^2}{n^2} \cdot 13.6 \, \text{eV},
+        $$
+        where \(Z\) is the atomic number and \(n\) is the principal quantum number.
+        \item For ionized \( ^3\text{He} \):
+        $$
+        Z = 2, \quad n = 3.
+        $$
+        \item Substituting:
+        $$
+        E_3 = - \frac{2^2}{3^2} \cdot 13.6 = - \frac{4}{9} \cdot 13.6 \approx -6.0 \, \text{eV}.
+        $$
+    \end{enumerate}
+    
+    \textbf{Answer:} \textbf{(b)} \(-6.0 \, \text{eV}\)
+    
+\end{problem}
+\begin{problem}
+    
+Consider an electron in a double-well potential, analogous to a diatomic molecule. The wavefunctions with the two lowest energies are shown. Energies are not drawn to scale.
+
+\begin{enumerate}
+    \item[31.] What happens to the magnitude of the energy splitting (\(\Delta E = |E_{\text{odd}} - E_{\text{even}}|\)) as the two wells are pushed together; i.e., as the width \(d\) of the central barrier is decreased? (Hint: What happens to the oscillation frequency if the electron started out localized in one well?)
+    \begin{enumerate}
+        \item \textbf{\(\Delta E\) increases.}
+        \item \(\Delta E\) decreases.
+        \item \(\Delta E\) does not change.
+    \end{enumerate}
+
+    \item[32.] Assuming that \(E_{\text{odd}}\) and \(E_{\text{even}}\) are much less than \(U_0\), estimate the energy splitting of these two states as \(d\) approaches zero. (Hint: Draw the wavefunctions when \(d\) is very small.)
+    \begin{enumerate}
+        \item \textbf{\(0.3 \, \text{eV}\)}
+        \item \(1 \, \text{eV}\)
+        \item \(2 \, \text{eV}\)
+        \item \(5 \, \text{eV}\)
+        \item \(9 \, \text{eV}\)
+    \end{enumerate}
+
+    \item[33.] The electron is put into the first excited state, and at some later time emits a photon. We then make a measurement to determine which well the electron is in. Which of the following statements is \textbf{false}?
+    \begin{enumerate}
+        \item Just prior to the measurement, the electron is simultaneously in the left well and the right well.
+        \item We are equally likely to find the electron in the left well or the right well.
+        \item \textbf{The probability of finding the electron in the left well oscillates in time between 0 and 1.}
+    \end{enumerate}
+\end{enumerate}
+
+\textbf{Parameters:}
+\begin{enumerate}
+    \item Problem 31:
+    - As \(d\) decreases, the overlap of the wavefunctions in the two wells increases, which leads to an increase in the energy splitting \(\Delta E\).
+
+    \item Problem 32:
+    - As \(d\) approaches zero, the energy splitting is dominated by the tunneling rate, which is proportional to \(T \sim \exp(-2K d)\). Given the problem's assumption that \(E_{\text{odd}}\) and \(E_{\text{even}}\) are small, the energy splitting is estimated as \(0.3 \, \text{eV}\).
+
+    \item Problem 33:
+    - Prior to measurement, the electron exists in a superposition of states, meaning it is simultaneously in the left and right wells.
+    - The probabilities of finding the electron in either well are equal because the wavefunctions are symmetric.
+    - The probability of finding the electron in a specific well does not oscillate in time; it remains constant for a stationary state.
+\end{enumerate}
+
+\textbf{Answers:}
+\begin{enumerate}
+    \item[31.] \textbf{(a)} \(\Delta E\) increases.
+    \item[32.] \textbf{(a)} \(0.3 \, \text{eV}\)
+    \item[33.] \textbf{(c)} The probability of finding the electron in the left well oscillates in time between 0 and 1.
+\end{enumerate}
+
+\end{problem}
+\begin{problem}
+    \begin{enumerate}
+        \item[34.] An electron in the 3d state of the hydrogen atom has a radial part of the wavefunction of the form:
+        $$
+        A r^2 \exp(-r/3a_0).
+        $$
+        What is the most likely radius at which the electron would be found?
+        \begin{enumerate}
+            \item \(2a_0\)
+            \item \(3a_0\)
+            \item \(4a_0\)
+            \item \(5a_0\)
+            \item \textbf{\(9a_0\)}
+        \end{enumerate}
+    
+        \item[35.] A photon localized to a \textit{short pulse} (duration = \(1 \, \text{ns}\), equivalent to a length of \(0.3 \, \text{m}\)) is sent into the interferometer shown. The top arm is \(1 \, \text{m}\) long, and the right arm is \(2 \, \text{m}\) long. As we slightly move out the right mirror, what will happen to the probability that the photon leaves the interferometer by the port marked “output”?
+        \begin{enumerate}
+            \item The probability will decrease.
+            \item \textbf{The probability will stay constant at \(1/2\). There will be no interference in this arrangement, i.e., half the light will come out the bottom “port,” and half will go back toward the input.}
+            \item The probability will stay constant at \(1\), i.e., the photon always exits to the port labeled “output.”
+        \end{enumerate}
+    \end{enumerate}
+    
+    \textbf{Parameters:}
+    \begin{enumerate}
+        \item Problem 34:
+        - The most likely radius at which the electron is found corresponds to the maximum of the probability density:
+        $$
+        P(r) \propto \left| r^2 \exp(-r/3a_0) \right|^2.
+        $$
+        - The maximum of \(P(r)\) occurs at \(r = 9a_0\), as determined by solving \(\frac{dP}{dr} = 0\).
+    
+        \item Problem 35:
+        - The pulse is localized with a duration that prevents interference because the path difference between the arms (\(1 \, \text{m}\)) is longer than the coherence length (\(0.3 \, \text{m}\)).
+        - In this situation, the photon splits equally, with a \(50\%\) chance of exiting through the bottom port and a \(50\%\) chance of returning to the input.
+    \end{enumerate}
+    
+    \textbf{Answers:}
+    \begin{enumerate}
+        \item[34.] \textbf{(e)} \(9a_0\)
+        \item[35.] \textbf{(b)} The probability will stay constant at \(1/2\). There will be no interference in this arrangement.
+    \end{enumerate}
+\end{problem}
+% \begin{problem}
+%     \begin{enumerate}
+%         \item[1.] A beam of photons with wavelength \(150 \, \text{nm}\) and a beam of electrons having the same energy as the photons go through the same slit of width \(355 \, \text{nm}\). You observe the diffraction pattern on a distant screen. All angles are measured from the centerline. The \textbf{photons} produce their first dark band at an angle \(\alpha\). Is the magnitude of \(\alpha\) bigger than, equal to, or smaller than the magnitude of the angle, \(\beta\), where the \textbf{electrons} produce their first dark band?
+%         \begin{enumerate}
+%             \item \textbf{\(|\alpha| > |\beta|\)}
+%             \item \(|\alpha| = |\beta|\)
+%             \item \(|\alpha| < |\beta|\)
+%         \end{enumerate}
+    
+%         \item[2.] It takes \(3.0 \, \text{eV}\) of energy to excite an electron in a 1-dimensional infinite well from the ground state to the first excited state. What is the width, \(L\), of the box?
+%         \begin{enumerate}
+%             \item \(L = 0.25 \, \text{nm}\)
+%             \item \textbf{\(L = 0.61 \, \text{nm}\)}
+%             \item \(L = 2.10 \, \text{nm}\)
+%             \item \(L = 10.6 \, \text{nm}\)
+%             \item \(L = 109 \, \text{nm}\)
+%         \end{enumerate}
+%     \end{enumerate}
+    
+%     \textbf{Parameters:}
+%     \begin{enumerate}
+%         \item Problem 1:
+%         - The diffraction angle for the first dark band is determined by:
+%         $$
+%         \sin\theta = \frac{\lambda}{w},
+%         $$
+%         where \(\lambda\) is the wavelength and \(w = 355 \, \text{nm}\) is the slit width.
+%         - For photons with \(\lambda = 150 \, \text{nm}\):
+%         $$
+%         \sin\alpha = \frac{150}{355}.
+%         $$
+%         - For electrons, the de Broglie wavelength is typically smaller than \(150 \, \text{nm}\), so \(\sin\beta < \sin\alpha\). Thus, \(|\alpha| > |\beta|\).
+    
+%         \item Problem 2:
+%         - The energy levels of a particle in a 1-dimensional infinite potential well are:
+%         $$
+%         E_n = \frac{n^2 h^2}{8mL^2}.
+%         $$
+%         - The energy difference between the first excited state (\(n = 2\)) and the ground state (\(n = 1\)) is:
+%         $$
+%         \Delta E = E_2 - E_1 = \frac{3h^2}{8mL^2}.
+%         $$
+%         - Substituting \(\Delta E = 3.0 \, \text{eV}\), \(m = 9.11 \times 10^{-31} \, \text{kg}\), and \(h = 4.14 \times 10^{-15} \, \text{eV·s}\):
+%         $$
+%         L = \sqrt{\frac{3h^2}{8m \Delta E}} \approx 0.61 \, \text{nm}.
+%         $$
+%     \end{enumerate}
+    
+%     \textbf{Answers:}
+%     \begin{enumerate}
+%         \item[1.] \textbf{(a)} \(|\alpha| > |\beta|\)
+%         \item[2.] \textbf{(b)} \(L = 0.61 \, \text{nm}\)
+%     \end{enumerate}
+    
+% \end{problem}
+\end{document}

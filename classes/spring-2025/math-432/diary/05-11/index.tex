@@ -1,0 +1,161 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Final Practice Exam 1}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                MATH 432 – Practice Final Examination (8 Problems)
+%                (All work must be fully justified.)                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{problem}[Set algebra and symmetric difference]
+  For any sets $A,B,C$ define
+  \[
+      A\setminus B \;:=\; \{\,x\in A : x\notin B\,\},
+      \qquad
+      A\triangle B \;:=\;(A\setminus B)\cup(B\setminus A).
+  \]
+  Prove each of the following.
+  \begin{enumerate}[label=(\alph*)]
+    \item $A\triangle B=(A\cup B)\setminus(A\cap B)$.
+    \item $A\cap(B\triangle C)=(A\cap B)\triangle(A\cap C)$.
+    \item $A\triangle C\;\subset\;(A\triangle B)\cup(B\triangle C)$.
+    \item $C\setminus(A\cup B)=(C\setminus A)\cap(C\setminus B)$.
+    \item \emph{(Associativity)}\;
+          $(A\triangle B)\triangle C
+          =A\triangle(B\triangle C)$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Posets, lattices, and completeness]
+  Let $(L,\le)$ be a lattice.  Assume that \emph{every chain} in $L$
+  has both a least upper bound and a greatest lower bound.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that \emph{every} subset of $L$ has a least upper bound.
+    \item Show that \emph{every} subset of $L$ has a greatest lower bound.
+    \item Conclude that $L$ is a \textbf{complete lattice}.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Composition of functions]
+  Let $f:A\to B$ and $g:B\to C$ be functions.
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove: if both $f$ and $g$ are onto, then $g\circ f$ is onto.
+    \item Prove: if $g\circ f$ is onto, then $g$ is onto.
+    \item Give an explicit example where $g\circ f$ is onto but $f$ is
+          \emph{not} onto.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Countability]
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove that the countable product
+          $\mathbb{N}\times\mathbb{N}\times\cdots\times\mathbb{N}$
+          (finite length) is countable.  Deduce that any finite product
+          of countable sets is countable.
+    \item Let $A$ be a countably infinite set and let
+          $X:=\{\,F\subset A : F\text{ is finite}\,\}$.
+          Show that $X$ is countable.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Cardinal arithmetic \& bijections]
+  \begin{enumerate}[label=(\alph*)]
+    \item Exhibit an explicit bijection showing
+          $(0,1)\times(0,1)\times(0,1)\;\cong\;(0,1)$
+          and hence prove that $|\,\mathbb{R}^{3}\,|=|\mathbb{R}|$.
+    \item Prove, without using Theorems 13–14 from the notes, that
+          $c+c=c$, where $c$ is the cardinality of~$\mathbb{R}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Topology of metric spaces]
+  Let $(M,D)$ be a metric space and fix $x\in M$ together with
+  $0<r<s$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Prove that the \emph{punctured annulus}
+          $A(x,r,s):=\{\,y\in M\mid r<D(x,y)<s\,\}$ is open.
+    \item Prove that the \emph{sphere}
+          $S(x,r):=\{\,y\in M\mid D(x,y)=r\,\}$ is closed.
+    \item Show that $\overline{A}(x,r,s)
+          :=\{\,y\in M\mid r\le D(x,y)\le s\,\}$ is closed.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Uniform continuity]
+  Determine which of the following maps
+  $f:\mathbb{R}\to\mathbb{R}$ are \emph{uniformly} continuous.
+  Prove your answers.
+  \begin{enumerate}[label=(\roman*)]
+    \item $f(x)=x^{2}$\quad($x\in\mathbb{R}$).
+    \item $f(x)=|x|$\quad($x\in\mathbb{R}$).
+    \item $f(x)=\dfrac{1}{1+x^{2}}$\quad($x\in\mathbb{R}$).
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[A basis via Zorn’s Lemma]
+  Let $V$ be a (possibly infinite-dimensional) real vector space.
+  Recall that a subset $B\subset V$ is a \emph{basis} if
+  $B$ is linearly independent and
+  every $v\in V$ can be written as a finite linear combination of
+  vectors from $B$.
+  Use Zorn’s Lemma to prove that \emph{every} vector space possesses a
+  basis.
+\end{problem}
+\end{document}

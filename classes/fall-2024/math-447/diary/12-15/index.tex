@@ -1,0 +1,528 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Finals Exam Prep}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+So I finally finished all Final Exam practice problems that my professor gave to me. 36 of them! (Actually 32—one of them was a repeat and a couple of them were prev hw assignments) It is currently Sunday, and my final is on Tuesday. Let's go. I'm going to walkthrough all of my solutions, then analyze them with the solutions provided by my prof. Let's run it.
+\begin{problem}[1 (Cauchy Concentration Test)]
+    Suppose $a(1) \geq a(2) \geq \dots > 0$. Prove that
+\begin{align}
+\sum_{n} a(n) \quad \text{and} \quad \sum_{n} 2^n a(2^n)
+\end{align}
+converge or diverge simultaneously.
+
+\textit{Hint.} Let $s(m) = \sum_{k=1}^m a(k)$. Prove first that
+\begin{align}
+\frac{1}{2} \sum_{j=1}^n 2^j a(2^j) \leq s(2^n) \leq a(2^n) + \sum_{j=0}^n 2^j a(2^j).
+\end{align}
+
+This can be achieved by grouping $a_k$'s into blocks of length $2^0, 2^1, 2^2, \dots$.
+
+\noindent\textbf{(b)} Use the result of (a) to show that $\sum_n \frac{1}{n^p}$ converges if and only if $p > 1$.
+
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2]
+    \begin{enumerate}
+       \item State the definition of a compact set
+       \item Give an example of an open cover of $\mathbb{{R}}$ which has no finite subcover
+       \item Consider the set $E \subset \mathbb{{R}}^{5}$, consisting of all vectors $\vec{x} =\left( x_1, \ldots, x_5  \right) $ for which  
+       \begin{align}
+        \sum_{k=1}^{5} \left\vert x_k \right\vert \leq 1
+       \end{align}
+       Is $E$ compact?
+    \end{enumerate}
+
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[3]
+    \begin{enumerate}
+       \item Use Arithmetic-Geometric means inequality to prove that, for every $n$, 
+       \begin{enumerate}
+        \item $\left( 1+\frac{1}{n} \right)^{n}\leq \left( 1+ \frac{1}{n+1} \right)^{n+1}  $ 
+        \item $\left( 1+\frac{1}{n} \right)^{n+1}\geq \left( 1+\frac{1}{n+1} \right)^{n+2}  $  
+       \end{enumerate}
+       \item Conclude that the sequence $\left( \left( 1+\frac{1}{n} \right)^{n}  \right)_n $ converges. 
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[4]
+   Prove that the space $C(S)$ (the space of bounded continuous functions on a set $S$, with $d(f,g)=\sup_{x\in S}\left\vert f(x)-f(y) \right\vert $) is complete.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[5]
+   Prove that $\left\vert \sin x - \sin y \right\vert > \frac{\left\vert x-y \right\vert}{2} $ for distinct $-\frac{\pi}{3}\leq  x,y \leq \frac{\pi}{3} $.   
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[6]
+   Prove that the function $f: \mathbb{{R}}\to \mathbb{{R}}: x\mapsto \frac{x}{x^{2}+1}$ is Lipschitz.
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[7]
+   Suppose the function $f$ is continuous on the interval $[1,9]$, differentiable in its interior, and satisfies $f(1)=3, f(4)=0$, and $f(9)=10$. Prove that there exists $c\in (1,9)$, such that $f^\prime (c)=1$.       
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[8]
+    Prove that the set of all real numbers of the form $a+b\sqrt{5} $ (where $a,b \in \mathbb{{Q}}$) is a field.   
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[9] 
+    Suppose $(a_{n})$ is a bounded sequence of real numbers. Denote by $A$ the set of its subsequential limits. Prove that $A$ is a closed subset of $\mathbb{{R}}$.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[10]
+    Suppose $f:\mathbb{{R}}\to \mathbb{{R}}$ is differentiable everywhere, and $\lim_{t \to 0} f^\prime (t)$ exists. Prove that $f^\prime$ is continuous at $0$.    
+\end{problem}
+\begin{solution}
+   So for this problem, I appealed to the Sequential Criterion for continuity (Theorem 17.1 + 17.2): 
+  \begin{align}
+    f:S\to S^{*} \text{ is continuous at } x\in S \iff  f(x_{n})\to f(x) \text{ whenever } x_{n}\to x. \label{seqcon}
+  \end{align}  The question was labeled \emph{Difficult Problem}, which always kind of confuses bc sometimes these labeled problems can be impossible but else they are actually not bad. This problem (I think) is of the latter...
+   \begin{proof}
+    \noindent
+
+    We know that $f^\prime (0)$ is defined on $f^\prime $, as $f$is diff'able everywhere.
+    
+    WTF: $\lim_{n \to 0}f^\prime (x)=f^\prime (0) $ 
+
+    We know that $\lim_{x \to 0}f^\prime (x) $ exists. So, we want to show that it equals $f^\prime (0)$ by \autoref{seqcon}.
+    \begin{align}
+       \lim_{x \to 0} f^\prime (x)=L 
+    \end{align}
+    We know that the above implies:
+    \begin{align}
+        \lim_{n \to \infty} f^\prime (a_{n})=L \ s.t. \ \lim_{n \to \infty} a_{n}\to 0 \\[10pt] 
+        \left\vert f^\prime (a_{n})-L \right\vert <\varepsilon \\[10pt] 
+        \frac{f^\prime (a_{n})-f^\prime (0)}{a_{n}}=L \\[10pt] 
+        f^\prime (0) = -La_{n}+f^\prime (a_{n}) \\[10pt] 
+        f^\prime (a_{n}) = La_{n}+f^\prime (0) \\[10pt] 
+        \left\vert La_{n}+f^\prime (0)-L \right\vert <\varepsilon \\[10pt] 
+        \left\vert L(a_{n}-1)+f^\prime (0) \right\vert < \varepsilon \\[10pt] 
+        \left\vert f^\prime (0) -L \right\vert < \varepsilon \implies f^\prime (0) = L \label{y}
+    \end{align}
+    By \autoref{y}, 
+    \begin{align}
+        \lim_{x \to 0} f^\prime (x)=f^\prime (0)
+    \end{align}.
+   \end{proof}     
+
+\end{solution}
+\begin{problem}[11]
+    Suppose $f: \mathbb{{R}}\to \mathbb{{R}}$ is continuous and strictly decreasing, with $f(2)=3$ and $f^\prime (2)=-5$. Find $g^\prime (3)$, where $g=f^{-1}$ (the inverse function of $f$).     
+\end{problem}
+\begin{solution}
+    $f:\mathbb{{R}}\to \mathbb{{R}}$ is cont., strictly decreasing, $f(2)=3, f^\prime (2)=-5$. By the Derivative of an Inverse Function, 
+    \begin{align}
+    g^\prime (d)&=\frac{1}{f^\prime (c)}= \frac{1}{f^\prime (g(d))} \label{in} \\[10pt] 
+    g^\prime (3) &= \boxed{\frac{1}{-5}}
+    \end{align}   
+\end{solution}
+\begin{problem}[12]
+   Compute $\lim_{n \to \infty} \sum_{j=1}^{n} \frac{1}{n+5j}$.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[13]
+   Suppose the functions $f$ and $g$ are integrable on $[a,b]$. 
+   \begin{enumerate}
+    \item Prove that the inequalities $\int_{a}^{b} (tf+g)^{2} \geq 0$ and $\int_{a}^{b} (tf-g)^{2} \geq 0$ holds for any $t$.
+    \item Prove that, for any $t>0$, we have $2\left\vert \int_{a}^{b} fg \right\vert \leq t\int_{a}^{b} f^{2} +\frac{1}{t}\int_{a}^{b} g^{2}$. \label{bun}
+    \item Show that, if $\int_{a}^{b} f^{2} = 0$, then $\int_{a}^{b} fg=0  $.     
+    \item Prove Bunyakovsky-Cauchy-Schwarz Inequality for Integrals:
+     \begin{align}
+        \left( \int_{a}^{b} fg   \right)^{2} \leq \left( \int_{a}^{b} \left\vert fg \right\vert    \right)^{2} \leq \left( \int_{a}^{b} f^{2}   \right) \cdot \left( \int_{a}^{b} g^{2}  \right) \label{bunya}
+    \end{align}
+   \end{enumerate}  
+\end{problem}
+\begin{solution}
+    This one was a monster. Prob the hardest problem in the entire pset. Lots of duh moments.
+    \begin{enumerate}
+        \item By the Linearity and Comparison of Integrals, we know that 
+        \begin{align}
+            g\leq f \implies \int_{a}^{b} g \leq \int_{a}^{b} f \label{linint}   
+        \end{align}
+        Let $g=0$ and $f = (tf+g)^{2}$. We know that $f\geq g$, as the square of a integrand is always positive. By \autoref{linint}, $\int_{a}^{b} (tf+g)^{2}  \geq 0$ and $\int_{a}^{b} (tf-g)^{2}\geq 0 $.    
+        \item Using the result of part 1:
+        \begin{align}
+            \int_{a}^{b} (tf+g)^{2} \geq 0\\[10pt]  
+            &= \int_{a}^{b} t^{2}f^{2} + 2tfg + g^{2} \\[10pt] 
+            &= \int_{a}^{b} t^{2}f^{2} + 2\int_{a}^{b} tfg + \int_{a}^{b} g \geq 0 \\[10pt] 
+            &= t^{2}\int_{a}^{b} f^{2} + 2t\int_{a}^{b} fg + \int_{a}^{b} g^{2} \\[10pt] 
+            &= -2\int_{a}^{b} fg \leq t\int_{a}^{b} f^{2} + \frac{1}{t}\int_{a}^{b} g^{2}         
+        \end{align}
+        The other case, $\int_{a}^{b} (tf-g)^{2}\geq  $ is handled similarly to obtain the absolute value of $2\left\vert \int_{a}^{b} fg   \right\vert $.
+        \item \begin{proof}
+            Suppose by contradiction, $fg=y>0$ for some $x\in[a,b]$. By continuity of the interval of integrable functions, $\exists $ interval $[c,d] \subset [a,b]\ s.t. \ f\geq \frac{y}{2}$ on $[c,d]$. Then,
+        \begin{align}
+            \int_{a}^{b} f^{2} = \int_{a}^{b} f^{2}+\int_{c}^{d} f^{2}+\int_{d}^{b} f^{2}\geq \frac{y}{2}(d-c)>0         
+        \end{align}  
+            Which is a contradiction.
+        \end{proof}
+        \item \begin{proof}
+           \begin{align}
+            2\left\vert \int_{a}^{b} fg \,\mathrm{d}x  \right\vert^{2}&< \left( t\int_{a}^{b} f^{2} +\frac{1}{t}\int_{a}^{b} g^{2}    \right)\left( t\int_{a}^{b} f^{2} +\frac{1}{t}\int_{a}^{b} g^{2}   \right) \\[10pt] 
+            &\leq t^{2}\underbrace{\left( \int_{a}^{b} f^{2}   \right)^{2} }_{\alpha}+2\left( \int_{a}^{b} f^{2}  \right)\left( \int_{a}^{b} g^{2}  \right) + \frac{1}{t^{2}}\underbrace{\left( \int_{a}^{b} g^{2}   \right)^{2} }_{\beta} \\[10pt]     
+           \end{align} 
+           We wish to minimize the function 
+           \begin{align}
+            h(t) &= \alpha t + \frac{\beta}{t} \\[10pt] 
+            h^\prime (t) &= \alpha - \frac{\beta}{t^{2}} = 0
+            \implies \alpha=\frac{\beta}{t^{2}} \\[10pt] 
+            t^{2}=\frac{\beta}{2}\\[10pt] 
+            t = \left( \frac{\beta}{\alpha} \right)^{2} \label{t}
+           \end{align} 
+           Subbing \autoref{t} into \autoref{bun}, we achieve \autoref{bunya}.
+        \end{proof}
+    \end{enumerate}
+\end{solution}
+\begin{problem}[14]
+   Recall that the metric $d$ on $\mathbb{{R}}^{n}$ is defined as follows: for $\vec{a}, \vec{b}\in \mathbb{{R}}^{n}, d(\vec{a},\vec{b})=\left\lVert \vec{a} -\vec{b} \right\rVert $, where, for $\vec{c}=(c_1, \ldots , c_{n}),\left\lVert \vec{c} \right\rVert =\left( \sum_{i} \left\vert c_i \right\vert  \right)^{\frac{1}{2}}  $. Suppose $\vec{x}, \vec{y} \in \mathbb{{R}}^{n}$. Prove that the function $\phi:\mathbb{{R}}\to \mathbb{{R}}:t \mapsto \left\lVert \vec{x} +\vec{ty} \right\rVert $ is convex.     
+\end{problem}
+\begin{solution}[Mine]
+\begin{proof}
+       \begin{align}
+    \phi\left( \frac{t+s}{2} \right) &\leq \frac{\phi(t)+\phi(2)}{2}\\[10pt] 
+    \left\lVert \vec{x_i}+t \vec{y_i}  \right\rVert &\leq \left\lVert \vec{x_{i}}\right\rVert + \left\lVert \vec{ty_{i}}\right\rVert \\[10pt] 
+    &= \left\lVert \vec{x_{i}}\right\rVert + \left\lVert \vec{t}\right\rVert \cdot\left\lVert \vec{y_{i}}\right\rVert \\[10pt] 
+    c&= \frac{t+s}{2}\\[10pt] 
+    \phi\left( c \right) &= \left\lVert \vec{v} +c \vec{y} \right\rVert \\[10pt] 
+    &= \left\lVert \vec{x} + \left( \frac{t+s}{2} \right) \vec{y} \right\rVert \\[10pt] 
+    &= \left\lVert \vec{x} +\frac{t}{2}\vec{y} +\frac{s}{2}\vec{y} \right\rVert \\[10pt] 
+    &\leq \left\lVert \vec{x} \right\rVert + \left\lVert \frac{t}{2}\vec{y} \right\rVert + \left\lVert \frac{s}{2}\vec{y} \right\rVert \\[10pt] 
+    &= \left\lVert \vec{x} \right\rVert + \frac{t}{2}\left\lVert \vec{y} \right\rVert + \frac{s}{2}\left\lVert \vec{y} \right\rVert \label{yuh}
+   \end{align} 
+   WTF: \begin{align}
+    \frac{\phi(t)+\phi(s)}{2}&=\frac{\left\lVert \vec{x} +t\vec{y} \right\rVert + \left\lVert \vec{x} +s \vec{y} \right\rVert}{2} \\[10pt] 
+    &\leq \frac{\left\lVert \vec{x} \right\rVert}{2}+\frac{\left\lVert \vec{x} \right\rVert}{2}+\frac{\left\lVert t \vec{y}  \right\rVert}{2} + \frac{\left\lVert s \vec{y}   \right\rVert}{2} \\[10pt] 
+    &= \left\lVert \vec{x} \right\rVert + \frac{t+s}{2}\left\lVert \vec{y} \right\rVert \label{huh}
+   \end{align}
+   \autoref{yuh}= \autoref{huh}.
+\end{proof}
+\end{solution}
+\begin{solution}[True]
+   Using the parallelogram identity:
+   \begin{align}
+    \left\lVert \vec{x} +\vec{y} \right\rVert^{2}+\left\lVert \vec{x} -\vec{y} \right\rVert^{2}= 2\left( \left\lVert \vec{x} \right\rVert^{2}+\left\lVert \vec{y} \right\rVert^{2}   \right) 
+   \end{align} 
+\end{solution}
+\begin{problem}[15]
+   Suppose $E$ is a compact subset of a metric space $(S,d)$. 
+   \begin{enumerate}
+    \item Prove that any $x\in S$ has a \emph{nearest point} in $E$—i.e.,the point $y$ such that $d(x,y)=\inf \left\{ d(x,s):s\in E \right\} $.
+    \item Give an example of $x$ and $E$ where the nearest point is not unique—i.e.,there exists distinct $y,z\in E$ such that $d(x,y)=d(x,z)=\inf \left\{ d(x,s) : s\in E \right\} $.
+    \item Prove that, if $S\in \mathbb{{R}}^{n}$ with its usual Euclidean metric, and $E \subset S$ is compact and convex, then, for any $x\in S$, the point nearest to it in $E$ is unique.
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+    Why is $E\subset \mathbb{{R}}^{2}$  $E=\left\{ (u,v):u^{2}+v^{2}=1 \right\} $ 
+\end{solution}
+\begin{problem}[16]
+    The function $g: \mathbb{{R}}\to \mathbb{{R}}$ is defined by setting 
+    \begin{align}
+        g(x) = \begin{cases}
+            x^{3}, &\text{ if }  x\in \mathbb{{Q}};\\
+            -x^{3}, &\text{ if }  x \neq \mathbb{{Q}}.
+        \end{cases}
+    \end{align}  
+   Compute the derivative $g^\prime $ at all points where it exists.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[17]
+   Compute $\lim_{n} \int_{0}^{1} e^{-nt^{2}} \,\mathrm{d}t $  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[18]
+   Suppose $f$ and $g$ are continuous functions on $[0,1]$, which coincide at all rational points. Prove that $f=g$ everywhere.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[19]
+   Compute the following integrals:
+   \begin{enumerate}
+    \item $\int_{0}^{1} t\sqrt{1+t^{2}}  \,\mathrm{d}t $
+    \item $\int_{0}^{1} t \sin t \,\mathrm{d}t $  
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[20]
+   \begin{enumerate}
+    \item Give an example fo a continuous map $f: S\to S^{*}$ such that there exists an open set $U \subset S$ with the property that $f(U)$ is not open in $S^{*}$.
+    \item Suppose $(S,d)$ is a compact metric space, and $f:S\to S^{*}$ is continuous and bijective. Prove that, for every open $U \subset S$, $f(U)$ is open.       
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[21]
+   Determine whether the following series converge: 
+   \begin{enumerate}
+    \item $\sum_{k=1}^{\infty} \frac{k+\sqrt{k} \sin k}{k^{3}+1}$
+    \item $\sum_{k=1}^{\infty} \frac{(-4)^{k}}{k^{4}}$
+    \item $\sum_{k=1}^{\infty} \frac{2k^{2}-1}{k^{3}+1}$   
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+What is $\lim_{k \to \infty} \frac{(-4)^{k}}{k^{4}}$ 
+\end{solution}
+\begin{problem}[22]
+   The sequence $(a_{n})$ is defined by $a_1=5, a_{n+1}=\sqrt{2a_{n}+3} $ for $n\geq 1$. Determine whether this sequence converges. If it does, find its limit.    
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[23]
+   Define the function 
+   \begin{align}
+  f(x) = \begin{cases}
+    x\sin(\frac{1}{x}), &\text{ if }  x\neq 0;\\
+    0, &\text{ if }  x=0.
+  \end{cases}  
+   \end{align} 
+   \begin{enumerate}
+    \item Prove that $f$ is not differentiable at $0$ 
+    \item Prove that there is not continuous function $g:[-1,1]\to \mathbb{{R}}$ satisfying $\int_{0}^{x} g(t) \,\mathrm{d}t =f(x)$ for any $x\in [-1,1]$.  
+   \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[24 (Alternating Series Theorem)]
+   Suppose $a_1\geq a_2\geq \ldots \geq 0 $. Prove that $\sum_{k=1}^{\infty} (-1)^{k-1}a_{k}=a_{1}-a_{2}+a_3 - \ldots   $ converges iff $\lim_{k}a_{k}=0 $.   
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[25]
+    Denote by $\mathbb{{T}}$ the unit circle in $\mathbb{{R}}^{2}$—i.e.,$\mathbb{{T}}=\left\{ (x,y)\in \mathbb{{R}}^{2}:x^{2}+y^{2}=1 \right\} $. Consider $f:[0,2\pi]\to \mathbb{{R}}^{2}: t\mapsto (\cos t, \sin t)$. Prove that
+    \begin{enumerate}
+        \item $f$ is continuous
+        \item $f([0,2\pi)]=\mathbb{{T}}$
+        \item $f^{-1}:\mathbb{{T}}\to [0,2\pi)$ is not continuous  
+    \end{enumerate}   
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[26]
+   Suppose $S$ is a non-empty metric space. Prove that $S$ is connected iff it has exactly two subsets which are both open and closed—$\varnothing $ and itself. 
+\end{problem}
+\begin{solution}
+   $\sum_{k=1}^{n} (k-1)$  
+\end{solution}
+
+\begin{problem}[22.4]
+        Consider the following subset of $\mathbb{R}^2$: 
+    \begin{align}
+        E = \left\{ \left( x, \sin\frac{1}{x} \right) : x \in (0, 1] \right\};
+    \end{align}
+    \begin{enumerate}
+        \item[(a)] Determine its closure $ E^- $. See Fig. 19.4.
+        \item[(b)] Show $ E^- $ is connected.
+        \item[(c)] Show $ E^- $ is not path-connected.
+    \end{enumerate}
+        $E$ is simply the graph of $g(x) = \sin\frac{1}{x}$ along the interval $(0, 1]$.
+\end{problem}
+\begin{solution}
+\end{solution}
+\begin{problem}[26.5]
+        Let $f(x) = \sum_{n=0}^\infty \frac{1}{n!} x^n $ for $x \in \mathbb{R}$ .
+    \begin{enumerate}
+        \item Show $ f'(x) = f(x) $.
+        \item Do \textbf{not} use the fact that $ f(x) = e^x $; this is true but has not been established at this point in the text.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[26.6]
+   Let $s(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots$ and $c(x) = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$ for $x \in \mathbb{R}$ .
+    \begin{enumerate}
+        \item[(a)] Prove $ s'(x) = c(x) $ and $ c'(x) = -s(x) $.
+        \item[(b)] Prove $ (s^2(x) + c^2(x))' = 0 $.
+        \item[(c)] Prove $ s^2(x) + c^2(x) = 1 $.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[29.5]
+    Let $f$ be defined on $\mathbb{R}$, and suppose $|f(x) - f(y)| \leq (x - y)^2$ for all $x, y  \in \mathbb{R}$.
+    \begin{align}
+    \end{align}
+    \begin{enumerate}
+        \item Prove that $ f $ is a constant function.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[32.2]
+    Let
+    \begin{align}
+        f(x)\begin{cases} 
+            x & \text{for rational } x, \\
+            0 & \text{for irrational } x.
+        \end{cases}
+    \end{align}
+    \begin{enumerate}
+        \item[(a)] Calculate the upper and lower Darboux integrals for $ f $ on the interval $[0, b]$.
+        \item[(b)] Is $ f $ integrable on $[0, b]$?
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[33.5]
+    Show
+    \begin{align}
+         \left| \int_{-2\pi}^{2\pi} x^2 \sin^8(e^x) \, dx \right| \leq \frac{16\pi^3}{3}.
+    \end{align}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[34.2]
+    \begin{enumerate}
+        \item[(a)] Calculate 
+        \begin{align}
+            \lim_{x \to 0} \frac{1}{x} \int_{0}^{x} e^{t^2} \, dt.
+        \end{align}
+        \item[(b)] Calculate 
+        \begin{align}
+            \lim_{h \to 0} \frac{1}{h} \int_{3}^{3+h} e^{t^2} \, dt.
+        \end{align}
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[34.5]
+    Let $f$ be a continuous function on $\mathbb{R}$ and define
+    \begin{align}
+        F(x) = \int_{x-1}^{x+1} f(t) \, dt \quad \text{for } x \in \mathbb{R}.
+    \end{align}
+    \begin{enumerate}
+        \item Show that $ F $ is differentiable on $ \mathbb{R} $.
+        \item Compute $ F' $.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[38.3]
+Show that there is a differentiable function on $\mathbb{R}$ whose derivative is nowhere differentiable.
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\subsubsection*{Exam 2 Practice Problems}
+\begin{problem}[17.10(c)]
+    Prove the following functions are discontinuous at the indicated points. 
+    \begin{enumerate}
+        \item $f(x)=1$ for $x>0$ and $f(x)=0$ for $x\leq 0,x_0=0$ 
+        \item $g(x)=\sin(\frac{1}{x})$ for $x\neq 0$ and $g(0)=0,x_0=0$.
+        \item $sgn(x)=\frac{x}{\left\vert x \right\vert }$ for $x\neq 0$.    
+    \end{enumerate}
+\end{problem}
+\begin{problem}[18.6]
+    Prove $x=\cos x$ for some $x$ in $(0,\frac{\pi}{2})$ 
+\end{problem}
+\begin{problem}[22.5]
+   Let $E$ and $F$ be connected sets in some metric space.
+   \begin{enumerate}
+    \item Prove that if $E\cap F\neq \varnothing $, then $E\cup F$ is connected.
+    \item Give an example to show $E \cup  F$ need not be connected. Incidentally, the empty set \emph{is} connected.   
+   \end{enumerate} 
+\end{problem}
+\begin{problem}[24.13]
+   Prove that if $(f_{n})$ is a sequence of uniformly continuous functions on an interval $(a,b)$, and if $f_{n}\to f$ uniformly on $(a,b)$, then $f$ is also uniformly continuous on $(a,b)$.
+\end{problem}
+\begin{problem}[24.15]
+    Let $f_{n}(x)=\frac{nx}{1+nx}$ for $x\in [0,\infty )$ .
+    \begin{enumerate}
+        \item Find $f(x)=\lim_{n \to \infty} f_{n}(x)$ 
+        \item Does $f_{n}\to f$ uniformly on $[0,1]$? Justify.
+        \item Does $f_{n}\to f$ uniformly on $[1,\infty )$? Justify.  
+    \end{enumerate}
+\end{problem}
+\begin{problem}[25.6]
+\begin{enumerate}
+    \item 
+    Show that if $\sum \left\vert a_{k} \right\vert  <\infty $, then $\sum a_{k}x^{k}$ converges uniformly on $[-1,1]$ to a continuous function.
+    \item Does $\sum_{n=1}^{\infty} \frac{1}{n^{2}}x^{n}$ represent a continuous function on $[-1,1]$? 
+\end{enumerate}
+\end{problem}
+\subsubsection*{Exam 1 Practice Problems}
+\begin{problem}[13.3]
+   Let $B$ be the set of all bounded sequences $\mathbf{x} =\left( x_1 ,x_2, \ldots    \right) $, and define $d(\mathbf{x} ,\mathbf{y} )=\sup\left\{ \left\vert x_{j}-y_{j} \right\vert  :j=1,2, \ldots  \right\} $.
+   \begin{enumerate}
+    \item Show $d$ is a metric for $B$ 
+    \item Does $d^{*}(\mathbf{x} ,\mathbf{y} )=\sum_{j=1}^{\infty} \left\vert x_{j}-y_{j} \right\vert $ define a metric for $B$?
+   \end{enumerate}  
+\end{problem}
+\end{document}

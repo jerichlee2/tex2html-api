@@ -1,0 +1,271 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+%------------------------------------------------------------------------------
+%  Inversion  \(T(z)=\dfrac{1}{z}\) sends \emph{generalised circles}
+%  (i.e.\ Euclidean circles or straight lines) to generalised circles.
+%  Below is a concise statement, a coordinate–free proof, and a
+%  coordinate proof that makes the geometry completely explicit.
+%------------------------------------------------------------------------------
+
+\begin{theorem}[Inversion preserves circles and lines]
+  Let
+  \[
+     T : \widehat{\mathbb C}\longrightarrow\widehat{\mathbb C},
+     \qquad T(z)=\frac{1}{z},
+  \]
+  where \(\widehat{\mathbb C}=\mathbb C\cup\{\infty\}\) is the Riemann
+  sphere and \(T(0)=\infty,\; T(\infty)=0\).
+  For any generalised circle  
+  \(C\subset\widehat{\mathbb C}\) (that is, a circle or a straight line,
+  with the understanding that a line “passes through” \(\infty\)),
+  its image \(T(C)\) is again a generalised circle.
+  \end{theorem}
+  
+  \subsection*{1. Conceptual proof (cross–ratio)}
+  Any Möbius (linear–fractional) map
+  \(M(z)=\dfrac{az+b}{cz+d}\;(ad-bc\neq0)\) is completely determined by
+  the image of three distinct points and \emph{preserves the cross–ratio}
+  \((z_1,z_2,z_3,z_4)\).  A generalised circle is precisely the set of
+  points \(z_4\) whose cross–ratio with three fixed, distinct
+  points \(z_1,z_2,z_3\) is real.  
+  Because invariance of the cross–ratio implies
+  \[
+     (z_1,z_2,z_3,z_4)\in\mathbb R 
+     \;\Longleftrightarrow\;
+     (M(z_1),M(z_2),M(z_3),M(z_4))\in\mathbb R,
+  \]
+  Möbius maps carry generalised circles to generalised circles.
+  The inversion \(T(z)=1/z\) is a special Möbius map
+  \(\bigl(\begin{smallmatrix}0&1\\ 1&0\end{smallmatrix}\bigr)\), hence
+  inherits this property.
+  \qed
+  
+  \subsection*{2. Coordinate proof}
+  Write any generalised circle as
+  \[
+     \alpha\,z\bar z+\beta\,z+\overline{\beta}\,\bar z+\gamma=0,
+     \qquad \alpha,\gamma\in\mathbb R,\;
+     (\alpha,\beta,\gamma)\neq(0,0,0).
+     \tag{$\star$}
+  \]
+  \begin{itemize}
+  \item A \emph{circle} is the case \(\alpha\neq0\);
+  \item A \emph{line} is the case \(\alpha=0\).
+  \end{itemize}
+  
+  Under \(w=T(z)=1/z\) we have \(z=\dfrac{1}{w}\) and
+  \(z\bar z=\dfrac{1}{w\bar w}\).
+  Substituting \(z=1/w\) in \((\star)\) gives
+  \[
+     \alpha\frac{1}{w\bar w}
+     +\beta\frac{1}{w}
+     +\overline{\beta}\frac{1}{\bar w}
+     +\gamma =0.
+  \]
+  Multiplying by \(w\bar w\) (which is non–zero except at \(w=0\), where
+  we interpret the equation in the extended plane) yields
+  \[
+     \gamma\,w\bar w
+     +\overline{\beta}\,w
+     +\beta\,\bar w
+     +\alpha =0.
+     \tag{$\star\star$}
+  \]
+  Equation \((\star\star)\) is of the same algebraic form as
+  \((\star)\), so the image set \(T(C)\) is a generalised circle.
+  
+  \medskip
+  \noindent
+  \textbf{Classification of special cases.}
+  Let \(L\) be a straight line and \(S\) a true circle.
+  \[
+  \begin{array}{c|c}
+  \text{Pre–image set}  & \text{Image under }T(z)=\dfrac{1}{z} \\ \hline
+  \text{Line through }0 & \text{Same line (fixed)} \\[3pt]
+  \text{Line not through }0 & \text{Circle through }0 \\[6pt]
+  \text{Circle through }0 & \text{Line not through }0 \\[6pt]
+  \text{Circle not through }0 & \text{Circle not through }0
+  \end{array}
+  \]
+  
+  \smallskip
+  \emph{Example.}
+  The vertical line \(\Re z=2\) (does not meet \(0\)) has parametrisation
+  \(z=2+it\;(t\in\mathbb R)\).  Then
+  \[
+     w=T(z)=\frac{1}{2+it}
+       =\frac{2-it}{4+t^{2}}
+       =\frac{2}{4+t^{2}}-\;i\frac{t}{4+t^{2}},
+  \]
+  and one checks directly that
+  \(
+     \bigl|\,w-\tfrac14\,\bigr|=\tfrac14,
+  \)
+  so the image is the circle centred at \(1/4\) with radius \(1/4\) that
+  passes through \(0\).
+  
+  \subsection*{3. Geometric interpretation}
+  Algebraically
+  \(
+     T(z)=1/z
+     =\overline z/|z|^{2}
+  \)
+  is the composition of
+  \begin{enumerate}
+  \item inversion in the unit circle \(I(z)=z/|z|^{2}\), and
+  \item reflection across the real axis \(R(z)=\bar z\).
+  \end{enumerate}
+  Both \(I\) and \(R\) individually send circles/lines to
+  circles/lines; hence so does \(T=R\circ I\).
+  Intuitively, inversion swaps the inside and outside of the unit circle,
+  while reflection flips each point across the real axis, preserving the
+  circle/line structure throughout.
+  
+  \bigskip
+  \centerline{$\boxed{\;T(z)=1/z\text{ maps generalised circles to generalised circles.}\;}$}
+  %------------------------------------------------------------------------------
+%  Why does the horizontal line  $\ell_2=\{z\in\Bbb C:\operatorname{Im}z=1\}$
+%  go to the circle  $\{w:|w+\tfrac{i}{2}|=\tfrac12\}$ under the inversion
+%  $T(z)=\dfrac1z$\,?
+%------------------------------------------------------------------------------
+
+\begin{proof}
+  Write a point of the line \(\ell_2\) as
+  \[
+     z=x+i, \qquad x\in\Bbb R.
+  \]
+  Applying the map \(T(z)=\dfrac1z\) gives  
+  \[
+     w=T(z)=\frac1{x+i}
+          =\frac{x-i}{x^{2}+1}
+          =\frac{x}{x^{2}+1}\;-\;i\,\frac1{x^{2}+1}.
+  \]
+  
+  \medskip
+  \noindent
+  \textbf{Step 1.  Show that \(w\) satisfies the claimed circle equation.}
+  
+  Add \(\dfrac{i}{2}\) to \(w\):
+  \[
+     w+\frac{i}{2}
+     =\frac{x}{x^{2}+1}
+      +i\!\left(\frac12-\frac1{x^{2}+1}\right).
+  \]
+  Set \(D:=x^{2}+1>0\) for brevity.  Then
+  \[
+     |\,w+\tfrac{i}{2}\,|^{2}
+     =\left(\frac{x}{D}\right)^{2}
+      +\left(\frac12-\frac1{D}\right)^{2}.
+  \]
+  Since \(x^{2}=D-1\),
+  \[
+     \left(\frac{x}{D}\right)^{2}
+     =\frac{D-1}{D^{2}}
+     =\frac1{D}-\frac1{D^{2}}.
+  \]
+  Hence
+  \[
+     |\,w+\tfrac{i}{2}\,|^{2}
+     =\Bigl(\frac1{D}-\frac1{D^{2}}\Bigr)
+      +\Bigl(\frac14-\frac1{D}+\frac1{D^{2}}\Bigr)
+     =\frac14.
+  \]
+  Therefore \(|\,w+\tfrac{i}{2}\,|=\tfrac12\), so every image point
+  indeed lies on the circle
+  \(C:=\{\,w\in\Bbb C:|\,w+\tfrac{i}{2}\,|=\tfrac12\}\).
+  
+  \medskip
+  \noindent
+  \textbf{Step 2.  The circle \(C\) contains \(0\).}
+  
+  Putting \(w=0\) gives \(|\,0+\tfrac{i}{2}\,|=\tfrac12\), so
+  \(0\in C\); this fits the general rule that a line not passing through
+  \(0\) is sent to a circle \emph{through} \(0\).
+  
+  \medskip
+  \noindent
+  \textbf{Step 3.  No other points are missed.}
+  
+  Conversely, let \(w\in C\setminus\{0\}\).
+  Then \(z:=\dfrac1w\) is well-defined and
+  \(
+     \operatorname{Im}z
+     =\operatorname{Im}\!\bigl(\tfrac1w\bigr)
+     =\operatorname{Im}\!\bigl(\overline{w}/|w|^{2}\bigr)
+     =\frac{-\operatorname{Im}w}{|w|^{2}}.
+  \)
+  The condition \(|\,w+\tfrac{i}{2}\,|=\tfrac12\) forces
+  \(\operatorname{Im}w=-\dfrac12\) and \(|w|^{2}=\dfrac14\),
+  so \(\operatorname{Im}z=1\); hence \(z\in\ell_2\).
+  Thus \(T(\ell_2)=C\).
+  
+  \medskip
+  \[
+     \boxed{%
+        T\bigl(\,\operatorname{Im}z=1\,\bigr)
+        \;=\;
+        \Bigl\{\,w\in\Bbb C : \bigl|\,w+\tfrac{i}{2}\,\bigr|=\tfrac12\Bigr\}.}
+  \]
+  
+  \end{proof}
+
+  find all the order of the zeros on the upper half plane Im(z)>0 of:
+
+  $z^{8}+4z^{5}+iz+i+1$ 
+\end{document}

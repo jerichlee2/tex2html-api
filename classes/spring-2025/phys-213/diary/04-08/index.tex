@@ -1,0 +1,1727 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Solution: Fraction of the Translational Kinetic Energy in O$_2$}
+
+\noindent
+\textbf{Given:}
+\begin{itemize}
+    \item Air is composed of approximately 20\% O$_2$ molecules and 80\% N$_2$ molecules by number.
+    \item Both O$_2$ and N$_2$ are diatomic gases at the same temperature $T$.
+\end{itemize}
+
+\noindent
+\textbf{Goal:} Find the fraction of the total translational kinetic energy (KE) in the mixture that resides in O$_2$.
+
+\vspace{1em}
+\noindent
+\textbf{Step 1: Average translational kinetic energy per molecule.}
+
+\[
+\langle K_\text{trans} \rangle \;=\; \frac{3}{2} k_B T
+\]
+Every molecule (regardless of species) in an ideal gas at temperature $T$ has the same average translational kinetic energy $\frac{3}{2} k_B T$.
+
+\vspace{1em}
+\noindent
+\textbf{Step 2: Total translational kinetic energy in the mixture.}
+
+Let $N_{O_2}$ be the total number of O$_2$ molecules and $N_{N_2}$ be the total number of N$_2$ molecules. Then,
+\[
+K_\text{total} \;=\; \Bigl(N_{O_2} + N_{N_2}\Bigr)\,\frac{3}{2}\,k_B\,T.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 3: Portion of the total translational KE due to O$_2$.}
+
+\[
+K_\text{O$_2$} \;=\; N_{O_2}\,\frac{3}{2}\,k_B\,T.
+\]
+Thus, the fraction of the total translational energy contributed by O$_2$ is
+\[
+\frac{K_\text{O$_2$}}{K_\text{total}} 
+\;=\; 
+\frac{N_{O_2}\,\frac{3}{2}\,k_B\,T}{\bigl(N_{O_2} + N_{N_2}\bigr)\,\frac{3}{2}\,k_B\,T} 
+\;=\; 
+\frac{N_{O_2}}{N_{O_2} + N_{N_2}}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 4: Substitute the given percentages.}
+
+Since 20\% of the molecules in air are O$_2$, 
+\[
+\frac{N_{O_2}}{N_{O_2} + N_{N_2}}
+\;=\; 0.20.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Conclusion:} 
+The fraction of the \emph{total translational kinetic energy} in air that resides in O$_2$ is 
+\[
+\boxed{0.20 \text{ (i.e., 20\%)}}.
+\]
+
+\section*{Solution: Factor Increase in Molecular Speed}
+
+\noindent
+\textbf{Problem:} 
+Air in a box is heated from $22^\circ\mathrm{C}$ to $52^\circ\mathrm{C}$. We want to find by what factor the \emph{typical} translational molecular speed will increase.
+
+\vspace{1em}
+\noindent
+\textbf{Step 1: Relationship between temperature and molecular speed.}
+
+For an ideal gas, a typical measure of molecular speed is given by the root-mean-square (rms) speed, which is proportional to the square root of the absolute temperature $T$:
+\[
+v_\mathrm{rms} \;=\; \sqrt{\frac{3k_B T}{m}},
+\]
+where $m$ is the mass of a gas molecule and $k_B$ is the Boltzmann constant. Hence,
+\[
+v_\mathrm{rms} \propto \sqrt{T}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 2: Convert temperatures to Kelvin.}
+
+\[
+T_i \;=\; 22^\circ\mathrm{C} \;=\; (22 + 273)\,\mathrm{K} \;=\; 295\,\mathrm{K},
+\]
+\[
+T_f \;=\; 52^\circ\mathrm{C} \;=\; (52 + 273)\,\mathrm{K} \;=\; 325\,\mathrm{K}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 3: Compute the ratio of rms speeds.}
+
+\[
+\frac{v_{\mathrm{rms},f}}{v_{\mathrm{rms},i}}
+\;=\;
+\sqrt{\frac{T_f}{T_i}}
+\;=\;
+\sqrt{\frac{325}{295}}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 4: Numerical evaluation.}
+
+\[
+\frac{v_{\mathrm{rms},f}}{v_{\mathrm{rms},i}}
+\;\approx\;
+\sqrt{1.10169}
+\;\approx\;
+1.05.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Result:} 
+The typical translational molecular speed increases by a factor of 
+\[
+\boxed{1.05 \text{ (about a 5\% increase).}}
+\]
+
+\section*{Solution: Twice the Translational Speed}
+
+\noindent
+\textbf{Problem:}
+We want to find the temperature to which air must be heated so that the typical translational speed of the molecules becomes twice as large as it is at room temperature ($22^\circ\mathrm{C}$).
+
+\vspace{1em}
+\noindent
+\textbf{Step 1: Relationship between molecular speed and temperature.}
+
+For an ideal gas, the typical molecular speed can be taken as the root-mean-square (rms) speed, which satisfies
+\[
+v_{\mathrm{rms}} \;=\; \sqrt{\frac{3k_B T}{m}}
+\quad\Longrightarrow\quad
+v_{\mathrm{rms}} \propto \sqrt{T}.
+\]
+
+\noindent
+Thus,
+\[
+\frac{v_{\mathrm{rms},f}}{v_{\mathrm{rms},i}} 
+\;=\;
+\sqrt{\frac{T_f}{T_i}}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 2: Express the condition for doubling the speed.}
+
+We want
+\[
+v_{\mathrm{rms},f} = 2\,v_{\mathrm{rms},i}
+\quad\Longrightarrow\quad
+\frac{v_{\mathrm{rms},f}}{v_{\mathrm{rms},i}} 
+\;=\; 2.
+\]
+
+\noindent
+Hence,
+\[
+2 
+\;=\;
+\sqrt{\frac{T_f}{T_i}}
+\quad\Longrightarrow\quad
+\frac{T_f}{T_i}
+\;=\; 
+2^2 
+\;=\; 
+4.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 3: Solve for the final temperature $T_f$.}
+
+\[
+T_f 
+\;=\; 
+4\,T_i.
+\]
+
+\noindent
+Room temperature of $22^\circ\mathrm{C}$ in Kelvin is
+\[
+T_i 
+\;=\;
+22^\circ\mathrm{C} + 273
+\;=\;
+295\,\mathrm{K}.
+\]
+Thus,
+\[
+T_f
+\;=\; 
+4 \times 295\,\mathrm{K}
+\;=\; 
+1180\,\mathrm{K}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 4: Convert $T_f$ back to degrees Celsius.}
+
+\[
+T_f\;(^\circ\mathrm{C}) 
+\;=\; 
+T_f\,(\mathrm{K}) - 273
+\;=\; 
+1180 - 273
+\;=\; 
+907^\circ\mathrm{C}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Final Answer:}
+To have the molecules move twice as fast as they do at $22^\circ\mathrm{C}$, you would need to heat the air to 
+\[
+\boxed{907^\circ\mathrm{C} \text{ (i.e., about } 1180\text{ K}).}
+\]
+
+\section*{Solution: Temperature Required to Double Pressure at Constant Density}
+
+\noindent
+\textbf{Problem:}
+We want to find the temperature to which we must heat air (initially at $22^\circ\mathrm{C}$) so that its pressure doubles, \emph{assuming constant density}.
+
+\vspace{1em}
+\noindent
+\textbf{Step 1: Recall the ideal gas law for a fixed mass of gas.}
+
+For a gas of fixed mass (and hence fixed number of moles) in which the density remains constant, we can write:
+\[
+P \;=\; \frac{N k_B T}{V},
+\]
+where $N$ is the number of molecules, $k_B$ is Boltzmann's constant, $T$ is the absolute (Kelvin) temperature, and $V$ is the volume. 
+\emph{Constant density} means $\frac{N}{V}$ stays the same, so $P$ is directly proportional to $T$:
+\[
+P \;\propto\; T.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 2: Relationship for doubling the pressure.}
+
+To \emph{double} the pressure,
+\[
+P_f \;=\; 2\,P_i.
+\]
+Since $P \propto T$, it follows that
+\[
+T_f \;=\; 2\,T_i.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 3: Convert initial temperature to Kelvin and solve for $T_f$.}
+
+\[
+T_i 
+= 22^\circ\mathrm{C} + 273 
+= 295\,\mathrm{K}.
+\]
+Therefore,
+\[
+T_f = 2 \times 295\,\mathrm{K} = 590\,\mathrm{K}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 4: Convert $T_f$ back to degrees Celsius.}
+
+\[
+T_f\,(^\circ\mathrm{C})
+= 590 - 273
+= 317^\circ\mathrm{C}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Final Answer:}
+To double the pressure at constant density (starting from $22^\circ\mathrm{C}$), you must heat the air to
+\[
+\boxed{317^\circ\mathrm{C} \text{ (i.e., } 590\text{ K}).}
+\]
+
+\section*{Solution: Temperature from RMS Speed of O$_2$}
+
+\noindent
+\textbf{Problem Statement:} \\
+We have a sample of pure O$_2$ (molecular weight $= 32\,$g/mol) whose molecules have an RMS (root-mean-square) translational speed $v_\mathrm{rms} = 300\,\mathrm{m/s}$. We want to find the temperature $T$ of this gas.
+
+\vspace{1em}
+\noindent
+\textbf{Step 1: Express the RMS speed for a gas in terms of temperature.}
+
+For a gas with molar mass $M$ (in kg/mol), the RMS speed is given by
+\[
+v_\mathrm{rms} \;=\; \sqrt{\frac{3 R \, T}{M}},
+\]
+where $R \approx 8.314\,\mathrm{J/(mol\,K)}$ is the universal gas constant and $T$ is the absolute (Kelvin) temperature.
+
+\vspace{1em}
+\noindent
+\textbf{Step 2: Solve for the temperature $T$.}
+
+Rearranging,
+\[
+v_\mathrm{rms}^2 
+\;=\;
+\frac{3 R \, T}{M}
+\;\;\Longrightarrow\;\;
+T
+\;=\;
+\frac{v_\mathrm{rms}^2\,M}{3 R}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 3: Convert the molar mass of O$_2$ to SI units (kg/mol).}
+
+\[
+\text{Molecular weight of O}_2 = 32\,\mathrm{g/mol} 
+= 0.032\,\mathrm{kg/mol}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 4: Plug in the values and compute $T$.}
+
+\[
+v_\mathrm{rms} = 300\,\mathrm{m/s}, 
+\quad
+M = 0.032\,\mathrm{kg/mol}, 
+\quad
+R = 8.314\,\mathrm{J/(mol\,K)}.
+\]
+Hence,
+\[
+T 
+\;=\;
+\frac{(300\,\mathrm{m/s})^2 \times 0.032\,\mathrm{kg/mol}}{3 \times 8.314\,\mathrm{J/(mol\,K)}}.
+\]
+\[
+T 
+\;=\; 
+\frac{90000\,(\mathrm{m^2/s^2}) \times 0.032\,\mathrm{kg/mol}}{24.942\,\mathrm{J/(mol\,K)}}.
+\]
+\[
+T 
+\;=\;
+\frac{2880\,\mathrm{J/mol}}{24.942\,\mathrm{J/(mol\,K)}}
+\;\approx\;
+115.5\,\mathrm{K}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Step 5: (Optional) Convert to degrees Celsius.}
+
+\[
+T\,(\!^\circ\mathrm{C})
+\;=\;
+T\,(\mathrm{K}) \;-\; 273
+\;=\;
+115.5 \;-\; 273
+\;\approx\;
+-157.5\,^\circ\mathrm{C}.
+\]
+
+\vspace{1em}
+\noindent
+\textbf{Final Answer:} 
+The temperature of the O$_2$ gas is 
+\[
+\boxed{115.5\,\mathrm{K} \;\;(\text{approximately }-157.5^\circ\mathrm{C}).}
+\]
+
+\section*{Solution: Constant-Temperature Compression from $V_i$ to $V_f$}
+
+\noindent
+\textbf{Given:} We have an ideal gas initially at volume $V_i$, which is slowly compressed to a final volume $V_f$ under \emph{constant temperature} $T$. 
+We want to:
+\begin{enumerate}
+    \item[(a)] Write $p$ as a function of $V$ and constants.
+    \item[(b)] Obtain a formula for $\Delta p = p(V_f) - p(V_i)$.
+\end{enumerate}
+
+\subsection*{(a) Pressure as a function of volume}
+
+\noindent
+Because the temperature $T$ is held constant and we assume an ideal gas, the Ideal Gas Law states
+\[
+pV = nRT,
+\]
+where 
+\begin{itemize}
+    \item $p$ is the pressure,
+    \item $V$ is the volume,
+    \item $n$ is the number of moles of gas,
+    \item $R$ is the universal gas constant,
+    \item $T$ is the (constant) temperature.
+\end{itemize}
+
+\noindent
+Solving for $p$ in terms of $V$, we get
+\[
+\boxed{p(V) = \frac{nRT}{V}.}
+\]
+
+\subsection*{(b) Change in pressure from $V_i$ to $V_f$}
+
+\noindent
+Using $p(V) = \tfrac{nRT}{V}$, we compute the initial and final pressures:
+\[
+p(V_i) = \frac{nRT}{V_i}
+\quad\quad\text{and}\quad\quad
+p(V_f) = \frac{nRT}{V_f}.
+\]
+Hence, the change in pressure is
+\[
+\Delta p = p(V_f) - p(V_i)
+= \frac{nRT}{V_f} - \frac{nRT}{V_i}
+= nRT \,\left(\frac{1}{V_f} - \frac{1}{V_i}\right).
+\]
+Thus,
+\[
+\boxed{\Delta p
+= nRT\left(\frac{1}{V_f} - \frac{1}{V_i}\right).
+}
+\]
+
+\section*{Solution: Constant-Temperature Compression from $V_i$ to $V_f$}
+
+\noindent
+\textbf{Given:} We have an ideal gas initially at volume $V_i$, which is slowly compressed to a final volume $V_f$ under \emph{constant temperature} $T$. 
+We want to:
+\begin{enumerate}
+    \item[(a)] Write $p$ as a function of $V$ and constants.
+    \item[(b)] Obtain a formula for $\Delta p = p(V_f) - p(V_i)$.
+\end{enumerate}
+
+\subsection*{(a) Pressure as a function of volume}
+
+\noindent
+Because the temperature $T$ is held constant and we assume an ideal gas, the Ideal Gas Law states
+\[
+pV = nRT,
+\]
+where 
+\begin{itemize}
+    \item $p$ is the pressure,
+    \item $V$ is the volume,
+    \item $n$ is the number of moles of gas,
+    \item $R$ is the universal gas constant,
+    \item $T$ is the (constant) temperature.
+\end{itemize}
+
+\noindent
+Solving for $p$ in terms of $V$, we get
+\[
+\boxed{p(V) = \frac{nRT}{V}.}
+\]
+
+\subsection*{(b) Change in pressure from $V_i$ to $V_f$}
+
+\noindent
+Using $p(V) = \tfrac{nRT}{V}$, we compute the initial and final pressures:
+\[
+p(V_i) = \frac{nRT}{V_i}
+\quad\quad\text{and}\quad\quad
+p(V_f) = \frac{nRT}{V_f}.
+\]
+Hence, the change in pressure is
+\[
+\Delta p = p(V_f) - p(V_i)
+= \frac{nRT}{V_f} - \frac{nRT}{V_i}
+= nRT \,\left(\frac{1}{V_f} - \frac{1}{V_i}\right).
+\]
+Thus,
+\[
+\boxed{\Delta p
+= nRT\left(\frac{1}{V_f} - \frac{1}{V_i}\right).
+}
+\]
+
+\section*{Solution: Constant-Volume Heating from $T_i$ to $T_f$}
+
+\noindent
+\textbf{Given:}
+\begin{itemize}
+    \item We have an ideal gas in a closed, rigid container, so the volume $V$ is constant.
+    \item The temperature of the gas is increased from an initial temperature $T_i$ to a final temperature $T_f$.
+\end{itemize}
+We want to:
+\begin{enumerate}
+    \item[(a)] Write $p$ as a function of $T$ and constants.
+    \item[(b)] Obtain a formula for $\Delta p = p(T_f) - p(T_i)$.
+\end{enumerate}
+
+\subsection*{(a) Pressure as a function of temperature}
+
+\noindent
+Under conditions of constant volume, the Ideal Gas Law states:
+\[
+p\,V \;=\; n R T,
+\]
+where
+\begin{itemize}
+    \item $p$ is the pressure,
+    \item $V$ is the constant volume,
+    \item $n$ is the number of moles,
+    \item $R$ is the universal gas constant,
+    \item $T$ is the absolute (Kelvin) temperature.
+\end{itemize}
+Solving for $p$:
+\[
+\boxed{p(T) = \frac{n R \, T}{V}.}
+\]
+
+\subsection*{(b) Change in pressure from $T_i$ to $T_f$}
+
+\noindent
+Using $p(T) = \tfrac{n R T}{V}$, we find:
+\[
+p(T_i) = \frac{n R\,T_i}{V},
+\quad
+p(T_f) = \frac{n R\,T_f}{V}.
+\]
+Therefore,
+\[
+\Delta p \;=\; p(T_f) - p(T_i) 
+\;=\; \frac{n R\,T_f}{V} \;-\; \frac{n R\,T_i}{V} 
+\;=\; \frac{n R}{V}\,\bigl(T_f \;-\; T_i\bigr).
+\]
+Hence,
+\[
+\boxed{
+\Delta p 
+= \frac{n R}{V}\,\bigl(T_f - T_i\bigr).
+}
+\]
+
+\section*{Solution: Constant-Pressure Heating from $T_i$ to $T_f$}
+
+\noindent
+\textbf{Given:}
+\begin{itemize}
+    \item An ideal gas is heated in an \emph{expandable container} so that the pressure $p$ remains constant.
+    \item The temperature of the gas increases from $T_i$ to $T_f$.
+\end{itemize}
+We want to:
+\begin{enumerate}
+    \item[(a)] Write $V$ (the volume) as a function of $T$ and constants.
+    \item[(b)] Obtain a formula for $\Delta V = V(T_f) - V(T_i)$.
+\end{enumerate}
+
+\subsection*{(a) Volume as a function of temperature}
+
+\noindent
+Under constant pressure, the Ideal Gas Law is:
+\[
+p\,V \;=\; n\,R\,T,
+\]
+where
+\begin{itemize}
+    \item $p$ is the constant pressure,
+    \item $V$ is the volume,
+    \item $n$ is the number of moles,
+    \item $R$ is the universal gas constant,
+    \item $T$ is the absolute temperature (in Kelvin).
+\end{itemize}
+
+\noindent
+Solving for $V$ in terms of $T$,
+\[
+\boxed{V(T) = \frac{n\,R\,T}{p}.}
+\]
+
+\subsection*{(b) Change in volume from $T_i$ to $T_f$}
+
+\noindent
+We can now evaluate the volume at the two temperatures:
+\[
+V(T_i) = \frac{n\,R\,T_i}{p},
+\quad
+V(T_f) = \frac{n\,R\,T_f}{p}.
+\]
+Hence, the change in volume is
+\[
+\Delta V
+\;=\;
+V(T_f) - V(T_i)
+\;=\;
+\frac{n\,R\,T_f}{p} 
+\;-\; 
+\frac{n\,R\,T_i}{p}
+\;=\;
+\frac{n\,R}{p}\,\bigl(T_f - T_i\bigr).
+\]
+Thus,
+\[
+\boxed{\Delta V
+= \frac{n\,R}{p}\,\bigl(T_f - T_i\bigr).
+}
+\]
+
+\section*{3. PV Diagrams: Isothermal Compression}
+
+We have $n$ moles of diatomic nitrogen (an ideal gas), held at a constant temperature $T$
+by a thermal bath. The gas is slowly compressed from an initial volume $V_i$ to a final volume $V_f$.
+We assume $V_f < V_i$, so this is indeed a compression.
+
+\subsection*{(a) Write \texorpdfstring{$p$}{p} as a function of \texorpdfstring{$V$}{V} and constants}
+
+Because the temperature is held constant and the gas is assumed ideal, the ideal gas law applies:
+\[
+p\,V \;=\; n\,R\,T,
+\]
+where
+\begin{itemize}
+  \item $p$ is the (internal) gas pressure,
+  \item $V$ is the volume,
+  \item $n$ is the number of moles,
+  \item $R$ is the universal gas constant,
+  \item $T$ is the (constant) absolute temperature.
+\end{itemize}
+Solving for $p$ in terms of $V$:
+\[
+\boxed{p(V) \;=\; \frac{n\,R\,T}{V}.}
+\]
+
+\subsection*{(b) Determine the work on the system during compression}
+
+\paragraph{Sign convention.}
+In thermodynamics, one common sign convention is:
+\[
+W_{\text{by system}} \;=\; \int p\,dV,
+\]
+meaning ``the work \emph{done by} the gas'' is the integral of $p\,dV$.  
+However, the question specifically asks for ``the work \emph{on} the system'' during compression.  
+Hence,
+\[
+W_{\text{on system}} \;=\; -\,W_{\text{by system}}
+\;=\;
+- \int_{V_i}^{V_f} p(V)\,dV.
+\]
+
+Since $p(V) = \frac{nRT}{V}$, we have
+\[
+W_{\text{by system}}
+\;=\;
+\int_{V_i}^{V_f} \frac{n\,R\,T}{V}\,dV
+\;=\;
+n\,R\,T \,\int_{V_i}^{V_f} \frac{dV}{V}
+\;=\;
+n\,R\,T\,\ln\!\bigl(\tfrac{V_f}{V_i}\bigr).
+\]
+Therefore,
+\[
+W_{\text{on system}}
+\;=\;
+-\,n\,R\,T\,\ln\!\bigl(\tfrac{V_f}{V_i}\bigr)
+\;=\;
+n\,R\,T\,\ln\!\bigl(\tfrac{V_i}{V_f}\bigr).
+\]
+\[
+\boxed{
+W_{\text{on system}}
+\;=\;
+n\,R\,T\,\ln\!\Bigl(\frac{V_i}{V_f}\Bigr).
+}
+\]
+
+\subsection*{(c) Is the work on the system positive or negative?}
+
+Because this is a \emph{compression} ($V_f < V_i$), we have $\frac{V_i}{V_f} > 1$. Hence,
+\[
+\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr) \;>\; 0,
+\]
+and thus
+\[
+W_{\text{on system}} \;=\; n\,R\,T\,\ln\!\bigl(\tfrac{V_i}{V_f}\bigr)
+\;>\;
+0.
+\]
+In other words, the surroundings do \emph{positive} work \emph{on} the gas during compression.
+
+\section*{3.3 Entropy}
+
+We have $n$ moles of diatomic nitrogen gas (ideal) in thermal contact with a bath at temperature $T$. 
+The gas is \emph{isothermally} compressed from volume $V_i$ to $V_f$ ($V_f < V_i$). 
+We wish to analyze the entropy changes for the gas, the bath, and the total, and then comment on reversibility.
+
+\subsection*{(a) Does the entropy of the gas increase or decrease?}
+
+For an isothermal compression of an \emph{ideal} gas from $V_i$ to $V_f$, the gas experiences a \emph{decrease} in entropy because its volume decreases. 
+Mathematically (shown below), 
+\[
+\Delta S_{\text{gas}} \;=\; nR \ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr),
+\]
+and since $V_f<V_i$, the ratio $\tfrac{V_f}{V_i}<1$, so $\ln(\tfrac{V_f}{V_i})<0$. 
+Therefore, 
+\[
+\Delta S_{\text{gas}} < 0,
+\]
+i.e.\ the gas's entropy \emph{decreases}.
+
+\subsection*{(b) Compute the change in entropy of the gas, using \texorpdfstring{$dS = dQ/T$}{dS = dQ/T}}
+
+\paragraph{Heat flow and isothermal process.}
+For an ideal gas undergoing an isothermal process,
+the internal energy does not change ($\Delta U=0$),
+so the heat absorbed by the gas, $Q_{\text{gas}}$, equals (minus) the work done \emph{by} the gas.
+In a compression ($V_f < V_i$), the work done \emph{by} the gas is negative, hence $Q_{\text{gas}}<0$ as well.
+
+An easier route is the general formula for entropy change of an ideal gas in an isothermal process:
+\[
+\Delta S_{\text{gas}}
+\;=\;
+\int_{i}^{f}\! \frac{\delta Q}{T}
+\;=\;
+nR \ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+\]
+Thus,
+\[
+\boxed{
+\Delta S_{\text{gas}}
+\;=\;
+nR \ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+}
+\]
+Since $\tfrac{V_f}{V_i}<1$, this quantity is negative, matching our conclusion in part (a).
+
+\subsection*{(c) Find the entropy change of the bath}
+
+\paragraph{Heat exchange with the bath.}
+If the gas is \emph{losing} heat $Q_{\text{gas}}$ (which is negative), 
+the bath \emph{gains} that same amount of energy, $Q_{\text{bath}} = -\,Q_{\text{gas}}$. 
+Because the temperature of the bath is $T$ (the same temperature that is maintained in the gas for an isothermal process), 
+the bath's entropy change is
+\[
+\Delta S_{\text{bath}}
+\;=\;
+\frac{Q_{\text{bath}}}{T}
+\;=\;
+\frac{-\,Q_{\text{gas}}}{T}.
+\]
+But for an isothermal process of the ideal gas,
+\[
+Q_{\text{gas}}
+\;=\;
+nR\,T\,\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+\]
+Hence
+\[
+Q_{\text{bath}}
+\;=\;
+-\,nR\,T\,\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+\;=\;
+nR\,T\,\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr).
+\]
+Therefore,
+\[
+\Delta S_{\text{bath}}
+\;=\;
+\frac{nR\,T\,\ln\!\bigl(\tfrac{V_i}{V_f}\bigr)}{T}
+\;=\;
+nR\,\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr).
+\]
+Because $V_f<V_i$, the argument of the logarithm is $>1$, so $\Delta S_{\text{bath}}>0$.
+
+\subsection*{(d) Find the total change (bath + gas) in entropy}
+
+Summing the two contributions,
+\[
+\Delta S_{\text{total}} 
+\;=\;
+\Delta S_{\text{gas}}
+\;+\;
+\Delta S_{\text{bath}}
+\;=\;
+nR \ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+\;+\;
+nR \ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr).
+\]
+Notice that
+\[
+\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+\;=\;
+-\,\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr),
+\]
+so these two terms cancel exactly. 
+Hence,
+\[
+\boxed{\Delta S_{\text{total}} = 0.}
+\]
+In a \emph{reversible}, isothermal compression of an ideal gas, the decrease in the gas's entropy exactly matches the increase in the bath's entropy, so the total entropy change is zero.
+
+\subsection*{(e) Is the process reversible?}
+
+Yes. 
+An isothermal compression done \emph{quasi-statically} (infinitesimally slowly, with no dissipative effects) is a classic example of a \emph{reversible} process for an ideal gas. 
+The fact that $\Delta S_{\text{total}}=0$ confirms reversibility in idealized thermodynamics.
+
+\section*{3.4 Example: Isothermal Compression of 1.5 moles of Gas}
+
+\noindent
+\textbf{Given:}
+\begin{itemize}
+  \item Amount of gas: $n=1.5\,\text{moles}$
+  \item Temperature: $T=35^\circ\mathrm{C}=308\,\mathrm{K}$
+  \item Initial volume: $V_i=0.015\,\mathrm{m^3}$
+  \item Final volume: $V_f=0.0015\,\mathrm{m^3}$ (an order of magnitude smaller)
+  \item Process: \emph{Isothermal}, \emph{quasi‐static} (very slow) compression
+\end{itemize}
+
+\subsection*{(a) Sketch on a $p$-$V$ diagram}
+
+For an ideal gas at constant temperature $T$, we have
+\[
+p(V) \;=\; \frac{n R T}{V}.
+\]
+This is the equation of an \emph{isotherm} (a rectangular hyperbola in $p$ vs.\ $V$ space). 
+The compression from $V_i$ to $V_f$ corresponds to moving \emph{left} along this curve.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % Axes
+  \draw[->] (0,0) -- (6,0) node[right]{$V$};
+  \draw[->] (0,0) -- (0,4) node[above]{$p$};
+
+  % A qualitative isotherm curve (hyperbola), just for illustration
+  % We'll pretend that for V in [0.5, 5], p ~ const / V
+  % In reality, we only care about a segment, but this is a sketch.
+  \draw[domain=0.6:5.0,smooth,variable=\x,blue,thick]
+       plot ({\x},{3.5/\x}); 
+       % 3.5 is just a chosen scale factor for a nice shape
+
+  % Mark the initial and final volumes on the horizontal axis (just schematic)
+  \draw[dashed] (2,0) -- (2,1.75) coordinate (ViPoint);
+  \draw[dashed] (4,0) -- (4,0.875) coordinate (VfPoint);
+
+  % Label them
+  \node[below] at (2,0){$V_i$};
+  \node[below] at (4,0){$V_f$};
+
+  % Mark the corresponding pressures on the curve
+  \draw[dashed] (0,1.75) -- (2,1.75) ;
+  \draw[dashed] (0,0.875) -- (4,0.875) ;
+  \node[left] at (0,1.75){$p(V_i)$};
+  \node[left] at (0,0.875){$p(V_f)$};
+
+  % Arrows showing direction of compression (leftward)
+  \draw[->,red,thick] (3,1.1666) -- (2.2,1.6) node [midway,above] {Compression};
+
+  % Optional shading of "area under curve"
+  % to show the integral for the work by the gas (though sign is reversed for on the gas).
+  % (We won't overcomplicate the figure. This is just a schematic.)
+\end{tikzpicture}
+\end{center}
+
+\noindent
+In this rough sketch, $V_i$ is to the right of $V_f$ because $V_f<V_i$, and $p(V)$ is higher at smaller $V$.  
+The \emph{area under the curve}, from $V_i$ to $V_f$, represents 
+$\displaystyle \int_{V_i}^{V_f} p\,dV$ (the work \emph{by} the gas).  
+
+\subsection*{(b) The work done on the gas}
+
+\paragraph{Sign convention.}
+The \emph{work done by the gas} over a volume change $dV$ is 
+\[
+W_{\mathrm{by\,gas}}
+\;=\;
+\int_{V_i}^{V_f} p\,dV.
+\]
+Because this is a \emph{compression} ($V_f < V_i$), the integral from $V_i$ down to $V_f$ will be \emph{negative}, meaning the gas itself does \emph{negative} work (i.e.\ surroundings do positive work \emph{on} the gas).
+
+\paragraph{Formula and numeric result.}
+For an \emph{isothermal} process of an ideal gas, $p(V)=\tfrac{nRT}{V}$.  So
+\[
+W_{\mathrm{by\,gas}}
+\;=\;
+\int_{V_i}^{V_f} \frac{nRT}{V}\,dV
+\;=\;
+nRT\,\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+\]
+The work \emph{on} the gas is the negative of that:
+\[
+W_{\mathrm{on\,gas}}
+\;=\;
+-\,W_{\mathrm{by\,gas}}
+\;=\;
+nRT\,\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr).
+\]
+
+\noindent
+Let us compute it numerically. 
+\[
+n=1.5,\quad R=8.314\,\mathrm{J/(mol\cdot K)},\quad T=308\,\mathrm{K},
+\]
+\[
+V_i=0.015\,\mathrm{m^3}, 
+\quad 
+V_f=0.0015\,\mathrm{m^3}.
+\]
+First,
+\[
+n\,R\,T
+= 1.5 \;\times\; 8.314 \;\times\; 308 
+\;\approx\; 3841\,\mathrm{J}.
+\]
+Next,
+\[
+\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+\;=\;
+\ln\!\Bigl(\tfrac{0.0015}{0.015}\Bigr)
+\;=\;
+\ln(0.1)
+\;=\;
+-2.302585\ldots,
+\]
+so
+\[
+W_{\mathrm{by\,gas}}
+\;=\;
+3841\,\mathrm{J}
+\;\times\;
+(-2.302585)
+\;\approx\;
+-8848\,\mathrm{J}.
+\]
+Hence,
+\[
+W_{\mathrm{on\,gas}}
+\;=\;
+8848\,\mathrm{J}.
+\]
+\[
+\boxed{
+W_{\mathrm{on\,gas}}
+\;\approx\;
+8.85\times 10^3\,\mathrm{J},
+\quad
+\text{(positive, since it's compression).}
+}
+\]
+
+\paragraph{Interpreting the $p$-$V$ diagram.}
+On the diagram, the shaded area \(\int p\,dV\) from $V_i$ to $V_f$ is the \emph{magnitude} of the work the gas would do \emph{if} it expanded.  
+Because we are moving \emph{left} (compression), that same area represents \emph{work done on} the gas and is thus \(\;+\!8848\,\mathrm{J}\) from the perspective of the gas.
+
+
+\section*{Solution: Isothermal Compression of an Ideal Gas}
+
+\noindent
+We have $n$ moles of an ideal gas at constant temperature $T$, initially at volume $V_i$, and compressed quasi-statically to volume $V_f$ ($V_f < V_i$). We use the ideal-gas law and the standard thermodynamic relations to find:
+\[
+\text{(a) the work done on the gas,}\quad
+\text{(b) the heat that flows into the gas,}\quad
+\text{(c) the change in internal energy,}
+\]
+\[
+\text{(d) the final pressure of the gas,}\quad
+\text{(e) the change in entropy of the gas,}\quad
+\text{(f) the net change of entropy (gas + environment).}
+\]
+
+\subsection*{(a) Work done on the gas}
+
+\paragraph{Sign convention.} 
+By the first law,
+\[
+\Delta U \;=\; Q \;-\; W_{\text{by gas}}.
+\]
+If $W_{\text{on gas}}$ is the work done \emph{on} the gas, then
+\[
+W_{\text{on gas}} \;=\; -\,W_{\text{by gas}}.
+\]
+For an \emph{isothermal} process of an ideal gas, the internal energy $U$ depends only on temperature, so $\Delta U = 0$. The (reversible) work done \emph{by} the gas in going from $V_i$ to $V_f$ is
+\[
+W_{\text{by gas}}
+\;=\;
+\int_{V_i}^{V_f} p\,dV
+\;=\;
+\int_{V_i}^{V_f} \frac{nRT}{V}\,dV
+\;=\;
+nRT\,\ln\!\Bigl(\frac{V_f}{V_i}\Bigr).
+\]
+Hence,
+\[
+W_{\text{on gas}}
+\;=\;
+-\,W_{\text{by gas}}
+\;=\;
+nRT\,\ln\!\Bigl(\frac{V_i}{V_f}\Bigr).
+\]
+Since $V_f < V_i$, we have $\tfrac{V_i}{V_f} > 1$ and thus $W_{\text{on gas}}>0$ (positive).
+
+\subsection*{(b) Heat that flowed into the gas}
+
+From $\Delta U = 0$, the first law gives $Q = W_{\text{by gas}}$. Thus
+\[
+Q
+\;=\;
+n\,R\,T \,\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+\]
+Because $V_f < V_i$, $\ln\!\bigl(\tfrac{V_f}{V_i}\bigr)<0$, so $Q < 0$. 
+In other words, \emph{heat actually flows \textbf{out of} the gas}.  
+If the question literally asks “How much heat flows *into* the gas?” then the numerical value will be negative, indicating outflow.
+
+\subsection*{(c) Change in internal energy}
+
+For an ideal gas, internal energy $U$ depends only on temperature: $U=\tfrac{f}{2}\,nRT$ (with $f$ the degrees of freedom). An \emph{isothermal} process implies no change in $T$, so
+\[
+\Delta U = 0.
+\]
+
+\subsection*{(d) Final pressure of the gas}
+
+By the ideal-gas law at temperature $T$,
+\[
+p_f\,V_f 
+\;=\; 
+n\,R\,T
+\quad\Longrightarrow\quad
+p_f 
+\;=\;
+\frac{n\,R\,T}{V_f}.
+\]
+
+\subsection*{(e) Change in entropy of the gas}
+
+The entropy change of an ideal gas in an isothermal process from $V_i$ to $V_f$ is
+\[
+\Delta S_{\text{gas}}
+\;=\;
+nR\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr).
+\]
+Since $V_f < V_i$, we have $\ln(\tfrac{V_f}{V_i})<0$, so the gas's entropy \emph{decreases}.
+
+\subsection*{(f) Net change in the entropy of the gas + environment}
+
+The environment (at the same temperature $T$) gains the heat $-Q$ that leaves the gas. Hence the environment's entropy change is
+\[
+\Delta S_{\text{env}}
+\;=\;
+\frac{-\,Q}{T}
+\;=\;
+-\,\frac{nR\,T \,\ln(\tfrac{V_f}{V_i})}{T}
+\;=\;
+nR\,\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr).
+\]
+Adding,
+\[
+\Delta S_{\text{total}}
+\;=\;
+\Delta S_{\text{gas}} + \Delta S_{\text{env}}
+\;=\;
+nR\ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+\;+\;
+nR\ln\!\Bigl(\tfrac{V_i}{V_f}\Bigr)
+\;=\; 0.
+\]
+A \emph{quasi‐static isothermal} compression is a \emph{reversible} process, so the total entropy change (gas + environment) is zero.
+
+
+\section*{Adiabatic Compression: Constant-Volume Heat Capacity}
+
+\subsection*{Given Data}
+
+\begin{itemize}
+    \item The gas is argon (monatomic, ideal).
+    \item Initial pressure: $p = 10^5 \,\mathrm{Pa}$.
+    \item Initial temperature: $T = 300\,\mathrm{K}$.
+    \item Initial volume: $V = 5\,\mathrm{m}^3$ (though the volume changes in the compression, 
+          we use this initial state to determine amount of substance).
+    \item The universal gas constant: $R = 8.314\,\mathrm{J/(mol\cdot K)}$.
+\end{itemize}
+
+We want the \emph{constant-volume heat capacity} of this entire sample of argon, in \(\mathrm{J/K}\).
+
+\subsection*{Step 1: Number of moles of argon}
+
+From the ideal gas law at the initial state,
+\[
+p \, V \;=\; n\, R\, T.
+\]
+Hence,
+\[
+n 
+\;=\; 
+\frac{p\, V}{R\,T}
+\;=\; 
+\frac{(10^5\,\mathrm{Pa}) \times (5\,\mathrm{m}^3)}{(8.314\,\mathrm{J/(mol\cdot K)}) \times (300\,\mathrm{K})}.
+\]
+Numerically,
+\[
+n
+\;\approx\;
+\frac{5.0 \times 10^5\,\mathrm{J}}{8.314 \times 300}
+\;\approx\;
+\frac{5.0 \times 10^5}{2494.2}
+\;\approx\;
+200.4\,\mathrm{mol}.
+\]
+
+\subsection*{Step 2: Molar heat capacity at constant volume for a monatomic gas}
+
+For a monatomic ideal gas (e.g.\ argon), the \emph{molar} heat capacity at constant volume is
+\[
+C_{V,\text{molar}}
+\;=\;
+\frac{3}{2}\,R
+\;\approx\;
+\frac{3}{2} \times 8.314
+\;=\;
+12.471\,\mathrm{J/(mol\cdot K)}.
+\]
+
+\subsection*{Step 3: Total heat capacity at constant volume}
+
+The total (not molar) heat capacity of \emph{this entire sample} is
+\[
+C_V
+\;=\;
+n \,\times\, C_{V,\text{molar}}
+\;=\;
+n \,\times\, \Bigl(\frac{3}{2}R\Bigr).
+\]
+Plug in $n \approx 200.4$:
+\[
+C_V
+\;=\;
+200.4 
+\;\times\;
+12.471\,\mathrm{J/(mol\cdot K)}
+\;\approx\;
+2499\,\mathrm{J/K}.
+\]
+
+\subsection*{Final Answer}
+
+\[
+\boxed{
+C_V \;\approx\; 2.50\times10^3 \,\mathrm{J/K}.
+}
+\]
+
+\section*{4.2 Work Done on the Gas (Assuming \texorpdfstring{$\Delta p \approx 0$}{Δp ≈ 0})}
+
+\subsection*{Problem Setup}
+\begin{itemize}
+  \item We have 5\,m\(^3\) of argon at initial pressure $p \approx 10^5\,\mathrm{Pa}$ and temperature $T=300\,\mathrm{K}$.
+  \item The gas is compressed by 1\%, from $V_i = 5\,\mathrm{m}^3$ to $V_f = 4.95\,\mathrm{m}^3$.
+  \item Because the volume change is only 1\%, the pressure change is small. We therefore assume $p$ is \emph{constant} at $10^5\,\mathrm{Pa}$.
+  \item We want the \emph{work done on} the gas.
+\end{itemize}
+
+\subsection*{Step 1: Volume change}
+
+\[
+\Delta V 
+\;=\; 
+V_i - V_f
+\;=\; 
+5.00\,\mathrm{m}^3 \;-\; 4.95\,\mathrm{m}^3
+\;=\;
+0.05\,\mathrm{m}^3.
+\]
+Since this is a compression, $\Delta V$ is positive in the sense ``how much volume was removed.''
+
+\subsection*{Step 2: Approximate constant pressure}
+
+We take $p \approx 10^5\,\mathrm{Pa}$ throughout the process.  
+
+\subsection*{Step 3: Work done on the gas under constant pressure}
+
+For a process at (approximately) constant external pressure $p$, the work \emph{on} the gas is
+\[
+W_{\text{on gas}}
+\;=\;
+p \,\bigl(V_i - V_f\bigr)
+\;=\;
+p\,\Delta V.
+\]
+Plug in the values:
+\[
+W_{\text{on gas}}
+\;=\;
+(10^5 \,\mathrm{Pa})
+\times
+(0.05\,\mathrm{m}^3)
+\;=\;
+5.0 \times 10^3\,\mathrm{J}.
+\]
+\[
+\boxed{
+W_{\text{on gas}}
+\;\approx\;
+5.0 \times 10^3\,\mathrm{J}
+\;=\;
+5\,\mathrm{kJ}.
+}
+\]
+
+\subsection*{Interpretation}
+
+Because the volume decreased (compression) at nearly constant pressure, the surroundings must do \emph{positive} work on the gas. Numerically, $\;5\,\mathrm{kJ}\;$ of work is required for this 1\% compression under a $10^5\,\mathrm{Pa}$ external pressure.
+
+\section*{4.3 Temperature Change from 1\% Adiabatic Compression}
+
+\subsection*{Given Data}
+
+\begin{itemize}
+  \item Argon gas (monatomic, ideal), initially:
+    \[
+      p_i \;\approx\; 10^5\,\mathrm{Pa}, \quad
+      T_i \;=\; 300\,\mathrm{K}, \quad
+      V_i \;=\; 5.00\,\mathrm{m^3}.
+    \]
+  \item Final volume: $V_f = 4.95\,\mathrm{m^3}$ (1\% compression).
+  \item \emph{Adiabatic} process: $Q=0$.
+  \item The total constant-volume heat capacity of the entire sample:
+    \[
+      C_V \;\approx\; 2.50 \times 10^3\,\mathrm{J/K}.
+    \]
+  \item Approximate work done on the gas:
+    \[
+      W_{\text{on gas}} 
+      \;\approx\;
+      p_i\,(V_i - V_f)
+      \;=\;
+      (10^5\,\mathrm{Pa}) \,\times\, (0.05\,\mathrm{m^3})
+      \;=\;
+      5.0 \times 10^3\,\mathrm{J}.
+    \]
+\end{itemize}
+
+\subsection*{Step 1: Relate work and internal energy for an adiabatic process}
+
+From the First Law of Thermodynamics,
+\[
+\Delta U 
+\;=\;
+Q \;-\; W_{\text{by gas}}.
+\]
+For an adiabatic process, $Q=0$, so
+\[
+\Delta U
+\;=\;
+-\,W_{\text{by gas}}
+\;=\;
+W_{\text{on gas}}.
+\]
+Hence,
+\[
+\Delta U
+\;=\;
+5.0 \times 10^3\,\mathrm{J}.
+\]
+
+\subsection*{Step 2: Relate internal energy change to temperature change}
+
+For a monatomic ideal gas, internal energy is
+\[
+U 
+\;=\; 
+\frac{3}{2}\,n\,R\,T 
+\quad
+\Longrightarrow
+\quad
+dU
+\;=\;
+C_V\,dT,
+\]
+where $C_V$ is the total heat capacity at constant volume (for the entire sample). 
+We have:
+\[
+\Delta U 
+\;=\;
+C_V \,\Delta T.
+\]
+Thus,
+\[
+\Delta T
+\;=\;
+\frac{\Delta U}{C_V}
+\;=\;
+\frac{5.0\times 10^3\,\mathrm{J}}{2.50 \times 10^3\,\mathrm{J/K}}
+\;=\;
+2.0\,\mathrm{K}.
+\]
+
+\subsection*{Step 3: Final temperature}
+
+Hence the temperature increases by about $2\,\mathrm{K}$:
+\[
+T_f 
+\;=\; 
+T_i + \Delta T
+\;=\;
+300\,\mathrm{K} + 2\,\mathrm{K}
+\;=\;
+302\,\mathrm{K}.
+\]
+
+\subsection*{Answer: Temperature Increase}
+
+\[
+\boxed{
+\text{The gas warms up by about }2\,\mathrm{K}, 
+\text{ from }300\,\mathrm{K} \text{ to }302\,\mathrm{K}.
+}
+\]
+
+\section*{4.4 Change in Pressure: Adiabatic vs.\ Isothermal Compression}
+
+\noindent
+\textbf{Setup:}
+\begin{itemize}
+  \item Argon gas (monatomic, ideal).
+  \item Initial state: 
+  \[
+    p_i = 10^5\,\mathrm{Pa}, 
+    \quad
+    T_i = 300\,\mathrm{K}, 
+    \quad
+    V_i = 5.00\,\mathrm{m^3}.
+  \]
+  \item Final volume (1\% smaller): 
+  \[
+    V_f = 4.95\,\mathrm{m^3}.
+  \]
+\end{itemize}
+
+\subsection*{1. Adiabatic Compression (Slight Temperature Increase)}
+
+\paragraph{(a) Final Temperature.}
+From previous steps (or by using the First Law with $Q=0$ and $W_{\text{on gas}} \approx 5\times10^3\,\mathrm{J}$), 
+we found that the temperature rises from $300\,\mathrm{K}$ to about $302\,\mathrm{K}$. 
+
+\paragraph{(b) Final Pressure.}
+Use the ideal gas law in the final state:
+\[
+p_f \, V_f 
+\;=\;
+n\,R\,T_f.
+\]
+But $nR\,T_i = p_i\,V_i$.  Hence
+\[
+p_f
+\;=\;
+\frac{n\,R\,T_f}{V_f}
+\;=\;
+\frac{p_i \,V_i}{T_i}
+\;\frac{T_f}{V_f}
+\;=\;
+p_i
+\;\Bigl(\!\frac{T_f}{T_i}\!\Bigr)
+\;\Bigl(\!\frac{V_i}{V_f}\!\Bigr).
+\]
+Plug in numerical ratios:
+\[
+\frac{T_f}{T_i}
+\;=\;
+\frac{302}{300}
+\;\approx\;
+1.0067,
+\quad
+\frac{V_i}{V_f}
+\;=\;
+\frac{5.00}{4.95}
+\;\approx\;
+1.0101.
+\]
+Thus,
+\[
+p_f 
+\;\approx\;
+10^5\,\mathrm{Pa}
+\;\times\;
+(1.0067)
+\;\times\;
+(1.0101)
+\;\approx\;
+1.017 \times 10^5\,\mathrm{Pa}.
+\]
+This is about a \(\boxed{1.7\%\text{ increase}}\) over $10^5\,\mathrm{Pa}$.
+
+\subsection*{2. Isothermal Compression (Temperature Constant at 300\,K)}
+
+If the compression were carried out \emph{isothermally} at $T=300\,\mathrm{K}$, then
+\[
+p_f \, V_f 
+\;=\;
+n\,R\,T
+\;=\;
+p_i \, V_i,
+\]
+so
+\[
+p_f
+\;=\;
+p_i\,\frac{V_i}{V_f}
+\;=\;
+10^5\,\mathrm{Pa}
+\;\times\;
+\frac{5.00}{4.95}
+\;\approx\;
+1.010 \times 10^5\,\mathrm{Pa},
+\]
+a \(\boxed{1.0\%\text{ increase}}\).
+
+\subsection*{Conclusion and Comparison}
+
+\begin{itemize}
+  \item \textbf{Adiabatic 1\% compression:} 
+    $p$ rises by \(\approx 1.7\%\). 
+    The gas heats up slightly (from $300\,\mathrm{K}$ to $302\,\mathrm{K}$), so the pressure increase is larger than in the isothermal case.
+  \item \textbf{Isothermal 1\% compression:} 
+    $p$ rises by \(\approx 1.0\%\). 
+    The temperature is fixed at $300\,\mathrm{K}$, so the only factor raising the pressure is the decrease in volume.
+\end{itemize}
+
+\section*{4.5 Adiabatic Changes When \texorpdfstring{$\Delta p \neq 0$}{Δp ≠ 0}}
+
+We have 5\,m\(^3\) of argon (monatomic ideal gas) initially at
+\[
+p_i = 10^5\,\mathrm{Pa}, 
+\quad
+T_i = 300\,\mathrm{K},
+\quad
+V_i = 5.00\,\mathrm{m^3}.
+\]
+It is compressed \emph{adiabatically} and quasi‐statically (reversibly) to 
+\[
+V_f = 4.95\,\mathrm{m^3}\quad(1\%\text{ smaller}).
+\]
+No heat is exchanged (\(Q=0\)), so we must use the \emph{adiabatic} relations exactly instead of assuming \(\Delta p \approx 0\).
+
+\subsection*{Step 1: Recall the adiabatic condition for an ideal gas}
+
+For a reversible adiabatic process in an ideal gas,
+\[
+p \, V^\gamma = \text{constant}
+\quad\text{and}\quad
+T \, V^{\gamma - 1} = \text{constant},
+\]
+where
+\(\gamma = C_p / C_v\).  For a \emph{monatomic} ideal gas, 
+\[
+\gamma = \frac{5}{3}.
+\]
+
+\subsection*{Step 2: Final pressure}
+
+We have
+\[
+p_i\,V_i^\gamma \;=\; p_f\,V_f^\gamma,
+\]
+so
+\[
+p_f
+\;=\;
+p_i \,\biggl(\frac{V_i}{V_f}\biggr)^\gamma.
+\]
+Numerically,
+\[
+\frac{V_i}{V_f}
+\;=\;
+\frac{5.00}{4.95}
+\;\approx\;
+1.0101,
+\quad
+\gamma=\frac{5}{3}=1.6667.
+\]
+Hence
+\[
+\bigl(1.0101\bigr)^{1.6667}
+\;\approx\;
+1.017.
+\]
+Therefore,
+\[
+p_f
+\;\approx\;
+(10^5\,\mathrm{Pa})\times 1.017
+\;=\;
+1.017\times10^5\,\mathrm{Pa}.
+\]
+\[
+\Delta p
+\;=\;
+p_f - p_i
+\;\approx\;
+(1.017\times10^5) - (1.00\times10^5)
+\;=\;
+1.7\times10^3\,\mathrm{Pa}
+\quad(1.7\%\text{ increase}).
+\]
+
+\subsection*{Step 3: Final temperature}
+
+Use either the ideal gas law or the adiabatic relation \(T V^{\gamma-1} = \mathrm{const}\).  We use
+\[
+T_i\,V_i^{\gamma-1}
+\;=\;
+T_f\,V_f^{\gamma-1}.
+\]
+So
+\[
+T_f
+\;=\;
+T_i \;\biggl(\!\frac{V_i}{V_f}\!\biggr)^{\gamma-1}.
+\]
+For a monatomic gas, \(\gamma-1=\tfrac{5}{3}-1=\tfrac{2}{3}\). Thus
+\[
+T_f
+\;=\;
+300\,\mathrm{K}\times
+(1.0101)^{0.6667}
+\;\approx\;
+300\times1.0067
+\;=\;
+302\,\mathrm{K}.
+\]
+So the gas warms up by about 2\,K.
+
+\subsection*{Step 4: Work done on the gas}
+
+For a reversible adiabatic process, the \emph{work done \textbf{by} the gas} going from \((p_i,V_i)\) to \((p_f,V_f)\) is given by
+\[
+W_{\text{by}}
+\;=\;
+\frac{p_f\,V_f - p_i\,V_i}{1-\gamma}.
+\]
+Hence the \emph{work \textbf{on} the gas} is
+\[
+W_{\text{on}}
+\;=\;
+-\;W_{\text{by}}
+\;=\;
+-\;\frac{p_f\,V_f - p_i\,V_i}{1-\gamma}.
+\]
+Let us plug in the numbers:
+\[
+p_i\,V_i = (10^5\,\mathrm{Pa})\times(5.00\,\mathrm{m^3})
+=5.00\times10^5\,\mathrm{J},
+\]
+\[
+p_f\,V_f \;\approx\; (1.017\times10^5)\,\mathrm{Pa}\;\times\;4.95\,\mathrm{m^3}
+= 5.03\times10^5\,\mathrm{J}.
+\]
+Thus
+\[
+p_f\,V_f - p_i\,V_i
+= (5.03\times10^5) - (5.00\times10^5)
+= 0.03\times10^5
+= 3.0\times10^3\,\mathrm{J}.
+\]
+Since \(\gamma=\tfrac{5}{3}\Rightarrow1-\gamma=-\tfrac{2}{3}\),
+\[
+W_{\text{by}}
+\;=\;
+\frac{3.0\times10^3\,\mathrm{J}}{-\,\tfrac{2}{3}}
+\;=\;
+-\,4.5\times10^3\,\mathrm{J},
+\]
+\[
+W_{\text{on}}
+\;=\;
+4.5\times10^3\,\mathrm{J}.
+\]
+So the surroundings must do \(\boxed{4.5\,\mathrm{kJ}}\) of work \emph{on} the gas (slightly less than the 5\,kJ we found under the constant‐\(p\) approximation).
+
+\[
+\boxed{
+\Delta p \approx 1.7\times10^3\,\mathrm{Pa},
+\quad
+\Delta T \approx 2\,\mathrm{K},
+\quad
+W_{\text{on}} \approx 4.5\times10^3\,\mathrm{J}.
+}
+\]
+
+\section*{4.6 Change in Entropy}
+
+For a \emph{reversible adiabatic} compression of an ideal gas, 
+\[
+Q=0
+\quad\text{and}\quad
+\Delta S 
+\;=\;\int \frac{\delta Q}{T} = 0.
+\]
+Hence the gas’s entropy does not change.  
+\[
+\boxed{\Delta S = 0 \quad (\text{reversible, adiabatic}).}
+\]
+
+\section*{4.7 Other Ideal Gases (e.g.\ \texorpdfstring{$\mathrm{N_2}$}{N₂})}
+
+Which of our results remain the same if argon is replaced by nitrogen gas?
+
+\begin{enumerate}
+\item \textbf{4.1 (Constant-volume heat capacity).} 
+  This would \emph{definitely change} because $\mathrm{N_2}$ is diatomic (at room temperature) with 
+  \(\gamma = \tfrac{7}{5}\), and its $C_V$ is $\tfrac{5}{2}R$ \emph{per mole} rather than $\tfrac{3}{2}R$.
+
+\item \textbf{4.2 (Work for small $\Delta p\approx 0$).}  
+  Under “constant external pressure” for a 1\% volume change, $W \approx p\,\Delta V$ is essentially the same formula for \emph{any} ideal gas.  Numerically, if the initial $p$, $V$, and $\Delta V$ are the same, the result is the same.  (But if the number of moles or exact composition changed, $p$ might differ in practice.)
+
+\item \textbf{4.3 (Temperature change for 1\% compression, using $Q=0$ and $C_V$).}  
+  This \emph{depends} on the total $C_V$ of the gas.  For $\mathrm{N_2}$, $C_V$ is larger than for monatomic argon, so the same $W$ would produce a smaller $\Delta T$.  
+
+\item \textbf{4.4 (Adiabatic vs.\ Isothermal $\Delta p$).}  
+  The \emph{qualitative} result that $p_{\text{adiabatic}}$ rises more than $p_{\text{isothermal}}$ is true for \emph{any} ideal gas, but the \emph{numerical} factor depends on $\gamma$.
+
+\item \textbf{4.5 (Adiabatic changes with $pV^\gamma=\text{const}$).}  
+  The final $p$, $T$, and $W_{\text{on}}$ definitely depend on $\gamma$, so these numbers all change if we switch from $\gamma=\tfrac{5}{3}$ (Argon) to $\gamma=\tfrac{7}{5}$ (Nitrogen).
+
+\item \textbf{4.6 (Entropy change).}  
+  A reversible adiabatic compression means $\Delta S=0$ for \emph{any} ideal gas, so this remains the same even if the gas is changed to $\mathrm{N_2}$.
+\end{enumerate}
+
+\section*{4.8 Non-Ideal Gases}
+
+\noindent
+\textbf{Question:} Which of the answers to problems 4.1--4.6 would remain the same if the argon gas were replaced with a \emph{non-ideal} gas?
+
+\vspace{1em}
+\noindent
+\textbf{Short Answer:}
+\begin{itemize}
+  \item \textbf{(4.2)} The work for a very small compression at \emph{nearly constant external pressure} (``$\Delta p \approx 0$'') is still $W \approx p\,\Delta V$, regardless of whether the gas is ideal or not.
+  \item \textbf{(4.6)} The entropy change of a \emph{reversible adiabatic} compression remains $\Delta S=0$ for \emph{any} single-phase substance, not just an ideal gas.
+  \item \textbf{All other answers} (4.1, 4.3, 4.4, 4.5) \emph{depend on the ideal-gas assumption or on constant heat capacities}, so those would change for a non-ideal gas.
+\end{itemize}
+
+\subsection*{Detailed Reasoning}
+
+\begin{enumerate}
+\item[\textbf{(4.1)}]
+\emph{Constant-volume heat capacity.} \\
+For argon (a monatomic ideal gas), $C_V$ is $\tfrac{3}{2}\,nR$. A non-ideal gas generally does not have this simple relationship; its heat capacity can vary with pressure and temperature. Hence, \textbf{this answer changes} for a non-ideal gas.
+
+\item[\textbf{(4.2)}]
+\emph{Work done on the gas assuming $\Delta p \approx 0$.} \\
+If the external pressure is approximately constant at $p$, then the work is $W \approx p\,(V_i - V_f)$, independent of the gas’s equation of state. Thus, \textbf{this result remains valid} for a non-ideal gas, provided that the external pressure truly stays (approximately) constant during the small compression.
+
+\item[\textbf{(4.3)}]
+\emph{Temperature change for a 1\% adiabatic compression.} \\
+For an ideal gas, $\Delta T$ was found from $\Delta U = C_V\,\Delta T$ (with $C_V$ constant). A non-ideal gas may have a different dependence of internal energy on temperature and volume, so the final temperature would generally differ. \textbf{This answer changes.}
+
+\item[\textbf{(4.4)}]
+\emph{Comparing adiabatic vs.\ isothermal final pressures.} \\
+In the ideal-gas case, $p_{\text{adiabatic}} > p_{\text{isothermal}}$ with a simple ratio derived from $pV^\gamma=\mathrm{const}$ vs.\ $pV=\mathrm{const}$. A real gas does not exactly obey these relations. While the \emph{qualitative} statement that adiabatic compression yields a higher final pressure than isothermal \emph{often} remains true, the exact numerical result \textbf{would change}.
+
+\item[\textbf{(4.5)}]
+\emph{Adiabatic changes with $p\,V^\gamma = \mathrm{const}$.} \\
+This is a hallmark of an \emph{ideal gas with constant heat capacities}. A non-ideal gas typically does \emph{not} follow $p\,V^\gamma=\mathrm{const}$ exactly, so \textbf{this answer changes}.
+
+\item[\textbf{(4.6)}]
+\emph{Entropy change for the reversible adiabatic compression.} \\
+Regardless of whether the gas is ideal or not, \emph{any} single-phase substance undergoing a \emph{reversible, adiabatic} (i.e.\ no heat exchange and no internal friction) process experiences \(\Delta S=0\). This follows directly from $\delta Q_{\text{rev}}=T\,dS=0$. Hence, \textbf{this result remains valid} for a non-ideal gas.
+\end{enumerate}
+\end{document}

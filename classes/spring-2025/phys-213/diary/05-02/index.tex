@@ -1,0 +1,760 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+Below is a fully self-contained LaTeX write-up that walks through the counting step-by-step and ends with the numerical answer.
+You can copy-paste it directly into your document or LaTeX editor.
+
+\begin{solution}
+\textbf{System description.}  
+We have three \emph{distinguishable} simple harmonic oscillators (SHOs).  
+If oscillator $i$ has $n_i$ quanta of excitation, its energy is $E_i = n_i\,\varepsilon$ with
+\(n_i = 0,1,2,\dots\).  
+The total energy is fixed at
+\[
+U \;=\; 3\varepsilon
+      \;\;\Longrightarrow\;\;
+      n_1 + n_2 + n_3 = 3.
+\]
+
+\medskip
+\textbf{Goal.}  
+Count the number $\Omega(3)$ of ordered triples $(n_1,n_2,n_3)$ of
+non–negative integers that satisfy the constraint above.
+
+\medskip
+\textbf{Method 1: “Stars and Bars”.}  
+The standard combinatorial result for the number of non-negative integer
+solutions to
+\[
+n_1 + n_2 + \dots + n_k = N
+\]
+is
+\[
+\binom{N+k-1}{k-1}.
+\]
+Here $k=3$ (three oscillators) and $N=3$ (three quanta), hence
+\[
+\boxed{\;
+\Omega(3)
+  = \binom{3+3-1}{3-1}
+  = \binom{5}{2}
+  = 10
+\; }.
+\]
+
+\medskip
+\textbf{Method 2: Explicit enumeration (check).}
+\[
+\begin{aligned}
+(3,0,0),\;(0,3,0),\;(0,0,3) &\;\;\Rightarrow\; 3 \text{ states} \\[4pt]
+(2,1,0),\;(2,0,1),\;(1,2,0),\;(0,2,1),\;(1,0,2),\;(0,1,2)
+ &\;\;\Rightarrow\; 6 \text{ states} \\[4pt]
+(1,1,1) &\;\;\Rightarrow\; 1 \text{ state}
+\end{aligned}
+\]
+Summing these,
+\[
+3 + 6 + 1 = 10,
+\]
+in agreement with the stars-and-bars result.
+
+\medskip
+\textbf{Answer.}\quad
+There are \(\boxed{10}\) microstates with total energy \(U = 3\varepsilon\).
+\end{solution}
+
+\begin{solution}
+  \textbf{Given:} Three \emph{distinguishable} SHOs with  
+  \[
+  n_1+n_2+n_3 = 5, \qquad n_i \in \{0,1,2,\dots\}.
+  \]
+  
+  %--------------------------------------------------------------------
+  \subsection*{2) Total number of microstates for $U = 5\varepsilon$}
+  
+  The stars–and–bars formula for the number of non-negative integer
+  solutions to \(n_1+\dots+n_k=N\) is
+  \(\displaystyle \binom{N+k-1}{k-1}\).
+  Here \(k=3\) and \(N=5\):
+  \[
+  \boxed{\;
+  \Omega(5) \;=\; \binom{5+3-1}{3-1}
+             \;=\; \binom{7}{2}
+             \;=\; 21
+  \;} .
+  \]
+  
+  %--------------------------------------------------------------------
+  \subsection*{3) Probability that oscillator \#1 has zero energy}
+  
+  Fix \(n_1 = 0\).  
+  The remaining two oscillators must satisfy \(n_2+n_3=5\).
+  Counting those microstates:
+  \[
+  \Omega\!\bigl(E_1=0,U=5\varepsilon\bigr)
+    = \binom{5+2-1}{2-1}
+    = \binom{6}{1}
+    = 6.
+  \]
+  Hence
+  \[
+  \boxed{\;
+  P\!\bigl(E_1=0\bigr)
+    = \frac{\Omega(E_1=0,U=5\varepsilon)}{\Omega(U=5\varepsilon)}
+    = \frac{6}{21}
+    = \frac{2}{7}
+    \approx 0.286
+  \;} .
+  \]
+  
+  %--------------------------------------------------------------------
+  \subsection*{4) Probability that oscillator \#1 has energy $4\varepsilon$}
+  
+  Fix \(n_1 = 4\).  
+  Then \(n_2+n_3 = 1\).  The number of solutions is
+  \[
+  \Omega\!\bigl(E_1=4\varepsilon,U=5\varepsilon\bigr)
+    = \binom{1+2-1}{2-1}
+    = \binom{2}{1}
+    = 2.
+  \]
+  Therefore
+  \[
+  \boxed{\;
+  P\!\bigl(E_1 = 4\varepsilon\bigr)
+    = \frac{2}{21}
+    \approx 0.0952
+  \;} .
+  \]
+  \end{solution}
+  \begin{solution}
+    \textbf{Given data}
+    \[
+    f = 2.2\times10^{12}\,\mathrm{Hz},
+    \qquad
+    h = 6.626\times10^{-34}\,\mathrm{J\,s},
+    \qquad
+    k_B = 1.380\,649\times10^{-23}\,\mathrm{J\,K^{-1}} .
+    \]
+    
+    \medskip
+    \textbf{Boltzmann ratio for a harmonic oscillator}
+    
+    For non-degenerate levels the probability of the first excited state
+    relative to the ground state is
+    \[
+    \frac{P_1}{P_0}
+       = \frac{e^{-\varepsilon/(k_BT)}}{e^{0}}
+       = e^{-\varepsilon/(k_BT)} .
+    \]
+    
+    \medskip
+    \textbf{Set the required ratio and solve for \(T\)}
+    
+    We want \(P_1/P_0 = \tfrac12\):
+    \[
+    e^{-\varepsilon/(k_BT)} = \frac12
+    \;\;\Longrightarrow\;\;
+    \frac{\varepsilon}{k_BT} = \ln 2
+    \;\;\Longrightarrow\;\;
+    T = \frac{\varepsilon}{k_B\ln 2}.
+    \]
+    
+    \medskip
+    \textbf{Insert the energy spacing \(\varepsilon = hf\)}
+    
+    \[
+    \varepsilon = h f
+               = (6.626\times10^{-34}\,\mathrm{J\,s})
+                 (2.2\times10^{12}\,\mathrm{Hz})
+               = 1.458\times10^{-21}\,\mathrm{J}.
+    \]
+    
+    \[
+    T
+      = \frac{1.458\times10^{-21}\,\mathrm{J}}
+             {(1.380\,649\times10^{-23}\,\mathrm{J\,K^{-1}})(\ln 2)}
+      = 1.523\times10^{2}\,\mathrm{K}.
+    \]
+    
+    \[
+    \boxed{T \;\approx\; 1.5\times10^{2}\ \text{K} \;=\; 152\ \text{K}}
+    \]
+    \end{solution}
+    \begin{solution}
+      Throughout we use the same energy spacing 
+      \(\varepsilon = h f = 1.458\times10^{-21}\,\mathrm{J}\) and keep
+      \(\displaystyle k_B = 1.380\,649\times10^{-23}\,\mathrm{J\,K^{-1}}\).
+      
+      Let 
+      \[
+      T_1 = 152.3\ \mathrm{K}
+      \]
+      be the temperature found in part 1, so that  
+      \(P_1/P_0 = \tfrac12\) at \(T_1\).
+      
+      \vspace{0.5em}
+      %--------------------------------------------------------------------
+      \subsection*{2)  Temperature reduced to \(\boldsymbol{T_2 = 0.1\,T_1}\)}
+      
+      \[
+      T_2 = 0.10\,T_1 = 15.23\ \mathrm{K}, 
+      \qquad
+      \beta_2 = \frac1{k_B T_2}.
+      \]
+      
+      The Boltzmann ratio is 
+      \[
+      \frac{P_1}{P_0} = e^{-\beta_2\varepsilon}.
+      \]
+      Because \(\beta_2 = 10\,\beta_1\) and \(\beta_1\varepsilon=\ln 2\),
+      \[
+      \boxed{\;
+      \frac{P_1}{P_0}(T_2)
+            = e^{-10\ln 2}
+            = 2^{-10}
+            = \frac1{1024}
+            \approx 9.77\times10^{-4}
+      \;} .
+      \]
+      
+      \vspace{0.5em}
+      %--------------------------------------------------------------------
+      \subsection*{3)  Ratio \(\boldsymbol{P_2/P_1}\) at the same \(T_2\)}
+      
+      \[
+      \frac{P_2}{P_1}
+        = \frac{e^{-2\beta_2\varepsilon}}{e^{-\beta_2\varepsilon}}
+        = e^{-\beta_2\varepsilon}
+        = 2^{-10}
+        \approx 9.77\times10^{-4}.
+      \]
+      
+      Thus
+      \[
+      \boxed{\;
+      \frac{P_2}{P_1}(T_2) = 2^{-10} \approx 9.77\times10^{-4}
+      \;} .
+      \]
+      
+      \vspace{0.5em}
+      %--------------------------------------------------------------------
+      \subsection*{4)  Mean energy per oscillator, expressed as \(\langle E\rangle /kT\)}
+      
+      For a quantum harmonic oscillator whose ground–state energy
+      is taken as zero, the canonical partition function is
+      \[
+      Z(\beta)=\sum_{n=0}^{\infty}e^{-n\beta\varepsilon}
+              =\frac1{1-e^{-\beta\varepsilon}}.
+      \]
+      Hence
+      \[
+      \langle E\rangle
+         = -\frac{\partial}{\partial\beta}\ln Z
+         = \frac{\varepsilon}{e^{\beta\varepsilon}-1}.
+      \]
+      Dividing by \(kT=1/\beta\) gives the dimensionless ratio
+      \[
+      \frac{\langle E\rangle}{kT}
+         = \frac{\beta\varepsilon}{e^{\beta\varepsilon}-1}
+         \equiv \frac{x}{e^{x}-1},
+         \quad x:=\beta\varepsilon.
+      \]
+      
+      At \(T_2\) we have \(x = \beta_2\varepsilon = 10\ln 2 = 6.931\).
+      Therefore
+      \[
+      \boxed{\;
+      \frac{\langle E\rangle}{kT_2}
+        = \frac{6.931}{e^{6.931}-1}
+        = \frac{6.931}{1024-1}
+        \approx 6.78\times10^{-3}
+      \;} .
+      \]
+      
+      (Numerically, \(\langle E\rangle/kT_2 \approx 0.0068\); far below the
+      equipartition value~1 because the temperature is well below the
+      quantum energy spacing.)
+      \end{solution}
+      \begin{solution}
+        \textbf{Data}  
+        \[
+        \varepsilon = 10^{-20}\,\text{J}, 
+        \qquad 
+        T = 320\ \text{K}, 
+        \qquad 
+        k_B = 1.380\,649\times10^{-23}\,\text{J\,K}^{-1}.
+        \]
+        
+        The Boltzmann weight for level \(n\) is 
+        \[
+        P_n \;\propto\; e^{-n\varepsilon/(k_B T)} .
+        \]
+        
+        %-------------------------------------------------------------
+        \subsection*{1) Most–probable energy}
+        
+        Because the weights decrease monotonically with increasing \(n\),
+        the \emph{ground state} (\(n=0\)) is always the most probable state
+        for a non-degenerate harmonic oscillator in equilibrium.
+        
+        \[
+        \boxed{\; E_{\text{most probable}} = 0\,\varepsilon \;}
+        \]
+        
+        %-------------------------------------------------------------
+        \subsection*{2) Ratio of probabilities \(\displaystyle \frac{P(E=2\varepsilon)}{P(E=0)}\)}
+        
+        \[
+        \frac{P(E=2\varepsilon)}{P(E=0)}
+           \;=\; \frac{e^{-2\varepsilon/(k_B T)}}{e^{0}}
+           \;=\; e^{-2\varepsilon/(k_B T)} .
+        \]
+        
+        Insert the numbers:
+        \[
+        \frac{2\varepsilon}{k_B T}
+           = \frac{2\times10^{-20}\,\text{J}}
+                  {(1.380\,649\times10^{-23}\,\text{J\,K}^{-1})(320\,\text{K})}
+           = 4.53 .
+        \]
+        
+        Hence
+        \[
+        \boxed{\;
+        \frac{P(E=2\varepsilon)}{P(E=0)}
+          = e^{-4.53}
+          \approx 1.08\times10^{-2}
+        \;}
+        \]
+        
+        (That is, about \(1.1\%\).)
+        \end{solution}
+        \begin{solution}
+          \textbf{Energy levels and degeneracies}
+          
+          \[
+          \begin{array}{c|c|c}
+          \text{level} & E_i\ (\text{eV}) & g_i\ (\text{degeneracy})\\ \hline
+          \text{ground} & 0   & 1 \\
+          \text{first excited} & 0.1 & 2
+          \end{array}
+          \]
+          
+          \medskip
+          \textbf{Boltzmann factors at \(T = 300\ \text{K}\)}
+          
+          The Boltzmann constant in electron-volts is  
+          \(k_B = 8.617\,333\,262\times10^{-5}\ \text{eV K}^{-1}\), so
+          
+          \[
+          k_B T = (8.617\,333\,262\times10^{-5}\,\text{eV K}^{-1})(300\ \text{K})
+                = 2.5852\times10^{-2}\ \text{eV}.
+          \]
+          
+          The dimensionless ratio for the excited level is
+          
+          \[
+          \frac{E_1}{k_B T} = \frac{0.10\ \text{eV}}{0.025852\ \text{eV}} = 3.868,
+          \qquad
+          e^{-E_1/(k_B T)} = e^{-3.868} = 2.0897\times10^{-2}.
+          \]
+          
+          \medskip
+          \textbf{Partition function}
+          
+          \[
+          Z = g_0 e^{-E_0/(k_B T)} + g_1 e^{-E_1/(k_B T)}
+            = 1\,(1) + 2\,(2.0897\times10^{-2})
+            = 1.0418 .
+          \]
+          
+          \medskip
+          \textbf{Probability of occupying \emph{either} of the two excited states}
+          
+          \[
+          P_\text{excited}
+            = \frac{g_1 e^{-E_1/(k_B T)}}{Z}
+            = \frac{2\,(2.0897\times10^{-2})}{1.0418}
+            = 4.012\times10^{-2}.
+          \]
+          
+          \[
+          \boxed{\,P_\text{excited}\;\approx\;4.0\%\,}
+          \]
+          
+          Thus, at \(T = 300\ \text{K}\) there is about a \(\mathbf{4\%}\) chance that the quantum
+          dot is found in one of the two degenerate first-excited states at
+          \(0.1\ \text{eV}\).
+          \end{solution}
+          \begin{solution}
+            We again have two energy levels:
+            
+            \[
+            E_0 = 0\ \text{eV},\; g_0 = 1,
+            \qquad
+            E_1 = 0.1\ \text{eV},\; g_1 = 2,
+            \qquad
+            \Delta E = E_1-E_0 = 0.1\ \text{eV}.
+            \]
+            
+            The canonical (Boltzmann) probabilities are  
+            
+            \[
+            P_0 = \frac{g_0\,e^{-E_0/(k_BT)}}{Z},\qquad
+            P_1 = \frac{g_1\,e^{-E_1/(k_BT)}}{Z},
+            \quad
+            Z = g_0+g_1\,e^{-\Delta E/(k_BT)}.
+            \]
+            
+            %------------------------------------------------------------------
+            \subsection*{2)  High-temperature limit \(T\to\infty\)}
+            
+            As \(T\to\infty\), the factor \(e^{-\Delta E/(k_BT)}\to 1\), so  
+            
+            \[
+            P_0(\infty)=\frac{g_0}{g_0+g_1}
+                       =\frac{1}{1+2}
+                       =\boxed{\dfrac13}\;\;(\text{about }33\%).
+            \]
+            
+            %------------------------------------------------------------------
+            \subsection*{3)  Temperature where half the dots are excited}
+            
+            Set \(P_1 = P_0\):
+            
+            \[
+            \frac{g_1\,e^{-\Delta E/(k_B T_{1/2})}}
+                 {g_0} = 1
+            \;\;\Longrightarrow\;\;
+            e^{-\Delta E/(k_B T_{1/2})} = \frac{g_0}{g_1} = \frac12
+            \;\;\Longrightarrow\;\;
+            \frac{\Delta E}{k_B T_{1/2}} = \ln 2 .
+            \]
+            
+            Using \(k_B = 8.617\,333\times10^{-5}\,\text{eV\,K}^{-1}\),
+            
+            \[
+            T_{1/2} = \frac{0.1\ \text{eV}}
+                           {(8.617\,333\times10^{-5}\,\text{eV\,K}^{-1})\ln 2}
+                     = 1.67\times10^{3}\ \text{K}.
+            \]
+            
+            \[
+            \boxed{\,T_{1/2}\;\approx\;1.7\times10^{3}\ \text{K}\,}
+            \]
+            
+            %------------------------------------------------------------------
+            \subsection*{4)  Entropy as \(T\to 0\)}
+            
+            At very low \(T\) every dot occupies its unique ground state
+            (\(g_0=1\)).  
+            For \(N\) independent dots the number of accessible microstates is
+            \(\Omega = 1^{N}=1\).  
+            The entropy is therefore
+            
+            \[
+            S(T\!\to\!0) = k_B \ln \Omega = k_B\ln 1 = 0,
+            \qquad
+            \boxed{S = 0\ \text{J\,K}^{-1}}.
+            \]
+            
+            (This is consistent with the third law of thermodynamics since the
+            ground state is non-degenerate.)
+            \end{solution}
+            \begin{solution}
+              \textbf{Energy levels and degeneracies considered}
+              
+              \[
+              \begin{array}{c|c|c}
+              \text{level} & E_i\ (\text{eV}) & g_i \\ \hline
+              \text{1S (ground)} & 0      & 1 \\
+              \text{2S}          & 10.2   & 1 \\
+              \text{2P}          & 10.2   & 3   % \;(\text{three magnetic sub-levels})
+              \end{array}
+              \]
+              
+              (The 2P level is triply degenerate because \(m=-1,0,+1\).  
+              Higher states are neglected as instructed.)
+              
+              \medskip
+              \textbf{Boltzmann factor at \(T = 5900\;\text{K}\)}
+              
+              Boltzmann constant in electron-volts:
+              \[
+              k_B = 8.617\,333\,262\times10^{-5}\ \text{eV\,K}^{-1}.
+              \]
+              
+              \[
+              k_B T = (8.617\,333\,262\times10^{-5}\,\text{eV K}^{-1})(5900\ \text{K})
+                     = 5.08\times10^{-1}\ \text{eV}.
+              \]
+              
+              \[
+              \frac{E_1}{k_B T} = \frac{10.2\ \text{eV}}{0.508\ \text{eV}} = 20.06,
+              \qquad
+              e^{-E_1/(k_B T)} = e^{-20.06} = 1.94\times10^{-9}.
+              \]
+              
+              \medskip
+              \textbf{Partition function (truncated)}
+              
+              \[
+              Z = g_{1\text{S}}\;e^{-0}
+                  + (g_{2\text{S}}+g_{2\text{P}})\,e^{-E_1/(k_B T)}
+                = 1 + (1+3)\,(1.94\times10^{-9})
+                = 1 + 7.76\times10^{-9}.
+              \]
+              
+              \medskip
+              \textbf{Fraction in the 2P states}
+              
+              \[
+              P_{2\text{P}}
+                = \frac{g_{2\text{P}}\,e^{-E_1/(k_B T)}}{Z}
+                = \frac{3\,(1.94\times10^{-9})}{1 + 7.76\times10^{-9}}
+                = 5.81\times10^{-9}.
+              \]
+              
+              \[
+              \boxed{\;
+              \text{Fraction of H atoms in 2P at }T=5900\ \text{K}
+                    \;\approx\; 6\times10^{-9}
+              \;}
+              \]
+              
+              So only about six parts in a billion of the hydrogen atoms populate a
+              2P state at the Sun’s surface temperature.
+              \end{solution}
+              \begin{solution}
+                Keep the same level scheme and degeneracies as before,
+                
+                \[
+                \begin{array}{c|c|c}
+                \text{level} & E_i\ (\text{eV}) & g_i \\ \hline
+                \text{1S (ground)} & 0      & 1 \\
+                \text{2S}          & 10.2   & 1 \\
+                \text{2P}          & 10.2   & 3
+                \end{array}
+                \]
+                
+                and use the recommended Boltzmann constant  
+                \(k_B = 8.617\,333\,262\times10^{-5}\ \text{eV\,K}^{-1}\).
+                
+                %------------------------------------------------------------------
+                \subsection*{Sunspot temperature \(T = 4300\ \text{K}\)}
+                
+                \[
+                k_B T = (8.617\,333\times10^{-5}\,\text{eV K}^{-1})(4300\ \text{K})
+                       = 0.3705\ \text{eV}.
+                \]
+                
+                \[
+                \frac{E_1}{k_B T} = \frac{10.2\ \text{eV}}{0.3705\ \text{eV}} = 27.55,
+                \qquad
+                e^{-E_1/(k_B T)} = e^{-27.55} = 1.11\times10^{-12}.
+                \]
+                
+                \medskip
+                \textbf{Partition function (truncated)}
+                
+                \[
+                Z = g_{1\text{S}}
+                    + (g_{2\text{S}}+g_{2\text{P}})\,e^{-E_1/(k_B T)}
+                  = 1 + (1+3)(1.11\times10^{-12})
+                  = 1 + 4.44\times10^{-12}.
+                \]
+                
+                \medskip
+                \textbf{Fraction in the 2P manifold}
+                
+                \[
+                P_{2\text{P}}
+                  = \frac{g_{2\text{P}}\,e^{-E_1/(k_B T)}}{Z}
+                  = \frac{3\,(1.11\times10^{-12})}{1 + 4.44\times10^{-12}}
+                  = 3.33\times10^{-12}.
+                \]
+                
+                \[
+                \boxed{\;
+                \text{Fraction of H atoms in 2P at }T = 4300\ \text{K}
+                      \;\approx\; 3\times10^{-12}
+                \;}
+                \]
+                
+                So at a typical sunspot temperature only a few parts in a trillion of
+                the hydrogen atoms populate the 2P states.
+                \end{solution}
+                \begin{solution}
+                  A simple intrinsic semiconductor obeys  
+                  
+                  \[
+                  R(T)\;\propto\; \exp\!\Bigl(\frac{E_g}{2k_B T}\Bigr),
+                  \]
+                  
+                  because the conductivity varies as 
+                  \(\sigma\propto\exp\!\bigl(-E_g/2k_B T\bigr)\) and  
+                  \(R\propto 1/\sigma\).
+                  
+                  \vspace{0.4em}
+                  \textbf{Form the resistance ratio}
+                  
+                  \[
+                  \frac{R_1}{R_2}
+                     = \exp\!\Bigl(\frac{E_g}{2k_B}\Bigr)
+                       \exp\!\Bigl(\frac{1}{T_1}-\frac{1}{T_2}\Bigr),
+                  \qquad
+                  R_1 = 0.010\;\Omega,\;
+                  R_2 = 2.591\times10^{-4}\;\Omega.
+                  \]
+                  
+                  \[
+                  \ln\!\Bigl(\tfrac{R_1}{R_2}\Bigr)
+                    = \frac{E_g}{2k_B}\Bigl(\tfrac{1}{T_1}-\tfrac{1}{T_2}\Bigr).
+                  \]
+                  
+                  \vspace{0.4em}
+                  \textbf{Insert the numbers}
+                  
+                  \[
+                  \frac{R_1}{R_2} = \frac{0.010}{2.591\times10^{-4}} = 38.6,
+                  \qquad
+                  \ln(38.6)=3.654.
+                  \]
+                  
+                  \[
+                  \frac{1}{T_1}-\frac{1}{T_2}
+                     = \frac{1}{270\;\text{K}}-\frac{1}{300\;\text{K}}
+                     = 3.7037\times10^{-4}\;\text{K}^{-1}.
+                  \]
+                  
+                  \[
+                  E_g
+                    = 2k_B\,\frac{\ln(R_1/R_2)}{1/T_1-1/T_2}
+                    = 2(8.617\times10^{-5}\,\text{eV K}^{-1})
+                      \frac{3.654}{3.7037\times10^{-4}}
+                    = 1.7\;\text{eV}\;(\text{to one decimal place}).
+                  \]
+                  
+                  \[
+                  \boxed{E_g \;\approx\; 1.7\ \text{eV}}
+                  \]
+                  \end{solution}
+                  \begin{solution}
+                    For an intrinsic semiconductor the resistivity (and hence the resistance
+                    of a fixed‑geometry sample) follows
+                    
+                    \[
+                    R(T)\;=\; R_0\,\exp\!\Bigl(\frac{E_g}{2k_B T}\Bigr),
+                    \]
+                    
+                    so the \emph{ratio} of resistances at two temperatures is
+                    
+                    \[
+                    \frac{R_2}{R_1}
+                      = \exp\!\Bigl[\frac{E_g}{2k_B}\Bigl(\frac{1}{T_2}-\frac{1}{T_1}\Bigr)\Bigr].
+                    \]
+                    
+                    \medskip
+                    \textbf{Insert the data}
+                    
+                    \[
+                    \begin{aligned}
+                    E_g &= 1.1\ \text{eV}
+                          = (1.1)(1.602\,176\,634\times10^{-19}\,\text{J})
+                          = 1.762\,\times10^{-19}\ \text{J}, \\[6pt]
+                    k_B &= 1.380\,649\times10^{-23}\ \text{J\,K}^{-1}, \\[6pt]
+                    T_1 &= 300\ \text{K}, \qquad R_1 = 2\ \Omega, \\[6pt]
+                    T_2 &= 77\ \text{K}.
+                    \end{aligned}
+                    \]
+                    
+                    \[
+                    \frac{E_g}{2k_B} = 
+                    \frac{1.762\times10^{-19}}{2(1.380\,649\times10^{-23})}
+                    = 6.382\times10^{3}\ \text{K}.
+                    \]
+                    
+                    \[
+                    \frac{1}{T_2}-\frac{1}{T_1}
+                      = \frac{1}{77\ \text{K}}-\frac{1}{300\ \text{K}}
+                      = 9.654\times10^{-3}\ \text{K}^{-1}.
+                    \]
+                    
+                    \[
+                    \ln\!\Bigl(\tfrac{R_2}{R_1}\Bigr)
+                      = (6.382\times10^{3}\ \text{K})(9.654\times10^{-3}\ \text{K}^{-1})
+                      = 61.6
+                    \;\;\Longrightarrow\;\;
+                    \frac{R_2}{R_1}=e^{61.6}=5.74\times10^{26}.
+                    \]
+                    
+                    \[
+                    R_2 = R_1\,\frac{R_2}{R_1}
+                         = (2\ \Omega)(5.74\times10^{26})
+                         = 1.15\times10^{27}\ \Omega.
+                    \]
+                    
+                    \[
+                    \boxed{\;R(77\ \text{K})\;\approx\;1\times10^{27}\ \text{Ohms}\;}
+                    \]
+                    
+                    (The resistance skyrockets because the thermal excitation
+                    across the \(1.1\ \text{eV}\) silicon bandgap becomes
+                    vanishingly small at liquid‑nitrogen temperature.)
+                    \end{solution}
+\end{document}

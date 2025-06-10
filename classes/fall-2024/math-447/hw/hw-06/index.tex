@@ -1,0 +1,195 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Define the solution environment with normal text
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+
+% Title information
+\title{MATH 447: Real Variables - Homework \#6}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[18.7]
+  Prove $xe^{x} =2$ for some $x$ in $(0,1)$.  
+\end{problem}
+\begin{solution}
+  \begin{proof}
+    Our goal is to show that $f=x$ and $g=e^{x}$ are both continuous, then invoke Theorem 17.4 part iii): Let $f$ and $g$ be real-valued functions that are continuous at $x_0$ in $\mathbb{R} $. Then: 
+    \begin{align}
+     fg \text{ is continuous at } x_0 
+    \end{align}
+    To show that $f=x$ is continuous, we can show the following:
+    \begin{align}
+     \left\vert x_n -x\right\vert <\varepsilon
+    \end{align}
+    Choosing $\delta =\epsilon $, we get:
+    \begin{align}
+     \left\vert x_{n} -x \right\vert <\delta \implies \left\vert f(x_n)-f(x) \right\vert <\epsilon
+    \end{align} 
+    We wish to prove that the function $ f(x) = e^x $ is continuous.
+  
+    Let $ \epsilon > 0 $. We need to show that for every $ \epsilon > 0 $, there exists $ \delta > 0 $ such that if $ |x - x_0| < \delta $, then $ |e^x - e^{x_0}| < \epsilon $.
+    
+    Starting with the expression:
+    \begin{align}
+    |e^x - e^{x_0}| &= e^{x_0} |e^{x - x_0} - 1|
+    \end{align}
+    Now, we use the elementary inequality:
+    \begin{align}
+    e^y &\geq 1 + y
+    \end{align}
+    For $ y = -y $, we get:
+    \begin{align}
+    e^{-y} &\geq 1 - y
+    \end{align}
+    which implies:
+    \begin{align}
+    \frac{1}{1 - y} &\geq e^y \quad \text{for } y < 1
+    \end{align}
+    Hence:
+    \begin{align}
+    |e^y - 1| &\leq \max \left\{ |y|, \left| \frac{y}{1 - y} \right| \right\} \quad \text{for } y < 1
+    \end{align}
+    
+    Thus, taking $ y = x - x_0 $, we have:
+    \begin{align}
+    |e^y - 1| &\leq \max \left\{ |y|, \left| \frac{y}{1 - y} \right| \right\}
+    \end{align}
+    
+    Now, choose $ \delta $ small enough such that $ |y| = |x - x_0| < \delta $ satisfies:
+    \begin{align}
+    \max \left\{ |y|, \left| \frac{y}{1 - y} \right| \right\} &< e^{-x_0} \epsilon
+    \end{align}
+    and $ |y| < 1 $.
+    
+    Therefore, we can conclude that $ e^x $ is continuous at $ x_0 $.
+    \vspace{.5cm} 
+    Invoking Theorem 17.4 iii), we show that $xe^{x}$ is a continuous function. To show that there exists $x$ such that $h=xe^{x}=2$, we can show that pick two points in $(0,1)$ : $x_1=0.01$, and $x_2=0.99$, and substitute these into $h$, getting $h(x_1)=0.01$ and $f(x_2)=2.66$. $h(x_1)<2<h(x_2)$, and because $h$ is continuous on $(0,1)$, we can invoke the IVT, which proves that there exists $x$ such that $xe^{x}=2$.  
+  
+  \end{proof}
+\end{solution}
+\begin{problem}[21.2]
+    Consider $f:S\to S^{*}$ where $S,d$ and $S^{*}, d^{*}$ are metric spaces. Show that $f$ is continuous at $s_{0}\in S $ if and only if for every open set $U$ in $S^{*} $ containing $f(s_{0} )$, there is an open set $V$ in $S$ containing $s_{0}$ such that $f(V) \subseteq U$.
+\end{problem}
+\begin{solution}
+\begin{proof}
+  $\implies:$ The goal is to show that every point in $V$ has a neighborhood, i.e., is open. Because $U$ is open, we know that there exists $r=\varepsilon$ for each point $y\in U$. Because $f$ is continuous, we also know that there is a corresponding $\delta>0$ such that $s\in B_{\delta}(x)=V$, so this implies that there exists an open ball $V$ around each point $s$ in $S$. Because $d(s,s_0)<\delta \implies d(f(s),f(s))<\varepsilon$, and $\delta = V$, $\varepsilon \subseteq U$, as there may be other points not in $\delta$ that map into $U$, this implies $f(V)\subseteq U$. 
+  \vspace{.5cm}
+
+  $\impliedby:$ We know that $V$ is open for every $U$ in $S^{*}$. Choose $\varepsilon \in U \ s.t. \ \varepsilon >0$. Then choose $\delta \in V \ s.t. \ \delta >0$. By implication, we know that $\delta$ is open. Then, we can state that $d(s, s_0)<\delta \implies d(f(s),f(s_0))<\varepsilon$, which is the definition of continuity at a point.    
+\end{proof}
+\end{solution}
+\begin{problem}[21.3]
+    Let $(S,d)$ be a metric space and choose $s_{0} \in S$. Show $f(s)=d(s,s_{0})$ defines a uniformly continuous real-valued function $f$ on $S$.
+\end{problem}
+\begin{solution}
+\begin{proof}
+  We to show the definition of continuity:
+  \begin{align}
+    \forall \epsilon > 0, \exists \delta > 0 \text{ such that } d_Y(f(p), f(q)) &< \epsilon \\
+    \forall p, q \in X \text{ for which } d_X(p, q) &< \delta. 
+    \end{align}
+    We know that:
+    \begin{align}
+      f(s_0) = d(s_0, s_0) = 0 \\[10pt] 
+      f(p)= d(p, s_0) \\[10pt] 
+      f(q)= d(q, s_0) \\[10pt] 
+      d_Y(f(p),f(q))\leq d(f(p)) + d(f(q))\\[10pt] 
+    \end{align}
+We want to show using the triangle inequality:
+\begin{align} 
+      d(f(p),f(q))\leq d(f(p),f(s_0))+d(f(q),f(s_0))< \varepsilon
+\end{align}
+From Eqn 13, 14, and 15, we can say: 
+\begin{align}
+  d(f(p),f(q))\leq d(p,s_0)+d(q,s_0).
+\end{align}
+Choosing $p,q$ such that $d(p,s_0)<\frac{\varepsilon}{2}$ and $d(q,s_0)<\varepsilon$ , we can pick $\delta =\varepsilon$ and use Eqn 14 and 15 to show:
+\begin{align}
+  d(f(p),f(q))\leq d(f(p))+d(f(q))\\[10pt] 
+  \leq d(p,s_0)+d(q,s_0)<\varepsilon
+\end{align} 
+\end{proof}
+\end{solution}
+\begin{problem}[21.4]
+    Consider $f:S\to \mathbb{R} $ where $(S,d)$ is a metric space. Show the following are equivalent:
+    \begin{enumerate}
+        \item $f$ is continuous;
+        \item $f^{-1}((a,b)) $ is open in $S$ for all $a<b$;
+        \item $f^{-1}((a,b))$ is open in $S$ for all rational $a<b$.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+  \begin{proof}  
+    $1\implies 2$: We know that any open interval $(a,b)$ in $R^{1}$ is complete, i.e., every subsequence converges to a limit point contained in $\mathbb{R}$. Therefore, $(a,b)$ is an open set in $\mathbb{R}$. We know from Problem 2 that if $f$ is continuous, then every open set in the range corresponds to an open set in the domain. $(a,b)$ is open, so $f^{-1}(a,b)$ is also open.    
+    \end{proof}
+\begin{proof}  
+$1\implies 3$: By $1\implies 2$, we know that if $a,b\in \mathbb{Q} $, then $(a,b)$ is open by the denseness of the rationals, i.e., between every real there exists a rational.  
+\end{proof}
+\begin{proof}  
+$3\implies 1$: We achieve this by taking the converse of $1\implies 3$, which exists by the bijection of $1\implies 2$.
+\end{proof}
+
+\begin{proof}  
+$2\implies 1$: This exists by the bijection of $1\implies 2$.  
+\end{proof}
+\begin{proof}  
+$3\implies 2$: This is always true by the denseness of the rationals.
+\end{proof}
+\begin{proof}  
+$2\implies 3$: This is always true, as $\mathbb{Q} \subset \mathbb{R}$ 
+\end{proof}
+\end{solution}
+\begin{problem}[21.5]
+  Let $E$ be a noncompact subset of $\mathbb{R}^{k}$.
+  \begin{enumerate}
+    \item Show there is an unbounded continuous real-valued function on $E$. \emph{Hint}: Either $E$ is unbounded or else its closure $E^{-}$ contains $\mathbf{x}_{0} \notin E$. In the latter case, use $\frac{1}{g}$ where $g(\mathbf{x}) =d(\mathbf{x},\mathbf{x}_{0})$.
+    \item Show there is a bounded continuous real-valued function on $E$ that does not assume its maximum on $E$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+ \begin{enumerate}
+  \item \begin{enumerate}
+    \item Suppose that $E$ is bounded, and $x_0$ is not a point of $E$. To show that there exists a continuous unbounded real-valued function on $E$, consider the function:
+    \begin{align}
+     f(x)=\frac{1}{x-x_0}
+    \end{align} 
+    This function is continuous on $E$.
+    \item Suppose that $E$ is unbounded. Then, $f(x)=x$ is unbounded and is a continuous real-valued function on $E$. 
+  \end{enumerate}
+  \item Suppose that $E$ is bounded. Then the following:
+  \begin{align}
+    g(x)=\frac{1}{1+(x-x_0)^{2}}
+  \end{align}
+$g(x)$ is bounded, as $0<g(x)<1$ for all $x$. $g(x)$ has no maximal element, as $x_0$ is not a member of $E$. 
+ \end{enumerate} 
+\end{solution}
+\begin{problem}[21.10(d)]
+    Explain why there are no continuous functions mapping $[0,1]$ onto $(0,1)$ or $\mathbb{R}$.
+\end{problem}
+\begin{solution}
+  We know that $[0,1]$ is compact according to the according to the Heine-Borel Theorem, as it is closed and bounded. According to Theorem 21.4, if $E$ is compact, then $f(E)$ is compact. $(0,1)$ and $\mathbb{R}$ are not compact, so this contradicts Theorem 21.4..
+\end{solution}
+\begin{problem}
+  Is it true that any bounded continuous function on $\mathbb{R}$ is uniformly continuous? 
+\end{problem}
+\begin{solution}
+  No. Choose $f=\frac{1}{x-x_0}$ with $x\in (0,x_0)$. Uniform continuity states that $\forall \varepsilon, \exists \delta \ s.t. \ d(p,q)<\delta \implies d(f(p),f(q))$ for all $p, q$. Choose an arbitrary $\varepsilon$. Then, there exists a corresponding $\delta$ such that $d(x,x_0)<\delta\implies d(f(x),f(x_0))<\varepsilon$. But as we take the same $\delta$ about $x$ closer and closer to $x_0$, $d(f(x),f(x_n))$ will grow larger and larger, eventually exceeding our chosen $\varepsilon$. Therefore, there exists no constant $\delta$ that satisfies our chosen $\varepsilon$. Therefore, our bounded, continuous function $f$ is not uniformly continuous.    
+\end{solution}
+\end{document}

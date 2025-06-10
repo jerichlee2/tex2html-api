@@ -1,0 +1,2275 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{nonexamples}{Non-Examples}
+\newtheorem{remarks}{Remarks}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{definition}[Integral Domain]
+  A \textbf{commutative ring} \(R\) with identity \(1\neq 0\) is called an
+  \emph{integral domain} if it contains \textbf{no zero‐divisors}; that is,
+  for all \(a,b\in R\),
+  \[
+     ab = 0 \quad\Longrightarrow\quad a = 0 \ \text{or}\ b = 0.
+  \]
+  Equivalently, the cancellation law holds for non–zero elements:
+  \[
+     a\neq 0,\; ab = ac \;\Longrightarrow\; b = c
+     \quad\text{for all }a,b,c\in R.
+  \]
+  \end{definition}
+  
+  \begin{examples}
+     \begin{enumerate}
+        \item \(\mathbb{Z}\) (the integers) and, more generally, every
+              subring of a field, e.g.\ \(\mathbb{Z}[i]\subset \mathbb{C}\).
+        \item Polynomial rings over integral domains, e.g.\
+              \(\mathbb{Z}[X]\) or \(k[X_1,\dots,X_n]\) for a field \(k\).
+        \item Any field \(F\) itself is an integral domain
+              (zero divisors cannot exist because every non–zero element is
+              invertible).
+     \end{enumerate}
+  \end{examples}
+  
+  \begin{nonexamples}
+     \begin{enumerate}
+        \item The ring \(\mathbb{Z}/6\mathbb{Z}\):
+              \(2\cdot 3 = 0\) in this ring, yet \(2\neq 0\) and \(3\neq 0\).
+        \item The product ring \(\mathbb{Z}\times\mathbb{Z}\):
+              \((1,0)\cdot(0,1) = (0,0)\).
+     \end{enumerate}
+  \end{nonexamples}
+  
+  \begin{remarks}
+     \begin{itemize}
+        \item If \(R\) is an integral domain, its fraction field
+              \(\operatorname{Frac}(R)\) (constructed by formally adjoining
+              denominators) exists and embeds \(R\) into a field.
+        \item Many classical results—unique factorisation, Euclidean
+              algorithm, Gauss’s lemma—are developed first inside integral
+              domains.
+     \end{itemize}
+  \end{remarks}
+  \begin{corollary}[Rational Root Test]\label{cor:rational_root_test}
+    Let
+    \[
+       f(X)=a_{0}+a_{1}X+\dots+a_{n}X^{n}\in\mathbb{Z}[X],
+       \qquad a_{n}\neq 0.
+    \]
+    Assume \(f\) has a \emph{rational} zero \(\dfrac{\alpha}{\beta}\) written
+    in lowest terms (\(\gcd(\alpha,\beta)=1,\ \beta>0\)).  
+    Then
+    \[
+       \beta\mid a_{n}
+       \quad\text{and}\quad
+       \alpha\neq 0\;\Longrightarrow\; \alpha\mid a_{0}.
+    \]
+    Consequently, if the polynomial is \emph{monic} (\(a_{n}=1\)),
+    every rational zero is in fact an \emph{integer}.
+    \end{corollary}
+    
+    \begin{proof}
+    \textbf{Step 1.\;Divisibility in \(\mathbb{Q}[X]\).}
+    Since \(f\!\bigl(\tfrac{\alpha}{\beta}\bigr)=0\), the linear polynomial
+    \[
+       X-\frac{\alpha}{\beta}
+    \]
+    divides \(f\) in the polynomial ring \(\mathbb{Q}[X]\); that is,
+    \(\exists\,g\in\mathbb{Q}[X]\) with
+    \[
+       f=(X-\tfrac{\alpha}{\beta})\,g.
+    \]
+    
+    \smallskip
+    \textbf{Step 2.\;Clearing denominators.}
+    Multiply the factor \(X-\tfrac{\alpha}{\beta}\) by \(\beta\) to obtain
+    the \emph{primitive} (coefficients have gcd \(1\)) polynomial
+    \[
+       \beta X-\alpha\in\mathbb{Z}[X].
+    \]
+    Because \(\beta X-\alpha\) is just a unit
+    (\(\beta^{-1}\in\mathbb{Q}^{\!*}\)) multiple of
+    \(X-\tfrac{\alpha}{\beta}\), we still have a divisibility in
+    \(\mathbb{Q}[X]\):
+    \[
+       (\beta X-\alpha)\mid f \quad\text{in }\mathbb{Q}[X].
+    \]
+    
+    \smallskip
+    \textbf{Step 3.\;Gauss’s lemma.}
+    The polynomial \(\beta X-\alpha\) is \emph{primitive}.
+    Gauss’s lemma (or the theorem proved earlier) states that if a primitive
+    polynomial divides \(f\) in \(\mathbb{Q}[X]\), then it already divides
+    \(f\) in \(\mathbb{Z}[X]\).
+    Hence there exists \(h\in\mathbb{Z}[X]\) such that
+    \[
+       f=(\beta X-\alpha)\,h.
+    \]
+    
+    \smallskip
+    \textbf{Step 4.\;Leading and constant coefficients.}
+    Write
+    \[
+       h(X)=b_{0}+b_{1}X+\dots+b_{n-1}X^{\,n-1}\qquad(b_{n-1}\neq 0).
+    \]
+    Comparing coefficients in
+    \(f(X)=(\beta X-\alpha)h(X)\) gives:
+    
+    \begin{itemize}
+       \item \emph{Leading term: }
+             \(\displaystyle
+             a_{n}= \beta\cdot b_{\,n-1}\;\Longrightarrow\;
+             \beta\mid a_{n}.
+             \)
+       \item \emph{Constant term: }
+             \(\displaystyle
+             a_{0}=(-\alpha)\cdot b_{0}
+             \;\Longrightarrow\;
+             \alpha\mid a_{0}\quad(\text{provided }\alpha\neq 0).
+             \)
+    \end{itemize}
+    
+    \smallskip
+    \textbf{Step 5.\;The monic case.}
+    If \(a_{n}=1\) (i.e.\ \(f\) is monic) then
+    \(\beta\mid 1\mathbb{R}ightarrow\beta=1\).
+    Hence the only possible rational zeros are of the form
+    \(\tfrac{\alpha}{1}=\alpha\in\mathbb{Z}\).
+    
+    \end{proof}
+    \begin{theorem}[Eisenstein’s Criterion]
+      Let 
+      \[
+         f(x)=a_{0}+a_{1}x+a_{2}x^{2}+\dots+a_{n}x^{n}\in\mathbb{Z}[x]\setminus\{0\},
+         \qquad n\ge 1.
+      \]
+      Suppose there exists a prime number \(p\in\mathbb{N}\) such that 
+      \begin{enumerate}
+         \item[(i)] \(p\nmid a_{n}\);  \hfill           % 1st hypothesis
+         \item[(ii)] \(p \mid a_{i}\) for every \(0\le i<n\); \hfill % 2nd hypothesis
+         \item[(iii)] \(p^{2}\nmid a_{0}\).                       % 3rd hypothesis
+      \end{enumerate}
+      Then \(f\) is irreducible over \(\mathbb{Q}\).
+      \end{theorem}
+      
+      \begin{proof}[Step--by--step proof]
+      We argue by contradiction.
+      
+      \smallskip
+      \textbf{1.\;Reduction to \(\mathbb{Z}[x]\).}  
+      If \(f\) were reducible over \(\mathbb{Q}\) it would factor as  
+      \(f=gh\) with \(g,h\in\mathbb{Q}[x]\) and \(\deg g,\deg h>0\).  
+      By clearing denominators and removing any unit factor, Gauss’s lemma
+      yields a factorisation \(f=\tilde g\,\tilde h\) with  
+      \(\tilde g,\tilde h\in\mathbb{Z}[x]\) and  
+      \(\deg\tilde g,\deg\tilde h>0\).  
+      Thus it suffices to show that no such decomposition exists inside
+      \(\mathbb{Z}[x]\).  
+      For simplicity rename the integral factors again \(g,h\).
+      
+      \smallskip
+      \textbf{2.\;Coefficient notation.}  
+      Write  
+      \[
+         g(x)=b_{0}+b_{1}x+\dots+b_{r}x^{r},
+         \qquad
+         h(x)=c_{0}+c_{1}x+\dots+c_{s}x^{s},
+         \qquad r+s=n .
+      \]
+      
+      \smallskip
+      \textbf{3.\;First and leading coefficients.}  
+      Because \(f=gh\) we have
+      \[
+         a_{0}=b_{0}c_{0},
+         \qquad
+         a_{n}=b_{r}c_{s}.
+      \]
+      From (ii) and (iii) we know \(p\mid a_{0}\) but \(p^{2}\nmid a_{0}\);
+      thus exactly one of \(b_{0},c_{0}\) is divisible by \(p\).
+      WLOG assume
+      \[
+         p\mid b_{0}
+         \quad\text{and}\quad
+         p\nmid c_{0}.
+      \]
+      Condition (i) says \(p\nmid a_{n}\), so \(p\nmid b_{r}\) and \(p\nmid c_{s}\).
+      
+      \smallskip
+      \textbf{4.\;At least one non--initial coefficient of \(g\) is not
+      divisible by \(p\).}  
+      Because \(p\mid b_{0}\) but \(p\nmid b_{r}\), there exists an index
+      \(0\le j\le r\) for which \(p\nmid b_{j}\).
+      Let
+      \[
+         i:=\min\{\,j\ge 0 : p\nmid b_{j}\,\}.
+      \]
+      By construction \(1\le i\le r < n\) and
+      \[
+         p\mid b_{0},\dots,b_{i-1},
+         \qquad
+         p\nmid b_{i}.
+      \]
+      
+      \smallskip
+      \textbf{5.\;The key coefficient relation.}  
+      Compare the coefficient of \(x^{i}\) in the product \(f=gh\):
+      \[
+         a_{i}=b_{i}c_{0}+b_{i-1}c_{1}+b_{i-2}c_{2}+\dots+b_{0}c_{i}.
+      \]
+      
+      \smallskip
+      \textbf{6.\;Divisibility analysis.}  
+      
+      \begin{itemize}
+      \item By choice of \(i\), we have \(p\nmid b_{i}\).
+      \item From Step~2 we have \(p\nmid c_{0}\).
+      \item For every \(j<i\) we have \(p\mid b_{j}\) (minimality of \(i\)).
+      \end{itemize}
+      
+      Hence in the expression for \(a_{i}\)
+      
+      \[
+         b_{i}c_{0}\;\;\text{is \emph{not} divisible by }p,
+         \qquad
+         b_{k}c_{i-k}\;\;\text{is divisible by }p\;\;\text{for all }k<i.
+      \]
+      
+      Therefore \(a_{i}\not\equiv 0\pmod p\).
+      
+      \smallskip
+      \textbf{7.\;Contradiction.}  
+      But hypothesis (ii) says \(p\mid a_{i}\) for every \(i<n\),
+      in particular \(p\mid a_{i}\).
+      This contradicts the conclusion of Step~6 that \(p\nmid a_{i}\).
+      
+      \smallskip
+      \textbf{8.\;Conclusion.}  
+      The assumption that \(f\) factors non-trivially in \(\mathbb{Q}[x]\)
+      leads to a contradiction.  
+      Hence \(f\) is irreducible over \(\mathbb{Q}\).
+      \end{proof}
+      \paragraph{Definition (Monic Polynomial).}
+Let $R$ be a commutative ring (e.g.\ $\mathbb{Z},\ \mathbb{Q},\ \mathbb{R},\ \mathbb{C}$) and let  
+
+\[
+   f(x)\;=\;a_{n}x^{\,n}+a_{n-1}x^{\,n-1}+\cdots+a_{1}x+a_{0}
+   \;\in\;R[x], 
+   \qquad a_{n}\neq 0 .
+\]
+
+The polynomial $f$ is called \emph{monic} if its \emph{leading coefficient} $a_{n}$ equals $1$:
+\[
+   f \text{ is monic } \;\Longleftrightarrow\; a_{n}=1 .
+\]
+
+\medskip
+\textbf{Examples}
+\[
+   x^{3}-2x+5,\quad
+   x^{4}+7x^{2}-x+1,\quad
+   x-1
+\]
+are monic over $\mathbb{Z}$ (and hence over any larger coefficient ring), because the coefficient in front of the highest power of $x$ is $1$.
+
+\medskip
+\textbf{Non–example}
+\[
+   3x^{2}+x+4
+\]
+is \emph{not} monic, since its leading coefficient is $3\neq 1$.
+
+\medskip
+\textbf{Why the term “monic”?}  
+The prefix \textit{mono–} (meaning “single” or “one”) highlights that the highest–degree term has a single (unit) coefficient equal to $1$.
+\begin{proposition}
+  Let $E/F$ be a field extension and let $\alpha\in E$ be \emph{algebraic} over $F$.
+  Define
+  \[
+       F[\alpha]\;:=\;\bigl\{\,f(\alpha)\;:\;f\in F[x]\,\bigr\}\;\subseteq\;E.
+  \]
+  Then
+  \[
+       F[\alpha]\,=\,F(\alpha),
+  \]
+  i.e.\ the \textbf{ring} generated by $\alpha$ is already a \textbf{field}.
+  Moreover
+  \[
+       [\,F(\alpha):F\,]=\deg\!\bigl(m_{\alpha,F}\bigr),
+  \]
+  where $m_{\alpha,F}(x)$ denotes the minimal polynomial of $\alpha$ over $F$.
+  \end{proposition}
+  
+  \begin{proof}[Step--by--step]
+  \textbf{1.\;Finite--dimensional $F$–vector space structure.}
+  Because $\alpha$ is algebraic, let
+  \[
+       m_{\alpha,F}(x)=x^{n}+b_{n-1}x^{\,n-1}+\dots+b_{1}x+b_{0}\in F[x],
+       \qquad b_{n}=1,
+  \]
+  be its monic minimal polynomial ($n:=\deg m_{\alpha,F}$).  
+  Since $m_{\alpha,F}(\alpha)=0$ we may always reduce any power
+  $\alpha^{k}$ with $k\ge n$ to a $F$–linear combination of
+  $1,\alpha,\dots,\alpha^{\,n-1}$.  
+  Hence every $f(\alpha)\in F[\alpha]$ is an $F$–linear combination of the
+  set
+  \[
+       \mathcal{B}:=\{\,1,\alpha,\dots,\alpha^{\,n-1}\}.
+  \]
+  Thus $\mathrm{Span}_{F}(\mathcal{B})=F[\alpha]$ and
+  $\dim_{F}F[\alpha]\le n<\infty$.
+  
+  \medskip
+  \textbf{2.\;Linear independence of $\mathcal{B}$.}
+  Assume a dependence relation
+  \[
+       a_{0}+a_{1}\alpha+\dots+a_{n-1}\alpha^{\,n-1}=0,
+       \qquad a_{i}\in F.
+  \]
+  Then $g(x):=a_{0}+a_{1}x+\dots+a_{n-1}x^{\,n-1}\in F[x]$
+  satisfies $g(\alpha)=0$.
+  Minimality of $m_{\alpha,F}$ forces $g=0$, hence all $a_{i}=0$.
+  Therefore $\mathcal{B}$ is an $F$–basis and
+  \[
+       \dim_{F}F[\alpha]=n.
+  \]
+  
+  \medskip
+  \textbf{3.\;Showing $F[\alpha]$ is a field.}
+  Let $\beta=f(\alpha)$ with $f\in F[x]$ and $\beta\neq0$.
+  Because the powers $1,\beta,\dots,\beta^{n}$ live in the
+  $n$–dimensional $F$–space $F[\alpha]$, they are $F$–linearly dependent:
+  there exist $c_{0},\dots,c_{n}\in F$, \emph{not all zero}, with
+  \[
+       c_{0}+c_{1}\beta+\dots+c_{n}\beta^{\,n}=0.
+  \]
+  Choose such a relation with \emph{minimal} $k:=\max\{i:c_{i}\neq0\}$; then $c_{k}\neq0$ and we may divide
+  by it to obtain
+  \[
+       1+\tilde b_{1}\beta+\dots+\tilde b_{k}\beta^{\,k}=0
+       \quad\Longrightarrow\quad
+       1=\beta\bigl(-\tilde b_{1}-\tilde b_{2}\beta-\dots-\tilde b_{k}\beta^{\,k-1}\bigr).
+  \]
+  The right--hand factor lies in $F[\alpha]$, so $\beta^{-1}\in F[\alpha]$.
+  Every non–zero element therefore has a multiplicative inverse:
+  $F[\alpha]$ is a field.
+  
+  \medskip
+  \textbf{4.\;Equality $F[\alpha]=F(\alpha)$.}
+  By definition $F[\alpha]\subseteq F(\alpha)$ and $F(\alpha)$ is a field.
+  Step~3 shows $F[\alpha]$ is itself a field containing $\alpha$,
+  hence it must \emph{equal} the smallest such field, namely $F(\alpha)$.
+  
+  \medskip
+  \textbf{5.\;Degree formula.}
+  Because $\{1,\alpha,\dots,\alpha^{\,n-1}\}$ is an $F$–basis of
+  $F(\alpha)$, we have
+  \[
+       [\,F(\alpha):F\,]=n=\deg m_{\alpha,F},
+  \]
+  as claimed.
+  \end{proof}\begin{proposition}
+    Let $R$ be a \textbf{Euclidean domain}\footnote{%
+    All Euclidean domains are PIDs and hence UFDs, but we shall only
+    use the fact that every two elements admit a greatest common divisor
+    which can be expressed as a linear combination (Bezout identity).}
+    and let $a\in R$ be an \emph{irreducible} (hence non–unit) element.
+    Then the principal ideal
+    \[
+       (a)\;:=\;\{\,ar \mid r\in R\,\}\;\subset R
+    \]
+    is a \emph{maximal} ideal of~$R$.
+    \end{proposition}
+    
+    \begin{proof}[Step--by--step]
+    \textbf{1.\;$(a)$ is proper.}  
+    Because $a$ is not a unit, $1\notin(a)$, so $(a)\neq R$.
+    
+    \medskip
+    \textbf{2.\;Proper ideals contain no units.}  
+    If $I\subset R$ is an ideal and contains a unit $u\in R^{\times}$,
+    then $1=u^{-1}u\in I$, hence $I=R$.
+    Conse\-quently every proper ideal of $R$ contains \emph{no} units.
+    
+    \medskip
+    \textbf{3.\;Assume $(a)$ is \underline{not} maximal.}  
+    Then there exists a proper ideal
+    \[
+       (a)\;\subsetneq\;I\;\subsetneq\;R.
+    \]
+    Choose $b\in I\setminus(a)$; necessarily $b\neq 0$ and $b$ is \emph{not}
+    a unit (by Step~2).
+    
+    \medskip
+    \textbf{4.\;Greatest common divisor of $a$ and $b$.}  
+    Because $R$ is Euclidean (hence a UFD), the gcd
+    \[
+       d\;:=\;\gcd(a,b)
+    \]
+    exists and may be written as a linear combination
+    (Bezout identity):
+    \[
+       \exists\,u,v\in R\quad ua+vb=d.
+    \]
+    
+    \medskip
+    \textbf{5.\;$d=1$.}  
+    Since $a$ is irreducible and $a\nmid b$ (because $b\notin(a)$),
+    the only common divisors of $a$ and $b$ are units.
+    Hence $\gcd(a,b)=1$, so $d=1$ in Step~4.
+    
+    \medskip
+    \textbf{6.\;The contradiction.}  
+    Because $a\in(a)\subset I$ and $b\in I$, the linear combination
+    $ua+vb=1$ lies in $I$ (ideals are closed under
+    ring multiplication and addition).  
+    Thus $1\in I$, contradicting the assumption that $I$ is proper.
+    
+    \medskip
+    \textbf{7.\;Conclusion.}  
+    No proper ideal can sit strictly between $(a)$ and $R$,
+    so $(a)$ is maximal.
+    \end{proof}
+    \begin{example}[A concrete splitting field over $\mathbb{Q}$]
+      Consider the irreducible\footnote{%
+      Irreducibility follows from Eisenstein’s criterion with the prime
+      $p=2$.} polynomial
+      \[
+            f(x)\;=\;x^{3}\;-\;2\;\in\;\mathbb{Q}[x].
+      \]
+      
+      \medskip
+      \textbf{1.\;Roots in $\mathbb{C}$.}\;
+      Its three complex roots are
+      \[
+            \alpha_{1}= \sqrt[3]{2},\qquad
+            \alpha_{2}= \sqrt[3]{2}\,\zeta_{3},\qquad
+            \alpha_{3}= \sqrt[3]{2}\,\zeta_{3}^{\,2},
+            \quad\text{where}\;\;
+            \zeta_{3}:=e^{2\pi i/3}=\frac{-1+\sqrt{-3}}{2}.
+      \]
+      
+      \medskip
+      \textbf{2.\;Generating the splitting field.}\;
+      The \emph{smallest} field that contains \emph{all}
+      roots of $f$ and $\mathbb{Q}$ is
+      \[
+            K\;=\;\mathbb{Q}\bigl(\,\sqrt[3]{2},\;\zeta_{3}\bigr).
+      \]
+      It is called the \emph{splitting field} of $f$ over~$\mathbb{Q}$.
+      
+      \medskip
+      \textbf{3.\;Tower of extensions and degree.}\;
+      Form the tower
+      \[
+            \mathbb{Q} \;\subset\; \mathbb{Q}\bigl(\sqrt[3]{2}\bigr) 
+              \;\subset\; \mathbb{Q}\bigl(\sqrt[3]{2},\zeta_{3}\bigr)=K.
+      \]
+      \begin{itemize}
+        \item $\deg\bigl(\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}\bigr)=3$
+              because $x^{3}-2$ is irreducible.
+        \item $\zeta_{3}$ satisfies $x^{2}+x+1=0$, irreducible over
+              $\mathbb{Q}(\sqrt[3]{2})$ (the polynomial has no root there),  
+              so $\deg\bigl(K/\mathbb{Q}(\sqrt[3]{2})\bigr)=2$.
+      \end{itemize}
+      Hence by the tower law
+      \[
+            [K:\mathbb{Q}]=3\cdot 2=6.
+      \]
+      
+      \medskip
+      \textbf{4.\;Splitting.}\;
+      Inside $K$ we indeed have
+      \[
+            f(x)\;=\;
+            \bigl(x-\sqrt[3]{2}\bigr)
+            \bigl(x-\sqrt[3]{2}\zeta_{3}\bigr)
+            \bigl(x-\sqrt[3]{2}\zeta_{3}^{\,2}\bigr),
+      \]
+      so $f$ \emph{splits completely} into linear factors over~$K$.
+      No proper intermediate field of~$\mathbb{{Q}}$ already contains
+      all three roots, so $K$ is the splitting field.
+      
+      \medskip
+      \textbf{5.\;Galois group (optional).}\;
+      Because $f$ is separable and $K/\mathbb{{Q}}$ is the splitting field,
+      $K/\mathbb{{Q}}$ is a Galois extension.
+      One can show
+      \[
+            \mathrm{Gal}(K/\mathbb{{Q}})\;\cong\;S_{3},
+      \]
+      generated by 
+      $\;\sigma:\sqrt[3]{2}\!\mapsto\!\sqrt[3]{2}\zeta_{3},\;
+        \zeta_{3}\!\mapsto\!\zeta_{3}\;$
+      and
+      $\tau:\sqrt[3]{2}\!\mapsto\!\sqrt[3]{2},\;
+        \zeta_{3}\!\mapsto\!\zeta_{3}^{\,2}$.
+      
+      \bigskip
+      \noindent
+      Thus $K=\mathbb{{Q}}\!\bigl(\sqrt[3]{2},\zeta_{3}\bigr)$ is a classic
+      \emph{splitting field} example: it is the minimal field over
+      $\mathbb{{Q}}$ in which the polynomial $x^{3}-2$ factors into
+      linear terms.
+      \end{example}
+      % --------------------------------------------------------------------------
+%  Splitting–field existence: adjoining (any) one root
+% --------------------------------------------------------------------------
+\begin{theorem}[Adjoining a root]\label{thm:adjoin–root}
+  Let \(F\) be a field and let \(f\in F[x]\) be a non–constant
+  polynomial.  
+  There exists a field extension \(E/F\) and an element
+  \(\alpha\in E\) such that \(f(\alpha)=0\).
+  Moreover, \(E\) can be chosen to be a \emph{finite} (i.e.\ algebraic)
+  extension of~\(F\).
+  \end{theorem}
+  
+  \begin{proof}[Step–by–step construction of \(E\)]
+  \textbf{1.\;Reduce to an irreducible factor.}
+  If \(f\) is reducible, choose one of its irreducible factors
+  \[
+        p(x)\;\bigm|\;f(x), \qquad
+        \deg p = n\ge 1 .
+  \]
+  Since \(p(\alpha)=0\) will automatically force \(f(\alpha)=0\),
+  it suffices to adjoin a root of \(p\).
+  Hence from now on \emph{assume \(f\) itself is irreducible} of degree
+  \(n\).
+  
+  \smallskip
+  \textbf{2.\;The quotient ring \(F[x]/(f)\).}
+  Because \(F[x]\) is a Euclidean domain,
+  the ideal \(\bigl(f(x)\bigr)\subset F[x]\) generated by an
+  irreducible element is \emph{maximal}.
+  Consequently
+  \[
+        E \;:=\; F[x]\bigl/\!\bigl(f(x)\bigr)
+  \]
+  is a \emph{field}.  
+  Denote by
+  \(
+        \pi : F[x]\to E,\;
+        g(x)\longmapsto g(x)+\bigl(f(x)\bigr)
+  \)
+  the natural quotient map.
+  
+  \smallskip
+  \textbf{3.\;Embedding \(F\hookrightarrow E\).}
+  For every \(\lambda\in F\subset F[x]\) we have
+  \(
+        \pi(\lambda)=\lambda+\bigl(f(x)\bigr).
+  \)
+  Because \(\pi\) has trivial kernel, this injects \(F\) into \(E\);
+  thus we may view \(E\) as a field \emph{extension} of \(F\).
+  
+  \smallskip
+  \textbf{4.\;A root of \(f\) inside \(E\).}
+  Let
+  \[
+        \alpha\;:=\;x+\bigl(f(x)\bigr)\;\in\;E ,
+  \]
+  (the coset of the indeterminate \(x\)).
+  Then, in \(E\),
+  \[
+        f(\alpha)\;=\;\pi\!\bigl(f(x)\bigr)=
+        f(x)+\bigl(f(x)\bigr)=0,
+  \]
+  so \(\alpha\) is indeed a root of \(f\).
+  
+  \smallskip
+  \textbf{5.\;Finiteness of the extension.}
+  Write
+  \[
+        \mathcal{B}\;:=\;\{\,1,\alpha,\alpha^{2},\dots,\alpha^{n-1}\,\}\;\subset E.
+  \]
+  Because \(f\) is monic of degree \(n\) and satisfies
+  \(f(\alpha)=0\), every power \(\alpha^{k}\) with \(k\ge n\) can be
+  reduced (by polynomial long division) to an \(F\)-linear
+  combination of the entries of \(\mathcal{B}\).
+  Thus \(\text{Span}_{F}(\mathcal{B}) = E\).
+  
+  To see the elements of \(\mathcal{B}\) are independent, suppose
+  \(
+        a_{0}+a_{1}\alpha+\dots+a_{n-1}\alpha^{n-1}=0
+  \)
+  with \(a_{i}\in F\).  
+  Applying \(\pi^{-1}\) gives a polynomial of degree \(<n\) that
+  vanishes at \(\alpha\); but \(f\) is \emph{minimal}, so all
+  coefficients must vanish.  
+  Hence \(\mathcal{B}\) is a basis and
+  \[
+        [E:F]=n<\infty .
+  \]
+  
+  \smallskip
+  \textbf{6.\;Conclusion.}
+  The field \(E:=F[x]/\bigl(f(x)\bigr)\) is finite over \(F\)
+  and contains a root \(\alpha\) of \(f\).
+  \end{proof}
+  % --------------------------------------------------------------------------
+  %
+  %  (Remarks, if desired, can be added here.)
+  %
+  % --------------------------------------------------------------------------
+  % ---------------------------------------------------------------------------
+%  Examples of Principal Ideal Domains (PIDs)
+% ---------------------------------------------------------------------------
+\begin{example}
+  \item \textbf{The integers \(\boldsymbol{\mathbb{Z}}\).}  
+        Every ideal of \(\mathbb{Z}\) has the form 
+        \((n)\!=\!n\mathbb{Z}\) for some \(n\in\mathbb{Z}\); hence \(\mathbb{Z}\) is a PID.  
+        (In fact \(\mathbb{Z}\) is Euclidean with the absolute value norm.)
+  
+  \item \textbf{Polynomial rings in one variable over a field.}  
+        For any field \(k\) the ring \(k[x]\) is Euclidean 
+        (hence a PID) with Euclidean function
+        \(\deg\colon k[x]\smallsetminus\{0\}\to\mathbb{N}\cup\{-\infty\}\).  
+        Typical concrete instances:
+        \[
+           \mathbb{Q}[x],\qquad
+           \mathbb{F}_{p}[x]\;(p\text{ prime}),\qquad
+           \mathbb{R}[x],\qquad
+           \mathbb{C}[x].
+        \]
+  
+  \item \textbf{Gaussian integers \(\boldsymbol{\mathbb{Z}[i]}\).}  
+        \(\mathbb{Z}[i]=\{a+bi\mid a,b\in\mathbb{Z}\}\) is Euclidean
+        for the norm \(N(a+bi)=a^{2}+b^{2}\).  
+        Hence \(\mathbb{Z}[i]\) is a PID (and a UFD).
+  
+  \item \textbf{Eisenstein integers \(\boldsymbol{\mathbb{Z}[\omega]}\).}  
+        Here \(\omega=e^{2\pi i/3}=\tfrac{-1+\sqrt{-3}}{2}\).
+        The norm \(N(a+b\omega)=a^{2}-ab+b^{2}\) makes \(\mathbb{Z}[\omega]\)
+        Euclidean, so \(\mathbb{Z}[\omega]\) is a PID.
+  
+  \item \textbf{\(p\)-adic integers \(\boldsymbol{\mathbb{Z}_{p}}\).}  
+        For a prime \(p\) the ring
+        \[
+           \mathbb{Z}_{p}\;=\;\varprojlim_{n}\mathbb{Z}/p^{n}\mathbb{Z}
+        \]
+        is a \emph{discrete valuation ring};
+        its non–zero ideals are exactly \((p^{n})\;(n\ge0)\),
+        each generated by a power of~\(p\).  
+        Hence \(\mathbb{Z}_{p}\) is a PID, \emph{but not} Euclidean.
+  
+  \item \textbf{Formal power–series rings \(\boldsymbol{k[[x]]}\).}  
+        For any field \(k\) the power–series ring
+        \(k[[x]]\) is again a discrete valuation ring
+        with unique non–zero prime ideal \((x)\):
+        every ideal equals \((x^{n})\) for some \(n\ge0\).  
+        Thus \(k[[x]]\) is a PID (though not Euclidean).
+  
+  \item \textbf{Quadratic integer rings with class number \(1\).}  
+        The rings of integers of the imaginary quadratic fields
+        \[
+           \mathbb{Q}\!\bigl(\sqrt{-d}\bigr),\qquad
+           d\in\{1,2,3,7,11,19,43,67,163\},
+        \]
+        are PIDs.  
+        For example
+        \(
+           \mathcal{O}_{\mathbb{Q}(\sqrt{-19})}=
+           \mathbb{Z}\bigl[\tfrac{1+\sqrt{-19}}{2}\bigr]
+        \)
+        is a PID, even though no known Euclidean norm exists on it.
+  
+  \end{example}
+  
+  \bigskip
+  \noindent
+  \textbf{Remarks.}
+  \begin{itemize}
+  \item Every Euclidean domain is a PID, so Euclidean examples are
+        plentiful (items~1–4 above).
+  \item Discrete valuation rings (items~5–6) provide PIDs that are
+        \emph{not} Euclidean, illustrating that the Euclidean property
+        is stronger than principality.
+  \item The quadratic–integer examples in item~7 show that there exist
+        PIDs which are neither Euclidean nor DVRs in the strict sense,
+        highlighting the subtle spectrum of properties between
+        “Euclidean’’ and “PID’’.
+  \end{itemize}
+  % ---------------------------------------------------------------------------
+%  Adjoining one root of a polynomial — every detail spelled out
+% ---------------------------------------------------------------------------
+\subsection*{Theorem (Every polynomial has a root in a finite extension)}
+Let \(F\) be a field and \(f\in F[X]\) a non–constant polynomial.
+Then there exists a \emph{finite} field extension \(E/F\) together
+with an element \(\alpha\in E\) such that
+\[
+     f(\alpha)=0.
+\]
+
+\bigskip
+\textbf{Proof \;(full expansion).}
+
+\medskip
+\textbf{1.\;Why \(F[X]\) is Euclidean (hence a PID and UFD).}
+For every non–zero polynomial \(g\in F[X]\) define
+\(\delta(g):=\deg g\in\mathbb{N}\).
+The usual polynomial long–division shows that for any
+\(a,b\in F[X]\) with \(b\neq0\) we can find
+\(q,r\in F[X]\) such that
+\(a=bq+r\) and either \(r=0\) or \(\deg r<\deg b\).
+Thus \(\delta\) is a Euclidean function and \(F[X]\) is a 
+\emph{Euclidean domain}.
+Consequences:
+
+\begin{itemize}
+\item Every ideal of \(F[X]\) is principal (PID).
+\item Irreducible elements generate \emph{maximal} ideals.
+\item Unique factorisation of polynomials (UFD).
+\end{itemize}
+
+\medskip
+\textbf{2.\;Reduce to an irreducible factor.}
+If \(f\) is reducible, pick an irreducible factor \(p\mid f\).
+A root of \(p\) will automatically be a root of \(f\), so we may
+\emph{replace \(f\) by an irreducible factor}.
+Henceforth assume \(f\) itself is irreducible of degree
+\(n\ge1\).
+
+\medskip
+\textbf{3.\;Form the quotient field \(E:=F[X]/(f)\).}
+
+\begin{enumerate}[label=\alph*)]
+\item Because \(f\) is irreducible, the ideal \((f)\subset F[X]\)
+      is \emph{maximal}.  
+      Consequently the quotient
+      \[
+          E\;:=\;F[X]\bigl/(f)
+      \]
+      is a \emph{field}.
+\item Denote the canonical projection by
+      \(
+          \pi:F[X]\twoheadrightarrow E,\quad
+          g\mapsto g+(f).
+      \)
+\item The kernel of \(\pi\) is exactly \((f)\); hence \(\pi\) is
+      injective on the subring \(F\subset F[X]\).
+      Via the embedding
+      \[
+           F \;\hookrightarrow\;E,\qquad
+           \lambda\longmapsto\lambda+(f),
+      \]
+      we view \(E\) \emph{as a field extension of \(F\)}.
+\end{enumerate}
+
+\medskip
+\textbf{4.\;The element \(\alpha:=X+(f)\) is a root of \(f\).}
+
+Let
+\[
+     \alpha\;:=\;X+(f)\;\in\;E.
+\]
+Because \(f(X)\in(f)\), we have
+\[
+     f(\alpha)=\pi\!\bigl(f(X)\bigr)=f(X)+(f)=0\quad\text{in }E.
+\]
+Thus \(\alpha\) is the desired root.
+
+\medskip
+\textbf{5.\;Proving \(E/F\) is finite.}
+
+We need to show that \(E\) has finite dimension as an \(F\)-vector
+space.
+
+\begin{enumerate}[label=\alph*)]
+\item \emph{Candidate spanning set.}  
+      Consider the \(n\) elements
+      \[
+           1+(f),\;X+(f),\;X^{2}+(f),\;\dots,\;X^{n-1}+(f)
+      \]
+      and abbreviate them by
+      \(\{1,\alpha,\alpha^{2},\dots,\alpha^{n-1}\}\subset E\).
+\item \emph{Why they span.}  
+      Take an arbitrary element of \(E\); it is of the form
+      \(g(X)+(f)\) for some \(g\in F[X]\).
+      Perform polynomial long–division of \(g\) by \(f\):
+      \[
+           g(X)=q(X)f(X)+r(X),\qquad \deg r<\deg f=n.
+      \]
+      Applying \(\pi\) gives
+      \(
+         g(X)+(f)=r(X)+(f).
+      \)
+      But
+      \[
+           r(X)+(f)=a_{0}+a_{1}\alpha+\dots+a_{n-1}\alpha^{n-1},
+           \qquad a_{i}\in F,
+      \]
+      showing every element of \(E\) is in the \(F\)-span of our
+      \(n\)-element set.
+\item \emph{Why they are linearly independent.}  
+      Suppose
+      \(
+           a_{0}+a_{1}\alpha+\dots+a_{n-1}\alpha^{n-1}=0
+      \)
+      in \(E\).
+      Pull this back to \(F[X]\):
+      \(
+           a_{0}+a_{1}X+\dots+a_{n-1}X^{n-1}\in(f).
+      \)
+      Hence \(f\mid\bigl(a_{0}+a_{1}X+\dots+a_{n-1}X^{n-1}\bigr)\),
+      but the latter has degree \(<n\), impossible unless all
+      \(a_{i}=0\).
+\end{enumerate}
+Therefore
+\[
+     \bigl\{1,\alpha,\dots,\alpha^{n-1}\bigr\}
+     \text{ is an }F\text{-basis of }E,
+     \qquad
+     [E:F]=n<\infty.
+\]
+
+\medskip
+\textbf{6.\;Conclusion.}
+We have produced
+\begin{itemize}
+\item a finite field extension \(E/F\)
+      of degree \(\le\deg f\);
+\item an element \(\alpha\in E\) satisfying \(f(\alpha)=0\).
+\end{itemize}
+Hence every polynomial in \(F[X]\) acquires a root in some
+finite extension of \(F\).\qedhere
+
+% ---------------------------------------------------------------------------
+%  End of expanded proof
+% ---------------------------------------------------------------------------
+\paragraph{Definition (Maximal Ideal).}
+Let \(R\) be a commutative ring with unity \(1\neq 0\).
+An ideal \( \mathfrak{m}\subset R \) is called \emph{maximal} if it is
+proper (i.e.\ \( \mathfrak{m}\neq R \)) and there exists
+\emph{no} ideal strictly between \( \mathfrak{m} \) and \( R \):
+\[
+   \mathfrak{m}\subsetneq I\subseteq R
+   \;\;\Longrightarrow\;\;
+   I = R .
+\]
+
+\medskip
+\paragraph{Equivalent Characterisation.}
+An ideal \( \mathfrak{m}\subset R \) is maximal  
+\(\Longleftrightarrow\)
+the quotient ring \( R/\mathfrak{m} \) is a \emph{field}.
+(Proof: \(R/\mathfrak{m}\) is always a ring; maximality of
+\( \mathfrak{m} \) guarantees that every non-zero coset
+has a multiplicative inverse, and conversely.)
+
+\medskip
+\paragraph{Key Properties.}
+\begin{enumerate}
+  \item Every maximal ideal is \emph{prime}, but not every prime ideal
+        is maximal (unless \(R\) is a PID or a principal Artinian ring).
+  \item Maximal ideals always exist in any non-zero ring with unity;
+        Zorn’s Lemma guarantees this.
+  \item In a PID (e.g.\ \(\mathbb{Z}\) or \(k[x]\) with \(k\) a field),
+        irreducible elements generate maximal ideals.
+\end{enumerate}
+
+\medskip
+\paragraph{Concrete Examples.}
+\begin{itemize}
+  \item \(\mathbf{Integers:}\)
+        For a prime number \(p\),
+        \[
+           (p)\;=\;p\mathbb{Z}\;\subset\;\mathbb{Z}
+        \]
+        is maximal because \(\mathbb{Z}/(p)\cong\mathbb{F}_{p}\)
+        is a field.
+
+  \item \(\mathbf{Univariate\;polynomials:}\)
+        If \(k\) is a field and \(f(x)\in k[x]\) is \emph{irreducible},
+        then
+        \[
+           (f)\;\subset\;k[x]
+        \]
+        is maximal; the quotient \(k[x]/(f)\) is a field extension of
+        \(k\) of degree \(\deg f\).
+
+  \item \(\mathbf{Multivariate\;case:}\)
+        For \(k=\mathbb{C}\) and a point \(a=(a_{1},\dots,a_{n})\in k^{n}\),
+        the ideal
+        \[
+           \mathfrak{m}_{a}
+           \;:=\;
+           (\,x_{1}-a_{1},\dots,x_{n}-a_{n}\,)
+           \;\subset\;k[x_{1},\dots,x_{n}]
+        \]
+        is maximal because
+        \(k[x_{1},\dots,x_{n}]/\mathfrak{m}_{a}\cong k\)
+        (evaluation at the point \(a\)).
+
+  \item \(\mathbf{p-adic integers:}\)
+        In \(\mathbb{Z}_{p}\) the unique maximal ideal is
+        \((p)\); the residue field is \(\mathbb{F}_{p}\).
+\end{itemize}
+
+\medskip
+\paragraph{Non-Example.}
+In \(\mathbb{Z}\) the ideal \((6)\) is \emph{not} maximal,
+because \((6)\subsetneq(2)\subsetneq\mathbb{Z}\).
+
+\medskip
+\paragraph{Why Maximal Ideals Matter.}
+\begin{itemize}
+  \item They classify simple (one-point) algebraic “quotient spaces’’
+        of a ring.
+  \item In algebraic geometry, maximal ideals of
+        \(k[x_{1},\dots,x_{n}]\) correspond to points in the affine space
+        \(k^{n}\) (Hilbert’s Nullstellensatz when \(k\) is algebraically closed).
+  \item Via the Jacobson radical, maximal ideals control the “topology”
+        of \(\operatorname{Spec} R\) and the semisimple structure of
+        modules over~\(R\).
+\end{itemize}
+\begin{theorem}[A first step toward a splitting field]
+  Let \(F\) be a field and let \(f\in F[X]\) be a non–constant polynomial.
+  Then there exists a field extension \(E/F\) in which \(f\) has a root.
+  Moreover the extension \(E/F\) can be chosen to be finite.
+  \end{theorem}
+  
+  \begin{proof}
+  \textbf{Step 1.  Work in the Euclidean domain \(F[X]\).}  
+  Because \(F\) is a field, the polynomial ring \(F[X]\) is a Euclidean
+  domain (the Euclidean function is the usual degree).  Hence \(F[X]\) is
+  a principal ideal domain (PID) and therefore a unique-factorisation
+  domain (UFD).  In particular, every non–constant polynomial can be
+  factored into irreducibles.  Replacing \(f\) by one of its irreducible
+  factors if necessary, we \emph{assume from now on that \(f\) itself is
+  irreducible}.  Write
+  \[
+     \deg f = n\ge 1 .
+  \]
+  
+  \textbf{Step 2.  Form a natural candidate for the extension field.}  
+  Consider the prime (hence maximal) ideal \((f)\subseteq F[X]\).
+  Because \((f)\) is maximal, the quotient
+  \[
+     E \;:=\; F[X]\big/ (f)
+  \]
+  is a field.  We obtain a natural ring homomorphism
+  \[
+     \iota: F \;\longrightarrow\; E, \qquad
+     \lambda \;\longmapsto\; \lambda + (f),
+  \]
+  by regarding a constant \(\lambda\in F\) as the constant polynomial
+  \(\lambda\in F[X]\) and then reducing modulo \((f)\).
+  The kernel of \(\iota\) is trivial, so \(\iota\) is injective and we can
+  \emph{identify \(F\) with its image inside \(E\)}.  Thus \(E/F\) is a
+  field extension.
+  
+  \textbf{Step 3.  Exhibit an explicit root of \(f\) in \(E\).}  
+  Denote by
+  \[
+     \alpha \;:=\; X + (f) \;\in\; E
+  \]
+  the image of the indeterminate \(X\in F[X]\) in the quotient.
+  Because \(X\) is the residue class of the polynomial \(X\),
+  we may \emph{evaluate \(f\) at \(\alpha\)} inside \(E\) by simply
+  reducing the polynomial \(f(X)\) modulo \((f)\):
+  \[
+     f(\alpha)
+     \;=\;
+     f\bigl(X+(f)\bigr)
+     \;=\;
+     f(X) + (f).
+  \]
+  But \(f(X)\in (f)\) by definition of the ideal, so
+  \(f(X) + (f) = (f)\), which is the zero element of \(E\).
+  Therefore
+  \[
+     f(\alpha)=0 \quad\text{in }E,
+  \]
+  i.e.\ \(\alpha\) is a \emph{root} of \(f\) in the extension \(E\).
+  
+  \medskip
+  \emph{Why is \((f)\) the additive identity in \(E\)?}  
+  Elements of \(E=F[X]/(f)\) are congruence classes \(g(X)+(f)\).
+  The class \((f)\) itself is represented by the polynomial \(f(X)\).  
+  Because \(f(X)\equiv 0 \pmod{(f)}\), the class \((f)\) acts exactly like
+  the zero polynomial when we add classes:
+  \[
+     \bigl(g(X)+(f)\bigr) \;+\; (f) 
+     \;=\; g(X) + f(X) + (f) 
+     \;=\; g(X) + (f).
+  \]
+  Hence \((f)\) is the unique additive identity of the quotient ring.
+  Since a root of a polynomial is defined by the vanishing of that
+  polynomial, the calculation above shows \(f(\alpha)=0\).
+  
+  \textbf{Step 4.  Show that \(E/F\) is finite.}  
+  Because \(\deg f = n\), observe that every residue class
+  \(g(X)+(f)\in E\) has a representative of degree \(<n\):
+  apply the Euclidean algorithm to write \(g(X)=q(X)f(X)+r(X)\) with
+  either \(r=0\) or \(\deg r < n\).  In \(E\) we have
+  \(g(X)+(f)=r(X)+(f)\).  Consequently the set
+  \[
+     \mathcal{B}\;=\;\bigl\{\,1+(f),\,X+(f),\,
+            X^{2}+(f),\ldots,X^{n-1}+(f)\,\bigr\}
+  \]
+  spans \(E\) as a vector space over \(F\).  Hence
+  \(\dim_{F}E\le n\), and \(E/F\) is a \emph{finite} extension
+  (of degree at most \(n\)).
+  
+  \textbf{Conclusion.}  
+  The field \(E=F[X]/(f)\) is finite over \(F\) and contains an element
+  \(\alpha=X+(f)\) with \(f(\alpha)=0\).  This completes the proof.
+  \end{proof}
+  \pagebreak
+  \section*{Faithful versus Injective---what is the difference?}
+
+\subsection*{1.  Two contexts where the words occur}
+
+\begin{enumerate}
+   \item \textbf{Maps between algebraic objects}  
+         Here “injective’’ makes literal sense: a homomorphism 
+         \( \varphi\colon A \to B \) is \emph{injective} 
+         (a \emph{monomorphism} in the category of sets)  
+         if \( \varphi(a_1)=\varphi(a_2)\Rightarrow a_1=a_2\).
+
+   \item \textbf{Representations / actions / functors}  
+         Words like “faithful module”, “faithful group action” or
+         “faithful functor’’ describe \emph{how well the source object
+         is reflected inside the target category}.  
+\end{enumerate}
+
+\subsection*{2.  Group homomorphisms and representations}
+
+\begin{definition}
+   Let \(G\) and \(H\) be groups and \( \rho\colon G \to H\) a group
+   homomorphism.
+   \begin{enumerate}
+      \item \(\rho\) is \textbf{injective} if it is injective as a map
+            of underlying sets.
+      \item \(\rho\) (or the corresponding action of \(G\) on \(H\))
+            is \textbf{faithful} if its kernel is trivial:
+            \(
+               \ker\rho=\{e_G\}.
+            \)
+   \end{enumerate}
+\end{definition}
+
+\paragraph{Equivalence in this setting.}
+For group homomorphisms these two notions coincide:
+
+\[
+   \rho \text{ injective}
+   \quad\Longleftrightarrow\quad
+   \ker\rho=\{e_G\}
+   \quad\Longleftrightarrow\quad
+   \rho \text{ faithful}.
+\]
+
+Indeed, a group homomorphism is injective
+iff its kernel is trivial.  
+
+\emph{Take-away}:  
+“Faithful’’ and “injective’’ are synonymous for \emph{homomorphisms of
+groups, rings, vector spaces, \dots}.  
+
+\subsection*{3.  Functors}
+
+\begin{definition}
+   A functor \(F\colon \mathcal{C}\to\mathcal{D}\) is
+   \textbf{faithful} if for every pair of objects \(X,Y\) in
+   \(\mathcal{C}\) the function
+   \[
+      F_{X,Y}\colon \operatorname{Hom}_{\mathcal{C}}(X,Y)
+         \;\longrightarrow\;
+         \operatorname{Hom}_{\mathcal{D}}(F(X),F(Y))
+   \]
+   is injective.
+\end{definition}
+
+\begin{itemize}
+   \item Faithfulness \emph{ignores objects}:  
+         two different objects may still be mapped to the \emph{same}
+         object in \(\mathcal{D}\).
+   \item Hence a faithful functor \textbf{need not be injective on
+         objects}.  (Think of the forgetful functor
+         \(\mathbf{Grp}\to\mathbf{Set}\): it is faithful, but many
+         non-isomorphic groups become the same underlying set.)
+\end{itemize}
+
+So for functors “faithful’’ is strictly weaker than any reasonable
+notion of “injective’’ you might impose on objects.
+
+\subsection*{4.  Modules}
+
+For a (left) \(R\)-module \(M\):
+
+\[
+   M \text{ is \textbf{faithful}}
+   \;\Longleftrightarrow\;
+   \operatorname{Ann}_R(M)=\{\,0\}
+\]
+
+(the only element of \(R\) acting as \(0\) on \(M\) is \(0\) itself).
+There is \emph{no} underlying set-map here, so “injective’’ does not
+make sense in the usual way; instead one compares with the module‐theoretic
+property of being an \textbf{injective module}, which concerns
+extensions of homomorphisms and is unrelated to faithfulness.
+
+\subsection*{5.  Summary table}
+
+\[
+\begin{array}{|c|c|c|}
+\hline
+\text{Context} & \text{Faithful means\ldots} & \text{Relation to ``injective''} \\
+\hline
+\text{Group (or ring) hom.\ } \rho\colon G\to H 
+   & \ker\rho=\{e\} & \text{Exactly equivalent.}\\
+\hline
+\text{Functor } F\colon\mathcal{C}\to\mathcal{D}
+   & F_{X,Y}\text{ injective on each Hom-set} 
+   & \text{Weaker; may identify objects.}\\
+\hline
+\text{Module } M \text{ over } R 
+   & \operatorname{Ann}_R(M)=0 & \text{No direct link to ``injective module''.}\\
+\hline
+\end{array}
+\]
+
+\bigskip
+\noindent\emph{Rule of thumb:}  
+For plain homomorphisms into an \emph{automorphism group} (e.g.\ group
+actions, linear representations) “faithful’’ \(\Longleftrightarrow\)
+“injective’’.  
+In more elaborate categorical settings “faithful’’ only captures
+injectivity on \emph{morphisms}, not on objects.
+\section*{What \emph{is} a Module?}
+
+\subsection*{1.  The core idea}
+
+A \textbf{module} generalises the notion of a vector space by allowing
+the “scalars’’ to come from an arbitrary (possibly non-commutative) ring
+instead of a field.
+
+\begin{definition}[Left $R$-module]
+Let $R$ be a (unital) ring.  
+A \emph{left $R$-module} is an abelian group $\,(M,+)\,$ equipped with a
+map
+\[
+   R\times M \;\longrightarrow\; M,
+   \qquad (r,m)\longmapsto r\cdot m,
+\]
+satisfying, for all $r,s\in R$ and $m,n\in M$,
+\begin{align*}
+   r\cdot(m+n)             &= r\cdot m + r\cdot n &\text{(distributivity over $M$)},\\
+   (r+s)\cdot m            &= r\cdot m + s\cdot m &\text{(distributivity over $R$)},\\
+   (rs)\cdot m             &= r\cdot(s\cdot m)    &\text{(associativity)},\\
+   1_R\!\cdot m            &= m                   &\text{(unit action)}.
+\end{align*}
+\end{definition}
+
+\noindent
+\emph{Right $R$-modules} are defined analogously, except that scalars
+act on the \emph{right}: $m\cdot r$.
+
+\medskip
+\textbf{Vector spaces} are precisely the modules whose scalars come from
+a division ring (in particular, a field).
+
+\subsection*{2.  Basic examples}
+
+\begin{enumerate}
+   \item \emph{Abelian groups} $\;=\;$ $\mathbb Z$-modules  
+         (scalars are integers; scalar multiplication is iterated
+         addition).
+
+   \item Any \emph{vector space} $V$ over a field $F$ is an $F$-module.
+
+   \item The ring $R$ itself, with multiplication as the action,
+         is a left (and right) $R$-module, often denoted ${}_R R$ or
+         $R_R$.
+
+   \item \emph{Ideals} of $R$ are submodules of the regular module
+         ${}_R R$.
+
+   \item For a topological space $X$, the set $C(X,\Bbb R)$ of
+         continuous real-valued functions is a module over the ring
+         $\Bbb R$ (and also over $C(X,\Bbb R)$ itself).
+\end{enumerate}
+
+\subsection*{3.  Module morphisms and submodules}
+
+\begin{definition}
+A homomorphism of left $R$-modules is a group homomorphism
+$\varphi:M\to N$ satisfying $\varphi(r\cdot m)=r\cdot\varphi(m)$.
+\end{definition}
+
+\noindent
+Submodules, kernels, images, and quotients are defined exactly as in
+linear algebra, but keeping the $R$-action compatible.
+
+\subsection*{4.  Free, finitely generated, and torsion modules}
+
+\begin{itemize}
+   \item A \emph{free} $R$-module has a basis: it is isomorphic to
+         $R^{(I)}$ for some index set $I$.
+   \item It is \emph{finitely generated} if $I$ can be chosen finite.
+   \item Over an integral domain $R$, an element $m\in M$ is
+         \emph{torsion} if $rm=0$ for some non-zero $r\in R$.
+\end{itemize}
+
+\subsection*{5.  Why modules matter}
+
+\begin{enumerate}
+   \item They provide a common language for linear algebra,
+         group theory (\(\mathbb Z\)-modules), and algebraic topology
+         (e.g.\ homology groups).
+   \item Many structural properties of rings are best understood via
+         their module categories (projective, injective, simple,
+         Noetherian, Artinian, \dots).
+   \item Representation theory: a group representation is precisely a
+         module over the group ring $\Bbb C[G]$ (or any field).
+\end{enumerate}
+
+\subsection*{6.  A quick “dictionary’’}
+
+\[
+\begin{array}{|c|c|}
+\hline
+\text{Vector-space term} & \text{Module analogue} \\ \hline
+\text{Field } F & \text{Ring } R \\ \hline
+\text{Vector space } V & R\text{-module } M \\ \hline
+\dim_F V & \text{Rank (if free)} \\ \hline
+\text{Linear map} & \text{$R$-module homomorphism} \\ \hline
+\text{Basis} & \text{Module basis (free case)} \\ \hline
+\end{array}
+\]
+
+\bigskip
+\noindent
+\textbf{Take-away:}  
+If you are happy with vector spaces, just replace “field’’ by “ring’’
+and allow that not every non-zero scalar is invertible.  
+All the familiar linear-algebra constructions still make sense, but new
+phenomena (torsion, non-free modules, one-sided actions, etc.) appear
+and enrich the theory.
+\section*{Concrete Examples of Galois Groups}
+
+Below are several standard field extensions together with their Galois-
+groups.  Each example is fully explicit, so you can verify the Galois
+condition (\emph{normal} $+$ \emph{separable}) and compute the group
+structure directly.
+
+\bigskip
+\begin{enumerate}
+%--------------------------------------------------------------------
+\item \textbf{Quadratic extensions.}
+
+      \[
+         K \;=\; \Bbb Q\!\left(\sqrt d\right), 
+         \qquad d\in\Bbb Z \text{ square-free}.
+      \]
+
+      Every automorphism of $K$ over $\Bbb Q$ is determined by the image
+      of $\sqrt d$, and the only two possibilities are
+      $\sqrt d \mapsto \pm\sqrt d$.  Hence 
+
+      \[
+         \operatorname{Gal}(K/\Bbb Q)
+           \;\cong\; C_2
+           \quad\text{(cyclic of order $2$)}.
+      \]
+
+%--------------------------------------------------------------------
+\item \textbf{Cyclotomic extensions.}
+
+      Let $\zeta_n := e^{2\pi i/n}$ be a primitive $n$-th root of unity
+      and set $K=\Bbb Q(\zeta_n)$.  Complex conjugation sends 
+      $\zeta_n\mapsto\zeta_n^{-1}$ and, more generally, every integer
+      $a\in(\Bbb Z/n\Bbb Z)^{\times}$ induces an automorphism
+
+      \[
+         \sigma_a : \zeta_n \longmapsto \zeta_n^{\,a}.
+      \]
+
+      The map $a\mapsto\sigma_a$ is an isomorphism, so
+
+      \[
+         \operatorname{Gal}\bigl(\Bbb Q(\zeta_n)/\Bbb Q\bigr)
+            \;\cong\; (\Bbb Z/n\Bbb Z)^{\times}.
+      \]
+
+      \begin{itemize}
+         \item $n=3$: $\;(\Bbb Z/3\Bbb Z)^{\times}\cong C_2$.
+         \item $n=4$: $\;(\Bbb Z/4\Bbb Z)^{\times}\cong C_2$.
+         \item $n=5$: $\;(\Bbb Z/5\Bbb Z)^{\times}\cong C_4$.
+      \end{itemize}
+
+%--------------------------------------------------------------------
+\item \textbf{Finite fields.}
+
+      For a prime $p$ and integer $n\ge1$ let 
+      $K=\Bbb F_{p^{\,n}}$ and $F=\Bbb F_p$.  
+      The Frobenius map
+      \[
+         \varphi : x \longmapsto x^{p}
+      \]
+      is an automorphism of $K$ fixing $F$; its $n$-th iterate is the
+      identity and those iterates give all automorphisms.  Thus
+
+      \[
+         \operatorname{Gal}\bigl(\Bbb F_{p^{\,n}}/\Bbb F_p\bigr)
+            \;\cong\; C_n.
+      \]
+
+%--------------------------------------------------------------------
+\item \textbf{The splitting field of $x^{3}-2$ over $\Bbb Q$.}
+
+      Factor in $\Bbb C$:
+      \[
+         x^{3}-2 = (x-\sqrt[3]{2})
+                    \bigl(x-\sqrt[3]{2}\,\zeta_3\bigr)
+                    \bigl(x-\sqrt[3]{2}\,\zeta_3^{\,2}\bigr),
+         \qquad \zeta_3 = e^{2\pi i/3}.
+      \]
+      The splitting field is 
+      $K=\Bbb Q\!\bigl(\sqrt[3]{2},\zeta_3\bigr)$,  
+      and one checks that $[K:\Bbb Q]=6$.  
+      A convenient set of generators is
+      \[
+         \sigma:\sqrt[3]{2}\mapsto\zeta_3\sqrt[3]{2},
+         \quad\zeta_3\mapsto\zeta_3,
+         \qquad
+         \tau:   \sqrt[3]{2}\mapsto\sqrt[3]{2},
+         \quad\zeta_3\mapsto\zeta_3^{\,2}.
+      \]
+      These satisfy the relations of the symmetric group $S_3$, so
+
+      \[
+         \operatorname{Gal}\bigl(\Bbb Q\bigl(\sqrt[3]{2},\zeta_3\bigr)
+/\Bbb Q\bigr)\;\cong\;S_3.
+      \]
+
+%--------------------------------------------------------------------
+\item \textbf{The splitting field of $x^{4}-2$ over $\Bbb Q$.}
+
+      A root is $\sqrt[4]{2}$; 
+      adjoining $i$ is necessary for all four roots.  
+      One obtains $K=\Bbb Q\!\bigl(\sqrt[4]{2},i\bigr)$ with $[K:\Bbb Q]=8$.
+      Presenting the Galois group:
+
+      \[
+          \sigma : \sqrt[4]{2}\mapsto i\sqrt[4]{2},\; i\mapsto i,
+          \quad
+          \tau   : \sqrt[4]{2}\mapsto \sqrt[4]{2},\; i\mapsto -i,
+      \]
+      gives relations $\sigma^{4}=\tau^{2}=1$ and
+      $\tau\sigma\tau=\sigma^{-1}$.  
+      Hence
+      \[
+         \operatorname{Gal}(K/\Bbb Q)\;\cong\;D_{4}
+      \]
+      (the dihedral group of order $8$).
+
+%--------------------------------------------------------------------
+\item \textbf{Generic separable quartic.}
+
+      Let $f(x)$ be an irreducible separable quartic with
+      non-square discriminant.  
+      Then its splitting field $K$ over $\Bbb Q$ has Galois group
+
+      \[
+         \operatorname{Gal}(K/\Bbb Q)\;\cong\;S_4.
+      \]
+
+      (Typical example: $f(x)=x^{4}-x+1$.)
+
+%--------------------------------------------------------------------
+\item \textbf{An Artin–Schreier extension in characteristic $p$.}
+
+      For a prime $p$ take $F=\Bbb F_p(t)$ and 
+      consider $K=F\bigl(y\bigr)$ where $y$ satisfies
+      \[
+         y^{p}-y = t.
+      \]
+      The map $y\mapsto y+c$ ($c\in\Bbb F_p$) fixes $F$ and produces
+      all automorphisms.  Thus
+
+      \[
+         \operatorname{Gal}(K/F)\;\cong\;C_p.
+      \]
+
+\end{enumerate}
+
+\bigskip
+\noindent
+\textbf{Take-away.}\;
+Every finite group occurs as a Galois group over \(\Bbb Q\)
+(Shafarevich’s theorem), but the concrete examples above already cover
+the most common structures encountered in an introductory course:
+cyclic, dihedral, symmetric, and automorphism groups of finite fields.
+\subsection*{Why Galois automorphisms preserve algebraic relations among the roots}
+
+Let \(E/F\) be a (finite) Galois extension and let  
+\[
+   f(X)\;=\;a_nX^n+\dots+a_1X+a_0\;\in\;F[X], 
+   \qquad a_i\in F,
+\]
+have roots \(r_1,\dots,r_n\in E\) (so \(E\) is, for instance, the
+splitting field of \(f\)).  
+Write \(G=\operatorname{Gal}(E/F)\).
+
+\bigskip
+\textbf{1.  Automorphisms fix the coefficients.}\;
+By definition every \(\sigma\in G\) satisfies \(\sigma(\lambda)=\lambda\)
+for all \(\lambda\in F\).  Hence
+\[
+   \sigma\!\bigl(a_i\bigr)=a_i
+   \quad\text{for each }i.
+\]
+
+\bigskip
+\textbf{2.  A single–variable relation.}\;
+Because \(f(r_k)=0\) we have
+\[
+   0
+   \;=\;
+   \sigma\!\bigl(f(r_k)\bigr)
+   \;=\;
+   \sigma\!\Bigl(a_n r_k^{\,n}
+                 +\dots+a_1 r_k + a_0\Bigr)
+   \;=\;
+   a_n\bigl(\sigma r_k\bigr)^{\!n}
+      +\dots+a_1\bigl(\sigma r_k\bigr)+a_0
+   \;=\;
+   f\!\bigl(\sigma r_k\bigr).
+\]
+Therefore \(\sigma r_k\) is also a root of \(f\).  
+\emph{Conclusion: \(G\) permutes the set \(\{r_1,\dots,r_n\}\).}
+
+\bigskip
+\textbf{3.  Many–variable algebraic relations.}\;
+More generally take any polynomial
+\[
+   g(X_1,\dots,X_m)\;\in\;F[X_1,\dots,X_m].
+\]
+Suppose the chosen roots satisfy
+\[
+   g(r_{i_1},\dots,r_{i_m})\;=\;0.
+\]
+Applying \(\sigma\in G\) and using \(\sigma|_F=\operatorname{id}\) gives
+\[
+   0
+   \;=\;
+   \sigma\!\bigl(g(r_{i_1},\dots,r_{i_m})\bigr)
+   \;=\;
+   g\!\bigl(\sigma r_{i_1},\dots,\sigma r_{i_m}\bigr).
+\]
+Hence \emph{every polynomial relation over \(F\) that the roots satisfy
+is preserved under every automorphism in \(G\)}.
+
+\bigskip
+\textbf{4.  The conceptual picture.}
+\begin{itemize}
+   \item Each \(\sigma\in G\) is an \(F\)-algebra automorphism of \(E\);
+         it acts \emph{compatibly} with addition and multiplication
+         \((\sigma(a+b)=\sigma a+\sigma b,\;\sigma(ab)=\sigma a\,\sigma b)\)
+         and leaves every element of \(F\) fixed.
+   \item Algebraic relations are precisely the vanishing of polynomials
+         with coefficients in \(F\).  Because \(\sigma\) fixes those
+         coefficients and respects ring operations, the vanishing is
+         preserved after applying \(\sigma\).
+   \item In particular, the minimal polynomial of a single root over
+         \(F\) remains the same after applying \(\sigma\), so \(\sigma\)
+         must send the root to \emph{another} root of that polynomial.
+\end{itemize}
+
+\bigskip
+\textbf{5.  A quick example.}  
+Let \(f(X)=X^3-2\in\Bbb Q[X]\) with roots  
+\(r_1=\sqrt[3]{2},\;r_2=\sqrt[3]{2}\,\zeta_3,\;
+  r_3=\sqrt[3]{2}\,\zeta_3^{\,2}\)
+in the splitting field \(E=\Bbb Q(\sqrt[3]{2},\zeta_3)\).
+For \(\sigma\in\operatorname{Gal}(E/\Bbb Q)\) defined by
+\(\sigma(\sqrt[3]{2})=\sqrt[3]{2}\,\zeta_3\) and
+\(\sigma(\zeta_3)=\zeta_3,\) we compute
+\[
+   f\!\bigl(\sigma(\sqrt[3]{2})\bigr)
+   \;=\;
+   f\!\bigl(\sqrt[3]{2}\,\zeta_3\bigr)
+   \;=\;
+   0,
+\]
+so \(\sigma\) indeed sends one root to another root, respecting the
+relation \(X^3-2=0\) over \(\Bbb Q\).
+
+\bigskip
+\noindent
+\emph{Key take-away.}\;
+Because Galois automorphisms fix the coefficient field \(F\) and respect
+ring operations, they carry any algebraic dependence with coefficients
+in \(F\) to a new dependence with the \emph{same} coefficients—hence
+they must permute the roots while preserving \emph{all}
+\(F\)-polynomial relations those roots satisfy.
+\section*{Noetherian Rings: Definition, Characterisations, and Examples}
+
+\subsection*{1.  Definition}
+
+\begin{definition}[Noetherian ring]
+A (commutative, unital) ring \(R\) is called \emph{Noetherian} if it
+satisfies \emph{any} (hence all) of the following equivalent
+conditions:
+\begin{enumerate}
+   \item Every ascending chain of ideals stabilises:
+         \[
+            I_1 \;\subseteq\; I_2 \;\subseteq\; I_3 \;\subseteq\;\cdots
+         \quad\Longrightarrow\quad
+            \exists N \text{ such that } I_N = I_{N+1} = \cdots.
+         \]
+   \item Every ideal of \(R\) is \textbf{finitely generated}.
+   \item (Maximal condition) Every non-empty set of ideals of \(R\)
+         has a maximal element with respect to inclusion.
+\end{enumerate}
+\end{definition}
+
+\emph{Equivalence.}  
+\((1)\!\iff(2)\) is due to Emmy Noether (1921)---hence the name.
+Condition \((3)\) is Zorn–Hausdorff’s reformulation.
+
+\subsection*{2.  Fundamental properties}
+
+\begin{itemize}
+   \item \textbf{Ideals and quotients.}
+         If \(R\) is Noetherian and \(I\lhd R\), then both \(I\) and
+         \(R/I\) are Noetherian.
+
+   \item \textbf{Finite generation.}
+         If \(R\) is Noetherian and \(S\) is a finitely generated
+         \(R\)-algebra, then \(S\) is Noetherian
+         (Hilbert Basis Theorem).
+
+   \item \textbf{Modules.}
+         An \(R\)-module is called Noetherian if it satisfies the
+         ascending-chain condition on submodules.  Over a Noetherian
+         ring, submodules of finitely generated modules are again
+         finitely generated.
+
+   \item \textbf{Localisation.}
+         Any localisation \(S^{-1}R\) of a Noetherian ring is
+         Noetherian.
+
+   \item \textbf{Dimension theory.}
+         Noetherian rings admit Krull dimension; many finiteness
+         results (e.g.\ primary decomposition) rely on Noetherianness.
+\end{itemize}
+
+\subsection*{3.  Classical examples}
+
+\begin{enumerate}
+   \item \(\mathbb{Z}\) \textbf{and} every PID (principal ideal domain)
+         are Noetherian, because every ideal is generated by one
+         element.
+
+   \item Any \textbf{field} \(k\) is Noetherian
+         (the only ideals are \(0\) and \(k\)).
+
+   \item Polynomial rings in finitely many variables over a Noetherian
+         ring:
+         \[
+            R \text{ Noetherian}\;\Longrightarrow\;
+            R[x_1,\dots,x_n] \text{ Noetherian}
+         \]
+         by the Hilbert Basis Theorem.
+
+   \item Finite rings such as \(\mathbb{Z}/n\mathbb{Z}\) are trivially
+         Noetherian (there are only finitely many ideals).
+
+   \item The coordinate ring of an affine algebraic variety
+         \(k[x_1,\dots,x_n]/I\) is Noetherian whenever \(k\) is a field
+         (again via Hilbert).
+\end{enumerate}
+
+\subsection*{4.  Non-examples}
+
+\begin{enumerate}
+   \item The polynomial ring in \emph{infinitely} many variables over a
+         field:
+         \[
+            k[x_1,x_2,x_3,\dots]
+         \]
+         is \textbf{not} Noetherian.  
+         Example ascending chain:
+         \(
+            (x_1)\subset(x_1,x_2)\subset(x_1,x_2,x_3)\subset\cdots.
+         \)
+
+   \item The ring of all real-valued continuous functions on
+         \([0,1]\), \(C([0,1],\mathbb{R})\), fails to be Noetherian:
+         ideals like \(\{f: f(0)=0\}\subset\{f: f([0,\tfrac12])=0\}
+         \subset\cdots\) form a non-stationary ascending chain.
+
+   \item The power-series ring \(k[[x_1,x_2,\dots]]\) in infinitely many
+         variables (compare with the finitely generated case
+         \(k[[x]]\), which \emph{is} Noetherian).
+\end{enumerate}
+
+\subsection*{5.  Why Noetherian rings matter}
+
+\begin{itemize}
+   \item They ensure \textbf{finiteness}: algorithms terminate, bases
+         exist, and decompositions (primary, Gröbner, etc.) are finite.
+   \item In algebraic geometry, coordinate rings of affine varieties
+         are Noetherian, making it possible to translate geometric
+         questions into algebraic ones.
+   \item In commutative algebra, many deep theorems
+         (Krull’s principal ideal theorem, Lasker–Noether primary
+         decomposition, Cohen–Macaulay and regular local rings) assume
+         Noetherianness as a starting point.
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{Take-away.}\;
+A Noetherian ring is one in which “nothing requires infinitely many
+generators’’.  This finiteness condition is the bedrock on which modern
+commutative algebra and algebraic geometry are built.
+\section*{Solvability by Radicals, Solvable Galois Groups, and the Quintic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{1.  From radicals to groups: Galois’ criterion}
+
+\begin{theorem}[Galois]
+   Let \(f\in\Bbb Q[X]\) be a separable polynomial and let
+   \(K_f\) be its splitting field over \(\Bbb Q\).
+   Then
+   \[
+      \boxed{\;
+         f\text{ is solvable by radicals }
+         \Longleftrightarrow
+         \operatorname{Gal}(K_f/\Bbb Q)\text{ is a \emph{solvable} group}
+      \;}
+   \]
+\end{theorem}
+
+\emph{Idea of the proof.}\;
+Adjoining an \(n\)-th root corresponds to adjoining a root of the
+cyclotomic polynomial \(X^n-1\), whose Galois group is abelian.
+Building a radical tower therefore produces a chain of field extensions
+whose successive Galois groups are abelian.  
+Conversely, if the Galois group is solvable one can reverse this
+process and peel off successive abelian quotients, realising each step
+by extracting radicals.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{2.  What does “solvable group’’ mean?}
+
+\begin{definition}
+   A finite group \(G\) is \emph{solvable} if it admits a
+   \textbf{composition series}
+   \[
+      1 = G_0 \;\lhd\; G_1 \;\lhd\;\dots\;\lhd\; G_r = G
+   \]
+   whose successive \emph{composition factors}
+   \(G_{i}/G_{i-1}\) are all \textbf{abelian}.
+   Equivalently, \(G\) is solvable iff its \emph{derived series}
+   \(
+      G\triangleright G^{(1)}\triangleright G^{(2)}\triangleright\cdots
+   \)
+   terminates in the trivial group, where
+   \(G^{(i+1)}=[G^{(i)},G^{(i)}]\).
+\end{definition}
+
+\noindent
+A non-abelian \emph{simple} group has no non-trivial normal subgroups
+and therefore cannot occur as an abelian factor in \emph{any}
+composition series.  The minimal obstruction to solvability is thus
+the appearance of a non-abelian simple composition factor.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{3.  The symmetric groups}
+
+\[
+\begin{array}{|c|c|c|}
+\hline
+n & S_n\ \text{solvable?} & \text{Reason} \\ \hline
+2 & \text{Yes} & S_2\cong C_2 \\ \hline
+3 & \text{Yes} & 1\lhd A_3\cong C_3\lhd S_3,\ 
+                 S_3/A_3\cong C_2 \\ \hline
+4 & \text{Yes} & 1\lhd V_4\lhd A_4\lhd S_4,\ 
+                 \text{all factors abelian} \\ \hline
+5 & \textbf{No} & A_5\ \text{is simple and non-abelian} \\ \hline
+n\ge6 & \textbf{No} & A_n\ \text{simple, non-abelian} \\ \hline
+\end{array}
+\]
+
+For \(n\ge5\) the alternating group \(A_n\) is non-abelian and simple.
+Because \(A_n\lhd S_n\) with abelian quotient \(S_n/A_n\cong C_2\),
+every composition series of \(S_n\ (n\ge5)\) contains \(A_n\) as a
+factor, hence \(S_n\) is \emph{not} solvable.
+
+\medskip
+\textbf{Composition series of \(S_5\).}
+\[
+   1 \;<\; C_2 \;<\; A_5 \;<\; S_5,
+\qquad
+\text{factors}\;=\;\{C_2,\ A_5\}.
+\]
+Because \(A_5\) is non-abelian, \(S_5\) fails to be solvable.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{4.  A concrete quintic with Galois group \(\boldsymbol{S_5}\)}
+
+Take
+\[
+   f(X)\;=\;X^{5}-9X+3\;\in\;\Bbb Q[X].
+\]
+\begin{enumerate}
+   \item \emph{Irreducible over \(\Bbb Q\).}\;
+         Eisenstein with \(p=3\) after the shift \(X\mapsto X+1\), or
+         via the rational-root test ($\pm1,\,\pm3$ fail).
+   \item \emph{Exactly three real roots.}\;
+         \(f\) is odd and \(f' = 5X^{4}-9\) has exactly two real roots
+         \(\pm(9/5)^{1/4}\); an easy analysis shows the real graph
+         crosses the \(x\)-axis three times.
+   \item \emph{Discriminant non-square.}\;
+         Compute \(\Delta(f)=-2^{4}\cdot3^{6}\cdot5^{5}\), which is not
+         a square in \(\Bbb Q\).
+\end{enumerate}
+
+\noindent
+\emph{Conclusion.}\;
+The splitting field \(K_f\) is of degree \(120\) over \(\Bbb Q\) and
+\[
+   \operatorname{Gal}(K_f/\Bbb Q)\;\cong\;S_5.
+\]
+(The standard proof uses the \emph{transitive subgroup test}:
+irreducibility \(\Rightarrow\) transitivity;  
+\(3\) real roots \(\Rightarrow\) the Galois group contains an odd
+permutation;  
+non-square discriminant \(\Rightarrow\) it is not contained in \(A_5\);  
+together with a \(5\)-cycle from reduction modulo a suitable prime, one
+obtains the full \(S_5\).)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{5.  Why the quintic is (usually) unsolvable by radicals}
+
+Because \(S_5\) is \emph{not} solvable, any quintic whose Galois group
+is (isomorphic to) \(S_5\) fails Galois’ solvability criterion.
+Therefore there exists \emph{no} formula involving only field
+operations and radical extractions that expresses its roots in terms of
+the coefficients.
+
+\paragraph{Historical note.}
+Galois’ revolutionary insight (1830) was precisely this translation:
+
+\[
+   \text{``Formula with radicals''}\;
+   \Longleftrightarrow\;
+   \text{``Galois group solvable''}.
+\]
+
+The existence of a non-abelian simple composition factor in \(S_5\)
+provided the first rigorous proof that \emph{no quintic analogue of the
+quadratic, cubic, or quartic formula can exist in general}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{6.  Why degrees \(\boldsymbol{\le4}\) pose no problem}
+
+For \(n=2,3,4\) the full symmetric group \(S_n\) is solvable; more
+precisely,
+\[
+   S_2\cong C_2,\quad
+   S_3\cong D_3,\quad
+   S_4 \text{ has the chain }1<V_4<A_4<S_4.
+\]
+Hence \emph{every} polynomial of degree \(\le4\) has a solvable Galois
+group (a subgroup of a solvable group is solvable) and is therefore
+solvable by radicals—exactly the classical formulas you meet in
+algebra.
+
+\bigskip
+\noindent
+\textbf{Take-away.}\;
+The quintic barrier is not about ``degree $5$'' per se; it is about the
+emergence of the first non-abelian simple group \(A_5\) inside the
+symmetric group.  Once such a factor appears, radical formulas are
+doomed to fail.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{What the bullet really says (and why it matters)}
+
+\paragraph{Set--up.}
+You have a tower of fields
+\[
+   K_0 \;\subseteq\; K_1 \;\subseteq\; K_2 \;\subseteq\; \dots \;\subseteq\; K_m
+\]
+with $K_0 = F$ (typically $F=\Bbb Q$).  
+The bullet states that for each intermediate step $0\le i<m$ we pass
+from $K_i$ to $K_{i+1}$ by adjoining a single element
+\[
+   \alpha_i
+   \quad\text{where}\quad
+   \alpha_i^{\,n_i}=b_i\in K_i^{\phantom{|}}.
+\]
+Formally,
+\[
+   K_{i+1} \;=\; K_i(\alpha_i) 
+               \;\cong\;
+               K_i[X]\Big/\bigl(X^{n_i}-b_i\bigr).
+\]
+
+\paragraph{Interpretation.}
+Each extension $K_{i+1}/K_i$ is generated by \emph{extracting an
+$n_i$-th root} of some element $b_i\in K_i$.
+Such an extension is called a \textbf{radical extension},
+and a tower built entirely from such steps is a \emph{radical tower}.
+If \emph{every} root of your original polynomial lies in the top field
+$K_m$, we say that the polynomial is \textbf{solvable by radicals}.
+
+\paragraph{Why the polynomial $x^{n_i}-b_i$.}
+Choosing a minimal polynomial of the special form
+\(
+   X^{n_i}-b_i
+\)
+guarantees two things:
+
+\begin{enumerate}
+   \item \emph{Conceptual clarity.}
+         We are literally “taking an $n_i$-th root’’; no more complicated
+         algebraic relation is introduced at this step.
+   \item \emph{Group--theoretic consequence.}
+         The Galois group of $X^{n_i}-b_i$ (after adjoining the
+         necessary $n_i$-th roots of unity) is \textbf{abelian}
+         (isomorphic to a subgroup of the semidirect product
+         $C_{n_i}\rtimes C_{\varphi(n_i)}$).  
+         Hence each step in the tower contributes an \emph{abelian
+         factor} to the global Galois group, a cornerstone of the
+         “solvable $\Leftrightarrow$ solvable-by-radicals’’ theorem.
+\end{enumerate}
+
+\paragraph{Typical shape of a radical tower.}
+\[
+   \begin{aligned}
+      K_0 &= \Bbb Q, \\[4pt]
+      K_1 &= K_0\bigl(\sqrt[n_0]{b_0}\bigr), \\[4pt]
+      K_2 &= K_1\bigl(\sqrt[n_1]{b_1}\bigr), \\[4pt]
+      &\;\;\vdots \\[4pt]
+      K_m &= K_{m-1}\bigl(\sqrt[n_{m-1}]{\,b_{m-1}}\bigr).
+   \end{aligned}
+\]
+Often one also adjoins the relevant roots of unity to ensure
+\emph{normality}, producing a \emph{Galois} radical tower:
+\[
+   K_i^{\;\prime} = K_i\bigl(\zeta_{n_i}\bigr)
+   \quad\subseteq\quad
+   K_{i+1}^{\;\prime}
+             =K_{i}^{\;\prime}\bigl(\sqrt[n_i]{b_i}\bigr).
+\]
+
+\paragraph{Concrete example.}
+Solve $X^3-2=0$ by radicals.
+
+\[
+   \begin{aligned}
+      K_0 &= \Bbb Q, \\[2pt]
+      K_1 &= \Bbb Q\!\bigl(\sqrt[3]{2}\bigr) 
+            \quad\bigl(\text{adjoin root of }X^3-2\bigr), \\[2pt]
+      K_2 &= K_1\!\bigl(\zeta_3\bigr)
+            \quad\bigl(\text{adjoin primitive $3$rd root of unity
+                      so the extension becomes Galois}\bigr).
+   \end{aligned}
+\]
+Here $m=2$, $n_0=3$, $b_0=2$, and $n_1=1$ (trivial step for $\zeta_3$ if
+we choose to view it as a $1$-st root of itself).  
+The Galois group
+$\operatorname{Gal}(K_2/\Bbb Q)\cong S_3$ has a composition series
+$1\lhd C_3\lhd S_3$ with abelian factors, confirming solvability by
+radicals.
+
+\paragraph{Big picture.}
+Building a tower with steps of the form
+\(
+   K_{i+1}=K_i\bigl(\sqrt[n_i]{b_i}\bigr)
+\)
+is precisely how one “peels off’’ the derived series of a solvable
+Galois group.  
+Conversely, if you \emph{cannot} arrange such a tower (because the
+Galois group contains a non-abelian simple factor like $A_5$), the
+polynomial is \emph{not} solvable by radicals.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{A closer look at the tower for $X^{3}-2=0$}
+
+Recall the radical tower we wrote:
+
+\[
+   K_0=\Bbb Q
+   \;\subset\;
+   K_1=\Bbb Q\!\bigl(\sqrt[3]{2}\bigr)
+   \;\subset\;
+   K_2=K_1(\zeta_3)
+        =\Bbb Q\!\bigl(\sqrt[3]{2},\zeta_3\bigr),
+   \qquad
+   \zeta_3=e^{2\pi i/3}.
+\]
+
+\begin{itemize}
+   \item $K_1/K_0$ is generated by a \emph{single} radical step
+         $\sqrt[3]{2}$, so $[K_1:\Bbb Q]=3$.
+   \item $K_2/K_1$ is obtained by adjoining $\zeta_3$, which is a root
+         of $X-\,\zeta_3\in K_1[X]$ (formally a “$1^{\text{st}}$‐root’’
+         step).  
+         The real reason for adjoining $\zeta_3$ is to make the top
+         field \emph{normal} over $\Bbb Q$, i.e.\ to create the full
+         \textbf{splitting field}.
+   \item $[K_2:K_1]=2$, so $[K_2:\Bbb Q]=3\cdot2=6$.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{The Galois group and its generators}
+
+Label the three roots of $X^{3}-2$ in $K_2$ by
+\[
+   r_1=\sqrt[3]{2},\quad
+   r_2=\zeta_3\sqrt[3]{2},\quad
+   r_3=\zeta_3^{\,2}\sqrt[3]{2}.
+\]
+
+\begin{align*}
+   \sigma :\;
+      &r_1\mapsto r_2,\;
+        r_2\mapsto r_3,\;
+        r_3\mapsto r_1,
+      &&
+      (\text{$3$-cycle}) \\[4pt]
+   \tau :\;
+      &r_1\mapsto r_1,\;
+        r_2\mapsto r_3,\;
+        r_3\mapsto r_2,
+      &&
+      (\text{transposition, complex conjugation}).
+\end{align*}
+
+These automorphisms satisfy  
+$\sigma^{3}=1,\;\tau^{2}=1,\;\tau\sigma\tau=\sigma^{-1}$,  
+so
+\[
+   G\;=\;\operatorname{Gal}(K_2/\Bbb Q)
+   \;\cong\;S_3.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{The subgroup $C_3=\langle\sigma\rangle$}
+
+\[
+   C_3=\{1,\sigma,\sigma^{2}\}
+   \quad\text{(order $3$ cyclic)}.
+\]
+
+\paragraph{Why is $C_3\lhd S_3$?}
+
+\begin{itemize}
+   \item \emph{Group–theoretic reason:}  
+         $C_3$ has index $2$ in $S_3$; any subgroup of index $2$ is
+         automatically normal because left and right cosets coincide.
+   \item \emph{Galois–theoretic translation:}  
+         Normality means that for every $\gamma\in G$
+         we have $\gamma C_3\gamma^{-1}=C_3$.  
+         Equivalently, the fixed field of $C_3$
+         \[
+             L := K_2^{C_3}
+                \;=\;
+                \{\,x\in K_2 : \sigma x = x\,\}
+         \]
+         is \emph{stable} under the whole Galois group; hence $L/\Bbb Q$
+         is itself a normal (Galois) extension.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Field diagram and correspondence}
+
+\[
+\begin{tikzcd}[row sep=small,column sep=large]
+           & K_2=\Bbb Q(\sqrt[3]{2},\zeta_3) \arrow[-]{dl}[swap]{C_2}
+                                             \arrow[-]{dr}{C_3}
+           & \\
+  L=K_2^{C_3}=\Bbb Q(\zeta_3)
+           &                                     &
+  K_1=\Bbb Q(\sqrt[3]{2}) 
+           \\
+           & \Bbb Q \arrow[-]{ul}[swap]{S_3/C_3\cong C_2}
+                      \arrow[-]{ur}{S_3/C_2\cong S_3}
+           &
+\end{tikzcd}
+\]
+
+*   The vertical arrows are field extensions;  
+    the labels give the corresponding quotient groups via the
+    \emph{Fundamental Theorem of Galois Theory}.  
+*   Because $C_3\lhd S_3$, the fixed field $L$ is Galois over $\Bbb Q$
+    with Galois group $S_3/C_3\cong C_2$ (a quadratic extension).
+*   The top extension $K_2/L$ has Galois group $C_3$ and degree $3$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Composition series and solvability}
+
+\[
+   1 \;\lhd\; C_3 \;\lhd\; S_3,
+   \qquad
+   S_3/C_3 \cong C_2,\;
+   C_3/1 \cong C_3.
+\]
+
+\begin{itemize}
+   \item Each factor (\(C_3\) and \(C_2\)) is \emph{abelian}, so
+         \(S_3\) is a \textbf{solvable} group.
+   \item This mirrors the radical tower:
+         \begin{center}
+            \(\displaystyle
+              \underbrace{K_2/L}_{\text{degree $3$}}
+              \quad\text{and}\quad
+              \underbrace{L/\Bbb Q}_{\text{degree $2$}}
+            \)
+         \end{center}
+         each obtained by adjoining a single radical 
+         ($\sqrt[3]{2}$ and $\sqrt{-3}$ respectively).
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{In everyday words.}
+Saying “$C_3$ is a \emph{normal} subgroup of $S_3$’’ in this context is
+equivalent to saying that the quadratic subfield
+$L=\Bbb Q(\zeta_3)=\Bbb Q\!\bigl(\sqrt{-3}\bigr)$
+is \emph{fixed} by the entire Galois group and is thus itself a Galois
+extension of $\Bbb Q$.  
+That normal subgroup (and the abelian quotient $C_2$) provides exactly
+the abelian “building block’’ needed in the composition series, matching
+the fact that the cubic can be solved by successively adjoining radicals.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align}
+  &\textbf{Set--up:}\qquad 
+     K_1 \;=\; \mathbb{Q}\!\bigl(\sqrt[3]{2}\bigr), 
+     \qquad \alpha \;:=\; \sqrt[3]{2}.
+  \\[6pt]
+  &\textbf{Goal:}\qquad 
+     \bigl[K_1:\mathbb{Q}\bigr] \;=\; ?
+  \end{align}
+  
+  \bigskip
+  \hrule
+  \bigskip
+  
+  \section*{1.  Field\,–\,extension degree and minimal polynomial}
+  
+  The extension degree is the vector–space dimension
+  \[
+     [K_1:\mathbb{Q}] 
+     \;=\; \dim_{\mathbb{Q}}\bigl(K_1\bigr).
+  \]
+  For any algebraic element $\alpha$, that dimension equals the degree of
+  its \emph{minimal polynomial} $\mu_{\alpha,\mathbb{Q}}(X)$:
+  \[
+     [\,\mathbb{Q}(\alpha):\mathbb{Q}\,] 
+     \;=\; \deg\!\bigl(\mu_{\alpha,\mathbb{Q}}\bigr).
+  \]
+  Hence we must identify the minimal polynomial of
+  $\alpha=\sqrt[3]{2}$ over~$\mathbb{Q}$.
+  
+  \bigskip
+  \section*{2.  The polynomial $X^{3}-2$ is irreducible}
+  
+  \[
+     f(X)\;:=\;X^{3}-2 \;\in\; \mathbb{Q}[X].
+  \]
+  \begin{itemize}
+     \item \emph{Why $f(\alpha)=0$:}\;
+           Clearly $\alpha^{3}-2=0$ by construction.
+     \item \emph{Why $f$ is irreducible over $\mathbb{Q}$:}
+           \begin{enumerate}
+              \item \textbf{Rational-root test.}\;
+                    Any rational root must divide the constant term $\pm2$,
+                    so candidates are $\pm1,\pm2$.
+                    None of them satisfies $x^{3}-2=0$.
+              \item \textbf{Eisenstein (optional).}\;
+                    After the linear shift $X\mapsto X+1$,
+                    \[
+                       f(X+1) = X^{3}+3X^{2}+3X-1,
+                    \]
+                    which is Eisenstein with prime $2$; thus $f$ is
+                    irreducible, and so is $X^{3}-2$.
+           \end{enumerate}
+  \end{itemize}
+  
+  Because $f$ is monic and irreducible, it \emph{is} the minimal
+  polynomial of $\alpha$ over $\mathbb{Q}$.
+  
+  \bigskip
+  \section*{3.  Compute the extension degree}
+  
+  \[
+     \deg\bigl(\mu_{\alpha,\mathbb{Q}}\bigr)
+     \;=\;\deg(X^{3}-2)
+     \;=\;3
+     \;\Longrightarrow\;
+     [K_1:\mathbb{Q}]
+     \;=\;3.
+  \]
+  
+  \bigskip
+  \hrule
+  \bigskip
+  
+  \section*{4.  Explicit $\mathbb{Q}$–basis}
+  
+  A convenient $\mathbb{Q}$-basis of $K_1$ is
+  \[
+     \bigl\{\,1,\;\alpha,\;\alpha^{2}\,\bigr\}.
+  \]
+  
+  \bigskip
+  \noindent
+  \textbf{Final answer:}\;
+  \[
+     \boxed{\; [K_1:\mathbb{Q}] = 3 \;}
+  \]
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{What does it mean for \(G_i/G_{i-1}\) to be \emph{abelian}?}
+
+\begin{definition}[Abelian group]
+A group \(H\) is \emph{abelian} if its operation is commutative:
+\[
+   \forall\,x,y\in H \qquad xy = yx .
+\]
+\end{definition}
+
+Now suppose \(G_{i-1}\lhd G_i\) are groups.  
+The \textbf{quotient group} \(G_i/G_{i-1}\) consists of the left cosets
+\(\,gG_{i-1}\,\) with the operation
+\[
+   (gG_{i-1})(hG_{i-1}) = (gh)G_{i-1}.
+\]
+
+The quotient \(G_i/G_{i-1}\) is \emph{abelian} iff
+\[
+   (gG_{i-1})(hG_{i-1})=(hG_{i-1})(gG_{i-1})
+   \quad\Longleftrightarrow\quad
+   gh\,G_{i-1}=hg\,G_{i-1}.
+\]
+Equivalently, every commutator \([g,h]=g^{-1}h^{-1}gh\) already lies in
+\(G_{i-1}\), so the “commutativity defect’’ is killed in the quotient.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{A concrete example: the solvable group \(S_3\)}
+
+Consider the symmetric group
+\[
+   G_2=S_3
+   \;\supset\;
+   G_1=A_3=\{\,\text{even permutations}\,\}
+   \;\supset\;
+   G_0=\{1\}.
+\]
+
+\[
+\begin{array}{|c|c|c|}
+\hline
+\text{Step} & \text{Quotient} & \text{Is it abelian?} \\ \hline
+G_2/G_1 & S_3/A_3\;\cong\;C_2 & \text{Yes (cyclic of order $2$)} \\ \hline
+G_1/G_0 & A_3/1\;\cong\;C_3 & \text{Yes (cyclic of order $3$)} \\ \hline
+\end{array}
+\]
+
+* \(C_2\) and \(C_3\) are cyclic, hence abelian.
+* Thus each factor \(G_i/G_{i-1}\) in the chain is abelian, making
+  \(S_3\) a \emph{solvable} group.
+
+\paragraph{Explicit verification for the top quotient.}
+Because \(A_3\lhd S_3\) and \([S_3:A_3]=2\), the quotient
+\(S_3/A_3=\{\;A_3,\;(12)A_3\;\}\) has only two elements and therefore
+must be abelian (any group of order \(2\) is automatically commutative).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Another easy illustration: a cyclic chain inside \(\Bbb Z/8\Bbb Z\)}
+
+Take
+\[
+   G_2=\Bbb Z/8\Bbb Z,\qquad
+   G_1=4\Bbb Z/8\Bbb Z\cong C_2,\qquad
+   G_0=\{0\}.
+\]
+
+\[
+\begin{array}{|c|c|}
+\hline
+\text{Quotient} & \text{Structure} \\ \hline
+G_2/G_1 & (\Bbb Z/8)/(\,4\Bbb Z/8) \;\cong\; C_4 \\ \hline
+G_1/G_0 & C_2 \\ \hline
+\end{array}
+\]
+
+Both \(C_4\) and \(C_2\) are cyclic, hence abelian.  
+So again \(G_i/G_{i-1}\) are all abelian.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Take-away}
+
+Saying \emph{“\(G_i/G_{i-1}\) is abelian’’} simply means that, after
+modding out by \(G_{i-1}\), the remaining cosets commute with each
+other.  Concrete chains like
+\(
+   1\lhd A_3\lhd S_3
+\)
+or
+\(
+   0\lhd 4\Bbb Z/8\Bbb Z\lhd\Bbb Z/8\Bbb Z
+\)
+illustrate how each successive quotient can indeed be an abelian group.
+\end{document}

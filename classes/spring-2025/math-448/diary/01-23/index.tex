@@ -1,0 +1,267 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{align}
+    2\cos\left[ \sum_{k=1}^{n} kx^{k} +\sum_{k=1}^{n} x^{k} \right] - \cos\theta \left[ \sum_{k=1}^{n} 2k+\sum_{k=1}^{n} 1 \right]  
+\end{align}
+
+    \[
+\boxed{
+2 \cos\!\biggl(
+\frac{2\,x \;-\; x^2 \;-\; (n+2)\,x^{n+1} \;+\; (n+1)\,x^{n+2}}
+{(1-x)^2}
+\biggr)
+\;-\;
+\cos(\theta)\,\bigl[n(n+2)\bigr].
+}
+\]
+\[
+\tan^{-1}\Bigl(\tfrac{1}{\sqrt{3}}\Bigr) \;=\; \frac{\pi}{6}\quad\text{(radians)} \;=\; 30^\circ.
+\]
+
+\section*{Explanation of the Step}
+
+We want to see how
+\[
+4\Bigl\{\lvert z\rvert^2 - 2\,\mathrm{Re}\bigl(z\overline{i}\bigr) + \lvert i\rvert^2 \Bigr\}
+\;=\;
+\lvert z\rvert^2 - 2\,\mathrm{Re}(z) + \lvert 1\rvert^2
+\]
+simplifies to
+\[
+3 \lvert z\rvert^2 \;-\; 8y \;+\; 2x \;=\;-3.
+\]
+
+\begin{enumerate}
+\item \textbf{Write $z$ in terms of $x$ and $y$.}
+
+Let
+\[
+z \;=\; x + i\,y, 
+\quad 
+\lvert z\rvert^2 = x^2 + y^2,
+\quad
+\mathrm{Re}(z) = x.
+\]
+
+\item \textbf{Compute $\mathrm{Re}\bigl(z\overline{i}\bigr)$.}
+
+Since $i$ has the complex conjugate $\overline{i} = -\,i$, we get:
+\[
+z\overline{i} = (x + i\,y)\cdot(-\,i) = -\,i\,x \;-\; y.
+\]
+Hence
+\[
+\mathrm{Re}\bigl(z\overline{i}\bigr) \;=\; \mathrm{Re}\bigl(-\,i\,x \;-\; y \bigr)
+\;=\;
+-\,y.
+\]
+
+\item \textbf{Expand the left-hand side.}
+
+\[
+4\Bigl\{\lvert z\rvert^2 - 2\,\mathrm{Re}\bigl(z\overline{i}\bigr) + \lvert i\rvert^2\Bigr\}
+=
+4\Bigl\{(x^2 + y^2) \;-\; 2(-\,y) \;+\; 1 \Bigr\}
+=
+4\bigl(x^2 + y^2 + 2y + 1\bigr).
+\]
+So
+\[
+= 4x^2 + 4y^2 + 8y + 4.
+\]
+
+\item \textbf{Expand the right-hand side.}
+
+\[
+\lvert z\rvert^2 - 2\,\mathrm{Re}(z) + \lvert 1\rvert^2
+=
+(x^2 + y^2) \;-\; 2x + 1.
+\]
+
+\item \textbf{Set them equal and simplify.}
+
+Equating both sides,
+\[
+4x^2 + 4y^2 + 8y + 4
+\;=\;
+x^2 + y^2 - 2x + 1.
+\]
+Rearrange:
+\[
+4x^2 - x^2 + 4y^2 - y^2 + 8y + 4 - 1 + 2x 
+= 0
+\quad\Longrightarrow\quad
+3x^2 + 3y^2 + 2x + 8y + 3 = 0.
+\]
+Since $\lvert z\rvert^2 = x^2 + y^2$, we rewrite:
+\[
+3(x^2 + y^2) + 2x + 8y + 3 = 0
+\;\;\Longrightarrow\;\;
+3\,\lvert z\rvert^2 + 2x + 8y = -3.
+\]
+Or equivalently,
+\[
+3 \lvert z\rvert^2 \;-\; 8y \;+\; 2x 
+\;=\;
+-3.
+\]
+
+\end{enumerate}
+
+\section*{Derivation in Complex Notation}
+
+We wish to see why
+\[
+4\Bigl(\lvert z\rvert^{2} \;-\; 2\,\mathrm{Re}[\,z\,\overline{i}\,] \;+\; \lvert i\rvert^{2}\Bigr)
+\;=\;
+\lvert z\rvert^{2} \;-\; 2\,\mathrm{Re}(z) \;+\; 1
+\]
+simplifies to
+\[
+3\,\lvert z\rvert^{2} \;-\;8\,\mathrm{Im}(z) \;+\;2\,\mathrm{Re}(z)
+\;=\;
+-3.
+\]
+
+\begin{enumerate}
+\item
+Recall that 
+\[
+\lvert z\rvert^{2} \;=\; z\,\overline{z}, 
+\quad
+\lvert i\rvert^{2} \;=\; i\,\overline{i} \;=\; i\,(-\,i) \;=\;1,
+\]
+\[
+\mathrm{Re}(z) \;=\;\frac{z + \overline{z}}{2},
+\quad
+\mathrm{Im}(z) \;=\;\frac{z - \overline{z}}{2\,i}.
+\]
+
+\item
+Next, observe that 
+\[
+\overline{i} = -\,i,
+\quad
+\text{so}
+\quad
+\mathrm{Re}\bigl(z\,\overline{i}\bigr) 
+\;=\;
+\mathrm{Re}\bigl(z\,(-\,i)\bigr)
+\;=\;
+\mathrm{Re}(-\,i\,z).
+\]
+A useful identity is
+\[
+\mathrm{Re}(w) \;=\;\frac{w + \overline{w}}{2}.
+\]
+Applying this to $w = -\,i\,z$ shows 
+\(\mathrm{Re}(z\,\overline{i}) = -\,\mathrm{Im}(z).\)
+(Indeed, multiplying by $-\,i$ rotates $z$ by 90 degrees in the complex plane, turning the imaginary part of $z$ into a negative real part.)
+
+\item
+\textbf{Left-Hand Side (LHS).}
+\[
+4\Bigl(\lvert z\rvert^{2} \;-\; 2\,\mathrm{Re}[z\,\overline{i}] \;+\;\lvert i\rvert^{2}\Bigr)
+\;=\;
+4\Bigl(z\,\overline{z} \;-\;2\bigl(-\,\mathrm{Im}(z)\bigr)\;+\;1\Bigr).
+\]
+Hence
+\[
+= 4\Bigl(z\,\overline{z} + 2\,\mathrm{Im}(z) + 1\Bigr)
+\;=\;
+4\,z\,\overline{z} \;+\; 8\,\mathrm{Im}(z) \;+\;4.
+\]
+
+\item
+\textbf{Right-Hand Side (RHS).}
+\[
+\lvert z\rvert^{2} \;-\;2\,\mathrm{Re}(z) \;+\;\lvert 1\rvert^{2}
+\;=\;
+z\,\overline{z} \;-\;2\,\mathrm{Re}(z) \;+\;1.
+\]
+
+\item
+\textbf{Equate and rearrange.}
+
+Setting LHS $=$ RHS:
+\[
+4\,z\,\overline{z} \;+\;8\,\mathrm{Im}(z) \;+\;4
+\;=\;
+z\,\overline{z} \;-\;2\,\mathrm{Re}(z) \;+\;1.
+\]
+Bring everything to one side:
+\[
+4\,z\,\overline{z} - z\,\overline{z}
+\;+\;
+8\,\mathrm{Im}(z)
+\;+\;
+4 - 1
+\;+\;
+2\,\mathrm{Re}(z)
+\;=\;0.
+\]
+That is,
+\[
+3\,z\,\overline{z} \;+\; 2\,\mathrm{Re}(z) \;+\; 8\,\mathrm{Im}(z) \;+\;3 \;=\;0.
+\]
+Rewriting $z\,\overline{z}$ as $\lvert z\rvert^{2}$, we get
+\[
+3\,\lvert z\rvert^{2} \;+\;2\,\mathrm{Re}(z) \;+\;8\,\mathrm{Im}(z)
+\;=\;-3.
+\]
+Often one writes
+\[
+3\,\lvert z\rvert^{2} 
+\;-\;8\,\mathrm{Im}(z) 
+\;+\;2\,\mathrm{Re}(z) 
+\;=\;-3,
+\]
+depending on sign conventions for $\mathrm{Im}(z)$.
+\end{enumerate}
+
+\end{document}

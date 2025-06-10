@@ -1,0 +1,649 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\[
+  Q = m\,L_f
+     = (1000\;\text{g})\,(333.5\;\text{J g}^{-1})
+     = 3.335 \times 10^{5}\ \text{J}.
+\]
+
+\[
+  \boxed{Q \approx 3.34 \times 10^{5}\ \text{J}}
+\]
+
+\subsection*{Entropy changes for 1 kg of water/ice}
+
+\bigskip
+\begin{enumerate}
+%-----------------------------------------------------------------
+\item \textbf{Melting at $0^{\circ}$C}
+
+Latent heat \(L_f = 333.5\;\text{J g}^{-1}\).
+
+\[
+Q_{\text{melt}} = (1000\;\text{g})(333.5\;\text{J g}^{-1}) = 3.335\times10^{5}\,\text{J}.
+\]
+
+Isothermal at \(T = 273.15\;\text{K}\):
+
+\[
+\Delta S_{\text{melt}} = \frac{Q_{\text{melt}}}{T}
+                       = \frac{3.335\times10^{5}}{273.15}
+                       \approx \boxed{1.22\times10^{3}\;\text{J K}^{-1}}.
+\]
+
+%-----------------------------------------------------------------
+\item \textbf{Heating liquid water from $0^{\circ}$C to $100^{\circ}$C}
+
+Specific heat (nearly constant) \(c = 4184\;\text{J kg}^{-1}\text{K}^{-1}\).
+
+\[
+\Delta S_{\text{heat}}
+   = \int_{T_1}^{T_2} \frac{mc}{T}\,dT
+   = mc\,\ln\!\bigl(T_2/T_1\bigr)
+   = (4184)\,\ln\!\bigl(373.15/273.15\bigr)
+   \approx \boxed{1.31\times10^{3}\;\text{J K}^{-1}}.
+\]
+
+%-----------------------------------------------------------------
+\item \textbf{Boiling at $100^{\circ}$C}
+
+Latent heat \(L_v = 2257\;\text{J g}^{-1}\).
+
+\[
+Q_{\text{boil}} = (1000\;\text{g})(2257\;\text{J g}^{-1}) = 2.257\times10^{6}\,\text{J}.
+\]
+
+Isothermal at \(T = 373.15\;\text{K}\):
+
+\[
+\Delta S_{\text{boil}} = \frac{Q_{\text{boil}}}{T}
+                       = \frac{2.257\times10^{6}}{373.15}
+                       \approx \boxed{6.05\times10^{3}\;\text{J K}^{-1}}.
+\]
+\end{enumerate}
+\subsection*{Entropy change when \(1\;\text{kg}\) of liquid water is heated
+from \(0^{\circ}\text{C}\) to \(100^{\circ}\text{C}\)}
+
+\[
+  c_p \simeq 4184\;\frac{\text{J}}{\text{kg}\,\text{K}}
+  \quad(\text{assumed constant over this interval}).
+\]
+
+With no volume change, \(dU = m\,c_p\,dT\) and
+
+\[
+  \Delta S
+  = \int_{T_1}^{T_2} \frac{1}{T}\,dU
+  = m\,c_p \int_{T_1}^{T_2} \frac{dT}{T}
+  = m\,c_p \ln\!\left(\frac{T_2}{T_1}\right).
+\]
+
+\[
+  T_1 = 0^{\circ}\text{C} = 273.15\;\text{K},\qquad
+  T_2 = 100^{\circ}\text{C} = 373.15\;\text{K},\qquad
+  m = 1.00\;\text{kg}.
+\]
+
+\[
+  \Delta S
+  = (1.00)(4184)\,
+    \ln\!\left(\frac{373.15}{273.15}\right)
+  \approx 4184 \times 0.312
+  \approx \boxed{1.3 \times 10^{3}\ \text{J K}^{-1}}.
+\]
+
+So warming the kilogram of liquid water from the melting point to the
+boiling point increases its entropy by roughly
+\(1.3\;\text{kJ\,K}^{-1}\).
+\bigskip
+\noindent
+\textbf{Summary}  
+\[
+\Delta S_{\text{melt}} \approx 1.22\times10^{3}\;\text{J K}^{-1},\quad
+\Delta S_{\text{heat}} \approx 1.31\times10^{3}\;\text{J K}^{-1},\quad
+\Delta S_{\text{boil}} \approx 6.05\times10^{3}\;\text{J K}^{-1}.
+\]
+\subsection*{Adding \(10^{3}\,\text{J}\) of heat to \(10\;\text{kg}\) of water at its boiling point}
+
+\[
+  T = 373.15\;\text{K},\qquad
+  p = 1.01325\times10^{5}\;\text{Pa},\qquad
+  L_v = 2230\;\text{J g}^{-1},\qquad
+  Q = 1.00\times10^{3}\;\text{J}.
+\]
+
+\begin{enumerate}
+%-----------------------------------------------------------------
+\item \textbf{Mass that vaporises}
+      \[
+        m = \frac{Q}{L_v}
+            = \frac{1.00\times10^{3}}{2230}
+            = 4.48\times10^{-1}\;\text{g}.
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{Change in Gibbs free energy \((\Delta G)\)}
+
+      At the boiling point the two phases are in equilibrium,  
+      \(\mu_{\text{liq}} = \mu_{\text{vap}}\); hence for a reversible transfer  
+      \(dG = \mu_{\text{vap}}\,dN - \mu_{\text{liq}}\,dN = 0\).
+
+      \[
+        \boxed{\;\Delta G = 0\ \text{J}\;}
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{Change in entropy \((\Delta S)\)}
+
+      \[
+        \Delta S = \frac{Q}{T}
+                 = \frac{1.00\times10^{3}}{373.15}
+                 \approx \boxed{2.68\ \text{J K}^{-1}}.
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{Change in enthalpy \((\Delta H)\)}
+
+      At constant pressure: \(\displaystyle \Delta H = Q\).
+      \[
+        \boxed{\;\Delta H = +1.00\times10^{3}\ \text{J}\;}
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{Change in volume \((\Delta V)\)}
+
+      Mole number of vapour produced  
+      \(n = m/M = 0.448\ \text{g}/18\ \text{g mol}^{-1}=2.49\times10^{-2}\ \text{mol}\).
+
+      \[
+        \Delta V
+        = \frac{nRT}{p}
+        = \frac{(2.49\times10^{-2})(8.314)(373.15)}
+               {1.01325\times10^{5}}
+        \approx \boxed{7.6\times10^{-4}\ \text{m}^{3}}.
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{Change in internal energy \((\Delta U)\)}
+
+      \[
+        \Delta U = \Delta H - p\,\Delta V
+                 = 1.00\times10^{3}
+                   - (1.01325\times10^{5})(7.6\times10^{-4})
+                 \approx \boxed{9.23\times10^{2}\ \text{J}}.
+      \]
+\end{enumerate}
+\subsection*{Lowering the boiling point by \(1^{\circ}\text{C}\)}
+
+\textbf{Given}\\
+Atmospheric pressure \(P = 1.013\times10^{5}\,\text{Pa}\),  
+boiling temperature \(T = 373.15\,\text{K}\),  
+latent heat of vaporisation \(L_B = 2.256\times10^{6}\,\text{J kg}^{-1}\),  
+molar mass \(M = 0.018\,\text{kg mol}^{-1}\).
+
+\medskip
+\textbf{1.  Clausius–Clapeyron in differential form}
+
+For small changes,
+\[
+  \frac{dP}{dT} \;=\; \frac{L}{T\,\Delta v}.
+\]
+Taking the liquid volume per mole to be negligible,  
+\(\Delta v \approx v_{\text{vap}} = \dfrac{RT}{P}\).  
+Hence
+\[
+  \frac{dP}{dT}
+  = \frac{L}{T}\,\frac{P}{RT}
+  = \frac{P\,L}{R\,T^{2}}.
+\]
+
+\medskip
+\textbf{2.  Convert latent heat to a molar basis}
+
+\[
+  L = L_B\,M
+    = (2.256\times10^{6})(0.018)
+    \approx 4.06\times10^{4}\,\text{J mol}^{-1}.
+\]
+
+\medskip
+\textbf{3.  Pressure change for \(\Delta T = -1\,\text{K}\)}
+
+\[
+  \Delta P
+  = \frac{P\,L}{R\,T^{2}}\;\Delta T
+  = \frac{(1.013\times10^{5})(4.06\times10^{4})}
+         {(8.314)(373.15)^{2}}\;(-1)
+  \approx -\,3.6\times10^{3}\,\text{Pa}.
+\]
+
+\[
+  \boxed{\;\Delta P \approx -3.6\ \text{kPa}\;}
+\]
+
+\noindent
+So the pressure must be reduced by roughly \(3.6\;\text{kPa}\) (about \(3.5\%\) of an atmosphere) to lower water’s boiling point by \(1^{\circ}\text{C}\) near standard conditions.
+\subsection*{Phase–transition data (per atom)}
+
+\[
+  \Delta h = 8.0\times 10^{-24}\;\text{J atom}^{-1},\qquad
+  \Delta s = 8.0\times 10^{-24}\;\text{J K}^{-1}\!\text{ atom}^{-1}.
+\]
+
+Here “$\Delta$” denotes (liquid – solid).
+
+%--------------------------------------------------------------------
+\paragraph{1.  Latent heat per mole}
+
+\[
+  L_{\text{m}} 
+  = \bigl(\Delta h\bigr)\,N_{\!A}
+  = (8.0\times10^{-24})\,
+    (6.022\,140\,76\times10^{23})
+  \;\text{J mol}^{-1}
+  \approx \boxed{4.8\;\text{J mol}^{-1}}.
+\]
+
+%--------------------------------------------------------------------
+\paragraph{2.  Melting temperature}
+
+At the equilibrium (melting) point, Gibbs free energies of the two phases
+are equal, so
+\[
+  \Delta G = \Delta h - T_{\text{m}}\Delta s = 0
+  \;\;\Longrightarrow\;\;
+  T_{\text{m}} = \frac{\Delta h}{\Delta s}.
+\]
+
+Because the given numbers are identical,
+\[
+  T_{\text{m}} 
+  = \frac{8.0\times10^{-24}}{8.0\times10^{-24}}
+  = \boxed{1.0\;\text{K}}.
+\]
+% ---------------------------------------------------------------------------
+%  Equilibrium solubility of water in oil: temperature shift
+% ---------------------------------------------------------------------------
+\paragraph{Data}
+\[
+c_1 = 9.0\times10^{-4}\;
+      \Bigl(\text{water molecules per oil molecule at }T_1=283\;\text{K}\Bigr),
+\qquad
+\Delta E = 2.208\times10^{-20}\,\text{J},
+\qquad
+k_{\mathrm B}=1.380\,649\times10^{-23}\,\text{J\,K}^{-1},
+\qquad
+T_2 = 293\;\text{K}.
+\]
+
+\paragraph{Boltzmann expression for a very dilute ideal solute}
+\[
+c(T)=c_0\exp\!\Bigl(-\tfrac{\Delta E}{k_{\mathrm B}T}\Bigr).
+\]
+
+\paragraph{Ratio of concentrations at two temperatures}
+\[
+\frac{c_2}{c_1}
+  =\exp\!\Bigl[-\frac{\Delta E}{k_{\mathrm B}}
+                \Bigl(\frac{1}{T_2}-\frac{1}{T_1}\Bigr)\Bigr].
+\]
+
+\paragraph{Numerical evaluation}
+\[
+\begin{aligned}
+\frac{1}{T_2}-\frac{1}{T_1} &=\frac{1}{293}-\frac{1}{283}
+                              =-1.208\times10^{-4}\ \text{K}^{-1},\\[6pt]
+\frac{\Delta E}{k_{\mathrm B}}
+                            &=\frac{2.208\times10^{-20}}
+                                   {1.380\,649\times10^{-23}}
+                              =1.599\times10^{3}\ \text{K},\\[6pt]
+\frac{c_2}{c_1}
+  &=\exp\!\bigl[(1.599\times10^{3})(-1.208\times10^{-4})\bigr]
+   =\exp(-0.193)=1.213.
+\end{aligned}
+\]
+
+\paragraph{Concentration at \(T_2=293\;\text{K}\)}
+\[
+\boxed{%
+  c_2 = c_1\,\frac{c_2}{c_1}
+       =(9.0\times10^{-4})(1.213)
+       \approx 1.09\times10^{-3}\;
+       \text{water molecules per oil molecule}
+}
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Model}  At these very low concentrations the water in oil
+behaves as an \emph{ideal solute}, so its equilibrium mole fraction (or
+concentration) obeys
+
+\[
+c \;\propto\; \exp\!\Bigl(-\tfrac{\Delta E}{k_{\mathrm B}T}\Bigr),
+\]
+
+where \(\Delta E\) is the molecular energy cost of transferring one
+water molecule from the liquid phase into the oil.
+
+Let the two given solubilities be
+\[
+  c_1 = 0.90\;\text{g L}^{-1}\;(T_1=283\;\text{K}),\qquad
+  c_2 = 1.092\;\text{g L}^{-1}\;(T_2=293\;\text{K}).
+\]
+
+=======================================================================
+\subsection*{1. Energy cost per molecule}
+
+\[
+  \ln\!\frac{c_2}{c_1}
+  \;=\;
+  -\frac{\Delta E}{k_{\mathrm B}}
+  \bigl(\tfrac{1}{T_2}-\tfrac{1}{T_1}\bigr)
+  \quad\Longrightarrow\quad
+  \boxed{%
+    \Delta E
+    = -\,\frac{k_{\mathrm B}\ln(c_2/c_1)}{\,1/T_2 - 1/T_1\,}
+    \approx 2.2\times10^{-20}\ \text{J\;molecule}^{-1}}.
+\]
+
+=======================================================================
+\subsection*{2. Solubility at \(T_3 = 321\;\text{K}\)}
+% --------------------------------------------------------------------
+%  Solubility at \(T_3 = 321\;\text{K}\)
+% --------------------------------------------------------------------
+
+The dilute-solute relation  
+\[
+  c(T)=c_0\exp\!\Bigl(-\tfrac{\Delta E}{k_{\mathrm B}T}\Bigr)
+\]
+gives, for two temperatures \(T_1\) and \(T_3\),
+
+\[
+  c_3
+  = c_1
+    \exp\!\Bigl[
+      -\frac{\Delta E}{k_{\mathrm B}}
+      \Bigl(\tfrac{1}{T_3}-\tfrac{1}{T_1}\Bigr)
+    \Bigr].
+\]
+
+Numbers  
+\(\;c_1 = 0.900\;\text{g L}^{-1},\;
+  T_1 = 283\;\text{K},\;
+  T_3 = 321\;\text{K},\;
+  \Delta E = 2.208\times10^{-20}\;\text{J}\).
+
+\[
+  \frac{\Delta E}{k_{\mathrm B}}
+    =\frac{2.208\times10^{-20}}{1.380\,649\times10^{-23}}
+    = 1.599\times10^{3}\ \text{K},
+\qquad
+  \bigl(\tfrac{1}{T_3}-\tfrac{1}{T_1}\bigr)
+    = -1.330\times10^{-4}\ \text{K}^{-1}.
+\]
+
+\[
+  c_3
+  = 0.900\,
+    \exp\!\bigl[(1.599\times10^{3})(-1.330\times10^{-4})\bigr]
+  = 0.900 \times 1.952
+  = \boxed{1.76\;\text{g L}^{-1}}.
+\]
+
+=======================================================================
+\subsection*{3. What happens if equilibrated oil at \(80^{\circ}\text{C}\)
+is cooled to \(5^{\circ}\text{C}\)?}
+
+Because the solubility drops as temperature decreases
+(\(c \propto e^{-\Delta E/kT}\)), the oil will temporarily contain more
+water than its new equilibrium value.  The excess water therefore
+\textbf{condenses out of the oil}.  (First option.)
+\[
+  \text{Degeneracies and energies:}\quad
+  \begin{cases}
+    g_A = 1, & E_A = E_A,\\
+    g_B = 2, & E_B = 3E_A,\\
+    g_C = 3, & E_C = 5E_A.
+  \end{cases}
+\]
+
+Given \(k_{\mathrm B}T = E_A\) (\( \Rightarrow E_A/k_{\mathrm B}T = 1\)).
+
+\[
+\begin{aligned}
+\text{Boltzmann weights}&:\;
+w_A = g_A e^{-E_A/kT}=e^{-1},\\
+w_B &= g_B e^{-E_B/kT}=2e^{-3},\\
+w_C &= g_C e^{-E_C/kT}=3e^{-5}.
+\end{aligned}
+\]
+
+Partition sum  
+\[
+  Z = w_A + w_B + w_C
+    = e^{-1}+2e^{-3}+3e^{-5}\approx0.488.
+\]
+
+Probability that the molecule has energy \(E_B\):
+\[
+  P(E_B)
+  = \frac{w_B}{Z}
+  = \frac{2e^{-3}}{e^{-1}+2e^{-3}+3e^{-5}}
+  \approx \boxed{0.204}.
+\]
+\paragraph{Isothermal barometric relation}
+For an ideal gas in hydrostatic equilibrium at constant temperature \(T\)
+
+\[
+  \frac{p(z)}{p(0)} \;=\;
+  \exp\!\Bigl(-\frac{m g z}{k_{\mathrm B}T}\Bigr),
+\]
+
+where \(m\) is the particle mass and \(z\) the height above the reference
+level.
+
+\paragraph{Insert the data}
+\[
+  m = 3.0\times10^{-20}\,\text{kg},\qquad
+  g = 9.81\ \text{m s}^{-2},\qquad
+  z = h = 5.0\times10^{3}\,\text{m},\qquad
+  T = 300\ \text{K}.
+\]
+
+\[
+  \frac{m g h}{k_{\mathrm B}T}
+  = \frac{(3.0\times10^{-20})(9.81)(5.0\times10^{3})}
+         {(1.380\,649\times10^{-23})(300)}
+  \approx 3.6\times10^{5}.
+\]
+
+\[
+  \boxed{\frac{p_{\text{top}}}{p_{\text{bottom}}}
+         = \exp(-3.6\times10^{5})
+         \;\approx\; 10^{-1.6\times10^{5}}\;\text{(essentially zero).}}
+\]
+\paragraph{Pressure ratio in a \(5.0\times10^{3}\,\text{m}\) vertical tube
+(isothermal, \(T = 300\;\text{K}\))}
+
+For an ideal gas in hydrostatic equilibrium at constant \(T\)
+
+\[
+  \frac{p(h)}{p(0)}
+  = \exp\!\Bigl(-\frac{m\,g\,h}{k_{\mathrm B}T}\Bigr),
+\]
+
+where  
+
+* \(m = 3.0\times10^{-26}\ \text{kg}\) (mass per molecule)  
+* \(g = 9.81\ \text{m s}^{-2}\)  
+* \(h = 5.0\times10^{3}\ \text{m}\)  
+* \(k_{\mathrm B}=1.380\,649\times10^{-23}\ \text{J K}^{-1}\)  
+* \(T = 300\ \text{K}\).
+
+\[
+  \frac{mgh}{k_{\mathrm B}T}
+  =\frac{(3.0\times10^{-26})(9.81)(5.0\times10^{3})}
+        {(1.380\,649\times10^{-23})(300)}
+  = 0.355.
+\]
+
+\[
+  \boxed{\frac{p_{\text{top}}}{p_{\text{bottom}}}
+        = e^{-0.355}\;\approx\;0.70 }.
+\]
+
+Thus the pressure at the top of the 5-km column is about **70 %** of the
+pressure at the bottom.
+
+\textbf{Interpretation:} with such massive molecules, the pressure at the
+top of a \(5\;\text{km}\) column is negligibly small compared with the
+pressure at the bottom.
+\subsection*{Boltzmann statistics for electron spins}
+
+\[
+  \mu = 9.3\times10^{-24}\,\text{J T}^{-1},
+  \qquad
+  k_{\mathrm B}=1.380\,649\times10^{-23}\,\text{J K}^{-1}.
+\]
+
+--------------------------------------------------------------------
+\paragraph{1.  Population ratio for 63  up}
+
+\[
+  \frac{N_\uparrow}{N_\downarrow}
+  = \frac{0.63}{0.37}
+  \approx \boxed{1.70}.
+\]
+
+--------------------------------------------------------------------
+\paragraph{2.  Energy gap that yields this ratio at \(T = 24^{\circ}\text{C}=297\;\text{K}\)}
+
+Boltzmann relation  
+\(N_\uparrow/N_\downarrow = \exp\bigl(-\Delta E/kT\bigr)\) with  
+\(\Delta E = E_\downarrow-E_\uparrow\) \(= 2\mu B\).
+
+\[
+  \Delta E
+  = kT\,\ln\!\bigl(N_\uparrow/N_\downarrow\bigr)
+  = (1.3806\times10^{-23})(297)\,\ln(1.70)
+  \approx \boxed{2.18\times10^{-21}\ \text{J}}.
+\]
+
+--------------------------------------------------------------------
+\paragraph{3.  Magnetic field that produces this splitting}
+
+\[
+  B = \frac{\Delta E}{2\mu}
+    = \frac{2.18\times10^{-21}}{2(9.3\times10^{-24})}
+    \approx \boxed{1.17\times10^{2}\ \text{T}}.
+\]
+
+\bigskip
+So a field of roughly \(1.2\times10^{2}\,\text{tesla}\) would bias the spins so that 63 % point up at room temperature.
+
+\subsection*{Two-state systems: \(N\) molecules, levels \(0\) and \(\varepsilon\)}
+
+-------------------------------------------------------------------
+\paragraph{1.  Partition function and internal energy}
+
+\[
+  Z = 1 + e^{-\varepsilon/kT},
+  \qquad
+  U(T) = N\,\varepsilon\,\frac{e^{-\varepsilon/kT}}{Z}
+        = \frac{N\varepsilon}{e^{\varepsilon/kT}+1}.
+\]
+
+-------------------------------------------------------------------
+\paragraph{2.  Heat capacity \(C(T)=\dv{U}{T}\)}
+
+\[
+  C(T)
+  = N\,\frac{\varepsilon^{2}}{kT^{2}}\;
+    \frac{e^{\varepsilon/kT}}
+         {\bigl(1+e^{\varepsilon/kT}\bigr)^{2}}.
+\]
+
+-------------------------------------------------------------------
+\paragraph{Numerical constants}
+
+\[
+  N = 6.022\times10^{23},\qquad
+  \varepsilon = 2.07\times10^{-21}\,\text{J},\qquad
+  k = 1.380649\times10^{-23}\,\text{J K}^{-1}.
+\]
+
+-------------------------------------------------------------------
+\paragraph{3.  Results}
+
+| \(T\) (K) | \(U(T)\) (J) | \(C(T)\) (J K\(^{-1}\)) |
+|-----------|--------------|-------------------------|
+| 200 | \(4.00\times10^{2}\) | \(1.02\) |
+| 250 | \(4.42\times10^{2}\) | \(0.684\) |
+|  20 | \(6.92\times10^{-1}\) | \(0.259\) |
+
+-------------------------------------------------------------------
+\textbf{Answers required by the form}
+
+1. \(U(200\,\text{K}) \approx 4.0\times10^{2}\ \text{J}\)
+
+2. \(C(200\,\text{K}) \approx 1.0\ \text{J K}^{-1}\)
+
+3. \(C(250\,\text{K}) \approx 0.68\ \text{J K}^{-1}\)
+
+4. \(C(20\,\text{K})  \approx 0.26\ \text{J K}^{-1}\)
+\end{document}

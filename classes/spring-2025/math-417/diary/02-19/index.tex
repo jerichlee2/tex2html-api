@@ -1,0 +1,841 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\noindent
+\textbf{Problem 1.} Calculate:
+\[
+\text{(a)}\; 3^{100} \pmod{30}, 
+\quad
+\text{(b)}\; 5^{63} \pmod{14},
+\quad
+\text{(c)}\; 10^{70} \pmod{142},
+\quad
+\text{(d)}\; \text{the last two digits of } 17^{41}.
+\]
+
+\bigskip
+\textbf{(a) Compute } $3^{100} \pmod{30}$
+
+\begin{enumerate}
+\item First, observe that powers of 3 modulo 30 form a repeating cycle. We check the first few powers:
+\[
+\begin{aligned}
+3^1 &\equiv 3 \pmod{30},\\
+3^2 &\equiv 9 \pmod{30},\\
+3^3 &\equiv 27 \pmod{30},\\
+3^4 &\equiv 81 \equiv 21 \pmod{30}, \\
+3^5 &\equiv 3 \times 21 \equiv 63 \equiv 3 \pmod{30}.
+\end{aligned}
+\]
+\item Hence, the residues repeat every 4 powers: the cycle is $(3,\,9,\,27,\,21)$ and then back to $3$.
+\item Since $100$ is a multiple of 4 (i.e.\ $100 \equiv 0 \pmod{4}$), we look at the 4th term in the cycle.
+\[
+3^{100} \equiv 21 \pmod{30}.
+\]
+\end{enumerate}
+
+\bigskip
+\textbf{(b) Compute } $5^{63} \pmod{14}$
+
+\begin{enumerate}
+\item Since $\gcd(5,14) = 1$, we can apply Euler's theorem (or Carmichael's theorem). 
+\item Recall $\varphi(14) = \varphi(2 \times 7) = (2-1)\times(7-1) = 6$. 
+\item By Euler's theorem:
+\[
+5^6 \equiv 1 \pmod{14}.
+\]
+\item Note that $63 \equiv 3 \pmod{6}$, so
+\[
+5^{63} \;=\; 5^{6 \cdot 10 + 3} \;=\; (5^6)^{10} \cdot 5^3 \;\equiv\; 1^{10} \cdot 125 \equiv 125 \pmod{14}.
+\]
+\item Finally, $125 \equiv 125 - 112 \equiv 13 \pmod{14}$. Thus,
+\[
+5^{63} \equiv 13 \pmod{14}.
+\]
+\end{enumerate}
+
+\bigskip
+\textbf{(c) Compute } $10^{70} \pmod{142}$
+
+\begin{enumerate}
+\item Factor $142 = 2 \times 71$. We will use the Chinese Remainder Theorem (CRT).
+\item \textbf{Modulo 2:} Clearly, $10^{70}$ is even, so
+\[
+10^{70} \equiv 0 \pmod{2}.
+\]
+\item \textbf{Modulo 71:} Note that $\gcd(10,71) = 1$ and $71$ is prime, so by Fermat's Little Theorem:
+\[
+10^{70} \equiv 1 \pmod{71}.
+\]
+\item We want $x \equiv 10^{70}$ such that 
+\[
+\begin{cases}
+x \equiv 0 \pmod{2},\\
+x \equiv 1 \pmod{71}.
+\end{cases}
+\]
+\item Write $x = 1 + 71k$. For $x$ to be even, we need:
+\[
+1 + 71k \equiv 0 \pmod{2}.
+\]
+Since $71 \equiv 1 \pmod{2}$, we get
+\[
+1 + k \equiv 0 \pmod{2} \quad\Longrightarrow\quad k \equiv 1 \pmod{2}.
+\]
+\item Taking the smallest positive solution $k=1$ gives $x = 1 + 71 \cdot 1 = 72$, which is even. Therefore,
+\[
+10^{70} \equiv 72 \pmod{142}.
+\]
+\end{enumerate}
+
+\bigskip
+\textbf{(d) Find the last two digits of } $17^{41}$
+
+\begin{enumerate}
+\item Finding the last two digits of a number is the same as finding it modulo 100.
+\item Since $\gcd(17,100) = 1$, we can apply Euler's theorem with $\varphi(100) = 40$.
+\item Thus,
+\[
+17^{40} \equiv 1 \pmod{100}.
+\]
+\item Hence,
+\[
+17^{41} = 17^{40} \cdot 17 \equiv 1 \cdot 17 \equiv 17 \pmod{100}.
+\]
+\item Therefore, the last two digits of $17^{41}$ are $\boxed{17}$.
+\end{enumerate}
+
+\bigskip
+\textbf{Answers:}
+\[
+\begin{aligned}
+(a)\;&3^{100} \equiv 21 \pmod{30},\\
+(b)\;&5^{63} \equiv 13 \pmod{14},\\
+(c)\;&10^{70} \equiv 72 \pmod{142},\\
+(d)\;&\text{the last two digits of }17^{41}\text{ are }17.
+\end{aligned}
+\]
+
+\begin{theorem}[Euler's Theorem]
+    Let $n$ be a positive integer and $a$ be an integer coprime to $n$ 
+    (i.e.\ $\gcd(a,n) = 1$). Then
+    \[
+      a^{\varphi(n)} \equiv 1 \pmod{n},
+    \]
+    where $\varphi(n)$ is Euler's totient function (the number of integers 
+    less than or equal to $n$ that are coprime to $n$).
+  \end{theorem}
+  
+  \begin{theorem}[Chinese Remainder Theorem]
+    Let $n_1, n_2, \ldots, n_k$ be pairwise coprime positive integers,
+    and let $N = n_1\,n_2 \cdots n_k$. Suppose $a_1, a_2, \ldots, a_k$ 
+    are any integers. Then there exists a unique integer $x$ modulo $N$ 
+    such that
+    \[
+      x \equiv a_i \pmod{n_i} 
+      \quad\text{for each}\quad i = 1, 2, \ldots, k.
+    \]
+    Moreover, all solutions $x$ to this system are congruent modulo $N$.
+  \end{theorem} 
+
+  \begin{definition}[Euler's Totient Function]
+    Let $n$ be a positive integer. The \emph{Euler totient function},
+    denoted by $\varphi(n)$, is defined as the number of positive integers 
+    less than or equal to $n$ that are \emph{coprime} to $n$. That is,
+    \[
+      \varphi(n) = \bigl|\{\,1 \le k \le n : \gcd(k,n) = 1\}\bigr|.
+    \]
+    Equivalently, if $n$ has the prime factorization
+    \[
+      n = p_1^{\alpha_1}\,p_2^{\alpha_2}\cdots p_m^{\alpha_m},
+    \]
+    then
+    \[
+      \varphi(n) \;=\; n \,\Bigl(1 - \frac{1}{p_1}\Bigr)
+                       \,\Bigl(1 - \frac{1}{p_2}\Bigr)\cdots
+                       \Bigl(1 - \frac{1}{p_m}\Bigr).
+    \]
+  \end{definition}
+
+
+\begin{example}
+    Let us compute $\varphi(48)$, where $\varphi(\cdot)$ denotes the
+    Euler totient function.
+  
+    \medskip
+    First, factorize $48$ into primes:
+    \[
+      48 \;=\; 2^4 \,\times\, 3^1.
+    \]
+    Using the product formula for the totient function,
+    \[
+      \varphi(n) \;=\; n \biggl(1 - \frac{1}{p_1}\biggr)
+                      \biggl(1 - \frac{1}{p_2}\biggr)
+                      \cdots
+                      \biggl(1 - \frac{1}{p_m}\biggr),
+    \]
+    we get
+    \[
+      \varphi(48)
+      \;=\;
+      48
+      \bigl(1 - \tfrac{1}{2}\bigr)
+      \bigl(1 - \tfrac{1}{3}\bigr).
+    \]
+    Simplify step by step:
+    \[
+      1 - \tfrac{1}{2} \;=\; \tfrac{1}{2},
+      \quad
+      1 - \tfrac{1}{3} \;=\; \tfrac{2}{3}.
+    \]
+    Hence,
+    \[
+      \varphi(48)
+      \;=\;
+      48 \times \tfrac{1}{2} \times \tfrac{2}{3}
+      \;=\;
+      48 \times \tfrac{1}{3}
+      \;=\;
+      16.
+    \]
+    Therefore, $\varphi(48) = 16$.
+  \end{example}
+
+
+\begin{theorem}[Fermat's Little Theorem]
+    If $p$ is a prime number, then for any integer $a$,
+    \[
+      a^p \equiv a \pmod{p}.
+    \]
+    Consequently, if $\gcd(a,p) = 1$, then
+    \[
+      a^{p-1} \equiv 1 \pmod{p}.
+    \]
+  \end{theorem}
+  
+  \begin{example}
+    \textbf{Applying Fermat's Little Theorem:} 
+  
+    Suppose we wish to compute $2^{101} \pmod{5}$. Observe that $\gcd(2, 5)=1$ and $5$ is prime. Hence by Fermat's Little Theorem,
+    \[
+      2^{4} \equiv 1 \pmod{5}.
+    \]
+    Since $101 = 4 \times 25 + 1$, we can write:
+    \[
+      2^{101} = 2^{4 \times 25 + 1} = (2^4)^{25} \times 2^1 
+               \equiv 1^{25} \times 2 
+               \equiv 2 \pmod{5}.
+    \]
+    Therefore,
+    \[
+      2^{101} \equiv 2 \pmod{5}.
+    \]
+  \end{example}
+
+  \begin{theorem}[Chinese Remainder Theorem]
+    Let $n_1, n_2, \ldots, n_k$ be positive integers that are pairwise coprime; 
+    that is, $\gcd(n_i, n_j) = 1$ for all $i \neq j$. 
+    Suppose $a_1, a_2, \ldots, a_k$ are any integers. 
+    Then the system of simultaneous congruences
+    \[
+      \begin{cases}
+        x \equiv a_1 \pmod{n_1},\\
+        x \equiv a_2 \pmod{n_2},\\
+        \quad \vdots \\
+        x \equiv a_k \pmod{n_k},
+      \end{cases}
+    \]
+    has a unique solution $x$ modulo $N = n_1\,n_2 \cdots n_k$. 
+    In other words, there exists exactly one residue class $x \bmod N$ 
+    satisfying all of these congruences simultaneously.
+  \end{theorem}
+  
+  \begin{example}
+    \textbf{Applying the Chinese Remainder Theorem:}
+  
+    Consider the system:
+    \[
+      \begin{cases}
+        x \equiv 2 \pmod{3},\\
+        x \equiv 3 \pmod{5}.
+      \end{cases}
+    \]
+    Here, $n_1 = 3$, $n_2 = 5$, and they are coprime. 
+    We have $N = 3 \cdot 5 = 15$.
+  
+    \medskip
+    \textbf{Step 1:} Write the system as:
+    \[
+      x = 2 + 3k_1, \quad\text{for some integer } k_1.
+    \]
+    We want $x$ to satisfy $x \equiv 3 \pmod{5}$. Substituting $x = 2 + 3k_1$ into this congruence:
+    \[
+      2 + 3k_1 \equiv 3 \pmod{5}.
+    \]
+    Simplify:
+    \[
+      3k_1 \equiv 1 \pmod{5}.
+    \]
+    Since $3 \cdot 2 \equiv 6 \equiv 1 \pmod{5}$, we see $k_1 \equiv 2 \pmod{5}$. 
+    Thus the smallest nonnegative choice is $k_1 = 2$, giving
+    \[
+      x = 2 + 3 \cdot 2 = 2 + 6 = 8.
+    \]
+    Therefore, $x \equiv 8 \pmod{15}$ is a solution that satisfies both 
+    congruences simultaneously.
+  
+    \medskip
+    \textbf{Step 2:} Verify:
+    \[
+      8 \equiv 2 \pmod{3} 
+      \quad\text{and}\quad
+      8 \equiv 3 \pmod{5}.
+    \]
+    Indeed, both statements check out. By the CRT, \emph{every} solution 
+    to the system is congruent to $8$ modulo $15$.
+  
+    \medskip
+    Thus the unique solution modulo $15$ is $\boxed{x \equiv 8 \pmod{15}}$.
+  \end{example}
+
+  \section*{Solution to Problem 2}
+
+\subsection*{(a) Find $\mathrm{ord}_{\mathbb{Z}_n}(k)$.}
+
+\textbf{Problem statement.} Let $n \in \mathbb{N}$ and $k \in \mathbb{Z}_n$. Recall that
+\[
+ \mathrm{ord}_{\mathbb{Z}_n}(k)
+\]
+is defined as the smallest positive integer $m$ such that $mk = 0$ in $\mathbb{Z}_n$, i.e.\ $mk \equiv 0 \pmod{n}$.
+ 
+\textbf{Solution.}
+
+\begin{enumerate}
+  \item Since $k \in \mathbb{Z}_n$, we can represent $k$ by an integer in $\{0,1,\dots,n-1\}$. Let us still denote that representative by $k$.
+  \item We want the smallest positive integer $m$ for which
+  \[
+    mk \equiv 0 \pmod{n}.
+  \]
+  \item The condition $mk \equiv 0 \pmod{n}$ is equivalent to saying $n \mid mk$, i.e.\ $mk$ is a multiple of $n$.
+  \item By number theory, the smallest such positive $m$ for which $n \mid mk$ is given by
+  \[
+    m = \frac{n}{\gcd(n,k)}.
+  \]
+  (Indeed, the product $mk$ is a multiple of $n$ precisely when $m \gcd(n,k)$ is a multiple of $\gcd(n,k)$ times $\frac{n}{\gcd(n,k)}$, which leads to $m$ being a multiple of $\frac{n}{\gcd(n,k)}$. The least positive such $m$ is exactly $\frac{n}{\gcd(n,k)}$.)
+\end{enumerate}
+
+Therefore,
+\[
+  \mathrm{ord}_{\mathbb{Z}_n}(k) \;=\; \frac{n}{\gcd(n,k)}.
+\]
+
+\subsection*{(b) Show that $\mathbb{Z}_n / \{0,\, d,\, \ldots,\, \bigl(\tfrac{n}{d}-1\bigr)d\} \simeq \mathbb{Z}_d$ when $d \mid n$.}
+
+\textbf{Problem statement.} Let $n,d \in \mathbb{N}$ such that $d \mid n$. We consider the subset
+\[
+  H = \{\,0,\, d,\, 2d,\, \ldots,\,(\tfrac{n}{d}-1)d \} \;\subset\; \mathbb{Z}_n.
+\]
+We wish to show that the quotient ring (or quotient group under addition)
+\[
+  \mathbb{Z}_n / H
+\]
+is isomorphic to $\mathbb{Z}_d$.
+
+\textbf{Solution.}
+
+\begin{enumerate}
+  \item \textbf{Interpretation of $H$ as a subgroup.} Note that $H$ is precisely the set of multiples of $d$ in $\mathbb{Z}_n$. Concretely, if we identify $\mathbb{Z}_n$ with the set $\{\,0,1,2,\ldots,n-1\}$ under addition mod $n$, then
+  \[
+    H = d\mathbb{Z}_n = \{\,d \cdot 0,\, d \cdot 1,\, \ldots,\, d \cdot (\tfrac{n}{d}-1)\}.
+  \]
+  This is an additive subgroup of $\mathbb{Z}_n$, often denoted $d\mathbb{Z}_n$.
+  
+  \item \textbf{Well-known quotient fact.} A standard result from elementary number theory (or group theory) is that
+  \[
+    \mathbb{Z}_n / d\mathbb{Z}_n \; \simeq \; \mathbb{Z}_d
+  \]
+  whenever $d\mid n$. Intuitively, in $\mathbb{Z}_n$ we are ``collapsing'' all elements that differ by a multiple of $d$ into the same equivalence class.
+
+  \item \textbf{Explicit isomorphism.}
+  We can give a direct construction of the isomorphism
+  \[
+    \varphi \colon \mathbb{Z}_n / H \;\to\; \mathbb{Z}_d
+  \]
+  as follows: take the coset of $x$ in $\mathbb{Z}_n / H$ (denoted $[x]$) and map it to $x \bmod d$ in $\mathbb{Z}_d$:
+  \[
+    \varphi([x]) \;=\; x \mod d.
+  \]
+  This is well-defined because if $x$ and $y$ are in the same coset of $H$, then $x - y$ is a multiple of $d$, so $x \equiv y \pmod{d}$. 
+
+  \item \textbf{Homomorphism properties.} One checks that $\varphi$ is a homomorphism of (additive) groups and that it is bijective:
+    \begin{itemize}
+      \item \emph{Surjectivity}: every element $r \in \{0,1,\dots,d-1\}$ has a preimage in $\mathbb{Z}_n$ (namely, the coset of $r$ itself). 
+      \item \emph{Injectivity}: if $[x]$ and $[y]$ map to the same element in $\mathbb{Z}_d$, then $x \equiv y \pmod{d}$, so $x-y$ is in $d\mathbb{Z}_n$, thus $[x] = [y]$ in the quotient. 
+    \end{itemize}
+  
+  \item \textbf{Conclusion.} Hence, 
+  \[
+    \mathbb{Z}_n / H \;\simeq\; \mathbb{Z}_d,
+  \]
+  completing the proof.
+\end{enumerate}
+
+\section*{First Isomorphism Theorem}
+
+\begin{theorem}[First Isomorphism Theorem for Groups]
+Let $G$ and $H$ be groups and let 
+\[
+  \varphi : G \longrightarrow H
+\]
+be a group homomorphism. Then the quotient group
+\[
+  G/\ker(\varphi)
+\]
+is isomorphic to the image of $\varphi$, i.e.\ $\operatorname{im}(\varphi) \subseteq H$. 
+In symbols:
+\[
+  G/\ker(\varphi) \;\simeq\; \operatorname{im}(\varphi).
+\]
+\end{theorem}
+
+\begin{example}
+Consider the homomorphism 
+\[
+  f : \mathbb{Z} \longrightarrow \mathbb{Z}_n
+\]
+defined by 
+\[
+  f(k) \;=\; [\,k\,]_n,
+\]
+where $[\,k\,]_n$ denotes the residue class of $k$ modulo $n$. 
+
+\begin{itemize}
+  \item The kernel of $f$ is 
+  \[
+    \ker(f) \;=\; \{\,k \in \mathbb{Z} : f(k) = [0]_n\,\}
+    \;=\; \{\,k \in \mathbb{Z} : k \equiv 0 \pmod{n}\}
+    \;=\; n\mathbb{Z}.
+  \]
+
+  \item The image of $f$ is all of $\mathbb{Z}_n$, because for every $[\,r\,]_n \in \mathbb{Z}_n$, we can take any integer representative $r \in \mathbb{Z}$ and see that 
+  $f(r) = [\,r\,]_n$.
+
+\end{itemize}
+
+Thus, by the First Isomorphism Theorem,
+\[
+  \mathbb{Z}/\,n\mathbb{Z} \;\simeq\; \operatorname{im}(f) = \mathbb{Z}_n.
+\]
+\end{example}
+
+\section*{Problem 3}
+
+\noindent\textbf{(a)} Find subgroups $G_1,\, G_2$ of $\mathbb{Z}_6$ such that 
+\[
+  G_1 \simeq \mathbb{Z}_2,\quad
+  G_2 \simeq \mathbb{Z}_3
+  \quad\text{and}\quad
+  \mathbb{Z}_6 \simeq G_1 \oplus G_2.
+\]
+
+\subsubsection*{Solution to (a)}
+
+\begin{itemize}
+  \item We regard $\mathbb{Z}_6$ as an additive cyclic group of order $6$, generated by the element $1 \pmod{6}$.
+  \item A subgroup of order 2 in $\mathbb{Z}_6$ is generated by $3 \pmod{6}$, because $2 \cdot 3 = 6 \equiv 0 \,(\bmod\,6)$. Hence we can set 
+  \[
+    G_1 \;=\; \langle 3 \rangle \;=\; \{0,\,3\}.
+  \]
+  Clearly, $|G_1|=2$ and $G_1 \simeq \mathbb{Z}_2$.
+
+  \item A subgroup of order 3 in $\mathbb{Z}_6$ is generated by $2 \pmod{6}$, since $3\cdot 2 = 6 \equiv 0\pmod{6}$. Hence 
+  \[
+    G_2 \;=\; \langle 2 \rangle \;=\; \{0,\,2,\,4\}.
+  \]
+  We have $|G_2|=3$ and $G_2 \simeq \mathbb{Z}_3$.
+
+  \item Observe that every element of $\mathbb{Z}_6$ can be uniquely written as a sum of an element in $G_1$ and an element in $G_2$.  Concretely:
+  \[
+    \{0,1,2,3,4,5\}
+    \;=\;
+    \{ (0+0),\,(3+4),\,(0+2),\,(3+0),\,(0+4),\,(3+2)\},
+  \]
+  and one checks this covers $\mathbb{Z}_6$ without overlap.
+  
+  Thus, $\mathbb{Z}_6 \simeq G_1 \oplus G_2$, as required.
+\end{itemize}
+
+\bigskip
+
+\noindent\textbf{(b)} Find subgroups $G_1,\,G_2,\,G_3$ of $\mathbb{Z}_{30}$ such that 
+\[
+  G_1 \simeq \mathbb{Z}_2,\quad
+  G_2 \simeq \mathbb{Z}_3,\quad
+  G_3 \simeq \mathbb{Z}_5
+  \quad\text{and}\quad
+  \mathbb{Z}_{30} \simeq G_1 \oplus G_2 \oplus G_3.
+\]
+
+\subsubsection*{Solution to (b)}
+
+\begin{itemize}
+  \item The group $\mathbb{Z}_{30}$ is also cyclic (additive) of order 30. By the \emph{structure theorem for finite cyclic groups} (or the Chinese Remainder Theorem viewpoint), $\mathbb{Z}_{30}$ is isomorphic to $\mathbb{Z}_2 \oplus \mathbb{Z}_3 \oplus \mathbb{Z}_5$ because $2 \cdot 3 \cdot 5 = 30$.
+  \item We exhibit explicit subgroups of $\mathbb{Z}_{30}$ of the required orders:
+    \begin{itemize}
+      \item A subgroup of order 2 is generated by $15 \pmod{30}$:
+      \[
+        G_1 \;=\; \langle 15\rangle \;=\; \{0,\,15\}.
+      \]
+      \item A subgroup of order 3 is generated by $10 \pmod{30}$:
+      \[
+        G_2 \;=\; \langle 10\rangle \;=\; \{0,\,10,\,20\}.
+      \]
+      \item A subgroup of order 5 is generated by $6 \pmod{30}$:
+      \[
+        G_3 \;=\; \langle 6\rangle \;=\; \{0,\,6,\,12,\,18,\,24\}.
+      \]
+    \end{itemize}
+  \item One checks that $|G_1|=2$, $|G_2|=3$, $|G_3|=5$, and that every element of $\mathbb{Z}_{30}$ can be written uniquely as a sum of elements from $G_1, G_2, G_3$.  Thus
+  \[
+    \mathbb{Z}_{30} \;\simeq\; G_1 \oplus G_2 \oplus G_3.
+  \]
+\end{itemize}
+
+\bigskip
+
+\noindent\textbf{(c)} Find subgroups $G_1,\,G_2$ of $\mathbb{Z}_{15}^*$ (the multiplicative group of units mod 15) such that 
+\[
+  G_1 \simeq \mathbb{Z}_3^*, 
+  \quad
+  G_2 \simeq \mathbb{Z}_5^*,
+  \quad\text{and}\quad
+  \mathbb{Z}_{15}^* \simeq G_1 \times G_2.
+\]
+
+\subsubsection*{Solution to (c)}
+
+\begin{itemize}
+  \item First recall that $\mathbb{Z}_{15}^*$ is the group (under multiplication mod 15) of all integers relatively prime to 15.  Since $15=3\cdot 5$, the Chinese Remainder Theorem tells us
+  \[
+    \mathbb{Z}_{15}^* \;\simeq\; \mathbb{Z}_3^* \times \mathbb{Z}_5^*.
+  \]
+  Also, $\mathbb{Z}_3^* \simeq \mathbb{Z}_2$ (it has elements $\{[1],[2]\}$) and $\mathbb{Z}_5^*$ is cyclic of order 4 (isomorphic to $\mathbb{Z}_4$).
+  \item Concretely, the elements of $\mathbb{Z}_{15}^*$ are 
+  \[
+    \{\,1,2,4,7,8,11,13,14\}
+    \quad(\text{mod }15).
+  \]
+  This is a group of order $8$.
+  \item We need to exhibit:
+    \[
+      G_1 \;\simeq\; \mathbb{Z}_3^*\quad (\text{order }2),
+      \quad
+      G_2 \;\simeq\; \mathbb{Z}_5^*\quad (\text{order }4),
+      \quad
+      \mathbb{Z}_{15}^* \;\simeq\; G_1 \times G_2.
+    \]
+  \item A convenient choice:
+    \begin{itemize}
+      \item \textbf{Subgroup of order 2:}  pick the element $14 \equiv -1 \pmod{15}$, whose square is $14^2=196 \equiv 1 \,(\bmod\,15)$. Then 
+      \[
+        G_1 = \{\,1,\,14\}.
+      \]
+      \item \textbf{Subgroup of order 4:} one can pick the element $2\pmod{15}$, which has order 4 since
+      \[
+        2^2 = 4 \neq 1,\quad 2^3 = 8 \neq 1,\quad 2^4 = 16 \equiv 1\pmod{15}.
+      \]
+      Hence
+      \[
+        G_2 = \langle 2 \rangle = \{\,1,\,2,\,4,\,8\}.
+      \]
+    \end{itemize}
+  \item Notice that $G_1 \cap G_2 = \{1\}$ and $|G_1|\cdot |G_2| = 2\cdot 4 = 8$, which matches the total number of units mod 15.  Consequently,
+  \[
+    \mathbb{Z}_{15}^* \;=\; G_1 \,G_2 \;\simeq\; G_1 \times G_2,
+  \]
+  as required.
+\end{itemize}
+
+\section*{Lagrange's Theorem for Finite Groups}
+
+\begin{theorem}[Lagrange's Theorem]
+Let $G$ be a finite group and $H$ be a subgroup of $G$. Then the order of $H$ divides the order of $G$, i.e.
+\[
+  |H|\; \Big|\; |G|.
+\]
+\end{theorem}
+
+\begin{example}
+Consider the group $G = \mathbb{Z}_{12}$ under addition modulo 12 (so $|G|=12$), and let $H$ be the subgroup generated by $4 \in \mathbb{Z}_{12}$. That is,
+\[
+  H \;=\; \langle 4 \rangle \;=\; \{0,4,8\} \quad (\text{mod }12).
+\]
+We see that $H$ has 3 elements, while $G$ has 12. Lagrange's Theorem tells us that $|H|$ must divide $|G|$. Indeed, $3 \,\big|\, 12$. 
+\end{example}
+\section*{Problem 4}
+
+\subsection*{(a) Order of an element in a direct product}
+
+\textbf{Statement.} Let $G_1, G_2, \dots, G_s$ be groups, and let 
+\[
+  G \;=\; G_1 \,\times\, G_2 \,\times\, \dots \,\times\, G_s
+\]
+be their direct product. Suppose each $G_i$ contains an element $a_i$ of finite order (denoted $\mathrm{ord}_{G_i}(a_i) < \infty$). Show that for the element
+\[
+  (a_1, a_2, \dots, a_s) \;\in\; G,
+\]
+its order in $G$ is given by 
+\[
+  \mathrm{ord}_G \bigl(a_1, a_2, \dots, a_s\bigr)
+  \;=\; \mathrm{lcm}\!\bigl(\mathrm{ord}_{G_1}(a_1),\,\mathrm{ord}_{G_2}(a_2),\,\dots,\,\mathrm{ord}_{G_s}(a_s)\bigr).
+\]
+
+\paragraph{Step-by-Step Proof:}
+
+\begin{enumerate}
+  \item \textbf{Interpretation of the order in the product.}
+  By definition, 
+  \[
+    \mathrm{ord}_G(a_1, \dots, a_s)
+  \]
+  is the smallest positive integer $n$ such that 
+  \[
+    n\cdot(a_1, \dots, a_s) \;=\; \bigl(e_{G_1}, e_{G_2}, \dots, e_{G_s}\bigr),
+  \]
+  where $e_{G_i}$ is the identity in $G_i$ (and $n\cdot(a_1,\dots,a_s)$ denotes the $n$-fold group operation in $G$, e.g.\ repeated addition if the groups are written additively, or repeated multiplication otherwise).
+
+  \item \textbf{Condition for each component to be the identity.}
+  The element $n\cdot(a_1,\dots,a_s)$ equals 
+  \[
+    \bigl(n\cdot a_1,\; n\cdot a_2,\;\dots,\; n\cdot a_s\bigr).
+  \]
+  (Here each $n\cdot a_i$ is computed inside $G_i$.)  For this product to be the identity $(e_{G_1},\dots,e_{G_s})$, we need 
+  \[
+    n\cdot a_i \;=\; e_{G_i} 
+    \quad \text{for each } i=1,\dots,s.
+  \]
+  In other words, $\mathrm{ord}_{G_i}(a_i)$ must divide $n$ for \emph{every} $i$.
+
+  \item \textbf{Largest required divisor.}
+  Therefore, any $n$ which annihilates $\bigl(a_1,\dots,a_s)$ to the identity must be a common multiple of 
+  $\mathrm{ord}_{G_1}(a_1),\;\mathrm{ord}_{G_2}(a_2),\;\dots,\;\mathrm{ord}_{G_s}(a_s)$.
+
+  \item \textbf{Minimal such $n$ is the LCM.}
+  The smallest positive integer satisfying $n \cdot a_i = e_{G_i}$ for each $i$ is precisely
+  \[
+    \mathrm{lcm}\bigl(\mathrm{ord}_{G_1}(a_1),\;\mathrm{ord}_{G_2}(a_2),\;\dots,\;\mathrm{ord}_{G_s}(a_s)\bigr).
+  \]
+  Hence
+  \[
+    \mathrm{ord}_G\bigl(a_1,\dots,a_s\bigr)
+    \;=\;
+    \mathrm{lcm}\!\bigl(\mathrm{ord}_{G_1}(a_1),\,\dots,\,\mathrm{ord}_{G_s}(a_s)\bigr).
+  \]
+
+\end{enumerate}
+
+\bigskip
+
+\subsection*{(b) \(\mathbb{Z}_4 \oplus \mathbb{Z}_4\) is not isomorphic to \(\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2\)}
+
+\textbf{Claim.} The abelian groups $\mathbb{Z}_4 \oplus \mathbb{Z}_4$ and $\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2$ are not isomorphic.
+
+\paragraph{Step-by-Step Reasoning:}
+
+\begin{enumerate}
+  \item \textbf{Both groups have the same cardinality.}
+  \[
+    |\mathbb{Z}_4 \oplus \mathbb{Z}_4| \;=\; 4 \times 4 \;=\; 16,
+    \quad
+    |\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2| \;=\; 4 \times 2 \times 2 \;=\; 16.
+  \]
+  So they agree in size.
+
+  \item \textbf{Count elements of order 2 in \(\mathbb{Z}_4 \oplus \mathbb{Z}_4\).}
+    \begin{itemize}
+      \item An element in $\mathbb{Z}_4 \oplus \mathbb{Z}_4$ can be written as $(\overline{x}, \overline{y})$ where $x,y \in \{0,1,2,3\}$ and $\overline{x}, \overline{y}$ denote residue classes modulo 4.
+      \item $(\overline{x},\overline{y})$ has order 2 exactly when 
+      \[
+        2\cdot(\overline{x}, \overline{y}) \;=\; (\overline{0}, \overline{0})
+        \quad \text{but} \quad (\overline{x}, \overline{y}) \neq (\overline{0}, \overline{0}).
+      \]
+      \item Since $2\cdot(\overline{x}, \overline{y}) = (\overline{2x}, \overline{2y})$, we need $\overline{2x} = \overline{0}$ and $\overline{2y} = \overline{0}$ in $\mathbb{Z}_4$. This implies $x,y \in \{0,2\}$. 
+      \item The candidates are therefore $(\overline{0},\overline{0}),\,(\overline{2},\overline{0}),\,(\overline{0},\overline{2}),\,(\overline{2},\overline{2})$. Out of these four:
+        \[
+          \text{the identity }(\overline{0},\overline{0})\text{ is \emph{not} of order 2.}
+        \]
+      \item \emph{Hence there are exactly 3 elements of order 2} in $\mathbb{Z}_4 \oplus \mathbb{Z}_4$.
+    \end{itemize}
+
+  \item \textbf{Count elements of order 2 in \(\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2\).}
+    \begin{itemize}
+      \item An element is $(\overline{x}, \overline{y}, \overline{z})$ with $x \in \{0,1,2,3\}$ (mod 4) and $y,z \in \{0,1\}$ (mod 2).
+      \item Its order is 2 when
+      \[
+        2 \cdot (\overline{x}, \overline{y}, \overline{z}) 
+        \;=\; (\overline{0}, \overline{0}, \overline{0})
+        \quad \text{but} \quad
+        (\overline{x},\overline{y},\overline{z}) \neq (\overline{0},\overline{0},\overline{0}).
+      \]
+      \item Now, $2\cdot(\overline{x}, \overline{y}, \overline{z}) 
+      = (\overline{2x},\,\overline{2y},\,\overline{2z})$. 
+      \begin{itemize}
+        \item In $\mathbb{Z}_2$, we always have $\overline{2y} = \overline{0}$ regardless of $y\in\{0,1\}$. Hence $y,z$ are unrestricted by the doubling condition (they do not affect whether the element squares to the identity).
+        \item The condition $\overline{2x} = \overline{0}$ in $\mathbb{Z}_4$ implies $x \in \{0,2\}$.
+      \end{itemize}
+      \item Therefore the possible $x$ values are 0 or 2, while $y,z$ can each be 0 or 1 independently. That gives $2 \times 2 \times 2 = 8$ possible tuples $(\overline{x},\overline{y},\overline{z})$. However, one of them is the identity $(\overline{0},\overline{0},\overline{0})$ and does \emph{not} have order 2.
+      \item \emph{Hence there are $8 - 1 = 7$ elements of order 2} in $\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2$.
+    \end{itemize}
+
+  \item \textbf{Conclusion:} Since $\mathbb{Z}_4 \oplus \mathbb{Z}_4$ has only 3 elements of order 2 but $\mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2$ has 7 elements of order 2, they cannot be isomorphic (an isomorphism must preserve the number of elements of each order). Thus,
+  \[
+    \mathbb{Z}_4 \oplus \mathbb{Z}_4 
+    \;\not\simeq\; 
+    \mathbb{Z}_4 \oplus \mathbb{Z}_2 \oplus \mathbb{Z}_2.
+  \]
+\end{enumerate}
+
+\section*{Theorem}
+\begin{theorem}
+Let $G_1$ and $G_2$ be groups, and consider their direct product
+\[
+  G_1 \times G_2.
+\]
+This direct product is abelian (commutative) if and only if both $G_1$ and $G_2$ are abelian.
+\end{theorem}
+
+\begin{proof}
+We prove both directions.
+
+\bigskip
+\noindent\textbf{(\(\Longrightarrow\)) Suppose $G_1\times G_2$ is abelian. Show that $G_1$ and $G_2$ are abelian.}
+
+\begin{enumerate}
+  \item \textbf{Setup:} We know $G_1\times G_2$ is commutative, meaning for any 
+  \[
+    (a_1, a_2), (b_1, b_2) \;\in\; G_1\times G_2,
+    \quad
+    (a_1,a_2)\,(b_1,b_2) \;=\; (b_1,b_2)\,(a_1,a_2).
+  \]
+  
+  \item \textbf{Show $G_1$ is abelian:}
+    \begin{itemize}
+      \item Take arbitrary $g_1, h_1 \in G_1$. We need to show $g_1 h_1 = h_1 g_1$ in $G_1$.
+      \item Consider $(g_1,e_{G_2})$ and $(h_1, e_{G_2})$ in $G_1\times G_2$. By commutativity of the product:
+      \[
+        (g_1, e_{G_2}) \,(h_1, e_{G_2}) \;=\; (h_1, e_{G_2})\,(g_1, e_{G_2}).
+      \]
+      \item Using the definition of multiplication in the direct product,
+      \[
+        (g_1 h_1,\, e_{G_2} e_{G_2}) = (h_1 g_1,\, e_{G_2} e_{G_2}).
+      \]
+      \item This equality implies $g_1 h_1 = h_1 g_1$ in $G_1$, so $G_1$ is abelian.
+    \end{itemize}
+
+  \item \textbf{Show $G_2$ is abelian:}
+    \begin{itemize}
+      \item Take arbitrary $g_2, h_2 \in G_2$. We need $g_2 h_2 = h_2 g_2$ in $G_2$.
+      \item Similar reasoning: consider $(e_{G_1},g_2)$ and $(e_{G_1},h_2)$ in $G_1\times G_2$. By commutativity,
+      \[
+        (e_{G_1}, g_2)\,(e_{G_1}, h_2) \;=\; (e_{G_1}, h_2)\,(e_{G_1}, g_2).
+      \]
+      \item This yields $(e_{G_1} e_{G_1},\, g_2 h_2) = (e_{G_1} e_{G_1},\, h_2 g_2)$, forcing $g_2 h_2 = h_2 g_2$.
+    \end{itemize}
+
+  \item \textbf{Conclusion for this direction:} Since both $G_1$ and $G_2$ are abelian, we have shown that $G_1 \times G_2$ being abelian implies $G_1$ and $G_2$ must each be abelian.
+\end{enumerate}
+
+\bigskip
+\noindent\textbf{(\(\Longleftarrow\)) Suppose $G_1$ and $G_2$ are abelian. Show that $G_1\times G_2$ is abelian.}
+
+\begin{enumerate}
+  \item \textbf{Setup:} Since $G_1$ is abelian, $g_1 h_1 = h_1 g_1$ for all $g_1, h_1 \in G_1$. Similarly, $G_2$ is abelian means $g_2 h_2 = h_2 g_2$ for all $g_2, h_2 \in G_2$.
+
+  \item \textbf{Goal:} We need to show that every pair of elements in $G_1\times G_2$ commutes. That is, for any $(g_1, g_2), (h_1, h_2)\in G_1\times G_2$,
+  \[
+    (g_1,g_2)\,(h_1,h_2) \;=\; (h_1,h_2)\,(g_1,g_2).
+  \]
+
+  \item \textbf{Compute product in each order:}
+    \[
+      (g_1,g_2)\,(h_1,h_2) 
+      \;=\; 
+      \bigl(g_1 h_1,\; g_2 h_2\bigr),
+    \]
+    \[
+      (h_1,h_2)\,(g_1,g_2) 
+      \;=\; 
+      \bigl(h_1 g_1,\; h_2 g_2\bigr).
+    \]
+
+  \item \textbf{Use commutativity within each group:}
+    \[
+      g_1 h_1 = h_1 g_1 
+      \quad \text{(since $G_1$ is abelian)},
+    \]
+    \[
+      g_2 h_2 = h_2 g_2
+      \quad \text{(since $G_2$ is abelian)}.
+    \]
+
+  \item \textbf{Conclude equality:}
+    \[
+      \bigl(g_1 h_1,\; g_2 h_2\bigr)
+      =
+      \bigl(h_1 g_1,\; h_2 g_2\bigr).
+    \]
+    Thus $(g_1,g_2)(h_1,h_2) = (h_1,h_2)(g_1,g_2)$.
+
+  \item \textbf{Conclusion for this direction:} We've shown every pair of elements in the product commutes, so $G_1\times G_2$ is abelian.
+\end{enumerate}
+
+By combining both directions, we conclude that $G_1 \times G_2$ is abelian if and only if $G_1$ and $G_2$ are each abelian.
+\end{proof}
+
+\end{document}

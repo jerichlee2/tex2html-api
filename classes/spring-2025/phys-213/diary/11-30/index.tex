@@ -1,0 +1,716 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{PHYS 213: Thermal Physics—Final Exam}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[Law of Atmospheres]
+    \noindent 
+    \begin{align*}
+        g_{\text{Pluto}} &= -\frac{\ln\left(\frac{n(h)}{n_0}\right) \cdot R \cdot T}{M \cdot h} \\
+        \text{where:} \\
+        g_{\text{Pluto}} &= \text{local acceleration due to gravity on Pluto} \\
+        n(h) &= \text{concentration of nitrogen at height } h \\
+        n_0 &= \text{concentration of nitrogen at the surface} \\
+        R &= \text{universal gas constant (8.314 J/(mol·K))} \\
+        T &= \text{temperature in Kelvin (50 K)} \\
+        M &= \text{molar mass of nitrogen (} \text{N}_2 \text{) in kg/mol (0.028 kg/mol)} \\
+        h &= \text{height above the surface in meters (10,000 m)}
+        \end{align*}
+\end{problem}
+\begin{problem}[Boiling]
+    \noindent 
+    \begin{align*}
+        dT &= \frac{R T}{\Delta S_{\text{molar}}} \frac{dp}{P} \\
+        \text{where:} \\
+        dT &= \text{change in boiling point temperature} \\
+        R &= \text{universal gas constant (8.314 J/(mol·K))} \\
+        T &= \text{boiling point temperature at atmospheric pressure (373.15 K)} \\
+        \Delta S_{\text{molar}} &= \text{entropy difference between liquid and gas per mole} \\
+        &= \Delta S \times M \\
+        \Delta S &= \text{entropy difference per kilogram (6.05} \times 10^3 \, \text{J/kg·K)} \\
+        M &= \text{molar mass of water (0.018 kg/mol)} \\
+        dp &= \text{small pressure change (3.00} \times 10^{-1} \, \text{Pa)} \\
+        P &= \text{atmospheric pressure (101300 Pa)}
+        \end{align*}
+\end{problem}
+\begin{problem}[Paramagnets]
+    \noindent 
+    \begin{enumerate}
+        \item \begin{align*}
+        \frac{N_{\text{down}}}{N_{\text{up}}} &= e^{-\frac{2 \mu B}{k_B T}} \\
+        \text{where:} \\
+        N_{\text{down}} &= \text{number of electrons in the down state} \\
+        N_{\text{up}} &= \text{number of electrons in the up state} \\
+        \mu &= \text{magnetic moment of the electron (} 9.27 \times 10^{-24} \, \text{J/T)} \\
+        B &= \text{magnetic field strength (2 T)} \\
+        k_B &= \text{Boltzmann constant (} 1.38 \times 10^{-23} \, \text{J/K)} \\
+        T &= \text{temperature (5 K)} \\
+        \end{align*}
+        \item \begin{align*}
+            \text{If } kT &\ll \mu B: \\
+            M &= N \mu \quad \text{(since nearly all electrons are in the up state)} \\
+            &\text{Answer: (c) } M = N \mu
+        \end{align*}
+        \item \begin{align*}
+        \text{If } kT &\gg \mu B: \\
+        C_V &= 0 \quad \text{(since the magnetic moments are randomized)} \\
+        &\text{Answer: (c) } C_V = 0
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Capacity]
+    \noindent 
+    \begin{enumerate}
+        \item \begin{align*}
+        N &= \frac{C}{3k_B} \\
+        \text{where:} \\
+        N &= \text{approximate number of atoms in the aluminum block} \\
+        C &= \text{heat capacity of the aluminum block (30 J/K)} \\
+        k_B &= \text{Boltzmann constant (} 1.38 \times 10^{-23} \, \text{J/K)} \\
+        \end{align*}
+        \item \begin{align*}
+        Q_{\text{lost by aluminum}} &= Q_{\text{gained by gas}} \\
+        C_{\text{Al}} (T_{\text{f}} - T_{\text{i,Al}}) &= C_{\text{gas}} (T_{\text{f}} - T_{\text{i,gas}}) \\
+        \text{where:} \\
+        C_{\text{Al}} &= \text{heat capacity of the aluminum block (30 J/K)} \\
+        T_{\text{i,Al}} &= \text{initial temperature of the aluminum (300 K)} \\
+        T_{\text{f}} &= \text{final temperature of both aluminum and gas (345 K)} \\
+        T_{\text{i,gas}} &= \text{initial temperature of the gas (400 K)} \\
+        C_{\text{gas}} &= n c_{\text{v, gas}} = (1 \, \text{mol}) \, c_{\text{v, gas}} \\
+        c_{\text{v, gas}} &= \text{molar heat capacity of the gas at constant volume} \\
+        \end{align*}
+        \item \begin{align*}
+        c_{\text{v, gas}} &= \frac{C_{\text{Al}} (T_{\text{f}} - T_{\text{i,Al}})}{n (T_{\text{i,gas}} - T_{\text{f}})} \\
+        \text{Substitute values:} \\
+        c_{\text{v, gas}} &= \frac{30 \times (345 - 300)}{1 \times (400 - 345)} = 4.5 \, \text{J/K/mol} \\
+        \text{Since } c_{\text{v, gas}} &= \frac{5}{2} R \quad \text{for polyatomic gases (like } \text{NH}_3), \text{ we find:} \\
+        &\text{Answer: (c) NH}_3
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Engine Cycle]
+    \noindent   
+    \begin{enumerate}
+        \item \begin{align*}
+        W_{\text{max}} &= Q_H \left( 1 - \frac{T_C}{T_H} \right) \\
+        \text{where:} \\
+        W_{\text{max}} &= \text{maximum work the engine can do in one cycle} \\
+        Q_H &= \text{heat drawn from the hot reservoir (1000 J)} \\
+        T_C &= \text{temperature of the cold reservoir in Kelvin (} 25^\circ \text{C} = 298 \, \text{K)} \\
+        T_H &= \text{temperature of the hot reservoir in Kelvin (} 220^\circ \text{C} = 493 \, \text{K)} \\
+        \end{align*}
+        \item \begin{align*}
+        W_{\text{max}} &= 1000 \left( 1 - \frac{298}{493} \right) \approx 395 \, \text{J} \\
+        &\text{Answer: (d) } 395 \, \text{J}
+        \end{align*}
+        \item \begin{align*}
+        \text{To achieve maximum theoretical work, the engine must operate reversibly, meaning:} \\
+        \text{Answer: (a) The cycle is reversible.}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Harmonic Oscillator]
+    \noindent
+    \begin{enumerate}
+        \item \begin{align*}
+        \frac{P_1}{P_0} &= e^{-\frac{\epsilon}{k_B T}} \\
+        \text{where:} \\
+        P_1 &= \text{probability that the oscillator is in the first excited state (energy } E = \epsilon) \\
+        P_0 &= \text{probability that the oscillator is in the ground state (energy } E_0 = 0) \\
+        \epsilon &= \text{energy difference between levels, given by } \epsilon = h f \\
+        h &= \text{Planck's constant (} 6.626 \times 10^{-34} \, \text{J s)} \\
+        f &= \text{frequency of the oscillator (} 7 \times 10^{11} \, \text{Hz)} \\
+        k_B &= \text{Boltzmann constant (} 1.38 \times 10^{-23} \, \text{J/K)} \\
+        T &= \text{temperature in Kelvin} \\
+        \end{align*}
+        \item \begin{align*}
+        T &= \frac{\epsilon}{k_B \ln \left( \frac{1}{3} \right)} = \frac{h f}{k_B \ln(3)} \\
+        \text{Substitute values:} \\
+        T &= \frac{6.626 \times 10^{-34} \times 7 \times 10^{11}}{1.38 \times 10^{-23} \times \ln(3)} \approx 30.6 \, \text{K} \\
+        &\text{Answer: (e) } 30.6 \, \text{K}
+        \end{align*}
+        \item \begin{align*}
+        \text{As } T &\to \infty, \frac{P_1}{P_0} \to 1 \quad \text{(since both states become equally populated)} \\
+        &\text{Answer: (b) It tends towards a value of 1.}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Thermal Equilibrium]
+    \noindent  
+    \begin{enumerate}
+        \item \begin{align*}
+        \Delta S &= m c_{\text{Cu}} \ln \left( \frac{T_{\text{final}}}{T_{\text{initial}}} \right) \\
+        \text{where:} \\
+        \Delta S &= \text{entropy change of the copper sphere} \\
+        m &= \text{mass of the copper sphere (5 kg)} \\
+        c_{\text{Cu}} &= \text{specific heat of copper (385 J/kg-K)} \\
+        T_{\text{initial}} &= \text{initial temperature of the copper sphere in Kelvin (} 473.15 \, \text{K)} \\
+        T_{\text{final}} &= \text{final temperature of the copper sphere in Kelvin (} 278.15 \, \text{K)} \\
+        \end{align*}
+        \item \begin{align*}
+        \Delta S &= 5 \times 385 \times \ln \left( \frac{278.15}{473.15} \right) \approx -1010.4 \, \text{J/K} \\
+        &\text{Answer: (b) } -1010.4 \, \text{J/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Latent Heat]
+    \noindent
+    \begin{enumerate}
+        \item \begin{align*}
+        \Delta S &= \frac{Q}{T} = \frac{m L}{T} \\
+        \text{where:} \\
+        \Delta S &= \text{entropy change when the ice melts} \\
+        Q &= \text{heat absorbed during melting} \\
+        m &= \text{mass of the ice (9 kg)} \\
+        L &= \text{latent heat of fusion for ice (333 kJ/kg)} \\
+        T &= \text{temperature at which melting occurs (} 273.15 \, \text{K)} \\
+        \end{align*}
+        \item \begin{align*}
+        \Delta S &= \frac{9 \times 333000}{273.15} \approx 10972 \, \text{J/K} = 11 \, \text{kJ/K} \\
+        &\text{Answer: (c) } 11 \, \text{kJ/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Triple Point of Gallium]
+    \noindent
+        If pressure is increased, the phase with the highest density is favored in equilibrium. Given densities:
+        \begin{enumerate}
+            \item $\rho_{\text{solid}} = 5.91 \, \text{g/cm}^3$
+            \item $\rho_{\text{liquid}} = 6.05 \, \text{g/cm}^3$
+            \item $\rho_{\text{gas}} = 0.116 \, \text{g/cm}^3$
+        \end{enumerate}
+        Since $\rho_{\text{liquid}}$ is the highest, the liquid phase is stabilized at higher pressures.
+        \textbf{Answer:} (b) Liquid
+\end{problem}
+\begin{problem}[Boltzmann Distribution and Entropy]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The probability \( P_1 \) that the electron is in state 1—with energy \( E_1 = 6.1 \, \text{eV} \)—in thermal equilibrium at temperature \( T = 1144 \, \text{K} \) is given by:
+        \begin{align*}
+        P_1 &= \frac{e^{-\frac{E_1}{k_B T}}}{Z} \\
+        Z &= \sum_{i=1}^{3} e^{-\frac{E_i}{k_B T}} = e^{-\frac{E_1}{k_B T}} + e^{-\frac{E_2}{k_B T}} + e^{-\frac{E_3}{k_B T}} \\
+        \text{where:} \\
+        E_1 &= \text{energy of state 1 (6.1 eV)} \\
+        E_2 &= \text{energy of state 2 (6.3 eV)} \\
+        E_3 &= \text{energy of state 3 (6.6 eV)} \\
+        k_B &= \text{Boltzmann constant (} 8.617 \times 10^{-5} \, \text{eV/K)} \\
+        T &= \text{temperature (1144 K)}
+        \end{align*}
+        Substitute the values to find \( P_1 \):
+        \begin{align*}
+        Z &= e^{-\frac{6.1}{8.617 \times 10^{-5} \times 1144}} + e^{-\frac{6.3}{8.617 \times 10^{-5} \times 1144}} + e^{-\frac{6.6}{8.617 \times 10^{-5} \times 1144}} \approx 1.137 \\
+        P_1 &= \frac{e^{-\frac{6.1}{8.617 \times 10^{-5} \times 1144}}}{1.137} \approx 0.879 \\
+        &\text{Answer: (c) } 8.79 \times 10^{-1}
+        \end{align*}
+
+        \item 
+        The entropy \( S \) of the electron as \( T \to 0 \) approaches zero because, at absolute zero, the system will be in the ground state with no disorder. This results in \( S = 0 \) as \( T \to 0 \).
+        \begin{align*}
+        &\text{Answer: (a) } 0.00 \, \text{eV/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Freezing Point Depression]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The addition of sugar to water lowers the chemical potential of the liquid phase. This results in a depression of the freezing point because the solid phase (ice) now has a higher chemical potential relative to the liquid phase. Thus, the system requires a lower temperature to reach the equilibrium where the chemical potentials of the liquid and solid phases are equal.
+        
+        \item 
+        \textbf{Answer:} (a) The mixing of the sugar lowered the chemical potential of the liquid water.
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Phases of Matter]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The diagram shows chemical potential \( \mu \) versus temperature \( T \) for solid, liquid, and gas phases of a substance at a particular pressure. In thermodynamic equilibrium, a substance will minimize its chemical potential. Given that state \( Q \) is at a higher chemical potential than the liquid phase at the same temperature, the substance will tend to transition to the liquid phase to lower its chemical potential.
+
+        \item 
+        \textbf{Answer:} (a) It will melt.
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Phase Diagrams]
+    \noindent
+    \begin{enumerate}
+        \item 
+        In a phase diagram, phases with higher entropy are generally favored at higher temperatures, as entropy tends to increase with temperature. Near the phase transition lines:
+        \begin{itemize}
+            \item Phase III, being at higher temperatures relative to Phase I and Phase II, likely has more entropy per particle than the other phases.
+            \item Phase I, typically present at lower temperatures and higher pressures, likely has the highest density.
+        \end{itemize}
+        Therefore, Phase III has more entropy per particle than Phase II.
+
+        \item 
+        \textbf{Answer:} (b) Phase III has more entropy per particle than Phase II.
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Latent Heat and Binding Energy]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The binding energy \( E_{\text{binding}} \) of a nitrogen molecule in the liquid phase is given by:
+        \begin{align*}
+        E_{\text{binding}} &= \frac{Q}{n N_A} \\
+        n &= \frac{\text{mass}}{\text{molar mass}} = \frac{20 \, \text{g}}{28 \, \text{g/mol}} \\
+        \text{where:} \\
+        Q &= \text{total heat required to vaporize the liquid nitrogen (4480 J)} \\
+        N_A &= \text{Avogadro's number (} 6.022 \times 10^{23} \, \text{mol}^{-1} \text{)} \\
+        \end{align*}
+
+        Substitute the values to find \( E_{\text{binding}} \):
+        \begin{align*}
+        E_{\text{binding}} &= \frac{4480}{\left( \frac{20}{28} \right) \times 6.022 \times 10^{23}} \approx 9.4 \times 10^{-21} \, \text{J} \\
+        &\text{Answer: (d) } 9.4 \times 10^{-21} \, \text{J}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Degrees of Freedom in a Gas]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The number of active degrees of freedom \( f \) can be determined using the relationship:
+        \begin{align*}
+        f &= \frac{2Q}{n R \Delta T} \\
+        \text{where:} \\
+        Q &= \text{heat added to the gas (} 1.45 \times 10^4 \, \text{J)} \\
+        n &= \text{number of moles (6 moles)} \\
+        R &= \text{gas constant (8.314 J/(mol K))} \\
+        \Delta T &= T_{\text{final}} - T_{\text{initial}} = 383 \, \text{K} - 300 \, \text{K} = 83 \, \text{K}
+        \end{align*}
+
+        Substitute the values to find \( f \):
+        \begin{align*}
+        f &= \frac{2 \times 1.45 \times 10^4}{6 \times 8.314 \times 83} \approx 7 \\
+        &\text{Answer: (b) } 7
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Three-State System]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The probability \( P_3 \) that the system is in state 3 is given by:
+        \begin{align*}
+        P_3 &= \frac{e^{-\frac{E_3}{k_B T}}}{Z} \\
+        Z &= e^{-\frac{E_1}{k_B T}} + e^{-\frac{E_2}{k_B T}} + e^{-\frac{E_3}{k_B T}} \\
+        \text{where:} \\
+        E_1 &= \text{energy of state 1 (} 3.2 \times 10^{-20} \, \text{J)} \\
+        E_2 &= \text{energy of state 2 (equal to } E_1 \text{)} \\
+        E_3 &= \text{energy of state 3 (} 4.8 \times 10^{-20} \, \text{J)} \\
+        k_B &= \text{Boltzmann constant (} 1.38 \times 10^{-23} \, \text{J/K)} \\
+        T &= \text{temperature (605 K)}
+        \end{align*}
+
+        Substitute the values to find \( P_3 \):
+        \begin{align*}
+        Z &= e^{-\frac{3.2 \times 10^{-20}}{1.38 \times 10^{-23} \times 605}} + e^{-\frac{3.2 \times 10^{-20}}{1.38 \times 10^{-23} \times 605}} + e^{-\frac{4.8 \times 10^{-20}}{1.38 \times 10^{-23} \times 605}} \\
+        P_3 &= \frac{e^{-\frac{4.8 \times 10^{-20}}{1.38 \times 10^{-23} \times 605}}}{Z} \approx 0.0685 \\
+        &\text{Answer: (e) } 0.0685
+        \end{align*}
+
+        \item 
+        To make the probability of being in state 1 equal to the probability of being in state 3, the energies \( E_1 \) and \( E_3 \) must be equal, which would make the Boltzmann factors for these states equal as well.
+
+        \item 
+        \textbf{Answer: (c) } \( E_3 = E_1 \)
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Engine Efficiency]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The maximum temperature \( T_C \) of the cold reservoir is calculated based on the efficiency of the heat engine:
+        \begin{align*}
+        \eta &= \frac{W}{Q_H} = 1 - \frac{T_C}{T_H} \\
+        T_C &= T_H (1 - \eta) \\
+        \text{where:} \\
+        W &= \text{work output of the engine (600 W)} \\
+        Q_H &= \text{heat input from the hot reservoir (1000 W)} \\
+        T_H &= \text{temperature of the hot reservoir (373 K)}
+        \end{align*}
+
+        Substitute the values to find \( T_C \):
+        \begin{align*}
+        \eta &= \frac{600}{1000} = 0.6 \\
+        T_C &= 373 \times (1 - 0.6) = 149.2 \, \text{K} \approx -124^\circ \text{C} \\
+        &\text{Answer: (e) } -124^\circ \text{C}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Entropy of Coin Tosses]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The entropy is minimized for outcomes that are farthest from the mean, as these are the least likely. For a fair coin flipped 16 times, the mean number of heads is:
+        \begin{align*}
+        \mu &= n \cdot p = 16 \cdot 0.5 = 8
+        \end{align*}
+        Values of \( k \) near the extremes (such as 0 or 16 heads) will have the lowest entropy, as these outcomes have the smallest chance of occurring.
+
+        \item 
+        \textbf{Answer:} (c) 14 (assuming closest to extremes).
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Average Energy of a Three-State System]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The average energy \( \langle E \rangle \) of the system as \( T \to \infty \) is calculated by considering the degeneracies of each energy state:
+        \begin{align*}
+        \langle E \rangle &= \frac{\sum_i g_i E_i}{\sum_i g_i} \\
+        \text{where:} \\
+        g_1 &= 1 \quad \text{(degeneracy of state with } E_1 = 0.4 \, \text{eV)} \\
+        g_2 &= 2 \quad \text{(degeneracy of state with } E_2 = 0.6 \, \text{eV)} \\
+        \end{align*}
+
+        Substitute the values to find \( \langle E \rangle \):
+        \begin{align*}
+        \langle E \rangle &= \frac{(1 \times 0.4) + (2 \times 0.6)}{1 + 2} \\
+        &= \frac{0.4 + 1.2}{3} = \frac{1.6}{3} \approx 0.533 \, \text{eV} \\
+        &\text{Answer: (c) } 0.533 \, \text{eV}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Change in Gibbs Free Energy of a Diatomic Ideal Gas]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The change in Gibbs free energy \( \Delta G \) for a diatomic ideal gas expanding isothermally can be calculated using:
+        \begin{align*}
+        \Delta G &= N k_B T \ln \left( \frac{P_f}{P_i} \right) \\
+        \text{where:} \\
+        N &= \text{number of molecules (} 7 \times 10^{23} \text{)} \\
+        k_B &= \text{Boltzmann constant (} 1.38 \times 10^{-23} \, \text{J/K)} \\
+        T &= \text{temperature (600 K)} \\
+        P_i &= \text{initial pressure (700 Pa)} \\
+        P_f &= \text{final pressure (850 Pa)}
+        \end{align*}
+
+        Substitute the values to find \( \Delta G \):
+        \begin{align*}
+        \Delta G &= (7 \times 10^{23}) \times (1.38 \times 10^{-23}) \times 600 \times \ln \left( \frac{850}{700} \right) \\
+        &= 1125 \, \text{J} \\
+        &\text{Answer: (c) } 1125 \, \text{J}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Vapor Pressure, Boiling Point, and Heat Capacity]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The Clausius-Clapeyron relation describes how vapor pressure varies with temperature:
+        \begin{align*}
+        \ln(P) &= -\frac{L}{R} \frac{1}{T} + \text{constant} \\
+        \text{where:} \\
+        P &= \text{vapor pressure} \\
+        L &= \text{latent heat of vaporization} \\
+        R &= \text{gas constant (8.314 J/(mol K))} \\
+        T &= \text{temperature in Kelvin}
+        \end{align*}
+        A plot of \( \ln(P) \) versus \( \frac{1}{T} \) gives a straight line with slope \( -\frac{L}{R} \).
+
+        \item 
+        To find the boiling point \( T_2 \) at \( P_2 = 2 \, \text{atm} \), we use:
+        \begin{align*}
+        \ln\left(\frac{P_2}{P_1}\right) &= -\frac{L}{R} \left( \frac{1}{T_2} - \frac{1}{T_1} \right) \\
+        T_1 &= 373 \, \text{K} \quad \text{(boiling point at 1 atm)} \\
+        P_1 &= 1 \, \text{atm}, \quad P_2 = 2 \, \text{atm} \\
+        L &= 40650 \, \text{J/mol}
+        \end{align*}
+
+        Rearranging and solving:
+        $$
+        \frac{1}{T_2} = \frac{1}{T_1} - \frac{R}{L} \ln\left(\frac{P_2}{P_1}\right)
+        $$
+
+        \item 
+        The average energy of a solid (as 3D oscillators) is given by:
+        \begin{align*}
+        U &= 3N \epsilon \frac{e^{\frac{\epsilon}{k_B T}}}{e^{\frac{\epsilon}{k_B T}} - 1} \\
+        C &= \frac{dU}{dT} \quad \text{(heat capacity)}
+        \end{align*}
+        At low \( T \), \( C \) increases with \( T \); at high \( T \), \( C \) approaches a constant.
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Chemical Potential and Phase Equilibrium]
+    \noindent
+    \begin{enumerate}
+        \item 
+        Given the initial conditions:
+        \begin{align*}
+        N_L &= 5 \, \text{moles (in liquid phase)} \\
+        N_S &= 2 \, \text{moles (in solid phase)} \\
+        \mu_L &= 9 \times 10^{-20} \, \text{J (chemical potential of liquid)} \\
+        \mu_S &= 9.5 \times 10^{-20} \, \text{J (chemical potential of solid)}
+        \end{align*}
+        
+        Since \( \mu_L < \mu_S \), the liquid phase is favored. At equilibrium, all moles will be in the liquid phase.
+
+        \item 
+        Therefore, the equilibrium value of \( N_L \) is:
+        \begin{align*}
+        N_L &= N_L + N_S = 5 + 2 = 7 \, \text{moles} \\
+        &\text{Answer: (c) } 7 \, \text{moles}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Pump Work Requirement]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the minimum work \( W \) required, we use the coefficient of performance (COP) of a heat pump:
+        \begin{align*}
+        \text{COP} &= \frac{Q_H}{W} = \frac{T_H}{T_H - T_C} \\
+        W &= \frac{Q_H}{\text{COP}} \\
+        \text{where:} \\
+        Q_H &= Q_{\text{leak}} = 26 \, \text{kW} \quad \text{(heat required to maintain house temperature)} \\
+        T_H &= \text{inside temperature in Kelvin (} 21^\circ \text{C} = 294 \, \text{K)} \\
+        T_C &= \text{outside temperature in Kelvin (} -11^\circ \text{C} = 262 \, \text{K)}
+        \end{align*}
+
+        Substitute the values to find \( \text{COP} \) and \( W \):
+        \begin{align*}
+        \text{COP} &= \frac{294}{294 - 262} = \frac{294}{32} \approx 9.19 \\
+        W &= \frac{26 \, \text{kW}}{9.19} \approx 2.83 \, \text{kW} \\
+        &\text{Answer: (a) } 2.8 \, \text{kW}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Capacity of a Cold Block]
+    \noindent
+    \begin{enumerate}
+        \item 
+        The heat capacity \( C \) of the block is calculated using the Carnot efficiency and the relationship between heat, work, and temperature change:
+        \begin{align*}
+        \eta &= 1 - \frac{T_C}{T_H} \\
+        W &= \eta Q = \left(1 - \frac{T_C}{T_H}\right) Q \\
+        Q &= C (T_H - T_C) \\
+        C &= \frac{W}{\left(1 - \frac{T_C}{T_H}\right)(T_H - T_C)}
+        \end{align*}
+        
+        \text{where:} \\
+        \( W = 80 \, \text{kJ} = 80000 \, \text{J} \quad \text{(work obtained)} \) \\
+        \( T_H = \text{temperature of air reservoir (294 K)} \) \\
+        \( T_C = \text{initial temperature of block (77 K)} \) \\
+
+        Substitute the values to find \( C \):
+        \begin{align*}
+        \eta &= 1 - \frac{77}{294} \approx 0.738 \\
+        C &= \frac{80000}{0.738 \times (294 - 77)} \approx 452 \, \text{J/K} \\
+        &\text{Answer: (a) } 4.52 \times 10^2 \, \text{J/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Capacity of Solid Germanium]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the heat capacity \( C \) for 4 kg of germanium, we use the molar heat capacity under the Dulong-Petit law, assuming equipartition holds:
+        \begin{align*}
+        C &= n \cdot C_m = \frac{m}{M} \cdot 3R \\
+        \text{where:} \\
+        m &= 4 \, \text{kg (mass of germanium)} \\
+        M &= 0.07263 \, \text{kg/mol (molar mass of germanium)} \\
+        R &= 8.314 \, \text{J/(mol K) (gas constant)} \\
+        C_m &= 3R = 3 \times 8.314 \, \text{J/(mol K)} = 24.942 \, \text{J/(mol K)}
+        \end{align*}
+
+        Substitute the values to find \( C \):
+        \begin{align*}
+        C &= \frac{4}{0.07263} \cdot 24.942 \\
+        &\approx 1374 \, \text{J/K} \\
+        &\text{Answer: (d) } 1.37 \times 10^3 \, \text{J/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Centrifugal Separation of Molecules]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the number of hemoglobin molecules \( N(h_2) \) at height \( h_2 = 0.2 \, \text{m} \), we use the Boltzmann factor for the distribution of molecules in a gravitational (centrifugal) field:
+        \begin{align*}
+        N(h_2) &= N(h_1) \cdot e^{-\frac{(m g_{\text{eff}}) (h_2 - h_1)}{k_B T}} \\
+        \text{where:} \\
+        N(h_1) &= 20000 \, \text{molecules (at } h_1 = 0.03 \, \text{m)} \\
+        h_2 &= 0.2 \, \text{m} \\
+        m &= 1.07 \times 10^{-22} \, \text{kg (mass of hemoglobin molecule)} \\
+        g_{\text{eff}} &= 3g = 3 \times 9.8 = 29.4 \, \text{m/s}^2 \\
+        k_B &= 1.38 \times 10^{-23} \, \text{J/K (Boltzmann constant)} \\
+        T &= 312 \, \text{K (temperature)}
+        \end{align*}
+
+        Substitute the values to find \( N(h_2) \):
+        \begin{align*}
+        N(h_2) &= 20000 \cdot e^{-\frac{(1.07 \times 10^{-22}) \times 29.4 \times (0.2 - 0.03)}{1.38 \times 10^{-23} \times 312}} \\
+        &\approx 17700 \, \text{molecules} \\
+        &\text{Answer: (e) } 1.77 \times 10^4 \, \text{molecules}
+        \end{align*}
+
+        \item 
+        Since nitrogen (\( \text{N}_2 \)) has a much smaller mass compared to hemoglobin, it will experience less centrifugal force and thus will be more prevalent at the top of the tube.
+
+        \item 
+        \textbf{Answer:} (a) \( \text{N}_2 \)
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Equipartition and Molar Mass of a Solid]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the molar mass \( M \) of the solid, we use the relationship between heat, heat capacity, and temperature change:
+        \begin{align*}
+        C &= \frac{Q}{\Delta T} \\
+        C_m &= 3R = 3 \times 8.314 \, \text{J/(mol K)} = 24.942 \, \text{J/(mol K)} \\
+        M &= \frac{m \cdot C_m}{C}
+        \end{align*}
+        
+        \text{where:} \\
+        \( Q = 700 \, \text{J} \) \quad (heat applied) \\
+        \( \Delta T = 6 \, ^\circ \text{C} \) \quad (temperature rise) \\
+        \( m = 1 \, \text{kg} \) \quad (mass of the solid) \\
+        \( R = 8.314 \, \text{J/(mol K)} \) \quad (gas constant)
+
+        Substitute the values to find \( C \) and then \( M \):
+        \begin{align*}
+        C &= \frac{700}{6} \approx 116.67 \, \text{J/K} \\
+        M &= \frac{1 \times 24.942}{116.67} \approx 214 \, \text{g/mol} \\
+        &\text{Answer: (e) } 214 \, \text{g/mol}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Work Done by an Expanding Ideal Gas]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the work \( W \) done by the gas, we use the first law of thermodynamics:
+        \begin{align*}
+        \Delta U &= Q - W \\
+        W &= Q - \Delta U
+        \end{align*}
+        
+        The change in internal energy \( \Delta U \) for a monatomic ideal gas is:
+        \begin{align*}
+        \Delta U &= \frac{3}{2} n R \Delta T \\
+        \text{where:} \\
+        n &= 9 \, \text{moles} \\
+        R &= 8.314 \, \text{J/(mol K)} \\
+        \Delta T &= T_f - T_i = 280 \, \text{K} - 250 \, \text{K} = 30 \, \text{K}
+        \end{align*}
+
+        Substitute values to calculate \( \Delta U \):
+        \begin{align*}
+        \Delta U &= \frac{3}{2} \times 9 \times 8.314 \times 30 \\
+        &= 1116.57 \, \text{J}
+        \end{align*}
+
+        Then, calculate \( W \):
+        \begin{align*}
+        W &= Q - \Delta U \\
+        &= 3523 - 1116.57 \\
+        &= 155.83 \, \text{J} \\
+        &\text{Answer: } 155.83 \, \text{J}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Chemical Equilibrium of a Material in a Cylinder]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the temperature \( T \) at which the liquid and gas phases are in equilibrium, we use the chemical potential difference:
+        \begin{align*}
+        \mu_L - \mu_G &= \Delta = - k_B T \ln \left( \frac{N_L}{N_G} \right) \\
+        \text{where:} \\
+        \Delta &= 0.394 \, \text{eV} \quad \text{(difference in chemical potential)} \\
+        k_B &= 8.617 \times 10^{-5} \, \text{eV/K} \quad \text{(Boltzmann constant)} \\
+        \frac{N_L}{N_G} &= 0.541 \quad \text{(ratio of molecules in liquid to gas phase)}
+        \end{align*}
+
+        Substitute the values and rearrange to solve for \( T \):
+        \begin{align*}
+        0 &= 0.394 + k_B T \ln(0.541) \\
+        T &= \frac{-0.394}{k_B \ln(0.541)} \\
+        &= \frac{-0.394}{8.617 \times 10^{-5} \times \ln(0.541)} \\
+        &\approx 7442.76 \, \text{K} \\
+        &\text{Answer: } 7442.76 \, \text{K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Carnot Engine Temperature Ratio]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the ratio \( \frac{T_C}{T_H} \) for a Carnot engine with efficiency \( \eta = 0.30 \), we use the efficiency formula:
+        \begin{align*}
+        \eta &= 1 - \frac{T_C}{T_H} \\
+        \text{where:} \\
+        \eta &= 0.30 \quad \text{(Carnot efficiency)} \\
+        T_C &= \text{temperature of the cold reservoir} \\
+        T_H &= \text{temperature of the hot reservoir}
+        \end{align*}
+
+        Substitute the given value of \( \eta \) and rearrange to solve for \( \frac{T_C}{T_H} \):
+        \begin{align*}
+        0.30 &= 1 - \frac{T_C}{T_H} \\
+        \frac{T_C}{T_H} &= 1 - 0.30 \\
+        &= 0.70 \\
+        &\text{Answer: (d) } 0.70
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\begin{problem}[Heat Capacity of a Cold Block]
+    \noindent
+    \begin{enumerate}
+        \item 
+        To find the heat capacity \( C \) of the block, we use the Carnot efficiency and the relationship between heat, work, and temperature change:
+        \begin{align*}
+        \eta &= 1 - \frac{T_C}{T_H} \\
+        W &= \eta Q = \left(1 - \frac{T_C}{T_H}\right) Q \\
+        Q &= C (T_H - T_C) \\
+        C &= \frac{W}{\left(1 - \frac{T_C}{T_H}\right)(T_H - T_C)}
+        \end{align*}
+        \item where: \begin{enumerate}
+            \item \( W = 80 \, \text{kJ} = 80000 \, \text{J} \quad \text{(maximum work output)} \) 
+            \item \( W = 80 \, \text{kJ} = 80000 \, \text{J} \quad \text{(maximum work output)} \) 
+            \item \( W = 80 \, \text{kJ} = 80000 \, \text{J} \quad \text{(maximum work output)} \)  
+        \end{enumerate}
+        Substitute the values to find \( C \):
+        \begin{align*}
+        \eta &= 1 - \frac{77}{294} \approx 0.738 \\
+        C &= \frac{80000}{0.738 \times (294 - 77)} \\
+        &\approx 452 \, \text{J/K} \\
+        &\text{Answer: (a) } 4.52 \times 10^2 \, \text{J/K}
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+\end{document}

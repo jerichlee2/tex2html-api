@@ -1,0 +1,390 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432: HW 9}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \begin{theorem}
+    Let $(M,D)$ be a metric space and let $A\subseteq M$.  
+    Define
+    \[
+    f:M\longrightarrow\mathbb{R},\qquad 
+    f(x)\;:=\;D(x,A)\;:=\;\inf_{a\in A}D(x,a)\quad(x\in M).
+    \]
+    Then $f$ is continuous (in fact, $1$–Lipschitz).
+    \end{theorem}
+    
+    \begin{proof}
+    We prove the stronger statement that for all $x,y\in M$,
+    \[
+    \lvert f(x)-f(y)\rvert\;\le D(x,y).
+    \tag{$\ast$}
+    \]
+    
+    \begin{enumerate}
+        \item Fix $x,y\in M$ and let $a\in A$ be arbitrary.  
+              By the triangle inequality,
+              \[
+                  D(x,a)\;\le\;D(x,y)+D(y,a).
+              \]
+        \item Taking the infimum over $a\in A$ on the right–hand side yields
+              \[
+                  D(x,A)\;\le\;D(x,y)+D(y,A),
+              \]
+              i.e.\ $f(x)\le D(x,y)+f(y)$.
+        \item Reversing the roles of $x$ and $y$ gives
+              \[
+                  f(y)\;\le\;D(x,y)+f(x).
+              \]
+        \item Combining the two inequalities gives $(\ast)$:
+              \[
+                  \lvert f(x)-f(y)\rvert
+                  \;=\;\max\{f(x)-f(y),\,f(y)-f(x)\}
+                  \;\le\;D(x,y).
+              \]
+    \end{enumerate}
+    
+    \smallskip
+    \noindent\textbf{Continuity.}
+    Let $(x_n)_{n\in\mathbb{N}}\subseteq M$ with $x_n\to x\in M$.  
+    Since $D(x_n,x)\to 0$, inequality $(\ast)$ gives
+    \[
+    \lvert f(x_n)-f(x)\rvert\;\le\;D(x_n,x)\;\xrightarrow[n\to\infty]{}\;0,
+    \]
+    so $f(x_n)\to f(x)$.  
+    Hence $f$ is continuous at every point of $M$.
+    \end{proof} 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \begin{theorem}
+    Let $(M,D)$ be a metric space, let $A\subseteq M$ be closed, and let $y\in M\setminus A$.  
+    There exists a continuous function $f:M\to\mathbb{R}$ such that
+    \[
+    f\bigl\lvert_{\,A}\equiv 0
+    \quad\text{while}\quad
+    f(y)\neq 0.
+    \]
+    \end{theorem}
+    
+    \begin{proof}
+    Define
+    \[
+    f:M\longrightarrow\mathbb{R},
+    \qquad
+    f(x)\;:=\;D(x,A)\;=\;\inf_{a\in A}D(x,a)\quad(x\in M).
+    \]
+    
+    \begin{enumerate}
+        \item[\textbf{1.}] \textbf{Continuity of $f$.}  
+              For any $x,z\in M$ and every $a\in A$,
+              \[
+                    D(x,a)\;\le\;D(x,z)+D(z,a)
+              \]
+              by the triangle inequality.  
+              Taking $\inf_{a\in A}$ on both sides yields
+              \[
+                    f(x)\;\le\;D(x,z)+f(z).
+              \]
+              Interchanging $x$ and $z$ and combining the two inequalities we obtain
+              \[
+                    |f(x)-f(z)|\;\le\;D(x,z)
+              \]
+              for all $x,z\in M$.  
+              Hence $f$ is $1$–Lipschitz and therefore continuous on $M$.
+    
+        \item[\textbf{2.}] \textbf{Vanishing on $A$.}  
+              If $a\in A$ then $D(a,A)=0$ (take $a$ itself in the infimum), so $f(a)=0$.  
+              Thus $f\bigl\lvert_{\,A}\equiv 0$.
+    
+        \item[\textbf{3.}] \textbf{Non‑vanishing at $y$.}  
+              Because $A$ is closed and $y\notin A$, the distance
+              \[
+                    d\;:=\;D(y,A)\;=\;\inf_{a\in A}D(y,a)
+              \]
+              satisfies $d>0$.  
+              Consequently $f(y)=d\neq 0$.
+    
+    \end{enumerate}
+    
+    \noindent
+    Therefore $f$ satisfies all required conditions.  \qedhere
+    \end{proof} 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \begin{theorem}
+    Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and let $f:X\to Y$.
+    \begin{enumerate}[]
+        \item If $X=\displaystyle\bigcup_{i\in I}U_i$ with each $U_i$ open in $X$ and
+              $f\!\restriction_{U_i}$ continuous for every $i\in I$, then $f$ is continuous on $X$.
+        \item If $n\in\mathbb{N}$ and $X=\displaystyle\bigcup_{i=1}^{n}F_i$ with each
+              $F_i$ closed in $X$ and $f\!\restriction_{F_i}$ continuous for $i=1,\dots,n$,
+              then $f$ is continuous on $X$.
+        \item Statement \textup{(b)} need not hold for an \emph{infinite} collection of closed sets.
+    \end{enumerate}
+    \end{theorem}
+    
+    \begin{proof}
+    Throughout we use the \emph{closed‐set characterisation} of continuity:  
+    $f$ is continuous on $X$ iff $f^{-1}(C)$ is closed in $X$ for every closed $C\subseteq Y$.
+    
+    \smallskip
+    \noindent\textbf{(a) Open cover.}
+    Let $C\subseteq Y$ be closed.  
+    For each $i\in I$ the restriction $f\!\restriction_{U_i}$ is continuous, hence
+    \[
+    f^{-1}(C)\cap U_i
+       \;=\;(f\!\restriction_{U_i})^{-1}(C)
+    \]
+    is closed in $U_i$.  
+    Because $U_i$ is open in $X$, any subset that is closed in $U_i$ is in fact closed in $X$.  
+    Consequently $f^{-1}(C)=\bigcup_{i\in I}\bigl(f^{-1}(C)\cap U_i\bigr)$ is a union of closed
+    subsets of $X$—hence closed.  By the closed‐set criterion, $f$ is continuous on $X$.
+    
+    \smallskip
+    \noindent\textbf{(b) Finite closed cover.}
+    Let $C\subseteq Y$ be closed.  For each $i=1,\dots,n$,
+    continuity of $f\!\restriction_{F_i}$ gives
+    \[
+    F_i\cap f^{-1}(C)=(f\!\restriction_{F_i})^{-1}(C)
+    \]
+    closed in $F_i$.  
+    Because $F_i$ itself is closed in $X$, the set $F_i\cap f^{-1}(C)$ is the intersection of two closed subsets of $X$, hence closed in $X$.  
+    Since a \emph{finite} union of closed sets is closed, 
+    \[
+    f^{-1}(C)=\bigcup_{i=1}^{n}\bigl(F_i\cap f^{-1}(C)\bigr)
+    \]
+    is closed in $X$, proving that $f$ is continuous on $X$.
+    
+    \smallskip
+    \noindent\textbf{(c) Failure for infinitely many closed sets.}
+    The argument in (b) hinges on the union being finite.
+    If we allow infinitely many closed sets, the conclusion can fail.
+    
+    \emph{Counterexample.}  
+    Let $X=\mathbb{R}$, $Y=\mathbb{R}$, and for each $x\in\mathbb{R}$ set
+    \[
+    F_x:=\{x\}\quad(\text{a singleton, hence closed}).
+    \]
+    Clearly $\displaystyle X=\bigcup_{x\in\mathbb{R}}F_x$ is an \emph{infinite} closed cover of $X$.
+    Define
+    \[
+    f:\mathbb{R}\longrightarrow\mathbb{R},\qquad
+    f(t):=
+    \begin{cases}
+    0,& t\le 0,\\[2pt]
+    1,& t>0.
+    \end{cases}
+    \]
+    For each closed set $F_x=\{x\}$ the restriction $f\!\restriction_{F_x}$ is a constant map
+    and therefore continuous.
+    Yet $f$ is \emph{not} continuous on $\mathbb{R}$ (it jumps at $t=0$).
+    Thus the finite–closed–cover result does not extend to an infinite family of closed sets.
+    \end{proof} 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \begin{theorem}
+    Every metric space is homeomorphic to one whose diameter is finite (indeed, $\le 1$).
+    \end{theorem}
+    
+    \begin{proof}[Construction and verification]
+    Let $(X,d)$ be an arbitrary metric space.  
+    Define a new function
+    \[
+    \varrho:X\times X\longrightarrow[0,1),\qquad
+    \varrho(x,y)\;:=\;g\!\bigl(d(x,y)\bigr)
+    \quad\text{where}\quad
+    g(t)\;:=\;\frac{t}{1+t}\quad(t\ge 0).
+    \]
+    
+    \smallskip
+    \noindent\textbf{Step 1: $\varrho$ is a metric.}
+    \begin{enumerate}
+        \item \emph{Non‑negativity and identity of indiscernibles} are immediate from those of $d$ and the fact that $g(0)=0$ and $g$ is strictly increasing.
+        \item \emph{Symmetry} holds because $d$ is symmetric and $g$ depends only on the value of $d(x,y)$.
+        \item \emph{Triangle inequality.}  
+              For $a,b\ge 0$ observe that
+              \[
+                  g(a)+g(b)-g(a)g(b)
+                  \;=\;\frac{a}{1+a}+\frac{b}{1+b}-\frac{ab}{(1+a)(1+b)}
+                  \;=\;\frac{a+b}{1+a+b}.
+              \]
+              Since $g(a+b)=\dfrac{a+b}{1+a+b}$, we have
+              \[
+                  g(a+b)\;=\;g(a)+g(b)-g(a)g(b)\;\le\;g(a)+g(b).
+              \]
+              Now let $x,y,z\in X$.  
+              Setting $a=d(x,y)$ and $b=d(y,z)$ and using $d(x,z)\le a+b$,
+              \[
+                    \varrho(x,z)
+                    =g\!\bigl(d(x,z)\bigr)
+                    \le g(a+b)
+                    \le g(a)+g(b)
+                    =\varrho(x,y)+\varrho(y,z).
+              \]
+    \end{enumerate}
+    Hence $\varrho$ is a metric on $X$.
+    
+    \smallskip
+    \noindent\textbf{Step 2: $\varrho$ has finite diameter.}
+    Because $g(t)<1$ for every $t\ge 0$, we have
+    \[
+    \operatorname{diam}(X,\varrho)\;=\;\sup_{x,y\in X}\varrho(x,y)\;\le\;1.
+    \]
+    
+    \smallskip
+    \noindent\textbf{Step 3: Topologies coincide.}
+    The function $g:[0,\infty)\to[0,1)$ is a homeomorphism with inverse
+    $g^{-1}(s)=\dfrac{s}{1-s}$ ($0\le s<1$).  
+    For $r>0$ and $x\in X$,
+    \[
+    B_{\varrho}(x,r)=\bigl\{y\in X : \varrho(x,y)<r\bigr\}
+                   =\bigl\{y\in X : d(x,y)<g^{-1}(r)\bigr\}
+                   =B_{d}\!\bigl(x,g^{-1}(r)\bigr).
+    \]
+    Thus the open balls (and hence the open sets) are the same for $d$ and $\varrho$.
+    Therefore the identity map
+    \[
+    \text{id}_X:(X,d)\longrightarrow (X,\varrho),\qquad x\mapsto x,
+    \]
+    is a homeomorphism.
+    
+    \smallskip
+    \noindent\textbf{Conclusion.}
+    The metric $\varrho$ endows $X$ with the same topology as $d$ while ensuring
+    $\operatorname{diam}(X,\varrho)\le 1$.  
+    Hence every metric space is homeomorphic to a metric space of finite diameter, as claimed.
+    \end{proof} 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \begin{theorem}
+    Let $(M,D)$ be a metric space and let $X\subseteq M$ be dense.
+    Assume that \emph{every} Cauchy sequence contained in $X$ converges to a point of $M$.
+    Then $M$ is complete.
+    \end{theorem}
+    
+    \begin{proof}
+    Let $(x_n)_{n\in\mathbb{N}}$ be an arbitrary Cauchy sequence in $M$.
+    We must show that $(x_n)$ converges in $M$.
+    
+    \medskip
+    \noindent\textbf{Step 1: Approximate each $x_n$ by a point in $X$.}
+    
+    Because $X$ is dense in $M$, for every $n\in\mathbb{N}$ we can choose
+    \[
+    y_n\in X
+    \quad\text{such that}\quad
+    D(x_n,y_n)<\frac1n.
+    \]
+    
+    \medskip
+    \noindent\textbf{Step 2: $(y_n)$ is a Cauchy sequence in $X$.}
+    
+    Given $\varepsilon>0$, choose $N\in\mathbb{N}$ such that
+    $D(x_m,x_k)<\varepsilon/3$ whenever $m,k\ge N$ (possible because $(x_n)$ is Cauchy).
+    For $m,k\ge N$ we have
+    \[
+    D(y_m,y_k)
+    \;\le\;
+    D(y_m,x_m)+D(x_m,x_k)+D(x_k,y_k)
+    \;<\;
+    \frac1m+\varepsilon/3+\frac1k
+    \;\le\;
+    \varepsilon,
+    \]
+    so $(y_n)$ is Cauchy.
+    
+    \medskip
+    \noindent\textbf{Step 3: $(y_n)$ converges in $M$.}
+    
+    By hypothesis, every Cauchy sequence in $X$ converges in $M$.
+    Hence there exists $y\in M$ with
+    \[
+    y_n\longrightarrow y.
+    \]
+    
+    \medskip
+    \noindent\textbf{Step 4: $(x_n)$ converges to the same limit $y$.}
+    
+    For $n\in\mathbb{N}$,
+    \[
+    D(x_n,y)
+    \;\le\;
+    D(x_n,y_n)+D(y_n,y)
+    \;<\;
+    \frac1n + D(y_n,y).
+    \]
+    Taking $n\to\infty$ the first term $\tfrac1n\to 0$,
+    and the second term tends to $0$ because $y_n\to y$.
+    Thus $D(x_n,y)\to 0$, i.e.\ $x_n\to y$ in $M$.
+    
+    \medskip
+    \noindent\textbf{Conclusion.}
+    Every Cauchy sequence in $M$ converges in $M$, so $(M,D)$ is complete.
+    \end{proof} 
+\end{solution}
+\end{document}

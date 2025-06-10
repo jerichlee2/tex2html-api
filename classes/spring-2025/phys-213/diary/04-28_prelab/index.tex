@@ -1,0 +1,356 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Latent heat of vaporisation per \(\mathbf{H_2O}\) molecule}
+
+Given (at \(100^{\circ}\mathrm{C},\,1\;\text{atm}\))  
+\[
+  L_{\text{water}\to\text{steam}}
+  = 2256\;\text{kJ\,kg}^{-1}
+  = 2.256\times10^{6}\;\text{J\,kg}^{-1}
+\]
+our goal is to convert this macroscopic value to the energy required for
+\emph{one} water molecule.
+
+\subsection*{1.  Convert “per kilogram’’ to “per mole’’}
+
+\[
+  \begin{aligned}
+    M_{\,\mathrm{H_2O}}
+    &= 18.01528\;\text{g\,mol}^{-1}
+      = 0.01801528\;\text{kg\,mol}^{-1}, \\[6pt]
+    L_{\text{per mol}}
+    &= L_{\text{per kg}}\;M_{\,\mathrm{H_2O}} \\[4pt]
+    &= \bigl(2.256\times10^{6}\;\text{J\,kg}^{-1}\bigr)
+       \bigl(0.01801528\;\text{kg\,mol}^{-1}\bigr) \\[4pt]
+    &\approx 4.06\times10^{4}\;\text{J\,mol}^{-1}.
+  \end{aligned}
+\]
+
+\subsection*{2.  Convert “per mole’’ to “per molecule’’}
+
+\[
+  \begin{aligned}
+    N_A &= 6.02214076\times10^{23}\;\text{mol}^{-1}, \\[6pt]
+    \varepsilon_{\text{molecule}}
+    &= \frac{L_{\text{per mol}}}{N_A} \\[4pt]
+    &= \frac{4.064\times10^{4}\;\text{J\,mol}^{-1}}
+            {6.02214076\times10^{23}\;\text{mol}^{-1}} \\[4pt]
+    &\approx 6.75\times10^{-20}\;\text{J}.
+  \end{aligned}
+\]
+
+\subsection*{3.  Convert Joules to electron-volts}
+
+\[
+  1\;\text{eV} = 1.602176634\times10^{-19}\;\text{J},
+  \qquad
+  \varepsilon_{\text{molecule}}
+  = \frac{6.75\times10^{-20}\;\text{J}}{1.602176634\times10^{-19}\;\text{J/eV}}
+  \approx 0.42\;\text{eV}.
+\]
+
+\[
+  \boxed{
+    \varepsilon_{\text{molecule}}
+    \;\approx\;
+    6.8\times10^{-20}\;\text{J}
+    \;\;(\text{or}\;\;0.42\;\text{eV})
+  }.
+\]
+
+Thus, vaporising a single \(\mathrm{H_2O}\) molecule requires only a
+\(\sim\!\!10^{-19}\)-joule energy packet — about two-fifths of an
+electron-volt.
+\paragraph{Answer to part B}
+
+Water boils when its saturated‐vapor pressure equals the external (atmospheric) pressure.  
+At sea level this pressure is one standard atmosphere:
+
+\[
+  P_{\text{atm}}
+  = 1\;\text{atm}
+  = 1.01325\times10^{5}\;\text{Pa}.
+\]
+
+Hence the equilibrium vapour pressure of pure water at \(373\;\text{K}\) is
+
+\[
+  \boxed{P_{\text{vapor}}(373\;\text{K}) \;=\; 1.013\times10^{5}\;\text{Pa}}.
+\]
+\paragraph{Answer to part C}
+
+At \(T = 273\;\text{K}\) (the melting point at \(1\;\text{atm}\)),  
+solid ice \((\mathrm{s})\) and liquid water \((\mathrm{l})\) coexist in equilibrium:
+
+\[
+  \mu_{\mathrm{ice}}(T{=}273\;\text{K},P)
+  \;=\;
+  \mu_{\mathrm{water}}(T{=}273\;\text{K},P).
+\]
+
+Because each condensed phase is in equilibrium with \emph{the same} water–vapour phase \((\mathrm{g})\), their chemical potentials must also equal the chemical potential of that vapour:
+
+\[
+  \mu_{\mathrm{ice}} = \mu_{\mathrm{water}} = \mu_{\mathrm{vapour}} .
+\]
+
+The chemical potential of an ideal vapour depends on its pressure \(P_{\text{vap}}\) via  
+\(\mu_{\mathrm{vapour}} = \mu^{\circ}(T) + k_B T \ln P_{\text{vap}}\).
+Equality of \(\mu_{\mathrm{vapour}}\) for both equilibria therefore demands
+
+\[
+  \boxed{\,P_{\text{vap}}^{(\mathrm{ice})}(273\;\text{K})
+         \;=\;
+         P_{\text{vap}}^{(\mathrm{water})}(273\;\text{K})\,}.
+\]
+
+\noindent
+Hence, at \(273\;\text{K}\) the saturated vapour pressure above pure ice
+is exactly the same as the saturated vapour pressure above pure liquid
+water.
+\section*{Part D Clausius-Clapeyron on a \(\ln p\)-vs.-\(1/T\) plot}
+
+\subsection*{1.  Starting point}
+
+The simplified Clausius–Clapeyron form for a single molecule is  
+\[
+  p(T)\;=\;p_{0}\,\exp\!\Bigl(-\tfrac{L}{k_B\,T}\Bigr),
+\]
+where  
+
+\[
+  L = \text{latent heat per molecule},   \qquad 
+  k_B = 1.380649\times10^{-23}\,\mathrm{J\,K^{-1}} .
+\]
+
+\subsection*{2.  Take the natural logarithm}
+
+\[
+  \boxed{\;
+    \ln p
+    \;=\;
+    \ln p_{0}
+    \;-\;\frac{L}{k_B}\,\Bigl(\frac{1}{T}\Bigr)
+  \;} .
+\]
+
+\subsection*{3.  Implications for a \(\ln p\) vs.\ \(1/T\) graph}
+
+\begin{itemize}
+  \item The graph is a \emph{straight line}.  
+        \(\ln p\) (vertical axis) plotted against \(1/T\) (horizontal axis) has  
+        \[
+          \text{slope} = -\,\frac{L}{k_B}, 
+          \qquad
+          \text{intercept at } \frac{1}{T}=0 \text{ is } \ln p_0 .
+        \]
+  \item Because the slope is negative, the line falls as \(1/T\) increases  
+        (i.e.\ as \(T\) decreases).
+\end{itemize}
+
+\subsection*{4.  How to obtain \(L\) from the plot}
+
+Measure the slope \(m\) of the straight line:
+
+\[
+  m = \frac{\Delta(\ln p)}{\Delta(1/T)} \;=\; -\,\frac{L}{k_B}.
+\]
+
+\[
+  \boxed{\,L = -\,m\,k_B\,}.
+\]
+
+\noindent
+Thus, multiplying the \emph{negative} slope by \(-k_B\) gives the latent heat per molecule.  
+(If you prefer \(L\) per \(\mathrm{mol}\) or per \(\mathrm{kg}\), multiply by Avogadro’s number or divide by the molar mass, respectively.)
+\section*{Part E Boiling point of water at \(2\;\text{atm}\)}
+
+\subsection*{1.  Integrated Clausius–Clapeyron relation}
+
+For two points on the coexistence curve,
+
+\[
+  \ln\!\Bigl(\tfrac{P_2}{P_1}\Bigr)
+  \;=\;
+  -\,\frac{L}{k_B}
+  \!\left(
+     \frac{1}{T_2} - \frac{1}{T_1}
+  \right),
+  \tag{1}
+\]
+where  
+\(L\) = latent heat \emph{per molecule} (from part A)  
+and \(k_B\) is Boltzmann’s constant.
+
+\subsection*{2.  Insert known values}
+
+\[
+  \begin{aligned}
+    P_1 &= 1\;\text{atm}, & T_1 &= 373\;\text{K},\\
+    P_2 &= 2\;\text{atm}, & \ln\!\bigl(\tfrac{P_2}{P_1}\bigr) &= \ln 2 = 0.6931,\\
+    L   &= 6.75\times10^{-20}\;\text{J}, &
+    k_B &= 1.380649\times10^{-23}\;\text{J\,K}^{-1}.
+  \end{aligned}
+\]
+
+\subsection*{3.  Solve eq.\,(1) for \(T_2\)}
+
+\[
+  \frac{1}{T_2}
+  = \frac{1}{T_1}
+    -\Bigl(\frac{k_B}{L}\Bigr)\,
+     \ln\!\Bigl(\tfrac{P_2}{P_1}\Bigr)
+  \;=\;
+  \frac{1}{373}
+  -\frac{1.380649\times10^{-23}}{6.75\times10^{-20}}\,
+   (0.6931).
+\]
+
+\[
+  \frac{1}{T_2}
+  \approx 0.002680
+          - 0.000142
+  = 0.002538\;\text{K}^{-1},
+  \qquad
+  \Longrightarrow\quad
+  T_2 \approx 3.94\times10^{2}\;\text{K}.
+\]
+
+\[
+  \boxed{T_2 \;\approx\; 394\;\text{K}
+         \;\;(= 121^{\circ}\text{C}) }.
+\]
+
+\subsection*{4.  Interpretation}
+
+A pressure cooker that holds water vapour at \(2\;\text{atm}\) operates
+around \(121^{\circ}\text{C}\), which shortens cooking times by raising the
+boiling point relative to ordinary atmospheric conditions.
+\section*{Part F Qualitative heat-capacity curve for an Einstein solid}
+
+\subsection*{1.  Heat capacity from the Einstein energy}
+
+The average internal energy of \(N\) independent 3-D Einstein oscillators is  
+
+\[
+  U(T)\;=\;\frac{3N\varepsilon}{e^{\varepsilon/k_BT}-1},
+\qquad
+  \varepsilon = \hbar\omega .
+\]
+
+Differentiating with respect to \(T\) gives the molar* heat capacity  
+
+\[
+  \boxed{%
+    C(T)\;=\;\frac{\mathrm{d}U}{\mathrm{d}T}
+      \;=\;
+      3Nk_B
+      \biggl(\frac{\varepsilon}{k_BT}\biggr)^{\!2}
+      \frac{e^{\varepsilon/k_BT}}
+           {\Bigl(e^{\varepsilon/k_BT}-1\Bigr)^{2}}
+  }.
+\]
+
+\emph{Low-\(T\) limit (\(T\ll\varepsilon/k_B\)).}  
+\(e^{\varepsilon/k_BT}\gg1\Rightarrow C\propto T^{-2}e^{-\varepsilon/k_BT}\).
+Heat capacity is \emph{exponentially suppressed}, approaching \(0\).
+
+\emph{High-\(T\) limit (\(T\gg\varepsilon/k_B\)).}
+\(e^{\varepsilon/k_BT}\simeq1+\varepsilon/k_BT\Rightarrow C\to3Nk_B\).  
+This is the Dulong–Petit plateau.
+
+\subsection*{2.  Sketch of \(C(T)\)}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  \draw[->] (0,0) -- (0,4.2) node[left] {$c$};
+  \draw[->] (0,0) -- (7,0) node[below] {$T$};
+  % plateau level
+  \draw[dashed] (0,3.5) -- (7,3.5) node[right] {$3Nk_B$};
+  % curve
+  \draw[line width=1pt,domain=0:6.8,samples=120,smooth]
+      plot(\x,{3.5*(1-exp(-2.3*\x))});
+  % labels
+  \node at (1.4,0.4) {$\displaystyle C\!\sim\! e^{-\varepsilon/k_BT}$};
+  \node at (5.8,3.1) {$\displaystyle C\!\to\!3Nk_B$};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+Key features to include in any hand-drawn sketch:
+
+* Starts at \(C=0\) when \(T=0\).  
+* Rises steeply (almost vertical) for \(T\gtrsim \varepsilon/5k_B\).  
+* Smoothly approaches the horizontal asymptote \(C=3Nk_B\) from below.  
+
+\subsection*{3.  How to interpret the curve}
+
+* **Quantum regime (\(k_BT\ll\varepsilon\))** – few oscillators are thermally
+  excited, so the solid stores very little energy; \(C\) is negligible.
+* **Intermediate regime** – as \(T\) increases, more oscillators are
+  excited and \(C\) rises rapidly.
+* **Classical regime (\(k_BT\gg\varepsilon\))** – each of the
+  \(3N\) harmonic degrees of freedom contributes \(k_B\) to \(C\),
+  giving the constant Dulong–Petit value \(3Nk_B\).
+
+---
+
+\emph{*Molar quantity: if you prefer per mole, replace \(N\) by
+Avogadro’s number \(N_A\), so the plateau is \(3R\).}
+\end{document}

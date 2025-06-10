@@ -1,0 +1,500 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Maximal Linearly Independent Sets via Zorn's Lemma}
+
+\noindent
+\textbf{Claim.} \emph{Every vector space admits a maximal linearly independent set. In fact, such a set is a basis for the space.}
+
+\bigskip
+\noindent
+\textbf{Proof (using Zorn's Lemma).}
+
+\medskip
+\noindent
+\textbf{Step 1. Construct the partially ordered set.}\\
+Let $V$ be a vector space over a field $\mathbf{F}$. Define 
+\[
+\mathcal{S} \;=\; \{\,S \subseteq V \;\mid\; S \text{ is linearly independent}\}.
+\]
+We partially order $\mathcal{S}$ by \emph{set inclusion}. That is, for $S_1, S_2 \in \mathcal{S}$, we say 
+\[
+S_1 \le S_2 \quad \Longleftrightarrow \quad S_1 \subseteq S_2.
+\]
+
+\medskip
+\noindent
+\textbf{Step 2. Chains have upper bounds.}\\
+A \emph{chain} in $\mathcal{S}$ is a totally ordered subset $\mathcal{C} \subseteq \mathcal{S}$. Define
+\[
+S^* \;=\; \bigcup_{S \in \mathcal{C}} S.
+\]
+We claim $S^* \in \mathcal{S}$. Indeed, suppose there is a nontrivial linear combination of finitely many vectors in $S^*$ that sums to zero:
+\[
+\alpha_1 v_1 + \cdots + \alpha_k v_k \;=\; 0,
+\]
+where each $v_j \in S^*$. By total ordering, there is a single $S \in \mathcal{C}$ that contains all the $v_j$. Since $S$ is linearly independent, the only solution is $\alpha_1 = \cdots = \alpha_k = 0$. Hence $S^*$ is also linearly independent and is therefore an upper bound for $\mathcal{C}$ in $\mathcal{S}$.
+
+\medskip
+\noindent
+\textbf{Step 3. Apply Zorn's Lemma.}\\
+By hypothesis, $\mathcal{S}$ is nonempty (it contains the empty set, which is vacuously linearly independent), and every chain in $\mathcal{S}$ has an upper bound. Therefore, by Zorn's Lemma, there exists a \emph{maximal element} in $\mathcal{S}$. Call that maximal element $B$. Thus $B$ is linearly independent, and for any $S \supseteq B$ with $S \in \mathcal{S}$, we must have $S=B$. In other words, $B$ is \emph{maximal linearly independent}.
+
+\medskip
+\noindent
+\textbf{Step 4. A maximal independent set spans $V$.}\\
+We claim $B$ spans $V$. Suppose not. Then there is some $v \in V \setminus \mathrm{span}(B)$. In that case,
+\[
+B \,\cup\, \{v\}
+\]
+would still be linearly independent (since $v$ is outside the span of $B$). Hence $B \cup \{v\} \in \mathcal{S}$ and strictly contains $B$, contradicting the maximality of $B$. Therefore no such $v$ exists, and so $B$ spans $V$.
+
+\medskip
+\noindent
+Since $B$ is linearly independent and spans $V$, it is indeed a \emph{basis} of $V$. This completes the proof.
+
+\begin{lemma}[Lemma 1]
+    \label{lemma:1}
+    \textit{Let $L$ be a partially ordered set in which every chain has a 
+    least upper bound.  Then there cannot exist a function 
+    $g : L \to L$ such that for every $x \in L$, we have $g(x) > x$ 
+    \emph{and} there is no element strictly between $x$ and $g(x)$.}
+    \end{lemma}
+    
+    \begin{proof}[Proof (by contradiction)]
+    \textbf{Step 1. Assume the existence of $g$.}
+    
+    Suppose, for contradiction, that there is a function 
+    $g : L \to L$ with the property
+    \[
+       \forall x \in L,\quad x < g(x)
+       \quad\text{and no $y \in L$ satisfies } x < y < g(x).
+    \]
+    We aim to derive a contradiction from this assumption.
+    
+    \medskip
+    
+    \textbf{Step 2. Restrict to the set above a chosen element.}
+    
+    Choose some $z_0 \in L$.  Let
+    \[
+       L_0 \;=\; \{\,a \in L : a \ge z_0\}.
+    \]
+    Since $z_0 \le a$ for all $a \in L_0$, and $g$ raises each element, 
+    we may work only inside $L_0$.  By relabeling, we may simply assume 
+    that \emph{$z_0$ is the minimum element of $L$}.  (If not originally so, 
+    we just rename $L_0$ by $L$.)
+    
+    \medskip
+    
+    \textbf{Step 3. Define a \emph{tower}.}
+    
+    Following terminology used by Halmos, we call a subset 
+    $A \subseteq L$ a \emph{tower} if it satisfies:
+    \begin{itemize}
+    \item[(a)] $z_0 \in A$;
+    \item[(b)] $g(A) \,\subseteq\, A$;  (i.e.\ for every $a \in A$, we have $g(a) \in A$);
+    \item[(c)] whenever $C \subseteq A$ is a chain, the least upper bound of 
+       $C$ (which exists by hypothesis) is also in $A$.
+    \end{itemize}
+    
+    \medskip
+    
+    \textbf{Step 4. Intersect all towers to form $T$.}
+    
+    Since $L$ itself is easily seen to be a tower (check the properties),
+    we know there is at least one tower in $\mathcal{P}(L)$.  Let
+    \[
+       T \;=\; \bigcap \{\text{all towers in $L$}\}.
+    \]
+    It is routine to check (by definition) that $T$ itself is a tower:
+    \begin{itemize}
+    \item[(i)] $z_0 \in T$ because $z_0 \in A$ for every tower $A$.
+    \item[(ii)] if $x \in T$ then $x \in A$ for every tower $A$, hence 
+       $g(x) \in A$ for every tower $A$, so $g(x) \in T$. 
+    \item[(iii)] if $C \subseteq T$ is a chain, then $C$ is contained in 
+       every tower $A$.  By each tower's property (c), the least upper bound 
+       of $C$ belongs to each $A$, hence belongs to $T$.
+    \end{itemize}
+    
+    \medskip
+    
+    \textbf{Step 5. Plan of proof: show $T$ is a chain, reach a contradiction.}
+    
+    The crucial step is to prove that $T$ itself is a \emph{chain}.  Once we 
+    know $T$ is a chain, let $t$ be its least upper bound (which must lie 
+    in $T$ by property~(c)).  Then $g(t) \in T$ again by property~(b).  
+    But $g(t) > t$ contradicts the fact that $t$ is already an upper bound 
+    of $T$.  Hence no such $g$ can exist.
+    
+    \medskip
+    
+    \textbf{Step 6. Define $V$ to capture ``comparability'' with all of $T$.}
+    
+    To show $T$ is a chain, we must show that any two elements of $T$ 
+    are comparable.  Equivalently, define
+    \[
+       V \;=\; \{\,b \in T : b \text{ is comparable with every element of } T\}.
+    \]
+    Clearly $V \subseteq T$.  If we can show $V$ itself is a tower, 
+    then $T \subseteq V$ (because $T$ is the \emph{intersection} of 
+    all towers).  Thus we would get $T = V$, and so \emph{every} 
+    pair of points in $T$ is comparable.  That is, $T$ is a chain.
+    
+    \medskip
+    
+    \textbf{Step 7. Show that $V$ is a tower.}
+    
+    We must check the three defining properties of a tower 
+    (cf.\ (a)--(c) above), but for the set~$V$.
+    
+    \textbf{(a)} Since $z_0 \in T$, and $z_0$ is trivially comparable 
+    with every element of $T$, we have $z_0 \in V$.
+    
+    \textbf{(c)} If $\{w_i\}$ is a chain in $V$, let $u$ be its least 
+    upper bound in $L$.  We must show $u \in V$.  By definition of $V$, 
+    every $w_i$ in the chain is comparable with all of $T$, hence 
+    $u$ (as their least upper bound) is also forced to be in~$T$ 
+    (property~(c) for $T$ itself).  We now argue that $u$ is comparable 
+    with all of $T$:  each $w_i$ is comparable with any $t \in T$, and 
+    since $u$ is an upper bound for the chain $\{w_i\}$, it follows $u$ 
+    and $t$ are also comparable.  Thus $u \in V$.  
+    
+    \textbf{(b)} The key step is: given $b \in V$, show $g(b) \in V$.  
+    By definition, $b \in T$ and $b$ is comparable with every element of $T$.  
+    We must check that $g(b)$ (which is in $T$ by property~(b) of $T$) 
+    is also comparable with every element of $T$.  
+    
+    \medskip
+    
+    \textit{Construction of a sub-tower $W$.}  
+    Put
+    \[
+       W \;=\; \{\, w \in T : w \le b \;\text{ or }\; g(b) \le w \}.
+    \]
+    In words, $W$ consists of elements of $T$ that lie below or above the 
+    point $b$ and its ``image'' $g(b)$.  We claim $W$ is a tower.  
+    Then, since $b \in V$ means $b$ is comparable with everything in $T$, 
+    the same will force $g(b)$ to be comparable with everything in $T$, 
+    i.e.\ $g(b) \in V$.
+    
+    \textit{Check $W$ is a tower.}  
+    \begin{itemize}
+    \item[(a)] We have $z_0 \le b$ by assumption, so $z_0 \in W$.
+    \item[(c)] If $\{w_i\} \subseteq W$ is a chain, let $y$ be its least 
+       upper bound in $L$.  We need to show $y \in W$.  
+       Each $w_i$ is in $T$, and $T$ is a tower, so $y \in T$.  
+       Now we must check that $y \le b$ or $g(b) \le y$.  
+       By contradiction, if $b < y < g(b)$, that would insert an element 
+       between $b$ and $g(b)$, contradicting the hypothesis on $g$.  
+       Hence either $y \le b$ or $g(b) \le y$, so $y \in W$.  
+    \item[(b)] For any $w \in W$, we check that $g(w) \in W$.  
+       This is exactly the same argument: either $g(w) \le b$ or 
+       $g(b) \le g(w)$ must hold (again using that no element can 
+       lie strictly between $w$ and $g(w)$, and transitivity).  
+       So $g(w) \in W$.  
+    \end{itemize}
+    
+    Hence $W$ is a tower.  But $T$ was defined as the \emph{intersection} 
+    of \emph{all} towers, so $T \subseteq W$.  In particular, 
+    $g(b) \in W \subseteq T$.  Then by the definition of $W$ and the fact 
+    that $b$ is comparable with everything in $T$, $g(b)$ is also forced 
+    to be comparable with everything in $T$.  So $g(b) \in V$.
+    
+    Thus property~(b) for $V$ is verified.
+    
+    \medskip
+    
+    \textbf{Step 8. Conclude $V = T$ and hence $T$ is a chain.}
+    
+    We have shown that $V$ satisfies properties (a),(b),(c), so $V$ is a tower.  
+    By definition, $T$ is the intersection of all towers, so $T \subseteq V$.  
+    But also $V \subseteq T$ by definition, hence $V = T$.  Therefore 
+    \emph{every} pair of elements in $T$ is comparable.  In other words, 
+    $T$ is a chain.
+    
+    \medskip
+    
+    \textbf{Step 9. Final contradiction.}
+    
+    Since $T$ is a chain, its least upper bound $t$ belongs to $T$.  
+    But then $g(t) \in T$ also, by property~(b) of $T$.  However, $g(t) > t$ 
+    contradicts the fact that $t$ is an upper bound for $T$.  
+    Thus our original assumption that such a $g$ exists must be false.
+    
+    We have completed the proof of Lemma~\ref{lemma:1}.
+    \end{proof}
+    
+    \bigskip
+    
+    \begin{lemma}[Lemma 2]
+    \label{lemma:2}
+    \textit{Let $L$ be a partially ordered set in which every chain has a least 
+    upper bound. Then there cannot exist a function $g : L \to L$ satisfying 
+    $g(x) > x$ for all $x \in L$ (i.e.\ we do \emph{not} require the 
+    ``no-element-in-between'' condition).}
+    \end{lemma}
+    
+    \begin{proof}[Proof idea]
+    We adapt the proof of Lemma~\ref{lemma:1} by moving to a new 
+    partially ordered set $\mathcal{S}$ whose elements are \emph{chains} in $L$.  
+    We order $\mathcal{S}$ by inclusion: $C_1 \le C_2$ iff $C_1 \subseteq C_2$.  
+    
+    \medskip
+    
+    \textbf{Step 1. Define a function $h: \mathcal{S} \to \mathcal{S}$.}
+    
+    For a chain $C \in \mathcal{S}$:
+    \[
+       h(C) \;=\; 
+       \begin{cases}
+       C \,\cup\, \{g(x)\}, & \text{if $C$ has a top element $x$,}\\
+       C \,\cup\, \{\sup(C)\}, & \text{if $C$ has no top element (the sup exists in $L$).}
+       \end{cases}
+    \]
+    Note that by hypothesis each chain in $L$ has a least upper bound in $L$.  
+    Hence $h(C)$ is obtained from $C$ by adjoining exactly one new element 
+    (either $g(x)$ or the least upper bound of $C$).
+    
+    \medskip
+    
+    \textbf{Step 2. Check that $\mathcal{S}$ has least upper bounds.}
+    
+    In $\mathcal{S}$, a \emph{chain of chains} (i.e.\ a collection 
+    $\{C_i\}_{i \in I}$ where each $C_i \subseteq L$) can be shown 
+    to have a least upper bound under inclusion (it is the union of the $C_i$).  
+    Hence $\mathcal{S}$ is again a partially ordered set in which every chain 
+    has a least upper bound.
+    
+    \medskip
+    
+    \textbf{Step 3. Apply Lemma~\ref{lemma:1} to $\mathcal{S}$ and $h$.}
+    
+    If there were a function $g : L \to L$ with $g(x) > x$ for all $x \in L$, 
+    then we obtain $h : \mathcal{S} \to \mathcal{S}$ with the analogous 
+    property (``$h(C)$ is always strictly bigger than $C$ in the sense of 
+    inclusion'').  Lemma~\ref{lemma:1} now tells us such an $h$ cannot exist 
+    in a partially ordered set with all chains having a least upper bound.  
+    Hence no such $g$ can exist on $L$.  
+    
+    This completes the proof of Lemma~\ref{lemma:2}.
+    \end{proof}
+
+    \section*{Why Lemma 2 does not require ``immediate jumps''}
+
+The core reason is that in \textbf{Lemma\,2}, we start with an \emph{arbitrary}
+strictly-increasing function 
+\[
+   g : L \,\longrightarrow\, L 
+   \quad\text{with}\quad 
+   x < g(x)\quad\text{for all }x\in L,
+\]
+\emph{but} we do not require ``no element between $$x$$ and $$g(x)$$.'' 
+We then convert this general $$g$$ into a new function 
+\[
+   h : \mathcal{S} \,\longrightarrow\, \mathcal{S},
+\]
+where:
+\begin{itemize}
+\item $$\mathcal{S}$$ is the set of all \emph{chains} in $$L$$ (ordered by inclusion),
+\item for each chain $$C\subseteq L$$, 
+\[
+   h(C)\;=\;
+   \begin{cases}
+     C \cup \{\;g(x)\}, & \text{if $$C$$ has a greatest element $$x$$;}\\
+     C \cup \{\;\sup C\}, & \text{if $$C$$ has no greatest element (its sup exists in $$L$$).}
+   \end{cases}
+\]
+\end{itemize}
+
+\medskip
+
+\noindent
+\textbf{Key observations:}
+\begin{enumerate}
+\item $$\mathcal{S}$$ is again a partially ordered set (by inclusion) in which
+every chain has a least upper bound (the union of chains).
+\item Each application of $$h$$ strictly enlarges $$C$$. In the partial order
+of set inclusion, we have $$C < h(C)$$ and there is no chain strictly in
+between $$C$$ and $$h(C)$$. Hence $$h$$ behaves like a ``covering'' map.
+\end{enumerate}
+
+Thus, in $$\mathcal{S}$$, the function $$h$$ \emph{does} have the immediate-jump property
+(for chains). \textbf{Lemma\,1} directly applies here: it says no function can
+``cover'' every element of a poset in which every chain has an LUB. 
+Since we derive a contradiction in $$\mathcal{S}$$, it follows that our initial
+assumption (the existence of a strictly-increasing $$g$$ on $$L$$) must be false.
+
+\medskip
+
+Therefore, \textbf{Lemma\,2} does not require $$g(x)$$ to be an
+\emph{immediate} successor of $$x$$. By working in the higher-level poset
+$$\mathcal{S}$$, we \emph{force} an ``immediate jump'' condition on $$h$$, 
+which then contradicts Lemma\,1. Hence any strictly-increasing $$g$$ is ruled out, 
+whether or not it features immediate jumps in the original set $$L$$.
+\[
+C \;\subsetneq\; C\cup\{b{\prime}\}
+\quad\text{and}\quad
+C\cup\{b{\prime}\} \;\subsetneq\; C\cup\{b\},
+\]
+
+
+\section*{Lemma 2 Walkthrough (with Discussion of Intermediate Elements)}
+
+\begin{lemma}[Lemma 2]
+\label{lemma:2}
+\textit{Let $$L$$ be a partially ordered set in which every chain has a least 
+upper bound.  Then there cannot exist a function $$g : L \to L$$ satisfying 
+$$g(x) > x$$ for all $$x \in L$$.}
+\end{lemma}
+
+\begin{proof}[Sketch of Proof]
+\noindent
+\textbf{Goal:} Show that no function $$g\colon L\to L$$ can satisfy 
+\[
+   x < g(x)
+   \quad\text{for every x in L},
+\]
+under the hypothesis that \emph{every chain in $$L$$ has a least upper bound (LUB)}.
+
+\medskip
+
+\noindent
+\textbf{Step 1. Form the poset $$\mathcal{S}$$ of all chains in $$L$$.}
+
+\begin{itemize}
+\item An element of $$\mathcal{S}$$ is a \textit{chain} $$C\subseteq L$$. 
+  (A chain means any two distinct elements in $$C$$ are comparable in $$L$$.)
+\item We partially order $$\mathcal{S}$$ by \emph{set inclusion}: for two chains 
+  $$C_1,C_2\subseteq L$$,
+  \[
+    C_1 \;\le\; C_2 \quad\Longleftrightarrow\quad 
+    C_1 \;\subseteq\; C_2.
+  \]
+\end{itemize}
+
+\noindent
+\textbf{Claim:} $$\mathcal{S}$$ also has the property that \textit{every chain in $$\mathcal{S}$$ has a least upper bound}. 
+Indeed, a \emph{chain of chains} $$\{C_i\}_{i\in I} \subset \mathcal{S}$$ has a natural LUB: simply take
+\[
+  \bigcup_{i\in I} C_i 
+  \;\;\; (\subseteq L).
+\]
+Because each $$C_i$$ is a chain in $$L$$, any two points in the union come from some $$C_i$$ or $$C_j$$, so they remain comparable. Hence the union is itself a chain in $$L$$. This makes 
+$$\bigcup_{i\in I} C_i$$ an \emph{upper bound} for all $$C_i$$, and in fact the \emph{least} one under inclusion.
+
+\bigskip
+
+\noindent
+\textbf{Step 2. Construct a function $$h\colon \mathcal{S}\to \mathcal{S}$$ using $$g$$.}
+
+Assume, for contradiction, that such a strictly‐increasing function $$g$$ does exist on $$L$$.  
+We will define $$h$$ on $$\mathcal{S}$$ by adding exactly one element to each chain:
+\[
+   h(C) \;=\;
+   \begin{cases}
+     C \,\cup\, \{g(x)\}, & \text{if $C$ has a top element $x \in L$,}\\[6pt]
+     C \,\cup\, \{\sup(C)\}, & \text{if $C$ has no greatest element (its supremum exists).}
+   \end{cases}
+\]
+
+In either case, $$h(C)\supsetneq C$$. In the poset $$\mathcal{S}$$ (ordered by \emph{inclusion}), this means $$C < h(C)$$.  
+Moreover, because we are adding a single point that “completes” a jump (namely $$g(x)$$ or $$\sup C$$), there is \emph{no intermediate chain} $$D$$ with
+\[
+   C \;\subsetneq\; D \;\subsetneq\; h(C).
+\]
+Hence $$h$$ has the "cover-like" property from Lemma 1.
+
+\bigskip
+
+\noindent
+\textbf{Step 3. Why not use an intermediate $$\boldsymbol{b}$$ with $$x<b<g(x)$$?}
+
+A natural question is: \emph{why do we pick exactly $$g(x)$$ rather than some 
+$$b$$ in the interval $$(x,g(x))$$?} The reason is that \textbf{we need $$h(C)$$ to cover $$C$$ in the inclusion order}, i.e.\ there should be no chain strictly between $$C$$ and $$h(C)$$.
+
+- If you pick an intermediate point $$b$$ with 
+  \[
+    x < b < g(x),
+  \]
+  then very often there can be another point $$b'$$ in $$(x,b)$$ or $$(b,\,g(x))$$. 
+  If that happens, one can form a chain $$C \cup \{\,b'\}$$ (assuming $$b'$$ is comparable with all of $$C$$), and you get
+  \[
+    C
+    \;\subsetneq\;
+    C \cup \{\,b'\}
+    \;\subsetneq\;
+    C \cup \{\,b\}.
+  \]
+  That would destroy the “cover” property. So the “safe choice” is 
+  \emph{all the way up} to $$g(x)$$ or else $$\sup(C)$$ so that there is no “room” left in between.
+
+In other words, we specifically ensure $$\textit{no}$$ strictly larger chain than $$C$$ but strictly smaller than $$h(C)$$. This is crucial for applying Lemma 1, which rules out precisely that style of "covering map" in posets that have the LUB property.
+
+\bigskip
+
+\noindent
+\textbf{Step 4. Apply Lemma\,1 in $$\boldsymbol{\mathcal{S}}$$.}
+
+By the property of $$\mathcal{S}$$ (every chain in $$\mathcal{S}$$ has an LUB), 
+Lemma 1 says there cannot be a function that "covers" every element in $$\mathcal{S}$$. 
+But $$h$$ is exactly such a covering function ($$C < h(C)$$ and no chain in between). 
+Hence a contradiction arises in $$\mathcal{S}$$. 
+
+Therefore, our initial assumption---that $$g\colon L\to L$$ is strictly increasing
+($$x<g(x)$$ for all $$x$$)---must be false.
+
+\bigskip
+
+\noindent
+\textbf{Conclusion.} 
+No strictly‐increasing function $$g$$ can exist on $$L$$. This completes the proof 
+of \textbf{Lemma\,\ref{lemma:2}}.
+\end{proof}
+\end{document}

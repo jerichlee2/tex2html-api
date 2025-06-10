@@ -1,0 +1,247 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  ANALYSIS SHEET — “Clausius–Clapeyron”  (copy-and-paste LaTeX template) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate}
+  %-----------------------------------------------------------------------
+  \item \textbf{Expected slope on a \(\ln p\) vs.\(1/T\) plot}
+  
+  The integrated Clausius–Clapeyron relation for a single molecule is  
+  \[
+    \ln p \;=\; \ln p_0 \;-\; \frac{L}{k_B}\,\Bigl(\frac{1}{T}\Bigr),
+  \]
+  so the \emph{slope} of the straight line is
+  \[
+    \boxed{\,m_{\text{theory}} = -\dfrac{L}{k_B}\,}.
+  \]
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Does the experimental data follow a straight line on the
+        semi‐log plot?}
+  
+  \begin{itemize}
+    \item[] \rule{0.93\linewidth}{0.4pt}
+    \item[] \rule{0.93\linewidth}{0.4pt}
+  \end{itemize}
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Pick two convenient points on the line}
+  
+  \[
+    \begin{aligned}
+      \text{Point 1:}\;& (P_1,\;T_1) \;=\;(\;\rule{2cm}{0.15mm},\;
+                                           \rule{2cm}{0.15mm}\;)\;,\\
+      \text{Point 2:}\;& (P_2,\;T_2) \;=\;(\;\rule{2cm}{0.15mm},\;
+                                           \rule{2cm}{0.15mm}\;)\;.
+    \end{aligned}
+  \]
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Calculate the experimental slope}
+  
+  \[
+    m_{\text{exp}}
+    \;=\;
+    \frac{\ln P_2 - \ln P_1}{\dfrac{1}{T_2} - \dfrac{1}{T_1}}
+    \;=\;
+    \rule{5cm}{0.15mm}
+  \]
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Estimate the uncertainty in the slope}
+  
+  (e.g.\ by drawing the steepest and shallowest reasonable straight lines
+  through the error bars)
+  
+  \[
+    \sigma_{m}
+    \;=\;
+    \rule{4cm}{0.15mm}
+  \]
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Determine the latent heat per molecule}
+  
+  \[
+    L_{\text{exp}}
+    \;=\;
+    -\,m_{\text{exp}}\,k_B
+    \;=\;
+    (\rule{2.5cm}{0.15mm})\;\text{J}
+    \quad\Longrightarrow\quad
+    \frac{L_{\text{exp}}}{1.60218\times10^{-19}}
+    \;=\;
+    (\rule{2.5cm}{0.15mm})\;\text{eV}.
+  \]
+  
+  %-----------------------------------------------------------------------
+  \item \textbf{Comparison with the book value \(L_{\text{book}} = 0.42\;\text{eV}\)}
+  
+  \[
+    \text{Percent difference}
+    \;=\;
+    \frac{\lvert L_{\text{exp}}-L_{\text{book}}\rvert}
+         {L_{\text{book}}}\times100\%
+    \;=\;
+    \rule{3cm}{0.15mm}\%.
+  \]
+  
+  \vspace*{0.5em}
+  Comment on agreement (within uncertainties? systematic offsets?):
+  \begin{itemize}
+    \item[] \rule{0.93\linewidth}{0.4pt}
+    \item[] \rule{0.93\linewidth}{0.4pt}
+  \end{itemize}
+  
+  \end{enumerate}
+  \subsection*{Predictions}
+
+\begin{enumerate}
+  \item \textbf{Immersing the room-temperature aluminium cylinder in liquid\,N\textsubscript{2}.}
+        \begin{itemize}
+          \item The cylinder is initially at roughly \(T_{\text{room}}\simeq 295\;\text{K}\), 
+                whereas liquid nitrogen is at its boiling point
+                \(T_{\text{LN}_{2}}\simeq 77\;\text{K}\).
+          \item Heat therefore flows rapidly \emph{from} the aluminium \emph{into} the LN\(_2\),
+                providing the latent heat of vaporisation that allows the nitrogen to boil.
+          \item \emph{Prediction:} the mass of LN\(_2\) in the Styrofoam cup will
+                \textbf{decrease much faster} than before the cylinder was added.
+                You will observe vigorous bubbling and a visible cloud of cold
+                nitrogen gas above the cup until the cylinder cools to \(77\;\text{K}\).
+        \end{itemize}
+
+  \item \textbf{Transferring the now-cold cylinder to a chilled water bath.}
+        \begin{itemize}
+          \item The aluminium has been cooled to \(77\;\text{K}\), far below the
+                freezing point of water (\(273\;\text{K}\)).
+          \item When it enters the water bath the temperature gradient is reversed:
+                heat flows from the water into the cylinder.
+          \item \emph{Prediction:}
+                \begin{itemize}
+                  \item A thin layer of ice will form almost instantly on the cylinder’s surface
+                        (the water in direct contact freezes).
+                  \item The bulk water temperature will drop; if the bath is small enough, it may
+                        approach the freezing point or even begin to freeze.
+                  \item As the cylinder warms toward \(0^\circ\text{C}\), the rate of ice formation
+                        slows and eventually stops once thermal equilibrium is reached.
+                \end{itemize}
+          \item The dramatic contrast—rapid LN\(_2\) boil-off first, then rapid ice formation—illustrates how the direction of heat flow depends solely on relative temperature, not on the substance involved.
+        \end{itemize}
+\end{enumerate}
+Below is a ready-to-paste LaTeX block that answers every item in the “Questions” panel.
+
+\subsection*{Analysis}
+
+\begin{enumerate}
+  \item \textbf{Comparison of measured and tabulated latent heats \& error sources}
+
+        Your experimental value for the latent heat per molecule,
+        \(
+           L_{\text{exp}}\;(\text{from the slope})
+        \),
+        should be compared with the book value  
+        \(
+           L_{\text{book}}\simeq 0.42\;\text{eV}\;(6.8\times10^{-20}\,\mathrm{J})
+        \).
+        Typical discrepancies and their origins include
+        \begin{itemize}
+          \item \emph{Heat losses to the surroundings}  
+                (conduction through the cup walls, convection, radiation).
+          \item \emph{Evaporation not accounted for} while transferring LN\(_2\)
+                or while weighing the Styrofoam cup.
+          \item \emph{Finite heat capacity of the aluminium cylinder and cup}  
+                —often neglected in the simple energy balance.
+          \item \emph{Temperature gradients} inside the LN\(_2\); the
+                thermometer reads the bulk value, not the film temperature at
+                the surface of the cylinder.
+          \item \emph{Scale calibration and timing errors} when determining the
+                rate of mass loss.
+        \end{itemize}
+        Any one of these can push the fitted slope away from the ideal
+        \(-L/k_B\).
+
+  \item \textbf{Why does the LN\(_2\) boil \emph{most vigorously} just before
+        reaching equilibrium?}
+
+        Initially the hot aluminium is wrapped in a thick vapour film
+        (Leidenfrost layer).  
+        Nitrogen \emph{gas} has a very low thermal conductivity, so
+        heat transfer (and thus boil-off) is throttled despite the large
+        temperature difference.
+
+        As the cylinder cools, the vapour layer collapses and liquid
+        nitrogen comes into direct contact with the metal.
+        Liquid N\(_2\) conducts heat \(\sim\! 100\) times better than its
+        vapour, producing a sudden surge of heat flow.
+        The result is a last, rapid burst of boiling that subsides
+        only when the cylinder’s temperature falls to \(T_{\text{LN}_2}\).
+
+  \item \textbf{Why does water freeze more slowly once an ice layer has formed?}
+
+        The freshly deposited ice coats the aluminium with an insulating
+        shell whose thermal conductivity
+        (\(\kappa_{\text{ice}}\approx 2\,\mathrm{W\,m^{-1}K^{-1}}\))
+        is an order of magnitude lower than that of aluminium
+        (\(\kappa_{\text{Al}}\approx 200\,\mathrm{W\,m^{-1}K^{-1}}\)).
+        Heat must now diffuse through this ice barrier before it can
+        reach the cold metal core, dramatically reducing the cooling rate of
+        the still-liquid water and slowing further ice growth.
+\end{enumerate}
+\end{document}

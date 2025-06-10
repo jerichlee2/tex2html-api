@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{December 14, 2024}
+\author{Jerich Lee}
+\date{}
+
+\begin{document}
+
+\maketitle
+\section*{Problem 1 (xx points):}
+Consider the transient heat equation with a space and time-dependent source term:
+\[
+\frac{\partial T}{\partial t} = \alpha \frac{\partial^2 T}{\partial x^2} + xe^{-t}, \quad \text{for } x \in [0,1], \, t \geq 0
+\]
+with boundary conditions \( T(0,t) = T(1,t) = 0 \) and initial condition \( T(x,0) = 0 \).
+
+\begin{enumerate}
+    \item[(a)] Write the semi-discretized form of this PDE with constant grid spacing \(\Delta x\) on a grid with \( N + 1 \) points \( x_0, x_1, \dots, x_N \), i.e., complete the following equation:
+    \[
+    \frac{dT_j(t)}{dt} = \dots, \quad j = 1, 2, \dots, N-1
+    \]
+
+    \item[(b)] Write the forward Euler update scheme for interior nodes using time step \(\Delta t\), i.e., complete the statement below:
+    \[
+    T_j^{(n+1)} = T_j^{(n)} + \dots, \quad j = 1, 2, \dots, N-1
+    \]
+\end{enumerate}
+
+\begin{solution}
+  Forward Euler update scheme:
+  \begin{align}
+    T_i^{n+1}=T_i^{n}+\alpha \Delta t \left[\frac{T_{j+1}-2T_i^{n}+T_{i-1}^{n}}{h^{2}}+xe^{-t}\right]
+  \end{align}  
+\end{solution}
+\end{document}

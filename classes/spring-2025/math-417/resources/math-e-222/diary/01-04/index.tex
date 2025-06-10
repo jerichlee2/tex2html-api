@@ -1,0 +1,220 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Quotients}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+Exercises $2.10.1, 2.10.3, 2.10.5, 2.10.6$ \\
+Read $\S\S 3.1, 3.2$ for next lecture 
+\begin{problem}[2.10.1]
+    Let $G$ be the group of invertible real upper triangular $2\times 2$ matrices. Determine whether or not the following conditions describe normal subgroups $H$ of $G$ . If they do, use the First Isomorphism Theorem to identify the quotient group $\frac{G}{H}$
+    \noindent
+    \begin{enumerate}
+        \item $a_{11}=1 $
+        \item $a_{12}=0 $
+        \item $a_{11} =a_{22} $
+        \item $a_{11} =a_{22} =1$    
+    \end{enumerate}  
+\end{problem}
+\begin{solution}
+    what is the inverse of $H = \begin{bmatrix}
+        1 &  b \\
+        0 &  c \\
+    \end{bmatrix}$ 
+    if $a = \begin{bmatrix}
+        a &  b \\
+        0 &  c \\
+    \end{bmatrix}$, does $a=HaH^{-1}$ 
+
+    Let \( G \) be the group of all invertible upper-triangular \( 2 \times 2 \) real matrices:
+\[
+G = \left\{
+\begin{pmatrix}
+a & b \\
+0 & c
+\end{pmatrix}
+\;\middle|\; a, c \in \mathbb{R} \setminus \{0\},\, b \in \mathbb{R}
+\right\}.
+\]
+Let \( A \) be the subgroup of \( G \) consisting of those matrices whose \((1,1)\) entry is \( 1 \):
+\[
+A = \left\{
+\begin{pmatrix}
+1 & b \\
+0 & c
+\end{pmatrix}
+\;\middle|\; b \in \mathbb{R},\, c \in \mathbb{R} \setminus \{0\}
+\right\}.
+\]
+We have already established that \( A \trianglelefteq G \) (i.e., \( A \) is a normal subgroup).
+
+\section*{Using the First Isomorphism Theorem}
+
+We want to identify the quotient group \( G / A \). A standard technique is:
+\begin{enumerate}
+    \item Define a surjective group homomorphism \( \varphi : G \to H \) onto some simpler group \( H \).
+    \item Identify the kernel \( \ker(\varphi) \).
+    \item Then, by the \textbf{First Isomorphism Theorem}, we have
+    \[
+    G \big/ \ker(\varphi) \cong \mathrm{im}(\varphi).
+    \]
+    \item If \( \ker(\varphi) = A \), then \( G / A \cong \mathrm{im}(\varphi) \).
+\end{enumerate}
+
+\subsection*{1. A Natural Homomorphism}
+
+Consider the map
+\[
+\varphi : G \to \mathbb{R}^\times
+\quad\text{defined by}\quad
+\varphi\left(
+\begin{pmatrix}
+a & b \\
+0 & c
+\end{pmatrix}
+\right) = a,
+\]
+where \( \mathbb{R}^\times = \mathbb{R} \setminus \{0\} \) (the multiplicative group of all nonzero reals).
+
+\paragraph{Well-defined:} If \( \begin{pmatrix} a & b \\ 0 & c \end{pmatrix} \in G \), then \( a \neq 0 \), so \( \varphi(g) \in \mathbb{R}^\times \).
+
+\paragraph{Homomorphism:} For any 
+\( g_1 = \begin{pmatrix} a_1 & b_1 \\ 0 & c_1 \end{pmatrix} \) and 
+\( g_2 = \begin{pmatrix} a_2 & b_2 \\ 0 & c_2 \end{pmatrix} \) in \( G \),
+\[
+g_1 g_2 = 
+\begin{pmatrix}
+a_1 a_2 & a_1 b_2 + b_1 c_2 \\
+0 & c_1 c_2
+\end{pmatrix},
+\quad\text{so}\quad
+\varphi(g_1 g_2) = a_1 a_2.
+\]
+On the other hand,
+\[
+\varphi(g_1) \varphi(g_2) = a_1 \cdot a_2.
+\]
+Hence, \( \varphi(g_1 g_2) = \varphi(g_1) \varphi(g_2) \).
+
+\paragraph{Surjective:} Given any nonzero real number \( \alpha \), we can map it from
+\( \begin{pmatrix} \alpha & 0 \\ 0 & 1 \end{pmatrix} \) (for instance), so 
+\( \varphi\left( \begin{pmatrix} \alpha & 0 \\ 0 & 1 \end{pmatrix} \right) = \alpha \).  
+Therefore, \( \mathrm{im}(\varphi) = \mathbb{R}^\times \).
+
+\subsection*{2. The Kernel of \( \varphi \)}
+
+\[
+\ker(\varphi)
+= \left\{
+\begin{pmatrix}
+a & b \\
+0 & c
+\end{pmatrix}
+\in G
+\;\middle|\;
+\varphi\left(\begin{pmatrix}
+a & b \\
+0 & c
+\end{pmatrix}\right) = 1
+\right\}
+= \left\{
+\begin{pmatrix}
+1 & b \\
+0 & c
+\end{pmatrix}
+: b \in \mathbb{R},\, c \neq 0
+\right\}.
+\]
+But that set is exactly \( A \). Hence, \( \ker(\varphi) = A \).
+
+\subsection*{3. Apply the First Isomorphism Theorem}
+
+By the First Isomorphism Theorem:
+\[
+G / \ker(\varphi)
+\cong
+\mathrm{im}(\varphi).
+\]
+But \( \ker(\varphi) = A \) and \( \mathrm{im}(\varphi) = \mathbb{R}^\times \).  
+Therefore,
+\[
+G / A \cong \mathbb{R}^\times.
+\]
+
+\section*{Conclusion}
+
+Using the map \( \varphi \) that “forgets” everything except the top-left entry \( a \), we see that the quotient \( G / A \) is \textbf{isomorphic to} \( \mathbb{R}^\times \) (the multiplicative group of all nonzero reals). Thus,
+\[
+\boxed{G / A \cong \mathbb{R}^\times.}
+\]
+What is $\begin{bmatrix}
+    a &  b \\
+    0 &  c \\
+\end{bmatrix}\cdot \begin{bmatrix}
+    a &  0 \\
+    0 &  b \\
+\end{bmatrix}\cdot \begin{bmatrix}
+    \frac{1}{a} & 0  \\
+     -\frac{b}{ac}&\frac{1}{c}   \\
+\end{bmatrix}$ 
+\end{solution}
+\begin{problem}[2.10.3]
+   Let $P$ be a partition of a group $G$ with the property that for any pair of elements $A,B$ of the partition, the product set $AB$ is contained entirely within another element $C$ of the partition. Let $N$ be the element of $P$ which contains $1$ . Prove that $N$ is a normal subgroup of $G$ and that $P$ is the set of its cosets. 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.10.5]
+   Identify the quotient group $\frac{\mathbb{{R}}^{\times}}{P}$, where $P$ denotes the subgroup of positive real numbers.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.10.6]
+  Let $H=\left\{ \pm 1, \pm i \right\} $  be the subgroup of $G=\mathbb{{C}}^{\times}$ of fourth roots of unity. Describe the cosets of $H$ in $G$ explicitly, and prove that $\frac{G}{H}$   is isomorphic to $G$. 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\end{document}

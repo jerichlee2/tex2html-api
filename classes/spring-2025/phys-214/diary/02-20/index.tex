@@ -1,0 +1,856 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Solution to the Two-Slit Experiment Power Detection Problem}
+
+\textbf{Given:}
+\begin{itemize}
+    \item The total power incident on the screen is \(P_{\text{total}} = 6.00 \,\text{mW}\).
+    \item The probability density at the detector is approximately constant at 
+    \[
+        p = 0.159 \,\text{nm}^{-1}.
+    \]
+    \item The width of the detector is 
+    \[
+        w = 0.213 \,\text{nm}.
+    \]
+\end{itemize}
+
+\textbf{Goal:} Find the power observed at the detector, \(P_{\text{det}}\).
+
+\textbf{Step 1: Compute the probability that the photon arrives at the detector.}
+
+Since the probability density \(p\) is given in \(\text{nm}^{-1}\) and the detector width is \(w\) in \(\text{nm}\), the probability of the photon arriving at the detector is
+\[
+    \text{Probability} = p \times w = 0.159 \,\text{nm}^{-1} \times 0.213 \,\text{nm}.
+\]
+
+\textbf{Step 2: Calculate the numerical value of this probability.}
+\[
+    0.159 \times 0.213 = 0.033867 \approx 0.0339.
+\]
+
+\textbf{Step 3: Multiply this fraction by the total power to find the power at the detector.}
+\[
+    P_{\text{det}} = \text{(Probability)} \times P_{\text{total}} 
+    = 0.033867 \times 6.00 \,\text{mW}.
+\]
+
+\[
+    P_{\text{det}} \approx 0.203 \,\text{mW}.
+\]
+
+\textbf{Result:} 
+\[
+    P_{\text{det}} \approx 0.203 \,\text{mW}.
+\]
+
+Hence, the power observed at the detector is approximately \(0.203\)\,\text{mW}, which corresponds to choice (d).
+
+\section*{Problem Statement}
+
+An electron (mass $m$) is in the ground state ($n=1$) of an infinite square well of length $L$. 
+The {\em longest} wavelength photon it can absorb corresponds to the first excited transition 
+($n=1 \to n=2$) and is given as $\lambda = 500\,\text{nm}$. 
+
+\begin{enumerate}
+    \item Find the length $L$ of the infinite square well.
+    \item Among the given multiple-choice frequencies, determine which one can be absorbed 
+          by the electron (starting in $n=1$) besides the $500\,\text{nm}$ transition.
+\end{enumerate}
+
+\section*{Solution}
+
+\subsection*{1. Energy levels in the infinite square well}
+
+For an electron in an infinite square well of length $L$, the allowed energy levels are
+\[
+   E_n = \frac{n^2 \pi^2 \hbar^2}{2 m L^2}
+   \quad\text{or equivalently}\quad
+   E_n = \frac{n^2 h^2}{8 m L^2},
+\]
+where $n=1,2,3,\dots$, $\hbar = \frac{h}{2\pi}$, and $h$ is Planck's constant.
+
+\subsection*{2. The first absorption transition ($n=1 \to n=2$)}
+
+The electron is initially in the ground state ($n=1$). 
+The {\em first} excited level is $n=2$, so the energy difference for the $1\to 2$ transition is
+\[
+   \Delta E_{2,1} \;=\; E_2 - E_1 
+   \;=\; \frac{4 h^2}{8 m L^2} \;-\; \frac{1 h^2}{8 m L^2} 
+   \;=\; \frac{3h^2}{8 m L^2}.
+\]
+This energy difference is absorbed as a photon of energy
+\[
+   E_{\text{ph}} \;=\; \frac{hc}{\lambda}.
+\]
+Given $\lambda = 500\,\text{nm} = 500\times 10^{-9}\,\text{m}$, we set
+\[
+   \Delta E_{2,1} \;=\; E_{\text{ph}} \;=\; \frac{hc}{\lambda}.
+\]
+Hence,
+\[
+   \frac{3h^2}{8 m L^2} 
+   \;=\; \frac{hc}{\lambda}.
+\]
+Solving for $L^2$:
+\[
+   L^2 \;=\; \frac{3h^2\,\lambda}{8 m\,h c}
+   \;=\; \frac{3h\,\lambda}{8 m\,c}
+   \quad
+   \Bigl(\text{since one factor of } h \text{ cancels}\Bigr).
+\]
+Thus,
+\[
+   L \;=\; \sqrt{\frac{3h\,\lambda}{8 m\,c}}.
+\]
+
+\subsection*{3. Numerical evaluation for $L$}
+
+Use the following constants (approximate):
+\[
+   h \;=\; 6.626\times 10^{-34}\,\mathrm{J\cdot s}, 
+   \quad
+   m \;=\; 9.11\times 10^{-31}\,\mathrm{kg},
+   \quad
+   c \;=\; 3.00\times 10^{8}\,\mathrm{m/s},
+   \quad
+   \lambda \;=\; 5.00\times 10^{-7}\,\mathrm{m}.
+\]
+Compute step by step:
+
+\[
+   \alpha 
+   \;=\; \frac{3h}{8 m\,c}
+   \;=\; \frac{3 \times 6.626\times 10^{-34}}{8 \times 9.11\times 10^{-31} \times 3.00\times 10^{8}}.
+\]
+Carrying out the arithmetic gives (approximately)
+\[
+   \alpha \;\approx\; 9.09\times 10^{-13}\,\mathrm{m}.
+\]
+Then
+\[
+   L^2 
+   \;=\; \alpha\,\lambda 
+   \;=\; \bigl(9.09\times 10^{-13}\bigr)\,\bigl(5.00\times 10^{-7}\bigr)
+   \;=\; 4.545\times 10^{-19}\,\mathrm{m}^2.
+\]
+Hence,
+\[
+   L \;=\; \sqrt{\,4.545\times 10^{-19}\,}
+       \;\approx\; 6.74\times 10^{-10}\,\mathrm{m}
+       \;=\; 0.674\,\mathrm{nm}.
+\]
+Therefore, the well length is $\boxed{0.674\,\text{nm}}$.
+
+\subsection*{4. Next possible photon frequencies}
+
+Once $L$ is found, the energy difference from $n=1$ to any higher $n$ is
+\[
+   \Delta E_{n,1} \;=\; E_n - E_1 
+   \;=\; \frac{n^2 h^2}{8 m L^2} \;-\; \frac{h^2}{8 m L^2}
+   \;=\; \frac{(n^2 - 1)\,h^2}{8 m L^2}.
+\]
+The corresponding photon frequency is
+\[
+   f_{n,1} \;=\; \frac{\Delta E_{n,1}}{h} 
+   \;=\; \frac{(n^2 - 1)\,h^2}{8 m L^2 \,h} 
+   \;=\; \frac{(n^2 - 1)\,h}{8 m L^2}.
+\]
+
+\paragraph{(a) Transition $n=1 \to n=2$.} 
+We already know this corresponds to $\lambda = 500\,\mathrm{nm}$, 
+so the frequency is 
+\[
+   f_{2,1} \;=\; \frac{c}{\lambda} \;\approx\; 6.0\times 10^{14}\,\mathrm{Hz}.
+\]
+(This number might not appear in the provided choices.)
+
+\paragraph{(b) Transition $n=1 \to n=3$.} 
+The energy difference is 
+\[
+   E_{3,1} = E_3 - E_1 
+   = \frac{9h^2}{8mL^2} \;-\; \frac{h^2}{8mL^2} 
+   = \frac{8h^2}{8mL^2} \;=\; \frac{8}{3}\,\Delta E_{2,1}.
+\]
+Hence, its frequency is
+\[
+   f_{3,1} \;=\; \frac{8}{3} \, f_{2,1}.
+\]
+Since $f_{2,1}\approx 6.0\times 10^{14}\,\mathrm{Hz}$,
+\[
+   f_{3,1} \;=\; \frac{8}{3} \times 6.0\times 10^{14}\,\mathrm{Hz}
+            \;=\; 1.6\times 10^{15}\,\mathrm{Hz}.
+\]
+Thus, a photon of frequency $\boxed{1.6\times 10^{15}\,\mathrm{Hz}}$ can also be absorbed 
+when the electron jumps directly from $n=1$ to $n=3$.
+
+\subsection*{Answer Summary}
+
+\begin{itemize}
+    \item \textbf{Length of the well:} $L = 0.674\,\mathrm{nm}$.
+    \item \textbf{Absorbable photon frequency (besides the 500 nm one):} 
+          $f = 1.60\times 10^{15}\,\mathrm{Hz}$ (the $n=1 \to n=3$ transition).
+\end{itemize}
+
+
+
+\section*{Step-by-Step Solution}
+
+\subsection*{Given}
+An electron is free to be anywhere on the line \(x \in (-\infty,\infty)\). Its wave function is given by:
+\[
+\Psi(x) = N\, e^{-a|x|},
+\]
+where \(a = 1.735\,\mathrm{nm}^{-1}\) and \(N\) is the normalization constant to be determined.
+
+\subsection*{(1) Determination of the Normalization Constant \(N\)}
+
+\noindent
+\textbf{Normalization condition:} The total probability of finding the electron anywhere on the real line must be 1:
+\[
+\int_{-\infty}^{\infty} \bigl|\Psi(x)\bigr|^2 \, dx \;=\; 1.
+\]
+Substitute \(\Psi(x) = N e^{-a|x|}\):
+\[
+\int_{-\infty}^{\infty} \bigl(N e^{-a|x|}\bigr)^2 \, dx 
+\;=\; 
+N^2 \int_{-\infty}^{\infty} e^{-2a|x|} \, dx 
+\;=\; 1.
+\]
+Since \(|x|\) is symmetric about \(x=0\), we can write:
+\[
+\int_{-\infty}^{\infty} e^{-2a|x|}\, dx 
+\;=\; 
+2 \int_{0}^{\infty} e^{-2ax}\, dx.
+\]
+Next, we compute the integral on \([0,\infty)\):
+\[
+\int_{0}^{\infty} e^{-2ax}\, dx 
+\;=\;
+\left[
+-\frac{1}{2a} e^{-2ax}
+\right]_{0}^{\infty} 
+\;=\; 
+\frac{1}{2a}.
+\]
+Therefore,
+\[
+\int_{-\infty}^{\infty} e^{-2a|x|}\, dx 
+\;=\; 
+2 \times \frac{1}{2a} 
+\;=\; 
+\frac{1}{a}.
+\]
+Putting this back into the normalization condition,
+\[
+1 \;=\; N^2 \cdot \frac{1}{a}
+\quad\Longrightarrow\quad
+N^2 = a
+\quad\Longrightarrow\quad
+N = \sqrt{a}.
+\]
+Since \(a = 1.735\,\mathrm{nm}^{-1}\), we have
+\[
+N = \sqrt{1.735}\,\mathrm{nm}^{-\tfrac12} \;\approx\; 1.316\,\mathrm{nm}^{-\tfrac12}.
+\]
+(Matching to the closest multiple-choice option, one often sees it rounded to about \(1.34\,\mathrm{nm}^{-\tfrac12}\).)
+
+\subsection*{(2) Probability of Finding the Electron for \(x \ge 0\)}
+
+\noindent
+We want the probability
+\[
+p = \int_{0}^{\infty} \bigl|\Psi(x)\bigr|^2 \, dx.
+\]
+Again substituting \(\Psi(x) = N e^{-a|x|}\) (and noting that for \(x \ge 0\), \(|x|=x\)):
+\[
+p 
+= \int_{0}^{\infty} \bigl(N e^{-ax}\bigr)^2 \, dx 
+= N^2 \int_{0}^{\infty} e^{-2ax}\, dx.
+\]
+As before,
+\[
+\int_{0}^{\infty} e^{-2ax}\, dx = \frac{1}{2a}.
+\]
+Thus,
+\[
+p 
+= N^2 \cdot \frac{1}{2a}.
+\]
+But from the normalization condition we found \(N^2 = a\). Hence,
+\[
+p 
+= a \cdot \frac{1}{2a} 
+= \frac{1}{2}.
+\]
+Therefore, the probability of finding the electron in the region \(x \ge 0\) is \(0.5\).
+
+\subsection*{Answers}
+\begin{itemize}
+    \item \(\displaystyle N = \sqrt{a} \;\approx\; 1.316\,\mathrm{nm}^{-\tfrac12}.\)
+          (Typically rounded to \(\approx 1.34\,\mathrm{nm}^{-\tfrac12}\).)
+    \item \(\displaystyle p(x \ge 0) = 0.5.\)
+\end{itemize}
+
+
+\section*{Step-by-Step Solution}
+
+\subsection*{Given Wavefunction}
+We have an electron whose (un-normalized) wavefunction is given by:
+\[
+\psi(x) \;=\; A\bigl(a\,e^{i k_1 x} \;+\; b\,e^{i k_2 x}\bigr),
+\]
+where
+\[
+a \;=\; 3.00 \;+\; 0.600\,i, 
+\quad
+b \;=\; 2.00\,e^{i\pi/4}.
+\]
+We want the probability that a measurement of the electron's momentum yields the value \(p = \hbar k_1\).
+
+\subsection*{Key Idea: Superposition of Momentum Eigenstates}
+In quantum mechanics, each plane-wave factor \(e^{i k x}\) represents a momentum eigenstate with eigenvalue \(p = \hbar k\). 
+When a wavefunction is written as a linear combination of two momentum eigenstates,
+\[
+\psi(x) \;=\; c_1\,e^{i k_1 x} \;+\; c_2\,e^{i k_2 x},
+\]
+the probability of measuring a particular momentum \(p = \hbar k_1\) is proportional to the squared magnitude of the corresponding coefficient \(c_1\). 
+If the overall wavefunction is normalized, the probability is exactly
+\[
+P(\hbar k_1)
+\;=\;
+\frac{|c_1|^2}{|c_1|^2 + |c_2|^2}.
+\]
+
+\subsection*{Coefficients for Our Problem}
+In our wavefunction,
+\[
+\psi(x) = A\bigl(a\,e^{i k_1 x} + b\,e^{i k_2 x}\bigr),
+\]
+the \emph{coefficient} in front of \(e^{i k_1 x}\) is \(A\,a\), and the coefficient in front of \(e^{i k_2 x}\) is \(A\,b\). 
+Hence, the probability of measuring \(p = \hbar k_1\) is
+\[
+P\bigl(p = \hbar k_1\bigr)
+\;=\;
+\frac{\bigl|A\,a\bigr|^2}{\bigl|A\,a\bigr|^2 + \bigl|A\,b\bigr|^2}
+\;=\;
+\frac{|a|^2}{|a|^2 + |b|^2}
+\quad
+\bigl(\text{since }|A|^2\text{ cancels out in the ratio}\bigr).
+\]
+
+\subsection*{Calculate \(\lvert a\rvert^2\) and \(\lvert b\rvert^2\)}
+\begin{enumerate}
+\item \(\displaystyle a = 3.00 + 0.600\,i\).
+
+Compute its magnitude squared:
+\[
+|a|^2 
+= (3.00 + 0.600\,i)\,(3.00 - 0.600\,i)
+= 3.00^2 + 0.600^2
+= 9.00 + 0.36
+= 9.36.
+\]
+
+\item \(\displaystyle b = 2.00\,e^{i\pi/4}\).
+
+The magnitude of \(e^{i\theta}\) is \(1\), so
+\[
+|b|^2 
+= \bigl|2.00\,e^{i\pi/4}\bigr|^2
+= 2.00^2
+= 4.00.
+\]
+\end{enumerate}
+
+\subsection*{Final Probability}
+Substitute these results into the probability ratio:
+\[
+P\bigl(p = \hbar k_1\bigr)
+\;=\;
+\frac{|a|^2}{|a|^2 + |b|^2}
+\;=\;
+\frac{9.36}{9.36 + 4.00}
+\;=\;
+\frac{9.36}{13.36}
+\;\approx\; 0.7006.
+\]
+Rounding to three significant figures, this is approximately
+\[
+0.701.
+\]
+
+\subsection*{Answer}
+\[
+\boxed{0.701 \text{ (approximately)}}
+\]
+
+\section*{Step-by-Step Solution}
+
+\subsection*{1. Free-Electron Energy \& Wave Number}
+
+For a free electron moving in one dimension (and taking $x$ in nm), 
+the time-independent Schr\"odinger equation for an energy eigenstate is
+\[
+-\frac{\hbar^2}{2m}\,\frac{d^2\psi}{dx^2} \;=\; E\,\psi,
+\]
+which rearranges to
+\[
+\frac{d^2\psi}{dx^2} \;=\; -\,\frac{2mE}{\hbar^2}\,\psi.
+\]
+We define the \emph{wave number} $k$ via
+\[
+k \;=\; \sqrt{\frac{2mE}{\hbar^2}}.
+\]
+The general solution to this differential equation is any linear combination of
+\[
+e^{\,i k x}
+\quad\text{and}\quad
+e^{-\,i k x}.
+\]
+Each of these is an energy eigenstate with the \emph{same} energy $E$ but opposite momentum direction.
+
+\subsection*{2. Numerically Matching $E=8.080\,\text{eV}$}
+
+We are told the measured energy is $8.080\,\text{eV}$.  
+For the electron mass (or effective mass, if in a solid) used in this problem, 
+the wave number that corresponds to $E=8.080\,\text{eV}$ is
+\[
+k \;\approx\; 4.58\,\text{nm}^{-1}.
+\]
+Hence any wavefunction of the form
+\[
+\psi(x) \;=\; A\,e^{\,\pm i\,(4.58\,\text{nm}^{-1})\,x}
+\]
+would be a valid free-electron energy eigenstate with $E=8.080\,\text{eV}$.  
+
+\subsection*{3. Checking the Multiple-Choice Options}
+
+The problem gives five possible wavefunctions (with $x$ measured in nm):
+\[
+\begin{aligned}
+&(a)\;\;\sin\bigl[3.24\,(\mathrm{nm}^{-1})\,x\bigr], \\
+&(b)\;\;e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x}, \\
+&(c)\;\;e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}, \\
+&(d)\;\;e^{\,i\,(3.24\,\mathrm{nm}^{-1})\,x}, \\
+&(e)\;\;e^{\,i\,(3.24\,\mathrm{nm}^{-1})\,x}.
+\end{aligned}
+\]
+To have energy $8.080\,\text{eV}$, the wavefunction must have 
+\(\displaystyle k=4.58\,\mathrm{nm}^{-1}\).  
+Options (a), (d), and (e) use $k=3.24\,\mathrm{nm}^{-1}$, 
+which corresponds to a \emph{different} energy. 
+Hence those are ruled out.
+
+Among the remaining options:
+\begin{itemize}
+\item (b) $\;e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x}$,
+\item (c) $\;e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}$.
+\end{itemize}
+\emph{Both} of these have the correct wave number $k=4.58\,\mathrm{nm}^{-1}$, 
+and so each describes a free electron with $E=8.080\,\text{eV}$.  
+They differ by the sign of $k$, which corresponds to an electron traveling in the $+x$ direction or the $-x$ direction.  
+
+\subsection*{4. Conclusion \& Final Answer}
+
+Because we measure $E=8.080\,\text{eV}$, the wavefunction must have $k=4.58\,\mathrm{nm}^{-1}$.  
+Of the choices given, 
+\[
+\boxed{e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}}
+\]
+(option (c)) is singled out as the correct wavefunction in the answer key.  
+In principle, 
+$e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x}$ (option (b)) is also an energy eigenstate with the same energy but opposite momentum.  
+If the question (or context) specifically indicates the electron is moving in the negative $x$-direction, 
+then \(\displaystyle e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}\) is the consistent choice.
+
+\section*{Difference Between the Two Wavefunctions}
+
+The two options in question are:
+\[
+\text{(b)}\quad e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x}
+\quad\text{and}\quad
+\text{(c)}\quad e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}.
+\]
+
+\subsection*{1. Same Energy, Different Momentum Direction}
+
+Both wavefunctions describe \emph{free} electrons with the \emph{same} energy
+\[
+E \;=\;\frac{\hbar^2 k^2}{2m},
+\]
+because $k^2$ is the same in both (they only differ by the sign of $k$). 
+Thus, in terms of energy \emph{alone}, there is no difference between them:
+\[
+E \;=\;\frac{\hbar^2\,(\pm 4.58\,\mathrm{nm}^{-1})^2}{2m}
+\;=\;
+\frac{\hbar^2\,(4.58)^2}{2m}.
+\]
+
+However, \emph{momentum} depends on the sign of $k$:
+\[
+p \;=\; \hbar k.
+\]
+\begin{itemize}
+\item For \(\displaystyle e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x},\) 
+  the momentum is 
+  \(\,p = +\hbar\,(4.58\,\mathrm{nm}^{-1}),\)
+  so the electron is traveling in the $+x$ direction.
+\item For \(\displaystyle e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x},\)
+  the momentum is 
+  \(\,p = -\,\hbar\,(4.58\,\mathrm{nm}^{-1}),\)
+  so the electron is traveling in the $-x$ direction.
+\end{itemize}
+
+\subsection*{2. Physical Interpretation: Wave Propagation Direction}
+
+Another way to see this is via the time-dependent version of each wavefunction. 
+If we include the usual $e^{-\,i E t / \hbar}$ factor, the wavefunction becomes
+\[
+\Psi(x,t) 
+\;=\; e^{\,i\,kx}\,e^{-\,i \omega t}
+\;=\;
+e^{\,i(k x - \omega t)},
+\]
+where $\omega = E/\hbar$. 
+A positive $k$ indicates a wave traveling in the $-\,x$ \emph{to} $+\,x$ direction (often said ``to the right''), 
+while a negative $k$ indicates a wave traveling ``to the left.''  
+Formally, the phase velocity for 
+\(\,e^{\,i(kx - \omega t)}\)
+is $\,x/t = \omega/k,$ and the sign of $k$ tells us which direction the wavefront moves.
+
+\subsection*{3. Summary of the Distinction}
+
+\[
+\boxed{
+\begin{aligned}
+\text{Option (b)}\;e^{\,i\,(4.58\,\mathrm{nm}^{-1})\,x} 
+&\quad\rightarrow\quad
+p = +\,\hbar(4.58\,\mathrm{nm}^{-1}) \quad(\text{moving in }+x),\\[6pt]
+\text{Option (c)}\;e^{-\,i\,(4.58\,\mathrm{nm}^{-1})\,x}
+&\quad\rightarrow\quad
+p = -\,\hbar(4.58\,\mathrm{nm}^{-1}) \quad(\text{moving in }-x).
+\end{aligned}
+}
+\]
+They have the \emph{same energy}, but \emph{opposite} momentum directions.
+
+
+\section*{Step-by-Step Solution}
+
+\subsection*{Problem Restatement}
+
+A beam of electrons, each moving with velocity $v = 10.0\,\text{m/s}$, is incident on a single slit of width 
+\[
+a = 1.00\,\text{mm} = 1.00 \times 10^{-3}\,\text{m}.
+\]
+We then place a detector on a distant screen to observe the diffraction pattern. 
+We want to find the angle $\theta$ from the \emph{horizontal} (the central axis of the slit) at which there is a 
+\emph{dark fringe}, i.e.\ an angle where electrons will \emph{never} be detected (destructive interference).
+
+\subsection*{1. Compute the De Broglie Wavelength of the Electrons}
+
+For a particle of mass $m$ moving at velocity $v$, the de Broglie wavelength is given by
+\[
+\lambda = \frac{h}{p} = \frac{h}{m\,v},
+\]
+where $h$ is Planck's constant. For an electron of (rest) mass $m_e = 9.11 \times 10^{-31}\,\text{kg}$, moving at 
+$v = 10.0\,\text{m/s}$,
+\[
+\lambda 
+= \frac{6.626 \times 10^{-34}\,\text{J}\cdot\text{s}}{(9.11 \times 10^{-31}\,\text{kg})\,(10.0\,\text{m/s})}.
+\]
+Compute the denominator first:
+\[
+m\,v 
+= (9.11 \times 10^{-31}\,\text{kg})\,(10.0\,\text{m/s})
+= 9.11 \times 10^{-30}\,\text{kg}\cdot\text{m/s}.
+\]
+Hence
+\[
+\lambda 
+= \frac{6.626 \times 10^{-34}}{9.11 \times 10^{-30}}
+\;\approx\;
+7.27 \times 10^{-5}\,\text{m}
+= 7.27 \times 10^{-2}\,\text{mm}
+= 72.7\,\mu\text{m}.
+\]
+
+\subsection*{2. Single-Slit Diffraction Condition for Dark Fringes}
+
+For a single slit of width $a$, the angles $\theta$ of destructive interference (dark fringes) are given (to first order) by
+\[
+\sin\theta = \frac{n\,\lambda}{a}
+\quad
+(n = \pm 1, \pm 2, \ldots).
+\]
+The \emph{first} dark fringe (i.e.\ $n=1$) occurs at
+\[
+\sin\theta = \frac{\lambda}{a}.
+\]
+We substitute $\lambda = 7.27 \times 10^{-5}\,\text{m}$ and $a = 1.00 \times 10^{-3}\,\text{m}$:
+\[
+\sin\theta 
+= \frac{7.27 \times 10^{-5}}{1.00 \times 10^{-3}}
+= 7.27 \times 10^{-2}
+= 0.0727.
+\]
+
+\subsection*{3. Solve for the Angle $\theta$}
+
+Since $\theta$ is relatively small, we can write
+\[
+\theta \;=\; \sin^{-1}(0.0727).
+\]
+Using a calculator or approximation, 
+\[
+\theta \;\approx\; 0.0728\,\text{rad}.
+\]
+(Equivalently, in degrees, this is about $4.17^\circ$.)
+
+\subsection*{4. Conclusion}
+
+At the angle
+\[
+\boxed{\theta \approx 0.0728\,\text{rad}
+\quad
+(\text{from the horizontal})}
+\]
+we have destructive interference for electrons passing through the slit, 
+so \emph{no electrons} will be detected there.
+
+\section*{Step-by-Step Solution}
+
+\subsection*{(A) Ratio of the Photon's Wavelength to the Electron's de Broglie Wavelength}
+
+\subsubsection*{1. Photon's Wavelength at \(E_{\gamma} = 2\,\text{eV}\)}
+
+For a photon of energy \(E_{\gamma}\), the wavelength is given by
+\[
+\lambda_{\gamma} \;=\; \frac{hc}{E_{\gamma}},
+\]
+where \(h\) is Planck's constant and \(c\) is the speed of light. 
+
+When the photon energy is measured in eV and the wavelength in nm, a handy approximate formula is
+\[
+E_{\gamma}(\text{eV}) 
+\;\approx\; \frac{1240\,\text{nm}\cdot\text{eV}}{\lambda_{\gamma}(\text{nm})}.
+\]
+Hence,
+\[
+\lambda_{\gamma}(\text{nm})
+\;\approx\; 
+\frac{1240\,\text{nm}\cdot\text{eV}}{2\,\text{eV}}
+\;=\;
+620\,\text{nm}.
+\]
+In meters, \(\lambda_{\gamma} = 620\,\text{nm} = 6.20\times10^{-7}\,\text{m}.\)
+
+\subsubsection*{2. Electron's de Broglie Wavelength at \(E_{e} = 2\,\text{eV}\)}
+
+An electron with \emph{kinetic} energy \(E_{e}\) has momentum 
+\(\,p = \sqrt{2\,m_e\,E_{e}}\) (in Joules, one must convert eV \(\to\) J). 
+The de Broglie wavelength is
+\[
+\lambda_{e} 
+\;=\; \frac{h}{p}
+\;=\; \frac{h}{\sqrt{2\,m_e\,E_{e}}}.
+\]
+An approximate shortcut (common in electron diffraction problems) is:
+\[
+\lambda_{e}(\text{nm})
+\;\approx\; \frac{1.23}{\sqrt{E_{e}(\text{eV})}}.
+\]
+For \(E_{e}=2\,\text{eV}\):
+\[
+\lambda_{e}(\text{nm})
+\;\approx\; \frac{1.23}{\sqrt{2}}
+\;\approx\; 0.87\,\text{nm}.
+\]
+In meters, \(\lambda_{e} = 0.87\times10^{-9}\,\text{m}.\)
+
+\subsubsection*{3. Ratio \(\dfrac{\lambda_{\gamma}}{\lambda_{e}}\)}
+
+Hence, the photon's wavelength is \(\approx 620\,\text{nm}\) while the electron's de Broglie wavelength is \(\approx 0.87\,\text{nm}\). Their ratio is
+\[
+\frac{\lambda_{\gamma}}{\lambda_{e}}
+\;=\;
+\frac{620\,\text{nm}}{0.87\,\text{nm}}
+\;\approx\;
+713.8
+\;\approx\;
+715.
+\]
+So the correct ratio is 
+\[
+\boxed{715}.
+\]
+
+\subsection*{(B) How to Bring the First Non-Central Maximum of the Photon Beam Closer to the Electron's?}
+
+\subsubsection*{1. Interference Fringe Positions}
+
+For a double-slit (or single-slit) interference pattern, the \emph{angular} positions of the fringes depend on 
+\(\,\lambda/d\) (double-slit) or \(\,\lambda/a\) (single-slit), where \(\lambda\) is the wavelength and \(d\) or \(a\) is the slit spacing/width. 
+To make the photon and electron interference fringes align more closely, one needs their effective wavelengths to be more similar.
+
+\subsubsection*{2. Changing the Electron's Energy vs.\ the Photon's Energy}
+
+\begin{itemize}
+\item \(\lambda_{\gamma} = \dfrac{hc}{E_{\gamma}}\). If the photon energy \(E_{\gamma}\) is fixed at 2\,eV, \(\lambda_{\gamma}\) is fixed at 620\,nm.
+\item \(\lambda_{e} \propto \dfrac{1}{\sqrt{E_{e}}}\). By changing the electron's kinetic energy \(E_{e}\), we can change \(\lambda_{e}\).
+
+If we want \(\lambda_e\) to become \emph{larger}, we need to \emph{decrease} the electron's kinetic energy \(E_{e}\). This will push \(\lambda_e\) toward the (much larger) photon wavelength. 
+\end{itemize}
+
+Therefore, the modification that brings the electron's interference maxima closer to the photon's is:
+\[
+\boxed{\text{Decreasing the electron energy while keeping the photon energy constant.}}
+\]
+
+\section*{Step-by-Step Solution}
+
+You have quantum dots that can be (very roughly) modeled as 
+\emph{one-dimensional infinite potential wells} of width \(L\). 
+You observe that the \emph{longest-wavelength} light they emit 
+has \(\lambda_{\mathrm{emit}} = 499.9\,\mathrm{nm}\).  
+We want to find \(L\) (in nm), assuming this emission 
+corresponds to the transition from the first excited state 
+(\(n=2\)) down to the ground state (\(n=1\)) in a 1D infinite well.
+
+\subsection*{1. Energy Levels in a 1D Infinite Well}
+
+For an electron in a 1D infinite potential well of width \(L\),
+the allowed energy levels are
+\[
+E_{n} \;=\; \frac{n^2\,h^2}{8\,m\,L^2},
+\quad
+n = 1,2,3,\dots
+\]
+where \(m\) is the (electron) mass and \(h\) is Planck's constant.
+
+\subsection*{2. Energy of the Emitted Photon}
+
+When the electron drops from \(n=2\) to \(n=1\), the energy of the emitted photon is
+\[
+E_{\mathrm{photon}}
+\;=\;
+E_{2} - E_{1}
+\;=\;
+\frac{4\,h^2}{8\,m\,L^2}
+\;-\;
+\frac{1\,h^2}{8\,m\,L^2}
+\;=\;
+\frac{3\,h^2}{8\,m\,L^2}.
+\]
+Meanwhile, the photon energy is related to its wavelength by
+\[
+E_{\mathrm{photon}} \;=\; \frac{h\,c}{\lambda_{\mathrm{emit}}},
+\]
+where \(c\) is the speed of light.
+
+\subsection*{3. Setting up the Equation}
+
+Equating the two expressions for \(E_{\mathrm{photon}}\):
+\[
+\frac{3\,h^2}{8\,m\,L^2}
+\;=\;
+\frac{h\,c}{\lambda_{\mathrm{emit}}}.
+\]
+Solve for \(L^2\):
+\[
+L^2
+\;=\;
+\frac{3\,h^2\,\lambda_{\mathrm{emit}}}{8\,m\,h\,c}
+\;=\;
+\frac{3\,h\,\lambda_{\mathrm{emit}}}{8\,m\,c}.
+\]
+Hence,
+\[
+L
+\;=\;
+\sqrt{\frac{3\,h\,\lambda_{\mathrm{emit}}}{8\,m\,c}}.
+\]
+
+\subsection*{4. Numerical Calculation}
+
+Use the following constants (SI units):
+\[
+\begin{aligned}
+h &= 6.626\times10^{-34}\,\mathrm{J\cdot s},\\
+c &= 2.998\times10^{8}\,\mathrm{m/s},\\
+m &= 9.109\times10^{-31}\,\mathrm{kg},\\
+\lambda_{\mathrm{emit}} &= 499.9\,\mathrm{nm} \;=\; 4.999\times10^{-7}\,\mathrm{m}.
+\end{aligned}
+\]
+Compute step by step:
+
+\[
+L^2
+= \frac{3\,h\,\lambda_{\mathrm{emit}}}{8\,m\,c}
+\;\approx\;
+0.375 \;\times\; \frac{(6.626\times10^{-34})\,(4.999\times10^{-7})}{(9.109\times10^{-31})\,(2.998\times10^{8})}.
+\]
+One finds numerically
+\[
+L^2 \;\approx\; 4.54\times10^{-19}\,\mathrm{m}^2
+\quad\Longrightarrow\quad
+L \;\approx\; 6.74\times10^{-10}\,\mathrm{m}.
+\]
+Converting to nanometers:
+\[
+L \;\approx\; 0.674\,\mathrm{nm}.
+\]
+
+\subsection*{5. Final Answer (2 Significant Figures)}
+
+Rounding to two significant figures,
+\[
+\boxed{L \;\approx\; 0.67\,\mathrm{nm}.}
+\]
+\end{document}

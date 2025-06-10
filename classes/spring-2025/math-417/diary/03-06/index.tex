@@ -1,0 +1,461 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417: HW 5}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+ \textbf{Solution to: How many (pairwise non-isomorphic) abelian groups of order 
+\ (a)\ 15,\ (b)\ 16,\ (c)\ 17,\ (d)\ 18\ are there?}
+
+\bigskip
+
+\noindent
+\textbf{Step 1. Factor each order into prime powers.}
+\[
+\begin{aligned}
+15 &= 3^1 \cdot 5^1, \\
+16 &= 2^4, \\
+17 &= 17^1, \\
+18 &= 2^1 \cdot 3^2.
+\end{aligned}
+\]
+
+\noindent
+\textbf{Step 2. Use the Fundamental Theorem of Finite Abelian Groups.}\\
+Any finite abelian group of order $n$ decomposes as a direct product of its $p$-primary (Sylow) components.  Concretely, if
+\[
+n \;=\; p_1^{\alpha_1}\,\cdot\,p_2^{\alpha_2}\,\cdots\,p_k^{\alpha_k},
+\]
+then an abelian group of order $n$ is isomorphic to a direct product
+\[
+G \;\cong\; G_{p_1}\;\times\;\cdots\;\times\;G_{p_k},
+\]
+where $G_{p_i}$ is an abelian $p_i$-group of order $p_i^{\alpha_i}$.
+
+\bigskip
+
+\noindent
+\textbf{Step 3. Classification of abelian groups of prime-power order.}\\
+For a prime $p$ and a positive integer $m$, the number of \emph{distinct} abelian groups of order $p^m$ (up to isomorphism) equals the number of partitions of $m$.  Equivalently:
+\[
+\text{Number of abelian groups of order }p^m \;=\; \text{number of ways to write }m \text{ as an ordered sum of positive integers.}
+\]
+
+\bigskip
+
+\noindent
+\textbf{Step 4. Combine the $p$-primary components.}\\
+If $n = p_1^{\alpha_1}\,\cdots\,p_k^{\alpha_k}$ and $a_i$ is the number of distinct abelian groups of order $p_i^{\alpha_i}$, then the total number of abelian groups of order $n$ is
+\[
+a_1 \;\times\; a_2 \;\times\;\cdots\;\times\; a_k,
+\]
+since each Sylow component is chosen independently and then combined by direct product.
+
+\bigskip
+
+\noindent
+\textbf{Step 5. Apply this to each specific order.}
+
+\begin{enumerate}
+\item[(a)] \textbf{Order 15 = $3^1 \cdot 5^1$.}
+
+Each prime power is $3^1$ and $5^1$.  The number of abelian groups of order $3^1$ is the number of partitions of $1$, which is $1$.  Similarly, for order $5^1$ there is also only $1$ possibility.  
+\[
+\text{Total number} = 1 \;\times\; 1 = 1.
+\]
+Hence there is exactly one abelian group of order 15 (namely $\mathbb{Z}_{15}$).
+
+\bigskip
+
+\item[(b)] \textbf{Order 16 = $2^4$.}
+
+We count the number of partitions of $4$:
+\[
+4,\quad 3 + 1,\quad 2 + 2,\quad 2 + 1 + 1,\quad 1 + 1 + 1 + 1.
+\]
+There are $5$ partitions, so there are $5$ non-isomorphic abelian groups of order $16$.  Concretely, they can be listed as
+\[
+\mathbb{Z}_{16}, \quad
+\mathbb{Z}_8 \times \mathbb{Z}_2, \quad
+\mathbb{Z}_4 \times \mathbb{Z}_4, \quad
+\mathbb{Z}_4 \times \mathbb{Z}_2 \times \mathbb{Z}_2, \quad
+\mathbb{Z}_2 \times \mathbb{Z}_2 \times \mathbb{Z}_2 \times \mathbb{Z}_2.
+\]
+Thus the answer for (b) is $5$.
+
+\bigskip
+
+\item[(c)] \textbf{Order 17 = $17^1$.}
+
+Since $17$ is prime, the only abelian group of that order is the cyclic group $\mathbb{Z}_{17}$.  Thus there is exactly $1$ abelian group of order $17$.
+
+\bigskip
+
+\item[(d)] \textbf{Order 18 = $2^1 \cdot 3^2$.}
+
+The number of abelian groups of order $2^1$ is the number of partitions of $1$, which is $1$.  
+The number of abelian groups of order $3^2$ is the number of partitions of $2$, which is $2$ (namely $2$ and $1+1$).  Corresponding groups for order $9$ are:
+\[
+\mathbb{Z}_9 \quad \text{and} \quad \mathbb{Z}_3 \times \mathbb{Z}_3.
+\]
+So the total number of abelian groups of order $18$ is
+\[
+1 \;\times\; 2 = 2.
+\]
+These can be realized as:
+\[
+\mathbb{Z}_2 \;\times\; \mathbb{Z}_9 \;\cong\; \mathbb{Z}_{18}, 
+\quad\text{and}\quad
+\mathbb{Z}_2 \;\times\; (\mathbb{Z}_3 \times \mathbb{Z}_3).
+\]
+
+\end{enumerate}
+
+\bigskip
+
+\noindent
+\textbf{Final Answers:}
+\[
+\text{(a) }1, \quad
+\text{(b) }5, \quad
+\text{(c) }1, \quad
+\text{(d) }2.
+\]   
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{Solution to Problem 2: Decomposition into disjoint cycles}
+
+    \bigskip
+    
+    All permutations are multiplied from right to left. For each part, we track each element 
+    through the product of cycles.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(a) }$(12)(12345)$
+    
+    \medskip
+    
+    \noindent
+    Apply $(12345)$ first, then $(12)$.  We see:
+    \[
+    \begin{aligned}
+    1 &\xrightarrow{(12345)} 2 \;\xrightarrow{(12)} 1,\\
+    2 &\xrightarrow{(12345)} 3 \;\xrightarrow{(12)} 3,\\
+    3 &\xrightarrow{(12345)} 4 \;\xrightarrow{(12)} 4,\\
+    4 &\xrightarrow{(12345)} 5 \;\xrightarrow{(12)} 5,\\
+    5 &\xrightarrow{(12345)} 1 \;\xrightarrow{(12)} 2.
+    \end{aligned}
+    \]
+    Hence the net permutation sends
+    \[
+    1 \to 1,\quad 2 \to 3,\quad 3 \to 4,\quad 4 \to 5,\quad 5 \to 2.
+    \]
+    In disjoint cycles, this is $(2\,3\,4\,5)$ (and $1$ is fixed).  
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(b) }$(14)(12345)$
+    
+    \medskip
+    
+    \noindent
+    Again, apply $(12345)$ first, then $(14)$:
+    \[
+    \begin{aligned}
+    1 &\xrightarrow{(12345)} 2 \;\xrightarrow{(14)} 2,\\
+    2 &\xrightarrow{(12345)} 3 \;\xrightarrow{(14)} 3,\\
+    3 &\xrightarrow{(12345)} 4 \;\xrightarrow{(14)} 1,\\
+    4 &\xrightarrow{(12345)} 5 \;\xrightarrow{(14)} 5,\\
+    5 &\xrightarrow{(12345)} 1 \;\xrightarrow{(14)} 4.
+    \end{aligned}
+    \]
+    Thus the net permutation sends
+    \[
+    1 \to 2,\quad 2 \to 3,\quad 3 \to 1,\quad 4 \to 5,\quad 5 \to 4.
+    \]
+    In disjoint cycle form, this is $(1\,2\,3)(4\,5)$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(c) }$(12)(13)(14)$
+    
+    \medskip
+    
+    \noindent
+    Here we apply $(14)$, then $(13)$, then $(12)$.  Track each number in $\{1,2,3,4\}$:
+    
+    \[
+    \begin{aligned}
+    1 &\xrightarrow{(14)} 4 \;\xrightarrow{(13)} 4 \;\xrightarrow{(12)} 4,\\
+    4 &\xrightarrow{(14)} 1 \;\xrightarrow{(13)} 3 \;\xrightarrow{(12)} 3,\\
+    3 &\xrightarrow{(14)} 3 \;\xrightarrow{(13)} 1 \;\xrightarrow{(12)} 2,\\
+    2 &\xrightarrow{(14)} 2 \;\xrightarrow{(13)} 2 \;\xrightarrow{(12)} 1.
+    \end{aligned}
+    \]
+    Hence
+    \[
+    1 \to 4,\quad 4 \to 3,\quad 3 \to 2,\quad 2 \to 1.
+    \]
+    That is the 4-cycle $(1\,4\,3\,2)$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(d) }$(13)(1234)(13)$
+    
+    \medskip
+    
+    \noindent
+    First apply the rightmost $(13)$, then $(1234)$, then the leftmost $(13)$.  We get:
+    \[
+    \begin{aligned}
+    1 &\xrightarrow{(13)} 3 \;\xrightarrow{(1234)} 4 \;\xrightarrow{(13)} 4,\\
+    4 &\xrightarrow{(13)} 4 \;\xrightarrow{(1234)} 1 \;\xrightarrow{(13)} 3,\\
+    3 &\xrightarrow{(13)} 1 \;\xrightarrow{(1234)} 2 \;\xrightarrow{(13)} 2,\\
+    2 &\xrightarrow{(13)} 2 \;\xrightarrow{(1234)} 3 \;\xrightarrow{(13)} 1.
+    \end{aligned}
+    \]
+    So
+    \[
+    1 \to 4,\quad 4 \to 3,\quad 3 \to 2,\quad 2 \to 1,
+    \]
+    again yielding the 4-cycle $(1\,4\,3\,2)$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Final answers:}
+    \[
+    \begin{aligned}
+    &(a)\ (12)(12345) \;=\; (2\,3\,4\,5),\\
+    &(b)\ (14)(12345) \;=\; (1\,2\,3)(4\,5),\\
+    &(c)\ (12)(13)(14) \;=\; (1\,4\,3\,2),\\
+    &(d)\ (13)(1234)(13) \;=\; (1\,4\,3\,2).
+    \end{aligned}
+    \]
+     
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{Solution to Problem 3: All elements of $A_4$ and their orders}
+
+    \bigskip
+    
+    \noindent
+    \textbf{1.\ Definition and size of $A_4$.}\\
+    The group $A_4$ is the subgroup of the symmetric group $S_4$ consisting of all even permutations on the set $\{1,2,3,4\}$.  It has $12$ elements in total.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{2.\ Types of even permutations in $S_4$.}\\
+    An even permutation can be:
+    \begin{itemize}
+    \item the identity permutation (no transpositions),
+    \item a product of two disjoint transpositions (since each transposition is odd, the product of two of them is even),
+    \item or a 3-cycle (which can be written as two transpositions).
+    \end{itemize}
+    In $S_4$:
+    \begin{itemize}
+    \item There is exactly $1$ identity permutation.
+    \item There are $3$ distinct elements that are products of two disjoint transpositions in $S_4$:
+    \[
+    (12)(34),\quad (13)(24),\quad (14)(23).
+    \]
+    All of these are even, hence in $A_4$.
+    \item There are $8$ distinct 3-cycles in $S_4$, and all 3-cycles are even permutations, hence they all lie in $A_4$.  These are:
+    \[
+    (123),\ (132),\ (124),\ (142),\ (134),\ (143),\ (234),\ (243).
+    \]
+    \end{itemize}
+    
+    \bigskip
+    
+    \noindent
+    \textbf{3.\ Listing all elements of $A_4$.}\\
+    Thus we can list \emph{all} $12$ elements of $A_4$ as follows:
+    \[
+    \begin{aligned}
+    &A_4 = \{\, e,\ (12)(34),\ (13)(24),\ (14)(23),\\
+    &\qquad (123),\ (132),\ (124),\ (142),\ (134),\ (143),\ (234),\ (243)\}.
+    \end{aligned}
+    \]
+    
+    \bigskip
+    
+    \noindent
+    \textbf{4.\ Orders of the elements.}
+    \begin{itemize}
+    \item The \emph{identity} $e$ has order $1$.
+    \item Each product of two disjoint transpositions, e.g.\ $(12)(34)$, is its own inverse and therefore has order $2$.
+    \item Each 3-cycle (e.g.\ $(123)$) has order $3$, since $(abc)^3$ is the identity in $S_4$.
+    \end{itemize}
+    
+    \noindent
+    Hence we get the following classification of elements by order:
+    \[
+    \begin{aligned}
+    \text{Order }1 &: \quad e,\\
+    \text{Order }2 &: \quad (12)(34),\ (13)(24),\ (14)(23),\\
+    \text{Order }3 &: \quad (123),\ (132),\ (124),\ (142),\ (134),\ (143),\ (234),\ (243).
+    \end{aligned}
+    \]
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Final Answer.}\\
+    All $12$ elements of $A_4$ are as listed above; there is $1$ element of order $1$, $3$ elements of 
+    order $2$, and $8$ elements of order $3$.
+     
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{Solution to Problem 4}
+
+    \bigskip
+    
+    Throughout, let $D_n$ denote the dihedral group of order $2n$, that is, the group of symmetries
+    of a regular $n$-gon.  Hence $D_3$ has $6$ elements, $D_6$ has $12$ elements, and $D_{12}$ has $24$ elements.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(a) $D_3 \cong S_3$.}
+    
+    \medskip
+    
+    \noindent
+    An equilateral triangle has $3$ vertices.  A symmetry of the triangle is determined by how it permutes
+    these vertices.  Thus there is a natural map
+    \[
+    \phi: D_3 \;\longrightarrow\; S_3
+    \]
+    taking each symmetry to the corresponding permutation of the triangle's vertices.
+    It is straightforward to check that this map is a group homomorphism (it respects composition of symmetries),
+    is injective (different symmetries act differently on vertices),
+    and is surjective (every permutation of the $3$ vertices can be realized by some symmetry).
+    Hence $\phi$ is a bijective homomorphism, i.e.\ an isomorphism.  Therefore $D_3 \cong S_3$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(b) $D_{12}$ is not isomorphic to $S_4$.}
+    
+    \medskip
+    
+    \noindent
+    Both $D_{12}$ and $S_4$ have order $24$, so one might suspect an isomorphism.  However, an easy invariant
+    is the \emph{element orders} in each group.  In $D_{12}$, the rotation by $\tfrac{360^\circ}{12} = 30^\circ$
+    has order $12$.  Hence there is an element of order $12$ in $D_{12}$.
+    
+    By contrast, in $S_4$, the maximum possible order of any permutation is $4$ (for example, a $4$-cycle).
+    There are no elements of order $12$ in $S_4$.  Because the two groups do not share the same element orders,
+    they cannot be isomorphic.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(c) $D_{6}$ is not isomorphic to $A_4$.}
+    
+    \medskip
+    
+    \noindent
+    Both $D_{6}$ and $A_4$ have order $12$, so again one checks other invariants.
+    In $D_{6}$, the rotation by $\tfrac{360^\circ}{6} = 60^\circ$ has order $6$.
+    Hence $D_{6}$ contains an element of order $6$.
+    
+    In $A_4$, all non-identity elements have order $2$ (the product of two disjoint transpositions) or
+    order $3$ (a $3$-cycle).  There is \emph{no} element of order $6$ in $A_4$.  Hence $D_{6}$ cannot be
+    isomorphic to $A_4$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(d) $D_3 \times \mathbb{Z}_2$ is not isomorphic to $A_4$.}
+    
+    \medskip
+    
+    \noindent
+    Observe that $D_3 \cong S_3$, so
+    \[
+    D_3 \times \mathbb{Z}_2 \;\cong\; S_3 \times \mathbb{Z}_2,
+    \]
+    which has $6 \times 2 = 12$ elements.  Again, compare element orders:
+    \begin{itemize}
+    \item In $S_3 \times \mathbb{Z}_2$, if $(\sigma,x)$ is such that $\sigma$ is a $3$-cycle
+      and $x$ is the non-identity element of $\mathbb{Z}_2$, then $(\sigma,x)$ has order
+      $\mathrm{lcm}\bigl(\mathrm{ord}(\sigma),\mathrm{ord}(x)\bigr) = \mathrm{lcm}(3,2) = 6.$
+      Thus $S_3 \times \mathbb{Z}_2$ has elements of order $6$.
+    \item By contrast, as above, $A_4$ has no elements of order $6$.
+    \end{itemize}
+    Hence there can be no isomorphism between $D_3 \times \mathbb{Z}_2$ and $A_4$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Conclusion:} We have shown the required (non-)isomorphisms by comparing element orders
+    (or by constructing explicit isomorphisms in the one case where it exists).
+     
+\end{solution}
+\end{document}

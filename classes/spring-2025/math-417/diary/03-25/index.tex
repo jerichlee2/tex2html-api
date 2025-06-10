@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Let \( n = 10 \). Its prime factorization is
+\[
+10 = 2 \times 5.
+\]
+Using the formula for Euler's totient function,
+\[
+\varphi(10) = 10 \left(1 - \frac{1}{2}\right)\left(1 - \frac{1}{5}\right).
+\]
+Evaluating each term,
+\[
+1 - \frac{1}{2} = \frac{1}{2} \quad \text{and} \quad 1 - \frac{1}{5} = \frac{4}{5},
+\]
+so
+\[
+\varphi(10) = 10 \times \frac{1}{2} \times \frac{4}{5} = 10 \times \frac{4}{10} = 4.
+\]
+
+Thus, \(\varphi(10) = 4\).
+\end{document}

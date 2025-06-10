@@ -1,0 +1,131 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%---------------------------------------------------------------
+% Copy–paste LaTeX code: step‑by‑step force estimate for a 105 mph fastball
+%---------------------------------------------------------------
+
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=2.2em]
+
+  \item \textbf{Specify the known quantities.}
+  \[
+    \begin{aligned}
+      m &= 0.145\;\text{kg} &&\text{(mass of an MLB baseball)}\\
+      v_{\text{mph}} &= 105\;\text{mph} &&\text{(speed out of the pitcher’s hand)}
+    \end{aligned}
+  \]
+
+  \item \textbf{Convert the speed to SI units.}
+  \[
+    1\;\text{mph}=0.44704\;\text{m\,s}^{-1}\quad\Longrightarrow\quad
+    v = v_{\text{mph}}\times 0.44704
+      = 105\,(0.44704)\;\text{m\,s}^{-1}
+      \approx 46.94\;\text{m\,s}^{-1}.
+  \]
+
+  \item \textbf{Compute the kinetic energy when the ball reaches the catcher.}
+  \[
+    KE = \tfrac12 m v^{2}
+        = \frac{1}{2}(0.145)\,(46.94)^{2}
+        \approx 1.60\times 10^{2}\;\text{J}.
+  \]
+
+  \item \textbf{Energy–work method (average force from stopping distance).}
+
+        Assume the catcher brings the ball to rest over a distance
+        \(d = 0.10\text{–}0.15\;\text{m}\) inside the mitt.
+
+        \[
+          F_{\text{avg}}
+            = \frac{\text{work}}{d}
+            = \frac{KE}{d}
+            = \frac{1.60\times 10^{2}\;\text{J}}{0.10\text{–}0.15\;\text{m}}
+            \approx 1.1\text{–}1.6\;\text{kN}.
+        \]
+
+  \item \textbf{Impulse–momentum method (average force from stopping time).}
+
+        High‑speed video typically shows a stopping time of
+        \(t = 0.005\text{–}0.008\;\text{s}\).
+
+        \[
+          F_{\text{avg}}
+            = \frac{\Delta p}{\Delta t}
+            = \frac{m\,v}{t}
+            = \frac{0.145\,(46.94)}{0.005\text{–}0.008}
+            \approx 0.85\text{–}1.36\;\text{kN}.
+        \]
+
+        The two independent methods are consistent to within
+        experimental uncertainty.
+
+  \item \textbf{Convert the result to pounds‑force (optional).}
+        \[
+          1\;\text{kN} = 224.8\;\text{lbf}
+          \quad\Longrightarrow\quad
+          F_{\text{avg}}\approx
+          (1.0\text{–}1.6)\times 224.8
+          \approx 2.3\text{–}3.6\times 10^{2}\;\text{lbf}.
+        \]
+
+  \item \textbf{Comment on peak force.}
+
+        Because the deceleration is not perfectly uniform,
+        instantaneous peak forces can reach $\sim2\;\text{kN}$
+        ($\approx450\;\text{lbf}$) before the glove padding
+        spreads and dissipates the load.
+
+\end{enumerate}
+\end{document}

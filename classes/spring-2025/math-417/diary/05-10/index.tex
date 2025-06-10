@@ -1,0 +1,1689 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Out}{Out}
+\DeclareMathOperator{\F}{F}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{align}
+  y^n 
+    &= (g x g^{-1})^{\,n} \\[4pt]
+    &= \underbrace{(g x g^{-1})(g x g^{-1})\dotsm(g x g^{-1})}_{n\ \text{copies}} \\[4pt]
+    &= g\,x\,(g^{-1}g)\,x\,(g^{-1}g)\,\dotsm\,x\,g^{-1} \\[4pt]
+    &= g\,x^{\,n}\,g^{-1}.
+  \end{align}
+  \begin{definition}[Centralizer]
+    Let \(G\) be a group and \(S \subseteq G\) a (non-empty) subset.
+    The \emph{centralizer} of \(S\) in \(G\) is
+    \[
+        C_G(S) \;=\; \{\,g \in G \mid gs = sg \text{ for every } s \in S \}.
+    \]
+    When \(S = \{x\}\) is a single element, we write
+    \[
+        C_G(x) \;=\; \{\,g \in G \mid gx = xg \}.
+    \]
+    The \emph{center} of \(G\) is the centralizer of all of \(G\):
+    \[
+        Z(G) \;=\; C_G(G) \;=\; \{\,g \in G \mid gh = hg \text{ for every } h \in G \}.
+    \]
+  \end{definition}
+  \begin{proof}
+    Let $G$ be a finite group with exactly two conjugacy classes.
+    Since the identity element $e$ commutes with every element of $G$, its conjugacy class is the singleton $\{e\}$.
+    Consequently the other class must be the set $G\setminus\{e\}$.
+    
+    Pick an element $g\in G\setminus\{e\}$.
+    Its conjugacy class has size
+    \[
+        |g^G| \;=\; |G\setminus\{e\}| \;=\; |G|-1 .
+    \]
+    By the orbit–stabiliser theorem,
+    \[
+        |g^G| \;=\; [\,G:C_G(g)\,] 
+        \;=\; \frac{|G|}{|C_G(g)|},
+    \]
+    so $|g^G|$ divides $|G|$.
+    Thus $|G|-1\mid |G|$.
+    
+    Let $|G| = n$.  
+    If $n-1 \mid n$ then $n-1 \mid n-(n-1)=1$, whence $n-1 = 1$ and $n=2$.
+    
+    Therefore $|G|=2$ and every group of order 2 is cyclic:
+    \[
+        G \;\cong\; \Bbb Z_2.\qedhere
+    \]
+    \end{proof}
+    \begin{definition}[Stabilizer {\&} centralizer]
+      Let $G$ act on a set $X$.  
+      For $x\in X$ the \emph{stabilizer} of $x$ is
+      \[
+          G_x \;=\; \{\,g\in G \mid g\!\cdot\!x = x\}.
+      \]
+      
+      Now let $X=G$ with the conjugation action $g\!\cdot\!x = gxg^{-1}$.
+      Then
+      \[
+          G_x \;=\; \{\,g\in G \mid gxg^{-1}=x\}
+                 \;=\; C_G(x),
+      \]
+      the \emph{centralizer} of $x$.
+      \end{definition}
+      \begin{remark}
+        For $x\in G$ let
+        \[
+           C_G(x)=\{\,g\in G\mid gx=xg\},\qquad
+           x^{G}=\{\,g x g^{-1}\mid g\in G\}.
+        \]
+        Then
+        \[
+           |x^{G}| = [G:C_G(x)] = \frac{|G|}{|C_G(x)|}.
+        \]
+        Since $C_G(x)$ is a subgroup and $x^{G}$ is an orbit, they coincide
+        only when $|G|=1$ (the trivial group).  In every non-trivial group
+        they are distinct: the centralizer contains the stabiliser information,
+        while the conjugacy class contains the orbit information.
+        \end{remark}
+        Let $|G| = n \in \mathbb{N}$.
+Assume $n-1 \mid n$.
+Then there exists $k\in\mathbb{N}$ such that
+\[
+    n = k\,(n-1).
+\]
+But $n = (n-1)+1$, so
+\[
+    k\,(n-1) \;=\; (n-1)+1
+    \;\;\Longrightarrow\;\;
+    (k-1)\,(n-1) = 1.
+\]
+Both factors on the left are positive integers, hence each must equal $1$:
+\[
+    k-1 = 1
+    \quad\text{and}\quad
+    n-1 = 1.
+\]
+Consequently $n = 2$.  Therefore the only finite group with exactly two
+conjugacy classes has order $2$, i.e.\ $G \cong \mathbb{Z}_2$.
+\begin{definition}
+  Let $G$ be a group.
+  \begin{enumerate}
+    \item For $g\in G$, the map
+          \[
+              \varphi_g : G \longrightarrow G, \quad
+              h \mapsto g h g^{-1},
+          \]
+          is an \emph{inner automorphism}.
+          The set of all such maps is denoted $\Inn(G)$.
+    \item The full automorphism group is $\Aut(G)$.
+          The \emph{outer automorphism group} is
+          \[
+              \Out(G) \;=\; \Aut(G)\big/ \Inn(G).
+          \]
+          Its non-trivial elements are called \emph{outer automorphisms}.
+  \end{enumerate}
+  \end{definition}
+  \begin{problem}
+    Show that any finite group of order $255$ is abelian.
+    \end{problem}
+    
+    \begin{proof}[Solution]
+    Write the order in prime factor form:
+    \[
+        |G| \;=\; 255 \;=\; 3\cdot 5\cdot 17 ,
+    \qquad
+        3<5<17.
+    \]
+    
+    \paragraph{Step 1 — The Sylow $17$–subgroup is unique.}
+    Let $n_{17}$ be the number of Sylow $17$–subgroups.  
+    Sylow’s theorem gives
+    \[
+        n_{17}\mid 3\cdot 5=15,
+        \qquad
+        n_{17}\equiv 1 \;(\mathrm{mod}\; 17).
+    \]
+    The only divisor of $15$ congruent to $1$ modulo $17$ is $1$.  
+    Hence the Sylow $17$–subgroup $P_{17}$ is **unique and therefore normal**.
+    
+    \paragraph{Step 2 — Bounding the numbers of Sylow $5$– and $3$–subgroups.}
+    Similarly,
+    \[
+        n_{5}\mid 3\cdot 17 = 51, \quad n_{5}\equiv 1\pmod{5},
+    \qquad
+        n_{3}\mid 5\cdot 17 = 85, \quad n_{3}\equiv 1\pmod{3}.
+    \]
+    Thus
+    \[
+        n_{5}\in\{1,51\},
+    \qquad
+        n_{3}\in\{1,85\}.
+    \]
+    
+    \paragraph{Step 3 — Eliminating the large possibilities.}
+    Suppose $n_{5}=51$.  
+    Each Sylow $5$–subgroup has $4$ non-identity elements, and distinct Sylow subgroups intersect trivially, so this would contribute
+    \(
+        51\cdot 4 = 204
+    \)
+    elements of order $5$.
+    
+    If simultaneously $n_{3}=85$, the Sylow $3$–subgroups would contribute 
+    \(85\cdot 2 = 170\) non-identity elements of order $3$.  
+    Counting also the identity, we would have
+    \(
+        204 + 170 + 1 = 375 > 255,
+    \)
+    a contradiction.  
+    Hence \emph{at least one} of $n_{5},n_{3}$ equals $1$.
+    
+    \paragraph{Step 4 — Forcing both $n_{5}$ and $n_{3}$ to be $1$.}
+    Assume $n_{5}=51$ but $n_{3}=1$ (unique Sylow $3$–subgroup $P_{3}$).  
+    Then $P_{3}\trianglelefteq G$, so the quotient
+    \(
+        G/P_{3}
+    \)
+    has order $85 = 5\cdot 17$.  
+    Because $5\nmid 17-1=16$, a standard Sylow argument shows that any group of order $85$ is cyclic.  
+    A cyclic group has a \emph{unique} subgroup of order $5$, which pulls back to a unique Sylow $5$–subgroup of $G$—contradicting $n_{5}=51$.  
+    Thus $n_{5}$ cannot be $51$; hence $n_{5}=1$.  
+    An identical argument (swapping the roles of $3$ and $5$) forces $n_{3}=1$.
+    
+    \paragraph{Step 5 — All Sylow subgroups are normal and the group is cyclic.}
+    We have shown
+    \[
+        n_{17}=n_{5}=n_{3}=1.
+    \]
+    Therefore each Sylow subgroup
+    \(
+        P_{17},\,P_{5},\,P_{3}
+    \)
+    is normal in $G$.  
+    Their orders are pairwise coprime, so
+    \[
+        G\;=\;P_{3}\,P_{5}\,P_{17}\;\cong\;P_{3}\times P_{5}\times P_{17}.
+    \]
+    Each $P_{p}$ is cyclic (all groups of prime order are), and a direct product of cyclic groups of pairwise coprime orders is itself cyclic:
+    \[
+        P_{3}\times P_{5}\times P_{17}\;\cong\;\mathbb Z_{3}\times\mathbb Z_{5}\times\mathbb Z_{17}
+                                            \;\cong\;\mathbb Z_{255}.
+    \]
+    A cyclic group is abelian, so $G$ is abelian.
+    \end{proof}
+    \textbf{Claim.} If $P_{3}\trianglelefteq G$ and $G/P_{3}$ is cyclic of
+order $85$, then $n_{5}=1$.
+
+\emph{Proof.}
+Let $\pi:G\to G/P_{3}$ be the quotient map.
+Because $\ker\pi=P_{3}$ has order $3$, $\pi$ is injective on every
+Sylow $5$–subgroup.
+The cyclic group $G/P_{3}$ has a unique subgroup
+$H=\langle \pi(g)^{17}\rangle$ of order $5$.
+Hence for each Sylow $5$–subgroup $S\le G$ one has
+$\pi(S)=H\;(=|H|=5)$, so $S\subseteq\pi^{-1}(H)$.
+But $\lvert\pi^{-1}(H)\rvert=|P_{3}||H|=15$ and it can contain
+\emph{at most} one subgroup of order $5$.
+Thus $n_{5}=1$.
+\qed
+\begin{proof}[Detailed expansion of Step 4]
+  Recall that $|G| = 3\cdot 5 \cdot 17 = 255$ and
+  \[
+  n_{17}=1,\qquad 
+  n_{5}\in\{1,51\},\qquad 
+  n_{3}\in\{1,85\}.
+  \]
+  
+  \begin{enumerate}
+  %-----------------------------------------------------------
+  \item \textbf{Assume by contradiction that $n_{5}=51$ and $n_{3}=1$.}
+  
+        Thus the unique Sylow $3$–subgroup 
+        $P_{3}\le G$ is normal, $P_{3}\trianglelefteq G$.
+        \paragraph{Why does \(n_{3}=1\) make \(P_{3}\) normal?}
+
+Let \(P_{3}\le G\) be the (only) Sylow \(3\)-subgroup.
+
+\begin{enumerate}
+    \item Sylow’s theorem guarantees that for every \(g\in G\) the conjugate
+          \(gP_{3}g^{-1}\) is again a Sylow \(3\)-subgroup because
+          \[
+              \lvert gP_{3}g^{-1}\rvert 
+              = \lvert P_{3}\rvert
+              = 3 .
+          \]
+    \item If \(n_{3}=1\) there is \emph{exactly one} Sylow \(3\)-subgroup in
+          the whole group, namely \(P_{3}\) itself.
+    \item Hence for every \(g\in G\)
+          \[
+              gP_{3}g^{-1}\;=\;P_{3},
+          \]
+          i.e.\ \(P_{3}\) is fixed under conjugation by every element of
+          \(G\).
+\end{enumerate}
+
+Therefore \(P_{3}\) is invariant under all inner automorphisms and is
+normal:
+\[
+    P_{3}\trianglelefteq G.
+\]
+        
+  %-----------------------------------------------------------
+  \item \textbf{Pass to the quotient by $P_{3}$.}
+  
+        Because $|P_{3}|=3$ and $P_{3}\trianglelefteq G$, the quotient
+        $$
+            \bar{G}\;=\;G/P_{3}
+        $$
+        is a group of order
+        $$
+            |\bar{G}| \;=\;\frac{|G|}{|P_{3}|}\;=\;\frac{255}{3}\;=\;85
+            \;=\;5\cdot17.
+        $$
+  
+  %-----------------------------------------------------------
+  \item \textbf{A group of order $85$ is cyclic.}
+  
+        Let $q=17>p=5$.  
+        Sylow’s theorem in $\bar{G}$ gives
+        \begin{align}
+            n_{17}\mid 5
+            \ \text{and}\ 
+            n_{17}\equiv 1\pmod{17}
+            &\;\Longrightarrow\;
+            n_{17}=1, \\
+            n_{5}\mid 17
+            \ \text{and}\ 
+            n_{5}\equiv 1\pmod{5}
+            &\;\Longrightarrow\;
+            n_{5}=1.
+        \end{align}
+        Hence $\bar{G}$ possesses \emph{unique} Sylow subgroups
+        $\bar{P}_{17}$ and $\bar{P}_{5}$, both normal.  
+        Their orders are coprime, so
+        $$
+            \bar{G}\;=\;\bar{P}_{5}\,\bar{P}_{17}
+            \;\cong\;
+            \bar{P}_{5}\times\bar{P}_{17}
+            \;\cong\;
+            \mathbb{Z}_{5}\times\mathbb{Z}_{17}
+            \;\cong\;
+            \mathbb{Z}_{85},
+        $$
+        i.e.\ $\bar{G}$ is cyclic.
+  
+  %-----------------------------------------------------------
+  \item \textbf{Cyclic $\bar{G}$ has a \emph{unique} subgroup of order $5$.}
+  
+        Let $\bar{H}$ denote this subgroup of order $5$ in $\bar{G}$.
+        Because $\bar{G}$ is cyclic, $\bar{H}=\langle \bar{g}^{17}\rangle$
+        for any generator $\bar{g}$ of $\bar{G}$.
+  
+  %-----------------------------------------------------------
+  \item \textbf{Lift $\bar{H}$ back to $G$.}
+  
+        Let $\pi:G\twoheadrightarrow\bar{G}=G/P_{3}$ be the quotient map.
+        Set $H:=\pi^{-1}(\bar{H})$, so
+        $|H| = |\bar{H}|\cdot|P_{3}| = 5\cdot 3 = 15$
+        and $P_{3}\le H\le G$.
+  
+        Each Sylow $5$–subgroup $S\le G$ satisfies $\pi(S)=\bar{H}$:
+        since $|S|=5$ and $\ker\pi=P_{3}$ has order $3$ coprime to $5$,
+        we have $\ker(\pi|_S)=\{e\}$, so $\pi$ is injective on $S$ and
+        $\pi(S)$ is a subgroup of $\bar{G}$ of order $5$, hence $\bar{H}$.
+  
+        Therefore \emph{every} Sylow $5$–subgroup of $G$ lies inside $H$.
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Expanded explanation of “Step 5 — Lift $\bar{H}$ back to $G$’’
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Step 5 — Lifting the subgroup \(\bar{H}\) of order \(5\) from \(\bar{G}=G/P_{3}\) back to \(G\).}
+
+\begin{enumerate}
+%......................................................................
+\item \textbf{Set–up and basic facts.}
+
+      Let
+      \[
+          \pi : G \;\twoheadrightarrow\; \bar{G}=G/P_{3}
+      \]
+      be the canonical quotient map.  
+      By construction, \(\ker\pi = P_{3}\) has order \(3\).
+
+      Inside \(\bar{G}\cong\Bbb Z_{85}\) choose its \emph{unique}
+      subgroup of order \(5\),
+      \[
+          \bar{H}\;=\;\langle\bar{g}^{17}\rangle
+          \qquad(\lvert\bar{H}\rvert = 5).
+      \]
+
+%......................................................................
+\item \textbf{Define the pre-image of \(\bar{H}\).}
+
+      \[
+          H \;:=\; \pi^{-1}(\bar{H})
+          \;=\;
+          \bigl\{\,g\in G \mid \pi(g)\in\bar{H}\bigr\}.
+      \]
+      The subgroup \(H\) contains \(P_{3}\) (because \(P_{3}=\ker\pi\))
+      and satisfies
+      \[
+          \lvert H\rvert
+          \;=\;
+          \lvert\bar{H}\rvert\;\lvert P_{3}\rvert
+          \;=\;
+          5\cdot 3
+          \;=\;
+          15.
+      \]
+      Thus
+      \[
+          P_{3}\;\le\;H\;\le\;G,
+          \quad
+          \text{with}\;
+          \lvert H\rvert = 3\cdot5 .
+      \]
+
+%......................................................................
+\item \textbf{Image of every Sylow \(5\)-subgroup lands in \(\bar{H}\).}
+
+      Let \(S\le G\) be \emph{any} Sylow \(5\)-subgroup (\(\lvert S\rvert =5\)).
+      Because \(\ker\pi = P_{3}\) has order \(3\) coprime to \(5\),
+      we have
+      \[
+          \ker\bigl(\pi{\restriction_{S}}\bigr)
+          \;=\;
+          P_{3}\cap S
+          \;=\;\{e\}.
+      \]
+      Hence \(\pi{\restriction_{S}}\) is \emph{injective}, so
+      \[
+          \lvert\pi(S)\rvert = \lvert S\rvert = 5.
+      \]
+      But in \(\bar{G}\) there is \emph{only one} subgroup of order \(5\),
+      namely \(\bar{H}\).  Therefore
+      \[
+          \pi(S)=\bar{H}.
+      \]
+
+%......................................................................
+\item \textbf{Consequences for containment.}
+
+      Since \(\pi(S)=\bar{H}\)
+      and \(H=\pi^{-1}(\bar{H})\),
+      it follows immediately that
+      \[
+          S \;\subseteq\; H.
+      \]
+      Because \(S\) was an \emph{arbitrary} Sylow \(5\)-subgroup of \(G\),
+      we have shown:
+      \[
+          \boxed{\;
+            \text{Every Sylow }5\text{-subgroup of }G
+            \text{ is contained in }H.
+          \;}
+      \]
+\end{enumerate}
+
+\noindent
+This containment is the key to the contradiction:  
+\(H\) has order \(15\) and can house \emph{at most one} subgroup of
+order \(5\) (their pairwise intersections are trivial, so two distinct
+ones would already contribute \(5+5-1=9>15-3\) non-identity elements).
+Hence all Sylow \(5\)-subgroups coincide, implying \(n_{5}=1\),
+contradicting the earlier assumption \(n_{5}=51\).
+  %-----------------------------------------------------------
+  \item \textbf{$H$ contains exactly \underline{one} Sylow $5$–subgroup.}
+  
+        A subgroup of order $15$ can contain at most one subgroup of
+        order $5$ because the intersection of any two distinct such
+        subgroups would be trivial, giving $5+5-1>15$.  Concretely,
+        $15 = 3\cdot5$ and $\gcd(3,5)=1$ force uniqueness.
+  
+        Hence $H$ has a \emph{single} subgroup of order $5$, which means
+        $$
+            n_{5}=1,
+        $$
+        contradicting the assumption $n_{5}=51$.
+  
+        Thus our initial assumption is impossible; we conclude
+        $$
+            n_{5}=1.
+        $$
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Why a subgroup $H$ of order $15$ has \emph{exactly one} subgroup of
+%  order $5$  (expanded explanation for Step 6)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}\label{lem:15-cyclic}
+  Every group of order $15$ is cyclic.
+  \end{lemma}
+  
+  \begin{proof}
+  Write $|H|=15 = 3\cdot 5$ with primes $p=3<q=5$ and note that
+  $p\nmid(q-1)$ because $3\nmid 4$.
+  
+  \begin{enumerate}
+  \item \textbf{The Sylow--$5$ subgroup is unique and normal.}
+        Sylow’s theorem gives
+        \[
+            n_{5}\mid 3
+            \quad\text{and}\quad
+            n_{5}\equiv 1 \pmod{5}.
+        \]
+        The only divisor of $3$ congruent to $1 \pmod{5}$ is $1$,
+        so the Sylow--$5$ subgroup $Q$ is unique and therefore normal.
+  
+  \item \textbf{The conjugation homomorphism into $\Aut(Q)$ is trivial.}
+        Because $Q\cong\Bbb Z_{5}$, its automorphism group is
+        $\Aut(Q)\cong\Bbb Z_{4}$ of order $4$.
+        Conjugation induces a homomorphism
+        \[
+            \varphi:H \longrightarrow \Aut(Q),
+            \qquad
+            h\mapsto (x\mapsto hxh^{-1}).
+        \]
+        Its image has order dividing both $|H|$ and $|\Aut(Q)|$, hence
+        divides $\gcd(15,4)=1$; thus $\varphi$ is trivial and $Q$
+        lies in the centre of $H$.
+  
+  \item \textbf{Direct product decomposition and cyclicity.}
+        Let $P$ be a Sylow--$3$ subgroup.  Because $|P|=3$ is coprime to
+        $|Q|=5$ and $Q\le Z(H)$,
+        \[
+            H \;=\; P Q
+            \;\cong\; P\times Q
+            \;\cong\; \Bbb Z_{3}\times\Bbb Z_{5}
+            \;\cong\; \Bbb Z_{15},
+        \]
+        a cyclic group.
+  \end{enumerate}
+  \end{proof}
+  
+  \medskip
+  \noindent
+  \textbf{Consequences for Sylow--$5$ subgroups inside $H$.}
+  
+  Since $H$ is cyclic of order $15$, the subgroups of $H$ are exactly
+  the unique subgroups of each order dividing $15$:
+  \[
+      \langle g^{3}\rangle \;(\text{order }5), 
+      \quad
+      \langle g^{5}\rangle \;(\text{order }3),
+      \quad
+      \langle g^{15}\rangle = \{e\}.
+  \]
+  Hence:
+  
+  \[
+  \boxed{\;H\text{ contains a \emph{single} subgroup of order }5.\;}
+  \]
+  
+  \bigskip
+  \noindent
+  \textbf{Alternative counting argument (if one prefers not to invoke Lemma~\ref{lem:15-cyclic}).}
+  
+  Suppose, to the contrary, that $H$ contains two distinct subgroups
+  $S_{1},S_{2}$ of order $5$.
+  
+  \begin{itemize}
+  \item Groups of prime order are cyclic, so
+        $S_{1}\cap S_{2}$ is a common subgroup of order dividing $5$.
+        If $S_{1}\neq S_{2}$, the intersection must be $\{e\}$.
+  \item Then $|S_{1}\cup S_{2}| = |S_{1}|+|S_{2}|-|\{e\}| = 5+5-1 = 9$.
+  \item $H$ also contains the Sylow--$3$ subgroup $P_{3}$ of order $3$.
+        Aside from the identity, $P_{3}$ contributes $2$ further elements.
+  \end{itemize}
+  
+  Consequently $H$ would have at least $9+2 = 11$ distinct non-identity
+  elements, plus the identity, totalling at least $12$, which forces
+  $|H|\ge12$.  However $|H|=15$, and \emph{any} additional element of
+  order $5$ or $3$ would push the count past $15$, contradicting the fixed
+  order.  Therefore only \emph{one} subgroup of order $5$ can exist in $H$.
+  
+  \bigskip
+  Either route yields the desired uniqueness; in particular
+  \[
+      n_{5}=1,
+  \]
+  contradicting the earlier assumption $n_{5}=51$ and completing Step 6.
+  %-----------------------------------------------------------
+  \item \textbf{Swap the roles of $3$ and $5$.}
+  
+        An identical argument—starting with $n_{3}=85$ and $n_{5}=1$,
+        quotienting by the normal Sylow $5$–subgroup—forces $n_{3}=1$.
+        Therefore
+        $$
+            n_{3}=n_{5}=1.
+        $$
+  
+  \end{enumerate}
+  
+  Consequently \emph{all} Sylow subgroups ($P_{3},P_{5},P_{17}$) are
+  normal in $G$, whence
+  $
+      G\cong P_{3}\times P_{5}\times P_{17}
+            \cong\mathbb{Z}_{3}\times\mathbb{Z}_{5}\times\mathbb{Z}_{17}
+            \cong\mathbb{Z}_{255},
+  $
+  which is abelian.
+  \end{proof}
+  \paragraph{Why the “extra element’’ remark is needed—and why it leads to a contradiction.}
+
+Assume, for contradiction, that \(H\) (with \(|H|=15\)) contains
+\emph{two} distinct subgroups of order \(5\),
+\(S_{1}\) and \(S_{2}\).
+
+\begin{enumerate}
+\item[\textbf{(i)}]  Because groups of prime order are cyclic,
+      \(S_{1}\cap S_{2}=\{e\}\).
+      Hence
+      \[
+          |S_{1}\cup S_{2}| \;=\;
+          |S_{1}|+|S_{2}|-|\{e\}|
+          \;=\; 5+5-1
+          \;=\; 9
+      \]
+      non-identity elements
+      (together with \(e\), that makes \(10\) elements counted so far).
+
+\item[\textbf{(ii)}]  \(H\) \emph{also} contains \emph{its} Sylow-\(3\)
+      subgroup \(P_{3}\) of order \(3\),
+      which contributes exactly two further non-identity elements
+      (they are not in \(S_{1}\cup S_{2}\) because
+      \(\gcd(3,5)=1\)).
+      Now we have already identified
+      \[
+          9 + 2 = 11
+      \]
+      non-identity elements,
+      plus the identity,
+      so at least \(12\) elements in total.
+
+\item[\textbf{(iii)}]  But \(|H|=15\), so \emph{exactly three} elements
+      are still unaccounted for.
+      What could their orders be?
+
+      \begin{itemize}
+      \item If an uncounted element had order \(5\),
+            it would generate a \emph{third} subgroup of order \(5\),
+            necessarily disjoint from \(S_{1}\cup S_{2}\)
+            (apart from \(e\)),
+            adding at least \(4\) new non-identity elements
+            and pushing the total \(\ge 16>15\).
+
+      \item If an uncounted element had order \(3\),
+            it would either lie in \(P_{3}\) (already counted)
+            or generate a \emph{second} subgroup of order \(3\),
+            disjoint from \(P_{3}\) except for \(e\),
+            adding \(2\) new non-identity elements
+            and taking the total to \(14\);
+            a second such element (necessarily present,
+            because a subgroup of order \(3\) has \(2\) generators)
+            would push the total to \(16>15\).
+      \end{itemize}
+
+      Therefore \emph{no new element of order \(5\) or \(3\) can exist},
+      but those are the only possible prime orders dividing \(15\).
+      Hence no uncounted elements can exist at all.
+\end{enumerate}
+
+We have reached a contradiction:
+we cannot fill the remaining three “slots’’ in a way compatible with
+the assumption \(S_{1}\neq S_{2}\).
+Consequently \(H\) can contain \emph{only one} subgroup of order \(5\).
+
+\[
+\boxed{\;n_{5}=1\;}
+\]
+
+This contradicts the temporary assumption \(n_{5}=51\) and completes
+the counting argument.
+\paragraph{Corrected counting argument.}
+
+Assume $H$ (with $\lvert H\rvert = 15$) contains two \emph{distinct}
+subgroups of order $5$, say $S_1$ and $S_2$.
+
+\begin{itemize}
+    \item Each subgroup of order $5$ is cyclic, so
+          $S_1 \cap S_2 = \{e\}$.
+
+          Hence
+          \[
+              \lvert S_1 \cup S_2\rvert
+              = \lvert S_1\rvert + \lvert S_2\rvert - \lvert\{e\}\rvert
+              = 5 + 5 - 1
+              = 9
+          \]
+          elements, of which $8$ are non-identity.
+
+    \item $H$ also contains its Sylow–$3$ subgroup
+          $P_3$ (order $3$).  Aside from $e$, $P_3$ contributes
+          $2$ more non-identity elements that
+          cannot lie in $S_1 \cup S_2$ because $\gcd(3,5)=1$.
+
+          We have therefore accounted for
+          \[
+              8 \;+\; 2 \;=\; 10 \text{ non-identity elements},
+          \]
+          plus $e$, totalling $11$ elements.
+
+    \item Exactly $4$ elements of $H$ remain unaccounted for.
+          Any such element must have order $3$ or $5$ (the only prime
+          divisors of $15$):
+
+          \begin{enumerate}
+              \item If one of the remaining elements has order $5$,
+                    it generates a \emph{third} subgroup of order $5$,
+                    disjoint from $S_1\cup S_2$ except at $e$.
+                    This contributes \emph{at least} $4$ new
+                    non-identity elements, pushing the total
+                    non-identity count to $14$ and the group size to
+                    $\ge 15 + (4-1) = 18 > 15$ — impossible.
+
+              \item If one of the remaining elements has order $3$ and
+                    is \emph{not} in $P_3$, it generates another
+                    subgroup of order $3$ disjoint from $P_3$ except at
+                    $e$.  That adds $2$ new non-identity elements; a
+                    second generator of that same subgroup adds one more,
+                    so we exceed $15$ again.
+          \end{enumerate}
+\end{itemize}
+
+Thus it is impossible for $H$ to contain two distinct subgroups of
+order $5$.  Therefore \(H\) has \emph{exactly one} Sylow–$5$ subgroup,
+implying \(n_5 = 1\).
+
+\begin{problem}
+  Show that every group of order $255$ is abelian.
+\end{problem}
+
+\begin{proof}
+  \begin{enumerate}
+      \item \textbf{Prime factorisation and Sylow counts.}\\
+            Since $255 = 3\cdot 5\cdot 17$, let $n_{p}$ denote the number of Sylow $p$–subgroups of a group $G$ with $\lvert G\rvert =255$.
+            For $p = 17$ we have
+            \begin{align}
+                n_{17} \equiv 1 \pmod{17},
+                \qquad
+                n_{17} \mid 3\cdot 5 = 15 .
+            \end{align}
+            The only divisor of $15$ that is congruent to $1$ modulo $17$ is $1$, so $n_{17}=1$.
+            Hence the unique Sylow $17$–subgroup
+            \begin{align}
+                G_{17}\le G,\qquad \lvert G_{17}\rvert = 17
+            \end{align}
+            is \emph{normal}.
+
+      \item \textbf{The conjugation action on $G_{17}$ is trivial.}\\
+            Consider the conjugation homomorphism
+            \begin{align}
+                \alpha\colon G \longrightarrow \operatorname{Aut}(G_{17}),
+                \qquad
+                \alpha(g)(h) = ghg^{-1}\quad (g\in G,\;h\in G_{17}).
+            \end{align}
+            Because $G_{17}\cong \mathbb{Z}_{17}$ is cyclic, its automorphism group is
+            \begin{align}
+                \operatorname{Aut}(G_{17})\cong \mathbb{Z}_{17}^{\times},
+                \qquad
+                \lvert \operatorname{Aut}(G_{17}) \rvert = 16 .
+            \end{align}
+            Fix any $g\in G$.  Its order divides $255$, so
+            \begin{align}
+                \operatorname{ord}_{\operatorname{Aut}(G_{17})}\!\bigl(\alpha(g)\bigr)
+                \mid 255
+                \quad\text{and}\quad
+                \operatorname{ord}_{\operatorname{Aut}(G_{17})}\!\bigl(\alpha(g)\bigr)
+                \mid 16 .
+            \end{align}
+            Because $\gcd(255,16)=1$, the only positive integer dividing \emph{both} $255$ and $16$ is $1$.
+            Thus $\alpha(g)=\operatorname{id}_{G_{17}}$ for every $g\in G$; equivalently,
+            \begin{align}
+                ghg^{-1}=h \qquad\text{for all } g\in G,\;h\in G_{17}.
+            \end{align}
+            Hence $G_{17}\le Z(G)$, the center of $G$.
+
+      \item \textbf{The quotient $G/G_{17}$ is cyclic of order $15$.}\\
+            Because $G_{17}$ is normal, the quotient has order
+            \begin{align}
+                \lvert G/G_{17}\rvert = \frac{255}{17}=15 = 3\cdot 5 .
+            \end{align}
+            A standard result (groups of order $pq$ with $p<q$ and $p\nmid(q-1)$ are cyclic) shows that every group of order $15$ is cyclic.  Thus $G/G_{17}\cong\mathbb{Z}_{15}$.
+
+      \item \textbf{Every element of $G$ splits uniquely into a ``$\mathbb{Z}_{15}$–part'' and a ``$G_{17}$–part''.}\\
+            Choose $a\in G$ whose coset $aG_{17}$ generates $G/G_{17}$.
+            Then each $g\in G$ can be written uniquely as
+            \begin{align}
+                g = a^{k}z, \qquad 0\le k\le 14,\;z\in G_{17}.
+            \end{align}
+
+      \item \textbf{Elements commute, so $G$ is abelian.}\\
+            Take two arbitrary elements
+            \begin{align}
+                g  = a^{k}z,\qquad
+                g' = a^{\ell}z',
+                \qquad
+                z,z'\in G_{17}.
+            \end{align}
+            Because $G_{17}\le Z(G)$, we have $zz' = z'z$ and $a^{k}z = za^{k}$, etc.\  Hence
+            \begin{align}
+                gg'
+                &= a^{k}z\,a^{\ell}z'
+                 = a^{k+\ell}zz' ,\\
+                g'g
+                &= a^{\ell}z'\,a^{k}z
+                 = a^{\ell+k}z'z
+                 = a^{k+\ell}zz' .
+            \end{align}
+            Thus $gg' = g'g$ for all $g,g'\in G$; $G$ is abelian.
+
+      \item \textbf{$G$ is cyclic.}\\
+            Any abelian group of square–free order is cyclic, so
+            \begin{align}
+                G \cong \mathbb{Z}_{255}.
+            \end{align}
+  \end{enumerate}
+\end{proof}
+% Explanation of the “+\,\tfrac12” trick for rounding to the nearest integer
+Let \(\lfloor\cdot\rfloor\) denote the ordinary **floor** function, which always  
+rounds a real number \emph{down} to the greatest integer \(\le\) that number.  
+To transform “round down’’ into “round to the nearest integer’’ we first shift
+the real line by \(\tfrac12\) and then apply the floor:
+
+\begin{align}
+r \;:=\; \Bigl\lfloor x + \tfrac12 \Bigr\rfloor \;\in\; \mathbb{Z}.
+\end{align}
+
+---
+
+ Why does this work?
+
+Write \(x = n + \theta\) with \(n\in\mathbb{Z}\) and \(0 \le \theta < 1\).
+Adding \(\tfrac12\) gives  
+\(x + \tfrac12 = n + \bigl(\theta + \tfrac12\bigr)\).
+
+\[
+\begin{array}{c|c}
+0 \le \theta < \tfrac12 & \tfrac12 \le \theta < 1 \\ \hline
+n \le x < n+\tfrac12     & n+\tfrac12 \le x < n+1 \\
+n \le x+\tfrac12 < n+1   & n+1 \le x+\tfrac12 < n+2
+\end{array}
+\]
+
+Hence
+\[
+\lfloor x + \tfrac12 \rfloor
+=
+\begin{cases}
+n,   & 0 \le \theta < \tfrac12,\\[4pt]
+n+1, & \tfrac12 \le \theta < 1,
+\end{cases}
+\]
+exactly the integer \emph{nearest} to \(x\) (ties at
+\(\theta=\tfrac12\) are broken toward \(n+1\), but any fixed
+tie-breaking rule suffices).
+
+Consequently
+\[
+|x-r|\;\le\;\tfrac12,
+\qquad
+r = \lfloor x+\tfrac12\rfloor \text{ is the unique integer with this property.}
+\]
+
+---
+
+Application to Gaussian integers
+
+For \(z = x + iy \in \mathbb{C}\) set
+\[
+q \;=\;
+\bigl\lfloor x + \tfrac12\bigr\rfloor
+\;+\;
+\bigl\lfloor y + \tfrac12\bigr\rfloor\,i
+\;\in\; \mathbb{Z}[i].
+\]
+Since both real and imaginary parts are within \(\tfrac12\) of those of
+\(z\), we have
+\[
+|z-q|
+=\sqrt{(x-\operatorname{Re}q)^2 + (y-\operatorname{Im}q)^2}
+\;\le\;
+\sqrt{\bigl(\tfrac12\bigr)^2 + \bigl(\tfrac12\bigr)^2}
+\;=\;
+\frac1{\sqrt2},
+\]
+so \(q\) is a “nearest’’ Gaussian integer to \(z\).
+
+---
+
+ Why not simply \(\lfloor x\rfloor\)?
+
+Using \(q = \lfloor x\rfloor + i\lfloor y\rfloor\) would always
+round \emph{down}, not to the nearest lattice point, giving
+\(|x-\lfloor x\rfloor|<1\) but potentially as large as \(1\),
+while the \(\tfrac12\)-shift guarantees a maximal error of only
+\(\tfrac12\) in each coordinate (and \(\tfrac1{\sqrt2}\) overall).
+% Why the homomorphism  \psi : \mathbb Z \to \mathbb Z[i]/I \; (n\mapsto n+I) \; is introduced
+
+\bigskip
+\textbf{Goal}.  In part~(b) we must \emph{identify} the quotient ring
+\(\mathbb Z[i]/I\) where \(I=(2+i)\).
+A slick way to recognise an unfamiliar quotient is to produce a
+\emph{surjective ring homomorphism} onto it and then invoke the
+First Isomorphism Theorem.  
+That is exactly the rôle of
+\[
+\psi:\;\mathbb Z \;\longrightarrow\; \mathbb Z[i]/I,
+\qquad n\;\longmapsto\; n+I.
+\]
+
+\bigskip
+\textbf{Why does \(\psi\) help?}
+
+\begin{enumerate}
+    \item \emph{It is automatically a ring homomorphism.}  
+          Addition and multiplication of cosets are defined component-wise,
+          so sending \(n\) to \(n+I\) plainly respects \(+\) and \(\cdot\).
+
+    \item \emph{Its image is everything.}  
+          Every coset \(z+I\) contains an \emph{integer}:
+          write \(z=x+iy\) and subtract \(\lfloor x+\tfrac12\rfloor
+          +i\lfloor y+\tfrac12\rfloor\in I\) as in Step~2 of the notes.
+          Hence \(\psi\) is surjective.
+
+    \item \emph{The kernel is easy to compute.}  
+          An integer \(n\) lies in \(\ker\psi\) precisely when
+          \(n\in I\), i.e.\ when \(2+i\) divides \(n\) in
+          \(\mathbb Z[i]\).
+          Write \(n=(2+i)u\) with \(u=a+bi\in\mathbb Z[i]\) and take norms:
+          \[
+               n^{2}=N(n)=N\bigl((2+i)u\bigr)=N(2+i)\,N(u)=5\bigl(a^{2}+b^{2}\bigr).
+          \]
+          Because \(5\mid n^{2}\) and \(5\) is prime in \(\mathbb Z\),
+          we get \(5\mid n\).  Thus
+          \[
+               \ker\psi = 5\mathbb Z.
+          \]
+
+    \item \emph{Apply the First Isomorphism Theorem.}  
+          We obtain the canonical isomorphism
+          \[
+                \mathbb Z[i]/I 
+                \;\cong\; 
+                \mathbb Z/\ker\psi
+                \;=\;
+                \mathbb Z/5\mathbb Z
+                \;=\;
+                \mathbb Z_{5}.
+          \]
+\end{enumerate}
+
+\medskip
+\textbf{Summary}.  Introducing \(\psi\) packages the proof of
+\(\mathbb Z[i]/(2+i)\cong\mathbb Z_{5}\) into a
+single clean argument:
+\[
+\boxed{\;
+    \text{construct a surjective homomorphism }\psi,\;
+    \text{find }\ker\psi,\;
+    \text{invoke the First Isomorphism Theorem.}
+\;}
+\]
+Without \(\psi\) one would have to manipulate cosets by hand and guess
+the isomorphism, a longer and less systematic route.
+The implication  
+\[
+\bigl(\,p \text{ prime and } p \mid n^{2}\bigr)\; \Longrightarrow\; p \mid n
+\]
+is \emph{always} true in \(\mathbb{Z}\) (it is Euclid’s lemma).  
+Consequently **there is no counter-example when \(p\) is prime.**
+
+\medskip
+What \emph{can} fail is the same implication with a **composite** divisor.
+For instance
+\[
+4 \;\mid\; 6^{2}=36
+\qquad\text{but}\qquad
+4 \nmid 6.
+\]
+Here \(4\) is not prime, so Euclid’s lemma does not apply.  
+This example shows that the primality condition is indispensable.
+% Euclid’s Lemma in $\Bbb Z$ and its proof
+\begin{theorem}[Euclid’s Lemma]
+  Let $p$ be a prime number and let $a,b\in\Bbb Z$.  
+  If $p\mid ab$, then $p\mid a$ or $p\mid b$.
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}
+      \item Because $p$ is prime, its only positive divisors are $1$ and $p$.  
+            Hence $\gcd(p,a)$ is either $1$ or $p$.
+      \item Set $d=\gcd(p,a)$.  Apply Bézout’s identity: there exist integers $u,v$
+            such that
+            \begin{align}
+                up+va=d.
+            \end{align}
+      \item Multiply both sides by $b$:
+            \begin{align}
+                upb+vab=db.
+            \end{align}
+            By hypothesis $p\mid ab$, so $p\mid vab$.  Clearly $p\mid upb$.
+            Therefore $p\mid (upb+vab)=db$.
+      \item Since $p\mid db$ and $d=\gcd(p,a)$ divides $p$, there are two cases:
+            \begin{enumerate}
+                \item $d=p$.  Then $p\mid a$ (because $d=\gcd(p,a)$ divides $a$).
+                \item $d=1$.  Then the previous line gives $p\mid b$.
+            \end{enumerate}
+      \item In either case we have shown $p\mid a$ or $p\mid b$, completing the proof.
+  \end{enumerate}
+\end{proof}
+
+\bigskip
+\textbf{Corollary (Square version).}
+If $p$ is prime and $p\mid n^{2}$, then $p\mid n$.  
+\emph{Proof.}  Apply Euclid’s lemma to $ab = n\cdot n$.
+% Name and interpretation of the identity
+\[
+(1-x)\bigl(1+x+\dots+x^{k-1}\bigr)=1-x^{k}\qquad(k\in\Bbb N,\;k\ge 1).
+\]
+
+This is the \textbf{finite geometric-series identity}.  
+Equivalently, it is the factorisation of the \emph{difference of $k$-th powers}:
+
+\[
+1-x^{k}=(1-x)\bigl(1+x+x^{2}+\dots+x^{k-1}\bigr).
+\]
+
+\bigskip
+\textbf{Why it holds.}  Expand the left-hand side:
+
+\[
+(1-x)(1+x+\dots+x^{k-1})
+=1+x+\dots+x^{k-1}-\bigl(x+x^{2}+\dots+x^{k}\bigr),
+\]
+and notice that every term except the first \(1\) and the last \(-x^{k}\)
+cancels, giving \(1-x^{k}\).
+
+\bigskip
+\textbf{Standard rearrangement.}  For \(x\neq1\) one often writes
+\[
+1+x+\dots+x^{k-1}
+=\frac{1-x^{k}}{1-x},
+\]
+so the displayed identity is just that equation multiplied through by
+\((1-x)\).
+% Why $\;\Bbb Z/5\Bbb Z\;$ and $\;\Bbb Z_{5}\;$ are the same object
+
+By definition
+\[
+\Bbb Z/5\Bbb Z
+=\bigl\{\,\overline{n}\;:\;n\in\Bbb Z\bigr\},
+\qquad
+\overline{n}:=\{\,n+5k : k\in\Bbb Z\,\},
+\]
+with addition and multiplication performed
+\emph{component-wise} and then reduced modulo \(5\).
+
+The symbol \(\Bbb Z_{5}\) (or sometimes \(\mathbf{F}_{5}\))
+is simply a \emph{shorthand name} for this very ring:
+\[
+\Bbb Z_{5}
+\;=\;
+\{\,0,1,2,3,4\,\},
+\quad
+\text{operations taken modulo }5.
+\]
+
+The map
+\[
+\begin{aligned}
+\phi:\;\Bbb Z/5\Bbb Z &\;\longrightarrow\; \Bbb Z_{5},\\
+\overline{n}&\;\longmapsto\;n\pmod{5}\;\in\{0,1,2,3,4\},
+\end{aligned}
+\]
+is a well-defined bijective ring homomorphism, hence an \emph{isomorphism}.
+Because there is a unique ring of order \(5\) up to isomorphism,
+it is customary (and harmless) to \emph{identify}
+\(\Bbb Z/5\Bbb Z\) with \(\Bbb Z_{5}\) and write
+\[
+\boxed{\;\Bbb Z/5\Bbb Z\;=\;\Bbb Z_{5}\;}
+\]
+whenever convenient.
+\bigskip
+\textbf{Correction of Step 3 (surjectivity).}
+
+When we divide $z=a+bi\in\Bbb Z[i]$ by $2+i$ we obtain
+\[
+z=(2+i)q+r, \qquad q,r\in\Bbb Z[i],\qquad N(r)<5.
+\]
+Because $N(r)=x^{2}+y^{2}$ for some $x,y\in\Bbb Z$, the
+possible values of $N(r)$ under the bound $N(r)<5$ are
+\[
+N(r)\in\{0,1,2,4\}.
+\]
+(The value $3$ cannot occur since $x^{2}+y^{2}\equiv0,1,2\pmod4$ but
+never $3$.)  A complete set of representatives is
+
+\[
+\begin{array}{c|c|c}
+N(r) & r & \text{integer congruent to }r\pmod{I=(2+i)}\\\hline
+0 & 0                     & 0\\
+1 & 1,\,-1,\,i,\,-i       & 1\ (\,\text{or }4\text{ if }r=-1)\\
+2 & 1+i,\,-1+i,\;1-i,\,-1-i & 2\ (\,\text{or }3,4)\\
+4 & 2,\,-2,\,2i,\,-2i     & 0
+\end{array}
+\]
+
+\emph{How to see the “integer” column.}
+Write $r=x+yi$.  Reduce modulo $I=(2+i)$ by subtracting
+multiples of $2+i$ until only the integer part remains:
+
+\[
+\begin{aligned}
+1+i &\equiv (1+i)-(2+i)=-1\equiv 4\pmod{I},\\
+-1+i&\equiv(-1+i)+(2-i)=1\pmod{I},\\
+1-i &\equiv(1-i)-(2+i)=-1-2i\equiv2\pmod{I},
+\end{aligned}
+\]
+etc.  In every case $r$ is congruent to \emph{some} integer
+in $\{0,1,2,3,4\}$.
+
+Hence \textbf{every} coset of $I$ contains an integer
+representative, so the homomorphism
+\[
+\psi:\Bbb Z\longrightarrow\Bbb Z[i]/I,\qquad n\longmapsto n+I
+\]
+is \textbf{surjective}.
+
+\bigskip
+\textbf{Conclusion (unchanged).}
+Since $\ker\psi=5\Bbb Z$, the First Isomorphism Theorem gives
+\[
+\Bbb Z[i]/I\;\cong\;\Bbb Z/\ker\psi
+          \;=\;\Bbb Z/5\Bbb Z
+          \;=\;\Bbb Z_{5}.
+\]
+
+\medskip
+\emph{Thus the only missing norm in the original typed notes was $2$;
+including it does not affect the proof, only completes the list.}
+When an \emph{integer} \(n\in\Bbb Z\subset\Bbb Z[i]\) lies in the ideal
+\(I=(2+i)\), we can write it as a product
+\[
+n \;=\;(a+bi)(2+i), \qquad a,b\in\Bbb Z.
+\]
+
+Multiply out the right–hand side and separate real and imaginary parts:
+
+\[
+(a+bi)(2+i)
+\;=\;\underbrace{(2a-b)}_{\text{real part}}
+\;+\;
+\underbrace{(a+2b)}_{\text{imaginary part}}\,i.
+\]
+
+Because \(n\) is a *real* integer, its imaginary part must be zero.  
+Hence
+\[
+a+2b \;=\;0 
+\quad\Longrightarrow\quad
+a \;=\;-\,2b.
+\]
+
+(The equality \(a=-2b\) is nothing more than the condition that the
+imaginary component vanishes.)
+Substituting \(a=-2b\) back into the real part \(2a-b\) gives
+\[
+n \;=\;2a-b \;=\;2(-2b)-b \;=\;-5b,
+\]
+confirming that \(n\) is an integer multiple of \(5\).
+% Detailed justification that \ker\psi\;=\;(5)
+
+Recall the homomorphism
+\[
+\psi:\;\mathbb Z \longrightarrow \mathbb Z[i]/I, 
+\qquad n \longmapsto n+I,
+\qquad I=(2+i)\mathbb Z[i].
+\]
+
+\bigskip
+\textbf{1.  Show that \(\ker\psi \subseteq (5)\).}
+
+Assume \(n\in\ker\psi\).
+Then \(n\in I\); i.e.\ there exist \(a,b\in\mathbb Z\) with
+\[
+n=(a+bi)(2+i).
+\]
+Expanding and separating real/imaginary parts gives
+\[
+n=(2a-b) +(a+2b)i.
+\]
+Because \(n\) is an \emph{integer}, its imaginary part must vanish, so
+\(a+2b=0\) and hence \(a=-2b\).
+Substituting this into the real part:
+\[
+n \;=\; 2a-b \;=\; 2(-2b)-b \;=\; -5b.
+\]
+Thus \(5\mid n\), i.e.\ \(n\in(5)=5\mathbb Z\).  
+Hence \(\boxed{\ker\psi\;\subseteq\;(5)}\).
+
+\bigskip
+\textbf{2.  Show that \((5) \subseteq \ker\psi\).}
+
+Observe that
+\[
+5 \;=\; (2+i)(2-i) \;\in\; I
+\quad\Longrightarrow\quad
+5+I=0+I\in\mathbb Z[i]/I,
+\]
+so \(5\in\ker\psi\).
+Because \(\ker\psi\) is an ideal of \(\mathbb Z\) (the kernel of any ring
+homomorphism is an ideal) and \(5\in\ker\psi\),
+it follows that \emph{every} multiple of \(5\) lies in the kernel:
+\[
+(5)=5\mathbb Z \;\subseteq\; \ker\psi.
+\]
+Hence \(\boxed{(5)\;\subseteq\;\ker\psi}\).
+
+\bigskip
+\textbf{3.  Conclude equality.}
+
+Combining the two inclusions we have
+\[
+(5)\;\subseteq\;\ker\psi\;\subseteq\;(5)
+\quad\Longrightarrow\quad
+\boxed{\;\ker\psi = (5)=5\mathbb Z\;}.
+\]
+
+This completes the expanded justification of the line  
+“\(\ker\psi\subseteq(5)\) and, since \(5=(2+i)(2-i)\in I\), we obtain 
+\((5)\subseteq\ker\psi\).”
+% Why $5\in I$ implies $5+I = 0+I$ in the quotient ring $\Bbb Z[i]/I$
+
+\begin{enumerate}
+  \item \textbf{Recall the ideal.}  
+        The notation
+        \[
+             I \;=\; (\,2+i\,)
+        \]
+        means
+        \[
+             I \;=\;\bigl\{\, (2+i)\,w \;\bigm|\; w\in\Bbb Z[i] \bigr\},
+        \]
+        i.e.\ all Gaussian integers that are \emph{multiples} of the
+        generator $2+i$.
+
+  \item \textbf{Show that $5\in I$.}  
+        Factor $5$ in $\Bbb Z[i]$:
+        \[
+             (2+i)(2-i) \;=\; 4+1 \;=\; 5.
+        \]
+        Since $2-i\in\Bbb Z[i]$, we have  
+        $5=(2+i)(2-i)\in I$ by definition of $I$.
+
+  \item \textbf{Translate membership in $I$ to the quotient ring.}  
+        In \emph{any} quotient ring $R/J$, two elements
+        $a,b\in R$ represent the \emph{same} coset iff their difference
+        lies in $J$:
+        \[
+            a-b\in J \;\Longrightarrow\; a+J \;=\; b+J.
+        \]
+        Here $R=\Bbb Z[i]$ and $J=I$.
+        Because $5\in I$, the difference $5-0$ lies in $I$, so
+        \[
+            5+I \;=\; 0+I \quad\text{in }\Bbb Z[i]/I.
+        \]
+
+  \item \textbf{Interpretation.}  
+        The coset $0+I$ is the \emph{zero element} of the quotient
+        ring.  Thus $5$ maps to $0$ in $\Bbb Z[i]/I$, which is exactly
+        the statement that $5$ lies in the kernel of the homomorphism
+        \(\psi:\Bbb Z\to\Bbb Z[i]/I,\; n\mapsto n+I\).
+\end{enumerate}
+
+\[
+\boxed{\;
+   5=(2+i)(2-i)\in I
+   \;\Longrightarrow\;
+   5+I = 0+I \text{ in } \Bbb Z[i]/I
+\;}
+\]
+\begin{problem}
+  Show that
+  \begin{enumerate}
+    \item[\textnormal{(a)}] $\Bbb Z_{2}[x]/(x^{2}+1)$ is \emph{not} a field;
+    \item[\textnormal{(b)}] $\Bbb Z_{2}[x]/(x^{2}+x+1)$ is a finite field of order $4$;
+    \item[\textnormal{(c)}] $\Bbb Z_{2}[x]/(x^{3}+x+1)$ is a finite field of order $8$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+Throughout let $F=\Bbb Z_{2}=\{0,1\}$ and write $I\bigl(f(x)\bigr)$ for the
+principal ideal generated by $f(x)\in F[x]$.
+
+\bigskip
+\textbf{(a) $\boldsymbol{F[x]/(x^{2}+1)}$ is not a field.}
+
+\begin{enumerate}
+  \item[(i)]  In characteristic~$2$ one has
+              \[
+                  (x+1)^{2}=x^{2}+2x+1=x^{2}+1,
+              \]
+              because $2x=0$ in $F[x]$.  Hence $x^{2}+1=(x+1)^{2}$ is
+              \emph{reducible} in $F[x]$.
+
+  \item[(ii)] Because $(x^{2}+1)$ is not generated by an irreducible
+              polynomial, the ideal $I(x^{2}+1)$ is not maximal.
+              Therefore the quotient ring
+              $F[x]/I(x^{2}+1)$ cannot be a field.
+
+  \item[(iii)]  Concretely, set
+              \[
+                 \alpha = x+1 + I(x^{2}+1)\;\in\;F[x]/I(x^{2}+1).
+              \]
+              Then
+              $\alpha\neq0$ but
+              \[
+                 \alpha^{2}
+                 =(x+1)^{2}+I(x^{2}+1)
+                 =(x^{2}+1)+I(x^{2}+1)
+                 =0+I(x^{2}+1),
+              \]
+              so $\alpha$ is a \emph{non-zero nilpotent}, and the quotient
+              ring has zero divisors—another immediate proof that it is
+              not a field.
+\end{enumerate}
+
+\bigskip
+\textbf{(b) $\boldsymbol{F[x]/(x^{2}+x+1)}$ is a field of order $4$.}
+
+\begin{enumerate}
+  \item[(i)]  Check irreducibility of $f(x)=x^{2}+x+1$ over $F$.
+              The only possible linear factors are $x$ and $x+1$, so it
+              suffices to evaluate $f$ at $0$ and $1$:
+              \[
+                 f(0)=1\neq0, 
+                 \qquad
+                 f(1)=1+1+1=1\neq0
+                 \quad(\text{in }F).
+              \]
+              Thus $f(x)$ has no root in $F$, hence is irreducible
+              (all degree-$2$ polynomials over a field either factor
+              linearly or are irreducible).
+
+  \item[(ii)]  Because $f(x)$ is irreducible, the ideal $I(f)$ is
+              \emph{maximal}, so the quotient
+              $F[x]/I(f)$ is a field.
+
+  \item[(iii)]  As a vector space over $F$ the quotient is spanned by
+              $\{1,\bar{x}\}$, where $\bar{x}=x+I(f)$.
+              Therefore its dimension is $2$ and its cardinality is
+              $|F|^{2}=2^{2}=4$.
+\end{enumerate}
+
+\bigskip
+\textbf{(c) $\boldsymbol{F[x]/(x^{3}+x+1)}$ is a field of order $8$.}
+
+\begin{enumerate}
+  \item[(i)]  Let $g(x)=x^{3}+x+1$.  
+              \emph{Irreducibility test.}
+              A degree-$3$ polynomial over a field is irreducible
+              $\Longleftrightarrow$ it has no root in the field.
+              Again check the two elements of $F$:
+              \[
+                 g(0)=1\neq0,\qquad g(1)=1+1+1=1\neq0.
+              \]
+              Hence $g(x)$ has no linear factor and is irreducible.
+
+  \item[(ii)]  The ideal $I\bigl(g(x)\bigr)$ is maximal, so
+              $F[x]/I(g)$ is a field.
+
+  \item[(iii)]  The cosets $\{1,\bar{x},\bar{x}^{2}\}$ form an $F$-basis,
+              so the field has dimension~$3$ over $F$ and therefore
+              $2^{3}=8$ elements.
+\end{enumerate}
+
+\bigskip
+\textbf{Conclusion.}  Part~(a) fails because the modulus is reducible,
+producing zero divisors, while parts~(b) and~(c) succeed because the
+respective moduli are irreducible, giving fields whose orders are
+$2^{\deg f}$.
+\end{solution}
+% Why $x^{2}+1$ factors over $\Bbb Z_{2}[x]$
+
+Let $F=\Bbb Z_{2}$, the field with two elements $\{0,1\}$.
+In $F$ we have $1+1=0$, hence \emph{characteristic} $2$.
+
+\bigskip
+\textbf{Step 1.  Expand $(x+1)^{2}$ in characteristic $2$.}
+
+\[
+(x+1)^{2}=x^{2}+2x+1.
+\]
+
+Because $2=1+1=0$ in $F$, the middle term vanishes:
+
+\[
+x^{2}+2x+1 \;=\; x^{2}+0\cdot x+1 \;=\; x^{2}+1
+\quad\text{in }F[x].
+\]
+
+\bigskip
+\textbf{Step 2.  Observe the factorisation.}
+
+Thus
+\[
+x^{2}+1 \;=\; (x+1)^{2}
+           \;=\; (x+1)(x+1)
+           \quad\text{in }F[x].
+\]
+
+\bigskip
+\textbf{Step 3.  Apply the definition of reducible.}
+
+A non-constant polynomial $f(x)\in F[x]$ is called
+\emph{reducible} if it can be written as a product
+$f(x)=g(x)h(x)$ with $\deg g,\deg h\ge1$.
+Since $x^{2}+1$ has been expressed as the product of the
+degree-$1$ polynomial $x+1$ with itself, it meets that criterion.
+
+\[
+\boxed{\;x^{2}+1\text{ is reducible in }F[x]\;}
+\]
+
+(Over fields of characteristic $\neq2$ the cross-term $2x$ would
+survive, so $x^{2}+1$ would \emph{not} factor as a square in the same
+way.)
+% Why every element of \(\Bbb Z_{2}[x]/(f)\) can be written as \(ax+b+(f)\)
+% and why this shows the quotient has \(4\) elements
+\[
+f(x)=x^{2}+x+1\in\Bbb Z_{2}[x], 
+\qquad (f):=(\,f(x)\,)\subset\Bbb Z_{2}[x].
+\]
+
+\bigskip
+\textbf{1.  Division algorithm in \(\Bbb Z_{2}[x]\).}
+
+Because \(f\) has degree \(2\), the polynomial–division algorithm over the
+field \(\Bbb Z_{2}\) says that for \emph{every} \(g(x)\in\Bbb Z_{2}[x]\)
+there exist unique polynomials \(q(x),r(x)\in\Bbb Z_{2}[x]\) such that
+\[
+g(x)=q(x)f(x)+r(x),
+\qquad
+\deg r<\deg f=2.
+\]
+Thus \(r(x)\) is either \(0\), a linear polynomial, or a constant.
+
+\bigskip
+\textbf{2.  Representatives of cosets.}
+
+In the quotient ring
+\(\Bbb Z_{2}[x]/(f)\) the polynomials \(g(x)\) and \(r(x)\)
+represent the \emph{same} coset because their difference \(q(x)f(x)\)
+lies in the ideal \((f)\):
+\[
+g(x)+(f)=r(x)+(f).
+\]
+Hence \emph{every} coset has a representative of the form
+\[
+r(x)=ax+b,
+\qquad a,b\in\Bbb Z_{2}.
+\]
+
+\bigskip
+\textbf{3.  How many such representatives exist?}
+
+The coefficient field \(\Bbb Z_{2}\) has exactly two elements,
+\(0\) and \(1\).  
+Therefore the ordered pair \((a,b)\) can take \(2\times2=4\) distinct
+values:
+\[
+(0,0),\;(1,0),\;(0,1),\;(1,1).
+\]
+Each pair gives a distinct polynomial \(ax+b\) and hence a distinct coset
+because the representation \(r(x)=ax+b\) is \emph{unique}.  
+
+\bigskip
+\textbf{4.  Conclusion.}
+
+Thus the entire quotient ring is
+\[
+\Bbb Z_{2}[x]/(f)
+=\bigl\{\,0+(f),\; 1+(f),\; x+(f),\; x+1+(f)\bigr\},
+\]
+and it contains exactly \(4\) elements:
+
+\[
+\boxed{\; \bigl|\Bbb Z_{2}[x]/(x^{2}+x+1)\bigr| \;=\;4\; }.
+\]
+
+(The same reasoning works for any degree-\(n\) irreducible polynomial:
+the quotient will have \(2^{n}\) elements over \(\Bbb Z_{2}\).)
+% Why a subfield \(K\subseteq\F_{p^{\,n}}\) must have order \(p^{m}\) with \(m\mid n\)
+
+Let \(\F_{p^{\,n}}\) be a finite field of characteristic \(p\) (so \(p\) is prime)  
+and suppose \(K\subseteq\F_{p^{\,n}}\) is a subfield.  
+We want to justify the statement
+
+\[
+\lvert K\rvert \;=\; p^{m}\quad\text{for some integer }m\text{ dividing }n,
+\]
+because
+\[
+[\F_{p^{\,n}}:K] \;=\; \frac{n}{m}
+\]
+is a field–extension degree and therefore \emph{must} be an integer.
+
+\bigskip
+\textbf{Step 1.  Both fields contain the prime field \(\F_{p}\).}
+
+Every finite field of characteristic \(p\) contains a copy of the prime
+field \(\F_{p}\).  Thus
+\[
+\F_{p}\;\subseteq\;K\;\subseteq\;\F_{p^{\,n}}.
+\]
+
+\bigskip
+\textbf{Step 2.  View \(\F_{p^{\,n}}\) as a vector space over \(K\).}
+
+Because \(K\) is a subfield, \(\F_{p^{\,n}}\) is automatically a
+\emph{vector space} over \(K\).
+Write its dimension as
+\[
+[\F_{p^{\,n}}:K] \;=\; d \;\in\;\Bbb N.
+\]
+
+\bigskip
+\textbf{Step 3.  Relate cardinalities via vector–space dimension.}
+
+For finite fields the size of a vector space is the base–field size
+raised to the dimension:
+
+\[
+\lvert\F_{p^{\,n}}\rvert 
+    \;=\;\lvert K\rvert^{\;d}.
+\]
+
+But \(\lvert\F_{p^{\,n}}\rvert = p^{n}\).  Put \(\lvert K\rvert=p^{m}\)
+for some \(m\).  Then
+
+\[
+p^{n} \;=\; \bigl(p^{m}\bigr)^{d}
+          \;=\; p^{\,md}.
+\]
+
+\bigskip
+\textbf{Step 4.  Compare exponents.}
+
+Equality of prime powers forces equality of exponents:
+
+\[
+n = m d,
+\qquad\text{i.e.}\qquad
+d = \frac{n}{m}.
+\]
+
+Because \(d=[\F_{p^{\,n}}:K]\) is a \emph{dimension}, it is an integer,
+so \(n/m\in\Bbb N\).  
+Equivalently, \(m\mid n\).
+
+\bigskip
+\textbf{Conclusion.}
+
+\[
+\boxed{\;
+       K\text{ finite }\Longrightarrow\lvert K\rvert=p^{m}
+       \text{ with }m\mid n
+      \;}
+\]
+and
+\[
+\boxed{\;
+       [\F_{p^{\,n}}:K] = \frac{n}{m}\in\Bbb N
+      \;}
+\]
+
+This is precisely the assertion quoted:  
+\emph{the degree of the field extension must be an integer, so \(m\) divides \(n\).}
+% Concrete illustration of the “\(m\mid n\)” rule for subfields of \(\F_{p^{\,n}}\)
+
+\section*{Example:  A field of order \(3^{4}=81\)}
+
+\subsection*{1.  Construct the field \(\F_{81}\)}
+
+Over the prime field \(\F_{3}=\{0,1,2\}\) consider the polynomial
+\[
+f(t)=t^{4}+t+2\in\F_{3}[t].
+\]
+\begin{itemize}
+    \item  Evaluate at \(0,1,2\):
+           \(
+                f(0)=2,\;
+                f(1)=1,\;
+                f(2)=2\pmod3;
+           \)
+           none of these are \(0\), so \(f\) has no linear factor.
+    \item  Therefore \(f(t)\) is irreducible (degree \(4\) with no root).
+\end{itemize}
+
+Define
+\[
+\F_{81}\;:=\;\F_{3}[t]/(f)\quad\text{and}\quad\alpha:=t+(f)\in\F_{81}.
+\]
+Then \(\deg f=4\) gives \(|\F_{81}|=3^{4}=81\), and every element of
+\(\F_{81}\) is uniquely expressible as
+\[
+c_{0}+c_{1}\alpha+c_{2}\alpha^{2}+c_{3}\alpha^{3},
+\qquad c_{i}\in\F_{3}.
+\]
+
+\subsection*{2.  The subfield of order \(3^{2}=9\)}
+
+The Frobenius map \(\varphi:x\mapsto x^{3}\) is an automorphism of
+\(\F_{81}\) whose fixed field is
+\[
+\F_{9}\;=\;\bigl\{\,x\in\F_{81}\;:\;x^{9}=x\,\bigr\}.
+\]
+Because \(9=3^{2}\) divides \(81=3^{4}\), this subfield \emph{must}
+exist by the theory, and indeed
+\[
+[\F_{81}:\F_{9}] \;=\;\frac{4}{2}=2.
+\]
+
+A concrete generator:  set
+\[
+\gamma:=\alpha^{10}\in\F_{81}.
+\]
+One checks (using \(\alpha^{4}= -\alpha-2\) from \(f(\alpha)=0\)) that
+\(\gamma^{9}=\gamma\) and \(\gamma\notin\F_{3}\); hence
+\(\F_{9}=\F_{3}(\gamma)\).
+
+\subsection*{3.  Why no subfield of order \(3^{3}=27\)}
+
+If a subfield \(K\subseteq\F_{81}\) had size \(|K|=27=3^{3}\) it would
+correspond to \(m=3\) in the formula
+\[
+|K|=3^{m},\qquad m\mid 4.
+\]
+But \(3\nmid 4\), so \emph{no integer degree}
+\(
+[\F_{81}:K]=\dfrac{4}{3}
+\)
+exists.  
+Hence such a subfield cannot be embedded in \(\F_{81}\).
+
+\subsection*{4.  Summary of the example}
+
+\[
+\boxed{
+   \F_{81}
+   \supset
+   \F_{9}\,(\text{order }3^{2})
+   \supset
+   \F_{3}\,(\text{order }3^{1}),
+   \quad
+   \text{no subfield of order }3^{3}=27.
+}
+\]
+
+This concretely realises the general fact:
+
+\begin{center}
+If \(K\subseteq\F_{p^{\,n}}\), then \(|K|=p^{m}\) with \(m\mid n\)
+because \( [\F_{p^{\,n}}:K]=n/m \) must be an integer.
+\end{center}
+\end{document}

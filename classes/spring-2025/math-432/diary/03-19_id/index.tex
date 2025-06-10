@@ -1,0 +1,195 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Basic Set Theory}
+
+\subsection{Inclusion}
+\begin{definition}[Subset and Proper Subset]
+A set \(A\) is a \textbf{subset} of set \(B\), written \(A \subseteq B\), if every element of \(A\) is in \(B\). If \(A \subseteq B\) and \(A \neq B\), we say \(A\) is a \textbf{proper subset}, written \(A \subsetneq B\).
+\end{definition}
+
+\subsection{Operations on Sets}
+\begin{definition}[Union, Intersection, Complement, Difference]
+Given sets \(A,B\) in a universal set \(U\):
+\begin{itemize}
+\item Union: \(A \cup B = {x: x \in A \text{ or } x \in B}\)
+\item Intersection: \(A \cap B = {x: x \in A \text{ and } x \in B}\)
+\item Complement: \(A^c = {x \in U: x \notin A}\)
+\item Difference: \(A \setminus B = {x \in A: x \notin B}\)
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[De Morgan's Laws]
+        For any sets \(A,B\),
+        \[
+        (A \cup B)^c = A^c \cap B^c \quad\text{and}\quad (A \cap B)^c = A^c \cup B^c.
+        \]
+        \end{proposition}
+
+\subsection{Partially Ordered Sets and Lattices}
+\begin{definition}[Partial Order]
+    A relation \(\le\) on a set \(P\) is called a \textbf{partial order} if it satisfies the following conditions:
+    \begin{enumerate}[label=(\roman*)]
+        \item \textbf{Reflexivity}: For all \(x \in P\), \(x \le x\).
+        \item \textbf{Antisymmetry}: For all \(x,y \in P\), if \(x \le y\) and \(y \le x\), then \(x = y\).
+        \item \textbf{Transitivity}: For all \(x,y,z \in P\), if \(x \le y\) and \(y \le z\), then \(x \le z\).
+    \end{enumerate}
+    The pair \((P, \le)\) is called a \textbf{partially ordered set} (or \textbf{poset}).
+    \end{definition}
+
+    \begin{definition}[Chain]
+        Let \((P, \leq)\) be a partially ordered set. A subset \(C \subseteq P\) is called a \textbf{chain} (or \textbf{totally ordered set}) if any two elements of \(C\) are comparable. Formally, for all \(x, y \in C\), either
+        \[
+        x \leq y \quad\text{or}\quad y \leq x.
+        \]
+        \end{definition}
+
+\begin{definition}[Lattice]
+A poset \((L, \le)\) is a \textbf{lattice} if any two elements \(x,y \in L\) have both a greatest lower bound (\(x \wedge y\)) and least upper bound (\(x \vee y\)).
+\end{definition}
+
+\subsection{Functions}
+\begin{definition}[Injective, Surjective, Bijective]
+A function \(f: A \to B\) is:
+\begin{itemize}
+\item \textbf{Injective} if \(f(x)=f(y)\) implies \(x=y\).
+\item \textbf{Surjective} if for each \(b \in B\) there is \(a \in A\) with \(f(a)=b\).
+\item \textbf{Bijective} if it is both injective and surjective.
+\end{itemize}
+\end{definition}
+
+\subsection{Relations; Cartesian Products}
+\begin{definition}[Equivalence Relation]
+    A relation \(\sim\) on a set \(X\) is called an \textbf{equivalence relation} if it satisfies the following properties:
+    \begin{enumerate}[label=(\roman*)]
+        \item \textbf{Reflexivity}: For every \(x \in X\), \(x \sim x\).
+        \item \textbf{Symmetry}: For every \(x,y \in X\), if \(x \sim y\), then \(y \sim x\).
+        \item \textbf{Transitivity}: For every \(x,y,z \in X\), if \(x \sim y\) and \(y \sim z\), then \(x \sim z\).
+    \end{enumerate}
+    \end{definition}
+\begin{definition}[Cartesian Product]
+For sets \(A,B\), the \textbf{Cartesian product} is \(A \times B = {(a,b):a \in A,b \in B}\).
+\end{definition}
+
+\section{Cardinal Numbers}
+
+\begin{definition}[Countable Set]
+A set is \textbf{countable} if it is finite or bijective with \(\mathbb{N}\).
+\end{definition}
+
+\begin{theorem}[Cantor--Bernstein--Schröder]
+If \(|A| \le |B|\) and \(|B| \le |A|\), then \(|A| = |B|\).
+\end{theorem}
+
+\begin{theorem}[Cantor's Theorem]
+For any set \(A\), \(|A|<|\mathcal{P}(A)|\).
+\end{theorem}
+
+\section{Well-ordering; The Axiom of Choice}
+
+\begin{definition}[Well-order]
+A total order on \(W\) is a \textbf{well-order} if every nonempty subset of \(W\) has a least element.
+\end{definition}
+
+\begin{theorem}[Well-ordering Theorem]
+    Assuming the Axiom of Choice, every set can be well-ordered, meaning every nonempty subset has a least element.
+\end{theorem}
+
+\begin{theorem}[Zorn's Lemma]
+Let \((P, \leq)\) be a partially ordered set. If every chain (totally ordered subset) has an upper bound in \(P\), then \(P\) contains at least one maximal element.
+\end{theorem}
+
+\begin{theorem}[Equivalence of AC, Zorn, WO]
+The Axiom of Choice, Zorn's Lemma, and the Well-ordering Theorem are equivalent.
+\end{theorem}
+
+\section{Basic Properties of Metric Spaces}
+
+\begin{definition}[Metric Space]
+        A \textbf{metric space} is a pair \((X,d)\), where \(X\) is a set and \(d: X \times X \to [0,\infty)\) is a function called a \textbf{metric} satisfying:
+        \begin{enumerate}[label=(\roman*)]
+            \item \textbf{Non-negativity:} \(d(x,y) \geq 0\) for all \(x,y \in X\).
+            \item \textbf{Identity of indiscernibles:} \(d(x,y) = 0\) if and only if \(x = y\).
+            \item \textbf{Symmetry:} \(d(x,y) = d(y,x)\) for all \(x,y \in X\).
+            \item \textbf{Triangle inequality:} \(d(x,z) \leq d(x,y) + d(y,z)\) for all \(x,y,z \in X\).
+        \end{enumerate}
+        \end{definition}
+
+\begin{definition}[Open Sets and Closed Sets]
+\(U \subseteq X\) is \textbf{open} if for all \(x\in U\), \(\exists r>0\) such that \(B(x,r)\subseteq U\). A set is \textbf{closed} if its complement is open.
+\end{definition}
+
+\begin{definition}[Continuity]
+A function \(f:(X,d)\to (Y,\rho)\) is \textbf{continuous} at \(x\in X\) if for every \(\varepsilon>0\), there exists \(\delta>0\) such that whenever \(d(x,y)<\delta\), we have \(\rho(f(x),f(y))<\varepsilon\).
+\end{definition}
+
+\section{Completeness, Separability, Compactness}
+
+\begin{definition}[Completeness]
+\((X,d)\) is \textbf{complete} if every Cauchy sequence converges in \(X\).
+\end{definition}
+
+\begin{theorem}[Completion of Metric Spaces]
+Every metric space has a completion.
+\end{theorem}
+
+\begin{definition}[Separability]
+\((X,d)\) is \textbf{separable} if it contains a countable dense subset.
+\end{definition}
+
+\begin{definition}[Compactness]
+A subset \(K\subseteq X\) is \textbf{compact} if every open cover has a finite subcover.
+\end{definition}
+
+\begin{theorem}[Heine--Borel]
+In \(\mathbb{R}^n\), a set is compact if and only if it is closed and bounded.
+\end{theorem}
+\end{document}

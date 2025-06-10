@@ -1,0 +1,468 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{theorem}[Fundamental Theorem of Finite Abelian Groups]
+    Every finite abelian group $G$ is isomorphic to a direct sum of cyclic $p$-power groups.  
+    Equivalently, there is a decomposition
+    \[
+    G \;\cong\; \mathbb{Z}_{p_1^{r_1}} \;\oplus\; \mathbb{Z}_{p_2^{r_2}} 
+    \;\oplus\;\cdots\;\oplus\; \mathbb{Z}_{p_k^{r_k}},
+    \]
+    for some primes $p_i$ and positive integers $r_i$.  Moreover, if one arranges these factors appropriately, this decomposition is unique up to isomorphism.
+    \end{theorem}
+    
+    \section*{Proof Sketch}
+    
+    \subsection*{1. Decompose $G$ into Sylow $p$-subgroups}
+    
+    Let $|G| = p_1^{a_1}\,p_2^{a_2}\cdots p_m^{a_m}$ be the prime factorization of the order of $G$.  
+    Since $G$ is abelian, for each prime $p_i$ there is a unique subgroup $G_{p_i} \subset G$ of order $p_i^{a_i}$ (the Sylow $p_i$-subgroup).  
+    Moreover, these subgroups intersect trivially (only in the identity) and commute with each other.  
+    Hence
+    \[
+      G \;=\; G_{p_1} \;\oplus\; G_{p_2} \;\oplus\;\cdots\;\oplus\; G_{p_m}.
+    \]
+    Each $G_{p_i}$ is itself a finite abelian $p_i$-group.  
+    Thus it suffices to prove the theorem for a finite abelian $p$-group, i.e.\ a group $G$ whose order is $p^n$ for some $n$.
+    
+    \subsection*{2. Find a maximal-order element and split off a cyclic summand}
+    
+    Assume $G$ is a finite abelian $p$-group, so $|G| = p^n$.  
+    
+    \begin{enumerate}
+    \item \textbf{Pick an element $a$ of maximal order.} \\
+      Since $G$ is finite, there is some element $a \in G$ of order $p^r$ for the largest possible $r$.  
+      Then $\langle a \rangle \cong \mathbb{Z}_{p^r}$ is a cyclic subgroup of $G$.
+    
+    \item \textbf{Show $\langle a \rangle$ is a direct summand of $G$.} \\
+      We want a subgroup $H \subset G$ such that 
+      \[
+        G \;=\; \langle a \rangle \oplus H.
+      \]
+      Equivalently, this means $G / \langle a \rangle \cong H$.  
+      One can construct a suitable surjective homomorphism $\varphi: G \to \langle a \rangle$ whose kernel is precisely $H$, or argue that the maximal order condition forces $a$ to map injectively into the quotient.
+    
+      Once this is established, we get
+      \[
+        G \;\cong\; \langle a \rangle \oplus \bigl(G / \langle a \rangle \bigr)
+        \;\cong\;
+        \mathbb{Z}_{p^r} \,\oplus\, \bigl(G / \langle a \rangle \bigr).
+      \]
+    
+    \item \textbf{Use induction on the size of $G$.} \\
+      The quotient $G / \langle a \rangle$ is again a finite abelian $p$-group, but strictly smaller than $G$.  
+      By induction on $|G|$, assume
+      \[
+        G / \langle a \rangle \;\cong\; \mathbb{Z}_{p^{r_2}} \oplus \cdots \oplus \mathbb{Z}_{p^{r_k}}
+      \]
+      for some $r_2, \dots, r_k$.  
+      Lifting this decomposition back to $G$, we obtain
+      \[
+        G \;\cong\; \mathbb{Z}_{p^r} \oplus \mathbb{Z}_{p^{r_2}} \oplus \cdots \oplus \mathbb{Z}_{p^{r_k}},
+      \]
+      completing the inductive step.
+    \end{enumerate}
+    
+    \subsection*{3. Combine prime-power decompositions}
+    
+    Returning to the original group $G$ of order $p_1^{a_1} p_2^{a_2} \cdots p_m^{a_m}$, we have
+    \[
+      G \;=\; G_{p_1} \oplus G_{p_2} \oplus \cdots \oplus G_{p_m},
+    \]
+    where each $G_{p_i}$ is a $p_i$-group.  
+    By the argument above (Steps 2.1--2.2) each $G_{p_i}$ decomposes as a direct sum of cyclic $p_i$-power groups.  
+    Hence
+    \[
+      G \;\cong\; 
+       \bigl(\mathbb{Z}_{p_1^{r_{11}}} \oplus \cdots \oplus \mathbb{Z}_{p_1^{r_{1k_1}}}\bigr)
+       \;\oplus\;\cdots\;\oplus\;
+       \bigl(\mathbb{Z}_{p_m^{r_{m1}}} \oplus \cdots \oplus \mathbb{Z}_{p_m^{r_{mk_m}}}\bigr).
+    \]
+    This proves the \emph{existence} of such a decomposition into cyclic $p$-power factors.
+    
+    \subsection*{4. Uniqueness (invariant-factor form)}
+    
+    To see why the decomposition is \emph{unique up to isomorphism}, one typically arranges the factors in a canonical form, such as
+    \[
+      G \;\cong\; \mathbb{Z}_{n_1} \oplus \mathbb{Z}_{n_2} \oplus \cdots \oplus \mathbb{Z}_{n_t},
+      \quad\text{where } n_1 \mid n_2 \mid \cdots \mid n_t.
+    \]
+    or keeps them grouped by prime powers.  
+    A standard counting argument on the structure of subgroups and the orders of elements shows that no two distinct such decompositions can be isomorphic unless they have exactly the same invariant factors (up to reordering).  
+    Alternatively, one analyzes the lattice of subgroups and the ranks of the groups at each prime-power factor to pin down the isomorphism type.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Conclusion:}  
+    Every finite abelian group $G$ decomposes uniquely (up to isomorphism) as a direct sum of cyclic groups of prime-power order.  
+    Equivalently,
+    \[
+      G \;\cong\; \mathbb{Z}_{n_1} \oplus \cdots \oplus \mathbb{Z}_{n_t},
+      \quad n_1 \mid n_2 \mid \cdots \mid n_t.
+    \]
+    This completes the proof of the Fundamental Theorem of Finite Abelian Groups.
+    \section*{Decomposing a Finite Abelian Group}
+
+    Consider the finite abelian group
+    \[
+    G = \mathbb{Z}_6 \oplus \mathbb{Z}_{12} \oplus \mathbb{Z}_{25}.
+    \]
+    The order of \(G\) is
+    \[
+    |G| = 6 \cdot 12 \cdot 25 = 1800.
+    \]
+    Since
+    \[
+    1800 = 2^3 \cdot 3^2 \cdot 5^2,
+    \]
+    the primes involved are \(2\), \(3\), and \(5\).
+    
+    \subsection*{Step 1. Decompose Each Factor into Prime-Power Cyclic Groups}
+    
+    We start by expressing each cyclic group as a direct sum of cyclic groups of prime-power order.
+    
+    \[
+    \mathbb{Z}_6 \cong \mathbb{Z}_2 \oplus \mathbb{Z}_3,
+    \]
+    because \(6 = 2 \cdot 3\) and \(\gcd(2,3)=1\).
+    
+    \[
+    \mathbb{Z}_{12} \cong \mathbb{Z}_4 \oplus \mathbb{Z}_3,
+    \]
+    since \(12 = 4 \cdot 3\) with \(\gcd(4,3)=1\).
+    
+    \[
+    \mathbb{Z}_{25} \cong \mathbb{Z}_{25},
+    \]
+    which is already of prime-power order (\(25 = 5^2\)).
+    
+    Thus, we can rewrite \(G\) as
+    \[
+    \begin{aligned}
+    G &\cong (\mathbb{Z}_2 \oplus \mathbb{Z}_3) \oplus (\mathbb{Z}_4 \oplus \mathbb{Z}_3) \oplus \mathbb{Z}_{25} \\
+      &\cong \mathbb{Z}_2 \oplus \mathbb{Z}_4 \oplus \mathbb{Z}_3 \oplus \mathbb{Z}_3 \oplus \mathbb{Z}_{25}.
+    \end{aligned}
+    \]
+    
+    \subsection*{Step 2. Group by Sylow Subgroups}
+    
+    Next, we group the cyclic factors according to the prime numbers.
+    
+    \begin{itemize}
+      \item \textbf{Sylow 2-subgroup:} Collect all factors whose orders are powers of 2.
+        \[
+        \mathbb{Z}_2 \oplus \mathbb{Z}_4.
+        \]
+        This subgroup has order \(2 \cdot 4 = 8 = 2^3\).
+    
+      \item \textbf{Sylow 3-subgroup:} Collect all factors whose orders are powers of 3.
+        \[
+        \mathbb{Z}_3 \oplus \mathbb{Z}_3.
+        \]
+        This subgroup has order \(3 \cdot 3 = 9 = 3^2\).
+    
+      \item \textbf{Sylow 5-subgroup:} The only factor with order a power of 5 is
+        \[
+        \mathbb{Z}_{25},
+        \]
+        which has order \(25 = 5^2\).
+    \end{itemize}
+    
+    \subsection*{Final Decomposition}
+    
+    Thus, the group \(G\) can be decomposed as a direct sum of its Sylow subgroups:
+    \[
+    G \cong (\mathbb{Z}_2 \oplus \mathbb{Z}_4) \oplus (\mathbb{Z}_3 \oplus \mathbb{Z}_3) \oplus \mathbb{Z}_{25}.
+    \]
+    Each of these Sylow subgroups is itself a finite abelian \(p\)-group, which—by the structure theorem—decomposes uniquely into a direct sum of cyclic groups of prime-power order.
+    \[
+      P_1Q_1 \equiv 1 \pmod{a_1}.
+      \]
+      
+      \section*{Major Definitions in Introductory Group Theory}
+
+\begin{definition}[Group]
+A \textbf{group} is a set \(G\) together with a binary operation \(\cdot\) such that:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Closure:} For all \(a,b\in G\), \(a\cdot b\in G\).
+    \item \textbf{Associativity:} For all \(a,b,c\in G\), \((a\cdot b)\cdot c = a\cdot (b\cdot c)\).
+    \item \textbf{Identity:} There exists an element \(e\in G\) such that for all \(a\in G\), \(e\cdot a = a\cdot e = a\).
+    \item \textbf{Inverses:} For every \(a\in G\), there exists an element \(a^{-1}\in G\) such that \(a\cdot a^{-1} = a^{-1}\cdot a = e\).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Abelian Group]
+A group \(G\) is called \textbf{abelian} (or \textbf{commutative}) if for all \(a,b\in G\), 
+\[
+a\cdot b = b\cdot a.
+\]
+\end{definition}
+
+\begin{definition}[Subgroup]
+A subset \(H\subseteq G\) is a \textbf{subgroup} if \(H\) itself forms a group under the operation of \(G\).
+\end{definition}
+
+\begin{definition}[Cyclic Group]
+A group \(G\) is \textbf{cyclic} if there exists an element \(g\in G\) (called a generator) such that every element of \(G\) can be written as 
+\[
+g^n \quad \text{for some } n\in \mathbb{Z}.
+\]
+\end{definition}
+
+\begin{definition}[Order]
+\textbf{Group Order:} The order of a group \(G\), denoted \(|G|\), is the number of elements in \(G\).
+
+\medskip
+
+\textbf{Element Order:} For an element \(g\in G\), the order is the smallest positive integer \(n\) such that
+\[
+g^n = e,
+\]
+or is said to be infinite if no such \(n\) exists.
+\end{definition}
+
+\begin{definition}[Cosets and Index]
+Let \(H\) be a subgroup of \(G\). For \(g\in G\), the \textbf{left coset} of \(H\) in \(G\) is defined as
+\[
+gH = \{gh : h\in H\}.
+\]
+The \textbf{index} of \(H\) in \(G\), denoted \([G : H]\), is the number of distinct left cosets of \(H\) in \(G\).
+\end{definition}
+
+\begin{definition}[Normal Subgroup and Quotient Group]
+A subgroup \(N\le G\) is \textbf{normal} if for every \(g\in G\), 
+\[
+gN = Ng.
+\]
+If \(N\) is normal, the set of cosets 
+\[
+G/N = \{gN : g\in G\}
+\]
+forms a group under the operation 
+\[
+(gN)(hN) = (gh)N,
+\]
+called the \textbf{quotient group} of \(G\) by \(N\).
+\end{definition}
+
+\begin{definition}[Group Homomorphism]
+A \textbf{group homomorphism} is a function \(\phi: G \to H\) such that for all \(a,b\in G\),
+\[
+\phi(ab) = \phi(a)\phi(b).
+\]
+The \textbf{kernel} of \(\phi\) is
+\[
+\ker(\phi) = \{g\in G : \phi(g) = e_H\},
+\]
+and the \textbf{image} is
+\[
+\operatorname{Im}(\phi) = \{\phi(g) : g\in G\}.
+\]
+\end{definition}
+
+\begin{definition}[Group Action]
+A \textbf{group action} of a group \(G\) on a set \(X\) is a function 
+\[
+G\times X \to X,\quad (g,x) \mapsto g\cdot x,
+\]
+satisfying:
+\begin{enumerate}[label=(\roman*)]
+    \item For all \(x\in X\), \(e\cdot x = x\).
+    \item For all \(g,h\in G\) and \(x\in X\), \((gh)\cdot x = g\cdot (h\cdot x)\).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Direct Product and Semidirect Product]
+The \textbf{direct product} of groups \(G\) and \(H\) is defined as
+\[
+G \times H = \{(g,h) : g\in G,\ h\in H\},
+\]
+with the operation 
+\[
+(g_1,h_1)(g_2,h_2) = (g_1g_2,\, h_1h_2).
+\]
+A \textbf{semidirect product} generalizes this notion by allowing one group to act nontrivially on the other.
+\end{definition}
+
+\begin{definition}[Symmetric Group]
+The \textbf{symmetric group} \(S_n\) is the group of all permutations on \(n\) elements.
+\end{definition}
+
+\newpage
+
+\section*{Major Propositions, Lemmas, and Theorems}
+
+\begin{proposition}[Subgroup Test]
+A nonempty subset \(H\) of a group \(G\) is a subgroup if for all \(a, b \in H\), the element \(ab^{-1}\) is also in \(H\).
+\end{proposition}
+
+\begin{proposition}[Cancellation Laws]
+In any group \(G\), if \(ab = ac\) or \(ba = ca\), then \(b = c\).
+\end{proposition}
+
+\begin{theorem}[Lagrange's Theorem]
+If \(G\) is a finite group and \(H\) is a subgroup of \(G\), then
+\[
+|H| \text{ divides } |G|.
+\]
+\end{theorem}
+
+\begin{corollary}
+For any element \(g\in G\), the order of \(g\) divides \(|G|\).
+\end{corollary}
+
+\begin{theorem}[Groups of Prime Order are Cyclic]
+If \(|G| = p\) for a prime \(p\), then \(G\) is cyclic.
+\end{theorem}
+
+\begin{theorem}[Cayley's Theorem]
+Every group \(G\) is isomorphic to a subgroup of the symmetric group acting on \(G\).
+\end{theorem}
+
+\begin{theorem}[First Isomorphism Theorem]
+Let \(\phi: G \to H\) be a group homomorphism. Then,
+\[
+G/\ker(\phi) \cong \operatorname{Im}(\phi).
+\]
+\end{theorem}
+
+\begin{theorem}[Second Isomorphism Theorem]
+If \(A\) is a subgroup of \(G\) and \(N\) is a normal subgroup of \(G\), then
+\[
+A/(A\cap N) \cong AN/N.
+\]
+\end{theorem}
+
+\begin{theorem}[Third Isomorphism Theorem]
+If \(N\) and \(K\) are normal subgroups of \(G\) with \(K \subseteq N\), then
+\[
+(G/K)/(N/K) \cong G/N.
+\]
+\end{theorem}
+
+\begin{theorem}[Correspondence Theorem]
+There is a one-to-one correspondence between the subgroups of \(G\) containing a normal subgroup \(N\) and the subgroups of the quotient group \(G/N\).
+\end{theorem}
+
+\begin{theorem}[Orbit-Stabilizer Theorem]
+Let \(G\) act on a set \(X\) and let \(x \in X\). Then,
+\[
+|G| = |\operatorname{Orb}(x)| \cdot |\operatorname{Stab}(x)|.
+\]
+\end{theorem}
+
+\begin{theorem}[Burnside's Lemma]
+  Let \( G \) be a finite group acting on a finite set \( X \). The number of distinct orbits of \( X \) under the action of \( G \) is given by
+  \[
+  |X/G| = \frac{1}{|G|} \sum_{g \in G} |X^g|,
+  \]
+  where \( X^g \) denotes the set of elements in \( X \) that are fixed by \( g \), i.e., 
+  \[
+  X^g = \{ x \in X \mid g \cdot x = x \}.
+  \]
+\end{theorem}
+
+\begin{theorem}[Euler's Theorem]
+  If \(a\) and \(n\) are positive integers with \(\gcd(a,n) = 1\), then
+\[
+a^{\varphi(n)} \equiv 1 \pmod{n},
+\]
+where \(\varphi(n)\) denotes Euler's totient function, which counts the number of positive integers less than \(n\) that are relatively prime to \(n\).
+\end{theorem}
+
+\begin{theorem}[Totient Function]
+  Let \( n = p_1^{a_1} p_2^{a_2} \cdots p_k^{a_k} \) be the prime factorization of \( n \). Then Euler's totient function is given by:
+  \[
+  \varphi(n) = n \prod_{i=1}^{k} \left(1 - \frac{1}{p_i}\right).
+  \] 
+\end{theorem}
+
+\begin{theorem}[Chinese Remainder Theorem]
+  Let \( n_1, n_2, \dots, n_k \) be pairwise coprime positive integers, and let \( N = n_1 n_2 \cdots n_k \). For any given integers \( a_1, a_2, \dots, a_k \), the system of congruences
+  \[
+  x \equiv a_1 \pmod{n_1}, \quad x \equiv a_2 \pmod{n_2}, \quad \dots, \quad x \equiv a_k \pmod{n_k}
+  \]
+  has a unique solution modulo \( N \). That is, there exists an integer \( x \) such that
+  \[
+  x \equiv a_i \pmod{n_i}, \quad \text{for all } i = 1, 2, \dots, k,
+  \]
+  and any two such solutions are congruent modulo \( N \).
+\end{theorem}
+
+\begin{theorem}[Class Equation]
+For a finite group \(G\),
+\[
+|G| = |Z(G)| + \sum [G:C_G(x_i)],
+\]
+where the sum is taken over a set of representatives \(x_i\) for the non-central conjugacy classes.
+\end{theorem}
+
+\begin{theorem}[Cauchy's Theorem]
+If a prime \(p\) divides the order of a finite group \(G\), then \(G\) contains an element of order \(p\).
+\end{theorem}
+
+\begin{theorem}[Sylow's Theorems]
+Let \(G\) be a finite group and \(p\) a prime such that \(p^n\) divides \(|G|\). Then:
+\begin{enumerate}[label=(\roman*)]
+    \item (\textbf{Sylow's First Theorem}) There exists a subgroup of \(G\) of order \(p^n\) (called a Sylow \(p\)-subgroup).
+    \item (\textbf{Sylow's Second Theorem}) All Sylow \(p\)-subgroups are conjugate in \(G\).
+    \item (\textbf{Sylow's Third Theorem}) The number of Sylow \(p\)-subgroups satisfies specific congruence and divisibility conditions.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Fundamental Theorem of Finite Abelian Groups]
+Every finite abelian group can be expressed as a direct sum of cyclic groups of prime power order.
+\end{theorem}
+
+\begin{theorem}[Jordan–Hölder Theorem]
+Any two composition series of a finite group have isomorphic factor groups, up to permutation and isomorphism.
+\end{theorem}
+\end{document}

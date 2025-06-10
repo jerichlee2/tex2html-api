@@ -1,0 +1,101 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Lecture 1}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\subsubsection*{Internal Energy, Work, and Heat}
+Main equations:
+\begin{align}
+    ME_i + U_i = ME_f + U_f \\[10pt] 
+    dU = dQ-pdV
+\end{align}
+
+\begin{definition}
+   Mechanical Energy: (macroscopic kinetic energy and potential energy) — this is usually ignored in thermo!
+\end{definition}
+\begin{definition}
+    Macroscopic quantities:
+   \noindent
+   \begin{enumerate}
+    \item U: internal energy
+    \item Q: heat
+    \item V: volume
+    \item p: pressure
+   \end{enumerate} 
+   
+\end{definition}
+\subsubsection*{Work and Heat}
+\begin{align}
+    \Delta U = W_{on} + Q
+\end{align}
+Work is the energy we see get put into the system macroscopically. \\
+Heat transfer $Q$ is spontaneous movement of energy from hot objects to cold objects (microscopic).
+
+\subsubsection*{Heat Transfer}
+Heat flows \emph{spontaneously} from a high temp object to a low temp object.
+\begin{align}
+    \Delta U_{cold} = Q \\[10pt] 
+    \Delta U_{hot} = -Q
+\end{align}
+\subsubsection*{Work On}
+\begin{align}
+    dW_{on} = -pdV \\[10pt] 
+    W_{on} = -\int_{}^{} p \,\mathrm{d}V \\[10pt] 
+    W_{by} = \int_{}^{} p \,\mathrm{d}V = -W_{on} 
+\end{align}
+Work on system (apply force that changes its volume), then we increase its internal energy.
+
+\subsubsection*{Differential Notation}
+
+Usually only know derivatives:
+\begin{align}
+    \Delta U = \int_{t_{i}}^{t_{f}} \frac{dU}{dt} \,\mathrm{d}t = U(t_{f})- U(t_{i})= U_{f}-U_{i}\\[10pt] 
+    \Delta U = \int_{U_{i}}^{U_{f}}  \,\mathrm{d}U \\[10pt] 
+    dU = dQ - pdV \label{1st}
+\end{align}
+\autoref{1st} is the First Law of Thermodynamics.
+\end{document}

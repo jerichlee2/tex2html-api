@@ -1,0 +1,930 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage[T1]{fontenc}   % good font encoding
+\usepackage[utf8]{inputenc}  % allow UTF-8 characters
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\newtheorem{answer}{Answer}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%------------------------------------------------------------
+%  A careful walk-through of the argument appearing in the image
+%  that every Möbius (linear fractional) transformation sends
+%  circles and straight–lines to circles and straight–lines.
+%------------------------------------------------------------
+
+\bigskip
+\textbf{1.  Decomposing the Möbius map}
+
+Let
+\[
+   T(z)=\frac{az+b}{cz+d},\qquad  a,b,c,d\in\mathbb{{C}},\; c\neq 0.
+\]
+Rewrite the fraction by separating the constant term:
+\[
+   T(z)=\frac{1}{c}\!\left(\frac{bc-ad}{\,cz+d\,}+a\right).
+\]
+Hence \(T\) can be expressed as a composition of three simpler maps
+(everywhere defined except where indicated):
+\[
+   U(z)=cz+d,\qquad
+   V(w)=\frac{1}{w}\quad(w\neq 0),\qquad
+   W(\zeta)=\frac{1}{c}\bigl[(bc-ad)\,\zeta+a\bigr].
+\]
+Indeed,
+\[
+   T = W\circ V\circ U.
+\]
+
+\bigskip
+\textbf{2.  Two of the three components already work}
+
+\begin{itemize}
+  \item \(U(z)=cz+d\) is an \emph{affine} map: it is the composition of
+        a rotation–dilation and a translation, so it clearly maps circles
+        to circles and lines to lines.
+  \item \(W(\zeta)=\dfrac{1}{c}\bigl[(bc-ad)\,\zeta+a\bigr]\) is again
+        affine, hence enjoys the same property.
+\end{itemize}
+
+Therefore the only non-trivial part is to check that the
+\emph{inversion} \(V(w)=1/w\) carries circles and lines to circles and
+lines.
+
+\bigskip
+\textbf{3.  A real-variable description of circles and lines}
+
+Write \(z=x+iy\;(x,y\in\mathbb{R})\).
+Every (generalised) circle or straight line in~\(\mathbb{{C}}\) can be described
+by a real equation of the form
+\[
+   \alpha\,(x^{2}+y^{2})+\beta\,x+\gamma\,y=\delta,
+   \tag{1}
+\]
+where \(\alpha,\beta,\gamma,\delta\in\mathbb{R}\) are \emph{not} all
+zero.  Precisely:
+
+\begin{itemize}
+  \item if \(\alpha\neq 0\) and \(\beta^{2}+\gamma^{2}+4\alpha\delta>0\),
+        (1) is a circle;
+  \item if \(\alpha=0\) the equation reduces to
+        \(\beta x+\gamma y=\delta\), i.e.\ a straight line.
+\end{itemize}
+
+\bigskip
+\textbf{4.  Substitute the inversion \(w=\dfrac{1}{z}\)}
+
+Write
+\[
+   w=u+iv=\frac{1}{z}=\frac{x-iy}{x^{2}+y^{2}}
+   \qquad\Longrightarrow\qquad
+   u=\frac{x}{x^{2}+y^{2}},\quad
+   v=-\frac{y}{x^{2}+y^{2}}.
+\]
+Multiplying both equalities by \(x^{2}+y^{2}\) gives
+\(x= u(x^{2}+y^{2})\) and \(y= -v(x^{2}+y^{2})\).
+Plug these into (1):
+
+\[
+   \alpha(x^{2}+y^{2})+\beta\,x+\gamma\,y
+   =\alpha\frac{1}{u^{2}+v^{2}}
+     +\beta\,\frac{u}{u^{2}+v^{2}}
+     -\gamma\,\frac{v}{u^{2}+v^{2}}
+   =\delta.
+\]
+Multiplying by the positive denominator \(u^{2}+v^{2}\) we arrive at
+\[
+   \boxed{\;\delta\,(u^{2}+v^{2})-\beta\,u+\gamma\,v=\alpha.\;}
+   \tag{2}
+\]
+
+\bigskip
+\textbf{5.  (2) is of the same type as (1)}
+
+Equation (2) has precisely the same
+shape as (1): the coefficients have simply
+\emph{permuted roles}.
+Consequently
+
+\[
+   \begin{cases}
+     \text{if }(1)\text{ is a circle }(\alpha\neq 0),&
+       (2)\text{ is also a circle;}\\[4pt]
+     \text{if }(1)\text{ is a line }(\alpha=0),&
+       (2)\text{ is also a line }(\delta=0).
+   \end{cases}
+\]
+
+Thus the inversion \(V(w)=1/w\) sends every circle or straight line to
+another circle or straight line (possibly sending the line at infinity
+to an ordinary circle and vice-versa).
+
+\bigskip
+\textbf{6.  Putting the pieces together}
+
+Since
+\[
+   T = W\circ V\circ U,\qquad
+   \underbrace{U,W}_{\text{affine}}\;+\;
+   \underbrace{V}_{\text{inversion}}
+\]
+\[
+   \Longrightarrow\;
+   T \text{ takes circles and lines to circles and lines.}
+\]
+
+\bigskip
+\centerline{\(\Box\)}
+\pagebreak
+% Problem 6
+\begin{problem}[]
+  Show that a linear fractional transformation $T$ that maps the circle $|z| = 1$ onto itself has the form
+  \[
+      T(z) = \lambda \frac{z - \gamma}{1 - \overline{\gamma}\,z}, 
+      \qquad |\lambda| = 1,\; |\gamma| \ne 1,
+  \]
+  or
+  \[
+      Tz = \frac{\lambda}{z}, 
+      \qquad |\lambda| = 1.
+  \] 
+\end{problem}
+\begin{solution}
+  \[
+\begin{aligned}
+|a-z|^{2}
+      &= (a-z)\,\overline{(a-z)} \\[4pt]
+      &= (a-z)\,(\bar a-\bar z) \\[4pt]
+      &= a\bar a \;-\; a\bar z \;-\; \bar a z \;+\; z\bar z \\[4pt]
+      &= |a|^{2} \;-\; a\bar z \;-\; \bar a z \;+\; |z|^{2} \\[4pt]
+      &= |a|^{2} \;-\; \bigl(a\bar z+\bar a z\bigr) \;+\; |z|^{2} \\[4pt]
+      &= |a|^{2} \;-\; 2\,\mathbb{R}e\!\bigl(\bar a z\bigr) \;+\; |z|^{2}.
+\end{aligned}
+\]
+\end{solution}
+\begin{problem}[]
+ % Problem 7(c)
+Find a linear fractional transformation $T$ such that
+\[
+    T(\mathbb{R}) = \mathbb{R},
+    \qquad
+    T\bigl(i\mathbb{R}\bigr)
+        = \Bigl\{\,w\in\mathbb{C} : \bigl|\,w-\tfrac54\,\bigr| = \tfrac34\,\Bigr\}.
+\] 
+\end{problem}
+\begin{solution}
+   \begin{solution}
+      \paragraph{1.  Geometry of the problem.}
+      The two sets we want to map intersect at the points $0$ and $\infty$:
+      \[
+         \mathbb{R}\cap i\mathbb{R}=\{0,\infty\}.
+      \]
+      Their images under $T$ must therefore lie on \emph{both}
+      $T(\mathbb{R})=\mathbb{R}$ and the target circle
+      \[
+         C=\Bigl\{w\in\mathbb{C}\;:\;\bigl|\,w-\tfrac54\,\bigr|=\tfrac34\Bigr\}.
+      \]
+      The real points of $C$ solve 
+      $\lvert w-\tfrac54\rvert=\tfrac34$, hence
+      \[
+         w_1=\tfrac54+\tfrac34=2,
+         \qquad
+         w_2=\tfrac54-\tfrac34=\tfrac12.
+      \]
+      We may therefore prescribe
+      \[
+         T(0)=2,
+         \qquad
+         T(\infty)=\frac12.
+         \tag{1}
+      \]
+      
+      \paragraph{2.  A first normal form.}
+      Write the Möbius map with \emph{real} coefficients
+      \[
+         T(z)=\frac{az+b}{cz+d}, \qquad ad-bc\neq0,\quad a,b,c,d\in\mathbb{R},
+      \]
+      so that $T(\mathbb{R})=\mathbb{R}$ automatically.
+      Condition (1) gives
+      \[
+         \frac{b}{d}=2,
+         \qquad
+         \frac{a}{c}=\frac12
+         \;\Longrightarrow\;
+         b=2d,\;c=2a.
+      \]
+      Scaling all coefficients by the same non–zero factor allows us to fix $d=1$, leading to the one-parameter family
+      \[
+         T_a(z)=\frac{az+2}{2az+1},
+         \qquad a\in\mathbb{R}\setminus\{0\}.
+         \tag{2}
+      \]
+      
+      \paragraph{3.  Fixing the parameter \(a\).}
+      It suffices to send a third point of $i\mathbb{R}$ to a known point of $C$.
+      Choose $z=i$ and the \emph{topmost} point of $C$,
+      \[
+         w_0=\frac54+\frac34\,i,
+      \]
+      and impose $T_a(i)=w_0$:
+      \[
+         \frac{ai+2}{1+2ai}=w_0.
+      \]
+      Writing $a=k$ and clearing denominators yields the real system
+      \[
+         \begin{cases}
+            \displaystyle\frac54-2k\cdot\frac34=2,\\[6pt]
+            \displaystyle\frac34+2k\cdot\frac54=k,
+         \end{cases}
+         \qquad\Longrightarrow\qquad
+         k=-\dfrac12.
+      \]
+      
+      \paragraph{4.  The desired map.}
+      Setting $a=-\tfrac12$ in (2) gives
+      \[
+         T(z)=\frac{-\tfrac12 z+2}{-\;z+1}
+              =\frac{z-4}{2\,(z-1)}.
+         \tag{3}
+      \]
+      
+      \paragraph{5.  Verification.}
+      \begin{enumerate}[label=\textbf{\alph*)}]
+         \item \emph{$T(\mathbb{R})=\mathbb{R}$.}  
+               Because the coefficients in \eqref{3} are real, conjugation commutes with $T$:
+               $T(\bar z)=\overline{T(z)}$, so the real axis is taken to itself.
+         \item \emph{$T(i\mathbb{R})=C$.}  
+               Möbius maps send circles/lines to circles/lines.  
+               The three distinct points
+               \[
+                  0,\;\infty,\;i
+                  \quad\mapsto\quad
+                  2,\;\tfrac12,\;w_0
+               \]
+               determine $i\mathbb{R}$ and $C$, respectively, so the whole axis $i\mathbb{R}$ is carried to the unique circle through $2,\tfrac12,w_0$, namely $C$.
+      \end{enumerate}
+      
+      \paragraph{6.  Alternative orientation.}
+      Swapping the images in (1), i.e.\ taking $T(0)=\tfrac12$ and $T(\infty)=2$, produces the companion map
+      \[
+         \widetilde{T}(z)=\frac{2z+1}{z+2},
+      \]
+      which satisfies the same two requirements.
+      \end{solution}
+\end{solution}
+\begin{problem}[]
+ % Problem 8(a)
+In Exercise 7(c), determine what happens to the first quadrant under the action of $T$. 
+\end{problem}
+\begin{solution}
+   \begin{solution}
+      \paragraph{Image of the first quadrant \(Q_1=\{z=x+iy : x>0,\;y>0\}\).}
+      
+      \begin{enumerate}
+        \item \textbf{Describe the boundary of \(Q_1\).}\\
+              The quadrant is bounded by the two rays  
+              \[
+                  R_+ := \{x \in \mathbb{R}_{>0}\}, 
+                  \qquad 
+                  I_+ := \{\,it : t>0\}.
+              \]
+      
+        \item \textbf{Send the boundary rays through \(T\).}\\
+              For the map
+              \[
+                  T(z)=\frac{z-4}{2\,(z-1)}, 
+                  \qquad 
+                  c=\frac54,\; r=\frac34,
+              \]
+              we have:
+              \begin{itemize}
+                \item Because \(T\) has real coefficients, \(T(\mathbb{R})=\mathbb{R}\), so 
+                      \(T(R_+)=\mathbb{R}_{>0}\).
+                \item Parameterise \(I_+\) by \(z=it\;(t>0)\):
+                      \[
+                          T(it)=\frac{it-4}{2\,(it-1)}
+                               =c + r \,e^{i\theta(t)}, 
+                          \qquad \theta(t)\in(0,\pi).
+                      \]
+                      Thus
+                      \[
+                          T(I_+)=\text{upper semicircle of } C
+                                 =\{\,w:|w-c|=r,\; \operatorname{Im}w>0\},
+                      \]
+                      running from \(w=2\) (as \(t\to0^+\)) to \(w=\tfrac12\) (as \(t\to+\infty\)).
+              \end{itemize}
+      
+        \item \textbf{Locate \(T(Q_1)\) relative to the circle \(C\).}\\
+              Take the interior test point \(z_0=1+i\):
+              \[
+                  w_0 := T(1+i)
+                        =\frac{1+i-4}{2\,(1+i-1)}
+                        =\frac{-3+i}{2i}
+                        =\frac12+\frac32\,i.
+              \]
+              Its distance from \(c\) is
+              \[
+                  |w_0-c|
+                    =\sqrt{(-0.75)^2 + 1.5^2}
+                    > r,
+              \]
+              so \(w_0\) (hence all of \(T(Q_1)\)) lies \emph{outside} the circle \(C\).
+      
+        \item \textbf{Result.}\\
+              \[
+                  T(Q_1)=
+                  \Bigl\{
+                    w\in\mathbb{C} :
+                    \operatorname{Im}w>0,\;
+                    |\,w-\tfrac54\,|>\tfrac34
+                  \Bigr\},
+              \]
+              the unbounded region in the \emph{upper half-plane} exterior to \(C\).
+              Its boundary is the positive real axis together with the upper semicircle of \(C\).
+      \end{enumerate}
+      \end{solution} 
+\end{solution}
+\begin{problem}[]
+  % Problem 16
+Show that if $T$ is a linear fractional transformation with $Tz_j = w_j$ for $j = 1, 2, 3$, then
+\[
+    (z, z_1, z_2, z_3) = (T(z), w_1, w_2, w_3)
+    \quad\text{for all } z.
+\]
+\end{problem}
+\begin{solution}
+  
+\end{solution}
+
+Show that a linear-frac. trans. T that maps $\left\vert z \right\vert =1$ to itself has the form 
+\begin{align}
+   T(z)=\lambda \frac{z-\gamma}{1-\overline{\gamma} z}, \left\vert \lambda \right\vert =1, \left\vert \gamma \right\vert \neq 1
+\end{align} 
+or 
+\begin{align}
+   T(z) = \frac{\lambda}{z}
+\end{align} 
+Solution:
+$T: \mathbb{{C}}_{\infty} \to \mathbb{{C}}_{\infty} $ is one-to-one. Let $c= T^{-1}(\infty)$.
+Case 1:
+$c=\infty, T(\infty) = \infty$. Then, $T(z) = \lambda z + b, \lambda \neq  0$, maps $\left\vert z \right\vert =1$ to a circle with center at $b$. Hence $ b=0$. Then $T(z) = \lambda z, \left\vert \lambda \right\vert=1, \gamma = 0$. 
+Case 2: $c=0, T(0)=\infty$. Put $g(z) = T(\frac{1}{z})$. $g(\infty) = T(0)= \infty$. $g$ maps $\left\vert z \right\vert =1$ to itself. By case 1, $g(z) = \lambda z, \left\vert \lambda \right\vert = 1. $ Then $T(z) = g(\frac{1}{z}) = \frac{\lambda}{z}$
+Case 3:
+$c\neq 0, c\neq  \infty$. Obviously $\left\vert c \right\vert \neq 1$. Let $g(z) = T(\phi(z)), \phi(z) = \frac{z+\gamma}{1+\overline{\gamma} z}, \gamma = \frac{1}{\overline{c} }$. Then $g(\infty) = T(\phi(\infty))=T(c) = \infty, \left\vert \gamma \right\vert \neq 1$. Recall $\phi$ maps $\left\vert z \right\vert =1$ to itself, $\phi^{-1}(z)= \frac{z-\gamma}{1-\overline{\gamma} z}$. By case 1, $g(z)=\lambda z, \left\vert \lambda \right\vert =1$. Then $T(z) = g(\phi^{-1}(z))= \lambda \frac{z-\gamma}{1-\overline{\gamma} z}$  
+
+%------------------------------------------------------------
+%  Theorem.
+%  Every linear–fractional (Möbius) map that sends the unit
+%  circle $\lvert z\rvert=1$ onto itself has one of the two forms
+%
+%     T(z) = \lambda\,\dfrac{z-\gamma}{1-\overline{\gamma}\,z},
+%        \qquad |\lambda| = 1,\; |\gamma|\neq 1,
+%
+%  or
+%
+%     T(z) = \dfrac{\lambda}{z},\qquad |\lambda| = 1.
+%
+%  Below is a detailed step-by-step proof, organised by cases
+%  according to the point whose image is~$\infty$.
+%------------------------------------------------------------
+\begin{proof}
+   Let
+   \[
+      T(z)=\frac{az+b}{cz+d},\qquad ad-bc\neq0,
+   \]
+   be a Möbius transformation that maps the unit circle
+   $\lvert z\rvert=1$ bijectively onto itself.
+   Because every Möbius map is a bijection of the extended complex
+   plane $\mathbb{{C}}_\infty:=\mathbb{{C}}\cup\{\infty\}$, there is a unique point
+   \[
+      c \;=\; T^{-1}(\infty)\;\in\;\mathbb{{C}}_\infty
+   \]
+   (the pole of~$T$).
+   We analyse three mutually exclusive cases.
+   
+   \bigskip
+   \noindent\textbf{Case 1: $c=\infty$ (so $T(\infty)=\infty$).}
+   
+   If $c=\infty$ then necessarily $c=0$ in the matrix of $T$, so
+   \(
+      T(z)=\dfrac{az+b}{d}=\lambda z+b
+   \)
+   with $\lambda:=a/d\neq0$.
+   \textbf{Why does $c=\infty$ force the matrix entry $c$ to be $0$?}
+
+\medskip
+\textbf{1.  General form of a Möbius map.}
+\[
+   T(z)=\frac{az+b}{cz+d},\qquad ad-bc\neq0.
+\]
+The value of $T$ is \emph{infinite} precisely when the denominator
+vanishes:
+\[
+   cz+d = 0
+   \;\;\Longrightarrow\;\;
+   z = -\frac{d}{c}.
+\]
+
+\medskip
+\textbf{2.  What does the symbol $c=\infty$ mean here?}
+
+In the proof we set
+\[
+   c:=T^{-1}(\infty),
+\]
+i.e.\ \emph{the point $z$ that is sent to $\infty$ by $T$}.
+Saying “$c=\infty$’’ means:
+
+> There is \emph{no finite} complex number $z$ for which $T(z)=\infty$.
+
+\medskip
+\textbf{3.  Consequence for the coefficient $c$ in the denominator.}
+
+* If $c\neq 0$, then $z=-d/c$ is a \emph{finite} complex number, so
+  $T\bigl(-d/c\bigr)=\infty$.  
+  This contradicts $c=\infty$.
+* Hence the only way to avoid a finite pole is to have $c=0$ in the
+  matrix representation.
+
+\medskip
+\textbf{4.  Simplifying the formula when $c=0$.}
+
+With $c=0$ the map reduces to
+\[
+   T(z)=\frac{az+b}{d}.
+\]
+Because the matrix $(a\;b;0\;d)$ is projective, we may divide all
+entries by $d\neq0$ (scaling does not change the Möbius transformation):
+\[
+   T(z)=\frac{a}{d}\,z + \frac{b}{d}
+       = \lambda z + b',
+   \qquad\lambda:=\frac{a}{d}\neq 0,\;
+          b':=\frac{b}{d}.
+\]
+
+Thus “$c=\infty$ implies $c=0$’’ and yields the affine form
+\(T(z)=\lambda z+b'\).
+   Geometrically, $T$ is an \emph{affine map} composed of a rotation-dilation
+   ($z\mapsto\lambda z$) followed by a translation ($z\mapsto z+b$).
+   
+   \begin{itemize}
+     \item[\(\circ\)]
+       The image of the unit circle under $z\mapsto\lambda z$ is still the
+       unit circle if and only if $|\lambda|=1$ (a pure rotation).
+     \item[\(\circ\)]
+       The subsequent translation by $b$ would shift the centre away from
+       the origin, hence cannot preserve the unit circle unless $b=0$.
+   \end{itemize}
+   Thus
+   \[
+      T(z)=\lambda z,\qquad |\lambda|=1.
+   \]
+   This is the special case of the first formula with $\gamma=0$.
+   
+   \bigskip
+   \noindent\textbf{Case 2: $c=0$ (so $T(0)=\infty$).}
+   
+   Define
+   \[
+      g(z)\;:=\;T\!\bigl(\tfrac1z\bigr)\quad(z\neq0).
+   \]
+   Because $\tfrac1z$ also sends the unit circle onto itself, the map $g$
+   shares the properties:
+   \[
+      g(\mathbb{{C}}_\infty\setminus\{0\})\subseteq\mathbb{{C}}_\infty,
+      \quad g(\infty)=T(0)=\infty,
+      \quad g(\lvert z\rvert=1)=\lvert z\rvert=1.
+   \]
+   Hence $g$ falls under Case 1 and must be a rotation:
+   \(
+      g(z)=\lambda z,\;|\lambda|=1.
+   \)
+   Consequently
+   \[
+      T(z)=g\!\bigl(\tfrac1z\bigr)=\frac{\lambda}{z},\qquad |\lambda|=1,
+   \]
+   which is exactly the second form claimed.
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Expanded explanation of \textbf{Case 2}  
+%  (“Pole at the origin”) in the proof that a Möbius map
+%  preserving the unit circle has the form
+%       T(z)=\lambda(z-\gamma)/(1-\bar\gamma z)   or   T(z)=\lambda/z.
+%
+%  Assumption for Case 2:
+%      c:=T^{-1}(\infty)=0  \quad\Longrightarrow\quad  T(0)=\infty .
+%
+%  Goal:  Show   T(z)=\lambda/z \; \text{with}\; |\lambda|=1.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Case \textup{2}: $c=0$ so $T(0)=\infty$}
+
+\begin{enumerate}
+%-------------------------------------------------------------------
+\item[\textbf{Step 1.}] \textbf{Pre-compose with the inversion $z\mapsto 1/z$.}
+
+Define a new Möbius transformation
+\[
+    g(z)\;:=\;T\!\Bigl(\frac{1}{z}\Bigr),
+    \qquad z\in\mathbb{{C}}_\infty\setminus\{0\}.
+\]
+(The point $z=0$ will be handled below.)
+
+\vspace{4pt}
+%-------------------------------------------------------------------
+\item[\textbf{Step 2.}] \textbf{$g$ shares the crucial properties of $T$.}
+
+\begin{itemize}
+  \item The inversion $I(z)=1/z$ satisfies $|I(z)|=1$ whenever
+        $|z|=1$.  Thus
+        \[
+           |z|=1\;\Longrightarrow\;|I(z)|=1
+           \;\Longrightarrow\;|T(I(z))|=1
+           \;\Longrightarrow\;|g(z)|=1.
+        \]
+        Hence $g$ maps the unit circle onto itself.
+
+  \item As $z\to\infty$ we have $I(z)\to0$, so
+        \[
+            g(\infty)=\lim_{z\to\infty}T\!\Bigl(\frac1z\Bigr)=T(0)=\infty .
+        \]
+\end{itemize}
+
+\vspace{4pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Why does  g(\infty)=\infty  when
+%       g(z)=T\!\bigl(\frac1z\bigr)  and  T(0)=\infty?
+%
+%  (Expanded explanation of the displayed limit.)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Setting.}
+For Case~2 we have a Möbius map
+\[
+   T(z)=\frac{az+b}{cz+d},\qquad c=0,\;ad\neq0,
+\]
+so that \(\displaystyle T(0)=\frac{b}{d}=\infty\).
+We define
+\[
+   g(z):=T\!\Bigl(\frac1z\Bigr),\qquad z\neq0.
+\]
+
+\paragraph{What does \(g(\infty)\) mean?}
+On the Riemann sphere \(\widehat{\mathbb{{C}}}=\mathbb{{C}}\cup\{\infty\}\)
+the value of a meromorphic function at~\(\infty\) is defined by the
+limit along any path tending to~\(\infty\):
+\[
+   g(\infty)
+   \;:=\;\lim_{z\to\infty}g(z)
+   \;=\;\lim_{|z|\to\infty}g(z),
+\]
+provided this limit exists in \(\widehat{\mathbb{{C}}}\).
+
+\paragraph{Computing the limit.}
+Because \(g(z)=T\!\bigl(\frac1z\bigr)\), substitute \(w=\frac1z\):
+
+\[
+  \boxed{\;
+  \displaystyle
+   \lim_{z\to\infty}g(z)
+     =\lim_{|z|\to\infty}T\!\Bigl(\frac1z\Bigr)
+     =\lim_{w\to 0}T(w)
+     =T(0)
+     =\infty.
+  }
+\]
+
+\emph{Why does \(w\to0\)?}  
+If \(|z|\to\infty\) then \(|1/z|\to0\); conversely every sequence
+\((w_n)\) with \(w_n\to0\) arises from \(z_n=1/w_n\) with
+\(|z_n|\to\infty\).
+
+\paragraph{Alternate sequence-based justification.}
+Choose any sequence \((z_n)\) in \(\mathbb{{C}}\) with \(|z_n|\to\infty\).
+Then \(w_n:=1/z_n\to0\).  Since Möbius maps are continuous on
+\(\widehat{\mathbb{{C}}}\),
+\[
+   g(z_n)=T(w_n)\longrightarrow T(0)=\infty.
+\]
+Because the limit is independent of the sequence, the spherical limit
+exists and equals~\(\infty\).  Therefore
+
+\[
+   g(\infty)=\infty.
+\]
+
+\bigskip
+(This completes the expanded justification of the line
+\(\displaystyle g(\infty)=\lim_{z\to\infty}T(1/z)=T(0)=\infty\).)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Why does $T(0)=\infty$ in \textbf{Case 2}?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Two different symbols called $c$.}
+\begin{itemize}
+\item[(i)]  In the matrix representation of a Möbius map  
+  \[
+     T(z)=\frac{az+b}{cz+d},\qquad ad-bc\neq0,
+  \]
+  the \emph{coefficient} $c$ multiplies $z$ in the denominator.
+\item[(ii)]  In the proof we introduced a \emph{point}
+  \[
+        c:=T^{-1}(\infty)\in\widehat{\mathbb{{C}}},
+  \]
+  i.e.\ the \textbf{unique point of the domain that is sent to $\infty$}.  
+  This “$c$’’ is *not* the same object as the matrix entry $c$—it is a
+  complex number (possibly $\infty$).
+\end{itemize}
+
+\paragraph{Definition of Case 2.}
+Case 2 is defined by the statement  
+\[
+   \boxed{\,c = T^{-1}(\infty)=0\,}.
+\]
+In words: the \emph{origin} is the point that $T$ blows up at.
+\[
+   \Longrightarrow\quad
+   T(0)=\infty
+   \quad\text{by definition.}
+\]
+Nothing about the matrix coefficients has been used yet; we have only
+unpacked what “$c=0$’’ means.
+
+\paragraph{Consistency with the algebraic formula.}
+To see that $T(0)=\infty$ forces a certain pattern in the coefficients,
+set $z=0$ in the generic formula:
+\[
+   T(0)=\frac{b}{d}.
+\]
+For this quotient to be infinite we must have $d=0$ (while $b\neq0$
+because $ad-bc\neq0$).  
+Thus a Möbius map with $T(0)=\infty$ can always be written
+\[
+   T(z)=\frac{az+b}{cz}\quad(c\neq0,\;b\neq0),
+\]
+and indeed the limit as $z\to0$ is $\infty$.
+
+Hence there is no contradiction:  
+* \textit{Case 2 assumes $T^{-1}(\infty)=0$; this is precisely the
+  statement $T(0)=\infty$.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------
+\item[\textbf{Step 3.}] \textbf{Determine the explicit form of $g$.}
+
+Because
+\[
+   g:\mathbb{{C}}_\infty\longrightarrow\mathbb{{C}}_\infty,\quad
+   g(\lvert z\rvert=1)=\lvert z\rvert=1,\quad
+   g(\infty)=\infty,
+\]
+$g$ falls under \emph{Case 1} of the proof (no finite pole).  Therefore
+$g$ must be an \emph{affine rotation}:
+\[
+   g(z)=\lambda z + b,
+   \qquad |\lambda|=1,\;b\in\mathbb{{C}} .
+\]
+
+\medskip\noindent
+\emph{Why is the translation term $b$ forced to vanish?}  
+If $b\neq0$, the image of the unit circle under $z\mapsto z+b$
+would be a circle \emph{whose centre is $b$}.  That centre has modulus
+$|b|>0$, so the image would \emph{no longer} be centred at the origin,
+contradicting the fact that $g$ maps the unit circle onto itself.
+Hence $b=0$ and
+\[
+   g(z)=\lambda z,\qquad |\lambda|=1.
+\]
+
+\vspace{4pt}
+%-------------------------------------------------------------------
+\item[\textbf{Step 4.}] \textbf{Translate the information back to $T$.}
+
+For every $z\in\mathbb{{C}}_\infty$,
+\[
+   T(z)=g\!\Bigl(\frac{1}{z}\Bigr)=\lambda\,\frac{1}{z}.
+\]
+Because $|\lambda|=1$ the map $T$ indeed sends $|z|=1$ onto itself.
+
+\vspace{2pt}
+\[
+   \boxed{\;T(z)=\frac{\lambda}{z},\quad |\lambda|=1\;}
+\]
+
+This completes the detailed justification of Case 2 and yields exactly
+the \emph{second} normal form stated in the theorem.
+\end{enumerate}
+   \bigskip
+   \noindent\textbf{Case 3: $c\in\mathbb{{C}}$ with $|c|\neq1$ (finite pole off the unit circle).}
+   
+   \medskip
+   \emph{Step 3.1 –   Construct a Blaschke map that moves $c$ to $\infty$.}
+   
+   Set
+   \[
+      \gamma:=\frac{1}{\overline{c}},\qquad\text{so that }|\gamma|\neq1.
+   \]
+   Define the Möbius map
+   \[
+      \phi(z)=\frac{z+\gamma}{1+\overline{\gamma}\,z},
+   \]
+   a (generalised) \emph{Blaschke factor}.  One checks
+   \[
+      |\phi(z)|=1\quad\text{whenever }|z|=1
+      \quad\Longrightarrow\quad \phi\bigl(\lvert z\rvert=1\bigr)
+      =\lvert z\rvert=1,
+   \]
+   and
+   \(
+      \phi(c)=\infty,\;\; \phi(\infty)= -\gamma.
+   \)
+   
+   \medskip
+   \emph{Step 3.2 –  Reduce to Case 1 by composing with $\phi$.}
+   
+   Let
+   \[
+      g(z):=T\!\bigl(\phi(z)\bigr),\qquad z\in\mathbb{{C}}_\infty.
+   \]
+   Then
+   \[
+      g(\infty)=T\!\bigl(\phi(\infty)\bigr)=T(-\gamma)\neq\infty,
+      \qquad
+      g\bigl(\phi^{-1}(\infty)\bigr)=g(c)=\infty.
+   \]
+   Because $\phi$ and $T$ each send the unit circle onto itself,
+   so does their composition \(g\).
+   Moreover $g(\infty)=\infty$, hence \(g\) lies in Case 1 and must be a
+   rotation:
+   \(
+      g(z)=\lambda z,\;|\lambda|=1.
+   \)
+   
+   \medskip
+   \emph{Step 3.3 –  Solve back for $T$.}
+   
+   Since $\phi^{-1}(z)=\dfrac{z-\gamma}{1-\overline{\gamma}\,z}$,
+   we obtain
+   \[
+      T(z)=g\!\bigl(\phi^{-1}(z)\bigr)
+          =\lambda\,\frac{z-\gamma}{1-\overline{\gamma}\,z},
+      \qquad |\lambda|=1,\;|\gamma|\neq1.
+   \]
+   
+   \bigskip
+   \noindent\textbf{Conclusion.}
+   Exactly one of the three cases applies, and they exhaust all linear
+   fractional maps that preserve the unit circle, yielding the two forms
+   
+   \[
+      \boxed{\;
+         T(z)=\lambda \frac{z-\gamma}{1-\overline{\gamma}\,z},
+         \;|\lambda|=1,\;|\gamma|\neq1
+      \;}
+      \quad\text{or}\quad
+      \boxed{\;
+         T(z)=\frac{\lambda}{z},
+         \;|\lambda|=1
+      \;}.
+   \]
+   \end{proof}
+   \begin{answer}
+      \textbf{Why break the proof into three cases?}
+      
+      Let \(T(z)=\dfrac{az+b}{cz+d}\;(ad-bc\neq0)\) be a Möbius map that
+      sends the unit circle \(\Gamma=\{\,|z|=1\}\) onto itself.  
+      One structural feature immediately singles out \emph{three and only three}
+      qualitatively different situations:
+      
+      \[
+         \boxed{\; \text{the \emph{pole}}
+                 \;c:=T^{-1}(\infty)= -\tfrac{d}{c_{\text{matrix}}}\;}
+         \qquad(\text{a single point in }\widehat{\mathbb{{C}}}).
+      \]
+      
+      Because \(T\) is a bijection of the Riemann sphere, \(c\) is the
+      \emph{unique} point where \(T\) blows up.  Where that point sits
+      dictates which elementary conformal “building block’’
+      (rotation, inversion, Blaschke factor) is best suited to normalise the
+      transformation.
+      
+      \medskip
+      \begin{enumerate}
+      %-----------------------------------------------------------------
+      \item[\textbf{Case 1:\;}] \(\boldsymbol{c=\infty}\).
+            \\
+            \textit{Interpretation.}  The denominator of \(T\) never vanishes,
+            so \(T\) is an \emph{affine map}.  
+            A single rotation \(z\mapsto\lambda z\,(|\lambda|=1)\) is already
+            the desired normal form.  No other technique is needed.
+      
+      %-----------------------------------------------------------------
+      \item[\textbf{Case 2:\;}] \(\boldsymbol{c=0}\).
+            \\
+            \textit{Interpretation.}  The pole lies at the origin, so \(T\) is
+            necessarily of the form \(T(z)=\dfrac{\lambda}{z}\) up to a
+            rotation.  
+            The quickest way to see this is to \emph{pre-compose} with the
+            inversion \(I(z)=1/z\), thereby \emph{sending the pole back to
+            infinity}.  
+            Once infinity is the unique pole, we are reduced to Case~1 again.
+      
+      %-----------------------------------------------------------------
+      \item[\textbf{Case 3:\;}] \(\boldsymbol{c\in\mathbb{{C}},\;|c|\neq1}\).
+            \\
+            \textit{Interpretation.}  The pole lies in the finite plane
+            but \emph{off} the unit circle (it \textbf{must} be off
+            \(\Gamma\); otherwise \(T\) could not map \(\Gamma\) onto itself).
+            A Blaschke factor
+            \[
+               \phi_{c}(z)=\frac{z+\gamma}{1+\bar\gamma z},
+               \qquad \gamma=\frac1{\bar c},
+            \]
+            is the canonical automorphism of the unit disc that
+            sends \(c\) to \(\infty\).
+            Composing \(T\) with \(\phi_{c}\) therefore converts Case 3 to
+            Case 1.  Undoing the composition yields the standard Blaschke
+            form \(\lambda\,(z-\gamma)/(1-\bar\gamma z)\).
+      
+      \end{enumerate}
+      
+      \bigskip
+      \textbf{Why these three cases are exhaustive and mutually exclusive}
+      
+      \vspace{-2mm}
+      \[
+         c\;=\;T^{-1}(\infty)\;\in\;\widehat{\mathbb{{C}}}
+         \;=\;\mathbb{{C}}\cup\{\infty\}
+         \quad\Longrightarrow\quad
+         c=\infty,\;c=0,\;\text{or }c\in\mathbb{{C}}\setminus\{0\}.
+      \]
+      \(\Gamma\)-preservation forces \(|c|\neq1\) in the finite situation, so
+      no further sub-cases appear.  Hence every Möbius map that keeps the unit
+      circle invariant lands in exactly \emph{one} of the three scenarios,
+      and each scenario has its own most economical normalising trick:
+      
+      \[
+         \begin{array}{c|c}
+           \text{location of the pole} & \text{tool that fixes the pole at }\infty
+           \\\hline
+             \infty & \text{none (already affine)} \\[4pt]
+             0 & I(z)=1/z \\[4pt]
+             c,\;|c|\neq1 & \phi_{c}(z)=\dfrac{z+\gamma}{1+\bar\gamma z}
+         \end{array}
+      \]
+      
+      By treating these cases separately we keep the algebra
+      minimal and make clear \emph{which elementary conformal maps are doing
+      the work} in each circumstance.  An alternative one-size-fits-all
+      derivation exists (via the Schwarz lemma on the unit disc) but hides
+      these geometrically meaningful distinctions.
+      \end{answer}
+\end{document}

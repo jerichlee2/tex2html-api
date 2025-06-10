@@ -1,0 +1,359 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%--------------------------------------------------------------------
+%  Why (8) together with  $\Lambda f\le \mu(V)<\mu(K)+\varepsilon$
+%  yields (7)
+%--------------------------------------------------------------------
+
+\begin{align}
+  \mu(K) \;\le\; \Lambda f \tag{8}
+\end{align}
+
+\noindent
+Now fix an arbitrary $\varepsilon>0$.  
+By Urysohn’s lemma there exists an open set $V\supset K$ with  
+$\mu(V)<\mu(K)+\varepsilon$ and a continuous function  
+$\,f$ such that
+\[
+  K \prec f \prec V .
+\]
+For this particular $f$ we therefore have  
+\[
+  \Lambda f \;\le\; \mu(V) \;<\; \mu(K)+\varepsilon .
+\]
+Hence
+\[
+  \inf\{\Lambda g : K \prec g\}\;\le\;\Lambda f
+  \;<\;\mu(K)+\varepsilon .
+\]
+Because $\varepsilon>0$ is arbitrary, letting $\varepsilon\to 0$ gives  
+\[
+  \inf\{\Lambda g : K \prec g\}\;\le\;\mu(K).
+\]
+Together with (8), which states $\mu(K)\le\Lambda f$ for \emph{every}  
+$K\prec f$, we obtain the reverse inequality
+\[
+  \mu(K)\;\le\;\inf\{\Lambda g : K \prec g\}.
+\]
+Consequently,
+\[
+  \boxed{\,
+     \mu(K)=\inf\{\Lambda f : K \prec f\}
+  \,},
+\]
+which is exactly equation (7).  \qed
+\pagebreak
+%--------------------------------------------------------------------
+%  STEP III — Every open set $V$ with $\mu(V)<\infty$ satisfies (3)
+%--------------------------------------------------------------------
+%
+%  Recall (3):   $\displaystyle 
+%          \mu(E)=\sup\{\mu(K)\;:\;K\subset E,\;K\text{ compact}\}$.
+%
+%  Goal:  Show this for any \emph{open} $V$ with $\mu(V)<\infty$.
+%--------------------------------------------------------------------
+
+\paragraph{Proof.}
+Fix an arbitrary real number $\alpha$ with $\alpha<\mu(V)$.  
+Since $\mu(V)=\sup\{\Lambda f: f\prec V\}$ by definition of $\mu$,  
+there exists a continuous function $f$ such that  
+\[
+      f\prec V
+      \quad\text{and}\quad
+      \alpha<\Lambda f,
+\]
+where $\Lambda f=\int_X f\,d\mu$ (or whatever functional $\Lambda$ denotes).
+
+\medskip
+Let $K:=\operatorname{supp}f$ be the (necessarily compact) support of $f$.  
+Because $V$ is open and $f\prec V$, we have $K\subset V$.
+
+\medskip
+Now take any open set $W$ with $K\subset W$ (in particular we may take
+$W=V$).  Since $f\prec W$, monotonicity of $\mu$ with respect to the
+order $\prec$ yields
+\[
+      \Lambda f\;\le\;\mu(W).
+\]
+Choosing $W=K$ gives $\Lambda f\le\mu(K)$, whence
+\[
+      \alpha\;<\;\Lambda f\;\le\;\mu(K)\;\le\;
+      \sup\{\mu(L):L\subset V,\;L\text{ compact}\}.
+\]
+
+\medskip
+Because $\alpha<\mu(V)$ was \emph{arbitrary}, it follows that
+\[
+      \mu(V)\;\le\;\sup\{\mu(K):K\subset V,\;K\text{ compact}\}.
+\]
+The reverse inequality is immediate since every compact
+$K\subset V$ is contained in $V$, so $\mu(K)\le\mu(V)$.
+Consequently
+\[
+      \boxed{\;
+         \mu(V)=\sup\{\mu(K):K\subset V,\;K\text{ compact}\}
+      \;},
+\]
+which is precisely condition~(3).  Hence every open
+$V$ with $\mu(V)<\infty$ lies in $\mathfrak{M}_F$.
+\qed
+\pagebreak
+%---------------------------------------------------------------
+%  Why do we introduce the number $\alpha$?
+%---------------------------------------------------------------
+
+The rôle of the auxiliary number $\alpha$ is purely \emph{approximation}:
+
+\begin{itemize}
+  \item We know \(\mu(V)\) is the \emph{supremum} of all numbers
+        \(\Lambda f\) with \(f\prec V\), but in general that supremum
+        need not be \emph{attained} by any single \(f\).
+  \item By picking an \emph{arbitrary} real number
+        \(\alpha<\mu(V)\) we set a target “just below’’ \(\mu(V)\).
+        The definition of a supremum then guarantees
+        the existence of some \(f\prec V\) with
+        \[
+             \alpha<\Lambda f\;(\le \mu(V)).
+        \]
+        Thus we manufacture a concrete function whose integral comes as
+        close to \(\mu(V)\) as we like.
+  \item The support \(K=\operatorname{supp}f\) of that \(f\) is compact
+        and satisfies
+        \[
+             \alpha<\Lambda f\le\mu(K)\le\mu(V).
+        \]
+        Because \(\alpha\) was \emph{arbitrary}, this shows that for
+        every neighbourhood below \(\mu(V)\) we can find a compact
+        subset \(K\subset V\) whose measure falls inside that
+        neighbourhood.  In symbols,
+        \[
+             \text{for every } \alpha<\mu(V)\text{ there is a compact }
+             K\subset V\text{ with }\alpha<\mu(K).
+        \]
+        Precisely this property forces
+        \[
+             \mu(V)\le\sup\{\mu(K):K\subset V,\;K\text{ compact}\},
+        \]
+        completing the verification of condition~(3) for \(V\).
+\end{itemize}
+
+\noindent
+\textbf{In short:}  
+\(\alpha\) plays the same rôle that an \(\varepsilon\) does in
+``$\sup$–$\inf$’’ arguments—it lets us push arbitrarily close to
+\(\mu(V)\) even when \(\mu(V)\) is merely a limit value rather than an
+attained one.
+\pagebreak
+%--------------------------------------------------------------------
+%  Detailed walk-through of the chain of inequalities on p.\,47
+%--------------------------------------------------------------------
+\begin{align}
+  \Lambda f
+    &= \sum_{i=1}^{n}\Lambda\!\bigl(h_i f\bigr)
+        &&\text{(linearity of $\Lambda$ and $\sum_{i=1}^{n}h_i=1$ on $K$)}\\[6pt]
+    &\le \sum_{i=1}^{n}(y_i+\epsilon)\,\Lambda h_i
+        &&\text{since $h_i f\le(y_i+\epsilon)h_i$ everywhere}\\[6pt]
+    &= \sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)\Lambda h_i
+          -|a|\sum_{i=1}^{n}\Lambda h_i
+        &&\text{add--subtract the constant $|a|$}\\[6pt]
+    &\le \sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)
+          \bigl[\mu(E_i)+\epsilon/n\bigr]-|a|\mu(K)
+        &&\text{(19): $\Lambda h_i\le\mu(E_i)+\epsilon/n$ and  
+                     $\sum_{i=1}^{n}\Lambda h_i=\mu(K)$}\\[6pt]
+    &= \sum_{i=1}^{n}(y_i-\epsilon)\,\mu(E_i)
+          +2\epsilon\mu(K)
+          +\frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)
+        &&\text{expand and gather $\epsilon$-terms}\\[6pt]
+    &\le \int_{X}f\,d\mu
+          +\epsilon\bigl[2\mu(K)+|a|+b+\epsilon\bigr]
+        &&\text{$y_i-\epsilon<f$ on $E_i$ and $y_i\le b$}
+  \end{align}
+  
+  \begin{enumerate}
+    \item \textbf{Line 1.}  Write $f=\sum_{i=1}^{n}h_i f$ on $K$; apply the linear functional $\Lambda$.
+    \item \textbf{Line 2.}  On $V_i$ we constructed $f(x)<y_i+\epsilon$, hence $h_i f\le(y_i+\epsilon)h_i$; monotonicity of $\Lambda$ preserves the inequality.
+    \item \textbf{Line 3.}  Insert and remove the same constant $|a|$ (the left-endpoint of $[a,b]$, the range of $f$) to prepare for the next estimate.
+    \item \textbf{Line 4.}  From (19) we have $\Lambda h_i\le\mu(V_i)\le\mu(E_i)+\epsilon/n$.  
+          Because $\sum h_i=1$ on $K$, $\sum_{i=1}^{n}\Lambda h_i=\Lambda1=\mu(K)$.
+    \item \textbf{Line 5.}  Distribute the bracket, collect like terms,
+          and isolate factors of $\epsilon$.
+    \item \textbf{Line 6.}  On each $E_i$ one has $y_i-\epsilon<f$, so $\sum_{i=1}^{n}(y_i-\epsilon)\mu(E_i)\le\int_{X}f\,d\mu$.  
+          The remaining sum is bounded by $\epsilon(|a|+b+\epsilon)$ because $y_i\le b$.
+  \end{enumerate}
+  
+  Since $\epsilon>0$ was arbitrary, letting $\epsilon\to0$ yields
+  \[
+    \Lambda f\;\le\;\int_{X}f\,d\mu,
+  \]
+  establishing inequality (16) and completing the proof.
+  \pagebreak
+  %--------------------------------------------------------------------
+%  Zooming in on \textbf{Line 5} and \textbf{Line 6}
+%--------------------------------------------------------------------
+Recall the expression we reached at the end of Line 4:
+\[
+  S
+  \;=\;
+  \sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)\bigl[\mu(E_i)+\tfrac{\epsilon}{n}\bigr]
+  \;-\;|a|\,\mu(K).
+\]
+Here $\mu(K)=\sum_{i=1}^{n}\mu(E_i)$ because the $E_i$ are pairwise
+disjoint and cover $K$.
+
+%--------------------------------------------------------------------
+\paragraph{Line 5.  Algebraic clean-up.}
+First expand the bracket and separate the terms:
+\begin{align*}
+S
+&=
+  \sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)\mu(E_i)
+  \;+\;
+  \frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)
+  \;-\;
+  |a|\,\mu(K).
+\end{align*}
+
+\noindent
+Split the first sum into a ``$|a|$-part’’ and a ``$(y_i+\epsilon)$-part’’,
+then use $\sum_{i=1}^{n}\mu(E_i)=\mu(K)$ to cancel the $|a|$-terms:
+\begin{align*}
+S
+&=
+  |a|\,\mu(K)+\sum_{i=1}^{n}(y_i+\epsilon)\mu(E_i)
+  \;+\;
+  \frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)
+  \;-\;
+  |a|\,\mu(K)
+\\[4pt]
+&=
+  \sum_{i=1}^{n}(y_i+\epsilon)\mu(E_i)
+  \;+\;
+  \frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr).
+\end{align*}
+
+\noindent
+Finally, write
+\(
+  (y_i+\epsilon)\mu(E_i)
+  =(y_i-\epsilon)\mu(E_i) + 2\epsilon\mu(E_i)
+\)
+and sum over $i$:
+\[
+  S
+  =
+  \sum_{i=1}^{n}(y_i-\epsilon)\mu(E_i)
+  \;+\;
+  2\epsilon\mu(K)
+  \;+\;
+  \frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr).
+\]
+All $\epsilon$-dependence is now explicit—that is the whole point of
+Line 5.
+
+%--------------------------------------------------------------------
+\paragraph{Line 6.  Estimating the two pieces.}
+
+\begin{enumerate}
+\item\emph{The main (non-$\epsilon$) term.}
+      On $E_i$ we have
+      \(
+        y_{i-1}<f(x)<y_i
+      \)
+      by construction, hence
+      \(
+        y_i-\epsilon<f(x)
+      \)
+      whenever $\epsilon>0$ is small enough.  Therefore
+      \[
+          \sum_{i=1}^{n}(y_i-\epsilon)\mu(E_i)
+          \;\le\;
+          \int_{X}f\,d\mu.
+      \]
+
+\item\emph{The $\epsilon$-terms.}
+      Because $y_i\le b$ for every $i$ (the $y_i$ live in the range
+      $[a,b]$ of $f$),
+      \[
+          \frac{\epsilon}{n}\sum_{i=1}^{n}\bigl(|a|+y_i+\epsilon\bigr)
+          \;\le\;
+          \epsilon\bigl(|a|+b+\epsilon\bigr).
+      \]
+      Adding the $2\epsilon\mu(K)$ coming from the previous line gives
+      the total $\epsilon$-contribution
+      \[
+         \epsilon\bigl[2\mu(K)+|a|+b+\epsilon\bigr].
+      \]
+\end{enumerate}
+
+Putting the two pieces together we arrive at
+\[
+   \Lambda f
+   \;\le\;
+   \int_{X}f\,d\mu
+   \;+\;
+   \epsilon\bigl[2\mu(K)+|a|+b+\epsilon\bigr].
+\]
+Since $\epsilon>0$ was arbitrary, letting $\epsilon\to0$ yields the
+desired inequality
+\(
+  \Lambda f\le\int_{X}f\,d\mu,
+\)
+completing the proof.
+\end{document}

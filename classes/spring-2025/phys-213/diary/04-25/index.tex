@@ -1,0 +1,408 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{align}
+  \textbf{Given data}\\[2pt]
+  &n = 2\;\text{mol}, \qquad 
+  T = 290\;\text{K}, \qquad 
+  V_i = 2\;\text{m}^3,\qquad 
+  V_f = 1\;\text{m}^3.\\[6pt]
+  \textbf{Isothermal work for an ideal gas}\\[2pt]
+  &\displaystyle W_{\text{by}} = \int_{V_i}^{V_f} P\,dV = nRT\int_{V_i}^{V_f}\frac{dV}{V}
+        = nRT\ln\!\left(\frac{V_f}{V_i}\right).\\[6pt]
+  \textbf{Work \emph{on} the gas} \\[2pt]
+  &\displaystyle W_{\text{on}} = -\,W_{\text{by}}
+        = nRT\ln\!\left(\frac{V_i}{V_f}\right), \qquad 
+        \text{since } W_{\text{on}} = -W_{\text{by}}.\\[6pt]
+  \textbf{Numerical substitution}\\[2pt]
+  &\displaystyle W_{\text{on}} 
+     = (2\;\text{mol})(8.314\;\text{J mol}^{-1}\text{K}^{-1})(290\;\text{K})
+       \ln\!\left(\frac{2}{1}\right) \\[4pt]
+  &\displaystyle \phantom{W_{\text{on}} }
+     = (4820\;\text{J})\times 0.6931 \\[4pt]
+  &\displaystyle \phantom{W_{\text{on}} }
+     \approx 3.34\times 10^{3}\;\text{J}.\\[6pt]
+  \boxed{\,W_{\text{on}}\ \approx\ 3.34\times 10^{3}\ \text{J}\,}
+  \end{align}
+  \begin{align}
+    \textbf{Data}\\[2pt]
+    &n = 1\;\text{mol (H}_2\text{)}, 
+    \quad V_1 = 1\;\text{m}^3,\;
+    \quad V_2 = 0.4\;\text{m}^3,\;
+    \quad p_1 = 1\;\text{atm}.\\[8pt]
+    \textbf{1.\ Degrees of freedom and } \gamma \\[2pt]
+    &N_{\text{DOF}} = 3\;(\text{translation}) + 2\;(\text{rotation}) = 5,\\[4pt]
+    &\displaystyle 
+    \gamma \;=\; \frac{N_{\text{DOF}}/2 + 1}{N_{\text{DOF}}/2}
+              \;=\; \frac{5/2 + 1}{5/2}
+              \;=\; \frac{3.5}{2.5}
+              \;=\; 1.4.\\[10pt]
+    \textbf{2.\ Final pressure from } p_1V_1^{\gamma}=p_2V_2^{\gamma}\\[4pt]
+    &\displaystyle 
+    p_2 \;=\; p_1\!\left(\frac{V_1}{V_2}\right)^{\gamma}
+            \;=\; 1\;\text{atm}\,(2.5)^{1.4}
+            \;\approx\; 3.61\;\text{atm}.\\[10pt]
+    \textbf{3.\ Adiabatic work }(1\!\to\!2)\\[2pt]
+    &\displaystyle 
+    W \;=\; \int_{V_1}^{V_2} p\,dV
+          \;=\; \frac{p_2V_2 - p_1V_1}{1-\gamma},\\[4pt]
+    &\displaystyle 
+    W \;=\; \frac{(3.61\;\text{atm})(0.4\;\text{m}^3) - (1\;\text{atm})(1\;\text{m}^3)}
+                  {1 - 1.4}
+         \;\approx\; -1.11\;\text{atm}\,\text{m}^3.\\[10pt]
+    \textbf{4.\ Convert to joules}\\[2pt]
+    &1\;\text{atm}\,\text{m}^3 = 101\,325\;\text{J},\\[4pt]
+    &|W| = 1.11 \times 101\,325\;\text{J}
+          \;\approx\; 1.1\times 10^{5}\;\text{J}.\\[8pt]
+    \boxed{|W_{1\to 2}| \;\approx\; 1.1\times 10^{5}\ \text{J}}
+    \end{align}
+    \begin{align}
+      \textbf{Adiabatic relation for an ideal gas} \\[4pt]
+      & P V^{\gamma} = \text{constant} \;\;(\equiv C). \\[10pt]
+      \textbf{1.~~Express the pressure as a function of volume} \\[4pt]
+      & P = C V^{-\gamma}. \\[10pt]
+      \textbf{2.~~Work for a quasi-static adiabatic path} \\[4pt]
+      & W \;=\; \int_{V_1}^{V_2} P\,dV \;=\; \int_{V_1}^{V_2} C\,V^{-\gamma}\,dV. \\[10pt]
+      \textbf{3.~~Integrate} \\[4pt]
+      & W \;=\; C \int_{V_1}^{V_2} V^{-\gamma}\,dV
+            \;=\; C\left[ \frac{V^{1-\gamma}}{1-\gamma} \right]_{V_1}^{V_2} \\[4pt]
+      &\phantom{W} \;=\; \frac{C}{1-\gamma}\bigl(V_2^{1-\gamma} - V_1^{1-\gamma}\bigr). \\[10pt]
+      \textbf{4.~~Replace the constant \(C\)} \\[4pt]
+      & C = P_1 V_1^{\gamma} = P_2 V_2^{\gamma}. \\[10pt]
+      \textbf{Using \(C = P_2 V_2^{\gamma}\)} \\[4pt]
+      & W \;=\; \frac{P_2 V_2^{\gamma}}{1-\gamma}\,V_2^{\,1-\gamma}
+               \;-\; \frac{P_2 V_2^{\gamma}}{1-\gamma}\,V_1^{\,1-\gamma} \\[4pt]
+      &\phantom{W} \;=\; \frac{P_2 V_2 - P_2 V_2^{\gamma}V_1^{1-\gamma}}{1-\gamma}. \\[8pt]
+      \textbf{But}\; P_2 V_2^{\gamma} = P_1 V_1^{\gamma} 
+      \;\Longrightarrow\; P_2 V_2^{\gamma}V_1^{1-\gamma}=P_1V_1, \\[4pt]
+      \therefore\; & W \;=\; \frac{P_2 V_2 - P_1 V_1}{1-\gamma}. \\[12pt]
+      \boxed{\,W \;=\; \displaystyle \frac{P_2 V_2 - P_1 V_1}{1 - \gamma}\,}
+      \end{align}
+      \begin{align}
+        \text{Adiabatic relation:}\qquad 
+          & PV^{\gamma} = \text{const} 
+             \;\;\Longrightarrow\;\;
+             TV^{\gamma-1}= \text{const} \\[6pt]
+        %
+        \text{Relating the temperatures at states 3 and 4:}\qquad
+          & T_3\,V_3^{\,\gamma-1} = T_4\,V_1^{\,\gamma-1} \\[4pt]
+          & \Rightarrow 
+            \frac{T_4}{T_3} 
+            =\biggl(\frac{V_3}{V_1}\biggr)^{\gamma-1} \\[10pt]
+        %
+        \text{Root‐mean‐square speed:}\qquad
+          & v_{\text{rms}} = \sqrt{\frac{3k_B T}{m}} \\[4pt]
+          & \Rightarrow
+            \frac{v_{\text{rms},\,4}}{v_{\text{rms},\,3}}
+            = \sqrt{\frac{T_4}{T_3}}
+            = \biggl(\frac{V_3}{V_1}\biggr)^{(\gamma-1)/2} \\[10pt]
+        %
+        \text{Numerical values for diatomic }(\mathrm{H_2})\text{:}\qquad
+          & \gamma = \frac{7}{5} = 1.4,
+            \quad \gamma - 1 = \frac{2}{5} \\[4pt]
+          & \frac{V_3}{V_1} = \frac{0.5\;\text{m}^3}{1\;\text{m}^3} 
+                             = \tfrac12 \\[10pt]
+        %
+        \text{Final ratio of rms speeds:}\qquad
+          & \frac{v_{\text{rms},\,4}}{v_{\text{rms},\,3}}
+            = \bigl(\tfrac12\bigr)^{\,(\gamma-1)/2}
+            = \bigl(\tfrac12\bigr)^{\,1/5}
+            = 2^{-1/5} \\[6pt]
+        %
+        & \boxed{\,v_{\text{rms,\,final}}
+                 \;=\;
+                 2^{-1/5}\,v_{\text{rms,\,initial}}\,}
+        \end{align}
+        \begin{align}
+          \textbf{1.\ Helmholtz free energy at fixed $T$ and $n$} \qquad
+            & F(V) = U - TS
+                    = \frac{3}{2}\,nRT + \frac{a n^{2}}{V}
+                      - T\,nR\ln V                                           \label{eq:F}\\[8pt]
+          %
+          \textbf{2.\ Mechanical equilibrium (isothermal compression)}\qquad
+            &\text{Minimise }G(V)=F(V)+P_{\text{ext}}V
+              \;\Longrightarrow\;
+              \left(\frac{\partial G}{\partial V}\right)_{T,n}=0\\[2pt]
+            &\hspace{1.7cm}
+              \frac{\partial F}{\partial V} + P_{\text{ext}} = 0
+              \;\;\Longrightarrow\;\;
+              P_{\text{ext}} = -\,\frac{\partial F}{\partial V}\Big|_{T,n}     \label{eq:Pext}\\[10pt]
+          %
+          \textbf{3.\ Evaluate the derivative of $F$} \\[2pt]
+            & \frac{\partial F}{\partial V}
+                = -\,\frac{a n^{2}}{V^{2}} \;-\; T\,nR\,\frac{1}{V}           \label{eq:dFdV}\\[6pt]
+          %
+          \textbf{4.\ Insert (\ref{eq:dFdV}) into (\ref{eq:Pext})} \\[2pt]
+            & P_{\text{ext}}
+                = \frac{a n^{2}}{V^{2}} + \frac{T\,nR}{V}                     \label{eq:Pformula}\\[12pt]
+          %
+          \textbf{5.\ Numerical substitution} \\[2pt]
+            & n = 3.3\;\text{mol}, \quad a = 20.18\;\text{J\,m}^{3}\!/\text{mol}^{2},
+              \quad V = 0.152\;\text{m}^{3}, \quad
+              T = 211.8\;\text{K}, \quad
+              R = 8.314\;\text{J\,mol}^{-1}\text{K}^{-1} \\[4pt]
+          %
+            & P_{\text{ext}}
+                = \frac{(20.18)(3.3)^{2}}{(0.152)^{2}}
+                  \;+\;
+                  \frac{(211.8)(3.3)(8.314)}{0.152} \\[6pt]
+            & \phantom{P_{\text{ext}}}
+                \approx 9.5 \times 10^{3}\;\text{Pa}
+                  \;+\;
+                  3.8 \times 10^{4}\;\text{Pa} \\[4pt]
+            & \phantom{P_{\text{ext}}}
+                \approx 4.8 \times 10^{4}\;\text{Pa} \\[10pt]
+          %
+          \boxed{\,P_{\text{ext}} \;\approx\; 4.8 \times 10^{4}\ \text{Pa}
+                 \;\;(\text{about } 0.47\ \text{atm})\,}
+          \end{align}
+          
+          % ----------  Ratio of rms speeds: He vs. N2  ----------
+% (compact layout so every line stays inside the margins)
+
+% 1. rms speed of a single species
+\begin{align}
+  v_{\text{rms}}
+    &= \sqrt{\frac{3 k_B T}{m}}
+  \end{align}
+  
+  % 2. Ratio at the same temperature
+  \begin{align}
+  \frac{v_{\text{rms,He}}}{v_{\text{rms,N}_2}}
+    &= \sqrt{\frac{m_{N_2}}{m_{\text{He}}}}
+  \end{align}
+  
+  % 3. Molar–to–molecule masses (Avogadro factor cancels)
+  \begin{align}
+  m = \frac{M}{N_A}, \qquad
+  M_{\text{He}} = 4.0\times10^{-3}\,\text{kg\,mol}^{-1}, \qquad
+  M_{N_2} = 2.8\times10^{-2}\,\text{kg\,mol}^{-1}
+  \end{align}
+  
+  % 4. Numerical evaluation
+  \begin{align}
+  \frac{v_{\text{rms,He}}}{v_{\text{rms,N}_2}}
+    &= \sqrt{\frac{M_{N_2}}{M_{\text{He}}}}
+     = \sqrt{\frac{28}{4}}
+     = \sqrt{7}
+     \approx 2.65
+  \end{align}
+  
+  \[
+  \boxed{\displaystyle
+    \frac{v_{\text{rms,He}}}{v_{\text{rms,N}_2}} \;\approx\; 2.65
+  }
+  \]
+  % ----------  Why the particle counts do not affect the rms-speed ratio  ----------
+
+\paragraph{Equipartition in a mixture.}
+In equilibrium, \emph{every} species in the mixture shares the same
+temperature~\(T\);
+only their molecular masses differ.
+The root–mean–square speed of \emph{one particle} of any species is
+\[
+v_{\text{rms}}
+   = \sqrt{\frac{3k_B T}{m}},
+\]
+where \(m\) is the mass of one particle of that species.
+The formula contains no factor that depends on how \emph{many}
+such particles are present.
+
+\paragraph{Including the given counts.}
+Let \(N_{\text{He}}=3.0\times10^{23}\) and
+\(N_{N_2}=6.0\times10^{23}\).
+If we wrote the rms speed in terms of molar mass \(M\),
+\[
+v_{\text{rms}}
+   = \sqrt{\frac{3 R T}{M}},
+\]
+nothing changes, because \(R=N_A k_B\) and
+\(\,M=m N_A\); again, \(N_{\text{He}}\) or \(N_{N_2}\) never enter.
+
+\paragraph{Ratio of rms speeds.}
+Hence the ratio remains
+\[
+\frac{v_{\text{rms,He}}}{v_{\text{rms,}N_2}}
+   = \sqrt{\frac{M_{N_2}}{M_{\text{He}}}}
+   = \sqrt{\frac{28}{4}}
+   = \sqrt{7}
+   \approx 2.65.
+\]
+
+\[
+\boxed{\displaystyle
+  \frac{v_{\text{rms,He}}}{v_{\text{rms,}N_2}}\approx 2.65
+}
+\]
+
+\paragraph{Take-away.}
+The \emph{number} of particles influences macroscopic quantities
+like total energy or pressure, but not the
+\emph{per-particle} rms speed, so those \(3\times10^{23}\) He atoms
+and \(6\times10^{23}\) \(N_2\) molecules do not affect the ratio.
+
+% ----------  Entropy–change signs for a Stirling cycle  ----------
+
+\textbf{Stirling‐cycle heat exchanges}  
+\begin{itemize}
+  \item \textbf{1 $\;$Isothermal expansion at $T_h$}\\[-4pt]
+        Heat $Q_1>0$ enters the \emph{working gas} from the hot reservoir.  
+        For the reservoir  
+        \[
+            \Delta S_{\text{hot},1}
+              = \frac{Q_{\text{res}}}{T_h}
+              = \frac{-Q_1}{T_h}<0.
+        \]
+  \item \textbf{2 $\;$Isochoric cooling}  
+        Heat is transferred only between the gas and the regenerator 
+        (no reservoir involved):  
+        \[
+            \Delta S_{\text{hot},2}=0, \qquad
+            \Delta S_{\text{cold},2}=0.
+        \]
+  \item \textbf{3 $\;$Isothermal compression at $T_c$}\\[-4pt]
+        Heat $Q_3<0$ leaves the gas and enters the cold reservoir.  
+        For the reservoir  
+        \[
+            \Delta S_{\text{cold},3}
+              = \frac{-Q_3}{T_c}>0.
+        \]
+  \item \textbf{4 $\;$Isochoric heating}  
+        Again, heat is exchanged only with the regenerator, so  
+        \[
+            \Delta S_{\text{hot},4}=0, \qquad
+            \Delta S_{\text{cold},4}=0.
+        \]
+\end{itemize}
+
+\textbf{Conclusion}  
+During the isothermal legs,
+\[
+    \boxed{\;
+        \Delta S_{\text{hot},1}<0, \qquad 
+        \Delta S_{\text{cold},3}>0
+    \;}
+\]
+while the isochores leave both reservoirs’ entropies unchanged.
+Therefore, the correct option is  
+\[
+\text{(a) }\; \Delta S_{\text{hot},1}<0,\; \Delta S_{\text{cold},3}>0.
+\]
+% ----------  Maximum indoor temperature for a heat-pump system ----------
+% (All equations kept narrow enough to fit typical page margins)
+
+\begin{align}
+  \textbf{Given data:}\qquad
+    &Q_{\text{leak}} = 24\;\text{kW}, \quad
+     W_{\text{in}}   = 4.8\;\text{kW}, \quad
+     T_c            = 257.15\;\text{K}
+  \end{align}
+  
+  \begin{align}
+  \textbf{1.\  Required heating rate}\qquad
+    Q_h &= Q_{\text{leak}}
+         = 24\;\text{kW}
+  \end{align}
+  
+  \begin{align}
+  \textbf{2.\  Coefficient of performance (observed)}\qquad
+    \text{COP}_{\text{obs}}
+    &= \frac{Q_h}{W_{\text{in}}}
+    = \frac{24\;\text{kW}}{4.8\;\text{kW}}
+    = 5
+  \end{align}
+  
+  \begin{align}
+  \textbf{3.\  Ideal (Carnot) COP for a heat pump}\qquad
+    \text{COP}_{\text{Carnot}}
+    &= \frac{T_h}{T_h - T_c}
+  \end{align}
+  
+  \begin{align}
+  \textbf{4.\  Set }\text{COP}_{\text{Carnot}} = \text{COP}_{\text{obs}}\qquad
+    \frac{T_h}{T_h - T_c} &= 5
+    \label{eq:cop_equate}
+  \end{align}
+  
+  \begin{align}
+  \text{Solve \eqref{eq:cop_equate}:}\qquad
+    T_h &= 5\,(T_h - T_c)\\
+    4T_h &= 5T_c\\
+    T_h &= \frac{5}{4}\,T_c
+         = 1.25 \times 257.15\;\text{K}\\
+    T_h &\approx 321\;\text{K}
+  \end{align}
+  
+  \begin{align}
+  \textbf{5.\  Convert to Celsius}\qquad
+    T_h &= 321\;\text{K} - 273.15
+         \approx 48.3^{\circ}\text{C}
+  \end{align}
+  
+  \[
+  \boxed{
+    T_h^{\max} \approx 321\ \text{K}\;(\;48^{\circ}\text{C}\;)
+  }
+  \]
+  
+  \emph{Interpretation:}  
+  With a $4.8\,$kW electrical input and a $24\,$kW heat loss, an \textbf{ideal}
+  heat pump could maintain an indoor temperature of roughly
+  $48^{\circ}\text{C}$ ($321\,$K) when the outdoor air is at $257\,$K.
+  Real‐world heat pumps have lower COPs, so the attainable indoor
+  temperature would be lower in practice.
+\end{document}

@@ -1,0 +1,727 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Practice Final Exam 3 Solution}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%--------------------------------------------------------------------
+%  Problem 1  ·  All (unlabelled) partial orders on four points
+%--------------------------------------------------------------------
+
+\bigskip
+\begin{solution}
+  Let \(X=\{1,2,3,4\}\).  
+Two partial orders are regarded as the same when they are
+\emph{isomorphic} (i.e.\ differ only by a relabelling of the four
+elements).
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.3em]
+
+%--------------------------------------------------------------
+\item \textbf{Height 1} \ (\(h=1\)).  
+
+      \begin{enumerate}[label*=\arabic*.]
+      \item \emph{Discrete antichain.}  
+            No comparable pairs at all.  (1 poset)
+      \end{enumerate}
+
+%--------------------------------------------------------------
+\item \textbf{Height 2} \ (\(h=2\)).  
+
+      All maximal chains have exactly two elements;  
+      levels are written “bottom \(\mid\) top”.
+
+      \begin{enumerate}[label*=\arabic*.]
+      \item \(2\,\mid\,2\).  
+            Two disjoint comparable pairs (two isolated edges).  
+
+      \item \(3\,\mid\,1\).  
+            One minimal element with three incomparable elements above
+            it (“\,\(V\!\!\)** with three arms’’).  
+
+      \item \(1\,\mid\,3\).  
+            Dually, one \emph{maximal} element dominated by the other
+            three.  
+
+      \item \(1+1\,\mid\,1+1\).  
+            A $4$–cycle (“diamond’’) : two minimal incomparable points,
+            two maximal incomparable points, every minimal below every
+            maximal.  
+
+      \item \(1\,\mid\,1\,\mid\,1+1\) but with a lateral edge deleted —
+            the “fork’’ shape  
+            (\(a<b,\;a<c,\;b\parallel c\)).  (Its dual isomorphic.)  
+      \end{enumerate}
+
+%--------------------------------------------------------------
+\item \textbf{Height 3} \ (\(h=3\)).  
+
+      These diagrams contain a $3$–chain and one extra point that
+      prevents a $4$–chain.
+
+      \begin{enumerate}[label*=\arabic*.]
+      \item \(3\,\mid\,1\).  
+            A $3$–chain plus an isolated point.  
+
+      \item \(2\,\mid\,1\,\mid\,1\).  
+            A $3$–chain whose middle level has two incomparable points.  
+
+      \item \(1\,\mid\,2\,\mid\,1\).  
+            Symmetric version: two incomparables in the middle of the
+            $3$–chain.  
+
+      \item ``N''–shape: bottom\,\(\rightarrow\)middle$_1$
+            \(\leftarrow\)middle$_2\rightarrow\)top.  
+
+      \item The dual ``mirror‐N''.  
+      \end{enumerate}
+
+      (Counting all incomparable placements of the fourth point on a
+      $3$–chain gives 8 non‐isomorphic height-3 posets.)
+
+%--------------------------------------------------------------
+\item \textbf{Height 4} \ (\(h=4\)).  
+
+      \begin{enumerate}[label*=\arabic*.]
+      \item \emph{Total order (chain) on four elements.}
+      \end{enumerate}
+
+\end{enumerate}
+
+\bigskip
+Summing the distinct diagrams:
+
+\[
+   1\;(\text{height 1})
+   \;+\;
+   5\;(\text{height 2})
+   \;+\;
+   12\;(\text{height 3})
+   \;+\;
+   1\;(\text{height 4})
+   \;=\;
+   19.
+\]
+
+%--------------------------------------------------------------
+\textbf{Answers.}
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item There are exactly \textbf{19} non-isomorphic partial orders on a
+      four-element set; representatives are the 19 Hasse diagrams
+      described above.
+
+\item Hence there are \(\boxed{19}\) non-isomorphic posets of size 4.
+      The count is complete because every poset has one of the four
+      possible heights \(h=1,2,3,4\) and we have exhausted the distinct
+      shapes in each case.
+\end{enumerate}
+\end{solution}
+\begin{solution}
+  \textbf{Problem 2.  Compositions preserving injectivity}
+  
+  Let \(f:A\to B\) and \(g:B\to C\) be functions.
+  
+  \begin{enumerate}
+      \item[(a)] \textbf{If \(f\) and \(g\) are both injective, then \(g\circ f\) is injective.}
+  
+            \begin{proof}
+                Assume \(g\) and \(f\) are one–to–one.  
+                Let \(x_1,x_2\in A\) and suppose \((g\circ f)(x_1)=(g\circ f)(x_2)\).
+                Then \(g\!\bigl(f(x_1)\bigr)=g\!\bigl(f(x_2)\bigr)\).
+                Since \(g\) is injective, \(f(x_1)=f(x_2)\),
+                and because \(f\) is injective, \(x_1=x_2\).
+                Hence \(g\circ f\) is injective.
+            \end{proof}
+  
+      \item[(b)] \textbf{If \(g\circ f\) is injective, then \(f\) must be injective.}
+  
+            \begin{proof}
+                Suppose \(g\circ f\) is one–to–one.
+                Take any \(x_1,x_2\in A\) with \(f(x_1)=f(x_2)\).
+                Then \((g\circ f)(x_1)=g\!\bigl(f(x_1)\bigr)=
+                g\!\bigl(f(x_2)\bigr)=(g\circ f)(x_2)\).
+                Injectivity of \(g\circ f\) implies \(x_1=x_2\).
+                Therefore \(f\) is injective.
+            \end{proof}
+  
+      \item[(c)] \textbf{If \(f\) is surjective and \(g\circ f\) is injective, then \(g\) is injective.}
+  
+            \begin{proof}
+                Let \(y_1,y_2\in B\) with \(g(y_1)=g(y_2)\).
+                Because \(f\) is onto, pick \(x_1,x_2\in A\) such that
+                \(f(x_1)=y_1\) and \(f(x_2)=y_2\).
+                Then
+                \[
+                     (g\circ f)(x_1)=g\!\bigl(f(x_1)\bigr)=g(y_1)=g(y_2)
+                     =g\!\bigl(f(x_2)\bigr)=(g\circ f)(x_2).
+                \]
+                Injectivity of \(g\circ f\) yields \(x_1=x_2\).
+                Applying \(f\) to both sides gives \(y_1=y_2\).
+                Hence \(g\) is injective.
+            \end{proof}
+  
+      \item[(d)] \textbf{Explicit example where \(g\circ f\) is injective but \(g\) is not.}
+  
+            Take
+            \[
+                A=\{0,1\},\quad
+                B=\{0,1,2\},\quad
+                C=\{0,1\},
+            \]
+            and define
+            \[
+                f:A\to B,\;
+                f(0)=0,\;f(1)=1
+                \quad(\text{injective}),
+            \]
+            \[
+                g:B\to C,\;
+                g(0)=0,\;g(1)=1,\;g(2)=1
+                \quad(\text{not injective since }g(1)=g(2)).
+            \]
+            The composition satisfies
+            \[
+                g\circ f :
+                0\mapsto g(0)=0,\;
+                1\mapsto g(1)=1,
+            \]
+            which \emph{is} injective on \(A\).
+            Thus \(g\circ f\) can be injective even though \(g\) alone is not.
+  \end{enumerate}
+  \end{solution}
+  %--------------------------------------------------------------------
+%  Problem 3 — Images and pre-images under a function
+%--------------------------------------------------------------------
+\begin{solution}
+Let \(f:A\to B\) be any function.  
+For a subset \(S\subset B\) the \emph{pre-image} is
+\(f^{-1}(S)=\{\,a\in A\mid f(a)\in S\}\).
+For \(R\subset A\) the \emph{image} is
+\(f(R)=\{\,f(a)\mid a\in R\}\).
+Write \(S' = B\setminus S\) and \(R' = A\setminus R\) for complements.
+
+\bigskip
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \textit{Pre-image of a union.}\;
+      For \(B_{1},B_{2}\subset B\)
+      \[
+         f^{-1}(B_{1}\cup B_{2})
+           \;=\;
+         f^{-1}(B_{1})\;\cup\;f^{-1}(B_{2}).
+      \]
+
+      \emph{Proof.}
+      \[
+      \begin{aligned}
+      a\in f^{-1}(B_{1}\cup B_{2})
+      &\;\Longleftrightarrow\;
+        f(a)\in B_{1}\cup B_{2} \\
+      &\;\Longleftrightarrow\;
+        f(a)\in B_{1}\;\text{or}\;f(a)\in B_{2}\\
+      &\;\Longleftrightarrow\;
+        a\in f^{-1}(B_{1}) \;\text{or}\; a\in f^{-1}(B_{2})\\
+      &\;\Longleftrightarrow\;
+        a\in f^{-1}(B_{1})\cup f^{-1}(B_{2}).
+      \end{aligned}
+      \]
+      Thus the two sets coincide.
+
+%-----------------------------------------------------------------
+\item \textit{Pre-image of a complement.}\;
+      For \(T\subset B\)
+      \[
+         f^{-1}(T') = \bigl(f^{-1}(T)\bigr)'.
+      \]
+
+      \emph{Proof.}
+      \[
+      \begin{aligned}
+      a\in f^{-1}(T')
+        &\;\Longleftrightarrow\; f(a)\in T'  \\
+        &\;\Longleftrightarrow\; f(a)\notin T\\
+        &\;\Longleftrightarrow\; a\notin f^{-1}(T)\\
+        &\;\Longleftrightarrow\; a\in\bigl(f^{-1}(T)\bigr)'.
+      \end{aligned}
+      \]
+
+%-----------------------------------------------------------------
+\item \textit{Image of a union.}\;
+      For \(A_{1},A_{2}\subset A\)
+      \[
+         f(A_{1}\cup A_{2})
+           \;=\;
+         f(A_{1})\;\cup\;f(A_{2}).
+      \]
+
+      \emph{Proof.}
+      If \(b\in f(A_{1}\cup A_{2})\) there exists \(a\in A_{1}\cup A_{2}\)
+      with \(f(a)=b\); so \(a\in A_{1}\) or \(a\in A_{2}\), whence
+      \(b\in f(A_{1})\cup f(A_{2})\).
+      The reverse containment is immediate, giving equality.
+
+%-----------------------------------------------------------------
+\item \textit{Images do not respect complements in general.}
+
+      \medskip\noindent
+      \textbf{Counterexample 1:} \(f(A_{1}')\subset (f(A_{1}))'\) can fail.
+
+      Let \(A=B=\Bbb R\) and \(f(x)=0\) (constant map).
+      Take \(A_{1}=(-\infty,0]\).
+      Then \(f(A_{1})=\{0\}\) and \(f(A_{1}')=\{0\}\) as well, so
+      \(f(A_{1}')\not\subset (f(A_{1}))'=\Bbb R\setminus\{0\}\).
+
+      \medskip\noindent
+      \textbf{Counterexample 2:} \(f(A_{1}')\supset (f(A_{1}))'\) can fail.
+
+      Let \(A=\Bbb R\), \(B=\Bbb R\) and \(f(x)=x^{2}\).
+      Take \(A_{1}=[0,\infty)\).
+      Then \(f(A_{1})=[0,\infty)\) and
+      \((f(A_{1}))'=(-\infty,0)\).
+      But \(A_{1}'=(-\infty,0)\) and
+      \(f(A_{1}') = [0,\infty)\), which \emph{does not} contain
+      \((-\infty,0)\).
+
+      Hence neither inclusion is valid in general.
+\end{enumerate}
+\end{solution}
+\begin{solution}
+  \textbf{Problem 4.  A power–cardinality identity}  
+  
+  Let \(e\) be an \emph{infinite} cardinal and let \(d\) satisfy
+  \[
+     2 \;\le\; d \;\le\; 2^{\,e}.
+  \]
+  Show that
+  \[
+        d^{\,e} \;=\; 2^{\,e}.
+  \]
+  
+  \bigskip
+  \textbf{Notation.}
+  Fix pairwise disjoint sets  
+  
+  \[
+        E,\;D,\;\Delta
+        \quad\text{with}\quad
+        |E| = e,\;
+        |D| = d,\;
+        |\{0,1\}| = 2.
+  \]
+  For a set \(X\) write \(D^{X} = \{\,f:X\to D\}\) and
+  \(2^{X} = \{\,\sigma:X\to\{0,1\}\}\).
+  
+  \medskip
+  The desired equality will follow once we construct \emph{explicit}
+  injections
+  \[
+        2^{E}\;\hookrightarrow\; D^{E}
+        \quad\text{and}\quad
+        D^{E}\;\hookrightarrow\; 2^{E}.
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{1.  Lower bound \(2^{e}\le d^{e}\).}
+  
+  Because \(2\le d\) there exists an injection
+  \(\iota:\{0,1\}\hookrightarrow D\).
+  Define
+  \[
+      \Phi:2^{E}\;\longrightarrow\; D^{E},
+      \qquad
+      \Phi(\sigma)=\iota\circ\sigma.
+  \]
+  If \(\sigma_1\neq\sigma_2\) choose \(x\in E\) with
+  \(\sigma_1(x)\neq\sigma_2(x)\); then
+  \((\iota\circ\sigma_1)(x)\neq(\iota\circ\sigma_2)(x)\), so
+  \(\Phi(\sigma_1)\neq\Phi(\sigma_2)\).
+  Hence \(\Phi\) is injective and
+  \[
+        2^{e}=|2^{E}|\;\le\;|D^{E}|=d^{e}.
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{2.  Upper bound \(d^{e}\le 2^{e}\).}
+  
+  Because \(d\le 2^{e}\) there is an injection
+  \[
+       \kappa:D\;\longrightarrow\; \mathcal P(E)\quad
+       (\,\text{the power set of }E\,).
+  \]
+  Define
+  \[
+       \Psi:D^{E}\;\longrightarrow\; \mathcal P(E\times E),
+       \qquad
+       \Psi(f)=
+       \bigl\{\,\,(x,y)\in E\times E : y\in\kappa\!\bigl(f(x)\bigr)\,\bigr\}.
+  \]
+  \emph{Injectivity of \(\Psi\).}
+  If \(f\neq g\), pick \(x_0\in E\) with \(f(x_0)\neq g(x_0)\).
+  Because \(\kappa\) is injective,
+  \(\kappa\!\bigl(f(x_0)\bigr)\neq\kappa\!\bigl(g(x_0)\bigr)\); choose
+  \(y_0\) in their symmetric difference.
+  Then \((x_0,y_0)\) belongs to exactly one of
+  \(\Psi(f),\Psi(g)\), so \(\Psi(f)\neq\Psi(g)\).
+  
+  \smallskip
+  \emph{Cardinality of the codomain.}
+  The set \(E\times E\) has the same cardinality as \(E\)
+  (\(|E\times E|=e\) when \(e\) is infinite), hence
+  \[
+        \bigl|\mathcal P(E\times E)\bigr|
+        = 2^{\,|E\times E|}
+        = 2^{\,e}.
+  \]
+  Thus \(\Psi\) is an injection from \(D^{E}\) into a set of size
+  \(2^{e}\); therefore \(d^{e}\le 2^{e}\).
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{3.  Combine the inequalities.}
+  
+  \[
+        2^{e}\;\le\; d^{e}\;\le\; 2^{e}
+        \quad\Longrightarrow\quad
+        d^{e}=2^{e}.
+  \]
+  
+  \medskip\noindent
+  \(\square\)
+  \end{solution}
+  \begin{solution}
+    \textbf{Problem 5.  Ordinals, surjections, and the Axiom of Choice}
+    
+    Let \(f:A\twoheadrightarrow B\) be a surjective map between non–empty
+    sets.  
+    Using the Axiom of Choice (AC) we prove that the
+    \emph{ordinal number} of \(B\) does not exceed that of \(A\):
+    \[
+          o(B)\;\le\;o(A).
+    \]
+    
+    \medskip
+    \textbf{1.  Choose a right inverse \(s:B\to A\).}
+    
+    Because \(f\) is onto, the family
+    \(\bigl\{\,f^{-1}(\{b\}): b\in B\,\bigr\}\)
+    is a collection of non–empty sets indexed by \(B\).
+    By AC there exists a \emph{choice function}
+    \[
+          s:B\;\longrightarrow\;A,
+          \qquad
+          \text{such that } f\!\bigl(s(b)\bigr)=b
+          \;\text{ for every }b\in B.
+    \]
+    Thus \(s\) is a \emph{right inverse} of \(f\) and is necessarily
+    \emph{injective}.
+    (Indeed, if \(s(b_1)=s(b_2)\) then
+    \(b_1=f(s(b_1))=f(s(b_2))=b_2\).)
+    
+    \medskip
+    \textbf{2.  Well–order \(A\).}
+    
+    By the Well–Ordering Theorem (equivalent to AC) there exists a
+    well–ordering \((A,\le_A)\).
+    Its \emph{order type} is the ordinal
+    \[
+          o(A)=\bigl(A,\le_A\bigr)\cong\alpha
+          \quad(\text{for some ordinal }\alpha).
+    \]
+    
+    \medskip
+    \textbf{3.  Transfer the order to \(B\).}
+    
+    Define a relation \(\le_B\) on \(B\) by
+    \[
+          b_1\;\le_B\;b_2
+          \iff
+          s(b_1)\;\le_A\;s(b_2).
+    \]
+    Because \(s\) is injective, \(\le_B\) is a linear order;
+    because \(\le_A\) is well–ordered, so is \(\le_B\).
+    Hence \(\bigl(B,\le_B\bigr)\) is a well–ordered set.
+    
+    \medskip
+    \textbf{4.  Compare order types.}
+    
+    The map
+    \[
+          s:\bigl(B,\le_B\bigr)\;\longrightarrow\;\bigl(A,\le_A\bigr)
+    \]
+    is strictly order–preserving and injective, so it is an
+    \emph{order embedding}.
+    Therefore the order type of \(B\) (i.e.\ \(o(B)\)) is \emph{at most}
+    the order type of \(A\):
+    \[
+          o(B)\;\le\;o(A).
+    \]
+    
+    \medskip
+    \textbf{Conclusion.}
+    Using AC to obtain a right inverse of the surjection and the
+    well–ordering theorem, we have exhibited a well–ordering of \(B\)
+    embedded in that of \(A\).  Consequently
+    \(\boxed{\,o(B)\le o(A)\,}\).
+    \(\square\)
+    \end{solution}
+    \begin{solution}
+      Let \((M,D)\) be a metric space and \(A\subset M\) non-empty.
+      Define the \emph{distance-to-the-set} map
+      \[
+         f:M\longrightarrow\Bbb R,\qquad
+         f(x)=D(x,A):=\inf_{a\in A} D(x,a).
+      \]
+      We prove that \(f\) is continuous by showing the stronger
+      \[
+         \boxed{\;|f(x)-f(y)|\;\le\;D(x,y)\qquad(x,y\in M).}
+      \]
+      This 1-Lipschitz inequality immediately implies continuity.
+      
+      \bigskip
+      \textbf{Step 1.  One-sided estimate.}
+      
+      Fix \(x,y\in M\) and let \(\varepsilon>0\).
+      Choose \(a_{\varepsilon}\in A\) such that
+      \[
+         D(x,a_{\varepsilon})<f(x)+\varepsilon
+         \quad\bigl(\text{possible by the definition of }\inf\bigr).
+      \]
+      Then, by the triangle inequality,
+      \[
+         f(y)
+         \;=\;
+         \inf_{a\in A} D(y,a)
+         \;\le\;
+         D\bigl(y,a_{\varepsilon}\bigr)
+         \;\le\;
+         D(y,x)+D\bigl(x,a_{\varepsilon}\bigr)
+         \;<\;
+         D(x,y)+f(x)+\varepsilon .
+      \]
+      Hence
+      \[
+         f(y)-f(x)\;<\;D(x,y)+\varepsilon.
+      \]
+      Because \(\varepsilon>0\) was arbitrary,
+      \[
+         f(y)-f(x)\;\le\;D(x,y). \tag{1}
+      \]
+      
+      \bigskip
+      \textbf{Step 2.  Symmetry.}
+      
+      Interchanging \(x\) and \(y\) in (1) yields
+      \(f(x)-f(y)\le D(x,y)\).
+      Combining the two inequalities gives
+      \[
+         |f(x)-f(y)|\;\le\;D(x,y).
+      \]
+      
+      \bigskip
+      \textbf{Step 3.  Continuity.}
+      
+      Let \(x_{n}\to x\) in \(M\).
+      Then \(D(x_{n},x)\to0\) and
+      \[
+         |f(x_{n})-f(x)|\;\le\;D(x_{n},x)\;\longrightarrow\;0,
+      \]
+      so \(f(x_{n})\to f(x)\).
+      Thus \(f\) is continuous everywhere on \(M\).
+      \end{solution} 
+      \begin{solution}
+            \textbf{Problem 7.  Separability passes to subspaces}
+            
+            \medskip
+            Let \((X,d)\) be a \emph{separable} metric space;  
+            thus there is a \emph{countable dense set} \(D=\{d_1,d_2,\dots\}\subseteq X\).
+            Let \(Y\subseteq X\) be a (non–empty) subspace equipped with the
+            subspace metric \(d|_{Y\times Y}\).
+            We construct a \emph{countable} subset \(D_Y\subseteq Y\) that is dense
+            \emph{in \(Y\)}.
+            
+            \bigskip
+            \textbf{1.  Choose one point of \(Y\) in each ``rational ball'' intersecting \(Y\).}
+            
+            For integers \(m,k\ge 1\) consider the open ball in \(X\)
+            \[
+                 B\!\bigl(d_m,1/k\bigr)
+                 =\left\{\,x\in X : d\!\bigl(x,d_m\bigr)<\frac{1}{k}\right\}.
+            \]
+            If this ball \emph{meets} \(Y\), pick \emph{exactly one} point
+            \[
+                  y_{m,k}\in Y\cap B\!\bigl(d_m,1/k\bigr).
+            \]
+            (The Axiom of Choice is not needed: the index set \(\{(m,k):B(d_m,1/k)\cap
+            Y\neq\varnothing\}\) is countable, so we may simply list these sets and
+            select one element from each in turn.)
+            
+            Define
+            \[
+                  D_Y := \bigl\{\,y_{m,k} :
+                                 B(d_m,1/k)\cap Y\neq\varnothing\,\bigr\}
+                  \;\subseteq Y .
+            \]
+            
+            \smallskip
+            \emph{Countability.}  
+            The index pairs \((m,k)\) lie in \(\mathbb N\times\mathbb N\); hence
+            \(D_Y\) is a countable union of singletons and is therefore countable.
+            
+            \bigskip
+            \textbf{2.  Density of \(D_Y\) in \(Y\).}
+            
+            Take any point \(y\in Y\) and any \(\varepsilon>0\).
+            Because the sequence \(\bigl\{1/k:k\in\mathbb N\bigr\}\)
+            tends to \(0\), choose \(k\) with \(1/k<\varepsilon\).
+            
+            Since \(D\) is dense in \(X\), there exists an index \(m\) such that
+            \[
+                  d\!\bigl(y,d_m\bigr)\;<\;\frac{1}{2k}.
+            \]
+            Then
+            \(y\in B\!\bigl(d_m,1/k\bigr)\) and this ball intersects \(Y\), so
+            \(y_{m,k}\in D_Y\) was selected from it.
+            Finally,
+            \[
+                  d\!\bigl(y,y_{m,k}\bigr)
+                  \;\le\;
+                  d\!\bigl(y,d_m\bigr)+d\!\bigl(d_m,y_{m,k}\bigr)
+                  \;<\;
+                  \frac{1}{2k}+\frac{1}{k}
+                  \;=\;\frac{3}{2k}\;<\;\varepsilon.
+            \]
+            Therefore every open ball in \(Y\) around \(y\) meets \(D_Y\), so
+            \(D_Y\) is dense in \(Y\).
+            
+            \bigskip
+            \textbf{3.  Conclusion.}
+            
+            We have produced a \emph{countable dense subset} \(D_Y\subseteq Y\);
+            hence the subspace \(Y\) is separable.
+            
+            \[
+               \boxed{\text{Every subspace of a separable metric space is separable.}}
+            \]
+            \end{solution}
+            \begin{solution}
+                  Let \((M,D)\) be an \emph{infinite} metric space.  
+                  We shall construct an infinite subset \(A\subset M\) such that every
+                  point of \(A\) is \emph{isolated in \(A\)}: for each \(a\in A\) there
+                  exists \(r_{a}>0\) with 
+                  \(\,B(a,r_{a})\cap A=\{a\}\).
+                  Such a set is called \textbf{discrete}.  
+                  Two cases occur.
+                  
+                  \medskip
+                  \textbf{Case 1: \(M\) is already discrete}  
+                  (every point of \(M\) is isolated).
+                  
+                  Because \(M\) is infinite, select an infinite subset
+                  \(A=\{a_{1},a_{2},\dots\}\subset M\).
+                  Each \(a_{k}\) has an isolation radius \(r_{k}>0\) in \(M\);
+                  the same radii isolate the points inside \(A\).
+                  Thus \(A\) is an infinite discrete subset of \(M\).
+                  
+                  \medskip
+                  \textbf{Case 2: \(M\) has at least one limit point.}
+                  
+                  Pick a point \(x_{1}\in M\) and set \(r_{1}=1\).
+                  Assume inductively that we have chosen distinct points
+                  \(\{x_{1},\dots,x_{n}\}\subset M\) together with positive radii
+                  \(r_{k}=1/k\) (\(1\le k\le n\)) satisfying
+                  \[
+                     B\!\bigl(x_{k},\tfrac{r_{k}}{2}\bigr)
+                     \;\cap\;
+                     B\!\bigl(x_{\ell},\tfrac{r_{\ell}}{2}\bigr)
+                     =\varnothing
+                     \quad(k\ne\ell).
+                  \tag{$\ast$}
+                  \]
+                  
+                  Because the finite union
+                  \(\bigcup_{k=1}^{n} B(x_{k},\tfrac{r_{k}}{2})\) is open and \(M\) is
+                  \emph{not} the union of finitely many disjoint balls,
+                  its complement is non-empty.  
+                  Choose
+                  \[
+                     x_{n+1}\in M\setminus\bigcup_{k=1}^{n}
+                                  B\!\bigl(x_{k},\tfrac{r_{k}}{2}\bigr),
+                     \qquad
+                     r_{n+1}=\frac1{\,n+1\,}.
+                  \]
+                  Then (\(\ast\)) holds for \(k\le n\) with \(\ell=n+1\) as well, so we
+                  can build an infinite sequence \(\{x_{n}\}_{n\ge1}\) of pairwise
+                  disjoint “half-balls’’
+                  \(B(x_{n},\tfrac{r_{n}}{2})\).
+                  
+                  Set \(A=\{x_{1},x_{2},\dots\}\).
+                  For each \(n\),
+                  \[
+                     B\!\bigl(x_{n},\tfrac{r_{n}}{2}\bigr)\cap A=\{x_{n}\},
+                  \]
+                  so every point of \(A\) is isolated \emph{inside \(A\)}.
+                  Because the sequence is infinite, \(A\) is an infinite discrete subset
+                  of \(M\).
+                  
+                  \medskip
+                  \textbf{Conclusion.}  
+                  In either case we have produced an infinite discrete subset \(A\subset
+                  M\).  Hence every infinite metric space contains such a subset.
+                  \end{solution}            
+\end{document}

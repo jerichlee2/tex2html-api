@@ -1,0 +1,921 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{theorem}[Argument Principle]
+    Let $h$ be analytic on a domain $D$ except at finitely many poles, and let 
+    $\gamma$ be a positively oriented, piecewise–smooth, simple closed curve lying in $D$ that encloses no zero or pole of $h$ on $\gamma$ itself.  
+    Then
+    \begin{align}
+        \frac{1}{2\pi i}\oint_{\gamma} \frac{h'(z)}{h(z)}\,dz
+        = 
+        \bigl\{\text{number of zeros of $h$ inside $\gamma$}\bigr\}
+        -
+        \bigl\{\text{number of poles of $h$ inside $\gamma$}\bigr\},
+    \end{align}
+    where both zeros and poles are counted with multiplicity.
+    
+    %-------------------------------------------------
+    % Parameters (symbols used in the proof)
+    %-------------------------------------------------
+    \begin{align}
+        &z_1,\dots,z_N &&\text{distinct zeros of $h$ inside $\gamma$},\\
+        &w_1,\dots,w_M &&\text{distinct poles of $h$ inside $\gamma$},\\
+        &n_j          &&\text{order (multiplicity) of the zero at } z_j,\\
+        &m_k          &&\text{order of the pole at } w_k.
+    \end{align}
+    
+    \begin{enumerate}
+        \item\textbf{Local form near a zero.}  
+        If $z_j$ is a zero of order $n_j\ge1$, write
+        \begin{align}
+            h(z)=(z-z_j)^{\,n_j}G_j(z),
+        \end{align}
+        where $G_j$ is analytic near $z_j$ and $G_j(z_j)\neq0$.
+        
+        \item\textbf{Differentiate and divide.}  
+        Compute
+        \begin{align}
+            \frac{h'(z)}{h(z)}
+            =
+            \frac{n_j}{z-z_j}+\frac{G_j'(z)}{G_j(z)}.
+        \end{align}
+        The second term is analytic at $z_j$, so the residue of $h'/h$ at $z_j$ is
+        \begin{align}
+            \operatorname*{Res}\!\bigl(\tfrac{h'}{h};\,z_j\bigr)=n_j.
+        \end{align}
+        
+        \item\textbf{Local form near a pole.}  
+        If $w_k$ is a pole of order $m_k\ge1$, write
+        \begin{align}
+            h(z)=\frac{H_k(z)}{(z-w_k)^{\,m_k}},
+        \end{align}
+        where $H_k$ is analytic near $w_k$ and $H_k(w_k)\neq0$.
+        
+        \item\textbf{Differentiate and divide again.}  
+        Then
+        \begin{align}
+            \frac{h'(z)}{h(z)}
+            =
+            -\frac{m_k}{\,z-w_k}+\frac{H_k'(z)}{H_k(z)},
+        \end{align}
+        so
+        \begin{align}
+            \operatorname*{Res}\!\bigl(\tfrac{h'}{h};\,w_k\bigr)=-m_k.
+        \end{align}
+        
+        \item\textbf{Sum of residues inside $\gamma$.}  
+        The only singularities of $h'/h$ inside $\gamma$ are the $z_j$’s and $w_k$’s, hence
+        \begin{align}
+            \sum_{j=1}^{N}\operatorname*{Res}\!\bigl(\tfrac{h'}{h};\,z_j\bigr)
+            +
+            \sum_{k=1}^{M}\operatorname*{Res}\!\bigl(\tfrac{h'}{h};\,w_k\bigr)
+            =
+            \sum_{j=1}^{N}n_j
+            -
+            \sum_{k=1}^{M}m_k.
+        \end{align}
+        
+        \item\textbf{Apply the Residue Theorem.}  
+        By the Residue Theorem,
+        \begin{align}
+            \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz
+            =
+            \sum_{j=1}^{N}n_j
+            -
+            \sum_{k=1}^{M}m_k,
+        \end{align}
+        which is exactly the claimed equality.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Argument Principle, change--in--argument form]
+    Suppose $h$ is analytic on a domain $D$ except for finitely many isolated poles, and
+    let $\gamma$ be a positively oriented, piecewise–smooth, simple closed curve whose
+    image and interior both lie in $D$, while $\gamma$ itself passes through no zero or pole of $h$.
+    Then
+    \begin{align}
+        \frac{1}{2\pi}\bigl\{\text{total change in }\arg h(z)\text{ as }z\text{ traverses }\gamma\bigr\}
+        \;=\;
+        \bigl\{\text{number of zeros of }h\text{ inside }\gamma\bigr\}
+        \;-\;
+        \bigl\{\text{number of poles of }h\text{ inside }\gamma\bigr\},
+    \end{align}
+    where zeros and poles are counted with multiplicity.
+
+    %-------------------------------------------------
+    % Parameters (symbols used in the proof)
+    %-------------------------------------------------
+    \begin{align}
+        &z_0       &&\text{a fixed point inside }\gamma,\\
+        &R         &&\text{radius of }\gamma(t)=z_0+Re^{it}\quad(0\le t\le2\pi),\\
+        &\varepsilon&&\text{small positive real number tending to }0,\\
+        &f         &&\text{a branch of }\log h\text{ on a simply–connected subdomain of }D.
+    \end{align}
+
+    \begin{enumerate}
+        \item\textbf{Reduce to a circle.}
+              Since $\gamma$ encloses only finitely many singularities, homotopy
+              within $D$ lets us replace $\gamma$ by a positively oriented circle
+              $C_R\colon t\mapsto z_0+Re^{it}$ that still encloses the same zeros and poles.
+              Because $h$ has no zeros or poles \emph{on} $C_R$, $h'/h$ is continuous there.
+
+        \item\textbf{Existence of a logarithm.}
+              The annulus $A=\{R-\delta<|z-z_0|<R+\delta\}$ (with $\delta>0$ small) is simply connected
+              and contains no zeros or poles of $h$,
+              so there exists an analytic function $f$ on $A$ such that $f=\log h$.
+              Hence $f' = h'/h$ on $A$.
+
+        \item\textbf{Express the integral using $f$.}
+              Parametrising $C_R$ by $z(t)=z_0+Re^{it}$ gives
+              \begin{align}
+                  \oint_{C_R}\frac{h'(z)}{h(z)}\,dz
+                  =\int_{0}^{2\pi}\frac{h'(z(t))}{h(z(t))}\,z'(t)\,dt
+                  =\int_{0}^{2\pi}f'(z(t))\,z'(t)\,dt
+                  =\int_{0}^{2\pi}\frac{d}{dt}\bigl[f(z(t))\bigr]\,dt.
+              \end{align}
+
+        \item\textbf{Avoid the starting point.}
+              To make the antiderivative $f(z(t))$ single‑valued along the path,
+              remove a tiny sector of opening $\varepsilon>0$ and integrate from $t=\varepsilon$
+              to $t=2\pi-\varepsilon$:
+              \begin{align}
+                  \oint_{C_R}\frac{h'}{h}\,dz
+                  =\lim_{\varepsilon\to0}
+                  \int_{\varepsilon}^{2\pi-\varepsilon}\frac{d}{dt}\bigl[f(z(t))\bigr]\,dt
+                  =\lim_{\varepsilon\to0}\Bigl[f\bigl(z_0+Re^{i(2\pi-\varepsilon)}\bigr)-f\bigl(z_0+Re^{i\varepsilon}\bigr)\Bigr].
+              \end{align}
+
+        \item\textbf{Separate real and imaginary parts.}
+              Write $f=\log|h|+i\arg h$ along $C_R$.  Then
+              \begin{align}
+                  f\bigl(z_0+Re^{i(2\pi-\varepsilon)}\bigr)-f\bigl(z_0+Re^{i\varepsilon}\bigr)
+                  &=\underbrace{\bigl[\log|h(z_0+Re^{i(2\pi-\varepsilon)})|-\log|h(z_0+Re^{i\varepsilon})|\bigr]}_{\to 0\text{ as }\varepsilon\to0}\\
+                  &\quad+i\bigl[\arg h(z_0+Re^{i(2\pi-\varepsilon)})-\arg h(z_0+Re^{i\varepsilon})\bigr].
+              \end{align}
+              The real part tends to $0$ because $|h|$ is continuous on $C_R$.
+              The imaginary part tends to the \emph{total change in the argument}
+              of $h$ as $z$ travels once around $C_R$.
+
+        \item\textbf{Relate the integral to $\Delta\arg h$.}
+              Therefore
+              \begin{align}
+                  \oint_{C_R}\frac{h'}{h}\,dz
+                  = i\,\Delta_{\gamma}\arg h,
+                  \qquad\text{so}\qquad
+                  \frac{1}{2\pi i}\oint_{C_R}\frac{h'}{h}\,dz
+                  =\frac{1}{2\pi}\,\Delta_{\gamma}\arg h.
+              \end{align}
+
+        \item\textbf{Insert the residue computation.}
+              From the earlier version of the argument principle
+              \[
+                  \frac{1}{2\pi i}\oint_{C_R}\frac{h'}{h}\,dz
+                  =\sum_{j=1}^{N}n_j-\sum_{k=1}^{M}m_k,
+              \]
+              where the $n_j$’s are the multiplicities of the zeros
+              and the $m_k$’s the orders of the poles of $h$ inside $C_R$.
+              Combining with the previous step yields
+              \begin{align}
+                  \frac{1}{2\pi}\,\Delta_{\gamma}\arg h
+                  =\sum_{j=1}^{N}n_j-\sum_{k=1}^{M}m_k,
+              \end{align}
+              which is precisely the desired statement.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Rouché’s Theorem]
+    Let $f$ and $g$ be analytic on an open set that contains a positively
+    oriented, piecewise–smooth, simple closed curve $\gamma$ and its interior.
+    Assume 
+    \begin{align}
+        |f(z)+g(z)| \;<\; |f(z)|, \qquad z\in\gamma. \tag{5}
+    \end{align}
+    Then $f$ and $g$ have the same number of zeros inside $\gamma$, counted
+    with multiplicity.
+    %
+    %-------------------------------------------------
+    % Parameters (symbols used in the proof)
+    %-------------------------------------------------
+    \begin{align}
+        &\gamma                &&\text{curve enclosing its interior $\Omega$},\\
+        &h(z)=\dfrac{g(z)}{f(z)} &&\text{quotient used in the proof},\\
+        &z_1,\dots,z_N         &&\text{zeros of $g$ in $\Omega$},\\
+        &w_1,\dots,w_M         &&\text{zeros of $f$ in $\Omega$}.
+    \end{align}
+
+    \begin{enumerate}
+        \item\textbf{Pre-liminaries.}  
+              Inequality (5) implies $f$ and $g$ are \emph{non-zero on $\gamma$};
+              otherwise the left-hand side would vanish somewhere on $\gamma$.
+              We may also cancel any common zeros of $f$ and $g$
+              (doing so does not affect the hypothesis or the conclusion).
+
+        \item\textbf{Define the auxiliary function.}  
+              Set $h(z)=g(z)/f(z)$.  
+              Because $f$ has no zeros on $\gamma$, $h$ is analytic on a
+              neighbourhood of $\gamma$ (it may have poles or zeros \emph{inside} $\gamma$).
+
+        \item\textbf{Geometric consequence of (5).}  
+              From (5) we have
+              \[
+                  |1+h(z)| \;=\;\Bigl|\frac{f(z)+g(z)}{f(z)}\Bigr| \;<\;1,
+              \qquad z\in\gamma.
+              \]
+              Thus the image $h(\gamma)$ lies entirely in the open disc
+              $D(-1,1)=\{w\in\mathbb{C}:|w+1|<1\}$, a disc centred at $-1$ of radius 1.
+              \emph{Importantly, $0\notin D(-1,1)$,} so $h(z)$ never crosses the origin
+              while $z$ runs along $\gamma$.
+              Consequently the net change of $\arg h(z)$ along $\gamma$ is $0$.
+
+        \item\textbf{Argument-principle integral vanishes.}  
+              By the change-in-argument form of the Argument Principle,
+              \[
+                  \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz
+                  \;=\;
+                  \frac{1}{2\pi}\bigl\{\Delta_\gamma\arg h(z)\bigr\}
+                  \;=\;0.
+              \]
+              \item\textbf{Argument–principle integral vanishes (in detail).}
+              \begin{enumerate}
+                  \item\emph{Image of $\gamma$ stays in a puncture-free disc.}  
+                        Recall from Step 3 that 
+                        $
+                            |1+h(z)|<1 \quad (z\in\gamma),
+                        $
+                        so the curve $w=h(z)$ lives entirely in the open disc 
+                        $
+                            D(-1,1)=\{w:|w+1|<1\}.
+                        $
+                        This disc is simply connected and, crucially, \emph{does not contain the origin}.  
+                        Hence $h(z)\neq0$ for all $z\in\gamma$.
+
+                  \item\emph{Continuous choice of argument.}  
+                        Because $h$ never hits $0$ on $\gamma$, we can choose a continuous branch of 
+                        $
+                            \arg h(z)
+                        $
+                        along the whole path, starting with some initial value at the base point $z_0\in\gamma$.
+
+                  \item\emph{No winding around the origin $\Longrightarrow$ no net change in argument.}  
+                        As $z$ travels once around $\gamma$, the point $h(z)$ traces a closed curve that \emph{never encircles} $0$.  
+                        In algebraic topology language, its winding number about $0$ is $0$; equivalently,
+                        the continuous argument we picked must return to its initial value.  Therefore
+                        \[
+                            \Delta_{\gamma}\arg h(z)=0.
+                        \]
+
+                  \item\emph{Convert to the $h'/h$ integral.}  
+                        The change‑in‑argument form of the Argument Principle states
+                        \[
+                            \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz
+                            \;=\;
+                            \frac{1}{2\pi}\,\Delta_{\gamma}\arg h(z).
+                        \]
+                        With $\Delta_{\gamma}\arg h(z)=0$, we immediately get
+                        \[
+                            \oint_{\gamma}\frac{h'(z)}{h(z)}\,dz=0,
+                            \qquad
+                            \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz=0.
+                        \]
+                        This is the quantitative statement that the “Argument‑principle integral” vanishes.
+              \end{enumerate}
+
+        \item\textbf{Translate the integral into zeros and poles.}  
+              Write the residue version of the same integral:
+              \begin{align}
+                  \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz
+                  \;=\;
+                  \bigl\{\text{number of zeros of $h$ in $\Omega$}\bigr\}
+                  -
+                  \bigl\{\text{number of poles of $h$ in $\Omega$}\bigr\}. \tag{$\ast$}
+              \end{align}
+              \begin{enumerate}
+                  \item Zeros of $h$ occur exactly where $g$ vanishes,
+                        so the left curly‑brace in $(\ast)$ equals
+                        the number of zeros of $g$ inside $\gamma$
+                        (counted with multiplicity).
+                  \item Poles of $h$ occur exactly where $f$ vanishes,
+                        so the right curly‑brace in $(\ast)$ equals
+                        the number of zeros of $f$ inside $\gamma$
+                        (again with multiplicity).
+              \end{enumerate}
+
+        \item\textbf{Finish the count.}  
+              Because the integral equals $0$ by Step 4,
+              the two curly‑braces in $(\ast)$ are equal.
+              Hence the number of zeros of $g$ in the interior of $\gamma$
+              equals the number of zeros of $f$ there, as claimed.
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    If condition (5) is replaced by 
+    \[
+        |f(z)-g(z)|<|f(z)|,\qquad z\in\gamma, \tag{6}
+    \]
+    the same conclusion holds.  
+    Indeed, apply the theorem to $f$ and $-g$; a point is a zero of $-g$
+    precisely when it is a zero of $g$.
+\end{remark}
+
+
+\section*{Explanation: Importance of $h(z)$ Not Crossing the Origin}
+
+Recall that in the proof of Rouché's Theorem we introduce the auxiliary function 
+\[
+  h(z) = \frac{g(z)}{f(z)}.
+\]
+Two key points depend on the fact that $h(z)$ never crosses the origin on the contour $\gamma$.
+
+\subsection*{1. Analyticity of the Logarithmic Derivative}
+We use the identity
+\[
+  \frac{h'(z)}{h(z)} = \frac{d}{dz}\log h(z),
+\]
+in order to apply the Argument Principle. A well-defined, single-valued branch of the logarithm $\log h(z)$ can be chosen on $\gamma$ if and only if 
+\[
+  h(z) \neq 0 \quad \text{for all } z\in\gamma.
+\]
+If $h(z)$ were allowed to hit $0$, the function $\log h(z)$ would become multi–valued and exhibit discontinuities (jumps of integer multiples of $2\pi i$). In that situation, the derivative $h'(z)/h(z)$ might have non–removable singularities (or even poles) on $\gamma$, preventing us from applying the Argument Principle in the standard way.
+
+\subsection*{2. Winding Number and Change in Argument}
+The Argument Principle relates the integral 
+\[
+  \frac{1}{2\pi i}\oint_{\gamma} \frac{h'(z)}{h(z)}\,dz 
+\]
+to the net change in the argument of $h(z)$ along $\gamma$. More precisely,
+\[
+  \frac{1}{2\pi i}\oint_{\gamma}\frac{h'(z)}{h(z)}\,dz
+  = \frac{1}{2\pi} \, \Delta_{\gamma} \arg h(z),
+\]
+where $\Delta_{\gamma} \arg h(z)$ is the total change in $\arg h(z)$ as $z$ traverses $\gamma$. This expression is valid only because the continuous branch of $\log h(z)$ (and hence $\arg h(z)$) can be defined along $\gamma$, which in turn is guaranteed by the fact that $h(z)$ avoids $0$.
+
+\subsection*{Why Not a Different Point?}
+If we had $h(z)\neq a$ on $\gamma$, with some $a\neq 0$, one might think a similar argument could be made. However:
+\begin{itemize}
+    \item The logarithmic derivative that would appear naturally is 
+          \[
+            \frac{d}{dz}\log\bigl(h(z)-a\bigr) = \frac{h'(z)}{h(z)-a},
+          \]
+          which is \emph{different} from $\frac{h'(z)}{h(z)}$ that we need for our proof.
+    \item The integral of $\frac{h'(z)}{h(z)-a}$ would count the winding number of $h(z)$ about the point $a$, not about $0$.  
+    \item The zeros of $g(z)$ and the poles of $h(z)$ occur when $h(z)=0$, so tracking the winding about $0$ is exactly what gives us the required information about zeros and poles of $g(z)$ and $f(z)$.
+\end{itemize}
+
+Thus, ensuring that $h(z)$ does not cross (or hit) the origin is essential for:
+\begin{enumerate}
+    \item Defining a continuous branch of $\arg h(z)$ along $\gamma$.
+    \item Concluding that the net change in $\arg h(z)$ along $\gamma$ is exactly the winding number about $0$, which directly relates to the difference between the number of zeros and poles.
+    \item Applying the Argument Principle correctly in order to deduce that the number of zeros of $g(z)$ inside $\gamma$ equals the number of zeros of $f(z)$.
+\end{enumerate}
+
+\section*{Intuitive Explanation: Relating Change in Argument to Zeros and Poles}
+
+Consider an analytic (or meromorphic) function \( h(z) \) and a closed contour \(\gamma\) that does not pass through any zeros or poles of \( h \). When we talk about the change in the argument of \( h(z) \) along \(\gamma\), we are measuring how the angle (or phase) of \( h(z) \) changes as we traverse \(\gamma\). This idea is central to the Argument Principle, and here is the intuition behind it:
+
+\begin{enumerate}
+    \item \textbf{Local Behavior Near a Zero:}\\[0.5em]
+          Suppose \(z_0\) is a zero of \(h(z)\) of order \(k\). Near \(z_0\) the function behaves like
+          \[
+              h(z) \approx (z - z_0)^k \, G(z),
+          \]
+          where \(G(z)\) is analytic and nonzero at \(z_0\).  
+          As \(z\) makes one full counterclockwise circuit around \(z_0\), the term \((z - z_0)^k\) rotates by an angle of 
+          \[
+              k\cdot 2\pi.
+          \]
+          In essence, each zero of order \(k\) contributes \(+2\pi k\) to the total change in the argument of \( h(z) \).
+
+    \item \textbf{Local Behavior Near a Pole:}\\[0.5em]
+          Now suppose \(z_1\) is a pole of \(h(z)\) of order \(m\). Near \(z_1\) the function behaves like
+          \[
+              h(z) \approx \frac{H(z)}{(z - z_1)^m},
+          \]
+          where \(H(z)\) is analytic and nonzero at \(z_1\).  
+          As \(z\) encircles \(z_1\), the denominator \((z - z_1)^m\) rotates by an angle of 
+          \[
+              m\cdot 2\pi,
+          \]
+          but since this term is in the denominator, it contributes a \emph{negative} rotation of \(-2\pi m\). Thus, every pole of order \(m\) subtracts \(2\pi m\) from the net change in the argument.
+
+    \item \textbf{Net Change in Argument:}\\[0.5em]
+          If the contour \(\gamma\) encloses several zeros and poles, then the total change in the argument of \( h(z) \) as \( z \) traverses \(\gamma\) is the sum of the individual contributions:
+          \[
+              \Delta_\gamma \arg h(z) = 2\pi\Biggl( \sum_{i} k_i - \sum_{j} m_j \Biggr),
+          \]
+          where \( k_i \) are the orders (multiplicities) of the zeros and \( m_j \) are the orders of the poles enclosed by \(\gamma\).  
+          Dividing this net change by \(2\pi\) gives the difference between the number of zeros and the number of poles (each counted with its multiplicity).
+
+    \item \textbf{Why Is This Significant?}\\[0.5em]
+          The argument of a complex number tells us its angle relative to the positive real axis.  
+          - A zero causes the value of \( h(z) \) to twist (or “wind”) around the origin in a positive direction.  
+          - A pole, on the other hand, causes a twist in the negative direction (effectively “unwinding” the phase).  
+          Thus, the net rotation—quantified by the total change in \(\arg h(z)\)—captures, in a single number, the algebraic count of the zeros minus the poles inside the contour.
+
+          This is the heart of the Argument Principle. By analyzing the rotation (or winding) of the image curve \( h(\gamma) \) around the origin, we obtain valuable information about the internal structure (the zeros and poles) of the function \( h(z) \) itself.
+
+\end{enumerate}
+
+\section*{Computing \(\displaystyle \int_{\gamma} \frac{1}{z - a}\,dz\)}
+
+Let \(\gamma\) be a positively oriented, simple closed curve in the complex plane, and let \(a\) be a point not on \(\gamma\). We want to compute
+\[
+  \int_{\gamma} \frac{1}{z - a}\,dz.
+\]
+The result depends on whether \(a\) is inside or outside the region enclosed by \(\gamma\):
+
+\[
+  \int_{\gamma} \frac{1}{z - a}\,dz 
+  \;=\;
+  \begin{cases}
+      2\pi i, & \text{if $a$ is inside $\gamma$,}\\
+      0,      & \text{if $a$ is outside $\gamma$.}
+  \end{cases}
+\]
+We will show this in two ways: (1) by a direct parametrization, and (2) by the Residue Theorem.
+
+\subsection*{1.\; Direct Parametrization (Circle Example)}
+
+Although the statement is true for any simple closed curve \(\gamma\), it is most easily illustrated when \(\gamma\) is the circle 
+\(\,z(t) = a + Re^{it}\) with \(t \in [0,2\pi]\) and \(R>0\).  Assume \(a\) is at the center of this circle, so it is certainly \emph{inside} \(\gamma\).
+
+\begin{enumerate}
+  \item \textbf{Parametrize the contour.}\\
+    Let \(z(t) = a + Re^{it}\). Then \(\displaystyle dz = \frac{dz}{dt}\,dt = iRe^{it}\,dt\) and \(t\) runs from \(0\) to \(2\pi\).
+    
+  \item \textbf{Substitute into the integral.}\\
+    \[
+      \int_{\gamma} \frac{1}{z - a}\,dz
+      \;=\;
+      \int_{t=0}^{2\pi} \frac{1}{\bigl(a + Re^{it} - a\bigr)} \,\bigl(iRe^{it}\bigr)\,dt.
+    \]
+    Note that \(a + Re^{it} - a = Re^{it}\). Hence
+    \[
+      \int_{0}^{2\pi} \frac{1}{Re^{it}} \cdot iRe^{it}\,dt
+      \;=\;
+      \int_{0}^{2\pi} i\,dt 
+      \;=\;
+      i \bigl[t\bigr]_{0}^{2\pi}
+      \;=\;
+      2\pi i.
+    \]
+    Thus, for a positively oriented circle around \(a\), the integral is \(2\pi i\).
+
+  \item \textbf{Outside the circle.}\\
+    If \(a\) were strictly \emph{outside} the circle \(\gamma(t)=z_0+Re^{it}\) (i.e.\ if \(\|a - z_0\| > R\)), 
+    one can continuously shrink the circle (within the domain) away from \(a\) to a point.  
+    Since \(\frac{1}{z-a}\) would remain analytic in that simply connected region (avoiding \(z=a\)), 
+    the integral must remain constant under this deformation; but shrinking to a point makes the integral \(0\).  
+    Hence if \(a\) is outside, the integral is \(0\).
+\end{enumerate}
+
+\subsection*{2.\; Residue Theorem Approach}
+
+Alternatively, we can appeal directly to the Residue Theorem from complex analysis:
+\[
+  \int_{\gamma} \frac{1}{z - a}\,dz
+  \;=\;
+  2\pi i\;\times\;\sum \bigl[\text{Residues of } \tfrac{1}{z-a}\text{ inside $\gamma$}\bigr].
+\]
+The function \(\tfrac{1}{z-a}\) has a single simple pole at \(z=a\). The residue of \(\tfrac{1}{z-a}\) at \(z=a\) is
+\[
+  \operatorname{Res}\!\Bigl(\frac{1}{z-a},\,z=a\Bigr)
+  = 1.
+\]
+\begin{itemize}
+  \item If \(a\) lies \emph{inside} \(\gamma\), then \(\gamma\) encloses the pole at \(z=a\), and the sum of residues is \(1\).  Hence
+    \[
+      \int_{\gamma} \frac{1}{z - a}\,dz 
+      = 2\pi i \cdot (1) 
+      = 2\pi i.
+    \]
+  \item If \(a\) lies \emph{outside} \(\gamma\), the function \(\frac{1}{z-a}\) has no pole inside \(\gamma\), so the sum of residues inside is \(0\).  Thus the integral is \(0\).
+\end{itemize}
+
+\noindent
+This perfectly agrees with the result from the direct parametrization.
+
+\section*{Are All Zeros Removable?}
+
+In complex analysis the concepts of \emph{zeros} and \emph{removable singularities} refer to different phenomena.
+
+\subsection*{Zeros}
+A \emph{zero} of an analytic function \(f(z)\) is any point \(z_0\) such that
+\[
+  f(z_0)=0.
+\]
+Zeros are a natural feature of the function. For example, if
+\[
+  f(z)=(z-z_0)^k\,g(z),
+\]
+where \(g(z)\) is analytic and nonzero at \(z_0\), then \(z_0\) is a zero of order \(k\) (or multiplicity \(k\)). Such zeros are intrinsic to the function and are not “problems” to be fixed.
+
+\subsection*{Removable Singularities}
+A \emph{removable singularity} is a point \(z_0\) where a function \(f(z)\) is either not defined or not analytic, yet there exists a way to redefine \(f\) at \(z_0\) so that \(f\) becomes analytic at that point. A standard example is the function
+\[
+  f(z)=\frac{\sin z}{z}.
+\]
+At \(z=0\) the function is undefined; however, since
+\[
+  \lim_{z\to 0}\frac{\sin z}{z}=1,
+\]
+we can define \(f(0)=1\) to make \(f\) analytic everywhere. Here the singularity at \(z=0\) was \emph{removable}.
+
+\subsection*{Why Zeros Are Not Removable}
+A zero is simply a point where the function takes the value zero. It is not a singularity at all; in fact, if \(f\) is analytic in a neighborhood of \(z_0\) and \(f(z_0)=0\), then \(z_0\) is a perfectly well-behaved part of the function's domain. Although we can factor out the zero (as in writing \(f(z)=(z-z_0)^k\,g(z)\) with \(g(z_0)\neq 0\)), this process of \emph{factoring} the zero is different from the notion of \emph{removing a singularity}.
+
+Thus, while a \textbf{removable singularity} is a point where the function is \emph{not properly defined or analytic} but can be redefined to be analytic, a \textbf{zero} is simply where the function \emph{vanishes}. We do not “remove” zeros; rather, they are part of the analytic structure of the function and are essential in determining properties such as factorization and behavior under analytic continuation.
+
+
+\section*{Why does \((z-z_0)^k\) Rotate by an Angle of \(k \cdot 2\pi\)?}
+
+Consider the factor \(z-z_0\) in polar form. Suppose we draw a small circle of radius \(r\) around the zero \(z_0\) and parametrize it by
+\[
+z(t)=z_0+re^{it},\qquad 0\le t\le 2\pi.
+\]
+Then,
+\[
+z(t)-z_0= re^{it}.
+\]
+
+\subsection*{One Loop Around \(z_0\)}
+As \(t\) goes from \(0\) to \(2\pi\), the complex number \(re^{it}\) starts at the point \(r\) on the positive real axis, makes one full counterclockwise revolution around the origin, and returns to its starting point. This means that the argument (angle) of \(re^{it}\) increases by exactly \(2\pi\).
+
+\subsection*{Raising to the \(k^{\text{th}}\) Power}
+Using the property of complex numbers in polar form, we have
+\[
+(re^{it})^k = r^k e^{ikt}.
+\]
+Thus, the argument of \((z-z_0)^k\) is \(k \cdot t\). As \(t\) sweeps from \(0\) to \(2\pi\), the exponent \(kt\) sweeps from \(0\) to \(k \cdot 2\pi\). Geometrically, the point \((z-z_0)^k\) winds around the origin exactly \(k\) times.
+
+\subsection*{Conclusion}
+Hence, the total change in the argument of \((z-z_0)^k\) during one complete circuit is
+\[
+\Delta\!\bigl(\arg\,(z-z_0)^k\bigr) = k \cdot 2\pi.
+\]
+This is why a zero of order \(k\) contributes \(+\,2\pi k\) to the net change in the argument of the function.
+
+\subsection*{Why does the denominator \((z-z_{1})^{m}\) contribute a \(-\,m\cdot2\pi\) rotation?}
+
+Let \(z_{1}\) be a pole of order \(m\) for an analytic (meromorphic) function \(h\).  
+Near \(z_{1}\) we can write
+\[
+   h(z)\;=\;\frac{H(z)}{(z-z_{1})^{m}},
+   \qquad\text{where }H(z)\text{ is analytic and }H(z_{1})\neq0.
+\]
+
+\begin{enumerate}
+    \item\textbf{Parametrise a small circle around the pole.}\\
+          Take a tiny radius \(r>0\) and let
+          \[
+              z(t)=z_{1}+re^{it},\qquad 0\le t\le 2\pi .
+          \]
+          Then \(z(t)-z_{1}=re^{it}\).
+
+    \item\textbf{Track the argument of the denominator.}\\
+          \[
+              (z(t)-z_{1})^{m}=r^{m}e^{imt}.
+          \]
+          As \(t\) runs from \(0\) to \(2\pi\), the angle \(mt\) increases from \(0\) to \(m\cdot2\pi\).
+          Hence the \emph{argument} of \((z-z_{1})^{m}\) increases by \(+\,m\cdot2\pi\).
+
+    \item\textbf{Effect of the reciprocal.}\\
+          Because \((z-z_{1})^{m}\) sits in the \emph{denominator} of \(h(z)\), we actually look at
+          \[
+              \frac{1}{(z(t)-z_{1})^{m}}=r^{-m}e^{-imt}.
+          \]
+          Its argument therefore \emph{decreases} by \(m\cdot2\pi\) during one loop:
+          \[
+              \Delta\arg\!\Bigl((z-z_{1})^{-m}\Bigr)= -\,m\cdot2\pi .
+          \]
+
+    \item\textbf{Combine with the analytic factor \(H(z)\).}\\
+          The factor \(H(z(t))\) is analytic and non–zero at \(z_{1}\), so along the tiny circle its argument changes by an amount that tends to \(0\) as \(r\to0\).  Thus it does not affect the leading order calculation.
+
+\end{enumerate}
+
+\noindent
+\textbf{Conclusion.}  
+Encircling the pole once counter‑clockwise makes the term \((z-z_{1})^{m}\) wind \(+\,m\) times, but because it is in the denominator, \(h(z)\) experiences a \emph{negative} rotation of
+\[
+   -\,m\cdot2\pi.
+\]
+Consequently every pole of order \(m\) subtracts \(2\pi m\) from the net change in the argument of \(h(z)\).
+
+\begin{problem}
+    Find the number of zeros of the polynomial
+    \begin{align}
+        f(z)=z^{3}-2z^{2}+4
+    \end{align}
+    that lie in the \emph{first quadrant} $\{z:\Re z>0,\Im z>0\}$ by means of the Argument Principle.
+    
+    %-------------------------------------------------
+    % Parameters
+    %-------------------------------------------------
+    \begin{align}
+        &\gamma   &&\text{contour consisting of three pieces (see Fig.~3.3):}\\
+        &         &&\text{(i) the real segment }[0,R],\\
+        &         &&\text{(ii) the quarter--circle }z=Re^{it},\;0\le t\le\pi/2,\\
+        &         &&\text{(iii) the imaginary segment }iy,\;R\ge y\ge0,\\
+        &R\gg1    &&\text{radius chosen so that $f$ behaves like $z^{3}$ on the arc.}
+    \end{align}
+    
+    \begin{enumerate}
+        \item\textbf{Segment (i): the positive real axis.}\\
+              For $0\le x\le R$,
+              \begin{align}
+                  f(x)=x^{3}-2x^{2}+4>2>0,
+              \end{align}
+              so $f(x)$ is real and positive.  
+              Hence $\arg f(x)=0$ along this piece and contributes \emph{no} change in argument.
+        
+        \item\textbf{Segment (ii): the quarter–circle $z=Re^{it}$, $0\le t\le\pi/2$.}\\
+              Write
+              \begin{align}
+                  f(Re^{it})&=R^{3}e^{3it}\!\Bigl(1-\frac{2}{Re^{it}}+\frac{4}{R^{3}e^{3it}}\Bigr)
+                             =R^{3}e^{3it}\bigl(1+\zeta(t)\bigr),
+              \end{align}
+              where $|\zeta(t)|\le6/R<\varepsilon$ for $R$ sufficiently large.  
+              Therefore
+              \begin{align}
+                  \arg f(Re^{it})=\arg\bigl(e^{3it}\bigr)+\arg\bigl(1+\zeta(t)\bigr)\approx 3t.
+              \end{align}
+              As $t$ increases from $0$ to $\pi/2$, the argument rises from $0$ to about $3\pi/2$.  
+              Thus this piece contributes roughly $+\,\dfrac{3\pi}{2}$ to $\Delta\arg f$.
+        
+        \item\textbf{Segment (iii): the imaginary axis $z=iy$, $R\ge y\ge0$.}\\
+              Compute
+              \begin{align}
+                  f(iy)=-iy^{3}+2y^{2}+4
+                        =\underbrace{(4+2y^{2})}_{>0}\;+\;i\underbrace{(-y^{3})}_{<0}.
+              \end{align}
+              Hence every point $f(iy)$ lies in the \emph{fourth quadrant}.  
+              When $y=R$ (large), the point is far down the negative imaginary axis, so $\arg f(iy)\approx-\pi/2$.  
+              As $y\to0^{+}$, $f(iy)\to4$ on the positive real axis, so $\arg f(iy)\to0$.  
+              Thus the argument \emph{increases} by about $+\pi/2$ along this segment.
+        
+        \item\textbf{Total change in argument.}\\
+              \begin{align}
+                  \Delta_{\gamma}\arg f
+                  =0\;+\;\frac{3\pi}{2}\;+\;\frac{\pi}{2}=2\pi.
+              \end{align}
+              By the Argument Principle,
+              \begin{align}
+                  \frac{1}{2\pi}\,\Delta_{\gamma}\arg f
+                  =\#\{\text{zeros of }f\text{ inside }\gamma\}
+                  -\#\{\text{poles of }f\text{ inside }\gamma\}.
+              \end{align}
+              The polynomial $f$ has no poles, so the left side equals the number of zeros enclosed.  
+              Hence $f$ possesses exactly \emph{one} zero in the first quadrant.
+    \end{enumerate}
+\end{problem}
+
+\paragraph{Where does the constant \(6\) in \(\lvert\zeta(t)\rvert\le \dfrac{6}{R}<\varepsilon\) come from?}
+
+Inside the quarter–circle part of the contour we wrote
+\[
+    f\!\bigl(Re^{it}\bigr)=R^{3}e^{3it}
+    \Bigl(
+        1-\frac{2}{Re^{it}}+\frac{4}{R^{3}e^{3it}}
+    \Bigr)
+    \;=\;
+    R^{3}e^{3it}\bigl(1+\zeta(t)\bigr),
+\]
+so
+\[
+    \zeta(t)\;=\;-\frac{2}{Re^{it}}+\frac{4}{R^{3}e^{3it}}.
+\]
+
+\[
+\boxed{\displaystyle
+   \bigl\lvert\zeta(t)\bigr\rvert
+   \;\le\;
+   \frac{2}{R}\;+\;\frac{4}{R^{3}}
+}
+\]
+
+Because \(R\ge 1\) we have \(\dfrac{4}{R^{3}}\le\dfrac{4}{R}\), hence
+\[
+   \bigl\lvert\zeta(t)\bigr\rvert
+   \;\le\;
+   \frac{2}{R}+\frac{4}{R}
+   \;=\;
+   \frac{6}{R}.
+\]
+
+By choosing \(R\) so large that \(\dfrac{6}{R}<\varepsilon\) (for whatever small \(\varepsilon>0\) we like), we guarantee that
+\[
+   \bigl\lvert\zeta(t)\bigr\rvert<\varepsilon
+   \qquad(0\le t\le\tfrac{\pi}{2}),
+\]
+which justifies treating \(1+\zeta(t)\) as a perturbation whose argument is negligibly small.  The particular constant “\(6\)” is simply the coarse bound
+\(
+   2+4=6
+\)
+obtained from the coefficients \(2\) and \(4\) that appear in the polynomial.
+
+\section*{Why Does \(\arg f(iy) \to 0\) as \(f(iy)\to 4\)?}
+
+We consider the function
+\[
+    f(iy) = -iy^3 + 2y^2 + 4, \qquad y\ge0,
+\]
+and want to understand the behavior of its argument as \(y\to 0^+\).
+
+\subsection*{Step 1. Evaluate the Limit as \(y\to 0^+\)}
+Since the terms involving \(y\) vanish in the limit, we have
+\[
+    \lim_{y\to 0^+} f(iy) = 4.
+\]
+The number \(4\) is a positive real number.
+
+\subsection*{Step 2. Argument of a Positive Real Number}
+Recall that for any positive real number, the argument is \(0\):
+\[
+    \arg(4) = 0.
+\]
+Thus if \(f(iy) \to 4\), its argument must approach \(0\).
+
+\subsection*{Step 3. Continuity of \(\arg f(iy)\) Near \(y = 0\)}
+For \(y>0\), we can rewrite
+\[
+    f(iy) = \bigl(4 + 2y^2\bigr) + i\bigl(-y^3\bigr).
+\]
+In this expression:
+\begin{itemize}
+    \item The real part is \(4+2y^2\) which is always positive.
+    \item The imaginary part is \(-y^3\), which is negative (or zero when \(y=0\)).
+\end{itemize}
+Thus, for \(y>0\), \(f(iy)\) lies in the fourth quadrant. As \(y\to0^+\), the imaginary part \(-y^3\) tends to \(0\), and \(f(iy)\) approaches \(4\), which lies exactly on the positive real axis. Therefore,
+\[
+    \lim_{y\to 0^+} \arg f(iy) = \arg(4) = 0.
+\]
+
+\subsection*{Step 4. Net Change in Argument Along the Imaginary Segment}
+To see how this fits into the overall contour argument, note the following:
+\begin{enumerate}
+    \item At the \emph{starting end} of the imaginary segment (when \(y = R\) is large), 
+          \(f(iR)\) is dominated by the term \(-iR^3\). Thus,
+          \[
+              f(iR) \approx -iR^3, \quad \text{so} \quad \arg f(iR) \approx -\frac{\pi}{2}.
+          \]
+    \item At the \emph{ending end} (as \(y \to 0^+\)), we have shown that 
+          \[
+             f(iy) \to 4 \quad \text{and} \quad \arg f(iy) \to 0.
+          \]
+\end{enumerate}
+Therefore, as we traverse the imaginary segment from \(y=R\) down to \(y=0\), the argument of \(f(iy)\) increases from approximately \(-\pi/2\) to \(0\), yielding a net change of
+\[
+    \Delta \arg f(iy) \approx +\frac{\pi}{2}.
+\]
+This change is essential when applying the Argument Principle to determine the number of zeros in a specified region.
+
+\begin{problem}
+    Show that for every real constant $\lambda>1$ the transcendental equation
+    \[
+        z+e^{-z}=\lambda
+    \]
+    has exactly \emph{one} solution in the closed right half‑plane
+    $\{\,z\in\mathbb C:\Re z\ge0\}$.
+
+    %-------------------------------------------------
+    % Set–up
+    %-------------------------------------------------
+    \begin{align}
+        h(z)\;=\;z+e^{-z}-\lambda, \qquad 
+        \gamma\;=\;\gamma_1+\gamma_2,
+    \end{align}
+    where $\gamma_1$ is the vertical segment $z=iy$ ($R\ge y\ge -R$) and  
+    $\gamma_2$ is the right‑hand semicircle $z=Re^{i\theta}$ ($-\pi/2\le\theta\le\pi/2$);  
+    see Fig.\;3.4.  The contour is oriented \emph{positively} (counter‑clockwise).
+
+    \begin{enumerate}
+    %-------------------------------------------------
+    % 1. Imaginary axis
+    %-------------------------------------------------
+    \item[\textbf{1.}] \textbf{Segment $\gamma_1$ (imaginary axis).}\;
+          Put $z=iy$ with $R\ge y\ge -R$:
+          \[
+              h(iy)=iy+e^{-iy}-\lambda
+                    =(\cos y-\lambda)\;+\;i\bigl(y-\sin y\bigr).
+          \]
+          \begin{itemize}
+              \item Since $\lambda>1$ we have $\cos y-\lambda<0$ for \emph{all} $y$;
+                    hence $\Re h(iy)<0$.
+              \item The imaginary part $y-\sin y$ is $>0$ when $y>0$,
+                    $=0$ at $y=0$, and $<0$ when $y<0$.
+          \end{itemize}
+          Thus $h(iy)$ starts in the \emph{second} quadrant at $y=R$,
+          crosses the negative real axis at $y=0$,
+          and ends in the \emph{third} quadrant at $y=-R$.
+          Its argument therefore \emph{decreases} from about $+\pi/2$
+          down to about $-\pi/2$, giving
+          \[
+              \Delta_{\gamma_1}\arg h \;=\; -\pi.
+          \]
+
+    %-------------------------------------------------
+    % 2. Semicircle
+    %-------------------------------------------------
+    \item[\textbf{2.}] \textbf{Segment $\gamma_2$ (semicircle).}\;
+          Let $z=Re^{i\theta}$ with $-\pi/2\le\theta\le\pi/2$.
+          Then
+          \[
+              h(Re^{i\theta})
+              =Re^{i\theta}+e^{-Re^{i\theta}}-\lambda
+              =Re^{i\theta}\!\Bigl\{1+e^{-Re^{i\theta}-i\theta}/R-\lambda/R\,e^{-i\theta}\Bigr\}.
+          \]
+          Because $|e^{-Re^{i\theta}}|=e^{-R\cos\theta}\le1$ and $R\gg1$,
+          the bracketed factor equals $1+c(\theta)$ with $|c(\theta)|\le \dfrac{2}{R}$.
+          Hence
+          \[
+              h(Re^{i\theta}) = Re^{i\theta}\bigl(1+c(\theta)\bigr),
+              \qquad |c(\theta)|\ll1,
+          \]
+          so $\arg h(Re^{i\theta})=\theta+\mathcal O\!\bigl(R^{-1}\bigr)$.
+          As $\theta$ increases from $-\pi/2$ to $\pi/2$, the argument rises from
+          about $-\pi/2$ to about $+\pi/2$, yielding
+          \[
+              \Delta_{\gamma_2}\arg h \;=\; +\pi.
+          \]
+
+    %-------------------------------------------------
+    % 3. Net change
+    %-------------------------------------------------
+    \item[\textbf{3.}] \textbf{Total change in argument.}\;
+          Summing the two contributions,
+          \[
+              \Delta_\gamma\arg h
+              =\Delta_{\gamma_1}\arg h+\Delta_{\gamma_2}\arg h
+              =(-\pi)+(+\pi)=2\pi.
+          \]
+          The image curve $h(\gamma)$ therefore winds once
+          counter‑clockwise around the origin.
+
+    %-------------------------------------------------
+    % 4. Argument Principle
+    %-------------------------------------------------
+    \item[\textbf{4.}] \textbf{Apply the Argument Principle.}\;
+          $h$ is analytic on and inside $\gamma$, with no poles.
+          Hence
+          \[
+              \frac{1}{2\pi}\,\Delta_\gamma\arg h
+              =\#\{\text{zeros of }h \text{ inside }\gamma\}=1.
+          \]
+          Letting $R\to\infty$ expands $\gamma$ to fill the whole right half‑plane,
+          so $h(z)=z+e^{-z}-\lambda$ has \emph{exactly one} zero there.
+    \end{enumerate}
+\end{problem}
+
+
+\end{document}

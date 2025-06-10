@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Define the solution environment with normal text
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+
+% Title information
+\title{MATH 447: Real Variables - Homework \#9}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[28.6b]
+    Let $ f(x) = x \sin \frac{1}{x} $ for $ x \neq 0 $ and $ f(0) = 0 $. See Fig. 19.3.
+
+\begin{enumerate}
+    \item[(b)] Is $ f $ differentiable at $ x = 0 $? Justify your answer.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        By using Definition 28.1 from Ross of the derivative, we can show that the function $f(x)$ is not differentiable at $x=0$. 
+   \begin{align}
+    \frac{f(t)-f(0)}{t-0} = \frac{t\sin(\frac{1}{t})-0}{t}=\sin \left(  \frac{1}{t}\right) 
+   \end{align}
+   $\sin(\frac{1}{t})$ does not tend to any limit as $t\to 0$, so the proof is done.  
+    \end{proof}
+   \end{solution}
+\begin{problem}[29.3]
+    Suppose $ f $ is differentiable on $ \mathbb{R} $ and $ f(0) = 0 $, $ f(1) = 1 $ and $ f(2) = 1 $.
+
+\begin{enumerate}
+    \item[(a)] Show $ f'(x) = \frac{1}{2} $ for some $ x \in (0,2) $.
+    \item[(b)] Show $ f'(x) = \frac{1}{7} $ for some $ x \in (0,2) $.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+    \noindent
+\begin{enumerate}
+    \item \begin{proof}
+            By MVT, $\exists t \ s.t. \ \frac{f(2)-f(0)}{2-0}=f^\prime (t)$
+    \begin{align}
+        f^\prime(t)=\frac{f(2)-f(0)}{2-0}=\frac{1}{2}
+    \end{align} 
+    \end{proof}
+    \item \begin{proof}
+        From $(0,1)$, by MVT, $\exists t_1 \ s.t. \ $ $f^\prime (t)=1$. From $(1,2)$, by MVT, $\exists t_2 \ s.t. \ f^\prime (t)=0$. We know that $1>\frac{1}{7}>0$. By IVTD (Intermediate Value property of Derivatives), $\exists t_3 \in (0,2) \ s.t. \ f^\prime (t_3)=\frac{1}{7}$.          
+    \end{proof}
+\end{enumerate}
+\end{solution}
+\begin{problem}[29.10]
+    Let $ f(x) = x^2 \sin\left(\frac{1}{x}\right) + \frac{x}{2} $ for $ x \neq 0 $ and $ f(0) = 0 $.
+
+\begin{enumerate}
+    \item[(a)] Show $ f'(0) > 0 $; see Exercise 28.4.
+    \item[(b)] Show $ f $ is not increasing on any open interval containing 0.
+    \item[(c)] Compare this example with Corollary 29.7(i).
+\end{enumerate}
+\end{problem}
+\begin{solution}
+   We will appeal to Corollary 29.7 and determine $f^\prime (x)<0$ for all $x\in (a,b)\cup \left\{ 0 \right\}$, which will prove that $f(x)$ is not increasing on any open interval containing $0$. Applying Theorem 28.3 from Ross, we get the following:
+   \begin{align}
+    f^\prime (x)=2x\sin \left( \frac{1}{x} \right) -\cos\left( \frac{1}{x} \right) +\frac{1}{2} \label{3deriv}
+   \end{align} 
+\emph{Discussion:} The idea is to find a value $x \in (a,b)$ containing $0$ so the equation above is negative. This involves two cases: $a<x<0$ and $0<x<b$. For the first case, we see that:
+\begin{align}
+    \frac{1}{x} = -\frac{3\pi}{2}n \\[10pt]
+    x>a = \frac{1}{a}>\frac{1}{x} \\[10pt] 
+    \frac{1}{a}> -\frac{3\pi}{2}n \\[10pt] 
+    n > -\frac{2}{3\pi a}
+\end{align}
+Where $n\in \mathbb{N} $. 
+\begin{proof}
+    Choose $n> -\frac{2}{3\pi a} \ s.t. \ n\in \mathbb{N} $. Let $x = -\frac{2}{3\pi n}$. Then, substituting $x$ into \autoref{3deriv} gives us the following:
+    \begin{align}
+        f^\prime (x)=2x\sin \left( \frac{1}{x} \right) -\cos\left( \frac{1}{x} \right) +\frac{1}{2} \\[10pt] 
+        = 2\left( -\frac{3\pi}{2}n \right)\left( 1 \right) - 0 + \frac{1}{2}  \\[10pt] 
+        = \frac{1-6\pi}{2}<0
+    \end{align}
+    From the above, we were able to find $a<x<0$ such that $f^\prime (x)<0$, which disproves that $f$ is increasing from $(a,b)$ containing $0$. The second case where $0<x<b$ is handled similarly.
+\end{proof}
+\end{solution}
+
+\begin{problem}[29.12]
+    \noindent
+
+    \begin{enumerate}
+        \item[(a)] Show $ x < \tan x $ for all $ x \in \left( 0, \frac{\pi}{2} \right) $.
+        \item[(b)] Show $ \frac{x}{\sin x} $ is a strictly increasing function on $ \left( 0, \frac{\pi}{2} \right) $.
+        \item[(c)] Show $ x \leq \frac{\pi}{2} \sin x $ for $ x \in \left[ 0, \frac{\pi}{2} \right] $.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    \noindent
+\begin{enumerate}
+    \item To prove that $x<\tan(x)$ such that $f(x)=\tan(x)$ for all $x \in (0, \frac{\pi}{2})$, it suffices to show that $f^\prime (x)>1$ for all $x\in(0,\frac{\pi}{2})$    \begin{proof}
+        \begin{align}
+            f^\prime (x)>1 \\[10pt] 
+            \sec^{2}(x)-1>0\\[10pt] 
+            \underbrace{\frac{1}{\cos^{2}(x)}}_{< 1} >1
+        \end{align}
+    \end{proof}
+    \item To prove that $f(x)=\frac{x}{\sin(x)}$ is strictly increasing on $(0,\frac{\pi}{2})$, it suffices to show that $f^\prime (x)>0$ for all $x\in(0,\frac{\pi}{2})$
+    \begin{proof}
+        \begin{align}
+            f^\prime (x)=-x(\sin(x))^{-2}\cos(x)+(\sin(x))^{-1}\\[10pt] 
+            \frac{\sin(x)-x\cos(x)}{\sin^{2}(x)}>0 \\[10pt] 
+            \sin(x)-x\cos(x)>0 \label{4.2}
+        \end{align}
+        \autoref{4.2} is always true for $x\in (0, \frac{\pi}{2})$. 
+    \end{proof}
+    \item To prove that $x \leq \frac{\pi}{2}\sin(x)$ such that $f(x) = \frac{\pi}{2}\sin(x)$ for all $x \in [0, \frac{\pi}{2}]$, it suffices to show that $g(x) = \frac{\pi}{2}\sin(x) - x \geq 0$ on the interval.  
+
+    \begin{proof}
+        Let $g(x) = \frac{\pi}{2}\sin(x) - x$. To analyze $g(x)$, we compute its derivative:
+        \begin{align}
+            g'(x) &= \frac{\pi}{2}\cos(x) - 1 \\[10pt] 
+            \frac{\pi}{2}\cos(x) &\geq 1 \\[10pt] 
+            \cos(x) &\geq \frac{2}{\pi}.
+        \end{align}
+        The inequality $\cos(x) \geq \frac{2}{\pi}$ implies that $x \leq \arccos\left(\frac{2}{\pi}\right)$, since $\cos(x)$ is decreasing on $[0, \frac{\pi}{2}]$. Thus, $g'(x) \geq 0$ for $x \in [0, \arccos\left(\frac{2}{\pi}\right)]$, and $g'(x) \leq 0$ for $x \in [\arccos\left(\frac{2}{\pi}\right), \frac{\pi}{2}]$. 
+    
+        Therefore, $g(x)$ increases on $[0, \arccos\left(\frac{2}{\pi}\right)]$ and decreases on $[\arccos\left(\frac{2}{\pi}\right), \frac{\pi}{2}]$, reaching its maximum at $x = \arccos\left(\frac{2}{\pi}\right)$.
+    
+        Now, compute $g(x)$ at the boundaries:
+        \begin{align}
+            g(0) &= \frac{\pi}{2}\sin(0) - 0 = 0, \\[10pt]
+            g\left(\frac{\pi}{2}\right) &= \frac{\pi}{2}\sin\left(\frac{\pi}{2}\right) - \frac{\pi}{2} = 0.
+        \end{align}
+        Since $g(x) \geq 0$ on $[0, \frac{\pi}{2}]$, it follows that $x \leq \frac{\pi}{2}\sin(x)$ for all $x \in [0, \frac{\pi}{2}]$.
+    \end{proof}
+\end{enumerate}
+\end{solution}
+\begin{problem}[29.16]
+    Use Theorem \textbf{29.9} to obtain the derivative of the inverse $ g = \tan^{-1} = \arctan $ of $ f $ where $ f(x) = \tan x $ for $ x \in \left( -\frac{\pi}{2}, \frac{\pi}{2} \right) $.
+
+\bigskip
+
+\textbf{29.9 Theorem.} \\
+Let $ f $ be a one-to-one continuous function on an open interval $ I $, and let $ J = f(I) $. If $ f $ is differentiable at $ x_0 \in I $ and if $ f'(x_0) \neq 0 $, then $ f^{-1} $ is differentiable at $ y_0 = f(x_0) $ and
+\begin{align}    
+(f^{-1})'(y_0) = \frac{1}{f'(x_0)}.
+\end{align}
+\end{problem}
+\begin{solution}
+    \begin{align}
+        f(x)=\tan(x) \\[10pt] 
+        f^\prime (x)=\sec^{2}(x) \\[10pt] 
+        x=\arctan(y) \\[10pt] 
+        \left( f^{-1} \right) \left( y \right) =\frac{1}{\sec^{2}\left( \arctan(y) \right) }
+    \end{align}
+\end{solution}
+\begin{problem}[32.7]
+    Let $ f $ be integrable on $[a, b]$, and suppose $ g $ is a function on $[a, b]$ such that $ g(x) = f(x) $ except for finitely many $ x $ in $[a, b]$. Show $ g $ is integrable and
+\begin{align}    
+\int_a^b f = \int_a^b g.
+\end{align}
+\textit{Hint:} First reduce to the case where $ f $ is the function identically equal to 0.
+\end{problem}
+\begin{solution}
+    \begin{proof} Let $g$ be a bounded function from $[a,b]$ (we can deduce the boundedness of $g$ from the integrability of $f$). Let $M=\sup\left\vert g(x) \right\vert $, and let $E$ be the finite set of points such that $g(x)\neq f(x)$. As $E$ is finite, we are able to cover $E$ with disjoint intervals $[u_j, v_j]\subset [a,b]$, and also make the sum of all disjoint intervals $[u_j, v_j]$ less than $\varepsilon$ (arbitrarily small). By removing these intervals from $[a,b]$, we obtain a new set $K$ (this set is compact, as it is bounded and closed). Using Theorem 21.4 in Ross, we can say that $g$ is uniformly continuous on $K$. This implies the following: 
+        \begin{align}
+           s \in K, t \in K, \left\vert s-t \right\vert < \delta \implies  \left\vert g(s)-g(t) \right\vert
+        \end{align}
+        We can then create a partition $P$ of $[a,b]$ such that $u_j, v_j \in P$, but $(u_j,v_j)\notin P$. If $x_{i-1}$ is not $u_j$, then $\Delta x_i < \delta$. We know that $g$ is bounded for all $x\in [a,b]$, so $M_{i}-m_i \leq 2M $ for all $i$ (this includes the points $u_j$ in the finite set $E$), and if $x_{i-1}$ is not one of the finite $u_j$, then $M_{i}-m_i <\varepsilon$. This implies the following:
+        \begin{align}
+            U(P,f,x)-L(P,f,x)\leq [b-a]\varepsilon + 2M\varepsilon
+        \end{align}   
+        As $\varepsilon$ is arbitrary, this proves that $g$ is integrable.  
+    \end{proof}
+\end{solution}
+\end{document}

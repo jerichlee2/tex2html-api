@@ -1,0 +1,156 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 4}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+  
+  \begin{problem}[Values and properties of elementary functions]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Compute \emph{all} values of \((\sqrt{2}-i)^{20}\) and list them in the form \(x+iy\) with \(x,y\in\mathbb{R}\).
+    \item Determine the principal value of \(\displaystyle\exp\!\bigl[\tfrac12\Log\!\bigl(3+4i\bigr)\bigr]\).
+    \item Show that, for every \(z\in\mathbb{C}\setminus\{\pm i\}\),
+          \[
+            \arccos z \;=\; \frac{\pi}{2}-\arcsin z
+            \quad\text{where}\quad
+            \arcsin z \;=\; -\,i\Log\!\bigl(iz+\sqrt{1-z^{2}}\bigr),
+          \]
+          and \(\Log\) denotes the principal branch of the complex logarithm.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Isolated singularities]
+  Define
+  \[
+    f(z)\;=\;\frac{(z^{2}+1)\,e^{\tfrac{1}{z-1}}}{(z+2)^{3}}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Classify the isolated singularities of \(f\) at \(z=1\) and \(z=-2\).
+    \item Compute \(\operatorname*{Res}_{z=1}f(z)\) and \(\operatorname*{Res}_{z=-2}f(z)\).
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Find Taylor/Laurent series]
+  Expand
+  \[
+    h(z)\;=\;z\cot z
+  \]
+  in a Laurent series about \(z=0\) and write the first four non‑zero terms.
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Evaluate an integral over a closed contour]
+  Evaluate, using residues,
+  \[
+    \oint_{\lvert z\rvert = 3}\frac{z^{2}}{(z^{2}+4)(z-1)}\,dz.
+  \]
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Evaluate an improper integral]
+  Show that
+  \[
+    I \;=\;\int_{0}^{\infty}\frac{x}{x^{4}+5x^{2}+6}\,dx
+  \]
+  converges and compute its exact value.
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Find the number of zeros of a function]
+  Let
+  \[
+    F(z)\;=\;z^{6}+z^{3}+1.
+  \]
+  Using the Argument Principle or Rouché’s Theorem, determine how many zeros of \(F\) lie in the annulus \(1<\lvert z\rvert<2\).
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Find a conformal map]
+  Construct an explicit conformal map that sends the sector
+  \[
+    S=\bigl\{\,z : 0<\Arg z<\tfrac{\pi}{3}\bigr\}
+  \]
+  onto the upper half‑plane \(\operatorname{Im}w>0\).  
+  Describe each intermediate mapping used in your construction.
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}[Cauchy estimates for a Laurent series]
+  Suppose \(f\) is analytic on the punctured disc \(0<\lvert z\rvert<R\) and has Laurent expansion
+  \[
+    f(z)=\sum_{n=-\infty}^{\infty}a_{n}z^{\,n}, \qquad 0<\lvert z\rvert<R.
+  \]
+  Assume there are constants \(M>0\) and \(\alpha>0\) such that
+  \[
+    \lvert f(z)\rvert \;\le\; \frac{M}{\lvert z\rvert^{\alpha}}
+    \quad\text{whenever }0<\lvert z\rvert<\frac{R}{2}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Show, using the Cauchy estimates for Laurent coefficients, that \(a_{n}=0\) whenever \(n<-\alpha\).
+    \item Conclude that \(f\) extends to a meromorphic function on \(\lvert z\rvert<R\) with at most a pole of order \(\lceil\alpha\rceil\) at \(z=0\).
+  \end{enumerate}
+  \end{problem}
+\end{document}

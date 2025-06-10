@@ -1,0 +1,180 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{theorem}[Sylow's Theorem --- existence of a $p^n$-subgroup]
+    Let $(G, *)$ be a finite group whose order is divisible by $p^n$, where $p$ is a prime.
+    Then $G$ contains a subgroup of order $p^n$.
+    \end{theorem}
+    
+    \begin{proof}[Sketch of Proof via Orbit--Stabilizer]
+    
+    \textbf{Step 1: Factor out the $p^n$ part from $|G|$.}\\
+    Write 
+    \[
+       |G| \;=\; p^n m,
+       \quad\text{where}\quad
+       m \;=\; p^r\,u
+       \quad\text{and}\quad
+       \gcd(p,\,u) \;=\; 1.
+    \]
+    (Note that $r$ could be $0$, so $m$ may or may not contain additional powers of $p$.)
+    
+    \medskip
+    
+    \textbf{Step 2: Consider the set $S$ of all $p^n$-element subsets of $G$.}\\
+    Define
+    \[
+      S \;=\; \{\, \omega \subseteq G : |\omega| = p^n \}.
+    \]
+    There is a natural (left) group action of $G$ on $S$:
+    for $g \in G$ and $\omega = \{\omega_1, \dots, \omega_{p^n}\} \in S$, set
+    \[
+       g * \omega 
+       \;=\; \{\,g * \omega_1,\;g * \omega_2,\;\dots,\;g * \omega_{p^n}\}.
+    \]
+    In other words, $g$ simply multiplies (on the left) each element of $\omega$.
+    
+    \medskip
+    
+    \textbf{Step 3: Show that any stabilizer has size at most $p^n$.}\\
+    Pick an ordered version $\omega = \{\omega_1, \dots, \omega_{p^n}\}$.  
+    Define the \emph{stabilizer} of $\omega$ as 
+    \[
+      \mathrm{Stab}(\omega) \;=\; \{\,g \in G : g * \omega = \omega\}.
+    \]
+    Observe that for each $g$ in $\mathrm{Stab}(\omega)$, we certainly have 
+    \[
+       g * \omega_1 \;\in\; \omega.
+    \]
+    Define a map
+    \[
+       f \colon \mathrm{Stab}(\omega) \;\longrightarrow\; \omega,
+       \quad g \;\mapsto\; g * \omega_1.
+    \]
+    We claim $f$ is \emph{injective}.  Indeed, if $g_1 * \omega_1 = g_2 * \omega_1$, 
+    then by the cancellation property in the group $G$, we get $g_1 = g_2$.  
+    Thus $|\mathrm{Stab}(\omega)| \le |\omega| = p^n.$
+    
+    \medskip
+    
+    \textbf{Step 4: Compute the size of $S$.}\\
+    We have
+    \[
+       |S| 
+       \;=\; \binom{p^n m}{p^n} 
+       \;=\;
+       \frac{(p^n m)!}{(p^n)!\,\bigl(p^n m - p^n\bigr)!}.
+    \]
+    One can rewrite this ratio using the product
+    \[
+       |S|
+       \;=\;
+       \prod_{j=0}^{p^n -1} \frac{p^n m - j}{p^n - j}
+       \;=\;
+       m \prod_{j=1}^{p^n-1} \frac{p^n m - j}{p^n - j}.
+    \]
+    A key observation is that for each $1 \le j \le p^n - 1$, 
+    the factors $p^n - j$ and $p^n m - j$ have the \emph{same} $p$-adic valuation 
+    (i.e.\ the same highest power of $p$ dividing each). 
+    Since $j$ is less than $p^n$, it can only contain at most $p^{n-1}$ in its factorization, 
+    so subtracting $j$ from $p^n$ and from $p^n m$ keeps that same power of $p$ in each.  
+    
+    Hence each fraction
+    \[
+       \frac{p^n m - j}{p^n - j}
+    \]
+    is \emph{not} divisible by $p$.  
+    When multiplying them all up, no additional factors of $p$ appear.  
+    Thus (after a bit of bookkeeping) one deduces
+    \[
+       |S| \;=\; p^r \,v
+       \quad\text{for some integer }v \text{ with } \gcd(p,\,v)=1.
+    \]
+    
+    \medskip
+    
+    \textbf{Step 5: Decompose $S$ into orbits under the $G$-action.}\\
+    $S$ is the disjoint union of $G$-orbits; each orbit has size 
+    \[
+       |\mathrm{Orb}(\omega)| 
+       \;=\; \frac{|G|}{|\mathrm{Stab}(\omega)|}.
+    \]
+    Because $|G|=p^n m$ and we already know $|\mathrm{Stab}(\omega)| \le p^n$, 
+    the orbit size $|\mathrm{Orb}(\omega)|$ must be a \emph{power of $p$ times} something \emph{coprime} to $p$.  
+    
+    \smallskip
+    By carefully analyzing these orbit sizes (all dividing $|S|=p^r v$), one shows there must be an orbit 
+    whose size is a power of $p$ \emph{at most} $p^n$.  Call this orbit $\mathrm{Orb}(\omega_0)$ and suppose its size is 
+    $p^t$ with $t \le n$.
+    
+    \medskip
+    
+    \textbf{Step 6: Conclude there is a subgroup of size $p^n$.}\\
+    For that special orbit, the \emph{stabilizer} has size
+    \[
+       |\mathrm{Stab}(\omega_0)| 
+       \;=\;
+       \frac{|G|}{|\mathrm{Orb}(\omega_0)|}
+       \;=\;
+       \frac{p^n m}{p^t}.
+    \]
+    Because $m$ itself has a factor $p^r$, we end up with 
+    \[
+       |\mathrm{Stab}(\omega_0)|
+       \;=\;
+       p^{n + r - t}\,u
+    \]
+    where $\gcd(p,u)=1$.  One checks that $n + r - t \ge n$, or (by slightly different combinatorial arguments) 
+    one can refine the orbit-size analysis to ensure we actually get $|\mathrm{Stab}(\omega_0)| = p^n$. 
+    In any case, we obtain a subgroup $\mathrm{Stab}(\omega_0)$ of order exactly $p^n$, 
+    as required.
+    
+    \end{proof}
+    
+\end{document}

@@ -1,0 +1,558 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Difference Between a Stabilizer and a Kernel: Step-by-Step}
+
+In a group action, we have two important concepts:
+
+\subsection*{1. Definitions}
+\begin{itemize}
+    \item \textbf{Stabilizer:} For a group \(G\) acting on a set \(X\) and for a specific element \(x\in X\), the stabilizer is defined by
+    \[
+    \operatorname{Stab}_G(x) = \{\,g\in G \mid g\cdot x = x\,\}.
+    \]
+    It consists of all elements that fix the element \(x\).
+
+    \item \textbf{Kernel:} The kernel of the action is the set of all elements in \(G\) that fix every element of \(X\):
+    \[
+    \operatorname{Ker}(G\curvearrowright X) = \{\,g\in G \mid g\cdot x = x \text{ for all } x\in X\,\}.
+    \]
+    Equivalently, it is the intersection of all stabilizers:
+    \[
+    \operatorname{Ker}(G\curvearrowright X) = \bigcap_{x\in X} \operatorname{Stab}_G(x).
+    \]
+\end{itemize}
+
+\subsection*{2. Example 1: Permutation Action on a Set}
+Let \(G = S_3\) (the symmetric group on 3 elements) and \(X = \{1,2,3\}\), with \(S_3\) acting on \(X\) by permutation.
+
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+    \item \textbf{Determine the Stabilizer:}
+    \begin{itemize}
+        \item Choose an element, say \(x=1\).
+        \item The stabilizer of \(1\) is
+        \[
+        \operatorname{Stab}_{S_3}(1) = \{g \in S_3 \mid g(1)=1\}.
+        \]
+        \item In \(S_3\), the permutations that fix \(1\) form a subgroup isomorphic to \(S_2\), which has 2 elements.
+    \end{itemize}
+    
+    \item \textbf{Determine the Kernel:}
+    \begin{itemize}
+        \item The kernel of the action is
+        \[
+        \operatorname{Ker}(S_3\curvearrowright \{1,2,3\}) = \{g\in S_3 \mid g(i)=i \text{ for all } i\in \{1,2,3\}\}.
+        \]
+        \item Since the permutation action is faithful (only the identity fixes every element), we have
+        \[
+        \operatorname{Ker}(S_3\curvearrowright \{1,2,3\}) = \{e\}.
+        \]
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{3. Example 2: Conjugation Action}
+Let \(G = S_3\) and consider \(G\) acting on itself by conjugation:
+\[
+g \cdot x = gxg^{-1}.
+\]
+
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=*]
+    \item \textbf{Stabilizer under Conjugation (Centralizer):}
+    \begin{itemize}
+        \item Pick an element, say \(x = (12)\).
+        \item The stabilizer (or centralizer) of \((12)\) is defined as
+        \[
+        \operatorname{Stab}_{S_3}((12)) = \{g\in S_3 \mid g(12)g^{-1} = (12)\} = C_{S_3}((12)).
+        \]
+        \item Using the orbit-stabilizer theorem and knowing that the conjugacy class of \((12)\) in \(S_3\) has 3 elements, we have
+        \[
+        |C_{S_3}((12))| = \frac{|S_3|}{|\text{conjugacy class of } (12)|} = \frac{6}{3} = 2.
+        \]
+    \end{itemize}
+    
+    \item \textbf{Kernel of the Conjugation Action:}
+    \begin{itemize}
+        \item The kernel of the conjugation action is given by
+        \[
+        \operatorname{Ker}(S_3\curvearrowright S_3) = \{g\in S_3 \mid gxg^{-1} = x \text{ for all } x\in S_3\}.
+        \]
+        \item This kernel is exactly the center of \(S_3\):
+        \[
+        \operatorname{Ker}(S_3\curvearrowright S_3) = Z(S_3).
+        \]
+        \item It is known that for \(S_3\), the center is trivial:
+        \[
+        Z(S_3) = \{e\}.
+        \]
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{4. Summary}
+\begin{itemize}
+    \item \textbf{Stabilizer:}
+    \begin{itemize}
+        \item In Example 1, \(\operatorname{Stab}_{S_3}(1) \cong S_2\) (order 2).
+        \item In Example 2, \(\operatorname{Stab}_{S_3}((12)) = C_{S_3}((12))\) (order 2).
+    \end{itemize}
+    \item \textbf{Kernel:}
+    \begin{itemize}
+        \item In Example 1, \(\operatorname{Ker}(S_3\curvearrowright \{1,2,3\}) = \{e\}\).
+        \item In Example 2, \(\operatorname{Ker}(S_3\curvearrowright S_3) = Z(S_3) = \{e\}\).
+    \end{itemize}
+\end{itemize}
+
+This step-by-step example demonstrates that while the stabilizer is specific to a single element (or its conjugacy, in the case of the conjugation action), the kernel reflects the overall faithfulness of the action by being the intersection of all stabilizers.
+
+\section*{Faithful Group Actions}
+
+A group action \( G \curvearrowright X \) is said to be \textbf{faithful} if distinct elements of \( G \) induce distinct permutations of \( X \). In other words, the only group element that acts as the identity on every element of \( X \) is the identity element of \( G \).
+
+\subsection*{Formal Definition}
+Consider the homomorphism associated with the action:
+\[
+\phi : G \to \operatorname{Sym}(X), \quad \phi(g)(x) = g \cdot x.
+\]
+The action is \textbf{faithful} if and only if \(\phi\) is injective. Equivalently, the kernel of the action is trivial:
+\[
+\operatorname{Ker}(G \curvearrowright X) = \{ g \in G \mid g\cdot x = x \quad \forall\, x \in X \} = \{e\}.
+\]
+
+\subsection*{Step-by-Step Explanation}
+\begin{enumerate}[label=\textbf{Step \arabic*:}]
+    \item \textbf{Identify the Kernel:} \\
+    Determine the set of elements in \(G\) that fix every element in \(X\):
+    \[
+    \operatorname{Ker}(G \curvearrowright X) = \{ g \in G \mid g \cdot x = x \quad \forall\, x \in X \}.
+    \]
+    
+    \item \textbf{Check for Triviality:} \\
+    The action is faithful if the kernel is trivial, meaning:
+    \[
+    \operatorname{Ker}(G \curvearrowright X) = \{e\}.
+    \]
+    
+    \item \textbf{Interpretation:} \\
+    This condition implies that no non-identity element of \(G\) acts as the identity on \(X\). Hence, different elements of \(G\) produce different permutations on \(X\), which means the action reflects the structure of \(G\) accurately.
+    
+    \item \textbf{Concrete Example:} \\
+    Consider the symmetric group \( S_n \) acting on the set \( X = \{1,2,\dots,n\} \) by permutation. If a permutation \( g \in S_n \) fixes every element in \( X \) (i.e., \( g(i)=i \) for all \( i \)), then \( g \) must be the identity permutation. Thus,
+    \[
+    \operatorname{Ker}(S_n \curvearrowright \{1,2,\dots,n\}) = \{e\},
+    \]
+    and the action is faithful.
+\end{enumerate}
+
+\section*{Relationship Between the Kernel of a Group Action and the Kernel of a Group Homomorphism}
+
+Let a group \( G \) act on a set \( X \). This action induces a homomorphism
+\[
+\phi: G \to \operatorname{Sym}(X)
+\]
+defined by
+\[
+\phi(g)(x) = g \cdot x \quad \text{for all } x \in X.
+\]
+
+\subsection*{Kernel of the Homomorphism}
+The kernel of the homomorphism \(\phi\) is
+\[
+\operatorname{Ker}(\phi) = \{ g \in G \mid \phi(g) = \operatorname{id}_X \},
+\]
+where \(\operatorname{id}_X\) is the identity permutation on \(X\).
+
+\subsection*{Kernel of the Group Action}
+By definition, the kernel of the group action is
+\[
+\operatorname{Ker}(G \curvearrowright X) = \{ g \in G \mid g\cdot x = x \text{ for all } x \in X \}.
+\]
+This means that every \(g\) in the kernel of the action leaves every element of \(X\) unchanged.
+
+\subsection*{Conclusion}
+Since \(\phi(g) = \operatorname{id}_X\) if and only if \(g \cdot x = x\) for all \(x \in X\), we have
+\[
+\operatorname{Ker}(\phi) = \operatorname{Ker}(G \curvearrowright X).
+\]
+Thus, the kernel of the group action is exactly the kernel of the induced group homomorphism.
+
+\section*{Examples of Kernels of Group Homomorphisms}
+
+Recall that if \(\varphi: G \to H\) is a group homomorphism, then its kernel is defined by
+\[
+\ker(\varphi) = \{ g \in G \mid \varphi(g) = e_H \},
+\]
+where \(e_H\) is the identity element of \(H\).
+
+\subsection*{Example 1: The Trivial Homomorphism}
+Let \( \varphi: G \to H \) be defined by
+\[
+\varphi(g) = e_H \quad \text{for all } g \in G.
+\]
+Since every element of \(G\) is mapped to \(e_H\), we have:
+\[
+\ker(\varphi) = G.
+\]
+
+\subsection*{Example 2: Projection from \(\mathbb{Z}\) to \(\mathbb{Z}_n\)}
+Define the homomorphism
+\[
+\pi: \mathbb{Z} \to \mathbb{Z}_n, \quad \pi(k) = k \mod n.
+\]
+The identity in \(\mathbb{Z}_n\) is \([0]\). The kernel consists of all integers \(k\) such that
+\[
+k \equiv 0 \pmod{n},
+\]
+so
+\[
+\ker(\pi) = n\mathbb{Z} = \{ nk \mid k \in \mathbb{Z} \}.
+\]
+
+\subsection*{Example 3: The Sign Homomorphism on \(S_n\)}
+Consider the sign homomorphism
+\[
+\operatorname{sgn}: S_n \to \{1, -1\},
+\]
+which assigns to each permutation its sign (even or odd). The kernel is the set of all even permutations, which forms the alternating group:
+\[
+\ker(\operatorname{sgn}) = A_n.
+\]
+
+\subsection*{Example 4: The Determinant Homomorphism}
+The determinant map
+\[
+\det: GL(n, \mathbb{R}) \to \mathbb{R}^*
+\]
+sends an invertible \(n \times n\) matrix to its determinant (a nonzero real number). The kernel is the set of matrices with determinant 1:
+\[
+\ker(\det) = SL(n, \mathbb{R}).
+\]
+
+\subsection*{Example 5: The Exponential Map}
+Consider the exponential map
+\[
+\exp: (\mathbb{R}, +) \to S^1, \quad \exp(x) = e^{2\pi i x}.
+\]
+Here, the identity in \(S^1\) is \(1\) (or \(e^{0}\)). The kernel is the set of all \(x \in \mathbb{R}\) such that
+\[
+e^{2\pi i x} = 1.
+\]
+Since \(e^{2\pi i x} = 1\) if and only if \(x\) is an integer, we have:
+\[
+\ker(\exp) = \mathbb{Z}.
+\]
+
+\section*{Kernel of the Differentiation Operator}
+
+Consider the differentiation operator
+\[
+D: C^1(I) \to C(I),
+\]
+where \(I \subseteq \mathbb{R}\) is an interval, \(C^1(I)\) is the space of continuously differentiable functions on \(I\), and \(C(I)\) is the space of continuous functions on \(I\).
+
+\subsection*{Definition of the Kernel}
+The kernel of \(D\) is given by
+\[
+\ker(D) = \{ f \in C^1(I) \mid D(f) = f' = 0 \text{ for all } x \in I \}.
+\]
+
+\subsection*{Why the Kernel Consists of Constant Functions}
+By the Mean Value Theorem, if a function \(f\) satisfies \(f'(x) = 0\) for all \(x \in I\) (and \(I\) is connected), then \(f\) must be constant on \(I\). Therefore,
+\[
+\ker(D) = \{ f \in C^1(I) \mid f(x) = c \text{ for some constant } c \in \mathbb{R} \}.
+\]
+
+Thus, in this setting, the constants are precisely the kernel of the differentiation operator.
+
+\section*{The Chinese Remainder Theorem}
+
+The \textbf{Chinese Remainder Theorem} (CRT) is a result about solving systems of simultaneous congruences with pairwise coprime moduli. It states that if
+\[
+\begin{aligned}
+x &\equiv a_1 \pmod{n_1}, \\
+x &\equiv a_2 \pmod{n_2}, \\
+&\;\;\vdots \\
+x &\equiv a_k \pmod{n_k},
+\end{aligned}
+\]
+where the moduli \(n_1, n_2, \dots, n_k\) are pairwise relatively prime (i.e., \(\gcd(n_i, n_j)=1\) for \(i\neq j\)), then there exists a unique solution modulo 
+\[
+N = n_1 n_2 \cdots n_k.
+\]
+
+\subsection*{Constructive Proof Idea}
+
+Define
+\[
+N_i = \frac{N}{n_i} \quad \text{for } i=1,2,\dots,k.
+\]
+Since \(\gcd(N_i, n_i)=1\), there exists an integer \(M_i\) such that
+\[
+N_i M_i \equiv 1 \pmod{n_i}.
+\]
+Then the solution can be constructed as
+\[
+x \equiv \sum_{i=1}^{k} a_i N_i M_i \pmod{N}.
+\]
+
+\subsection*{Example 1}
+
+Solve the system
+\[
+\begin{aligned}
+x &\equiv 2 \pmod{3}, \\
+x &\equiv 3 \pmod{5}.
+\end{aligned}
+\]
+
+\noindent\textbf{Step 1:} Compute \(N\) and \(N_i\). \\
+Here, \(n_1 = 3\) and \(n_2 = 5\) so
+\[
+N = 3 \times 5 = 15, \quad N_1 = \frac{15}{3} = 5, \quad N_2 = \frac{15}{5} = 3.
+\]
+
+\noindent\textbf{Step 2:} Find \(M_1\) and \(M_2\) such that:
+\[
+5M_1 \equiv 1 \pmod{3} \quad \text{and} \quad 3M_2 \equiv 1 \pmod{5}.
+\]
+Since \(5 \equiv 2 \pmod{3}\), we need:
+\[
+2M_1 \equiv 1 \pmod{3} \quad \Longrightarrow \quad M_1 = 2,
+\]
+because \(2 \times 2 = 4 \equiv 1 \pmod{3}\).
+
+Similarly, \(3 \times 2 = 6 \equiv 1 \pmod{5}\), so \(M_2 = 2\).
+
+\noindent\textbf{Step 3:} Construct the solution:
+\[
+x \equiv 2 \cdot 5 \cdot 2 + 3 \cdot 3 \cdot 2 = 20 + 18 = 38 \pmod{15}.
+\]
+Since \(38 \mod 15 = 8\), the unique solution is:
+\[
+x \equiv 8 \pmod{15}.
+\]
+
+\subsection*{Example 2}
+
+Solve the system
+\[
+\begin{aligned}
+x &\equiv 1 \pmod{4}, \\
+x &\equiv 2 \pmod{5}, \\
+x &\equiv 3 \pmod{7}.
+\end{aligned}
+\]
+
+\noindent\textbf{Step 1:} Compute \(N\) and \(N_i\). \\
+Here, \(n_1 = 4\), \(n_2 = 5\), \(n_3 = 7\) so
+\[
+N = 4 \times 5 \times 7 = 140,
+\]
+\[
+N_1 = \frac{140}{4} = 35, \quad N_2 = \frac{140}{5} = 28, \quad N_3 = \frac{140}{7} = 20.
+\]
+
+\noindent\textbf{Step 2:} Find \(M_i\) such that:
+\[
+35M_1 \equiv 1 \pmod{4}, \quad 28M_2 \equiv 1 \pmod{5}, \quad 20M_3 \equiv 1 \pmod{7}.
+\]
+For \(n_1=4\): Since \(35 \equiv 3 \pmod{4}\), we need
+\[
+3M_1 \equiv 1 \pmod{4} \quad \Longrightarrow \quad M_1 = 3 \quad (\text{since } 3 \times 3 = 9 \equiv 1 \pmod{4}).
+\]
+
+For \(n_2=5\): Since \(28 \equiv 3 \pmod{5}\), we have:
+\[
+3M_2 \equiv 1 \pmod{5} \quad \Longrightarrow \quad M_2 = 2 \quad (\text{since } 3 \times 2 = 6 \equiv 1 \pmod{5}).
+\]
+
+For \(n_3=7\): Since \(20 \equiv 6 \pmod{7}\) (or equivalently \(-1 \pmod{7}\)), we need:
+\[
+6M_3 \equiv 1 \pmod{7} \quad \Longrightarrow \quad M_3 \equiv 6 \pmod{7} \quad (\text{since } 6 \times 6 = 36 \equiv 1 \pmod{7}).
+\]
+
+\noindent\textbf{Step 3:} Construct the solution:
+\[
+x \equiv 1 \cdot 35 \cdot 3 + 2 \cdot 28 \cdot 2 + 3 \cdot 20 \cdot 6 \pmod{140}.
+\]
+Calculating, we get:
+\[
+x \equiv 105 + 112 + 360 = 577 \pmod{140}.
+\]
+Since \(577 \mod 140 = 577 - 4 \times 140 = 577 - 560 = 17\), the unique solution is:
+\[
+x \equiv 17 \pmod{140}.
+\]
+\section*{Relationship Between the Classical CRT and Its Algebraic Versions}
+
+The \textbf{classical Chinese Remainder Theorem (CRT)} states that if we have a system of congruences
+\[
+\begin{aligned}
+x &\equiv a_1 \pmod{n_1}, \\
+x &\equiv a_2 \pmod{n_2}, \\
+&\;\;\vdots \\
+x &\equiv a_r \pmod{n_r},
+\end{aligned}
+\]
+with the moduli \(n_1, n_2, \dots, n_r\) being pairwise coprime, then there exists a unique solution modulo 
+\[
+n = n_1 n_2 \cdots n_r.
+\]
+In essence, knowing the remainders \(x \bmod n_i\) for each \(i\) completely determines the residue of \(x\) modulo \(n\).
+
+\section*{Additive Version (Theorem 1.19)}
+
+The additive version of the CRT states that when the moduli \(n_1, n_2, \dots, n_r\) are pairwise relatively prime, there is a ring isomorphism:
+\[
+\mathbb{Z}_n \;\cong\; \mathbb{Z}_{n_1} \oplus \mathbb{Z}_{n_2} \oplus \cdots \oplus \mathbb{Z}_{n_r}.
+\]
+This means that every element in the ring \(\mathbb{Z}_n\) corresponds uniquely to a tuple
+\[
+\bigl(x \bmod n_1,\, x \bmod n_2,\, \dots,\, x \bmod n_r\bigr)
+\]
+in the direct sum of the rings \(\mathbb{Z}_{n_i}\). This is precisely the statement of the classical CRT rephrased in the language of ring theory.
+
+\section*{Multiplicative Version (Theorem 1.20)}
+
+The multiplicative version focuses on the units (invertible elements) in these rings. It states that:
+\[
+(\mathbb{Z}_n)^\times \;\cong\; (\mathbb{Z}_{n_1})^\times \times (\mathbb{Z}_{n_2})^\times \times \cdots \times (\mathbb{Z}_{n_r})^\times.
+\]
+Here, \((\mathbb{Z}_n)^\times\) denotes the multiplicative group of units modulo \(n\), and each \((\mathbb{Z}_{n_i})^\times\) is the group of units modulo \(n_i\). This theorem tells us that an invertible element modulo \(n\) corresponds uniquely to a tuple of invertible elements modulo each \(n_i\). The process of "breaking apart" the multiplicative structure mirrors the classical CRT, but now for the multiplicative groups.
+
+\section*{How They Relate to the Classical CRT}
+
+Both the additive and multiplicative versions are algebraic restatements of the classical Chinese Remainder Theorem:
+
+\begin{itemize}
+    \item \textbf{Classical CRT:} Guarantees a unique solution to a system of congruences with pairwise coprime moduli.
+    \item \textbf{Additive Version:} Reinterprets this unique correspondence as an isomorphism between the ring \(\mathbb{Z}_n\) and the direct sum \(\mathbb{Z}_{n_1} \oplus \cdots \oplus \mathbb{Z}_{n_r}\).
+    \item \textbf{Multiplicative Version:} Further refines this idea by showing that the multiplicative structure (units) in \(\mathbb{Z}_n\) splits as a direct product of the groups \((\mathbb{Z}_{n_i})^\times\).
+\end{itemize}
+
+In both cases, the key is the fact that the moduli are pairwise coprime. This condition ensures that the mapping
+\[
+x \mapsto \bigl(x \bmod n_1,\, x \bmod n_2,\, \dots,\, x \bmod n_r\bigr)
+\]
+is bijective and structure-preserving (either as a ring homomorphism or as a group homomorphism). Thus, these algebraic versions are simply different perspectives on the same underlying principle articulated by the classical CRT.
+
+\section*{Example: Solving a System of Congruences with the Chinese Remainder Theorem}
+
+Consider the system of congruences:
+\[
+\begin{aligned}
+x &\equiv 2 \pmod{3}, \\
+x &\equiv 3 \pmod{5}.
+\end{aligned}
+\]
+Since \(3\) and \(5\) are relatively prime, the Chinese Remainder Theorem guarantees a unique solution modulo 
+\[
+N = 3 \times 5 = 15.
+\]
+
+\subsection*{Step 1: Understanding the Isomorphism}
+
+According to the additive version of the CRT, we have a ring isomorphism:
+\[
+\mathbb{Z}_{15} \cong \mathbb{Z}_3 \oplus \mathbb{Z}_5.
+\]
+This means every element \(x \in \mathbb{Z}_{15}\) corresponds uniquely to the pair 
+\[
+\bigl( x \bmod 3,\, x \bmod 5 \bigr).
+\]
+
+\subsection*{Step 2: Constructing the Solution}
+
+Define:
+\[
+N_1 = \frac{N}{3} = \frac{15}{3} = 5, \quad N_2 = \frac{N}{5} = \frac{15}{5} = 3.
+\]
+We need to find integers \(M_1\) and \(M_2\) such that:
+\[
+N_1 M_1 \equiv 1 \pmod{3} \quad \text{and} \quad N_2 M_2 \equiv 1 \pmod{5}.
+\]
+
+\paragraph{Finding \(M_1\):}  
+Since \(N_1 = 5\) and \(5 \equiv 2 \pmod{3}\), we need:
+\[
+2M_1 \equiv 1 \pmod{3}.
+\]
+Choosing \(M_1 = 2\) works because \(2 \times 2 = 4 \equiv 1 \pmod{3}\).
+
+\paragraph{Finding \(M_2\):}  
+Since \(N_2 = 3\) and \(3 \equiv 3 \pmod{5}\), we need:
+\[
+3M_2 \equiv 1 \pmod{5}.
+\]
+Choosing \(M_2 = 2\) works as well since \(3 \times 2 = 6 \equiv 1 \pmod{5}\).
+
+\paragraph{Constructing \(x\):}  
+The solution is given by:
+\[
+x \equiv a_1 N_1 M_1 + a_2 N_2 M_2 \pmod{15},
+\]
+where \(a_1 = 2\) and \(a_2 = 3\). Thus,
+\[
+x \equiv 2 \cdot 5 \cdot 2 + 3 \cdot 3 \cdot 2 = 20 + 18 = 38 \pmod{15}.
+\]
+Since \(38 \mod 15 = 8\), we have:
+\[
+x \equiv 8 \pmod{15}.
+\]
+
+\subsection*{Step 3: Verification}
+
+To check the solution:
+\[
+8 \bmod 3 = 2 \quad \text{and} \quad 8 \bmod 5 = 3.
+\]
+Thus, the solution \(x = 8\) satisfies both congruences.
+
+\end{document}

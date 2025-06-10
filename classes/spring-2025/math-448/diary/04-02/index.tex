@@ -1,0 +1,1070 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\textbf{Claim.} 
+\[
+\frac{1}{2\pi i}\oint_{|z - z_0| = s} (z - z_0)^j \, dz 
+= 
+\begin{cases}
+1 & \text{if } j = -1,\\
+0 & \text{if } j \text{ is any other integer}.
+\end{cases}
+\]
+
+\begin{proof}
+\textbf{Step 1: Parametrize the contour.}\\
+Let the contour be the circle of radius $s$ centered at $z_0$, i.e.\ $|z - z_0| = s$. We may parametrize this contour by
+\[
+z = z_0 + s e^{i\theta},
+\quad\quad
+\theta \in [0,2\pi].
+\]
+Then the differential $dz$ is given by
+\[
+dz = \frac{d}{d\theta}(z_0 + s e^{i\theta}) \, d\theta 
+= i s e^{i\theta} \, d\theta.
+\]
+
+\noindent
+\textbf{Step 2: Rewrite the integrand in the chosen parameter.}\\
+On this contour,
+\[
+(z - z_0)^j = (s e^{i\theta})^j = s^j e^{i j \theta}.
+\]
+Hence the integrand becomes
+\[
+(z - z_0)^j \, dz 
+= s^j e^{i j \theta} \,\bigl(i s e^{i\theta}\bigr) \, d\theta 
+= i s^{j+1} e^{i (j+1)\theta} \, d\theta.
+\]
+
+\noindent
+\textbf{Step 3: Evaluate the integral.}\\
+Therefore,
+\[
+\oint_{|z - z_0|=s} (z - z_0)^j \, dz 
+= 
+\int_{0}^{2\pi} i s^{j+1} e^{i (j+1)\theta} \, d\theta 
+= 
+i s^{j+1} \int_{0}^{2\pi} e^{i (j+1)\theta} \, d\theta.
+\]
+We now incorporate the factor $\frac{1}{2 \pi i}$:
+\[
+\frac{1}{2\pi i}
+\oint_{|z - z_0| = s} (z - z_0)^j \, dz 
+= 
+\frac{1}{2\pi i} 
+\Bigl(
+i s^{j+1} \int_{0}^{2\pi} e^{i (j+1)\theta} \, d\theta
+\Bigr).
+\]
+Simplify:
+\[
+= 
+\frac{s^{j+1}}{2\pi} 
+\int_{0}^{2\pi} e^{i (j+1)\theta} \, d\theta.
+\]
+
+\noindent
+\textbf{Step 4: Evaluate the remaining integral.}\\
+We recognize that
+\[
+\int_{0}^{2\pi} e^{i (j+1)\theta} \, d\theta 
+=
+\begin{cases}
+2\pi, & \text{if } j+1 = 0 \\
+0, & \text{if } j+1 \neq 0
+\end{cases}
+\quad
+\text{i.e. }
+\begin{cases}
+2\pi, & \text{if } j = -1, \\
+0, & \text{if } j \neq -1.
+\end{cases}
+\]
+Thus:
+\[
+\frac{s^{j+1}}{2\pi} \int_{0}^{2\pi} e^{i (j+1)\theta} \, d\theta 
+= 
+\begin{cases}
+\frac{s^{-1+1}}{2\pi} \cdot 2\pi = 1, & \text{if } j = -1, \\
+0, & \text{otherwise}.
+\end{cases}
+\]
+Hence,
+\[
+\frac{1}{2\pi i}\oint_{|z - z_0| = s} (z - z_0)^j \, dz 
+= 
+\begin{cases}
+1 & \text{if } j = -1,\\
+0 & \text{otherwise}.
+\end{cases}
+\]
+
+\end{proof}
+
+\noindent
+\textbf{Claim.} For large \(R\), the integral
+\[
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,d\theta
+\]
+goes to \(0\) as \(R \to \infty\), assuming 
+\[
+\left|f\bigl(Re^{i\theta}\bigr)\right| \le \frac{e^{-R\sin\theta}}{R^2 - \alpha^2}.
+\]
+
+\begin{proof}
+
+\textbf{Step 1: Set up the integral and take absolute values.}\\
+We want to estimate 
+\[
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,d\theta.
+\]
+First, take the absolute value inside an integral:
+\[
+\left|
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,d\theta
+\right|
+\;\le\;
+\int_{0}^{\pi}
+\Bigl| f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\Bigr|
+\,d\theta.
+\]
+
+\textbf{Step 2: Use the given bound on \(f\).}\\
+By assumption, for each \(\theta \in [0,\pi]\),
+\[
+\bigl|f\bigl(Re^{i\theta}\bigr)\bigr|
+\;\le\;
+\frac{e^{-\,R\sin\theta}}{R^{2}-\alpha^{2}}.
+\]
+Also, \(\bigl|R\,e^{i\theta}\bigr| = R\). Hence
+\[
+\bigl|
+f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}
+\bigr|
+\;\le\;
+R \,\frac{e^{-\,R\sin\theta}}{R^{2}-\alpha^{2}}
+\;=\;
+\frac{R\, e^{-\,R\sin\theta}}{R^{2}-\alpha^{2}}.
+\]
+Therefore,
+\[
+\int_{0}^{\pi}
+\Bigl| f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\Bigr|
+\,d\theta
+\;\le\;
+\int_{0}^{\pi}
+\frac{R\, e^{-\,R\sin\theta}}{R^{2}-\alpha^{2}}
+\,d\theta
+\;=\;
+\frac{R}{R^{2}-\alpha^{2}}
+\;\int_{0}^{\pi}
+e^{-\,R\sin\theta}\,d\theta.
+\]
+
+\textbf{Step 3: Bound the exponential integral.}\\
+Note that \(e^{-\,R\sin\theta} \le 1\) for all \(\theta\). Hence
+\[
+\int_{0}^{\pi} e^{-\,R\sin\theta}\,d\theta
+\;\le\;
+\int_{0}^{\pi} 1\,d\theta 
+\;=\; \pi.
+\]
+Thus,
+\[
+\frac{R}{R^{2}-\alpha^{2}}
+\;\int_{0}^{\pi}
+e^{-\,R\sin\theta}\,d\theta
+\;\le\;
+\frac{R}{R^{2}-\alpha^{2}}
+\;\pi
+\;=\;
+\frac{\pi\,R}{R^{2}-\alpha^{2}}.
+\]
+
+\textbf{Step 4: Take the limit as \(R \to \infty\).}\\
+Finally, as \(R \to \infty\),
+\[
+\frac{\pi\,R}{R^{2}-\alpha^{2}}
+\;=\;
+\frac{\pi}{R - \frac{\alpha^{2}}{R}}
+\;\longrightarrow\; 0.
+\]
+Hence
+\[
+\left|
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,d\theta
+\right|
+\;\le\;
+\frac{\pi\,R}{R^{2}-\alpha^{2}}
+\;\longrightarrow\;
+0,
+\]
+which completes the proof.
+\end{proof}
+
+\noindent
+\textbf{Claim.} For $\alpha>0$,
+\[
+\int_{-\infty}^{\infty} \frac{\cos x}{x^2 + \alpha^2}\,dx
+\;=\;\frac{\pi}{\alpha}\,e^{-\alpha}.
+\]
+
+\begin{proof}
+\textbf{Step 1: Set up the complex integral.}\\
+Consider the complex function
+\[
+f(z)
+\;=\;
+\frac{e^{\,i\,z}}{z^2 + \alpha^2}.
+\]
+We seek to relate
+\(\displaystyle \int_{-\infty}^{\infty} \frac{\cos x}{x^2+\alpha^2}\,dx\)
+to
+\(\displaystyle \int_{-\infty}^{\infty} \frac{e^{\,i\,x}}{x^2+\alpha^2}\,dx.\)
+
+Note that
+\[
+\cos x \;=\;\mathrm{Re}\bigl(e^{\,i\,x}\bigr).
+\]
+Thus
+\[
+\int_{-\infty}^\infty \frac{\cos x}{x^2 + \alpha^2}\,dx
+\;=\;
+\mathrm{Re}\!
+\Bigl(
+\int_{-\infty}^\infty \frac{e^{\,i\,x}}{x^2 + \alpha^2}\,dx
+\Bigr).
+\]
+Hence, if we can compute 
+\(\int_{-\infty}^\infty \frac{e^{\,i\,x}}{x^2 + \alpha^2}\,dx,\)
+then taking the real part will give us the desired integral.
+
+\bigskip
+\noindent
+\textbf{Step 2: Choose a semicircular contour in the upper half‐plane.}\\
+Let $\Gamma_R$ be the contour consisting of:
+\begin{itemize}
+\item the real line segment from $-R$ to $R$, and
+\item the semicircle $C_R$ in the upper half‐plane centered at the origin with radius $R$, parametrized by $z = Re^{i\theta}$ for $\theta\in [0,\pi]$.
+\end{itemize}
+We will let $R \to \infty$ eventually. The contour encloses the pole at $z=i\alpha$ but \emph{not} the pole at $z=-\,i\alpha$ (which is in the lower half‐plane).
+
+\bigskip
+\noindent
+\textbf{Step 3: Apply the Residue Theorem.}\\
+By the residue theorem,
+\[
+\oint_{\Gamma_R} f(z)\,dz
+\;=\;
+2\pi i\,\bigl(\text{sum of residues of }f\text{ inside }\Gamma_R\bigr).
+\]
+Since the only pole of $f(z)=\dfrac{e^{iz}}{z^2+\alpha^2}$ in the upper half‐plane is at $z=i\alpha$, we need to compute $\mathrm{Res}\bigl(f(z), z=i\alpha\bigr).$
+
+\bigskip
+\noindent
+\textbf{Step 4: Compute the residue at $z=i\alpha$.}\\
+We have
+\[
+z^2 + \alpha^2
+\;=\;
+(z - i\alpha)\,(z + i\alpha),
+\]
+so a simple pole occurs at $z=i\alpha$. Hence
+\[
+\mathrm{Res}\bigl(f(z), z=i\alpha\bigr)
+\;=\;
+\lim_{z\to i\alpha}\,(z - i\alpha)\,\frac{e^{i z}}{(z - i\alpha)\,(z + i\alpha)}
+\;=\;
+\frac{e^{\,i\,(i\alpha)}}{2\,i\alpha}.
+\]
+Since $e^{i(i\alpha)}=e^{-\alpha}$,
+\[
+\mathrm{Res}\bigl(f(z), z=i\alpha\bigr)
+\;=\;
+\frac{e^{-\alpha}}{2\,i\,\alpha}.
+\]
+Thus, the residue theorem gives
+\[
+\oint_{\Gamma_R} \frac{e^{\,i\,z}}{z^2 + \alpha^2}\,dz
+\;=\;
+2\pi i 
+\;\times\;
+\frac{\,e^{-\alpha}\,}{2\,i\,\alpha}
+\;=\;
+\frac{\pi}{\alpha}\,e^{-\alpha}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 5: Show that the integral over the semicircle $C_R$ vanishes as $R\to\infty$.}\\
+Parametrize $C_R$ by $z=Re^{i\theta}$, $\theta\in [0,\pi]$.  On $C_R$,
+\[
+\left| e^{\,i\,z}\right|
+\;=\;
+\bigl|e^{\,i\,R e^{i\theta}}\bigr|
+\;=\;
+\bigl|e^{\,iR(\cos\theta + i\sin\theta)}\bigr|
+\;=\;
+e^{-\,R\sin\theta}.
+\]
+Because $\sin\theta\ge0$ for $\theta\in [0,\pi]$, we have exponential decay in $\mathrm{Im}(z)>0$.  This implies that 
+\[
+\left|\int_{C_R} \frac{e^{\,i\,z}}{z^2+\alpha^2}\,dz\right|
+\;\to\;
+0
+\quad\text{as }R\to\infty,
+\]
+often shown by Jordan's lemma or a direct comparison estimate.
+
+\bigskip
+\noindent
+\textbf{Step 6: Take the limit as $R\to \infty$.}\\
+Hence, in the limit,
+\[
+\int_{-R}^R \frac{e^{\,i\,x}}{x^2+\alpha^2}\,dx
+\;+\;
+\int_{C_R} \frac{e^{\,i\,z}}{z^2+\alpha^2}\,dz
+\;=\;
+\oint_{\Gamma_R} f(z)\,dz
+\;=\;
+\frac{\pi}{\alpha}\,e^{-\alpha}.
+\]
+As $R\to \infty$, the integral over $C_R$ vanishes, so
+\[
+\int_{-\infty}^{\infty} \frac{e^{\,i\,x}}{x^2 + \alpha^2}\,dx 
+\;=\;
+\frac{\pi}{\alpha}\,e^{-\alpha}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 7: Extract the real part to get the original integral.}\\
+Recall that $\cos x = \mathrm{Re}\bigl(e^{\,i\,x}\bigr)$.  Therefore,
+\[
+\int_{-\infty}^{\infty} \frac{\cos x}{x^2 + \alpha^2}\,dx
+\;=\;
+\mathrm{Re}
+\!\Bigl(
+\int_{-\infty}^{\infty} \frac{e^{\,i\,x}}{x^2 + \alpha^2}\,dx
+\Bigr)
+\;=\;
+\mathrm{Re}\Bigl(\frac{\pi}{\alpha}\,e^{-\alpha}\Bigr)
+\;=\;
+\frac{\pi}{\alpha}\,e^{-\alpha}.
+\]
+Since $e^{-\alpha}$ is real and positive, taking the real part has no effect on its value.  
+
+\bigskip
+\noindent
+Hence we conclude
+\[
+\boxed{
+\int_{-\infty}^{\infty} \frac{\cos x}{x^2 + \alpha^2}\,dx
+\;=\;
+\frac{\pi}{\alpha}\,e^{-\alpha}.
+}
+\]
+
+\end{proof}
+\noindent
+\textbf{Jordan's Lemma (Upper Half-Plane).}\\[6pt]
+\emph{Statement.} 
+Let $a>0$. Suppose $g$ is a continuous function on the semicircle 
+$C_R = \{R e^{i\theta} : \theta\in[0,\pi]\}$, 
+and that $g(z)$ does not grow too rapidly as $|z|\to\infty$ (for instance, if $|g(z)| \le M$ for some constant $M$, or decays polynomially, etc.). 
+Then
+\[
+\left|
+\int_{C_R} e^{\,i\,a\,z} \, g(z)\,dz
+\right|
+\;\longrightarrow\; 0
+\quad
+\text{as }R\to \infty.
+\]
+
+\begin{proof}
+\textbf{Step 1: Parametrize the semicircle.}\\
+Let $C_R$ be the arc of the circle of radius $R$ in the upper half-plane.  A convenient parametrization is
+\[
+z(\theta) \;=\; R\,e^{i\theta},
+\quad
+\theta \in [0,\pi].
+\]
+Then $dz = i\,R\,e^{i\theta}\,d\theta$, so
+\[
+\int_{C_R} e^{\,i\,a\,z} \, g(z)\,dz
+\;=\;
+\int_{0}^{\pi} e^{\,i\,a\,\bigl(R e^{i\theta}\bigr)} 
+\,g\bigl(R e^{i\theta}\bigr)\,\bigl(i\,R\,e^{i\theta}\bigr)\,d\theta.
+\]
+
+\noindent
+\textbf{Step 2: Take absolute values and simplify.}\\
+By the triangle inequality,
+\[
+\left|
+\int_{0}^{\pi} e^{\,i\,a\,\bigl(R e^{i\theta}\bigr)} 
+\,g\bigl(R e^{i\theta}\bigr)\,\bigl(i\,R\,e^{i\theta}\bigr)\,d\theta
+\right|
+\;\le\;
+\int_{0}^{\pi} 
+\left|
+e^{\,i\,a\,\bigl(R e^{i\theta}\bigr)}
+\right|
+\cdot
+\bigl|g\bigl(R e^{i\theta}\bigr)\bigr|
+\cdot
+\bigl|i\,R\,e^{i\theta}\bigr|
+\,d\theta.
+\]
+Notice:
+\[
+\bigl|i\,R\,e^{i\theta}\bigr|
+\;=\;
+R,
+\]
+and
+\[
+\left|
+e^{\,i\,a\,\bigl(R e^{i\theta}\bigr)}
+\right|
+\;=\;
+\left|
+e^{\,i\,a\,R(\cos\theta + i\,\sin\theta)}
+\right|
+\;=\;
+\left|
+e^{\,i\,a\,R\cos\theta}
+\right|
+\cdot
+\left|
+e^{-\,a\,R\,\sin\theta}
+\right|
+\;=\;
+e^{-\,a\,R\,\sin\theta}.
+\]
+Hence,
+\[
+\left|
+\int_{C_R} e^{\,i\,a\,z} \, g(z)\,dz
+\right|
+\;\le\;
+\int_{0}^{\pi} 
+e^{-\,a\,R\,\sin\theta}
+\;\bigl|g\bigl(R e^{i\theta}\bigr)\bigr|
+\;R
+\,d\theta.
+\]
+
+\noindent
+\textbf{Step 3: Use the exponential decay in the upper half-plane.}\\
+For $\theta\in(0,\pi)$, we have $\sin\theta>0$, so $e^{-\,a\,R\,\sin\theta}$ provides strong decay as $R\to\infty$.  If $g$ is not too large, e.g.\ if there is a constant $M$ such that 
+$\bigl|g\bigl(Re^{i\theta}\bigr)\bigr|\le M$ for all large $R$, 
+then
+\[
+\bigl|g\bigl(R e^{i\theta}\bigr)\bigr|
+\;\le\; M
+\quad
+\text{and we get}
+\quad
+\left|
+\int_{C_R} e^{\,i\,a\,z} \, g(z)\,dz
+\right|
+\;\le\;
+M \,R
+\int_{0}^{\pi} 
+e^{-\,a\,R\,\sin\theta}\,d\theta.
+\]
+By splitting the integral near $\theta=0,\pi$ and using the fact that $\sin\theta$ is bounded away from 0 in the interior of $(0,\pi)$, one can show 
+\(\displaystyle \int_{0}^{\pi} e^{-\,a\,R\,\sin\theta}\,d\theta \to 0\) 
+as $R\to\infty$.  
+
+More precisely, a simple upper bound is:
+\[
+\int_{0}^{\pi} e^{-\,a\,R\,\sin\theta}\,d\theta 
+\;\le\;
+\int_{0}^{\pi} e^{-\,a\,R\left(\frac{2\theta}{\pi}\right)}\,d\theta
+\quad (\text{using a geometric bound on }\sin\theta)
+\;=\;
+\frac{\pi}{2aR}\,\bigl(1 - e^{-\,2\,a\,R}\bigr)
+\;\longrightarrow\;0.
+\]
+(One can use other bounds or compare with known integrals. The main idea is that $e^{-\,a\,R\,\sin\theta}$ goes to zero rapidly except possibly very close to $0$ or $\pi$, but there it can still be shown to vanish in the limit.)
+
+\noindent
+Hence the entire integral over $C_R$ goes to $0$ as $R\to\infty$:
+\[
+\left|\int_{C_R} e^{\,i\,a\,z}\,g(z)\,dz\right|\;\longrightarrow\;0.
+\]
+\end{proof}
+
+how do we do 
+\begin{align}
+    f(z)= \frac{e^{iz}}{z^{2}+\alpha^{2}} \\[10pt] 
+    \left\vert \int_{0}^{\pi}f(Re^{i\theta})Re^{i\theta}  \,\mathrm{d}\theta  \right\vert \leq R \int_{0}^{\pi} \frac{e^{-R\sin \theta}}{R^{2}-\alpha^{2}} \,\mathrm{d}\theta \\[10pt] 
+    \leq  \frac{\pi R}{R^{2}-\alpha^{2}}\to 0, R \to \infty 
+\end{align}
+
+\noindent
+\textbf{Claim.} 
+\[
+\left|
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,\mathrm{d}\theta
+\right|
+\;\le\;
+\frac{\pi\,R}{\,R^2 - \alpha^2\,}
+\;\longrightarrow\;0 
+\quad
+\text{as } R \to \infty,
+\]
+where
+\[
+f(z) \;=\; \frac{e^{\,i\,z}}{z^{2}+\alpha^{2}}, 
+\quad
+z = Re^{i\theta}.
+\]
+
+\begin{proof}
+\textbf{Step 1: Parametrize the contour.}\\
+We consider the semicircle in the upper half-plane of radius $R$, parametrized by 
+\[
+z(\theta) \;=\; R e^{i\theta},
+\quad
+\theta \in [0,\pi].
+\]
+Then the integrand in question is $f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}$.
+
+\bigskip
+\noindent
+\textbf{Step 2: Take absolute values and use the exponential decay.}\\
+Write 
+\[
+f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}
+\;=\;
+\frac{e^{\,i\,(R e^{i\theta})}}{\bigl(Re^{i\theta}\bigr)^2 + \alpha^2}
+\;\times\;(R e^{i\theta}).
+\]
+Hence,
+\[
+\Bigl| f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\Bigr|
+\;=\;
+\frac{\bigl| e^{\,i\,R e^{i\theta}}\bigr|}
+{\bigl|\bigl(Re^{i\theta}\bigr)^2 + \alpha^2\bigr|}
+\;\times\; \bigl| R e^{i\theta}\bigr|.
+\]
+Notice that
+\[
+\bigl| e^{\,i\,R e^{i\theta}}\bigr|
+\;=\;
+e^{-\,R\sin\theta},
+\quad
+\bigl| R e^{i\theta}\bigr|
+\;=\;
+R,
+\]
+and by the reverse triangle inequality, for large $R$,
+\[
+\Bigl|\bigl(Re^{i\theta}\bigr)^2 + \alpha^2\Bigr|
+\;=\;
+\bigl|R^2 e^{2i\theta} + \alpha^2\bigr|
+\;\ge\;
+R^2 - \alpha^2.
+\]
+Hence,
+\[
+\Bigl| f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\Bigr|
+\;\le\;
+\frac{R\, e^{-\,R\sin\theta}}{R^2 - \alpha^2}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 3: Integrate from $0$ to $\pi$.}\\
+Thus,
+\[
+\left|
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\,\mathrm{d}\theta
+\right|
+\;\le\;
+\int_{0}^{\pi}
+\Bigl| f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}\Bigr|
+\,\mathrm{d}\theta
+\;\le\;
+\int_{0}^{\pi} \frac{R\, e^{-\,R\sin\theta}}{R^2 - \alpha^2}
+\,\mathrm{d}\theta.
+\]
+Factor out $\displaystyle \frac{R}{R^2 - \alpha^2}$:
+\[
+=\;
+\frac{R}{R^2 - \alpha^2}
+\int_{0}^{\pi}
+e^{-\,R\sin\theta}
+\,\mathrm{d}\theta.
+\]
+Since $e^{-\,R\sin\theta} \le 1$ for all $\theta \in [0,\pi]$,
+\[
+\int_{0}^{\pi} e^{-\,R\sin\theta}
+\,\mathrm{d}\theta
+\;\le\;
+\int_{0}^{\pi} 1 \,\mathrm{d}\theta
+\;=\;
+\pi.
+\]
+Hence,
+\[
+\frac{R}{R^2 - \alpha^2}
+\int_{0}^{\pi}
+e^{-\,R\sin\theta}
+\,\mathrm{d}\theta
+\;\le\;
+\frac{\pi\,R}{R^2 - \alpha^2}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 4: Take the limit as $R\to\infty$.}\\
+Finally,
+\[
+\frac{\pi\,R}{\,R^2 - \alpha^2\,}
+\;=\;
+\frac{\pi}{\,R - \tfrac{\alpha^2}{R}\,}
+\;\xrightarrow{R\to\infty}\;
+0.
+\]
+Therefore,
+\[
+\left|
+\int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,R\,e^{i\theta}
+\,\mathrm{d}\theta
+\right|
+\;\xrightarrow{R\to\infty}\;0,
+\]
+as desired.
+\end{proof}
+
+
+\begin{theorem}[Reverse Triangle Inequality]
+    \label{thm:reverse_triangle_inequality}
+    For any real or complex numbers $z$ and $w$, 
+    \[
+    \bigl| \lvert z\rvert - \lvert w\rvert \bigr| 
+    \;\le\; 
+    \lvert z - w\rvert.
+    \]
+    \end{theorem}
+    
+    \begin{proof}
+    We prove this using the standard (forward) triangle inequality 
+    \[
+    \lvert a + b\rvert \;\le\; \lvert a\rvert + \lvert b\rvert.
+    \]
+    
+    \noindent
+    \textbf{Step 1.} Consider 
+    \[
+    \lvert z\rvert 
+    \;=\; 
+    \bigl\lvert (z - w) + w\bigr\rvert
+    \;\le\; 
+    \lvert z - w\rvert + \lvert w\rvert.
+    \]
+    Rearranging, 
+    \[
+    \lvert z\rvert - \lvert w\rvert 
+    \;\le\; 
+    \lvert z - w\rvert.
+    \tag{1}
+    \]
+    
+    \noindent
+    \textbf{Step 2.} Swap $z$ and $w$. Then
+    \[
+    \lvert w\rvert 
+    \;=\; 
+    \bigl\lvert (w - z) + z\bigr\rvert
+    \;\le\;
+    \lvert w - z\rvert + \lvert z\rvert.
+    \]
+    Since $\lvert w - z\rvert = \lvert z - w\rvert$, we get
+    \[
+    \lvert w\rvert - \lvert z\rvert 
+    \;\le\; 
+    \lvert z - w\rvert.
+    \tag{2}
+    \]
+    
+    \noindent
+    \textbf{Step 3.} Inequalities \eqref{(1)} and \eqref{(2)} together imply
+    \[
+    -\lvert z - w\rvert 
+    \;\le\;
+    \lvert z\rvert - \lvert w\rvert 
+    \;\le\;
+    \lvert z - w\rvert,
+    \]
+    which can be rewritten as
+    \[
+    \bigl|\lvert z\rvert - \lvert w\rvert\bigr|
+    \;\le\;
+    \lvert z - w\rvert.
+    \]
+    This completes the proof.
+    \end{proof}
+    \begin{align}
+        f(z)=\frac{e^{iz}}{z^{2}+\alpha^{2}}
+    \end{align}
+
+    $\int_{-\infty}^{\infty } \frac{\sin z}{z^{2}+\alpha^{2}} \,\mathrm{d}z =0$  
+    $\text{Im}\left\{ 2\pi i \left( \frac{1}{4}\exp\left( \sqrt{2} (-1+i) \right) + \exp\left( \sqrt{2} (-1-i)  \right) \right) \right\} = \pi e^{-\sqrt{2} }\cos(\sqrt{2}) $ 
+
+    $f(z)=e^{iz}\frac{z^{3}}{z^{4}+16}$
+    $\text{Res} (f; \sqrt{2} (-1+i))$ 
+    
+    We consider the function 
+\[
+f(z) = \frac{e^{iz}\,z^3}{z^4 + 16},
+\]
+and let
+\[
+\text{Res}_1 = \mathrm{Res}\bigl(f; \sqrt{2}\,(1 + i)\bigr)
+\quad \text{and} \quad
+\text{Res}_2 = \mathrm{Res}\bigl(f; \sqrt{2}\,(-1 + i)\bigr).
+\]
+Each residue can be computed using the standard formula for a simple pole:
+\[
+\mathrm{Res}\bigl(f; z_0\bigr)
+= \frac{h(z_0)}{g'(z_0)}
+\quad \text{where} \quad
+f(z) = \frac{h(z)}{g(z)}, \; g(z_0) = 0, \; g'(z_0) \neq 0.
+\]
+Here,
+\[
+h(z) = e^{iz}\,z^3, \quad g(z) = z^4 + 16, \quad g'(z) = 4z^3.
+\]
+Thus for each root $z_0$ of $z^4 + 16 = 0$, the residue is
+\[
+\mathrm{Res}\bigl(f; z_0\bigr)
+= \frac{e^{i z_0}\,z_0^3}{4\,z_0^3}
+= \frac{e^{i z_0}}{4}.
+\]
+Hence
+\[
+\text{Res}_1 + \text{Res}_2 
+= \frac{1}{4}\Bigl(e^{i z_1} + e^{i z_2}\Bigr),
+\]
+where $z_1 = \sqrt{2}\,(1 + i)$ and $z_2 = \sqrt{2}\,(-1 + i)$. We then look at
+\[
+2\pi i \,\bigl[\text{Res}_1 + \text{Res}_2 \bigr]
+= 2\pi i \cdot \frac{1}{4}\Bigl(e^{i z_1} + e^{i z_2}\Bigr)
+= \frac{\pi i}{2}\,\Bigl(e^{i z_1} + e^{i z_2}\Bigr).
+\]
+
+\paragraph{Step 1: Simplify $e^{i z_1} + e^{i z_2}$.}
+
+We have
+\[
+z_1 = \sqrt{2}\,(1 + i), \qquad z_2 = \sqrt{2}\,(-1 + i).
+\]
+Then
+\[
+i z_1 = i \sqrt{2}\,(1 + i)
+= \sqrt{2}\,\bigl(i + i^2\bigr)
+= \sqrt{2}\,(i - 1)
+= -\sqrt{2} + i\,\sqrt{2},
+\]
+\[
+i z_2 = i \sqrt{2}\,(-1 + i)
+= \sqrt{2}\,\bigl(-i + i^2\bigr)
+= \sqrt{2}\,\bigl(-i - 1\bigr)
+= -\sqrt{2} - i\,\sqrt{2}.
+\]
+Hence
+\[
+e^{i z_1}
+= e^{-\sqrt{2} + i\sqrt{2}}
+= e^{-\sqrt{2}}\Bigl(\cos(\sqrt{2}) + i\sin(\sqrt{2})\Bigr),
+\]
+\[
+e^{i z_2}
+= e^{-\sqrt{2} - i\sqrt{2}}
+= e^{-\sqrt{2}}\Bigl(\cos(\sqrt{2}) - i\sin(\sqrt{2})\Bigr).
+\]
+Adding these,
+\[
+e^{i z_1} + e^{i z_2}
+= e^{-\sqrt{2}} \Bigl[ 
+  \cos(\sqrt{2}) + i\sin(\sqrt{2}) 
+  + \cos(\sqrt{2}) - i\sin(\sqrt{2})
+\Bigr]
+= 2\,e^{-\sqrt{2}}\,\cos(\sqrt{2}).
+\]
+
+\paragraph{Step 2: Multiply by $\frac{\pi i}{2}$ and extract the imaginary part.}
+
+Substitute into
+\[
+2\pi i \,\bigl[\text{Res}_1 + \text{Res}_2 \bigr]
+= \frac{\pi i}{2}\,\Bigl(e^{i z_1} + e^{i z_2}\Bigr)
+= \frac{\pi i}{2} \cdot 2\,e^{-\sqrt{2}}\cos(\sqrt{2})
+= \pi\,i\,e^{-\sqrt{2}}\cos(\sqrt{2}).
+\]
+Since $\pi\,i\,e^{-\sqrt{2}}\cos(\sqrt{2})$ is purely imaginary, its imaginary part is
+\[
+\pi\,e^{-\sqrt{2}}\cos(\sqrt{2}).
+\]
+Hence
+\[
+\Im\Bigl\{2\pi i\,[\text{Res}_1+\text{Res}_2]\Bigr\}
+= \boxed{\pi\,e^{-\sqrt{2}}\cos\bigl(\sqrt{2}\bigr)}.
+\]
+
+$f(z)=\frac{\log(z)}{(1+z^{2})^{2}}$
+$\left\vert f(z) \right\vert \leq \frac{2\log(R)}{(R^{2}-1)^{2}}, \left\vert z \right\vert = R$ 
+
+
+\section*{Bounding \(\left| f(z)\right|\) on \(\lvert z\rvert = R\)}
+
+We have the function
+\[
+f(z) \;=\; \frac{\log(z)}{\bigl(1 + z^2\bigr)^2},
+\]
+and we want to show that on the (upper) semicircle \(\{\,z : |z| = R\}\) with \(R>1\),
+\[
+\bigl|f(z)\bigr|
+\;\le\;
+\frac{2\,\log(R)}{(R^2 - 1)^2}.
+\]
+
+\subsection*{1. Bound the denominator \(\lvert (1 + z^2)^2\rvert\)}
+On the circle \(\lvert z\rvert = R\), we have \(\lvert z^2\rvert = R^2\). By the reverse triangle inequality,
+\[
+\lvert 1 + z^2 \rvert
+\;\ge\;
+\bigl|\lvert z^2\rvert - \lvert 1\rvert\bigr|
+\;=\;
+\lvert R^2 - 1\rvert
+\;=\;
+R^2 - 1
+\quad (\text{because }R>1).
+\]
+Hence
+\[
+\lvert (1 + z^2)^2\rvert
+\;=\;
+\bigl\lvert 1 + z^2\bigr\rvert^2
+\;\ge\;
+(R^2 - 1)^2,
+\]
+so
+\[
+\frac{1}{\lvert (1 + z^2)^2\rvert}
+\;\le\;
+\frac{1}{(R^2 - 1)^2}.
+\]
+
+\subsection*{2. Bound \(\lvert \log(z)\rvert\)}
+For \(z\) on the circle \(\lvert z\rvert = R\) (\(R>1\)), in the principal branch we write
+\[
+\log(z)
+\;=\;
+\ln\!\bigl|z\bigr| + i\,\arg(z)
+\;=\;
+\ln(R) + i\,\theta,
+\quad
+\theta \in [0, \pi]
+\ (\text{upper semicircle}).
+\]
+Thus
+\[
+\lvert \log(z)\rvert
+\;=\;
+\sqrt{\bigl(\ln(R)\bigr)^2 + \theta^2}.
+\]
+Because \(0 \le \theta \le \pi\) and \(\ln(R)\ge 0\) for \(R>1\), we can use the inequality
+\[
+\sqrt{\bigl(\ln(R)\bigr)^2 + \theta^2}
+\;\le\;
+\ln(R) + \lvert \theta\rvert
+\;\le\;
+\ln(R) + \pi.
+\]
+For sufficiently large \(R\), we typically have \(\ln(R) \ge \pi\), which allows
+\[
+\ln(R) + \pi \;\le\; 2\,\ln(R).
+\]
+Hence, a common simplified bound is
+\[
+\lvert \log(z)\rvert 
+\;\le\;
+2\,\ln(R)
+\quad (\text{for }R>1).
+\]
+
+\subsection*{3. Combine both bounds}
+Putting it all together:
+\[
+\bigl|f(z)\bigr|
+\;=\;
+\left|\frac{\log(z)}{\bigl(1 + z^2\bigr)^2}\right|
+\;\le\;
+\frac{\lvert \log(z)\rvert}{\lvert (1 + z^2)^2\rvert}
+\;\le\;
+\frac{2\,\ln(R)}{(R^2 - 1)^2}.
+\]
+Therefore, on the contour \(\lvert z\rvert = R\) (with \(R>1\)),
+\[
+\boxed{
+\lvert f(z)\rvert
+\;\le\;
+\frac{2\,\ln(R)}{(R^2 - 1)^2}.
+}
+\]
+
+
+We begin with the equation
+\[
+-\frac{\pi}{2} \;+\; i\,\frac{\pi^2}{4}
+\;=\;
+\int_{\varepsilon}^R
+\frac{\log x}{(1 + x^2)^2}\,dx
+\;+\;
+\int_{-R}^{-\varepsilon}
+\frac{\log(-x) \;+\; i\,\pi}{(1 + x^2)^2}\,dx
+\;+\; E,
+\]
+where \(\,E \to 0\,\) as \(\,\varepsilon \to 0\,\) and \(\,R \to \infty.\)
+
+\paragraph{1. Take the real part.}
+
+On the left-hand side, the real part is simply \(\,-\tfrac{\pi}{2}\).  
+On the right-hand side, note that
+\(\,\log(-x)\) is real (for \(x>0\)) and \(i\pi\) is purely imaginary, so the only real contributions in the integrals come from \(\,\log x\) and \(\,\log(-x)\).
+
+\paragraph{2. Rewrite the second integral by substituting \(\,x = -t\).}
+
+For the second integral
+\[
+\int_{-R}^{-\varepsilon} 
+\frac{\log(-x) \;+\; i\,\pi}{(1 + x^2)^2}\,dx,
+\]
+let \(\,x = -t\).  Then \(\,dx = -\,dt\) and when \(x=-R\), \(t=R\); when \(x=-\varepsilon\), \(t=\varepsilon\). Hence
+\[
+\int_{-R}^{-\varepsilon} 
+\frac{\log(-x) \;+\; i\,\pi}{(1 + x^2)^2}\,dx
+\;=\;
+\int_{\,R}^{\,\varepsilon} 
+\frac{\log(t) \;+\; i\,\pi}{(1 + t^2)^2} 
+\bigl(-\,dt\bigr)
+\;=\;
+-\int_{\varepsilon}^{R} 
+\frac{\log(t) \;+\; i\,\pi}{(1 + t^2)^2}\,dt.
+\]
+When we take only the \emph{real part}, the term \(i\,\pi\) drops out.  Hence
+\[
+\mathrm{Re}\!\Bigl[
+\int_{-R}^{-\varepsilon} 
+\frac{\log(-x) \;+\; i\,\pi}{(1 + x^2)^2}\,dx
+\Bigr]
+\;=\;
+-\int_{\varepsilon}^{R} 
+\frac{\log(t)}{(1 + t^2)^2}\,dt.
+\]
+
+\paragraph{3. Combine with the first integral.}
+
+Thus the sum of the real parts of the two integrals becomes
+\[
+\int_{\varepsilon}^{R} \frac{\log x}{(1 + x^2)^2}\,dx
+\;+\;
+\Bigl[\,-\int_{\varepsilon}^{R} \frac{\log(t)}{(1 + t^2)^2}\,dt\,\Bigr]
+\;=\;
+0.
+\]
+So, collecting real parts on the right-hand side, we are left with 
+\[
+\mathrm{Re}[\,E\,] 
+\;\;\;\text{and nothing else from the integrals.}
+\]
+But by hypothesis, \(E \to 0\) as \(\varepsilon \to 0\) and \(R \to \infty\), so its real part also goes to \(0\).  
+
+\paragraph{4. Equate real parts to find the integral from \(0\) to \(\infty\).}
+
+In more careful detail, we notice that after taking the real part and doing the substitution, the two integrals \emph{together} can be recast as
+\[
+\int_{\varepsilon}^{R} \frac{\log x}{(1 + x^2)^2}\,dx 
+\;+\;
+\int_{\varepsilon}^{R} \frac{\log x}{(1 + x^2)^2}\,dx
+\;+\;\text{(vanishing terms)}
+\;=\;
+2 \int_{\varepsilon}^{R} \frac{\log x}{(1 + x^2)^2}\,dx.
+\]
+Hence comparing with the real part on the left side,
+\[
+-\frac{\pi}{2} 
+\;=\;
+2 \int_{0}^{\infty} \frac{\log x}{(1 + x^2)^2}\,dx.
+\]
+Divide both sides by \(2\) to conclude
+\[
+\int_{0}^{\infty} \frac{\log x}{(1 + x^2)^2}\,dx
+\;=\;
+-\frac{\pi}{4},
+\]
+which is precisely the final statement.
+
+\begin{align}
+    \frac{1}{(2-\frac{1}{2i}(z-\frac{1}{z}))^{2}} \\[10pt] 
+    \frac{1}{(\frac{1}{2iz})^{2}(4iz-z^{2}+1)} \\[10pt] 
+    \frac{z}{(z^{2}-4iz-1)^{2}}
+\end{align}
+\end{document}

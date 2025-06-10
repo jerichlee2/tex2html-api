@@ -1,0 +1,288 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Exam 2 \quad \normalfont{5 problems}}
+\begin{enumerate}
+    \item Evaluate a line integral directly or by the Fundamental Theorem of Calculus for analytic functions.
+    \item Evaluate an integral using residue theory.
+    \item Determine the types of all singular points of a function.
+    \item Find the Laurent series of a given function.
+    \item General question on isolated singularities and Laurent series.
+\end{enumerate}
+
+\section*{Exercises for Section 1.6}
+
+Compute the following line integrals.
+\begin{enumerate}
+    \item $\displaystyle \int_\gamma z \, dz$, where $\gamma$ is the semicircle from $i$ to $-i$, which passes through $-1$. \quad \textbf{(1)}
+    \item $\displaystyle \int_\gamma e^z \, dz$, where $\gamma$ is the line segment from $0$ to $z_0$. \quad \textbf{(1)}
+    \item $\displaystyle \int_\gamma |z|^2 \, dz$, where $\gamma$ is the line segment from $2$ to $3 + i$. \quad \textbf{(1)}
+    \item $\displaystyle \int_\gamma \frac{1}{z + 4} \, dz$, where $\gamma$ is the circle of radius $1$ centered at $-4$, oriented counterclockwise. \quad \textbf{(1)}
+    \item $\displaystyle \int_\gamma \text{Re}(z) \, dz$, where $\gamma$ is the line segment from $1$ to $i$. \quad \textbf{(1)}
+    \item $\displaystyle \int_\gamma (z^2 + 3z + 4) \, dz$, where $\gamma$ is the circle $|z| = 2$ oriented counterclockwise. \quad \textbf{(1)}
+    \item Let $\gamma_1$ be the semicircle from $1$ to $-1$ through $i$ and $\gamma_2$ the semicircle from $1$ to $-1$ through $-i$. 
+\end{enumerate}
+
+Compute $\displaystyle \int_{\gamma_1} z^2 \, dz$ and $\int_{\gamma_2} z^2 \, dz$. \quad \textbf{(1)}
+
+Now compute $\displaystyle \int_{\gamma_1} \overline{z} \, dz$ and $\int_{\gamma_2} \overline{z} \, dz$. \quad \textbf{(1)}
+
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item Explicitly verify the conclusion of Example 11 by computing $\displaystyle \int_\gamma z \, dz$ and $\int_\gamma z^2 \, dz$ when $\gamma$ is the square with vertices at $\pm 1 \pm i$. \quad \textbf{(1)}
+    \item 
+    \begin{enumerate}
+        \item Show that 
+        \[
+        \frac{1}{2\pi} \int_0^{2\pi} e^{i k \theta} \, d\theta = 
+        \begin{cases}
+        1, & k = 0 \\
+        0, & k \ne 0
+        \end{cases}
+        \]
+        \item Explicitly verify the conclusion of Example 13 for $\gamma$, the circle of radius $1$ centered at $0$. 
+    \end{enumerate}
+    \item Interchange summation and integration; then use (a).
+    \item Let $f = u + iv$ be a continuous function and $\gamma(t) = x(t) + i y(t)$ be a piecewise smooth curve. Show that
+    \[
+    \text{Re} \biggl( \int_\gamma f(z) \, dz \biggr) = \int_\gamma (u \, dx - v \, dy),
+    \quad
+    \text{Im} \biggl( \int_\gamma f(z) \, dz \biggr) = \int_\gamma (v \, dx + u \, dy).
+    \]
+    \item Use Exercise 10 to show the equivalence of the two formulations of Green’s Theorem: (7) and (8).
+    \item Use the result of (the extension of) Example 11 to compute the following integrals:
+    \begin{enumerate}
+        \item $\displaystyle \int_\gamma (z^3 - 6z^2 + 4) \, dz$, where $\gamma$ is any curve joining $-1 + i$ to $1$. \quad \textbf{(1)}
+        \item $\displaystyle \int_\gamma (z^2 + z^3) \, dz$, where $\gamma$ is any curve joining $-1$ to $2 + i$. \quad \textbf{(1)}
+    \end{enumerate}
+    \item Use Green’s Theorem to derive Green’s Identity.
+    \item Use Exercise 13 to derive Green’s Formula (9).
+    \item Let $u$ be a continuous function on the complex plane, which is bounded. Show that
+    \[
+    \lim_{R \to \infty} \int_{\gamma_R} \frac{u(z)}{(z - z_0)^m} \, dz = 0.
+    \]
+    \item Let $z_0$ be outside a piecewise smooth simple closed curve $\gamma$. Extend Example 13 by showing that
+    \[
+    \int_\gamma \frac{dz}{(z - z_0)^m} = 0, \quad m = 2, 3, 4, \ldots
+    \]
+    \quad \textbf{(2)} 
+    % (Because one can interpret it via the residue theorem if desired.)
+\end{enumerate}
+
+\section*{Exercises for Section 2.1}
+
+\begin{enumerate}
+    \item Establish the following differentiation formulas:
+        \begin{enumerate}
+            \item $(\sin z)' = \cos z$
+            \item $(\cos z)' = -\sin z$
+            \item $(\sinh z)' = \cosh z$
+            \item $(\cosh z)' = \sinh z$
+            \item $(\tan z)' = \sec^2 z$
+            \item $(\tanh z)' = 1 - \tanh^2 z$
+            \item $(\arctan z)' = \frac{1}{1 + z^2}$
+            \item $(\arcsin z)' = \frac{1}{\sqrt{1 - z^2}}$
+        \end{enumerate}
+    \item Use the rules for differentiation, formulas (2) to (6), to find the derivative of each function in Exercises 2 to 7.
+    \item $z^2 + 10z$
+    \item $\exp(z^2 - 2)$
+    \item $[\cos(z^2)]^3$
+    \item $(z^2 + 100)^{-4}$
+    \item $(\log z)^3$ on the plane minus the negative reals
+    \item $\sinh(e^z)$
+    \item For each $f$ in Exercises 8 to 11, find an analytic $F$ with $F' = f$.
+    \item Let $f$ and $g$ be analytic on a domain. Show that...
+    \item Show that if $f$ is analytic on a domain $D$ and $g$ is analytic on a domain containing the range of $f$, then $g(f(z))$ is analytic on $D$...
+    \item Let $P(z) = (z - z_1)\cdots (z - z_n)$. Show that...
+    \item Let $f$ be analytic on a domain $D$ and suppose $f'(z)=0$ for all $z \in D$. Show $f$ is constant.
+    \item Find the derivative of the linear fractional transformation $T(z) = \frac{az + b}{cz + d}$...
+    \item Suppose $f$ is analytic on a domain $D$ and $f'(z) = e^{\psi(z)}$ where $\psi$ is constant...
+    \item Show that $h(z) = \overline{z}$ is not analytic on any domain.
+    \item Fill in details of $\log z$ derivative...
+    \item Let $f = u + iv$ be analytic. In each of the following, find $v$ given $u$...
+    \item Let $\gamma$ be a piecewise smooth simple closed curve, and suppose $F$ is analytic on some domain containing $\gamma$. Show that $\int_\gamma F(z)\,dz=0$.
+    \item Use conclusion of Ex. 21 and Example 13 of Sec. 6, Chap 1, to prove $f(z)=\log z$ cannot be analytic...
+    \item Show that if $f$ is analytic on a domain $D$ and the range of $f$ lies in either a straight line or circle, then $f$ is constant.
+    \item If $f(z)$ is differentiable real function, etc...
+\end{enumerate}
+
+\subsection*{Cauchy–Riemann Equations in Polar Coordinates}
+\begin{enumerate}
+    \setcounter{enumi}{24}
+    \item Suppose $f = u + iv$ is analytic in a domain $D$. Show that the Cauchy–Riemann equations in polar form are...
+    \item Suppose $\gamma$ is a piecewise smooth simple closed curve and $u$ is continuous on $\gamma$. Define $h(z)$...
+\end{enumerate}
+
+\section*{Exercises for Section 2.2}
+
+\noindent
+\textit{(Most of these are about power series/Taylor expansions, so none match (1)--(5).)}
+
+\section*{Exercises for Section 2.3}
+
+In Exercises 1 to 4, evaluate the given integral using Cauchy’s Formula or Theorem.
+\begin{enumerate}
+    \item $\displaystyle \int_{|z|=1} \frac{z}{(z - 2)^2} \, dz$. \quad \textbf{(2)}
+    \item $\displaystyle \int_{|z-3|=2} \frac{e^z}{z(z - 3)} \, dz$. \quad \textbf{(2)}
+    \item $\displaystyle \int_{|z+1|=2} \frac{z^2}{4 - z^2} \, dz$. \quad \textbf{(2)}
+    \item $\displaystyle \int_{|z|=1} \frac{\sin z}{z} \, dz$. \quad \textbf{(2)}
+\end{enumerate}
+
+In Exercises 5 to 8, evaluate the definite trigonometric integral making use of the technique of Examples 6 and 7 in this section (which also use contour methods).
+\begin{enumerate}
+    \setcounter{enumi}{4}
+    \item $\displaystyle \int_0^{2\pi} \frac{d\theta}{2 + \cos \theta}$. \quad \textbf{(2)}
+    \item $\displaystyle \int_0^{2\pi} \frac{d\theta}{3 + \sin \theta + \cos \theta}$. \quad \textbf{(2)}
+    \item $\displaystyle \int_0^{2\pi} \frac{d\theta}{a + b \cos \theta}, \quad a > b > 0$. \quad \textbf{(2)}
+    \item $\displaystyle \int_0^{2\pi} \frac{d\theta}{1 + \sin^2 \theta}$. \quad \textbf{(2)}
+\end{enumerate}
+
+In Exercises 9 to 12, evaluate the given integral using the technique of Example 10; indicate which theorem/device you used.
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item $\displaystyle \int_\gamma \frac{dz}{z^2}$, $\gamma$ in $\text{Re}\, z > 0$ from $1 - i$ to $1 + i$. \quad \textbf{(2)}
+    \item $\displaystyle \int_\gamma \Bigl(z + \frac{1}{z}\Bigr)\,dz$, $\gamma$ in $\text{Im}\,z>0$ from $-4+i$ to $6+2i$. \quad \textbf{(2)}
+    \item $\displaystyle \int_\gamma e^z \, dz$, $\gamma$ the semicircle from $-1$ to $1$ passing through $i$. \quad \textbf{(2)}
+    \item $\displaystyle \int_\gamma \sin z \, dz$, $\gamma$ any curve joining $i$ to $\pi$. \quad \textbf{(2)}
+\end{enumerate}
+
+\begin{enumerate}
+    \item Integrate $e^{iz^2}$ around a certain contour to obtain Fresnel integrals. \quad \textbf{(2)}
+    \item Specialize Theorem 4 to the case $z$ is center of circle...
+    \item (a) Use an estimate to conclude $|f(z)| \le \max\ldots$ 
+    \item Use conclusion of Ex. 15 to show $|f(z)|$ has no local minima if $f$ never zero...
+    \item Let $f(z) = \sum a_j (z-z_0)^j$ have radius $R>0$. Show $f^{(j)}(z_0)=\dots$ 
+    \item Use the result of Ex. 17 to establish certain formulas...
+    \item Let $A$ be an annulus... 
+    \item Let $I = \int_{-\infty}^\infty e^{-x^2}\,dx$...
+\end{enumerate}
+
+\subsection*{The Poisson Kernel}
+\begin{enumerate}
+    \item[\quad] (Various identities to verify; no direct match with (1)--(5).)
+\end{enumerate}
+
+\section*{Exercises for Section 2.4}
+
+In Exercises 1 to 8, give the order of each of the zeros of the given function. (Zeros, not singularities: no label.)
+
+In Exercises 9 to 16, find the power-series expansion about the given point. (Taylor expansions, not Laurent: no label.)
+
+\begin{enumerate}
+    \item Suppose $f$ is analytic on a domain $D$ and has a zero of order $m$ at $z_0$. Show that...
+    \item Suppose $f$ is analytic on $D$ and satisfies the Cauchy estimate...
+    \item Another proof of Liouville’s Theorem...
+    \item Suppose $f$ is entire and $\mathrm{Re}(f(z)) < e^{-|z|}$...
+    \item Suppose $f$ is entire with growth condition $\dots$ 
+    \item Let $D$ be simply connected, $f$ has no zeros in $D$, show there is an analytic function with $e^\phi=f$...
+    \item Suppose $f$ is analytic in $|z|>R$, including at $\infty$. Then $f$ can be expressed in a series of $1/z$. \quad \textbf{(4)}
+    \item Use Morera’s Theorem to show certain integrals define analytic functions, find power-series expansions (these are regular power-series, not necessarily Laurent). (No label if purely Taylor.)
+\end{enumerate}
+
+\subsection*{Differential Equations in the Complex Plane}
+\begin{enumerate}
+    \item Find all solutions to $f^{(4)}(z)+\beta^4 f(z)=0$...
+    \item More differential equation solutions...
+    \item If $f'(z)=A(z)f(z)$, show $f(z)=C\exp(\dots)$...
+\end{enumerate}
+
+\subsection*{Bessel Functions}
+\begin{enumerate}
+    \item Let $\nu>0$ be an integer. Show that one solution is $J_\nu(z)=\sum_{m=0}^\infty \dots$
+    \item Show that Bessel functions satisfy the recurrence relation...
+\end{enumerate}
+
+\section*{Exercises for Section 2.5}
+
+In Exercises 1 to 6, locate each isolated singularity (removable, pole, or essential). \quad \textbf{(3)}
+
+In Exercises 7 to 13, find the Laurent series for the given function about the indicated point. Also give the residue. \quad \textbf{(4)}
+
+\begin{enumerate}
+    \setcounter{enumi}{13}
+    \item If $f$ is analytic in $|z-z_0|<R$ and has a zero of order $m$ at $z_0$, show $\mathrm{Res}\bigl(\frac{f'}{f};z_0\bigr)=m$. \quad \textbf{(5)}
+    \item If $f$ is analytic in $0<|z-z_0|<R$ and has a pole of order 1, show $\mathrm{Res}\bigl(\frac{f'}{f};z_0\bigr)=-1$. \quad \textbf{(5)}
+    \item Suppose $f$ is analytic in $0<|z-z_0|<R$ with a zero, and $g$ has a pole, etc. Show $fg$ has a removable singularity. \quad \textbf{(5)}
+    \item Let $f$ have an essential singularity. Show that $1/(f(z)-w)$ is unbounded near $z_0$. \quad \textbf{(5)}
+    \item Alternate proof that $\frac{1}{2\pi i}\int f(z)\,dz=\mathrm{Res}(f;z_0)$ is independent of $r$. \quad \textbf{(5)}
+    \item Suppose the Laurent series $\sum a_n(z-z_0)^n$ converges and equals 0 in $0<|z-z_0|<r$. Show $a_n=0$. \quad \textbf{(5)}
+    \item If $f$ is analytic in $0<r<|z-z_0|<R$, show its Laurent series is uniquely determined. \quad \textbf{(5)}
+    \item If $f$ is analytic on $0<|z-z_0|<R$ and there is $G'$ = $f$, then $\mathrm{Res}(f;z_0)=0$. \quad \textbf{(5)}
+    \item Find the Laurent series about $z_0=0$ for each function, valid in the indicated regions. \quad \textbf{(4)}
+    \item Use eqns (12) and (13) to find Laurent expansions of certain rational functions. \quad \textbf{(4)}
+    \item Let $f$ be analytic in $0<|z-z_0|<r$, with Laurent series. Show that $z_0$ is removable/pole/essential depending on which coefficients vanish. \quad \textbf{(5)}
+    \item Show $f$ has a removable singularity at $\infty$ iff $f(z)$ is bounded for $|z|>R_0$. \quad \textbf{(3)} 
+    \item Classify the nature of the singularity at $\infty$ for each function. \quad \textbf{(3)}
+    \item Let $\nu$ be complex, define $G(z;\nu)=\exp\bigl(\tfrac{z}{2}(t-\tfrac{1}{t})\bigr)$. Show it has an essential singularity at $z=0$. \quad \textbf{(3)}
+    \item Let $G(z;\nu)=\sum_{n=0}^\infty J_\nu(z)t^n$... prove by real integral representation. (Laurent series for $G$.) \quad \textbf{(4)}
+    \item Multiply out expansions for $\exp(z/2)$ and $\exp(-z/2)$ to conclude a formula for $J_\nu(z)$. \quad \textbf{(4)}
+    \item Show $J_{-\nu}(z)=(-1)^\nu J_\nu(z)$. (Again about series expansions.) \quad \textbf{(4)}
+\end{enumerate}
+
+\begin{enumerate}
+    \item Evaluate the line integral $\displaystyle \int_{2}^{i} \overline{z}\,dz$ along the straight line from $2$ to $i$. \quad \textbf{(1)}
+    \item Estimate the line integral $\displaystyle \int_{2}^{2i} \frac{dz}{\overline{z}^2 - 1}$ along the circular arc from $2$ to $2i$. \quad \textbf{(1)}
+    \item Evaluate the line integral $\displaystyle \int_{-i}^{3i} \frac{dz}{\overline{z}^2}$ along the semicircle with center at $i$. \quad \textbf{(1)}
+    \item Evaluate the line integral $\displaystyle \int_{1 - 2i}^{-3 + i} \frac{dz}{z}$ along the straight line. (Use branch $0<\arg z<2\pi$.) \quad \textbf{(1)}
+\end{enumerate}
+
+\begin{enumerate}
+    \item Let $f(z) = z^{-1} \tan^2 z$. Characterize all singularities of $f$ (removable, pole, essential); find values/orders. Also find the radius of convergence of the Taylor series at $z=i$. \quad \textbf{(3)}
+    \setcounter{enumi}{2}
+    \item Find the Laurent series of $f(z) = (z+1)^{-2} + (z-2)^{-3}$ into powers of $z$ in $1<|z|<2$. \quad \textbf{(4)}
+    \item Let $f$ be analytic in $\mathbb{C}\setminus\{0\}$. Suppose $|f(z)| \le |z|^{10} + |z|^{-10}$. Prove $f$ is rational. (Hint: Use Cauchy estimates for Laurent series.) \quad \textbf{(5)}
+\end{enumerate}
+
+\begin{enumerate}
+    \item Find 4 terms of the Laurent series of $\displaystyle f(z) = \frac{1}{1 - e^z}$ in a punctured neighborhood of $0$. \quad \textbf{(4)}
+    \item Find 3 nonzero terms of the Laurent series of $\displaystyle f(z) = \frac{z}{\sin^2 z}$ in a punctured neighborhood of $0$. \quad \textbf{(4)}
+    \item Evaluate $\displaystyle \int_{|z|=1} \frac{dz}{e^z - e^{-z}}$ and $\int_{|z|=4} \frac{dz}{e^z - e^{-z}}.$ (Residues, multiple singularities inside the second contour!) \quad \textbf{(2)}
+    \item Evaluate $\displaystyle \int_{|z|=1} \frac{dz}{z^2 (e^z - 1)}.$ (Use the Laurent series.) \quad \textbf{(2)}
+\end{enumerate}
+
+\end{document}

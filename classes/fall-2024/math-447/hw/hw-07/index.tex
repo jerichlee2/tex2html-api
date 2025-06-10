@@ -1,0 +1,180 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Define the solution environment with normal text
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+
+% Title information
+\title{MATH 447: Real Variables - Homework \#7}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}[22.3]
+Prove that if $E$ is a connected subset of a metric space $(S, d)$, then its closure $E^-$ is also connected.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        To solve this problem, we will prove the contrapositive, i.e., if $E^{-}$ is disconnected, then $E$ is also disconnected. Because $E^{-}$ is disconnected, there exist $U_1, U_2$ such that:
+    \begin{enumerate}
+        \item $E^{-}\subseteq U_1 \cup U_2$ 
+        \item $(E^{-}\cap U_1)\cap (E^{-}\cap U_2)=\emptyset$
+        \item $(E^{-}\cap U_1) \neq \emptyset, (E^{-1}\cap U_{2})\neq \emptyset$   
+    \end{enumerate}  By the definition of closure, $E \subset E^{-}$. Then, 
+    \begin{align}
+        (E\cap U_1)\cap (E\cap U_2)\subset (E^{-}\cap U_1)\cap (E^{-}\cap U_2) \\[10pt] 
+        (E\cap U_1)\cap (E\cap U_2)=\emptyset 
+    \end{align}  Therefore, the following holds true:
+    \begin{enumerate}
+    \item $E \subset E^{-} \subseteq U_1 \cup U_2\implies E \subseteq U_1 \cup U_2$  
+    \item $(E\cap U_1)\cap (E\cap U_2)=\emptyset$
+    \item $(E\cap U_1)\neq \emptyset, (E\cap U_{2})\neq \emptyset$   
+    \end{enumerate}
+    Therefore, $E$ is also disconnected.
+\end{proof}
+\end{solution}
+\begin{problem}
+Prove that an intersection of convex sets in $\mathbb{R}^n$ is convex.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        Suppose we have sets $E,F$ that are both convex. We wish to find $E\cup F$ is convex. We know the following:
+        \begin{align}
+            \forall x, y \in E, 0<t<1 \implies tx+(1-t)y\in E\\[10pt] 
+            \forall u, v \in F, 0<t<1 \implies tu+(1-t)v \in F
+        \end{align}
+        Choose $\forall a,b \in E\cup F$. Then,
+        \begin{align}
+            ta+(1-t)b\in E\\[10pt] 
+            ta+(1-t)b \in F
+        \end{align} 
+        By the definition of an intersection of a set, we know that $x\in P$ iff $x\in E_{\alpha}$ for every $\alpha \in A$. Let $a \in E$, and $b \in F$, and $E = E_1$, $F = E_2$, $E_1, E_2 \in E_{\alpha}$. $P=E\cap F$. By the above, we know that $ta+(1-t)b\in E\cap F$. Therefore, the intersection of convex sets $E$ and $F$ is also convex.        
+    \end{proof}
+\end{solution}
+\begin{problem}
+On the metric space $\mathbb{R}^n$ (with the Euclidean metric $d$), denote by $P_i$ $(1 \leq i \leq n)$ the projection onto the $i$-th coordinate. Specifically, $P_i : \mathbb{R}^n \to \mathbb{R}$ takes $\vec{x} = (x_1, \dots, x_n)$ to $x_i$. Prove that $P_i$ is Lipschitz.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        The idea is to choose the largest value of $P_i(s)$, where $s\in \mathbb{R}^{n}$, and $P_i$ is the projection function of $\mathbb{R}^{n}$, i.e., choose the projection with the largest magnitude. By the triangle inequality, we know that the difference between the largest projection of values $s, t \in \mathbb{R}^{n}$ is always less than or equal to their respective Euclidean distances. As a result, we can always bound the differences between the difference of the outputs by the difference of the inputs by some constant value $k$, thereby making the function $P_i$ Lipschitz. For elements $ s, t \in \mathbb{R}^{n} $, choose $k=1$. Then,
+        \begin{align}
+            \left\vert s_i - t_i \right\vert < (1)d(s,t) \\[10pt] 
+            =\left(  \sum_{i=1}^{n} \left\vert s_i - t_i \right\vert^{2}  \right)^{\frac{1}{2}}
+        \end{align}
+        Therefore, $P_i$ is Lipschitz. 
+         \end{proof}
+\end{solution}
+\begin{problem}
+Denote by $\ell_1$ the set of all absolutely convergent series: the elements of $\ell_1$ are sequences $a = (a_i)_{i=1}^{\infty}$ with $\sum_{i=1}^{\infty} |a_i| < \infty$. For $a = (a_i)_{i=1}^{\infty}$ and $b = (b_i)_{i=1}^{\infty}$, define 
+\[
+d(a,b) = \sum_{i=1}^{\infty} |a_i - b_i|.
+\]
+\begin{enumerate}
+    \item Prove that $d$ is a metric.
+    \item Prove that the function $f : \ell_1 \to \mathbb{R}: (a_i) \mapsto \sum_{i=1}^{\infty} a_i$ is Lipschitz.
+    \item Determine whether the function $g: \mathbb{R} \to \ell_1$, taking $t \in \mathbb{R}$ to the sequence $\left( \frac{t^2}{2^i} \right)_{i=1}^{\infty}$, is uniformly continuous.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+        \begin{enumerate}
+            \item \item To show that $d$ is a metric, we need to show that $d$ satisfies the three criteria of a metric space:
+            \begin{enumerate}
+                \item Non-degeneracy:
+                \begin{align}
+                  d(x,y)=0 \iff x=y \\[10pt] 
+                  d(a,b) = \sum_{i=1}^{\infty} \left\vert a_i - b_{i} \right\vert  
+                \end{align} 
+                \begin{proof}
+                    $\implies:$ 
+                    \begin{align}
+                        \sum_{i=1}^{\infty} \left\vert a_{i}-b_{i} \right\vert = \sum_{i=1}^{\infty} \left\vert 0 \right\vert =0 
+                    \end{align} 
+                    $\impliedby:$ 
+                    \begin{align}
+                        \sum_{i=1}^{\infty} \left\vert a_{i}-b_{i} \right\vert =0 \implies \left\vert a_{i}-b_{i} \right\vert =0 \\[10pt] 
+                        a_{i}=b_{i}=0
+                    \end{align}
+                \end{proof}
+                \item Symmetry:
+                \begin{align}
+                    \forall x,y \in \ell_1, d(x,y)=d(y,x) 
+                \end{align}
+                \begin{proof}
+                    \begin{align}
+                        \left\vert a_{i}-b_{i} \right\vert =\left\vert b_{i}-a_{i} \right\vert 
+                    \end{align}
+                \end{proof}
+                \item Triangle Inequality: 
+                \begin{align}
+                    \forall x,y,z \in \ell_1, d(x,y)+d(y,z)\geq d(x,z)
+                \end{align} 
+                    \begin{proof}
+                    \begin{align}
+                        \sum_{i=1}^{\infty} \left\vert a_i -b_{i} \right\vert +\sum_{i=1}^{\infty} \left\vert b_{i}-c_{i}  \right\vert \geq \sum_{i=1}^{\infty} \left\vert a_i -c_{i} \right\vert \\[10pt] 
+                        \sum_{i=1}^{\infty} a_i = A, \sum_{i=1}^{\infty} b_i = B, \sum_{i=1}^{\infty} c_i = C \label{hw-5}\\[10pt] 
+                        \left\vert A-B \right\vert +\left\vert B-C \right\vert \geq \left\vert A -C \right\vert \\[10pt] 
+                        \left\vert A-B \right\vert +\left\vert B-C \right\vert \geq \left\vert (A-B)+(B-C) \right\vert \label{ti}
+                    \end{align} 
+    Where \autoref{hw-5} is proven in Homework 5 Problem 3.1, and \autoref{ti} is proven by the triangle inequality.
+                \end{proof}
+            \end{enumerate}
+            \item \begin{align}
+                f: \ell_1 \to \mathbb{R} : (a_{i}) \mapsto \sum_{i=1}^{\infty} a_{i}\\[10pt] 
+                s,t \in \ell_1, d^{*}(f(s), f(t))\leq kd(s,t)
+            \end{align}
+            \begin{proof}
+             We wish to find:
+            \begin{align}
+                \sum_{i=1}^{\infty} s_{i} - \sum_{i=1}^{\infty} t_{i} \leq k \sum_{i=1}^{\infty} \left\vert a_{i}-b_{i} \right\vert \\[10pt] 
+                \left\vert S \right\vert -\left\vert T \right\vert \leq k\left\vert S-T \right\vert 
+            \end{align} 
+            Choose $k=1$. Then:
+            \begin{align}
+                \left\vert \left( S-T \right)+T  \right\vert \leq \left\vert S-T \right\vert +\left\vert T \right\vert \\[10pt] 
+                \left\vert S \right\vert \leq \left\vert S-T \right\vert +\left\vert T \right\vert 
+            \end{align}
+            By the triangle inequality established in Problem 4.1, at $k = 1$, $f$ is Lipschitz. 
+            \end{proof}
+            \item To prove that $g: \mathbb{R} \to \ell_1$ is uniformly continuous, we will use the definition, i.e., 
+            \begin{align}
+                \forall \varepsilon>0, \exists \delta \ s.t. \ x,y\in S \text{ and } \left\vert x-y \right\vert <\delta \implies \left\vert f(x)-f(y) \right\vert <\varepsilon
+            \end{align} 
+            We will determine $\delta$ by the following discussion:
+            \begin{align}
+                f(x)-f(y) = \left(\frac{x^{2}}{2^{n}}- \frac{y^{2}}{2^{n}}   \right) =\\[10pt] 
+                \left( \frac{x^{2}-y^{2}}{2^{n}} \right) = \left( \frac{(x+y)(x-y)}{2^{n}} \right)  \\[10pt] 
+                \left( \frac{(x+y)(x-y)}{2^{n}} \right) <\varepsilon \\[10pt] 
+                (x-y) < \frac{\varepsilon \cdot 2^{n}}{(x+y)} \\[10pt] 
+            \end{align} 
+            Choose $\delta=\frac{\varepsilon \cdot 2^{n}}{(x+y)}$. Then, $\left\vert x-y \right\vert <\delta $ implies:
+            \begin{align}
+                \left\vert f(x)-f(y) \right\vert = \left\vert \left(\frac{x^{2}}{2^{n}}- \frac{y^{2}}{2^{n}}   \right) \right\vert  =\\[10pt] 
+                \left( \frac{x^{2}-y^{2}}{2^{n}} \right) = \left( \frac{(x+y)(x-y)}{2^{n}} \right) < \left( \frac{(x+y)\delta}{2^{n}} \right) \\[10pt] 
+                \frac{(x+y)\cdot \varepsilon \cdot 2^{n}}{(x+y)\cdot 2^{n}} = \varepsilon \\[10pt]  
+            \end{align} 
+            Therefore, 
+            \begin{align}
+                \left\vert x-y \right\vert < \delta \implies  \left\vert f(x)-f(y) \right\vert < \varepsilon
+            \end{align}
+            Then $g$ is uniformly continuous.
+        \end{enumerate}
+        
+
+\end{solution}
+\end{document}

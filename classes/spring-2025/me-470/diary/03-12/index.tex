@@ -1,0 +1,208 @@
+\documentclass[9pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+\section*{ME 470 Spindle Vibration Progress Report Outline}
+
+\begin{enumerate}
+    \item \textbf{Title page}
+    \item \textbf{Overview}
+    \begin{enumerate}
+        \item Team Introduction
+        \item Project Background
+        \item Solution Procedure
+        \item Ideation
+        \item Testing
+        \item Simulation
+        \item Summary
+        \item Questions
+    \end{enumerate}
+
+    \item \textbf{Team Introduction}
+    \item \textbf{Meet the Team} 
+    \begin{itemize}
+        \item Justin Frank
+        \item Eron Mahmudi
+        \item Jerich Lee
+        \item Liam Wydra
+        \item Ryan Vandewiele
+        \item Zachary Balakrishnan
+    \end{itemize}
+
+    \item \textbf{Project Background}
+
+    \item \textbf{Who is Peddinghaus, Inc.?}
+    \begin{itemize}
+        \item Structural steel machinery
+        \item PeddiSubX-1120 milling machine
+    \end{itemize}
+
+    \item \textbf{PeddiSubX-1120 Layout}
+
+    \item \textbf{What is the Problem?}
+    \begin{itemize}
+        \item Excess vibration during asymmetric loading
+        \item Impact: Damage, reduced quality
+    \end{itemize}
+
+    \item \textbf{Solution Procedure}
+
+    \item \textbf{Project Goal}
+    \begin{itemize}
+        \item Easy to implement, low maintenance, budget: \$1500
+    \end{itemize}
+
+    \item \textbf{Principal Tasks \& Deliverables}
+    \begin{itemize}
+        \item Root cause analysis
+        \item Research and testing
+        \item CAD modeling and simulation
+    \end{itemize}
+
+    \item \textbf{Project Timeline}
+    \begin{itemize}
+        \item Project Proposal: 2/17/2025
+        \item Mid-Semester Status Presentations: 4/1/2025
+        \item Trade Show: 4/22/2025
+        \item Final Presentations: 5/6/2025
+    \end{itemize}
+
+    \item \textbf{Peddinghaus, Inc. Site Visit}
+    \item \textbf{Vibration Research}
+    \item \textbf{Test Plan Development} 
+    \item \textbf{Simulation}
+    \item \textbf{Success Criterion}  
+    \item \textbf{Ideation}  
+    \item \textbf{Bearing Layout Change}
+    \item \textbf{Symmetrical Spindle Slide}
+    \item \textbf{Motor Repositioning}
+    \item \textbf{Spindle Housing Material Change}
+    \item \textbf{Spindle Material Change}
+    \item \textbf{Concept Selection}
+    \item \textbf{Testing Round 1}
+    \item \textbf{Budget}
+    \item \textbf{Budget}
+    \item \textbf{Summary}
+    \item \textbf{Summary}
+    \item \textbf{Questions}
+    \item \textbf{Contact info}
+    \item \textbf{References}
+    
+    
+    \item \textbf{Activities Completed}
+    \begin{itemize}
+        \item Torsion bar manufacturing and accelerometer acquisition
+        \item Impact and operational tests
+        \item Qualitative simulation
+        \item Literature review
+    \end{itemize}
+
+    \item \textbf{Detailed Test Data}
+    \begin{itemize}
+        \item Time Series Data: No Tool, X-axis
+        \item Time Series Data: 10-inch Tool, X-axis
+        \item Time Series Data: No Tool, Y-axis
+        \item Time Series Data: 10-inch Tool, Y-axis
+        \item Time Series Data: Torsion Bar
+        \item Spindle Unloaded Operation
+        \item Spindle Loaded Operation
+        \item Wavelet Analysis: Long Tool
+        \item Wavelet Analysis: Short Tool
+        \item Wavelet-Time Series Overlay
+    \end{itemize}
+
+    \item \textbf{Simulation Overview}
+    \begin{itemize}
+        \item Simplified models
+        \item Boundary conditions
+        \item Modal and frequency analysis
+    \end{itemize}
+
+    \item \textbf{Mesh Refinement}
+    \begin{itemize}
+        \item Goal: skewness $<$ 0.33
+    \end{itemize}
+
+    \item \textbf{Current Activities}
+    \begin{itemize}
+        \item CAD model creation and simulation improvements
+        \item Experimental frequency and wavelet analysis
+        \item Boundary condition revision
+    \end{itemize}
+
+    \item \textbf{Planned Activities}
+    \begin{itemize}
+        \item Data analysis
+        \item Simulation refinement
+        \item Begin CAD designs for solutions
+        \item Test Session \#2 (tentative)
+    \end{itemize}
+
+    \item \textbf{References}
+
+    \item \textbf{Backup Slides}
+
+    \item \textbf{Machine Axes System}
+
+    \item \textbf{Impact Test Details}
+    \begin{itemize}
+        \item Impact Test: 10-inch Tool, X-Direction
+        \item Impact Test: 10-inch Tool, Y-Direction
+        \item Impact Test: Torsional Mode
+        \item Impact Test: No Tool, X-Direction
+        \item Impact Test: No Tool, Y-Direction
+    \end{itemize}
+
+    \item \textbf{ISO Standards}
+    \begin{itemize}
+        \item ISO 20816-3 Success Criteria
+        \item ISO 2954 Requirements: Mounting and vibration criteria
+    \end{itemize}
+
+    \item \textbf{References}
+
+\end{enumerate}
+\end{document}

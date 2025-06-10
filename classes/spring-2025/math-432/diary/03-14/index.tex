@@ -1,0 +1,331 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432: HW 6}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+   
+
+\noindent
+\textbf{Step 1.} We claim that $\aleph_1 \le 2^{\aleph_0}$. 
+Indeed, $2^{\aleph_0}$ is the cardinality of the continuum (the set of real numbers), 
+which is uncountable, so it is at least $\aleph_1$, the first uncountable cardinal. 
+Hence,
+\[
+\aleph_1 \;\le\; 2^{\aleph_0}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 2.} Raise both sides of the inequality to the power $\aleph_0$:
+\[
+\aleph_1^{\aleph_0} \;\le\; \bigl(2^{\aleph_0}\bigr)^{\aleph_0}.
+\]
+Using the laws of exponents for cardinals, we have
+\[
+\bigl(2^{\aleph_0}\bigr)^{\aleph_0}
+\;=\;
+2^{\aleph_0 \cdot \aleph_0}
+\;=\;
+2^{\aleph_0}.
+\]
+Therefore,
+\[
+\aleph_1^{\aleph_0} \;\le\; 2^{\aleph_0}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 3.} We also show $\aleph_1^{\aleph_0} \ge 2^{\aleph_0}$. 
+Observe that $\aleph_1 \ge \aleph_0$, so by monotonicity of exponentiation
+on infinite cardinals,
+\[
+\aleph_1^{\aleph_0} \;\ge\; \aleph_0^{\aleph_0}.
+\]
+But it is a standard fact that $\aleph_0^{\aleph_0} = 2^{\aleph_0}$. 
+(For instance, $\aleph_0^{\aleph_0}$ is the cardinality of all infinite
+sequences of natural numbers, which has the same cardinality 
+as the reals.)
+
+\medskip
+\noindent
+\textbf{Conclusion.} Combining the two inequalities
+\[
+2^{\aleph_0} \;\le\; \aleph_1^{\aleph_0} \;\le\; 2^{\aleph_0},
+\]
+we deduce
+\[
+\aleph_1^{\aleph_0} \;=\; 2^{\aleph_0}.
+\]
+\qed 
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+
+    \noindent \textbf{Problem Statement.} 
+    Given two ordinals $\alpha$ and $\beta$, form disjoint well-ordered sets 
+    $A$ (of order type $\alpha$) and $B$ (of order type $\beta$), 
+    and define the order on $A \cup B$ by declaring that 
+    every element of $B$ exceeds every element of $A$. 
+    Then $A \cup B$ is well-ordered, and we let $\alpha + \beta$ 
+    denote its order type. We want to address:
+    
+    \begin{enumerate}
+    \item[(a)] Is $\alpha + \beta$ always equal to $\beta + \alpha$?
+    \item[(b)] Prove that if $\alpha + \beta = \alpha + \gamma$, then $\beta = \gamma$.
+    \item[(c)] Give an example where $\beta + \alpha = \gamma + \alpha$ fails to imply $\beta = \gamma$.
+    \end{enumerate}
+    
+    \subsection*{(a) Non-commutativity of Ordinal Addition}
+    
+    Ordinal addition is \emph{not} commutative in general.  
+    A standard counterexample is to take $\alpha = 1$ and $\beta = \omega$ 
+    (the first infinite ordinal).  We compute:
+    \[
+    1 + \omega = \omega \quad \text{but} \quad \omega + 1 \neq \omega.
+    \]
+    Indeed, $\omega + 1$ is $\omega$ followed by one extra element, strictly larger 
+    than all natural numbers, so its order type is different from $\omega$. 
+    Hence $\alpha + \beta$ may differ from $\beta + \alpha$.
+    
+    \subsection*{(b) Left-Cancellation: 
+    \texorpdfstring{$\alpha + \beta = \alpha + \gamma \implies \beta = \gamma$}{Left-Cancellation}}
+    
+    To see why $\alpha + \beta = \alpha + \gamma$ forces $\beta = \gamma$, 
+    we outline a common argument:
+    
+    \begin{enumerate}
+    \item[(1)] \textbf{Disjoint representatives.}
+    Let $A$ represent $\alpha$, $B$ represent $\beta$, and $C$ represent $\gamma$, 
+    with $A, B, C$ pairwise disjoint. Then:
+    \[
+    \alpha + \beta \quad \leftrightarrow \quad A \cup B \quad (\text{all of }B\text{ placed above all of }A),
+    \]
+    \[
+    \alpha + \gamma \quad \leftrightarrow \quad A \cup C \quad (\text{all of }C\text{ placed above all of }A).
+    \]
+    \item[(2)] \textbf{Order-isomorphism.}
+    If $\alpha + \beta = \alpha + \gamma$, there must be an 
+    order-isomorphism 
+    \[
+    \varphi\colon A \cup B \;\longrightarrow\; A \cup C
+    \]
+    between these two well-ordered sets.
+    
+    \item[(3)] \textbf{Initial segment is fixed.}
+    Because $A$ is an \emph{initial} segment in both $A \cup B$ and $A \cup C$ 
+    (no elements of $B$ or $C$ can appear below any element of $A$), 
+    the map $\varphi$ must send $A$ \emph{onto} $A$ itself. 
+    (If it did not, the image of an initial segment of length $\alpha$ could not match the 
+    corresponding initial segment in the codomain.)
+    
+    \item[(4)] \textbf{Remainders match.}
+    Since $\varphi$ takes $A$ onto $A$, the restriction of $\varphi$ 
+    to the ``tail segments'' $B$ and $C$ defines an order-isomorphism $B \cong C$. 
+    Hence $\beta = \gamma$.
+    \end{enumerate}
+    
+    Thus the ``left-cancellation law'' for ordinals holds:
+    \[
+    \alpha + \beta \;=\; \alpha + \gamma \quad \Longrightarrow\quad \beta = \gamma.
+    \]
+    
+    \subsection*{(c) Failure of Right-Cancellation}
+    
+    However, \emph{right-cancellation} often fails. That is,
+    \[
+    \beta + \alpha \;=\; \gamma + \alpha \quad \not\Longrightarrow\quad \beta = \gamma.
+    \]
+    A classic example: let $\alpha = \omega$, $\beta = 1$, and $\gamma = 2$.  Then
+    \[
+    1 + \omega = \omega 
+    \quad \text{and} \quad
+    2 + \omega = \omega,
+    \]
+    so $1 + \omega = 2 + \omega = \omega$.  Yet obviously $1 \neq 2$. 
+    Therefore $\beta + \alpha = \gamma + \alpha$ need \emph{not} imply $\beta = \gamma$.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Answer Summary.}
+    \begin{itemize}
+    \item[(a)] \emph{No.} Ordinal addition is not commutative, e.g.\ $1 + \omega = \omega$ but $\omega + 1 \neq \omega$.
+    \item[(b)] \emph{Yes.} If $\alpha + \beta = \alpha + \gamma$, then $\beta = \gamma$ (the left-cancellation law).
+    \item[(c)] Right-cancellation need not hold.  For example, $1 + \omega = 2 + \omega = \omega$ yet $1 \neq 2$.
+    \end{itemize} 
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+
+    \noindent
+    \textbf{Problem Statement.}
+    Let $A$ and $B$ be sets, and suppose there is a surjective function 
+    $f\colon A \to B$.  Use the Axiom of Choice to show that 
+    \[
+    Card(B) \; \le \; Card(A).
+    \]
+    (Here $Card(X)$ denotes the cardinality of $X$, 
+    though your text may write it as $o(X)$.)
+    
+    \bigskip
+    \noindent
+    \textbf{Step 1.  Surjectivity and fiber sets.}  
+    Since $f$ is onto $B$, for each $b \in B$, the \emph{fiber} 
+    \[
+    f^{-1}(\{b\}) \;=\; \{\,a \in A : f(a) = b\}
+    \]
+    is a nonempty subset of $A$.
+    
+    \medskip
+    \noindent
+    \textbf{Step 2.  Applying the Axiom of Choice.}  
+    By the Axiom of Choice, we can choose one element $a_b$ from each nonempty fiber 
+    $f^{-1}(\{b\})$.  Concretely, we obtain a function 
+    \[
+    g\colon B \,\longrightarrow\, A
+    \]
+    defined by 
+    \[
+    g(b) \;=\; a_b,\quad\text{where}\quad f(a_b) = b.
+    \]
+    Such a choice of $a_b$ for every $b \in B$ requires the Axiom of Choice 
+    if $B$ is infinite and the fibers have no natural ``canonical'' choice.
+    
+    \medskip
+    \noindent
+    \textbf{Step 3.  Verifying injectivity.}  
+    Claim: $g$ is injective.  Indeed, suppose $b_1,b_2 \in B$ with $b_1 \neq b_2$. 
+    Because $f(a_{b_1}) = b_1$ and $f(a_{b_2}) = b_2$, we must have 
+    $a_{b_1} \neq a_{b_2}$.  Hence $g(b_1) \neq g(b_2)$, so $g$ is injective.
+    
+    \medskip
+    \noindent
+    \textbf{Step 4.  Conclusion on cardinalities.}  
+    Since $g$ is an injection from $B$ into $A$, 
+    by definition of cardinal comparison we conclude 
+    \[
+    Card(B) \;\le\; Card(A).
+    \]
+    Thus the existence of a surjective map $f\colon A \to B$ 
+    implies $Card(B) \le Card(A)$, and the Axiom of Choice 
+    was used to construct the needed injection $g$.
+     
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \noindent
+    \textbf{Problem Statement.} 
+    Let $D$ be an infinite set of cardinality $d$. Define 
+    \[
+    F \;=\;\{\,A \subset D : A\text{ is finite}\}.
+    \]
+    Prove that $Card(F) = d$.
+    
+    \bigskip
+    \noindent
+    \textbf{Step 1: Decompose $F$ by finite sizes.}
+    Any finite subset $A$ of $D$ has some finite cardinality $n \in \omega$. 
+    Hence 
+    \[
+    F \;=\; \bigcup_{n=0}^{\infty} F_n,
+    \quad\text{where}\quad
+    F_n \;=\; \{\,A \subset D : |A| = n\}.
+    \]
+    Thus $F$ is a countable union of the sets $F_0, F_1, F_2, \dots$, 
+    where $F_n$ is the collection of all $n$-element subsets of $D$.  
+    
+    \medskip
+    \noindent
+    \textbf{Step 2: Cardinality of each $F_n$.}
+    Since $D$ is infinite of cardinality $d$, one shows (using standard cardinal arithmetic) 
+    that for every fixed integer $n \ge 1$, we have
+    \[
+    Card(F_n) \;=\; \binom{d}{n} \;=\; d.
+    \]
+    (The intuitive reason: from an infinite set of size $d$, there are ``$d^n$'' ways 
+    to choose an $n$-tuple of distinct elements, which still has cardinal $d$, and thus 
+    the set of $n$-element subsets has cardinal $d$ as well.)
+    
+    \medskip
+    \noindent
+    \textbf{Step 3: A countable union of cardinal $d$.}
+    We now write 
+    \[
+    F \;=\; F_0 \,\cup\, F_1 \,\cup\, F_2 \,\cup\, \cdots.
+    \]
+    Clearly $Card(F_0) = 1$ (there is only the empty subset), 
+    and $Card(F_n) = d$ for $n \ge 1$.  
+    Thus $F$ is a countable union of sets, each of cardinal at most $d$, 
+    and at least one of them ($F_1$, say) has cardinal $d$.  
+    Since $d$ is infinite and a countable union of sets of size at most $d$ still has size at most $d$, 
+    it follows that
+    \[
+    Card(F)
+    \;=\;
+    \bigl|\bigcup_{n=0}^{\infty} F_n\bigr|
+    \;=\; d.
+    \]
+    
+    \medskip
+    \noindent
+    \textbf{Conclusion.}
+    Hence the set of all finite subsets of an infinite set $D$ of cardinality $d$ itself has cardinality $d$:
+    \[
+    Card(F) = d.
+    \] 
+\end{solution}
+\end{document}

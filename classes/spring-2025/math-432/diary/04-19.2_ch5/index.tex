@@ -1,0 +1,2884 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\diam}{diam}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%------------------------------------------------
+% Completeness – Cauchy sequences
+%------------------------------------------------
+\section*{5.1 \quad Completeness}
+
+\begin{definition}[Cauchy sequence]
+    Let $(M,D)$ be a metric space.  
+    A sequence $\{x_i\}_{i=1}^{\infty}\subseteq M$ is called \emph{Cauchy} if
+    \[
+        \forall\,\varepsilon>0\;\exists\,N\in\mathbb N\ 
+        \text{such that}\ 
+        D(x_i,x_j)<\varepsilon
+        \quad\text{for all }i,j\ge N.
+    \]
+    Intuitively, the points $x_i$ eventually become arbitrarily close to
+    one another, regardless of a specific limit point.
+\end{definition}
+
+\begin{theorem}
+    Any convergent sequence in a metric space is a Cauchy sequence.
+\end{theorem}
+
+\begin{proof}
+    Let $\{x_i\}$ be a sequence in $(M,D)$ and suppose $x_i\to y\in M$.
+    We verify the Cauchy condition step by step.
+
+    \begin{enumerate}
+        \item[\textbf{1.}] \textbf{Fix an accuracy threshold.}\\
+              Take an arbitrary $\varepsilon>0$.
+
+        \item[\textbf{2.}] \textbf{Exploit convergence.}\\
+              Because $x_i\to y$, there exists
+              $N\in\mathbb N$ such that
+              \[
+                  D(x_i,y)<\frac{\varepsilon}{2}
+                  \qquad\text{whenever }i\ge N.
+              \]
+
+        \item[\textbf{3.}] \textbf{Estimate pairwise distances.}\\
+              For any indices $i,j\ge N$,
+              \begin{align}
+                  D(x_i,x_j)
+                  &\le D(x_i,y)+D(y,x_j)
+                      &&\text{(triangle inequality)}\\[4pt]
+                  &<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+                      =\varepsilon.
+              \end{align}
+
+        \item[\textbf{4.}] \textbf{Conclusion.}\\
+              The existence of such an $N$ for the chosen $\varepsilon$
+              shows that the sequence $\{x_i\}$ is Cauchy.
+    \end{enumerate}
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Remark.}\; The converse need not hold unless the ambient space is
+\emph{complete}; that is, a Cauchy sequence may fail to converge in an
+incomplete metric space.
+
+\begin{theorem}\label{thm:cauchy_subseq}
+  Let $\{x_i\}_{i=1}^{\infty}$ be a \emph{Cauchy} sequence in a metric space $(M,D)$.  
+  If some subsequence $\{x_{i_k}\}_{k=1}^{\infty}$ converges to a point $y\in M$,  
+  then the \textbf{entire} sequence $\{x_i\}$ converges to the same limit~$y$.
+\end{theorem}
+
+\begin{proof}
+  We show that every $\varepsilon>0$ eventually forces \emph{all} terms of the
+  sequence to lie within $\varepsilon$ of $y$.
+
+  \smallskip
+  \textbf{Step 1 (Cauchy control).}
+  Because $\{x_i\}$ is Cauchy, for the positive number $\varepsilon/2$
+  there exists an index $N_1\in\mathbb N$ such that
+  \[
+      D(x_i,x_j)<\frac{\varepsilon}{2}
+      \qquad\text{for all }i,j\ge N_1.
+  \tag{$\ast$}
+  \]
+
+  \smallskip
+  \textbf{Step 2 (Subsequence convergence).}
+  The subsequence $\{x_{i_k}\}$ converges to $y$, 
+  so there exists $N_2\in\mathbb N$ with
+  \[
+      k\ge N_2
+      \quad\Longrightarrow\quad
+      D(x_{i_k},y)<\frac{\varepsilon}{2}.
+  \tag{$\ast\!\ast$}
+  \]
+
+  \smallskip
+  \textbf{Step 3 (Choose a suitable index).}
+  Let $N:=\max\{\,N_1,i_{N_2}\,\}$.  
+  Then $N\ge N_1$ and the subsequence term $x_{i_{N_2}}$ satisfies $i_{N_2}\le N$.
+
+  \smallskip
+  \textbf{Step 4 (Estimate distance to the limit).}
+  For any $i\ge N$ pick the subsequence index $k=N_2$; by construction $i_{N_2}\ge N_1$
+  and $i_{N_2}\ge N$.  
+  Apply the triangle inequality using $(\ast)$ and $(\ast\!\ast)$:
+  \[
+      D(x_i,y)
+      \;\le\;
+      D\bigl(x_i,x_{i_{N_2}}\bigr)+D\bigl(x_{i_{N_2}},y\bigr)
+      \;<\;
+      \frac{\varepsilon}{2}+\frac{\varepsilon}{2}
+      \;=\;
+      \varepsilon.
+  \]
+
+  \smallskip
+  \textbf{Step 5 (Conclusion).}
+  Since $\varepsilon>0$ was arbitrary, we have shown that
+  $D(x_i,y)\to 0$ as $i\to\infty$; hence $x_i\to y$ and the whole
+  sequence converges to $y$.
+\end{proof}
+\begin{theorem}[Cauchy sequences are bounded]\label{thm:cauchy_bounded}
+  Let $(x_n)_{n\ge 1}$ be a Cauchy sequence in a metric space $(M,D)$.
+  Then the set
+  \[
+      S:=\{x_n\mid n\in\mathbb N\}
+  \]
+  has \emph{finite diameter}; i.e.\ there exists $R<\infty$ with
+  $D(x_i,x_j)\le R$ for all $i,j\in\mathbb N$.
+\end{theorem}
+
+\begin{proof}
+  We give a step–by–step argument.
+
+  \begin{enumerate}
+      \item[\textbf{1.}] \textbf{Choose an accuracy threshold.}  
+            Fix an arbitrary $\varepsilon>0$ (e.g.\ $\varepsilon=1$ will
+            already establish boundedness, but any positive choice works).
+
+      \item[\textbf{2.}] \textbf{Invoke the Cauchy property.}  
+            Because the sequence is Cauchy, there exists
+            $N\in\mathbb N$ such that
+            \[
+                D(x_i,x_j)<\varepsilon
+                \qquad\text{for all }i,j\ge N.
+            \tag{$\ast$}
+            \]
+
+      \item[\textbf{3.}] \textbf{Separate the sequence into two parts.}
+            \begin{itemize}
+               \item The \emph{tail}
+                     $\{x_n\}_{n\ge N}$ is contained in the ball
+                     $B\bigl(x_N,\varepsilon\bigr)$ by $(\ast)$,
+                     so any two points in the tail are at most
+                     $\varepsilon$ apart.
+               \item The \emph{head}
+                     $\{x_1,\dots,x_{N-1}\}$ is a \emph{finite} set and
+                     therefore has a finite diameter; denote
+                     \[
+                         R_0
+                         :=\max_{1\le i,j\le N-1}D(x_i,x_j)
+                         <\infty.
+                     \]
+            \end{itemize}
+
+      \item[\textbf{4.}] \textbf{Estimate distances between head and tail.}  
+            For $1\le i\le N-1$ and $j\ge N$ we use the triangle inequality:
+            \[
+                D(x_i,x_j)
+                \le D(x_i,x_N)+D(x_N,x_j)
+                < D(x_i,x_N)+\varepsilon.
+            \]
+            Set
+            \[
+                R_1:=\max_{1\le i\le N-1}D(x_i,x_N)<\infty.
+            \]
+            \paragraph{4.  Estimate distances between the \emph{head} and the \emph{tail}.}
+            Let \(1\le i\le N-1\) (so \(x_i\) lies in the finite head) and \(j\ge N\) (so \(x_j\) lies in the Cauchy–controlled tail).  
+            Since \(\{x_n\}\) is Cauchy, the choice of \(N\) in \eqref{eq:Cauchy} gives  
+            \[
+            D(x_N,x_j)<\varepsilon . \tag{\(*\)}
+            \]
+            Apply the triangle inequality in the form \(D(a,c)\le D(a,b)+D(b,c)\) with  
+            \(a=x_i,\; b=x_N,\; c=x_j\):
+            \[
+            D(x_i,x_j)\;\le\;D(x_i,x_N)+D(x_N,x_j)
+                         \;<\;D(x_i,x_N)+\varepsilon ,
+            \]
+            where the strict inequality uses \((*)\).
+            
+            \medskip
+            Because the set \(\{x_1,\dots,x_{N-1}\}\) is \emph{finite},
+            \[
+            R_1\;:=\;\max_{1\le i\le N-1} D(x_i,x_N)\;<\infty .
+            \]
+            Thus every “head–tail” pair satisfies
+            \[
+            D(x_i,x_j)\;<\;R_1+\varepsilon
+            \quad\text{for all }1\le i\le N-1,\; j\ge N.
+            \]
+      \item[\textbf{5.}] \textbf{Collect the bounds.}  
+            Define
+            \[
+                R:=\max\{R_0,\,R_1+\varepsilon,\,\varepsilon\}.
+            \]
+            Then every pair of indices $i,j\in\mathbb N$ satisfies
+            $D(x_i,x_j)\le R$.  Hence $\operatorname{diam}(S)\le R<\infty$.
+
+      \item[\textbf{6.}] \textbf{Conclusion.}  
+            The sequence’s range $S$ is contained in the closed ball
+            $\overline{B}(x_N,R)$, showing that every Cauchy sequence is
+            bounded (indeed, has finite diameter).
+            \qedhere
+  \end{enumerate}
+\end{proof}
+%------------------------------------------------
+% Monotone subsequence in a chain (Theorem 46)
+%------------------------------------------------
+\begin{definition}
+  A \emph{chain} is a totally ordered set; i.e.\ for any two elements
+  $a,b$ we have either $a<b$ or $b<a$.
+\end{definition}
+\begin{theorem}[Monotone subsequence]\label{thm:monotone}
+  Every (infinite) real sequence $(s_n)_{n\ge1}$ contains an infinite monotone
+  subsequence.
+  \end{theorem}
+  
+  \begin{proof}
+  Call the \(n\)-th term \emph{dominant} if it is greater than every term
+  that follows it:
+  \[
+     s_m < s_n \quad\text{for all } m>n. \tag{1}
+  \]
+  
+  \textbf{Case 1.  Infinitely many dominant terms.}
+  Let \(\bigl(s_{n_k}\bigr)_{k\ge1}\) be the subsequence of all dominant
+  terms.  Then by~(1)
+  \[
+     s_{n_1} > s_{n_2} > s_{n_3} > \cdots,
+  \]
+  so \(\bigl(s_{n_k}\bigr)\) is strictly decreasing.
+  
+  \medskip
+  \textbf{Case 2.  Only finitely many dominant terms.}
+  Choose \(n_1\) beyond the last dominant index.  Because
+  there are no dominant terms beyond \(n_1\), for every \(N\ge n_1\) we can find
+  an index \(m>N\) with
+  \[
+     s_m \ge s_N. \tag{2}
+  \]
+  Apply~(2) with \(N=n_1\) to select \(n_2>n_1\) such that
+  \(s_{n_2}\ge s_{n_1}\).  Suppose \(n_1,\dots,n_{k-1}\) have been chosen with
+  \[
+     n_1 < n_2 < \cdots < n_{k-1} \qquad\text{and}\qquad
+     s_{n_1} \le s_{n_2} \le \cdots \le s_{n_{k-1}}. \tag{3}
+  \]
+  Applying~(2) with \(N=n_{k-1}\) yields \(n_k>n_{k-1}\) such that
+  \(s_{n_k}\ge s_{n_{k-1}}\).  The relations~(3) then hold with \(k\) in place
+  of \(k-1\).  Proceeding inductively we obtain an infinite subsequence
+  \[
+     s_{n_1} \le s_{n_2} \le s_{n_3} \le \cdots,
+  \]
+  which is non‑decreasing.
+  
+  \medskip
+  In either case, the original sequence contains a monotone subsequence,
+  completing the proof.
+  \end{proof}
+
+\begin{theorem}[Monotone subsequence]\label{thm:monotone_subseq}
+  Let $x_1,x_2,x_3,\dots$ be a sequence of \emph{distinct} elements of a
+  chain $(C,<)$.  Then the sequence contains
+  \emph{either} a monotone increasing subsequence
+  \[
+      x_{i_1}<x_{i_2}<x_{i_3}<\dots,
+      \qquad i_1<i_2<i_3<\dots,
+  \]
+  \emph{or} a monotone decreasing subsequence
+  \[
+      x_{j_1}>x_{j_2}>x_{j_3}>\dots,
+      \qquad j_1<j_2<j_3<\dots.
+  \]
+\end{theorem}
+
+\begin{proof}
+  We argue by contradiction.
+
+  \smallskip
+  \textbf{Step 1 – Assume no increasing subsequence exists.}
+  Suppose that \emph{no} subsequence of $\{x_n\}$ is strictly increasing.  
+  We shall construct a strictly decreasing one.
+
+  \smallskip
+  \textbf{Step 2 – ``Hunt‐down’’ procedure and the notion of dominance.}
+  Fix an index $i$.  
+  Because the sequence is \emph{not} eventually increasing, there exists
+  $j>i$ with $x_j<x_i$.  
+  Continue: since $\{x_{j+1},x_{j+2},\dots\}$ is likewise not increasing,
+  pick $k>j$ with $x_k<x_j$, and so on.
+  This selection process must terminate in finitely many steps because the
+  set of indices is finite up to any bound.
+
+  The last chosen term, say $x_m$, is \emph{larger} than all terms that
+  follow it; otherwise we could extend the chain and contradict its
+  maximality.  Call such an $x_m$ a \emph{dominant element}:
+  \[
+      x_m\text{ is dominant } \iff 
+      x_m>x_\ell\text{ for every }\ell>m.
+  \]
+  %---  Detailed justification of the stopping condition  ---%
+\medskip\noindent
+\emph{Why the procedure stops with a dominant element.}
+During the ``hunt–down’’ construction we have already produced indices
+\[
+      i_{1}\;<\;i_{2}\;<\;\dots\;<\;i_{r}=m
+      \qquad\text{such that}\qquad
+      x_{i_{k+1}} \;<\; x_{i_{k}}
+      \quad(1\le k<r).
+\]
+We halt the process the first time we fail to locate an index
+\(j>m\) with \(x_{j}<x_{m}\).
+Assume, \emph{toward a contradiction}, that such an index actually exists;
+pick one and call it \(\ell\!>\!m\) with \(x_{\ell}<x_{m}\).
+Appending \(\ell\) to the list yields a strictly longer decreasing chain
+\[
+      x_{i_{1}}
+      \;>\;
+      x_{i_{2}}
+      \;>\;\dots\;>\;
+      x_{m}
+      \;>\;
+      x_{\ell},
+\]
+which contradicts our choice of \(m\) as the last (i.e.\ maximal) element
+selected by the procedure.
+Therefore no such \(\ell\) can exist, and we must have
+\[
+      x_{m} \;>\; x_{\ell} 
+      \qquad\text{for every } \ell>m,
+\]
+so \(x_{m}\) is \emph{dominant}.
+\medskip
+
+  \smallskip
+  \textbf{Step 3 – Existence of infinitely many dominant elements.}
+  The argument above shows:  
+  \emph{after} any index $i$ one can find a dominant element.  
+  Repeating inductively, we obtain an infinite sequence of indices
+  \[
+      j_1<j_2<j_3<\dots
+  \]
+  such that $x_{j_s}$ is dominant for each $s$.
+
+  \smallskip
+  \textbf{Step 4 – Dominant elements form a decreasing subsequence.}
+  By definition of dominance we have
+  \(
+      x_{j_1}>x_{j_2}>x_{j_3}>\dots
+  \);
+  thus $\{x_{j_s}\}_{s\ge1}$ is a strictly monotone decreasing
+  subsequence.
+
+  \smallskip
+  \textbf{Step 5 – Dichotomy.}
+  If the original assumption (no increasing subsequence) fails, then a
+  strictly increasing subsequence already exists.
+  Hence in \emph{every} case the sequence contains a monotone subsequence,
+  completing the proof.
+\end{proof}
+% ------------------------------------------------------------
+%  FULLY EXPANDED HUNT–DOWN EXAMPLE (to accompany Theorem 5)
+% ------------------------------------------------------------
+\begin{example}[Expanded illustration of Steps 1–5]\label{ex:long}
+  We work with the sequence
+  \[
+        x_1=5,\;x_2=-1,\;x_3=4,\;x_4=-2,\;x_5=3,\;x_6=-3,\;
+        x_7=2,\;x_8=-4,\;x_9=1,\;x_{10}=-5,\dots
+  \]
+  generated by
+  \(x_{2k-1}=6-k,\;x_{2k}=-k\).
+  
+  \bigskip\noindent
+  \textbf{Step 1 (temporary hypothesis).}
+  \emph{Assume that no increasing subsequence exists.}
+  We shall see this forces the appearance of a decreasing one.
+  
+  \bigskip\noindent
+  \textbf{Step 2 (hunt–down search inside a finite window).}
+  Fix an upper bound \(N=12\) so that only the finitely many indices
+  \(\{1,2,\dots,12\}\) are in play.
+  Start at the left end and repeatedly look for a strictly smaller
+  value to the right until either we fall off the window (forced stop) or no
+  smaller value exists (dominant element found).
+  
+  \begin{center}
+  \begin{tabular}{|c|c|c|c|}
+  \hline
+  \textbf{round} & \(\boldsymbol{i_r}\) chosen & \(\boldsymbol{x_{i_r}}\) &  
+  next \(j>i_r\) with \(x_j<x_{i_r}\)?\\
+  \hline
+  1 & \(1\) & \(5\)  & \(\boxed{2}\) (because \(-1<5\))\\
+  2 & \(2\) & \(-1\) & \(\boxed{4}\) (because \(-2<-1\))\\
+  3 & \(4\) & \(-2\) & \(\boxed{6}\) (because \(-3<-2\))\\
+  4 & \(6\) & \(-3\) & \(\boxed{8}\) (because \(-4<-3\))\\
+  5 & \(8\) & \(-4\) & \(\boxed{10}\) (because \(-5<-4\))\\
+  6 & \(10\)& \(-5\)& none in \(\{11,12\}\) \(\Rightarrow\) \emph{stop}\\
+  \hline
+  \end{tabular}
+  \end{center}
+  
+  \noindent
+  Hence the finite search terminates at \(m=10\)
+  with “last chosen’’ value \(x_{10}=-5\).
+  By construction,
+  \(x_{10}>x_\ell\) for all \(\ell>10\) with \(\ell\le12\);
+  for that window \(x_{10}\) is therefore \emph{dominant}.
+  
+  \bigskip\noindent
+  \textbf{Step 3 (restart on the next tail).}
+  Move the left–hand edge of the window just past \(10\),
+  i.e.\ begin anew at index \(11\) and run the same search
+  on \(\{11,12,\dots,22\}\).
+  A short calculation shows the procedure stops at \(m=11\)
+  because \(x_{11}=0\) exceeds every later \(x_\ell\)
+  up to index \(22\).
+  Repeating forever we obtain the \emph{infinite chain of dominants}
+  
+  \[
+     j_1=1,\;j_2=3,\;j_3=5,\;j_4=7,\dots,
+     \qquad
+     x_{j_s}=6-s\quad(s\ge1).
+  \]
+  
+  \bigskip\noindent
+  \textbf{Step 4 (dominants \(\Rightarrow\) decreasing subsequence).}
+  Because each \(x_{j_s}\) is larger than \emph{every} subsequent term,
+  in particular
+  \(
+        x_{j_1}>x_{j_2}>x_{j_3}>\dots
+  \),
+  so the subsequence
+  \(
+        x_{j_s}=5,4,3,2,1,\dots
+  \)
+  is strictly decreasing.
+  
+  \bigskip\noindent
+  \textbf{Step 5 (dichotomy concluded).}
+  Our “no increasing subsequence’’ hypothesis has produced a
+  \emph{decreasing} subsequence, while its negation
+  would give an increasing one immediately.
+  Thus, in all cases, the original non‑monotone sequence possesses a
+  monotone subsequence, confirming Theorem 5. \qed
+  \end{example}
+\begin{theorem}[Completeness of the real line]\label{thm:R_complete}
+  The metric space $(\mathbb R,|\!-\!|)$ is \emph{complete};\,
+  i.e.\ every Cauchy sequence of real numbers converges to a real number.
+\end{theorem}
+
+\begin{proof}
+  Let $\{x_n\}_{n\ge 1}$ be an arbitrary Cauchy sequence in $\mathbb R$.
+  We proceed in a sequence of logical reductions that culminate in the
+  desired convergence.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 1.}  Extract a convergent subsequence.}
+  \begin{enumerate}[label=\arabic*.]
+      \item If some value occurs \emph{infinitely} often in the sequence,
+            then the constant subsequence consisting of these repetitions
+            is trivially convergent; go directly to Step 4.
+      \item Otherwise every real number appears only \emph{finitely}
+            many times.  Hence we can discard repeats and obtain a
+            subsequence of \emph{distinct} terms
+            \(
+                x_{n_1},x_{n_2},x_{n_3},\dots
+            \)
+            with $n_1<n_2<n_3<\cdots$.
+  \end{enumerate}
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 2.}  Produce a monotone subsequence.}
+  By Theorem 46 (monotone subsequence lemma) applied to the chain
+  $(\mathbb R,<)$, the subsequence of distinct terms itself contains
+  a further subsequence that is either \emph{monotone increasing}
+  or \emph{monotone decreasing}.  Denote it by
+  \(
+      x_{m_1},x_{m_2},x_{m_3},\dots
+  \).
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 3.}  Show the monotone subsequence is bounded.}
+  The original sequence $\{x_n\}$ is Cauchy and therefore bounded by
+  Theorem 45.  Every subsequence of a bounded sequence is bounded, so
+  $\{x_{m_k}\}$ is a bounded monotone sequence of real numbers.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 4.}  Convergence of the subsequence.}
+  A classical fact from real analysis states that every bounded monotone
+  sequence of real numbers converges.  Thus there exists
+  $y\in\mathbb R$ such that
+  \[
+      x_{m_k}\;\longrightarrow\; y\quad(k\to\infty).
+  \]
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 5.}  Conclude convergence of the whole sequence.}
+  The original sequence $\{x_n\}$ is Cauchy and possesses a convergent
+  subsequence $\{x_{m_k}\}\to y$.  By Theorem 44
+  (``Cauchy $+$ convergent subsequence $\Rightarrow$ convergence’’)
+  the \emph{entire} sequence $\{x_n\}$ converges to the same limit~$y$.
+
+  \medskip
+  \noindent
+  Since $\{x_n\}$ was an arbitrary Cauchy sequence in $\mathbb R$, we
+  have proved that every Cauchy sequence of real numbers converges in
+  $\mathbb R$.  Therefore $(\mathbb R,|\!-\!|)$ is complete.
+\end{proof}
+\begin{theorem}\label{thm:closed_subset_complete}
+  Let $(M,D)$ be a \emph{complete} metric space and let
+  $A\subseteq M$ be \emph{closed}.  
+  Then $(A,D|_{A\times A})$ is complete; that is, every Cauchy sequence
+  contained in $A$ converges to a point of $A$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step proof]
+  \textbf{1.  Start with an arbitrary Cauchy sequence in $A$.}
+
+  Let $\{a_n\}_{n\ge 1}\subseteq A$ be Cauchy with respect to $D$.
+
+  \medskip
+  \textbf{2.  View the same sequence inside $M$.}
+
+  Because $A\subseteq M$, the very same sequence
+  $\{a_n\}$ is also a Cauchy sequence in the ambient space $M$.
+
+  \medskip
+  \textbf{3.  Invoke completeness of $M$ to obtain a limit in $M$.}
+
+  Since $M$ is complete, there exists a point $b\in M$ such that
+  \[
+      a_n \;\longrightarrow\; b
+      \qquad(n\to\infty).
+  \]
+
+  \medskip
+  \textbf{4.  Use closedness of $A$ to trap the limit inside $A$.}
+
+  Closedness means: if a sequence of points in $A$ converges in $M$,
+  then its limit lies in $A$.  
+  Therefore $b\in A$.
+
+  \medskip
+  \textbf{5.  Conclude completeness of the subspace.}
+
+  We have shown that an \emph{arbitrary} Cauchy sequence in $A$ actually
+  converges to a point of $A$.  Hence $(A,D|_{A\times A})$ is complete.
+\end{proof}
+
+\begin{remark}[Converse statement]
+  Conversely, if $A\subseteq M$ is complete \emph{as a metric space with the
+  restricted metric}, then $A$ must be closed in $M$:
+  if $x_n\in A$ converges to $x\in M$, the sequence is Cauchy in $A$,
+  so by completeness of $A$ it converges to a point of $A$; uniqueness of
+  limits forces $x\in A$.  Thus $\overline{A}=A$.
+\end{remark}
+\begin{theorem}\label{thm:complete_impl_closed}
+  Let $(M,D)$ be a metric space and let $A\subseteq M$.  
+  If $(A,D|_{A\times A})$ is \emph{complete} (with the induced metric),
+  then $A$ is \emph{closed} in $M$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step proof]
+  We must show that \(\overline{A}=A\).  
+  Equivalently, if a sequence in \(A\) converges in \(M\), its limit
+  actually lies in \(A\).
+
+  \smallskip
+  \textbf{1.  Take an arbitrary convergent sequence from \(A\).}  
+  Let \(\{a_i\}_{i\ge1}\subseteq A\) and suppose
+  \[
+      a_i \;\longrightarrow\; b
+      \quad\text{in } (M,D)
+      \quad\text{for some }b\in M.
+  \]
+
+  \smallskip
+  \textbf{2.  Use convergence to deduce the sequence is Cauchy.}  
+  Every convergent sequence in a metric space is Cauchy
+  (Theorem \ref{thm:cauchy_subseq} or standard first‑year analysis),
+  so \(\{a_i\}\) is Cauchy in \(M\) and hence also Cauchy when regarded
+  inside the subspace \(A\).
+
+  \smallskip
+  \textbf{3.  Invoke completeness of \(A\).}  
+  Because \(A\) is complete, the Cauchy sequence \(\{a_i\}\)
+  converges (with respect to \(D\)) to some limit point \(a\in A\).
+
+  \smallskip
+  \textbf{4.  Identify the limit.}  
+  Limits in a metric space are \emph{unique}; but \(\{a_i\}\) already
+  converges to \(b\) in \(M\).
+  Therefore \(a=b\).
+
+  \smallskip
+  \textbf{5.  Conclude closedness.}  
+  We have shown: whenever a sequence of points of \(A\) converges in \(M\),
+  its limit lies in \(A\).  
+  This is precisely the definition of \(A\) being \emph{closed} in \(M\).
+\end{proof}
+\begin{theorem}\label{thm:complete_impl_closed}
+  Let $(M,D)$ be a metric space and let $A\subseteq M$.  
+  If $(A,D|_{A\times A})$ is \emph{complete} (with the induced metric),
+  then $A$ is \emph{closed} in $M$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step proof]
+  We must show that \(\overline{A}=A\).  
+  Equivalently, if a sequence in \(A\) converges in \(M\), its limit
+  actually lies in \(A\).
+
+  \smallskip
+  \textbf{1.  Take an arbitrary convergent sequence from \(A\).}  
+  Let \(\{a_i\}_{i\ge1}\subseteq A\) and suppose
+  \[
+      a_i \;\longrightarrow\; b
+      \quad\text{in } (M,D)
+      \quad\text{for some }b\in M.
+  \]
+
+  \smallskip
+  \textbf{2.  Use convergence to deduce the sequence is Cauchy.}  
+  Every convergent sequence in a metric space is Cauchy
+  (Theorem \ref{thm:cauchy_subseq} or standard first‑year analysis),
+  so \(\{a_i\}\) is Cauchy in \(M\) and hence also Cauchy when regarded
+  inside the subspace \(A\).
+
+  \smallskip
+  \textbf{3.  Invoke completeness of \(A\).}  
+  Because \(A\) is complete, the Cauchy sequence \(\{a_i\}\)
+  converges (with respect to \(D\)) to some limit point \(a\in A\).
+
+  \smallskip
+  \textbf{4.  Identify the limit.}  
+  Limits in a metric space are \emph{unique}; but \(\{a_i\}\) already
+  converges to \(b\) in \(M\).
+  Therefore \(a=b\).
+
+  \smallskip
+  \textbf{5.  Conclude closedness.}  
+  We have shown: whenever a sequence of points of \(A\) converges in \(M\),
+  its limit lies in \(A\).  
+  This is precisely the definition of \(A\) being \emph{closed} in \(M\).
+\end{proof}
+%------------------------------------------------
+% Theorem 50  –  Characterisation of completeness
+%------------------------------------------------
+\begin{theorem}\label{thm:nested_diam}
+  For a metric space $(M,D)$ the following statements are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item \textbf{Completeness:} every Cauchy sequence in $M$ converges to a
+            point of $M$;
+      \item \textbf{Nested–set property:} for \emph{every} descending chain of
+            non‑empty closed subsets
+            \[
+                A_1 \supseteq A_2 \supseteq A_3 \supseteq \dots
+                \qquad\text{with}\qquad
+                \diam(A_n):=\sup_{x,y\in A_n}D(x,y)\;\longrightarrow\;0,
+            \]
+            the intersection $\displaystyle\bigcap_{n=1}^{\infty}A_n$ is
+            non‑empty.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  We prove \((a)\!\implies\!(b)\) and \((b)\!\implies\!(a)\).
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{(a) $\boldsymbol{\Longrightarrow}$ (b).}}
+  Assume $M$ is complete and let
+  \(
+      A_1 \supseteq A_2 \supseteq \dots
+  \)
+  satisfy the hypotheses of~(b).
+
+  \begin{enumerate}[label=\arabic*.]
+      \item \textbf{Pick one representative from each $A_n$.}  
+            For every $n$ choose $a_n\in A_n$.
+
+      \item \textbf{Show that $\{a_n\}$ is Cauchy.}  
+            Given $\varepsilon>0$, pick
+            $N$ so large that $\diam(A_N)<\varepsilon$.  
+            Because $A_{N}\supseteq A_{N+1}\supseteq\dots$, we have
+            $a_i,a_j\in A_N$ for all $i,j\ge N$, hence
+            \(
+                D(a_i,a_j)\le\diam(A_N)<\varepsilon.
+            \)
+
+      \item \textbf{Invoke completeness of $M$.}  
+            The sequence $\{a_n\}$ is Cauchy, so by completeness it
+            converges to some $b\in M$.
+
+      \item \textbf{Locate $b$ in every $A_k$.}  
+            Fix $k$.  Since $a_n\in A_k$ for all $n\ge k$ and $A_k$ is
+            closed, the limit $b$ must lie in $A_k$.
+
+      \item \textbf{Conclusion.}  
+            Thus $b\in\bigcap_{n\ge1}A_n$, proving (b).
+  \end{enumerate}
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{(b) $\boldsymbol{\Longrightarrow}$ (a).}}
+  Assume (b) holds and let $\{x_n\}$ be a Cauchy sequence in $M$.
+
+  \begin{enumerate}[label=\arabic*.]
+      \item \textbf{Create nested closed balls.}  
+            For each $n$ put
+            \(
+                B_n:=\overline{B}\!\left(x_n,\;
+                \displaystyle\sup_{k\ge n}D(x_n,x_k)\right).
+            \)
+            Because $\{x_n\}$ is Cauchy, the radii shrink to $0$, whence
+            \(
+              \diam(B_n)=\diam\bigl(\{x_n,x_{n+1},\dots\}\bigr)\longrightarrow 0.
+            \)
+            Moreover $B_{n+1}\subseteq B_n$.
+
+      \item \textbf{Apply the nested‐set property.}  
+            By (b) the intersection
+            \(
+              \bigcap_{n\ge1}B_n
+            \)
+            is non‑empty; choose $y$ in it.
+
+      \item \textbf{Prove $x_n\to y$.}  
+            For any $\varepsilon>0$ pick $N$ so large that
+            \(\diam(B_N)<\varepsilon\).  
+            Since $x_n,y\in B_N$ for $n\ge N$, we have
+            \(D(x_n,y)\le\diam(B_N)<\varepsilon\).
+            Hence $x_n\to y\in M$.
+
+      \item \textbf{Conclusion.}  
+            Every Cauchy sequence in $M$ converges; $M$ is complete.
+  \end{enumerate}
+\end{proof}
+
+%------------------------------------------------
+% Remarks
+%------------------------------------------------
+\begin{remark}
+  \begin{enumerate}[label=\textup{\arabic*.}, leftmargin=2.8em]
+      \item If $\diam(A_n)\to 0$, the intersection $\bigcap_n A_n$ contains
+            at most one point.
+      \item Dropping the requirement $\diam(A_n)\to 0$ yields a stronger
+            property—\emph{compactness}—which is treated in Section~5.3.
+  \end{enumerate}
+\end{remark}
+%------------------------------------------------
+% Uniform continuity: definition and step‑by‑step example
+%------------------------------------------------
+\begin{definition}[Uniform continuity]
+  Let $(X,D_X)$ and $(Y,D_Y)$ be metric spaces and  
+  $f:X\to Y$ a function.  
+  The map $f$ is \textbf{uniformly continuous} if
+  \[
+      \forall\,\varepsilon>0\;\exists\,\delta>0
+      \quad\text{such that}\quad
+      D_X(x,x')<\delta \;\Longrightarrow\;
+      D_Y\bigl(f(x),f(x')\bigr)<\varepsilon
+      \;\;\text{for \emph{all}}\,x,x'\in X.
+  \]
+  The key point is that $\delta$ depends \emph{only} on~$\varepsilon$,
+  not on the particular pair $(x,x')$; hence the same $\delta$ works
+  \emph{globally} across $X$.
+\end{definition}
+
+\bigskip
+\noindent
+%------------------------------------------------------------
+%  Step 4 – f is NOT uniformly continuous  (expanded version)
+%------------------------------------------------------------
+\paragraph{Step 4 — $f$ is \emph{not} uniformly continuous.}
+
+Fix\footnote{Any $\,\varepsilon>0$ would work; taking $\varepsilon=1$ makes
+the arithmetic look clean.} $\varepsilon = 1$ and assume, for
+contradiction, that a number $\delta>0$ exists such that
+\[
+   x,y\in X,\;d_X(x,y)<\delta
+   \;\Longrightarrow\;
+   |f(x)-f(y)|<\varepsilon.
+   \tag{$\star$}
+\]
+
+\medskip
+\noindent\textbf{(i)  Choose two \emph{very} close points of $X$.}
+Because $\delta>0$, pick an \emph{even} integer $n$ so large that
+\[
+   \frac1n < \frac{\delta}{2}.  \tag{a}
+\]
+Now let $m:=n+1$ (which is \emph{odd}).  Then
+\[
+   d_X\!\Bigl(\tfrac1n,\tfrac1m\Bigr)
+      =\Bigl|\frac1n-\frac1m\Bigr|
+      =\frac{1}{n(n+1)}
+      <\frac1n
+      <\frac{\delta}{2}
+      <\delta. \tag{b}
+\]
+Hence the two points $\tfrac1n,\tfrac1m\in X$ satisfy the
+$\delta$‑proximity required in $(\star)$.
+
+\medskip
+\noindent\textbf{(ii)  But their $f$‑values stay $1$ apart.}
+Because $n$ is even and $m$ is odd,
+\[
+   f\!\Bigl(\tfrac1n\Bigr)=0,
+   \qquad
+   f\!\Bigl(\tfrac1m\Bigr)=1,
+   \quad\Longrightarrow\quad
+   \Bigl|\,f\!\bigl(\tfrac1n\bigr)-f\!\bigl(\tfrac1m\bigr)\Bigr|=1=\varepsilon.
+\]
+
+\medskip
+\noindent\textbf{(iii)  Contradiction.}  
+The distance condition \((\star)\) is met by~(b), yet the
+$f$‑values violate the desired bound $|f(x)-f(y)|<\varepsilon$.  
+Therefore no such $\delta$ can exist, and $f$ fails to be uniformly
+continuous on $X$.
+\qed
+\begin{theorem}\label{thm:uniform_cauchy}
+  Let $(X,D_X)$ and $(Y,D_Y)$ be metric spaces and
+  $f:X\to Y$ be \emph{uniformly continuous}.
+  If $\{x_i\}_{i\ge 1}\subseteq X$ is a Cauchy sequence,  
+  then $\{f(x_i)\}_{i\ge 1}\subseteq Y$ is also Cauchy.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step proof]
+  \textbf{1.  Recall the two hypotheses.}
+  \begin{enumerate}[label=\alph*., wide, labelwidth=!, labelindent=0pt]
+      \item \emph{Uniform continuity of $f$:}\\[2pt]
+            $\displaystyle
+            \forall\,\varepsilon>0\;\exists\,\delta>0
+            \text{ such that }
+            D_X(x,x')<\delta
+            \;\Longrightarrow\;
+            D_Y\!\bigl(f(x),f(x')\bigr)<\varepsilon
+            \text{ for \emph{all} }x,x'\in X.$
+      \item \emph{$\{x_i\}$ is Cauchy in $X$:}\\[2pt]
+            $\displaystyle
+            \forall\,\delta>0\;\exists\,N\in\mathbb N
+            \text{ such that }
+            D_X(x_i,x_j)<\delta
+            \text{ whenever }i,j\ge N.$
+  \end{enumerate}
+
+  \medskip
+  \textbf{2.  Fix an arbitrary accuracy level in the target space.}\\
+  Let $\varepsilon>0$ be given.  
+  Use uniform continuity to obtain a corresponding $\delta>0$
+  (as in hypothesis a).
+
+  \medskip
+  \textbf{3.  Exploit the Cauchy property of the original sequence.}\\
+  Because $\{x_i\}$ is Cauchy, choose $N\in\mathbb N$ such that  
+  \[
+      D_X(x_i,x_j)<\delta
+      \qquad\text{for all }i,j\ge N.
+  \]
+
+  \medskip
+  \textbf{4.  Transfer the estimate through $f$.}\\
+  For any $i,j\ge N$ the above inequality triggers the
+  uniform‑continuity implication, yielding
+  \[
+      D_Y\!\bigl(f(x_i),f(x_j)\bigr)<\varepsilon.
+  \]
+
+  \medskip
+  \textbf{5.  Conclude that $\{f(x_i)\}$ is Cauchy.}\\
+  We have shown that for the \emph{arbitrary} $\varepsilon>0$
+  there exists $N$ (the same for the whole sequence) such that
+  $D_Y\!\bigl(f(x_i),f(x_j)\bigr)<\varepsilon$ whenever $i,j\ge N$.
+  This is precisely the Cauchy criterion in $(Y,D_Y)$.
+
+  \medskip
+  \textbf{6.  Statement proven.}\\
+  Therefore a uniformly continuous map carries Cauchy sequences
+  in the domain to Cauchy sequences in the codomain.
+\end{proof}
+%------------------------------------------------
+% Extension of a uniformly continuous map
+%------------------------------------------------
+\begin{theorem}\label{thm:uc_extension}
+  Let $A$ be a \emph{dense} subset of a metric space $(B,D_B)$ and let
+  $f:A\to C$ be a \textbf{uniformly continuous} map into a \emph{complete}
+  metric space $(C,D_C)$.
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item There exists a \emph{unique} extension
+          $\tilde f : B \to C$ that agrees with $f$ on $A$ and is
+          \textbf{continuous}.
+    \item The extension $\tilde f$ is \textbf{uniformly continuous}.
+    \item If $f$ is an \emph{isometry} on $A$
+      (i.e., $D_C\bigl(f(a_1),f(a_2)\bigr)=D_B(a_1,a_2)$ for all
+      $a_1,a_2\in A$), then $\tilde f$ is an \textbf{isometry}
+      on all of $B$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  We construct $\tilde f$ point‑by‑point and then verify the properties.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 1 – Definition of $\tilde f$.}}
+  Fix $b\in B$.  Because $A$ is dense, choose a sequence
+  $\{a_i\}_{i\ge1}\subseteq A$ with $a_i\to b$ in $B$.
+  By Theorem 51, $\{f(a_i)\}$ is a Cauchy sequence in $C$;
+  completeness of $C$ gives a limit $c\in C$.
+  \[
+      \boxed{\;\tilde f(b):=\displaystyle\lim_{i\to\infty}f(a_i)\;}
+  \]
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 2 – Well‑definedness (independence of sequence).}}
+  Let $\{\alpha_i\}\subseteq A$ be another sequence with $\alpha_i\to b$.
+  Interlace the two sequences to form
+  \(
+      a_1,\alpha_1,a_2,\alpha_2,\dots
+  \),
+  which still converges to $b$.  
+  Applying $f$ yields a Cauchy sequence whose subsequences
+  $\{f(a_i)\}$ and $\{f(\alpha_i)\}$ share the same limit, say $c$.
+  Thus $\tilde f(b)$ does not depend on the particular approximating
+  sequence.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 3 – Extension property.}}
+  If $b\in A$ we may take the constant sequence $a_i=b$,
+  giving $\tilde f(b)=f(b)$.  Hence $\tilde f$ truly extends $f$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 4 – Uniform continuity of $\tilde f$.}}
+  Take $\varepsilon>0$ and choose $\delta>0$ given by uniform continuity
+  of $f$.  
+  Suppose $b,\beta\in B$ satisfy $D_B(b,\beta)<\delta$.
+  Select sequences $a_i,\;\alpha_i\in A$ with
+  $a_i\to b$ and $\alpha_i\to\beta$.
+  For large $i$ we have simultaneously
+  \[
+      D_B(a_i,\alpha_i)\;<\;\delta,
+  \]
+  hence
+  \(
+      D_C\!\bigl(f(a_i),f(\alpha_i)\bigr)<\varepsilon
+  \)
+  by uniform continuity of $f$.
+  Passing to the limit and using continuity of $D_C$,
+  \[
+      D_C\!\bigl(\tilde f(b),\tilde f(\beta)\bigr)\le\varepsilon.
+  \]
+  The same $\delta$ works for \emph{all} pairs, proving uniform
+  continuity; continuity is automatic.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 5 – Uniqueness.}}
+  If $g:B\to C$ is any other continuous extension of $f$,
+  then for $b\in B$ we have $g(b)=\lim f(a_i)=\tilde f(b)$
+  by continuity of $g$ along $a_i\to b$.  Hence $g=\tilde f$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 6 – Preservation of isometry (part (c)).}}
+  Assume $f$ is an isometry on $A$ and take $b,\beta\in B$.
+  Pick sequences $a_i\to b$, $\alpha_i\to\beta$ from $A$.
+  Using the isometry property on $A$ and continuity of $D_B,D_C$,
+  \[
+      \boxed{\;
+      D_B(b,\beta)=\lim_{i\to\infty}D_B(a_i,\alpha_i)
+                 =\lim_{i\to\infty}D_C\!\bigl(f(a_i),f(\alpha_i)\bigr)
+                 =D_C\!\bigl(\tilde f(b),\tilde f(\beta)\bigr)\; }.
+  \]
+  Thus $\tilde f$ is an isometry on $B$.
+\end{proof}
+%----------------------------------------
+% Completion of a metric space – uniqueness
+%----------------------------------------
+
+\begin{definition}[Completion]
+  Let $(X,D_X)$ and $(Y,D_Y)$ be metric spaces.  
+  We say that \emph{$Y$ is a completion of $X$} if
+  \[
+      \text{$Y$ is complete \quad and \quad $X$ is a dense subspace of $Y$.}
+  \]
+\end{definition}
+
+\begin{theorem}[Uniqueness of completion]\label{thm:completion_unique}
+  Let $Y$ and $Z$ be two completions of the same metric space $X$.
+  Then there exists an \textbf{isometry}
+  \[
+      \Phi:Y\;\longrightarrow\;Z
+  \]
+  such that $\Phi$ \emph{restricts to the identity} on $X$.
+  Consequently, completions are unique up to a canonical isometry.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step]
+  \textbf{1.  Apply Theorem \ref{thm:uc_extension}.}  
+  Consider the identity map
+  \[
+      f:X\longrightarrow Z,\qquad f(x)=x .
+  \]
+  It is uniformly continuous (trivially, with $\delta=\varepsilon$).  
+  By Theorem \ref{thm:uc_extension}\,(a)–(b), $f$ extends uniquely to a
+  \emph{uniformly continuous} map
+  \[
+      \widetilde f:Y\longrightarrow Z
+  \]
+  that coincides with $\mathrm{id}_X$ on the dense subset $X$.
+
+  \medskip
+  \textbf{2.  $\widetilde f$ is an isometry on $Y$.}  
+  Because $f$ is the identity (hence an isometry) on $X$,
+  the “furthermore’’ clause of Theorem \ref{thm:uc_extension}\,(c)
+  implies
+  \[
+      D_Z\bigl(\widetilde f(y_1),\widetilde f(y_2)\bigr)
+      =D_Y(y_1,y_2)
+      \qquad\text{for all }y_1,y_2\in Y .
+  \]
+
+  \medskip
+  \textbf{3.  Surjectivity of $\widetilde f$.}  
+  Fix $z\in Z$.  
+  Because $X$ is dense in $Z$, we can choose a sequence
+  $(x_i)\subseteq X$ with $x_i\to z$ in $Z$.
+  Completeness of $Y$ ensures that $(x_i)$—viewed inside $Y$—converges
+  to some $y\in Y$.
+  By continuity of $\widetilde f$,
+  \[
+      \widetilde f(y)=\lim_{i\to\infty}\widetilde f(x_i)
+                    =\lim_{i\to\infty}x_i
+                    =z .
+  \]
+  Hence $\widetilde f$ is onto.
+
+  \medskip
+  \textbf{4.  Identification of $\Phi$.}  
+  Set $\Phi:=\widetilde f$.  
+  Steps 2 and 3 show that $\Phi$ is a surjective isometry
+  extending $\mathrm{id}_X$.
+\end{proof}
+
+\medskip
+\noindent
+Because any two completions of a metric space are canonically isometric, we
+may unambiguously refer to \emph{the} completion of $X$.
+%------------------------------------------------
+% Uniform convergence and continuity
+%------------------------------------------------
+
+\begin{definition}[Uniform convergence]
+  Let $(X,D_X)$ and $(Y,D_Y)$ be metric spaces.
+  A sequence of functions $f_i:X\to Y$ \emph{converges uniformly} to a
+  function $f:X\to Y$ (notation $f_i\!\xrightarrow{\;u\;} f$) if
+  \[
+      \forall\,\varepsilon>0\;\exists\,N\in\mathbb N
+      \quad\text{such that}\quad
+      D_Y\!\bigl(f_i(x),f(x)\bigr)<\varepsilon
+      \quad\text{for all }x\in X\text{ and all }i\ge N.
+  \]
+  Equivalently,
+  $\displaystyle\sup_{x\in X}D_Y\!\bigl(f_i(x),f(x)\bigr)\longrightarrow 0$
+  as $i\to\infty$.
+\end{definition}
+
+\begin{theorem}\label{thm:uniform_limit_continuous}
+  Let $f_i,f:X\to Y$ be functions between metric spaces with
+  $f_i\!\xrightarrow{\;u\;} f$ and each $f_i$ \emph{continuous}.
+  Then the limit function $f$ is \textbf{continuous}.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step]
+  \textbf{1.  Fix a candidate point of continuity.}  
+  Let $x_0\in X$ be arbitrary; we will show $f$ is continuous at $x_0$.
+
+  \medskip
+  \textbf{2.  Choose an accuracy threshold.}  
+  Given $\varepsilon>0$,
+  uniform convergence provides an index $i$ such that
+  \[
+      D_Y\!\bigl(f_i(x),f(x)\bigr)<\frac{\varepsilon}{3}
+      \qquad\text{for \emph{all} }x\in X.
+  \]
+
+  \medskip
+  \textbf{3.  Use continuity of the chosen $f_i$.}  
+  Because $f_i$ is continuous at $x_0$, there exists $\delta>0$ with
+  \[
+      D_X(x,x_0)<\delta
+      \;\Longrightarrow\;
+      D_Y\!\bigl(f_i(x),f_i(x_0)\bigr)<\frac{\varepsilon}{3}.
+  \]
+
+  \medskip
+  \textbf{4.  Estimate $D_Y\bigl(f(x),f(x_0)\bigr)$.}  
+  Whenever $D_X(x,x_0)<\delta$,
+  \begin{align*}
+      D_Y\!\bigl(f(x),f(x_0)\bigr)
+      &\le D_Y\!\bigl(f(x),f_i(x)\bigr)
+           +D_Y\!\bigl(f_i(x),f_i(x_0)\bigr)
+           +D_Y\!\bigl(f_i(x_0),f(x_0)\bigr)\\[4pt]
+      &<\frac{\varepsilon}{3}+\frac{\varepsilon}{3}+\frac{\varepsilon}{3}
+      =\varepsilon.
+  \end{align*}
+
+  \medskip
+  \textbf{5.  Conclude continuity.}  
+  We have found $\delta>0$ such that
+  $D_X(x,x_0)<\delta \Rightarrow D_Y\bigl(f(x),f(x_0)\bigr)<\varepsilon$.
+  Since $\varepsilon>0$ was arbitrary, $f$ is continuous at $x_0$.
+  As $x_0$ was arbitrary, $f$ is continuous on all of $X$.
+\end{proof}
+
+%------------------------------------------------
+% Metric on the space of bounded continuous maps
+%------------------------------------------------
+\paragraph{Remark.}
+For metric spaces $(X,D_X)$ and $(Y,D_Y)$ define
+\[
+  C(X,Y):=\Bigl\{\,g:X\to Y\;\Big|\; g\ \text{continuous and }
+  \diam\bigl(g(X)\bigr)<\infty\Bigr\}.
+\]
+Equipping $C(X,Y)$ with the metric
+\[
+  D_{\!\infty}(f,g):=\sup_{x\in X}D_Y\!\bigl(f(x),g(x)\bigr)
+\]
+turns it into a metric space in which convergence is precisely uniform
+convergence.
+%------------------------------------------------
+% Theorem 55 – Completeness of the function space $C(X,Y)$
+%------------------------------------------------
+\begin{theorem}\label{thm:CXY_complete}
+  Let $(X,D_X)$ be \emph{any} metric space and $(Y,D_Y)$ a
+  \emph{complete} metric space.
+  Denote by
+  \[
+      C(X,Y)\;=\;\Bigl\{\,f:X\to Y \ \Bigm|\ 
+          f \text{ is continuous and }
+          \operatorname{diam}f(X)<\infty\Bigr\}
+  \]
+  the set of bounded continuous maps,
+  equipped with the \emph{sup metric}
+  \[
+      D_\infty(f,g)\;:=\;\sup_{x\in X}D_Y\!\bigl(f(x),g(x)\bigr)
+      \qquad (f,g\in C(X,Y)).
+  \]
+  Then $\bigl(C(X,Y),D_\infty\bigr)$ is a \textbf{complete} metric space.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step]
+  \textbf{1.  Start with a Cauchy sequence of functions.}  
+  Let $\{f_i\}_{i\ge1}\subseteq C(X,Y)$ be Cauchy with respect to
+  $D_\infty$; i.e.\
+  \[
+      \forall\,\varepsilon>0\;\exists\,N\
+      \text{such that }D_\infty(f_i,f_j)<\varepsilon
+      \text{ whenever }i,j\ge N. \tag{$\star$}
+  \]
+
+  \textbf{2.  Fix $x\in X$ and look pointwise.}  
+  For each $x$ the sequence $\{f_i(x)\}$ in $Y$ satisfies
+  \[
+      D_Y\!\bigl(f_i(x),f_j(x)\bigr)\;\le\;D_\infty(f_i,f_j)
+      \xrightarrow[i,j\to\infty]{}\;0,
+  \]
+  so $\{f_i(x)\}$ is Cauchy in $Y$; completeness of $Y$ provides a limit:
+  \[
+      f(x):=\lim_{i\to\infty}f_i(x)\quad\in Y. \tag{$\dagger$}
+  \]
+
+  \textbf{3.  Show that convergence is \emph{uniform}.}  
+  Given $\varepsilon>0$, choose $N$ from ($\star$) with $\varepsilon/2$
+  in place of $\varepsilon$.  For $i\ge N$ and \emph{all} $x\in X$,
+  \[
+      D_Y\!\bigl(f_i(x),f(x)\bigr)
+          =\lim_{j\to\infty}D_Y\!\bigl(f_i(x),f_j(x)\bigr)
+          \le\frac{\varepsilon}{2}.
+  \]
+  Hence $D_\infty(f_i,f)\le\varepsilon/2$ for $i\ge N$, so
+  $f_i\xrightarrow{\;u\;}f$.
+
+  \textbf{4.  Continuity of the limit map.}  
+  Uniform limit of continuous functions is continuous
+  (Theorem \ref{thm:uniform_limit_continuous}); thus $f\in C(X,Y)$.
+
+  \textbf{5.  Boundedness of $f$.}  
+  From uniform convergence we have
+  \(
+      D_\infty(f_i,f)<1
+  \)
+  for some $i$, which implies
+  \(
+      \operatorname{diam}f(X)\le
+      \operatorname{diam}f_i(X)+2<\infty.
+  \)
+
+  \textbf{6.  Completion achieved.}  
+  We have produced $f\in C(X,Y)$ with $D_\infty(f_i,f)\to0$.
+  Therefore every Cauchy sequence converges; $\bigl(C(X,Y),D_\infty\bigr)$
+  is complete.
+\end{proof}
+
+%------------------------------------------------
+% Theorem 56 – Isometric embedding of $X$ into $C(X,\mathbb R)$
+%------------------------------------------------
+\begin{theorem}\label{thm:Kuratowski_embedding}
+  Let $(X,D_X)$ be a metric space and fix a point $a\in X$.
+  Define, for each $u\in X$, the function
+  \[
+      f_u:X\longrightarrow\mathbb R,
+      \qquad
+      f_u(x):=D_X(u,x)-D_X(a,x).
+  \]
+  Then the mapping
+  \[
+      \iota:X\longrightarrow C\bigl(X,\mathbb R\bigr),
+      \qquad
+      \iota(u)=f_u,
+  \]
+  is an \textbf{isometry}; i.e.\
+  \(
+      D_\infty\!\bigl(f_u,f_v\bigr)=D_X(u,v)
+      \text{ for all }u,v\in X.
+  \)
+\end{theorem}
+%-----------------------------------------------------------
+%  Why Theorem 16 (Kuratowski / Fréchet embedding) matters
+%-----------------------------------------------------------
+\begin{center}
+  \textbf{Significance of Theorem~16}
+  \end{center}
+  
+  \smallskip
+  \noindent
+  Let
+  \[
+     \iota:X\longrightarrow C(X,\mathbb R),\qquad
+     \iota(u)=f_u,\qquad
+     f_u(x)=D_X(u,x)-D_X(a,x),
+  \]
+  be the isometric embedding furnished by Theorem~16, where
+  \(C(X,\mathbb R)\) is endowed with the sup–metric
+  \(D_\infty(\varphi,\psi)=\sup_{x\in X}|\varphi(x)-\psi(x)|\).
+  Its importance can be summarised as follows:
+  
+  \begin{enumerate}
+    \item \textbf{Concrete linear model.}
+          Every metric space becomes a \emph{literal} subset of the Banach
+          space \((C(X,\mathbb R),\|\cdot\|_\infty)\), with all distances
+          preserved.
+          This is the classical \emph{Kuratowski} (or \emph{Fréchet})
+          embedding.
+  
+    \item \textbf{Immediate access to completions.}
+          Because \(C(X,\mathbb R)\) is complete, the closure
+          \(\overline{\iota(X)}\) automatically supplies a completion of
+          \(X\); uniqueness of completions follows by identifying any two
+          via the canonical isometry.
+  
+    \item \textbf{Functional–analytic toolkit.}
+          Inside a Banach space one can form convex combinations, use
+          Hahn–Banach separation, apply duality, etc.
+          The embedding lets such linear methods attack problems that were
+          originally stated purely in metric terms.
+  
+    \item \textbf{Universal property for \(1\)-Lipschitz maps.}
+          The space \(\ell^\infty(X)=C(X,\mathbb R)\) is
+          \emph{injective}: every \(1\)-Lipschitz map
+          \(g:X\to Y\) extends to a \(1\)-Lipschitz linear map
+          on \(\overline{\iota(X)}\).
+          This categorical viewpoint is central in modern metric geometry.
+  
+    \item \textbf{Foundation for Gromov–Hausdorff distance.}
+          To measure how \emph{close} two metric spaces are, embed both
+          isometrically into a common \(\ell^\infty\)–type space via
+          \(\iota\) and compute the Hausdorff distance of their images;
+          the theorem guarantees such embeddings always exist.
+  
+    \item \textbf{Role of the base point \(a\).}
+          Subtracting \(D_X(a,x)\) merely renders each \(f_u\) \emph{bounded}:
+          \(|f_u(x)|\le D_X(u,a)\) by the triangle inequality.
+          Any other choice of \(a\) yields an equally good embedding,
+          differing only by an additive constant function.
+  \end{enumerate}
+  
+  \medskip
+  \noindent
+  \emph{Key takeaway.}
+  Theorem~16 shows that \textbf{every metric space already hides inside a
+  complete normed space in a distance‐preserving way}, unlocking powerful
+  linear techniques for metric problems.
+\begin{proof}
+  \textbf{1.  Continuity and boundedness of $f_u$.}  
+  Each $f_u$ is continuous (difference of continuous functions) and,
+  by the triangle inequality,
+  \(
+      |f_u(x)|\le D_X(u,a)
+  \)
+  for all $x$, so $f_u\in C(X,\mathbb R)$.
+
+  \textbf{2.  Compute the sup distance.}  
+  For $u,v\in X$,
+  \[
+      D_\infty\!\bigl(f_u,f_v\bigr)
+      =\sup_{x\in X}\bigl|D_X(u,x)-D_X(v,x)\bigr|
+      \overset{(\ast)}{=}D_X(u,v),
+  \]
+  where $(\ast)$ follows because  
+  $\bigl|D_X(u,x)-D_X(v,x)\bigr|\le D_X(u,v)$ (triangle inequality),
+  and equality is attained at $x=v$ (or $x=u$).
+
+  \textbf{3.  Conclusion.}  
+  Thus $\iota$ preserves distances and embeds $X$ isometrically into the
+  complete space $C(X,\mathbb R)$.
+\end{proof}
+
+\medskip
+Combining Theorems \ref{thm:CXY_complete},
+\ref{thm:Kuratowski_embedding},
+and the fact that closed subsets of complete spaces are complete
+(Theorem 48), we obtain the classical construction of the
+\emph{completion} of an arbitrary metric space by closing the embedded
+copy $\iota(X)$ inside $C(X,\mathbb R)$.
+%------------------------------------------------
+% Theorem 57 – Every metric space admits a completion
+%------------------------------------------------
+\begin{theorem}[Existence of a completion]\label{thm:completion_exist}
+  For every metric space $(X,D)$ there exists a \emph{complete}
+  metric space $(\widehat{X},\widehat{D})$ that contains an
+  isometric copy of $X$ as a \textbf{dense} subset.
+  Such a pair $(\widehat{X},\widehat{D})$ is called a
+  \emph{completion} of $X$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step construction (Kuratowski embedding)]
+  We build $\widehat{X}$ explicitly and then verify the required
+  properties.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 1 – Embed $X$ into a known complete space.}}
+  Fix a reference point $a\in X$.
+  For each $u\in X$ define
+  \[
+      f_u:X\longrightarrow\mathbb R,
+      \qquad
+      f_u(x):=D(u,x)-D(a,x).
+  \]
+  \begin{enumerate}[label=\alph*.]
+      \item \textbf{Continuity.}  
+            Each $f_u$ is continuous (difference of continuous maps).
+      \item \textbf{Boundedness.}  
+            $\displaystyle|f_u(x)|
+            \le D(u,a)$ by the triangle inequality, so
+            $f_u$ is \emph{bounded}.
+  \end{enumerate}
+  Hence $f_u$ lies in
+  \[
+      C(X,\mathbb R):=\Bigl\{g:X\to\mathbb R\;\Bigm|\;
+          g\text{ continuous and } \operatorname{diam}g(X)<\infty\Bigr\},
+  \]
+  which we equip with the sup‑metric
+  $
+      D_\infty(g,h):=\sup_{x\in X}|g(x)-h(x)|.
+  $
+
+  \smallskip
+  \emph{Isometry.}  
+  The map
+  \[
+      \iota:X\to C(X,\mathbb R),\qquad
+      \iota(u)=f_u,
+  \]
+  is an isometry:
+  \[
+      D_\infty\!\bigl(f_u,f_v\bigr)
+      =\sup_{x\in X}\bigl|D(u,x)-D(v,x)\bigr|
+      =D(u,v)\quad(u,v\in X).
+  \]
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 2 – Take the closure inside a complete space.}}
+  By Theorem 55 the space
+  $\bigl(C(X,\mathbb R),D_\infty\bigr)$ is complete.
+  Define
+  \[
+      \widehat{X}:=\overline{\iota(X)}
+      \subseteq C(X,\mathbb R),
+      \qquad
+      \widehat{D}:=D_\infty\big|_{\widehat{X}\times\widehat{X}}.
+  \]
+  Because $\widehat{X}$ is a \emph{closed} subset of a complete space,
+  Theorem 48 implies that $(\widehat{X},\widehat{D})$ is complete.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 3 – Density of $X$ in $\widehat{X}$.}}
+  By construction $\iota(X)$ is dense in its own closure
+  $\widehat{X}$, so $\iota(X)$ is dense in $\widehat{X}$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 4 – Identify $X$ with its image.}}
+  Since $\iota$ is an isometry, we may regard $X$ as a
+  subspace of $\widehat{X}$ via $\iota$ without altering distances.
+  With this identification, $X$ is dense in $\widehat{X}$ and
+  $\widehat{X}$ is complete.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{Step 5 – Conclusion.}}
+  The pair $(\widehat{X},\widehat{D})$ constructed above is a
+  completion of $(X,D)$, establishing the theorem.
+\end{proof}
+%------------------------------------------------
+% 5.2  \;Separability
+%------------------------------------------------
+
+\section*{5.2 \quad Separability}
+
+\begin{definition}[Separable space]
+    A metric space $(M,D)$ is called \textbf{separable} if it
+    possesses a \emph{countable dense} subset;
+    i.e.\ there exists $\{x_1,x_2,\dots\}\subseteq M$ such that
+    $\overline{\{x_n\}}=M$.
+\end{definition}
+
+\medskip
+\noindent
+{\small
+\emph{Examples.}  $\mathbb R$ with the usual metric is separable
+(countable dense set $\mathbb Q$).  
+More generally, $\mathbb R^{n}$ is separable via points with rational
+coordinates.  
+By contrast, an \emph{uncountable discrete} space is not separable
+because its only dense subset is the entire uncountable space itself.
+}
+
+\bigskip
+\begin{definition}[Open base]
+    A collection $\mathcal U$ of open subsets of a metric space $M$
+    is an \textbf{open base} (or simply a \emph{basis})
+    if every open set in $M$ can be written as a union of members of
+    $\mathcal U$.
+\end{definition}
+
+\medskip
+\noindent
+The family of \emph{all} open balls forms a base, but one can often find
+a smaller, more economical base.  
+The theorem below shows how separability provides a \emph{countable} base.
+
+\bigskip
+\begin{theorem}[Countable base from a dense set]\label{thm:countable_base}
+    Let $\{x_i\}_{i=1}^{\infty}$ be a \emph{dense} subset of a metric space
+    $(M,D)$.  
+    Denote by $\mathcal U$ the collection of all open balls
+    \[
+        \mathcal U
+        :=\Bigl\{\,B\!\bigl(x_i,r\bigr)\ \Bigm|\ 
+            i\in\mathbb N,\ r\in\mathbb Q_{>0}\Bigr\}.
+    \]
+    Then $\mathcal U$ is a (countable) open base for $M$.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step]
+    \textbf{1.  Countability of $\mathcal U$.}\;
+    The index set is $\mathbb N\times\mathbb Q_{>0}$, which is countable.
+
+    \medskip
+    \textbf{2.  Goal.}\;
+    Show every open set $V\subseteq M$ equals
+    $\displaystyle\bigcup\mathcal U_V$ for some subfamily
+    $\mathcal U_V\subseteq\mathcal U$.
+
+    \medskip
+    \textbf{3.  Fix $y\in V$.}\;
+    Because $V$ is open, there exists an open ball
+    $B\bigl(y,r\bigr)\subseteq V$ with radius $r>0$.
+
+    \medskip
+    \textbf{4.  Choose a rational radius.}\;
+    Select $q\in\mathbb Q_{>0}$ with $0<q<r$.
+
+    \medskip
+    \textbf{5.  Use density of $\{x_i\}$.}\;
+    Since the set $\{x_i\}$ is dense, pick an index $j$ so close to $y$
+    that $D\!\bigl(x_j,y\bigr)<q/2$.
+
+    \medskip
+    \textbf{6.  Construct a basis ball inside $V$.}\;
+    Consider $B:=B\!\bigl(x_j,q\bigr)$.  
+    For our chosen $y$ we have
+    \[
+        D\!\bigl(y,x_j\bigr)<\frac{q}{2}<\frac{q}{2}+0<q,
+    \]
+    so $y\in B$.  
+    Moreover, for any $z\in B$,
+    \[
+        D(y,z)\le D\!\bigl(y,x_j\bigr) + D\!\bigl(x_j,z\bigr)
+                 < \frac{q}{2} + q
+                 < r,
+    \]
+    hence $z\in B(y,r)\subseteq V$.  
+    Thus $B\subseteq V$.
+    % Why do we have to check every \(z\in B(x_j,q)\) when proving 
+% \(B(x_j,q)\subseteq B(y,r)\subseteq V\)?
+
+\begin{enumerate}
+  \item \textbf{Objective.}  
+        To establish the set‐inclusion  
+        \[
+            B(x_j,q)\subseteq B(y,r)\subseteq V,
+        \]
+        we must verify that \emph{every} element of \(B(x_j,q)\) also belongs
+        to \(B(y,r)\).  Set containment is an “all–points’’ property, so a
+        single‐point check is insufficient.
+
+  \item \textbf{Take an arbitrary point.}  
+        Let \(z\in B(x_j,q)\); by definition of an open ball,
+        \[
+            D(x_j,z)<q.
+        \]
+
+  \item \textbf{Invoke the triangle inequality.}  
+        From the construction we have \(D(y,x_j)<\dfrac{q}{2}\).  
+        Hence
+        \[
+            D(y,z)\;\le\;D(y,x_j)+D(x_j,z)
+                    \;<\;\frac{q}{2}+q
+                    \;=\;\frac{3q}{2}.
+        \]
+
+  \item \textbf{Use the size of \(q\).}  
+        We chose a rational radius \(q\) so small that \(0<q<\tfrac{2}{3}r\)
+        (in particular \(q<r\)).  Therefore
+        \[
+            D(y,z)\;<\;\frac{3q}{2}\;<\;r,
+        \]
+        which means \(z\in B(y,r)\).
+
+  \item \textbf{Conclude inclusion.}  
+        Because the point \(z\) was \emph{arbitrary} in \(B(x_j,q)\), the
+        calculation shows
+        \[
+            B(x_j,q)\subseteq B(y,r)\subseteq V.
+        \]
+        Thus \(B(x_j,q)\subseteq V\), completing the proof that the
+        countable family \(\mathcal{U}\) is indeed a base for \(M\).
+\end{enumerate}
+
+    \medskip
+    \textbf{7.  Cover $V$ by balls from $\mathcal U$.}\;
+    As $y$ was arbitrary in $V$, each point of $V$ lies in some ball
+    from $\mathcal U$ that is itself contained in $V$.  
+    Therefore
+    \[
+        V=\bigcup\Bigl\{\,B\in\mathcal U \mid B\subseteq V\Bigr\},
+    \]
+    proving that $\mathcal U$ is an open base.
+\end{proof}
+
+%------------------------------------------------
+% Theorem 59 – Equivalences among separability, countable base, and Lindelöf
+%------------------------------------------------
+\begin{theorem}\label{thm:sep_base_lindelof}
+  For a metric space $(M,D)$ the following properties are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item $M$ is \emph{separable} (admits a countable dense set);
+      \item $M$ possesses a \emph{countable open base};
+      \item Every open cover of $M$ contains a \emph{countable subcover}
+            (the Lindelöf property).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  We show $(a)\!\Rightarrow\!(b)\!\Rightarrow\!(c)\!\Rightarrow\!(a)$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{(a) $\;\Longrightarrow\;$ (b).}}
+  Assume $M$ has a countable dense subset $\{x_1,x_2,\dots\}$.
+  Form the collection
+  \[
+      \mathcal U
+      :=\Bigl\{\,B\!\bigl(x_i,r\bigr)\ \Bigm|\ 
+          i\in\mathbb N,\ r\in\mathbb Q_{>0}\Bigr\}.
+  \]
+  \begin{itemize}
+      \item $\mathcal U$ is \emph{countable} because it is indexed by
+            $\mathbb N\times\mathbb Q_{>0}$.
+      \item Given an arbitrary open set $V\subseteq M$ and $y\in V$,
+            pick $r>0$ with $B(y,r)\subseteq V$; choose rational
+            $q\in(0,r)$.  
+            Density supplies $x_j$ with $D(y,x_j)<q/2$.
+            The ball $B(x_j,q)\in\mathcal U$
+            contains $y$ and lies in $V$.
+            Hence $V=\bigcup\mathcal U_V$ for a subfamily
+            $\mathcal U_V\subseteq\mathcal U$,
+            showing $\mathcal U$ is an open base.
+  \end{itemize}
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{(b) $\;\Longrightarrow\;$ (c).}}
+  Suppose $\mathcal U=\{U_i\}_{i\in\mathbb N}$ is a countable base for $M$
+  and let $\mathcal V=\{V_j\}_{j\in J}$ be an \emph{arbitrary} open cover.
+  For each $U_i$ that is contained in \emph{some} $V_j$,
+  choose one such $V_j$ and keep it; discard the rest.
+  The survivors form a countable family
+  $\{V_{j(i)}\}_{i\in I}\subseteq\mathcal V$.
+  To see they still cover $M$, fix $x\in M$:
+  there is $V_k\in\mathcal V$ with $x\in V_k$,
+  and some $U_m\in\mathcal U$ with $x\in U_m\subseteq V_k$.
+  By construction $V_{j(m)}$ was retained and contains $U_m$, hence $x$.
+  Thus $\{V_{j(i)}\}$ is a countable subcover of $\mathcal V$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{(c) $\;\Longrightarrow\;$ (a).}}
+  Assume every open cover of $M$ admits a countable subcover.
+  For each $n\in\mathbb N$ cover $M$ with the collection of open balls
+  $\{B(x,1/n)\}_{x\in M}$.
+  Extract a \emph{countable} subcover
+  $\{B(x_{n,k},1/n)\}_{k\in\mathbb N}$.
+  Let
+  \[
+      T_n:=\{x_{n,k}\mid k\in\mathbb N\}
+      \quad\text{and}\quad
+      D:=\bigcup_{n=1}^{\infty}T_n.
+  \]
+  \begin{itemize}
+      \item $D$ is \emph{countable} (countable union of countable sets).
+      \item For any $y\in M$ and $\varepsilon>0$ choose $n$ with $1/n<\varepsilon$.
+            Some ball $B(x_{n,k},1/n)$ contains $y$, so
+            $D(y,x_{n,k})<\varepsilon$.  
+            Hence $D$ is \emph{dense} in $M$.
+  \end{itemize}
+  Therefore $M$ is separable.
+  %  What does the symbol \(x_{n,k}\) stand for in the proof of \((c)\Rightarrow(a)\)?
+
+\begin{enumerate}
+  \item[\textbf{Step 1.}] 
+      \textbf{Fix a radius.}  
+      For each positive integer \(n\in\mathbb N\) we look at the open‐cover
+      of the metric space \((M,D)\) consisting of \emph{all} balls of
+      radius \(1/n\):
+      \[
+          \mathcal V_n \;=\;\bigl\{\,B(x,1/n)\mid x\in M\,\bigr\}.
+      \]
+      Observe that \(\mathcal V_n\) may be uncountable, because there could
+      be uncountably many centres \(x\).
+
+  \item[\textbf{Step 2.}] 
+      \textbf{Apply the Lindelöf (countable‐subcover) property.}  
+      Hypothesis (c) says \emph{every} open cover has a countable subcover.
+      Therefore, for our particular cover \(\mathcal V_n\) there exists a
+      countable family of balls
+      \[
+          \bigl\{\,B(x_{n,k},1/n)\mid k\in\mathbb N\,\bigr\}\;\subseteq\;\mathcal V_n
+      \]
+      that still covers \(M\).
+
+  \item[\textbf{Step 3.}] 
+      \textbf{Meaning of the notation \(x_{n,k}\).}  
+      \begin{itemize}
+          \item The first index \(n\) records the \emph{radius} \(1/n\).  
+                For each fixed \(n\) we are working with balls of that
+                radius.
+          \item The second index \(k\) simply enumerates (1,2,3,\dots) the
+                balls in the countable subcover obtained for that \(n\).
+                Concretely,
+                \[
+                    B(x_{n,1},1/n),\;B(x_{n,2},1/n),\;B(x_{n,3},1/n),\;\ldots
+                \]
+                are the first, second, third, \emph{etc.} balls whose
+                centres lie somewhere in \(M\).
+          \item There is \emph{no} canonical choice for these centres; we
+                just know \emph{some} such countable subcover exists, and we
+                label its centres \(x_{n,1},x_{n,2},\dots\).
+      \end{itemize}
+
+  \item[\textbf{Step 4.}] 
+      \textbf{Collecting the centres.}  
+      For each fixed \(n\) define
+      \[
+          T_n \;:=\;\bigl\{\,x_{n,k}\mid k\in\mathbb N\,\bigr\},
+      \]
+      the (countable) set of all centres appearing in the \(n\)-th
+      subcover.  Then set
+      \[
+          D \;:=\;\bigcup_{n=1}^\infty T_n.
+      \]
+      Because \(D\) is a countable union of countable sets, it is itself
+      countable.
+
+  \item[\textbf{Step 5.}] 
+      \textbf{Why \(D\) is dense.}  
+      Given any point \(y\in M\) and any \(\varepsilon>0\), choose
+      \(n\in\mathbb N\) with \(1/n<\varepsilon\).  Since
+      \(\{B(x_{n,k},1/n)\}_{k\in\mathbb N}\) covers \(M\),
+      there is some \(k\) such that \(y\in B(x_{n,k},1/n)\); equivalently
+      \(D(y,x_{n,k})<1/n<\varepsilon\).  Thus every open ball contains at
+      least one element of \(D\), proving \(D\) is dense in \(M\).
+
+  \item[\textbf{Conclusion.}]  
+      The symbols \(x_{n,k}\) therefore denote the centres of the kth ball
+      in a countable subcover of the radius‑\(1/n\) open‐ball cover of \(M\).
+      Their union over all \(n,k\) furnishes the desired countable dense
+      subset that witnesses separability.
+\end{enumerate}
+
+  \medskip\noindent
+  Since we have completed the cycle of implications,
+  the three statements are equivalent.
+\end{proof}
+%------------------------------------------------
+% Cardinality of separable spaces and condensation points
+%------------------------------------------------
+
+%------------------  Theorem 60  ------------------
+\begin{theorem}\label{thm:card_separable}
+  Let $(M,D)$ be a \emph{separable} metric space.
+  Then the cardinality of $M$ is \emph{at most} $\frak c$
+  (the cardinality of the continuum~$\mathbb R$).
+\end{theorem}
+
+\begin{proof}[Step-by-step]
+  \textbf{1.  Pick a countable dense set.}\;
+  Because $M$ is separable there exists a dense subset
+  $\{x_1,x_2,\dots\}$ of cardinality~$\aleph_0$.
+
+  \medskip
+  \textbf{2.  Encode points of $M$ by convergent sequences.}\;
+  For each $y\in M$ choose a sequence of indices
+  $(i_1,i_2,i_3,\dots)\in\mathbb N^{\mathbb N}$ such that
+  $x_{i_k}\to y$.
+  Thus we obtain a \emph{surjective} map
+  \[
+      \Phi:\mathbb N^{\mathbb N}\twoheadrightarrow M,
+      \qquad
+      \Phi\bigl((i_k)_{k}\bigr):=\lim_{k\to\infty}x_{i_k}.
+  \]
+%  Why does the index sequence \((i_1,i_2,i_3,\dots)\) lie in \(\mathbb N^{\mathbb N}\)?
+
+\begin{enumerate}
+  \item \textbf{Definition of \(\mathbb N^{\mathbb N}\).}  
+        The notation 
+        \[
+             \mathbb N^{\mathbb N}
+        \]
+        denotes the set of all functions
+        \(\sigma:\mathbb N\longrightarrow\mathbb N\).  
+        Equivalently, it is the set of all infinite sequences 
+        \((\sigma(1),\sigma(2),\sigma(3),\dots)\) of natural numbers.  
+        One often writes
+        \[
+            \mathbb N^{\mathbb N}
+            \;=\;
+            \bigl\{(a_1,a_2,a_3,\dots)\mid a_k\in\mathbb N\bigr\}.
+        \]
+
+  \item \textbf{Our chosen sequence.}  
+        For each \(y\in M\) we pick indices
+        \[
+            i_1,i_2,i_3,\dots \;\in\; \mathbb N
+        \]
+        such that \(x_{i_k}\to y\).  
+        Thus we have a function
+        \[
+            \begin{aligned}
+                \sigma:\mathbb N &\longrightarrow \mathbb N,\\
+                k &\longmapsto i_k,
+            \end{aligned}
+        \]
+        or, in sequence notation, \(\sigma=(i_1,i_2,i_3,\dots)\).
+
+  \item \textbf{Verification of membership.}  
+        Because every coordinate \(i_k\) is a natural number,
+        \(\sigma\) satisfies the defining property of an element of
+        \(\mathbb N^{\mathbb N}\).  
+        Hence
+        \[
+            (i_1,i_2,i_3,\dots)\;\in\;\mathbb N^{\mathbb N}.
+        \]
+
+  \item \textbf{Why this matters in the proof.}  
+        Once we know that \(\sigma\in\mathbb N^{\mathbb N}\), the mapping
+        \[
+            \Phi:\mathbb N^{\mathbb N}\twoheadrightarrow M,
+            \qquad
+            \Phi(\sigma)=\lim_{k\to\infty}x_{\sigma(k)}
+        \]
+        is well‑defined and surjective.  
+        Counting the possible \(\sigma\)’s (there are \(\mathfrak c\) of
+        them) gives \(|M|\le\mathfrak c\).
+\end{enumerate}
+  \medskip
+  \textbf{3.  Count the possible sequences.}\;
+  The set $\mathbb N^{\mathbb N}$ of all sequences of natural numbers has
+  cardinality $\aleph_0^{\aleph_0}=\frak c$.
+
+  \medskip
+  \textbf{4.  Conclude the inequality.}\;
+  Since $|M|\le|\mathbb N^{\mathbb N}|=\frak c$, the result follows.
+\end{proof}
+
+%------------------  Definition ------------------
+\begin{definition}[Condensation point]
+  A point $x\in M$ is called a \textbf{condensation point} of $M$ if
+  \emph{every} neighbourhood of $x$ contains \emph{uncountably} many
+  points of~$M$.
+\end{definition}
+
+%------------------  Theorem 61  ------------------
+\begin{theorem}\label{thm:condensation}
+  Let $M$ be an \emph{uncountable} separable metric space.
+  Then \emph{all but countably many} points of $M$ are
+  condensation points.
+\end{theorem}
+
+
+\begin{proof}[Step-by-step]
+  
+  \textbf{Step 1 -- Existence of some condensation point.}
+
+  Assume, to obtain a contradiction, that no point of \(M\) is a
+  condensation point.  Then each \(x\in M\) possesses a countable open
+  neighborhood \(N_x\) (i.e.\ \(\lvert N_x\rvert\) is countable).
+  The family \(\{N_x\}_{x\in M}\) is an open cover of \(M\).
+  By Theorem 59(c) (countable subcover property of separable spaces),
+  there exists a countable subcover \(\{N_{x_k}\}_{k\in\mathbb N}\).
+  The union of these countable sets is countable, contradicting the
+  assumption that \(M\) itself is uncountable.  Hence at least one
+  condensation point exists.
+  %  Why is the union of countably many countable sets itself countable?
+%
+%  Context (Step 1 of Theorem 21):  we have a countable subcover
+%  $\{N_{x_k}\}_{k\in\mathbb N}$ of $M$ where each $N_{x_k}$ is a
+%  \emph{countable} set.  We must show
+%  \[
+%        \bigcup_{k=1}^{\infty} N_{x_k}
+%        \quad\text{is countable.}
+%  \]
+%  Here is a standard argument.
+
+\begin{enumerate}
+  \item[\textbf{1.}] %
+      \textbf{Fix enumerations.}  
+      Because every $N_{x_k}$ is countable, we may list its elements as
+      \[
+          N_{x_k}=\{\,y_{k,1},y_{k,2},y_{k,3},\dots\}
+          \qquad(k=1,2,\dots).
+      \]
+      Thus every point in the union has a \emph{pair} of indices
+      $(k,m)\in\mathbb N\times\mathbb N$ with
+      $y_{k,m}\in N_{x_k}$.
+
+  \item[\textbf{2.}] %
+      \textbf{Enumerate $\mathbb N\times\mathbb N$.}  
+      The Cartesian product $\mathbb N\times\mathbb N$ is countable; an
+      explicit bijection is given by the classical “Cantor pairing’’
+      function
+      \[
+          \pi(k,m)=\frac{(k+m-2)(k+m-1)}{2}+k,
+      \]
+      or, more concretely, by listing the pairs in antidiagonals:
+      \[
+          (1,1),\;(1,2),(2,1),\;(1,3),(2,2),(3,1),\;\ldots
+      \]
+      Hence there exists a bijection
+      \(
+          f:\mathbb N\longrightarrow\mathbb N\times\mathbb N.
+      \)
+
+  \item[\textbf{3.}] %
+      \textbf{Transfer the enumeration to the union.}  
+      Define a map
+      \[
+          g:\mathbb N\;\longrightarrow\;\bigcup_{k=1}^{\infty}N_{x_k},
+          \qquad
+          g(n)=y_{\,f(n)_1,\,f(n)_2},
+      \]
+      where $f(n)=(k,m)$ and $f(n)_1=k,\;f(n)_2=m$ extract the two
+      coordinates.  By construction, each element of the union is hit at
+      least once, so $g$ is surjective.
+
+  \item[\textbf{4.}] %
+      \textbf{Conclude countability.}  
+      A surjective map from $\mathbb N$ onto a set proves that set is
+      \emph{at most} countable.  Therefore
+      \[
+          \bigcup_{k=1}^{\infty} N_{x_k}
+          \quad\text{is countable.}
+      \]
+      (If desired, duplicates in the enumeration can be removed to obtain
+      an explicit bijection rather than merely a surjection.)
+\end{enumerate}
+
+\noindent
+Hence the union of countably many countable sets is countable, which is the
+fact used in Step 1 of the proof of Theorem 21.  \qedhere
+
+  \medskip
+  \textbf{Step 2 -- Show the exceptional set is countable.}
+
+  Let
+  \[
+    Z := \{\text{condensation points of }M\}, 
+    \quad 
+    E := M\setminus Z.
+  \]
+  Suppose \(E\) were uncountable.  Since \(E\subseteq M\) and \(M\) is
+  separable, \(E\) is also separable; let \(\{e_n\}\) be a countable
+  dense subset of \(E\).  For each \(n\), choose an open ball
+  \(B(e_n,r_n)\) whose intersection with \(E\) is countable (possible
+  because \(e_n\notin Z\)).  The countable family
+  \(\mathcal B := \{B(e_n,r_n)\}\) covers \(E\).  Adding the single
+  open set \(M\setminus E\) gives an open cover
+  \(\mathcal B\cup\{M\setminus E\}\) of \(M\).  Again by Theorem 59(c)
+  there is a countable subcover; removing \(M\setminus E\) if necessary
+  still leaves a countable cover of \(E\) by sets each meeting \(E\) in
+  only countably many points.  Thus \(E\) is a countable union of
+  countable sets and hence countable—a contradiction.
+  %  Why does a subset \(E\subseteq M\) inherit separability from \(M\)?
+
+\begin{proof}[Proof that \(E\) is separable if \(M\) is separable]
+  Let \((M,D)\) be a separable metric space.  
+  By definition, there exists a \emph{countable} set
+  \[
+      D_0=\{d_1,d_2,d_3,\dots\}\subseteq M
+  \]
+  that is \emph{dense} in \(M\); i.e.\ every non‑empty open set of \(M\)
+  meets \(D_0\).
+  
+  \medskip
+  Define 
+  \[
+      D_E\;:=\;D_0\cap E.
+  \]
+  \begin{enumerate}
+      \item[\textbf{(i)}] \textbf{Countability.}  
+            Because \(D_0\) is countable, any subset of it—such as
+            \(D_E\)—is also countable (possibly finite or even empty if
+            \(E=\varnothing\)).  Thus \(D_E\) satisfies the “countable’’ part
+            of separability.
+            
+      \item[\textbf{(ii)}] \textbf{Density in \(E\).}  
+            Consider \(E\) with the \emph{subspace metric} inherited from
+            \(M\).  Let \(U\subseteq E\) be a non‑empty open set in this
+            subspace topology.  By definition of the subspace topology, there
+            exists an open set \(V\subseteq M\) such that
+            \[
+                U \;=\; V\cap E.
+            \]
+            Since \(D_0\) is dense in \(M\), we have \(D_0\cap V\neq\varnothing\).
+            Consequently
+            \[
+                D_E\cap U
+                \;=\;(D_0\cap E)\cap(V\cap E)
+                \;=\;D_0\cap V\cap E
+                \;=\;D_0\cap V
+                \;\;\neq\;\varnothing.
+            \]
+            Hence every non‑empty open subset of \(E\) meets \(D_E\), so
+            \(D_E\) is dense in \(E\).
+  \end{enumerate}
+  
+  Because \(D_E\) is \emph{countable} and \emph{dense} in \(E\), the subspace
+  \((E,D|_{E\times E})\) is separable.  \qedhere
+  \end{proof}
+  %  Let us make the definition of \(E\) explicit.
+%  Suppose \((M,D)\) is a separable metric space and let
+%  \[
+%      E\subseteq M
+%  \]
+%  be any (non‑empty) subset endowed with the subspace metric
+%  \(D|_{E\times E}\).
+%  We show that \(E\) is separable.
+
+\begin{proof}[Proof that \(E\) is separable]
+  Because \(M\) is separable, there exists a countable dense set
+  \[
+      D_0=\{d_1,d_2,d_3,\dots\}\subseteq M.
+  \]
+  
+  \medskip
+  \noindent\textbf{Step 1 – Construct a candidate dense set for \(E\).}
+  Define
+  \[
+      D_E \;:=\; D_0\cap E.
+  \]
+  
+  \begin{enumerate}
+      \item[\textbf{(i)}] \emph{Countability.}
+            Since \(D_0\) is countable, any subset of it—particularly
+            \(D_E\)—is also countable.
+  
+      \item[\textbf{(ii)}] \emph{Density in \(E\).}
+            Let \(U\subseteq E\) be a non‑empty open set in the
+            subspace topology.  By definition, there is an open set
+            \(V\subseteq M\) such that \(U = V\cap E\).
+            Because \(D_0\) is dense in \(M\), we have \(D_0\cap V\neq\varnothing\).
+            Hence
+            \[
+                D_E\cap U
+                \;=\;(D_0\cap E)\cap(V\cap E)
+                \;=\;D_0\cap V\cap E
+                \;=\;D_0\cap V
+                \;\neq\;\varnothing.
+            \]
+            Thus every non‑empty open subset of \(E\) meets \(D_E\), so
+            \(D_E\) is dense in \(E\).
+  \end{enumerate}
+  
+  \noindent
+  Because \(D_E\) is countable and dense in \(E\), the metric space
+  \((E,D|_{E\times E})\) is separable.  \qedhere
+  \end{proof}
+  %  Why does ``\(D_E\cap U\neq\varnothing\) for every non‑empty open
+%  \(U\subseteq E\)’’ imply that \(D_E\) is dense in \(E\)?
+
+\paragraph{1.  Two equivalent definitions of density.}
+For a subset \(A\) of a topological space \(X\) the following are
+equivalent:
+
+\begin{enumerate}
+    \item[(a)] \(\overline{A}=X\) (the \emph{closure} of \(A\) equals \(X\));
+    \item[(b)] \textit{every} non‑empty open subset \(U\subseteq X\) meets
+               \(A\), i.e.\ \(U\cap A\neq\varnothing\).
+\end{enumerate}
+
+\noindent
+\emph{Proof of the equivalence.}
+\begin{itemize}
+    \item[(a)\(\Rightarrow\)(b)]  
+          If \(\overline{A}=X\) and \(U\subseteq X\) is open and non‑empty,
+          then \(U\cap\overline{A}=U\neq\varnothing\).  
+          Since \(U\cap\overline{A}= U\cap A\) (because \(A\subseteq\overline{A}\)),
+          we get \(U\cap A\neq\varnothing\).
+    \item[(b)\(\Rightarrow\)(a)]  
+          Suppose every non‑empty open \(U\) meets \(A\).
+          If \(x\in X\setminus\overline{A}\), the set
+          \(U:=X\setminus\overline{A}\) is an open neighbourhood of \(x\)
+          disjoint from \(A\), contradicting (b).  Hence no such \(x\) exists
+          and \(\overline{A}=X\).
+\end{itemize}
+
+\paragraph{2.  Apply the criterion to \(D_E\subseteq E\).}
+In the argument you are reading, we showed:
+
+\[
+    \forall\,\text{non‑empty open }U\subseteq E,\quad D_E\cap U\neq\varnothing.
+\]
+
+Because \(E\) is being considered with its own (subspace) topology, this
+statement is exactly condition (b) for the space \(X=E\) and the subset
+\(A=D_E\).  By the equivalence above it follows that
+
+\[
+    \overline{D_E}^{\,E}=E,
+\]
+
+i.e.\ \(D_E\) is \emph{dense in \(E\)}.
+
+\paragraph{3.  Conclusion.}
+Therefore the fact that \(D_E\) intersects every non‑empty open subset of
+\(E\) is sufficient—indeed, equivalent—to saying that \(D_E\) is dense in
+\(E\).  No additional work is needed.  \qed
+
+  \medskip
+  \textbf{Step 3 -- Conclusion.}
+
+  We have shown \(M\setminus Z\) is countable, i.e.\ all but countably
+  many points of \(M\) are condensation points.
+\end{proof}
+\begin{theorem}\label{thm:card_c}
+  Every \emph{uncountable, complete, separable} metric space $M$
+  has cardinality $\mathfrak c$ (the cardinality of the continuum).
+\end{theorem}
+
+\begin{proof}
+  We already know from Theorem~60 that
+  $\lvert M\rvert\le\mathfrak c$ for any separable space,  
+  so it remains to prove the \emph{lower} bound
+  $\lvert M\rvert\ge\mathfrak c$.
+
+  \medskip
+  \noindent\textbf{Step 1.  Existence of disjoint uncountable balls of
+  arbitrarily small radius.}
+
+  \begin{enumerate}[label=\arabic*., leftmargin=2.8em]
+      \item By Theorem~61 an uncountable separable space contains
+            at least two \emph{distinct condensation points}
+            $p_1,p_2\in M$.
+      \item Choose $\rho>0$ with $0<\rho<\tfrac12D(p_1,p_2)$ and put
+            \[
+                B_i:=\overline{B}(p_i,\rho)\subseteq M,\qquad i=1,2 .
+            \]
+            The balls are disjoint (by choice of~$\rho$) and
+            \emph{uncountable} because each contains its centre
+            $p_i$ together with uncountably many other points of $M$.
+      \item Since $\rho$ can be taken as small as desired,
+            $M$ contains two disjoint uncountable closed balls
+            of \emph{arbitrarily small radius}.
+  \end{enumerate}
+
+  \medskip
+  \noindent\textbf{Step 2.  Recursive construction of a binary tree of balls.}
+
+  \begin{enumerate}[label=\arabic*., leftmargin=2.8em]
+      \item \emph{Level 1:}  
+            Find disjoint uncountable closed balls
+            $A_1,A_2$ with radius $\le 1$.
+      \item \emph{Induction step:}  
+            Given a ball $A$ of radius $\le 2^{-k}$ that is
+            uncountable, complete, and separable
+            (closed subspaces inherit these properties),
+            apply Step 1 \emph{inside $A$} to obtain two
+            disjoint uncountable closed sub‑balls of radius $\le 2^{-(k+1)}$.
+      \item Continuing inductively we obtain, for each finite sequence
+            $\sigma\in\{1,2\}^k$, a closed ball
+            $A_\sigma$ of radius $\le 2^{-k}$ such that
+            \[
+                A_{\sigma 1},\;A_{\sigma 2}\subseteq A_\sigma,
+                \quad
+                A_{\sigma 1}\cap A_{\sigma 2}=\varnothing .
+            \]
+  \end{enumerate}
+
+  \medskip
+  \noindent\textbf{Step 3.  Associate a unique point to each infinite
+  binary sequence.}
+
+  For an \emph{infinite} sequence
+  $\omega=\omega_1\omega_2\omega_3\cdots\in\{1,2\}^{\mathbb N}$
+  consider the nested chain
+  \[
+      A_{\omega_1}\supseteq
+      A_{\omega_1\omega_2}\supseteq
+      A_{\omega_1\omega_2\omega_3}\supseteq\dots
+  \]
+  whose radii tend to $0$.  
+  By Theorem 50 (nested‑set criterion in complete spaces) the
+  intersection
+  $\bigcap_{k\ge1}A_{\omega_1\cdots\omega_k}$ is a \emph{single point};
+  denote it by $x_\omega\in M$.
+
+  \medskip
+  \noindent\textbf{Step 4.  Distinct sequences give distinct points.}
+
+  If $\omega\ne\omega'$, let $k$ be the first index with
+  $\omega_k\ne\omega'_k$.  
+  Then $x_\omega\in A_{\omega_1\cdots\omega_k}$ and
+  $x_{\omega'}\in A_{\omega_1\cdots\omega'_k}$, two \emph{disjoint}
+  balls; hence $x_\omega\ne x_{\omega'}$.
+
+  \medskip
+  \noindent\textbf{Step 5.  Cardinality count.}
+
+  The set $\{1,2\}^{\mathbb N}$ of infinite binary sequences has
+  cardinality $2^{\aleph_0}=\mathfrak c$, and we have injected it into
+  $M$ via $\omega\mapsto x_\omega$.  
+  Therefore $\lvert M\rvert\ge\mathfrak c$.
+
+  \medskip
+  \noindent\textbf{Step 6.  Combine bounds.}
+
+  Together with $\lvert M\rvert\le\mathfrak c$
+  (Theorem~\ref{thm:card_separable}), we conclude
+  $\lvert M\rvert=\mathfrak c$.
+\end{proof}
+
+
+%------------------------------------------------
+% 5.3  \;Compactness – Sequential Lemmas
+%------------------------------------------------
+\section*{5.3 \quad Compactness}
+%-------------  Theorem 63  -------------
+\begin{theorem}\label{thm:limit_subseq}
+  Let $\{x_i\}_{i\ge 1}$ be a sequence of \emph{distinct} points in a
+  metric space $M$ and set $A=\{x_i\mid i\ge1\}$.
+  If $x\in\overline{A}\setminus A$, then $\{x_i\}$ possesses a
+  subsequence converging to $x$.
+\end{theorem}
+
+\begin{proof}
+  Every neighbourhood of $x$ intersects $A$ infinitely often.
+  Construct the desired subsequence inductively:
+
+  \smallskip
+  \noindent
+  \emph{Step $n$.}  
+  Having chosen indices $i_1<\dots<i_{n-1}$, pick $i_n>i_{n-1}$
+  such that
+  \[
+      x_{i_n}\in B\!\bigl(x,\tfrac1n\bigr)\setminus\{x_{i_1},\dots,x_{i_{n-1}}\}.
+  \]
+  This is possible because $B\!\bigl(x,\tfrac1n\bigr)$ contains
+  infinitely many $x_i$’s.
+
+  \smallskip
+  The sequence $(x_{i_n})$ satisfies
+  $D(x_{i_n},x)<\tfrac1n\to 0$, hence $x_{i_n}\to x$.
+\end{proof}
+
+%-------------  Theorem 64  -------------
+\begin{theorem}\label{thm:seq_limit_pt}
+  For a metric space $M$ the following are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item Every sequence in $M$ has a convergent subsequence.
+      \item Every infinite subset of $M$ has a limit point.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \textbf{(a)$\!\implies\!$(b).}\;
+  Given an infinite set $A\subseteq M$, list its elements as a sequence.
+  By~(a) some subsequence converges to a point $x\in M$, making $x$ a
+  limit point of $A$.
+
+  \medskip
+  \textbf{(b)$\!\implies\!$(a).}\;
+  Let $\{x_i\}$ be any sequence; without loss of generality assume the
+  $x_i$’s are distinct.  
+  The set $A=\{x_i\}$ is infinite and, by~(b), possesses a limit
+  point $x$.  
+  If $x\notin A$, Theorem \ref{thm:limit_subseq} provides a subsequence
+  $x_{i_n}\to x$.  
+  If $x=x_j$ for some $j$, delete $x_j$ and apply the same argument to
+  the remaining infinite set $A\setminus\{x_j\}$.
+\end{proof}
+%------------------------------------------------
+% 5.3  \;Compactness – Basic facts
+%------------------------------------------------
+
+\begin{definition}[Compact metric space]\label{def:compact_metric}
+  A metric space $(M,D)$ is \textbf{compact} if it satisfies
+  either (hence both) of the equivalent conditions in
+  Theorem \ref{thm:seq_compact} below; concretely,
+  every sequence has a convergent subsequence, or equivalently,
+  every infinite subset has a limit point.
+\end{definition}
+
+%-------------  Sequential forms of compactness  -------------
+\begin{theorem}[Sequential compactness]\label{thm:seq_compact}
+  For a metric space $M$ the following are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item Every sequence in $M$ possesses a \emph{convergent subsequence};
+      \item Every infinite subset of $M$ possesses a \emph{limit point}.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  $(a)\!\Rightarrow\!(b)$ is immediate:
+  given an infinite set, enumerate it as a sequence and use~(a).
+  For $(b)\!\Rightarrow\!(a)$, enumerate the given sequence by distinct
+  points, obtain a limit point $x$ via~(b), and apply
+  Theorem 63 to extract a convergent subsequence.
+\end{proof}
+
+%-------------  Theorem 65  -------------
+\begin{theorem}\label{thm:closed_interval_compact}
+  Any closed interval $[a,b]\subseteq\mathbb R$ is compact.
+\end{theorem}
+
+\begin{proof}[Sketch]
+  Modify the proof of Theorem 47 (completeness of $\mathbb R$)
+  by observing that every bounded sequence in $\mathbb R$ has a
+  convergent subsequence whose limit lies in~$[a,b]$.
+\end{proof}
+
+%-------------  Theorem 66  -------------
+\begin{theorem}\label{thm:closed_subset_compact}
+  A \emph{closed} subset of a compact metric space is compact.
+\end{theorem}
+
+\begin{proof}
+  Let $A\subseteq M$ with $M$ compact and $A$ closed.
+  For any sequence $\{a_i\}\subseteq A$,
+  $\{a_i\}$ has a convergent subsequence in $M$,
+  say $a_{i_k}\to x\in M$.
+  Closedness of $A$ implies $x\in A$,
+  hence $A$ is compact by Theorem \ref{thm:seq_compact}.
+\end{proof}
+
+%-------------  Theorem 67  -------------
+\begin{theorem}\label{thm:compact_complete}
+  Every compact metric space is complete.
+\end{theorem}
+
+\begin{proof}
+  Let $\{x_i\}$ be Cauchy in $M$ compact.
+  A subsequence converges to some $y\in M$; by Theorem 44
+  (Cauchy $+$ convergent subsequence $\Rightarrow$ convergence),
+  the whole sequence converges to $y$.
+\end{proof}
+
+\begin{remark}
+  As a corollary, compact subsets of metric spaces are \emph{closed}.
+\end{remark}
+
+%-------------  Theorem 68  -------------
+\begin{theorem}\label{thm:finite_diameter}
+  A compact metric space $M$ has finite diameter.
+  Moreover, there exist points $x,y\in M$ such that
+  $D(x,y)=\operatorname{diam}M$.
+\end{theorem}
+
+\begin{proof}
+  Let $t:=\sup\{D(u,v)\mid u,v\in M\}$ (possibly $\infty$).
+  Choose sequences $\{x_i\},\{y_i\}\subseteq M$
+  with $D(x_i,y_i)\to t$.
+  Compactness gives convergent subsequences
+  $x_i\to x$, $y_i\to y$.
+  Continuity of $D$ (Theorem 37) yields
+  $D(x,y)=t$, so $t<\infty$ and equals the diameter.
+\end{proof}
+
+%------------------------------------------------
+% Consequence in $\mathbb R$
+%------------------------------------------------
+\begin{corollary}[Heine–Borel for $\mathbb R$]\label{cor:HB}
+  A subset of the real line is compact \emph{iff} it is
+  \textbf{closed} and \textbf{bounded}.
+\end{corollary}
+%------------------------------------------------
+% 5.3  \;Compactness – Fundamental Results
+%------------------------------------------------
+
+%-------------  Theorem 69  -------------
+\begin{theorem}[Extreme–value theorem]\label{thm:EVT}
+  Let $M$ be a compact metric space and
+  $f:M\to\mathbb R$ a continuous map.
+  Then $f$ is \emph{bounded} on $M$ and attains both its
+  maximum and minimum values; i.e.\ there exist
+  $x_{\min},x_{\max}\in M$ such that
+  \[
+      f(x_{\min})=\inf_{x\in M}f(x),
+      \qquad
+      f(x_{\max})=\sup_{x\in M}f(x).
+  \]
+\end{theorem}
+
+\begin{proof}[Sketch]
+  By compactness $\{f(x)\mid x\in M\}\subset\mathbb R$
+  is compact (continuous image of a compact set) and hence closed and
+  bounded; closedness guarantees the extrema are attained.
+\end{proof}
+
+%-------------  Theorem 70  -------------
+\begin{theorem}[Compact $\;\Rightarrow\;$ separable]\label{thm:compact_sep}
+  Every compact metric space $(M,D)$ is separable.
+\end{theorem}
+
+\begin{proof}[Step‑by‑step]
+  \textbf{1.  Construct maximal $1/n$–separated sets.}  
+  For each $n\in\mathbb N$ choose $T_n\subseteq M$ \emph{maximal} with
+  the property
+  \(
+      D(x,y)\ge 1/n\ \text{for }x\ne y\text{ in }T_n.
+  \)
+  Compactness prevents $T_n$ from being infinite; otherwise one could
+  extract a convergent subsequence whose limit violates the separation
+  property.  Thus $T_n$ is finite for each $n$.
+  %-----------------------------------------------------------------
+%  Theorem 31  (compact ⇒ separable)  –  Step 1 in more detail
+%-----------------------------------------------------------------
+\paragraph{Goal of Step 1.}
+For each positive integer \(n\) we want a finite set
+\(T_n\subseteq M\) such that
+\[
+    D(x,y)\;\ge\;\frac1n
+    \quad\text{whenever }x,y\in T_n,\;x\ne y,
+    \tag{1}
+\]
+and which is \emph{maximal} with respect to this separation property
+(no additional point of \(M\) can be adjoined without breaking (1)).
+Such a set is called \textbf{\(1/n\)-separated and maximal}.
+
+\bigskip
+\begin{enumerate}
+%---------------------------------------------
+\item[\textbf{(a)}] \textbf{Existence of a \(1/n\)-separated set.}
+      Pick any point \(p\in M\); the singleton \(\{p\}\) already satisfies
+      (1).  Thus non‑empty \(1/n\)-separated sets exist.
+
+%---------------------------------------------
+\item[\textbf{(b)}] \textbf{Zorn’s lemma (or a greedy construction) gives a \emph{maximal} one.}
+
+      \begin{itemize}
+          \item \emph{Partial order.}
+                Order the family
+                \(\mathcal S:=\{S\subseteq M\mid S \text{ is }1/n\text{-separated}\}\)
+                by inclusion.
+          \item \emph{Chains have upper bounds.}
+                If \(\{S_\alpha\}_{\alpha\in\Lambda}\)
+                is a chain in \(\mathcal S\),
+                its union \(S=\bigcup_{\alpha}S_\alpha\)
+                is still \(1/n\)-separated (any conflicting pair would
+                already live in some \(S_\alpha\)).
+          \item \emph{Apply Zorn.}
+                Hence every chain has an upper bound,
+                so Zorn’s lemma furnishes a maximal element
+                \(T_n\in\mathcal S\).
+      \end{itemize}
+
+      \emph{Greedy alternative:}
+      Start with any point, then keep adding new points that are
+      at least \(1/n\) away from all previously chosen ones.
+      Stop when no further point can be added; the result is maximal
+      by construction.
+
+%---------------------------------------------
+\item[\textbf{(c)}] \textbf{Compactness forces \(T_n\) to be finite.}
+
+      Suppose, for contradiction, that \(T_n\) were infinite.
+      Because \(M\) is compact,
+      \(T_n\) has a convergent subsequence \(\{x_{k}\}_{k\ge1}\)
+      with limit \(x_\infty\in M\).
+
+      \medskip\noindent
+      Since \(x_{k}\to x_\infty\), there exists some index \(k_0\)
+      with
+      \[
+          D\bigl(x_{k_0},x_\infty\bigr)\;<\;\frac1n.
+      \]
+      The limit \(x_\infty\) itself cannot belong to \(T_n\),
+      for otherwise it would violate (1) together with \(x_{k_0}\).
+      But if \(x_\infty\notin T_n\) we could adjoin it to \(T_n\),
+      contradicting maximality.
+      Hence \(T_n\) must be finite.
+
+%---------------------------------------------
+\item[\textbf{(d)}] \textbf{Summary.}
+      For every \(n\in\mathbb N\) we have produced a \emph{finite}
+      maximal \(1/n\)-separated set \(T_n\subseteq M\).
+      These sets will be used in Step 2 to construct a \emph{countable}
+      dense subset
+      \[
+           D\;=\;\bigcup_{n\ge1}T_n,
+      \]
+      proving that \(M\) is separable.
+\end{enumerate}
+
+  \textbf{2.  Density of the union.}  
+  Any $x\in M$ lies within $1/n$ of some point of $T_n$
+  (otherwise $T_n\cup\{x\}$ would contradict maximality).  
+  Hence
+  \[
+      D:=\bigcup_{n\ge1}T_n
+  \]
+  is \emph{countable} and \emph{dense} in $M$.
+\end{proof}
+%-----------------------------------------------------------------
+%  Why adding the limit point \(x_\infty\notin T_n\) would defeat
+%  the assumption that \(T_n\) is \emph{maximal \(1/n\)-separated}.
+%-----------------------------------------------------------------
+
+
+%-----------------------------------------------------------------
+%  Theorem.  Every compact metric space is separable.
+%-----------------------------------------------------------------
+\begin{theorem}
+  Let \((M,D)\) be a compact metric space.  
+  Then \(M\) contains a countable dense subset; i.e.\ \(M\) is separable.
+  \end{theorem}
+  
+  \begin{proof}[Step‑by‑step proof]
+  \textbf{Step 1 – Build \(\tfrac1n\)-separated, maximal sets.}\par
+  For each \(n\in\mathbb N\) choose a subset \(T_n\subseteq M\) that is
+  \emph{maximal} with the property
+  \[
+      (\forall x\neq y\in T_n)\qquad D(x,y)\;\ge\;\frac1n.
+      \tag{$\ast_n$}
+  \]
+  Such a set exists by Zorn’s Lemma or by a greedy “add points until you
+  cannot’’ construction.
+  
+  \medskip
+  \textbf{Step 2 – Each \(T_n\) is finite (compactness).}\par
+  Assume, for contradiction, that some \(T_n\) were infinite.
+  Compactness of \(M\) gives a convergent subsequence
+  \(\{x_k\}_{k\ge1}\subseteq T_n\) with limit \(x_\infty\in M\).
+  Choose \(k_0\) so large that \(D(x_{k_0},x_\infty)<\tfrac1n\).
+  If \(x_\infty\in T_n\) this violates \((\ast_n)\) with \(x_{k_0}\);  
+  if \(x_\infty\notin T_n\) we could adjoin it and still respect
+  \((\ast_n)\), contradicting maximality.  
+  Hence \(T_n\) must be \emph{finite}.
+  
+  \medskip
+  \textbf{Step 3 – \(T_n\) is a \(\tfrac1n\)-net (coverage).}\par
+  Take any point \(x\in M\).  
+  If \(D(x,t)\ge\tfrac1n\) for every \(t\in T_n\), then \(T_n\cup\{x\}\)
+  would still satisfy \((\ast_n)\), again contradicting maximality.
+  Therefore
+  \[
+      (\forall x\in M)\quad
+      \exists\,t\in T_n\;:\;D(x,t)\;<\;\frac1n.
+      \tag{$\dagger_n$}
+  \]
+  
+  \medskip
+  \textbf{Step 4 – Countability of the union.}\par
+  Because each \(T_n\) is finite and \(n\) ranges over \(\mathbb N\),
+  their union
+  \[
+      D\;:=\;\bigcup_{n=1}^\infty T_n
+  \]
+  is a \emph{countable} (finite–by–countable) union of finite sets.
+  
+  \medskip
+  \textbf{Step 5 – Density of the union.}\par
+  Fix \(x\in M\) and \(\varepsilon>0\).  
+  Choose \(n\) so large that \(\tfrac1n<\varepsilon\).
+  By \((\dagger_n)\) there is \(t\in T_n\) with \(D(x,t)<\tfrac1n<\varepsilon\);  
+  thus every open ball around \(x\) meets \(D\).  
+  Hence \(D\) is \emph{dense} in \(M\).
+  
+  \medskip
+  \textbf{Conclusion.}\;
+  The set \(D\) is both countable and dense, so \(M\) is separable.
+  \end{proof}
+
+%-------------  Theorem 71  -------------
+\begin{theorem}[Nested closed–set criterion]\label{thm:nested_closed_compact}
+  For a metric space $M$ the following are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item $M$ is \textbf{compact};
+      \item Every descending sequence of non‑empty closed sets
+            \(
+                F_1\supseteq F_2\supseteq F_3\supseteq\dots
+            \)
+            has non‑empty intersection
+            $\displaystyle\bigcap_{i=1}^{\infty}F_i\ne\varnothing$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \textbf{(a)$\!\Rightarrow\!$(b).}\;
+  Given descending $F_i\ne\varnothing$, pick $x_i\in F_i$.
+  Compactness yields a subsequence $x_{i_k}\to y\in M$.
+  For any $m$, $x_{i_k}\in F_m$ once $i_k\ge m$, so $y\in F_m$.  
+  Hence $y$ lies in the intersection.
+
+  \medskip
+  \textbf{(b)$\!\Rightarrow\!$(a).}\;
+  Contrapositively, assume $M$ is \emph{not} compact.
+  Then there exists a sequence $\{x_i\}$ with no convergent subsequence.
+  (Theorem \ref{thm:seq_compact}.)
+  Define
+  \(
+      F_i:=\{x_i,x_{i+1},x_{i+2},\dots\}.
+  \)
+  Each $F_i$ is closed (Theorem 63) and non‑empty,
+  the $F_i$’s are nested, but their intersection is empty,
+  contradicting (b).
+\end{proof}
+
+%-------------  Theorem 72  -------------
+\begin{theorem}[Heine–Borel characterisation]\label{thm:HB_metric}
+  For a metric space $M$ the following are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item $M$ is \textbf{compact};
+      \item Every open cover of $M$ admits a \emph{finite} subcover;
+      \item For every family $\{F_i\}$ of closed subsets of $M$,
+            if every finite subfamily has non‑empty intersection then
+            $\displaystyle\bigcap_i F_i\ne\varnothing$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \textbf{(b)$\Leftrightarrow$(c)} by taking complements (Exercise 10
+  of §5.2).
+
+  \medskip
+  \textbf{(a)$\!\Rightarrow\!$(b).}\;
+  Compactness $\Rightarrow$ separability (Theorem \ref{thm:compact_sep})
+  and Theorem 59 (countable base) reduce any open cover to a
+  \emph{countable} one $\{U_k\}_{k\ge1}$.
+  Suppose no finite subcollection covers $M$.
+  Let $F_n:=M\setminus\bigl(U_1\cup\dots\cup U_n\bigr)$;
+  then $F_1\supseteq F_2\supseteq\dots\ne\varnothing$,
+  contradicting Theorem \ref{thm:nested_closed_compact}.
+
+  \medskip
+  \textbf{(c)$\!\Rightarrow\!$(a).}\;
+  Assume (c) and let $\{x_i\}$ be a sequence in $M$.
+  As in the proof of Theorem \ref{thm:nested_closed_compact},
+  set
+  \(
+      F_i:=\{x_i,x_{i+1},\dots\}.
+  \)
+  Finite intersections are non‑empty, so by (c)
+  $\bigcap_i F_i\ne\varnothing$,
+  hence $\{x_i\}$ has a cluster point and therefore a convergent
+  subsequence (Theorem \ref{thm:limit_subseq}).
+  Sequential compactness implies compactness.
+\end{proof}
+
+\medskip\noindent
+\textbf{Uniform continuity.}\;
+Every continuous map on a compact metric space is \emph{uniformly}
+continuous, since the usual $\varepsilon$–$\delta$ constants can be
+chosen uniformly via compactness (continuous image of a compact set is
+compact and real‐valued functions attain extrema).
+%------------------------------------------------
+% Theorem 73 – Continuous maps on compact spaces are uniformly continuous
+%------------------------------------------------
+\begin{theorem}\label{thm:compact_uc}
+  Let $(X,D_X)$ be a \textbf{compact} metric space and  
+  $(Y,D_Y)$ an arbitrary metric space.
+  If $f:X\to Y$ is \emph{continuous}, then $f$ is
+  \textbf{uniformly continuous}; i.e.
+  \[
+      \forall\,\varepsilon>0\;\exists\,\delta>0
+      \quad\text{s.t.}\quad
+      D_X(x,x')<\delta\;\Longrightarrow\;
+      D_Y\!\bigl(f(x),f(x')\bigr)<\varepsilon
+      \quad\text{for \emph{all }}x,x'\in X.
+  \]
+\end{theorem}
+
+\begin{proof}[Step‑by‑step (contrapositive argument)]
+  \textbf{Step 1.  Negate uniform continuity and set up sequences.}  
+
+  Assume, for contradiction, that $f$ is \emph{not} uniformly
+  continuous.
+  Then there exists $\varepsilon_0>0$ such that
+  no matter how small $\delta>0$ is chosen, we can find
+  $x,x'\in X$ with
+  \[
+      D_X(x,x')<\delta
+      \quad\text{but}\quad
+      D_Y\!\bigl(f(x),f(x')\bigr)\ge\varepsilon_0.
+  \]
+  Select a sequence $\delta_n\downarrow0$ (e.g.\ $\delta_n=1/n$) and,
+  for each $n$, pick points $x_n,y_n\in X$ satisfying
+  \[
+      D_X(x_n,y_n)<\delta_n, \qquad
+      D_Y\!\bigl(f(x_n),f(y_n)\bigr)\ge\varepsilon_0. \tag{1}
+  \]
+
+  \medskip
+  \textbf{Step 2.  Extract convergent subsequences using compactness.}
+
+  Because $X$ is compact, the sequence $\{x_n\}$ has a convergent
+  subsequence; relabel if necessary to assume
+  \[
+      x_n\longrightarrow x\in X. \tag{2}
+  \]
+  Condition $D_X(x_n,y_n)<\delta_n\to0$ implies
+  \[
+      y_n\longrightarrow x \quad\text{as well}. \tag{3}
+  \]
+
+  \medskip
+  \textbf{Step 3.  Pass to the limit via continuity of $f$.}
+
+  Continuity of $f$ at $x$ yields
+  \[
+      f(x_n)\;\longrightarrow\;f(x),
+      \qquad
+      f(y_n)\;\longrightarrow\;f(x). \tag{4}
+  \]
+
+  \medskip
+  \textbf{Step 4.  Reach a contradiction.}
+
+  From (4) we have
+  \(
+      D_Y\!\bigl(f(x_n),f(y_n)\bigr)\to 0.
+  \)
+  This contradicts inequality (1),
+  which asserts
+  \(
+      D_Y\!\bigl(f(x_n),f(y_n)\bigr)\ge\varepsilon_0>0
+  \)
+  for \emph{every} $n$.
+
+  \medskip
+  \textbf{Step 5.  Conclude uniform continuity.}
+
+  The contradiction shows our assumption was false; hence
+  such an $\varepsilon_0$ cannot exist, and $f$ is uniformly continuous.
+\end{proof}
+%------------------------------------------------
+% Theorem 74 – Total boundedness criteria
+%------------------------------------------------
+\begin{theorem}\label{thm:totally_bounded}
+  For a metric space $M$ the following five statements are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+      \item[\textup{(a)}] The completion $M^{\!*}$ of $M$ is \textbf{compact}.
+      \item[\textup{(b)}] \emph{Every} sequence in $M$ possesses a \textbf{Cauchy subsequence}.
+      \item[\textup{(c)}] For every $\varepsilon>0$ there exists a \emph{finite} set
+                         $T_\varepsilon\subseteq M$ such that
+                         \[
+                             \forall\,x\in M\;\exists\,t\in T_\varepsilon:\;
+                             D(x,t)<\varepsilon .
+                         \]
+      \item[\textup{(d)}] For every $\varepsilon>0$ the space $M$ can be written as the
+                         union of a \emph{finite} family of subsets, each having
+                         \emph{diameter} $<\varepsilon$.
+      \item[\textup{(e)}] For every $\varepsilon>0$ and every \emph{infinite} subset
+                         $A\subseteq M$ there exists an \emph{infinite}
+                         subset $B\subseteq A$ with $\operatorname{diam}B<\varepsilon$.
+  \end{enumerate}
+  A metric space satisfying any (hence all) of these conditions is often
+  called \textbf{totally bounded}.
+\end{theorem}
+
+\begin{proof}[Logical cycle of implications]
+  We establish
+  \[
+      (a)\Longleftrightarrow(b)\quad\text{and}\quad
+      (b)\;\Longrightarrow\;(c)\;\Longrightarrow\;(d)\;\Longrightarrow\;(e)\;\Longrightarrow\;(b).
+  \]
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(a)\Longrightarrow(b)$}.}
+      Let $\{x_i\}\subseteq M$ be a sequence.
+      As $M$ embeds isometrically and densely in the \emph{compact}
+      space $M^{\!*}$, $\{x_i\}$ has a convergent subsequence in
+      $M^{\!*}$; Theorem 43 shows this subsequence is Cauchy in $M$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(b)\Longrightarrow(a)$}.}
+      Take a sequence $\{y_i\}\subseteq M^{\!*}$.
+      For each $i$ choose $x_i\in M$ with $D(x_i,y_i)<\tfrac1i$.
+      By~(b) the sequence $\{x_i\}$ has a Cauchy subsequence,
+      hence converges in $M^{\!*}$; so does $\{y_i\}$.
+      Thus every sequence in $M^{\!*}$ converges—$M^{\!*}$ is compact.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(b)\Longrightarrow(c)$}.}
+      Fix $\varepsilon>0$ and build $T_\varepsilon$ greedily:
+      choose $x_1\in M$, then $x_2$ at distance $\ge\varepsilon$ from
+      $x_1$, etc.
+      If this process never stops we obtain an infinite sequence with
+      mutual distances $\ge\varepsilon$—hence \emph{no} Cauchy
+      subsequence, contradicting~(b).
+      Therefore the process terminates in a \emph{finite} set $T_\varepsilon$
+      that $\varepsilon$‑spans $M$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(c)\Longrightarrow(d)$}.}
+      Given $\varepsilon>0$, pick the finite set
+      $T_\varepsilon=\{u_1,\dots,u_n\}$ from~(c) and observe that
+      \(
+          M=\bigcup_{k=1}^{n}B(u_k,\varepsilon)
+      \)
+      is a finite cover by sets of diameter $<2\varepsilon$.
+      Re‑scale $\varepsilon$ to obtain statement (d).
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(d)\Longrightarrow(e)$}.}
+      Let $\varepsilon>0$ and $A\subseteq M$ be infinite.
+      Cover $M$ by finitely many sets $B_1,\dots,B_m$ of
+      diameter $<\varepsilon$ (by (d)).
+      The pigeon‑hole principle yields $B_j$ with $A\cap B_j$ infinite
+      and $\operatorname{diam}(A\cap B_j)<\varepsilon$.
+
+  %------------------------------------------------------------
+  \paragraph{\textbf{$(e)\Longrightarrow(b)$}.}
+      Let $\{x_i\}$ be a sequence in $M$ (w.l.o.g.\ with distinct
+      points).  
+      Apply~(e) with $\varepsilon_1=1$ to obtain an infinite
+      subsequence whose mutual distances are $<1$; denote it
+      $(x_{1n})$.
+      Repeat with $\varepsilon_2=\tfrac12$, etc.\ (Cantor’s diagonal
+      process):
+      \[
+          \begin{array}{cccc}
+             x_{11}, & x_{12}, & x_{13}, & \dots  \\
+             x_{21}, & x_{22}, & x_{23}, & \dots  \\
+             \vdots  &          &        &
+          \end{array}
+      \]
+      The diagonal $x_{11},x_{22},x_{33},\dots$ is a Cauchy
+      subsequence of $\{x_i\}$, establishing (b).
+\end{proof}
+
+\medskip\noindent
+The terminology \emph{totally bounded} (or sometimes \emph{pre‑compact})
+is standard for spaces satisfying the equivalent conditions of
+Theorem \ref{thm:totally_bounded}.
+
+\begin{definition}
+  Let $\{U_i\}_{i\in I}$ be an open cover of a metric space $(M,D)$.  
+  A \emph{Lebesgue number} for this cover is a number $\varepsilon>0$ such that for
+  \emph{every} subset $A\subset M$ with 
+  \[
+  \operatorname{diam}(A)\;=\;\sup\{D(a,b):a,b\in A\}\;<\varepsilon,
+  \]
+  there exists an index $i$ for which $A\subset U_i$.
+  \end{definition}
+  
+  \begin{theorem}[Lebesgue Number Lemma]\label{thm:lebesgue_number}
+  Any open cover of a \emph{compact} metric space has a Lebesgue number.
+  \end{theorem}
+  
+  \begin{proof}
+  Let $\{U_i\}_{i\in I}$ be an open cover of a compact metric space $M$.
+  Assume \emph{towards a contradiction} that the cover admits no Lebesgue number.
+  Then for every $n\in\mathbb{N}$ we can find a set $A_n\subset M$ with
+  $\operatorname{diam}(A_n)<\frac1n$ such that $A_n$ is \emph{not} contained
+  in any single $U_i$.
+  
+  Choose $x_n\in A_n$ for each $n$.
+  Because $M$ is compact, the sequence $(x_n)$
+  has a convergent subsequence, which we relabel as $(x_n)$, with
+  $x_n\to x\in M$.
+  
+  Since the $U_i$ cover $M$, pick $U_j$ with $x\in U_j$.
+  Because $U_j$ is open, there exists $r>0$ such that the open ball
+  \[
+  S_r(x)=\{y\in M:\;D(y,x)<r\}
+  \]
+  is contained in $U_j$.
+  
+  Convergence implies $D(x_n,x)<r$ for all sufficiently large $n$.
+  Fix such an $n$ and note that
+  $\operatorname{diam}(A_n)<\frac1n<r$.  For any $y\in A_n$ we have
+  \[
+  D(x,y)\le D(x,x_n)+D(x_n,y)<r+r=2r,
+  \]
+  so $A_n\subset S_{2r}(x)\subset U_j$.
+  This contradicts the choice of $A_n$, which by construction was not
+  contained in any $U_i$.
+  Hence the assumption is impossible, and a Lebesgue number must exist.
+  \end{proof}
+\end{document}

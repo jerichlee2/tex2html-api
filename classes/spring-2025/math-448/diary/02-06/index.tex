@@ -1,0 +1,385 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Quiz 1 Corrections}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{align}
+    4z^2 - 4z i - 1 &= 4 + 4i z + i^2 z^2 \\
+    4z^2 - 4z i - 1 &= 4 + 4i z - z^2 \\
+    5z^2 - 8z i - 5 &= 0 \\
+    z^2 - \frac{8}{5} z i - 1 &= 0 \\
+    \left[z^2 - \frac{8}{5} z i + \left(\frac{8i}{10}\right)^2 \right] - 1 &= \left(\frac{8i}{10}\right)^2 \\
+    \left(z - i \frac{4}{5} \right)^2 &= \left(\frac{8i}{10}\right)^2 + 1 \\
+    &= \left(\frac{8i}{10}\right)^2 + \frac{25}{25} \\
+    &= \frac{-16}{25} + \frac{25}{25} \\
+    &= \frac{9}{25}
+    \end{align}
+
+    \paragraph{Key Point:} For a complex number $w$, the square of the modulus is 
+    \[
+      |w|^2 \;=\; w\,\overline{w},
+    \]
+    while
+    \[
+      w^2 \;=\; w \cdot w.
+    \]
+    These are not the same unless $w$ is purely real. In particular,
+    \[
+      |\,2z - i\,|^2 
+      \;\neq\; (2z - i)^2
+      \quad\text{for complex }z.
+    \]
+    
+    \subsection*{Detailed Explanation}
+    
+    We start with the equation
+    \[
+    \bigl\lvert 2z - i \bigr\rvert 
+    \;=\; 
+    \bigl\lvert 2 + i\,z \bigr\rvert
+    \quad\Longleftrightarrow\quad
+    \bigl\lvert 2z - i \bigr\rvert^2 
+    \;=\; 
+    \bigl\lvert 2 + i\,z \bigr\rvert^2.
+    \]
+    
+    \begin{enumerate}
+    \item \textbf{Incorrect Move:}  
+      A common mistake is to replace
+      \[
+        \bigl\lvert 2z - i\bigr\rvert^2
+        \quad\text{by}\quad
+        (2z - i)^2.
+      \]
+      In fact,
+      \[
+        \bigl\lvert 2z - i\bigr\rvert^2
+        \;=\;(2z - i)\,\overline{(2z - i)}
+        \;=\;(2z - i)\bigl(2\overline{z} - \overline{i}\bigr).
+      \]
+      Because $\overline{i} = -\,i$, the correct expression is
+      \[
+        \bigl\lvert 2z - i\bigr\rvert^2 
+        \;=\;
+        (2z - i)\bigl(2\overline{z} + i\bigr),
+      \]
+      not $(2z - i)^2$.
+    
+    \item \textbf{Correct Method via Real and Imag Parts:}
+    
+      Let $z = x + i\,y$, where $x,y\in\mathbb{R}$. Then:
+      \[
+        2z - i 
+        \;=\; 2\bigl(x + i\,y\bigr) - i
+        \;=\; 2x + 2i\,y - i
+        \;=\; 2x \;+\; i(2y - 1).
+      \]
+      Hence
+      \[
+        \bigl\lvert 2z - i \bigr\rvert^2
+        \;=\; \bigl(2x\bigr)^2 + \bigl(2y - 1\bigr)^2.
+      \]
+      Likewise,
+      \[
+        i\,z 
+        \;=\; i\bigl(x + i\,y\bigr) 
+        \;=\; i\,x + i^2\,y 
+        \;=\; i\,x - y,
+      \]
+      so
+      \[
+        2 + i\,z 
+        \;=\; 2 + (i\,x - y)
+        \;=\; (2 - y) + i\,x.
+      \]
+      Hence
+      \[
+        \bigl\lvert 2 + i\,z \bigr\rvert^2
+        \;=\;\bigl(2 - y\bigr)^2 + x^2.
+      \]
+      The original condition becomes
+      \[
+        4x^2 + (2y - 1)^2 
+        \;=\; (2 - y)^2 + x^2.
+      \]
+      Expand and simplify:
+      \[
+        4x^2 + 4y^2 - 4y + 1 
+        \;=\; x^2 + y^2 + 4 - 4y
+        \;\;\Longrightarrow\;\;
+        3x^2 + 3y^2 - 3 = 0
+        \;\;\Longrightarrow\;\;
+        x^2 + y^2 = 1.
+      \]
+      Therefore, the solution set in the complex plane is precisely the \emph{unit circle}:
+      \[
+        \bigl\{\,z : |z| = 1 \bigr\}.
+      \]
+
+    \end{enumerate}
+
+    \section*{Solution: Points of Continuity of \texorpdfstring{$f(z)$}{f(z)}}
+
+    We are given a function
+    \[
+    f(z) \;=\;
+    \begin{cases}
+    \dfrac{z^3 + i}{\,z - i\,}, & z \neq i,\\[6pt]
+    -3, & z = i.
+    \end{cases}
+    \]
+    
+    \subsection*{Step 1: Identify the Potential Problem Point}
+    
+    Since the definition of $f(z)$ changes at $z=i$, the only possible discontinuity could occur there (the quotient is perfectly fine for $z \neq i$).  
+    
+    \subsection*{Step 2: Compute the Limit as \texorpdfstring{$z \to i$}{z -> i}}
+    
+    We check whether
+    \[
+    \lim_{z \to i} \dfrac{z^3 + i}{\,z - i\,}
+    \quad
+    \text{exists and equals } -3.
+    \]
+    
+    \paragraph{Factorization.}
+    Observe that $z=i$ is actually a root of $z^3 + i$, because $i^3 = -\,i$.  Hence
+    \[
+    i^3 + i = -i + i = 0,
+    \]
+    so $z-i$ divides $z^3 + i$.  By polynomial (or synthetic) division,
+    \[
+    z^3 + i \;=\; (z - i)\,\bigl(z^2 + i\,z - 1\bigr).
+    \]
+    Therefore, for $z \neq i$,
+    \[
+    \frac{z^3 + i}{z - i} 
+    \;=\;
+    z^2 + i\,z - 1.
+    \]
+    Taking $z \to i$ in this simplified form gives
+    \[
+    \lim_{z \to i} \bigl(z^2 + i\,z - 1\bigr)
+    \;=\;
+    i^2 + i\,\bigl(i\bigr) - 1
+    \;=\;
+    (-1) \;+\; (i^2) \;-\;1
+    \;=\;
+    -1 + (-1) - 1
+    \;=\;
+    -3.
+    \]
+    
+    \subsection*{Step 3: Compare with the Value at \texorpdfstring{$z=i$}{z=i}}
+    
+    By definition, $f(i) = -3$.  Since the limit from above also equals $-3$, we conclude
+    \[
+    \lim_{z \to i} \dfrac{z^3 + i}{\,z - i\,} 
+    \;=\;
+    -3
+    \;=\;
+    f(i).
+    \]
+    Hence $f(z)$ is continuous at $z=i$.
+    
+    \subsection*{Step 4: Final Conclusion}
+    
+    \begin{itemize}
+      \item For $z \neq i$, $f(z)$ is given by a rational function with denominator $z-i$; that is continuous everywhere except possibly at $z=i$.
+      \item At $z=i$, the limit of $\tfrac{z^3+i}{z-i}$ is exactly $-3$, which matches the piecewise definition $f(i)=-3$.  
+    
+    Therefore, \emph{the function $f$ is continuous for all complex $z$, including $z=i$.}
+    \end{itemize}
+
+    To use the formula 
+
+\[
+\operatorname{Re}(z) = \frac{z + \bar{z}}{2}
+\]
+
+to find \( \operatorname{Re}(z^2) \), follow these steps:
+
+\section*{Step 1: Compute \( z^2 \)}
+For \( z = x + iy \), we expand:
+
+\[
+z^2 = (x + iy)^2 = x^2 - y^2 + 2ixy
+\]
+
+\section*{Step 2: Compute \( \bar{z^2} \)}
+The complex conjugate of \( z^2 \) is:
+
+\[
+\bar{z^2} = \overline{x^2 - y^2 + 2ixy} = x^2 - y^2 - 2ixy
+\]
+
+\section*{Step 3: Apply the Formula}
+Using the real part formula:
+
+\[
+\operatorname{Re}(z^2) = \frac{z^2 + \bar{z^2}}{2}
+\]
+
+we substitute:
+
+\[
+\operatorname{Re}(z^2) = \frac{(x^2 - y^2 + 2ixy) + (x^2 - y^2 - 2ixy)}{2}
+\]
+
+Simplifying,
+
+\[
+\operatorname{Re}(z^2) = \frac{x^2 - y^2 + x^2 - y^2}{2}
+\]
+
+\[
+= \frac{2x^2 - 2y^2}{2}
+\]
+
+\[
+= x^2 - y^2
+\]
+
+\section*{Conclusion}
+Using the formula \( \operatorname{Re}(z) = \frac{z + \bar{z}}{2} \), we have verified that:
+
+\[
+\operatorname{Re}(z^2) = x^2 - y^2
+\]
+
+which matches our earlier result.
+
+To evaluate
+
+\[
+\lim_{z \to i} \frac{x^2 - y^2}{z},
+\]
+
+we proceed as follows:
+
+\section*{Step 1: Identify \((x, y)\) at \(z = i\)}
+If \(z \to i\), then 
+\[
+z = x + i y \quad \longrightarrow \quad i = 0 + i \cdot 1,
+\]
+which corresponds to \(x = 0\) and \(y = 1\).
+
+\section*{Step 2: Substitute into the function}
+We compute:
+\[
+x^2 - y^2 = 0^2 - 1^2 = -1,
+\]
+and since \(z = i\),
+\[
+f(i) = \frac{-1}{i}.
+\]
+
+\section*{Step 3: Simplify}
+Recall that \(\frac{1}{i} = -i\). Thus,
+\[
+\frac{-1}{i} = -1 \cdot \frac{1}{i} = -1 \cdot (-i) = i.
+\]
+
+\section*{Conclusion}
+The limit is:
+\[
+\lim_{z \to i} \frac{x^2 - y^2}{z} = i \neq 0.
+\]
+
+A concise way to see that the limit does not exist is to write $z$ in polar form:
+
+\begin{align}
+z &= r e^{i\theta}, \quad \text{so} \quad z^2 = r^2 e^{2i\theta}.
+\end{align}
+
+Then
+\begin{align}
+\operatorname{Re}(z^2) &= r^2 \cos(2\theta),
+\end{align}
+and
+\begin{align}
+\frac{\operatorname{Re}(z^2)}{z^2} 
+&= \frac{r^2 \cos(2\theta)}{r^2 e^{2i\theta}} \\
+&= \cos(2\theta)\,e^{-2i\theta}.
+\end{align}
+
+Notice that this ratio depends only on the angle $\theta$ and \emph{not} on $r$. As $r \to \infty$, different choices of $\theta$ give different values for 
+\begin{align}
+\cos(2\theta)\,e^{-2i\theta}.
+\end{align}
+
+Hence there is no single value to which the expression converges in all directions in the complex plane, and the limit does not exist.
+\[
+\textbf{Derivation of }|\cosh(x + i y)|^2 = \sinh^2 x + \cos^2 y
+\]
+\begin{align*}
+\cosh(x + i y) 
+&= \frac{e^{x + i y} + e^{-x - i y}}{2} \\[6pt]
+&= \frac{1}{2} \Bigl( e^x(\cos y + i\,\sin y) \;+\; e^{-x}(\cos y - i\,\sin y)\Bigr) \\[6pt]
+&= \cosh x\,\cos y \;+\; i\,\sinh x\,\sin y.
+\end{align*}
+
+Taking the modulus squared:
+\[
+|\cosh(x + i y)|^2 
+= \bigl(\cosh x \,\cos y\bigr)^2 + \bigl(\sinh x \,\sin y\bigr)^2 
+= \cosh^2 x\,\cos^2 y + \sinh^2 x\,\sin^2 y.
+\]
+
+Using the identity \(\cosh^2 x - \sinh^2 x = 1 \Rightarrow \cosh^2 x = 1 + \sinh^2 x,\) we get
+\begin{align*}
+\cosh^2 x\,\cos^2 y + \sinh^2 x\,\sin^2 y
+&= (1 + \sinh^2 x)\cos^2 y \;+\; \sinh^2 x\,\sin^2 y \\[4pt]
+&= \cos^2 y \;+\; \sinh^2 x \bigl(\cos^2 y + \sin^2 y\bigr) \\[4pt]
+&= \cos^2 y + \sinh^2 x.
+\end{align*}
+
+Hence,
+\[
+|\cosh(x + i y)|^2 
+\;=\; \sinh^2 x \;+\; \cos^2 y,
+\]
+as required.
+\end{document}

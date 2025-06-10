@@ -1,0 +1,196 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 7}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Values and properties of elementary functions]\mbox{}\\[4pt]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Determine \emph{all} complex values of 
+          \[
+            \bigl(1+i\sqrt{3}\bigr)^{\frac{11}{3}},
+          \]
+          and write each value in the form $x+iy$ with $x,y\in\mathbb{R}$.
+    \item Compute the principal value of the logarithm
+          \[
+            \Log\!\bigl(-3i\bigr),
+          \]
+          and state precisely the branch cut you have used.
+    \item Prove the identity
+          \[
+            \arccos z
+            \;=\;
+            \tfrac{\pi}{2}-\arcsin z
+            \;=\;
+            \tfrac{\pi}{2}
+            -\,\frac{1}{i}\,\Log\!\bigl(z+i\sqrt{1-z^{2}}\bigr),
+            \qquad z\in\mathbb{C}\setminus\bigl(\,(-\infty,-1]\cup[1,\infty)\bigr),
+          \]
+          taking care to justify analyticity on the indicated domain.
+  \end{enumerate}
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Isolated singularities and residues]\mbox{}\\[4pt]
+  Consider
+  \[
+    f(z)=\frac{e^{\frac{1}{z-\pi}}-\cos z}{(z+2)^{3}}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Classify the isolated singularities of $f$ at $z=\pi$ and $z=-2$ as removable, poles, or essential.
+    \item Compute both residues $\operatorname*{Res}_{z=\pi}f(z)$ and $\operatorname*{Res}_{z=-2}f(z)$.
+    \item Write the first \emph{four} non‑zero terms of the Laurent expansion of $f$ about $z=\pi$.
+  \end{enumerate}
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Laurent expansion in an annulus — multi‑step]\mbox{}\\[4pt]
+  Find the Laurent expansion
+  \[
+    \sum_{n=-\infty}^{\infty}a_{n}\,(z-1)^{n}
+  \]
+  of the function
+  \[
+    g(z)=\frac{z^{2}}{(z-3)(z+1)^{2}}
+  \]
+  in the annulus \(2<\lvert z-1\rvert<4\) as follows:
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Show that, on the given annulus, one may write
+          \[
+            \frac{1}{z-3}
+            \;=\;
+            -\frac{1}{2}\,
+            \sum_{k=0}^{\infty}\bigl(\tfrac{z-1}{2}\bigr)^{k}.
+          \]
+    \item Prove that, again on the annulus, 
+          \[
+            \frac{1}{(z+1)^{2}}
+            \;=\;
+            \frac{1}{4}
+            \sum_{m=0}^{\infty}(-1)^{m}(m+1)
+            \Bigl(\tfrac{z-1}{2}\Bigr)^{m}.
+          \]
+    \item Multiply the two series from (a) and (b) term‑by‑term, then multiply by $z^{2}$, to obtain the full Laurent expansion for $g$.
+    \item Give a closed‑form expression for the general coefficient $a_{n}$ valid for all $n\in\mathbb{Z}$.
+  \end{enumerate}
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Closed‑contour integral]\mbox{}\\[4pt]
+  Using residues, evaluate
+  \[
+    \oint_{\lvert z\rvert=3}
+    \frac{z^{2}}{(z-1)(z+2)^{2}(z-4)}\,dz.
+  \]
+  (You may assume the positive—oriented—circle is traversed once.)
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Improper integral via complex methods]\mbox{}\\[4pt]
+  Show that the integral
+  \[
+    I=\int_{0}^{\infty}\frac{x^{2}\cos(4x)}{(x^{2}+4)^{2}}\,dx
+  \]
+  converges and compute its exact value.  (Contour‑integration in the upper half‑plane is recommended.)
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Counting zeros with Rouché]\mbox{}\\[4pt]
+  Let
+  \[
+    P(z)=z^{6}+4z^{3}-8z+2.
+  \]
+  Apply Rouché’s Theorem on a suitable circle to determine how many zeros of $P$ lie strictly inside the circle \(\lvert z\rvert=2\).
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Conformal mapping]\mbox{}\\[4pt]
+  Construct an explicit conformal map \(T\) that sends the right‑angled triangle
+  \[
+    \Delta=\{z:\;0<\arg z<\tfrac{\pi}{2},\; \lvert z\rvert<1\}
+  \]
+  onto the upper half‑plane \(\operatorname{Im}w>0\).  
+  Indicate clearly the intermediate steps (Schwarz–Christoffel, power maps, linear fractional maps, etc.) and show how the three vertices of $\Delta$ are sent to \(-1,0,1\).
+  \end{problem}
+  
+  %-----------------------------------------------------------------
+  \pagebreak
+  \begin{problem}[Schwarz–Pick type estimate]\mbox{}\\[4pt]
+  Let \(f\) be analytic on the unit disc $\mathbb{D}$ and suppose $f(0)=a$ with $0<\lvert a\rvert<1$.
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Use the Schwarz–Pick Theorem to prove
+          \[
+            \lvert f'(0)\rvert
+            \;\le\;
+            \frac{1-\lvert a\rvert^{2}}{1-0^{2}}
+            \;=\;
+            1-\lvert a\rvert^{2}.
+          \]
+    \item Show that equality holds in (a) if and only if $f$ is a Möbius automorphism of $\mathbb{D}$.
+  \end{enumerate}
+  \end{problem}
+\end{document}

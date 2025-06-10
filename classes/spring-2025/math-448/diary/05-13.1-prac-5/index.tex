@@ -1,0 +1,178 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 5}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Values and properties of elementary functions]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Compute the principal value of
+          \[
+            \Bigl(\sqrt{5}\,e^{i\pi/8}\Bigr)^{12}.
+          \]
+    \item Show that for every $z\in\mathbb{C}\setminus(-\infty,0]$,
+          \[
+            \Log\!\bigl(1+z\bigr)
+            \;=\;
+            \sum_{n=1}^{\infty}(-1)^{\,n+1}\frac{z^{n}}{n},
+            \qquad\text{and find its radius of convergence.}
+          \]
+    \item Prove the identity
+          \[
+            \cosh^{-1}w
+            \;=\;
+            \Log\!\Bigl(w+\sqrt{w^{2}-1}\,\Bigr),
+            \qquad
+            w\in\mathbb{C}\setminus(-\infty,1],
+          \]
+          using the principal branches of the square‑root and logarithm.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Isolated singularities]
+  Let
+  \[
+    f(z)\;=\;\frac{e^{2z}-1}{z^{3}(z-\pi)}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Classify the isolated singularities of $f$ at $z=0$ and $z=\pi$.
+    \item Find the residues $\operatorname*{Res}_{z=0}f(z)$ and $\operatorname*{Res}_{z=\pi}f(z)$.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Find Taylor/Laurent series]
+  Expand
+  \[
+    g(z)\;=\;\frac{\Log(1+z)}{(1+z)^{2}}
+  \]
+  in a Laurent series about $z=-1$ and write out the terms from $z^{-2}$ up through $z^{2}$.
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Evaluate an integral over a closed contour]
+  Evaluate
+  \[
+    \oint_{\lvert z\rvert = 2}
+    \frac{z^{2}+1}{z^{3}(z-1)}\,dz
+  \]
+  using the residue theorem.
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Evaluate an improper integral]
+  Show that the integral
+  \[
+    I=\int_{0}^{\infty}\frac{x^{2}\cos(3x)}{x^{4}+1}\,dx
+  \]
+  converges and determine its exact value.
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Find the number of zeros of a function]
+  Let
+  \[
+    F(z)=z^{5}+z+1.
+  \]
+  Use Rouché’s Theorem to determine how many zeros of $F$ lie strictly inside the unit circle $\lvert z\rvert=1$.
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Find a conformal map]
+  Construct an explicit conformal map \(T\) that sends the horizontal strip
+  \[
+    S=\bigl\{\,z : 0<\operatorname{Im}z<\pi\bigr\}
+  \]
+  onto the open unit disc \(\mathbb{D}=\{w:\lvert w\rvert<1\}\).  
+  Detail the intermediate mappings you use.
+  \end{problem}
+  
+  \pagebreak
+  
+  %-------------------------------------------------------------
+  \begin{problem}[Cauchy estimates for a Laurent series]
+  Suppose \(f\) is analytic on the annulus \(0<\lvert z\rvert<R\) and has Laurent expansion
+  \[
+    f(z)=\sum_{n=-\infty}^{\infty}a_{n}z^{\,n},\qquad 0<\lvert z\rvert<R.
+  \]
+  If there exist constants \(M>0\) and \(\beta>0\) such that
+  \[
+    \lvert f(z)\rvert\;\le\;\frac{M}{\lvert z\rvert^{\beta}}
+    \quad\text{whenever }0<\lvert z\rvert<\tfrac{R}{2},
+  \]
+  prove the following.
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item \(a_{n}=0\) for every \(n<-\beta\).
+    \item Consequently, \(f\) extends to a meromorphic function on \(\lvert z\rvert<R\) with at most a pole of order \(\lceil\beta\rceil\) at \(z=0\).
+  \end{enumerate}
+  \end{problem}
+\end{document}

@@ -1,0 +1,371 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{HW 7: MATH 432}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[1]
+Let $(P, \leq)$ be a partially ordered set, and let $C \subseteq P$ be a chain (i.e.\ a totally ordered subset). We want to prove that there exists a \emph{maximal chain} $M$ in $P$ such that $C \subseteq M$. Recall that a chain $M$ is called \emph{maximal} if there is no strictly larger chain that properly contains it.
+\end{problem}
+\begin{solution}
+    
+
+
+\medskip
+
+\textbf{Proof (via Zorn's Lemma).}
+
+\begin{enumerate}
+    \item[\textbf{Step 1.}] \textbf{Define the collection of all chains containing $C$.}\\
+    Let 
+    \[
+        S = \{\,D \subseteq P : D \text{ is a chain and } C \subseteq D\,\}.
+    \]
+    In other words, $S$ is the set of all chains in $P$ that contain the given chain $C$. We will show that every chain in $S$ (under set inclusion) has an upper bound in $S$, and then apply Zorn's Lemma to conclude the existence of a maximal element in $S$.
+
+    \item[\textbf{Step 2.}] \textbf{Partially order $S$ by inclusion.}\\
+    We consider the partial order $\subseteq$ on $S$. That is, for any $D_1, D_2 \in S$, we say $D_1 \leq D_2$ if and only if $D_1 \subseteq D_2$. 
+
+    \item[\textbf{Step 3.}] \textbf{Show that every chain in $(S, \subseteq)$ has an upper bound in $S$.}\\
+    Let $\{D_i\}_{i \in I}$ be a chain in $S$ with respect to set inclusion. This means that for any $i, j \in I$, either $D_i \subseteq D_j$ or $D_j \subseteq D_i$. We claim that
+    \[
+        D^* := \bigcup_{i \in I} D_i
+    \]
+    is an upper bound for this family in $S$. We need to check two things:
+    \begin{enumerate}
+        \item $D^*$ is indeed a chain in $P$.\\
+              Since each $D_i$ is a chain and the family $\{D_i\}_{i \in I}$ is totally ordered by inclusion, any two elements $x,y \in D^*$ must come from some $D_i$ or $D_j$ with $D_i \subseteq D_j$ or $D_j \subseteq D_i$. Hence $x$ and $y$ lie in at least one common chain $D_k$, and so they are comparable in $D_k$. Thus $D^*$ is a chain.
+        \item $C \subseteq D^*$.\\
+              Each $D_i$ in our family contains $C$. Therefore $C$ is contained in the union of all $D_i$, i.e.\ $C \subseteq D^*$. 
+    \end{enumerate}
+    Consequently, $D^*$ belongs to $S$ (it is a chain containing $C$) and $D^*$ is clearly an upper bound for the chain $\{D_i\}_{i \in I}$ in $(S, \subseteq)$.
+
+    \item[\textbf{Step 4.}] \textbf{Apply Zorn's Lemma.}\\
+    By Zorn's Lemma (which applies because every chain in $S$ has an upper bound in $S$), the poset $(S, \subseteq)$ has a maximal element. Denote this maximal element by $M \in S$.
+
+    \item[\textbf{Step 5.}] \textbf{Conclude that $M$ is a maximal chain containing $C$.}\\
+    By definition of $S$, we have $C \subseteq M$, and $M$ is a chain in $P$. The maximality of $M$ in $S$ means that there is no strictly larger chain in $S$ containing $M$. In other words, there is no chain $M' \supsetneq M$ with $C \subseteq M'$. Hence $M$ is a \emph{maximal chain} in $P$ and it contains $C$, as required.
+\end{enumerate}
+\end{solution}
+\begin{problem}[2]
+Let $X$ be a set, and let $f: X \to X$ be any function. We want to show that there exists a function $g: X \to X$ such that
+
+\end{problem}
+\begin{solution}
+
+\[
+   f \circ g \circ f \;=\; f,
+\]
+i.e.\ for every $x \in X$,
+\[
+   f\bigl(g\bigl(f(x)\bigr)\bigr) \;=\; f(x).
+\]
+
+\medskip
+
+\textbf{Idea of the proof.} 
+We want $f(g(y)) = y$ for every $y$ in the image of $f$. If we can define $g(y)$ so that $f(g(y)) = y$ whenever $y$ is in the range of $f$, then $f(g(f(x))) = f(x)$ automatically follows for all $x \in X$. 
+
+\medskip
+
+\textbf{Step 1. Identify the image of $f$.} 
+Define
+\[
+   Y \;:=\; \{\, f(x) : x \in X \} \;\subseteq\; X.
+\]
+This is the \emph{range} (or image) of $f$.
+
+\medskip
+
+\textbf{Step 2. Use the Axiom of Choice to pick a preimage for each element of $Y$.} 
+For each $y \in Y$, the set $f^{-1}(\{y\}) = \{\, x \in X : f(x) = y \}$ is nonempty by definition of $Y$. By the Axiom of Choice, there is a function 
+\[
+   h : Y \to X
+\]
+such that for each $y \in Y$, we have $f(h(y)) = y$. (This means $h(y)$ is a chosen element from the preimage of $y$ under $f$.)
+
+\medskip
+
+\textbf{Step 3. Define $g$ on $X$.} 
+We now define a function $g : X \to X$ by specifying its values in two cases:
+\begin{itemize}
+    \item If $y \in Y$ (i.e.\ $y$ is in the image of $f$), set
+    \[
+       g(y) := h(y).
+    \]
+    \item If $y \notin Y$, we can define $g(y)$ arbitrarily (for example, pick any fixed element $x_0 \in X$ and set $g(y) = x_0$). 
+\end{itemize}
+This defines $g$ on all of $X$.
+
+\medskip
+
+\textbf{Step 4. Check that $f \circ g \circ f = f$.} 
+Take any $x \in X$. Let $y = f(x)$. Then $y \in Y$ by definition. By our construction of $g$,
+\[
+   g(y) = g\bigl(f(x)\bigr) = h\bigl(f(x)\bigr).
+\]
+Hence,
+\[
+   f\bigl(g(f(x))\bigr) \;=\; f\bigl(h(f(x))\bigr).
+\]
+But by the defining property of $h$, we have $f(h(z)) = z$ for every $z \in Y$. Here, $z = f(x)$. Thus
+\[
+   f(h(f(x))) = f(x).
+\]
+Therefore,
+\[
+   f\bigl(g(f(x))\bigr) = f(x),
+\]
+which shows exactly that
+\[
+   (f \circ g \circ f)(x) = f(x)
+\]
+for all $x \in X$. Consequently,
+\[
+   f \circ g \circ f \;=\; f.
+\]
+
+\medskip
+
+\textbf{Conclusion.} We have constructed a function $g: X \to X$ such that $f \circ g \circ f = f$, as required. The Axiom of Choice is used critically in choosing, for each $y$ in the image of $f$, a single $x$ such that $f(x) = y$.
+
+\end{solution}
+\begin{problem}[3]
+    
+\end{problem}
+\begin{solution}
+
+\textbf{Given:} 
+\begin{itemize}
+    \item[(a)] $D(a,a) = 0$ for all $a \in M$.
+    \item[(b)] For any $a,b \in M$ with $a \neq b$, we have $D(a,b) \neq 0$.
+    \item[(c)] For any $a,b,c \in M$, $D(a,b) + D(b,c) \geq D(c,a)$.
+\end{itemize}
+
+We wish to show that $D$ satisfies the axioms of a metric on $M$. Recall that to be a metric, $D$ must satisfy, for all $a,b,c \in M$:
+
+\begin{enumerate}
+    \item $D(a,b) \geq 0$.
+    \item $D(a,b) = 0 \iff a = b$.
+    \item $D(a,b) = D(b,a)$ (symmetry).
+    \item $D(a,b) + D(b,c) \geq D(a,c)$ (triangle inequality).
+\end{enumerate}
+
+\medskip
+
+\noindent \textbf{Step 1: Positivity and the condition $D(a,a)=0$.}
+
+\begin{itemize}
+    \item From (a), we know that for every $a \in M$, $D(a,a) = 0$.
+    \item From (b), if $a \neq b$, then $D(a,b) \neq 0$. 
+\end{itemize}
+It remains to check that $D(a,b)$ is nonnegative. To see this, we use (c) in a special case:
+\[
+    D(a,b) + D(b,a) \;\ge\; D(a,a).
+\]
+But $D(a,a) = 0$ by (a). Hence $D(a,b) + D(b,a) \ge 0$. 
+\emph{(We will soon show $D(a,b) = D(b,a)$, which then implies $D(a,b) \ge 0$.)}
+
+\medskip
+
+\noindent \textbf{Step 2: Symmetry, $D(a,b) = D(b,a)$.}
+
+We claim $D$ is symmetric, i.e.\ $D(a,b) = D(b,a)$ for all $a,b \in M$. 
+
+\begin{itemize}
+    \item \emph{First inequality:} Set $b = a$ in (c):
+    \[
+        D(a,a) + D(a,c) \;\ge\; D(c,a).
+    \]
+    Since $D(a,a) = 0$, it follows that $D(a,c) \ge D(c,a)$.
+
+    \item \emph{Second inequality:} Rename the variables in (c) by swapping the roles of $a$ and $c$. In other words, replace $(a,b,c)$ by $(c,b,a)$:
+    \[
+        D(c,b) + D(b,a) \;\ge\; D(a,c).
+    \]
+    Now set $b = c$ in this rewritten form:
+    \[
+        D(c,c) + D(c,a) \;\ge\; D(a,c).
+    \]
+    Since $D(c,c) = 0$, we get $D(c,a) \ge D(a,c)$.
+
+\end{itemize}
+
+Combining $D(a,c) \ge D(c,a)$ and $D(c,a) \ge D(a,c)$ gives 
+\[
+    D(a,c) \;=\; D(c,a).
+\]
+Hence $D$ is symmetric.
+
+\medskip
+
+\noindent \textbf{Step 3: Nonnegativity and uniqueness of zero distance.}
+
+Since $D(a,b) = D(b,a)$, the inequality $D(a,b) + D(b,a) \ge 0$ becomes
+\[
+   2\,D(a,b) \;\ge\; 0 \quad\Longrightarrow\quad D(a,b) \;\ge\; 0.
+\]
+Moreover, if $a \neq b$, then by (b) we know $D(a,b) \neq 0$. Hence $D(a,b) > 0$ whenever $a \neq b$, and $D(a,a) = 0$.
+
+Thus the usual metric conditions
+\[
+   D(a,b) \ge 0
+   \quad\text{and}\quad
+   D(a,b) = 0 \;\;\Leftrightarrow\;\; a = b
+\]
+are satisfied.
+
+\medskip
+
+\noindent \textbf{Step 4: Triangle inequality in the usual form.}
+
+We need to show $D(a,c) \le D(a,b) + D(b,c)$ for all $a,b,c \in M$. 
+
+Given (c), we have $D(a,b) + D(b,c) \ge D(c,a)$. By symmetry (just proved), $D(c,a) = D(a,c)$. Hence
+\[
+   D(a,b) + D(b,c) \;\ge\; D(a,c),
+\]
+which is precisely the usual triangle inequality.
+
+\medskip
+
+\noindent \textbf{Conclusion.} All four metric axioms are verified:
+
+\begin{enumerate}
+    \item $D(a,b) \ge 0$ and $D(a,b) = 0 \iff a = b$,
+    \item $D(a,b) = D(b,a)$,
+    \item $D(a,b) + D(b,c) \ge D(a,c)$.
+\end{enumerate}
+
+Therefore, $D$ is indeed a metric on $M$.
+
+\end{solution}
+\begin{problem}[4]
+    
+\end{problem}
+\begin{solution}
+    \section*{Problem Statement}
+Let $M = \mathbb{R}$ with the usual metric $D(a,b) = |a - b|$. Fix some point $\alpha_0 \in \mathbb{R}$. Show that there are \emph{exactly two} isometries $f: \mathbb{R} \to \mathbb{R}$ (i.e.\ distance-preserving maps) such that $f(\alpha_0) = \alpha_0$.
+
+\medskip
+
+\textbf{Key idea:} Any distance-preserving map $f$ on the real line must be either of the form $x \mapsto x + c$ or $x \mapsto -x + c$, i.e.\ a translation or a reflection (possibly combined with a translation). The condition $f(\alpha_0) = \alpha_0$ forces $c$ to be chosen so that $\alpha_0$ is fixed, which leaves exactly two possibilities: the identity map or the reflection around $\alpha_0$.
+
+\section*{Step-by-step Solution}
+
+\subsection*{Step 1. Isometries of $\mathbb{R}$ have the form $x \mapsto ax + b$ with $|a| = 1$.}
+
+First, recall that an isometry $f : \mathbb{R} \to \mathbb{R}$ must satisfy
+\[
+   |f(x) - f(y)| \;=\; |x - y|
+   \quad\text{for all } x,y \in \mathbb{R}.
+\]
+One can show (either by an elementary argument or using more advanced classification theorems) that every such $f$ on the real line is of the form
+\[
+   f(x) \;=\; ax + b,
+   \quad
+   \text{where } a = \pm 1 \text{ and } b \in \mathbb{R}.
+\]
+The condition $|a|=1$ (that is, $a = \pm 1$) is necessary for the map to preserve distances. Specifically:
+\begin{itemize}
+    \item If $a = 1$, then $f(x) = x + b$ is a \emph{translation} by $b$.
+    \item If $a = -1$, then $f(x) = -x + b$ is a \emph{reflection} (possibly combined with a translation).
+\end{itemize}
+
+\subsection*{Step 2. Impose the condition $f(\alpha_0) = \alpha_0$.}
+
+We are given that $f$ fixes a specific point $\alpha_0$. Hence,
+\[
+   f(\alpha_0) = \alpha_0.
+\]
+In the form $f(x) = ax + b$, this means
+\[
+   a\,\alpha_0 + b = \alpha_0.
+\]
+Solving for $b$, we get
+\[
+   b = \alpha_0 - a\,\alpha_0 \;=\; \alpha_0(1 - a).
+\]
+Since $a$ can be either $+1$ or $-1$, we have two cases:
+
+\begin{itemize}
+    \item \textbf{Case 1:} $a = 1$. Then $b = \alpha_0(1 - 1) = 0$.\\
+          Thus $f(x) = x + 0 = x$. This is the \emph{identity map}, which clearly fixes $\alpha_0$.
+
+    \item \textbf{Case 2:} $a = -1$. Then $b = \alpha_0(1 - (-1)) = \alpha_0(2) = 2\alpha_0$.\\
+          Thus $f(x) = -x + 2\alpha_0 = 2\alpha_0 - x$. This is the \emph{reflection} around the point $\alpha_0$ (i.e.\ it sends $\alpha_0$ to itself and flips the real line across that point).
+\end{itemize}
+
+\subsection*{Step 3. Conclusion: Exactly two isometries fix $\alpha_0$.}
+
+From the above two cases, the only possibilities for an isometry on $\mathbb{R}$ that keeps $\alpha_0$ fixed are:
+\[
+   f(x) = x
+   \quad\text{or}\quad
+   f(x) = 2\alpha_0 - x.
+\]
+These are indeed two different maps (the identity and the reflection), and no other isometry can fix $\alpha_0$. Hence there are \emph{exactly two} such isometries.
+
+\bigskip
+\noindent
+\textbf{Alternative Elementary Argument (Without Explicit Form):}
+
+One can also argue directly from the metric condition:
+\begin{enumerate}
+    \item Since $f$ is an isometry, for any $x \in \mathbb{R}$,
+          \[
+             |f(x) - f(\alpha_0)| \;=\; |x - \alpha_0|.
+          \]
+          But $f(\alpha_0) = \alpha_0$, so $|f(x) - \alpha_0| = |x - \alpha_0|$.
+    \item Thus $f(x)$ is one of the two points at distance $|x - \alpha_0|$ from $\alpha_0$, namely $x$ or $2\alpha_0 - x$.
+    \item To preserve distances \emph{between all points}, $f$ cannot ``mix'' these assignments for different $x$. Either $f$ always sends $x$ to $x$ (the identity) or it always sends $x$ to $2\alpha_0 - x$ (the reflection).
+\end{enumerate}
+This again yields exactly two isometries fixing $\alpha_0$.
+
+\end{solution}
+\end{document}

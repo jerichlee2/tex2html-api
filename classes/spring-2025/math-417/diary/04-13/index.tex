@@ -1,0 +1,2202 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\noindent
+\textbf{Problem Statement:} Prove that the permutations $(12)(345)$ and $(12345)$ are not conjugate in $S_5.$
+
+\bigskip
+
+\noindent
+\textbf{Solution:}
+
+\begin{enumerate}
+
+\item \textbf{Write down the cycle decompositions:}
+
+\[
+(12)(345) \quad \text{is a product of one 2-cycle and one 3-cycle.}
+\]
+\[
+(12345) \quad \text{is a single 5-cycle.}
+\]
+
+\item \textbf{Identify the cycle types:}
+
+\[
+\text{Cycle type of } (12)(345) = (2,3).
+\]
+\[
+\text{Cycle type of } (12345) = (5).
+\]
+
+\item \textbf{Key fact:} In the symmetric group $S_n$, two permutations are conjugate
+if and only if they have the same cycle type (i.e., the same partition of $n$ in their cycle decomposition).
+
+\item \textbf{Apply the fact to our permutations:}
+
+\[
+(12)(345) \quad \text{has cycle type }(2,3), \quad
+(12345) \quad \text{has cycle type } (5).
+\]
+Since $(2,3)\neq (5)$, the cycle types differ.
+
+\item \textbf{Conclusion:} Because $(12)(345)$ and $(12345)$ do not share the same cycle type, 
+they cannot be conjugate in $S_5$.
+
+\end{enumerate}
+\noindent
+\textbf{Why Do Conjugacy Classes Have the Same Cycle Type?}
+
+\bigskip
+
+\noindent
+Let \(\sigma \in S_n\) be a permutation with a disjoint cycle decomposition. For example, suppose
+\[
+\sigma = (a_1\,a_2\,\dots\,a_k) \, (b_1\,b_2\,\dots\,b_m) \cdots.
+\]
+The \emph{cycle type} of \(\sigma\) is the list \((k, m, \dots)\), which indicates the lengths of each cycle.
+
+\bigskip
+
+\noindent
+Now, consider conjugating \(\sigma\) by an element \(\tau \in S_n\):
+\[
+\tau \sigma \tau^{-1}.
+\]
+We examine what happens to a single cycle in \(\sigma\). Let
+\[
+\gamma = (a_1\,a_2\,\dots\,a_k)
+\]
+be one of the cycles in \(\sigma\). Then conjugation by \(\tau\) yields:
+\[
+\tau \gamma \tau^{-1} = \tau (a_1\,a_2\,\dots\,a_k) \tau^{-1} = (\tau(a_1)\,\tau(a_2)\,\dots\,\tau(a_k)).
+\]
+Notice that:
+\begin{itemize}
+    \item The \emph{length} of the cycle remains the same (namely \(k\)) because the number of elements in the cycle does not change.
+    \item The elements \(a_i\) are simply replaced by their images \(\tau(a_i)\), which is a relabeling of the entries.
+\end{itemize}
+
+\bigskip
+
+\noindent
+Since every cycle in the disjoint cycle decomposition of \(\sigma\) is relabeled in this way, the entire cycle structure (or cycle type) of \(\sigma\) is preserved under conjugation:
+\[
+\tau \sigma \tau^{-1} = \tau\gamma_1\tau^{-1} \, \tau\gamma_2\tau^{-1} \cdots,
+\]
+and each \(\tau\gamma_i\tau^{-1}\) has the same length as \(\gamma_i\).
+
+\bigskip
+
+\noindent
+Thus, conjugation in \(S_n\) cannot change the cycle lengths; it only changes the specific elements involved in the cycles. Consequently, two permutations are conjugate if and only if they have the same cycle type.
+
+\noindent
+\textbf{Goal:} Find all conjugacy classes of the dihedral group $D_4$, the group of symmetries of a square, of order~8.
+
+\bigskip
+
+\noindent
+\textbf{1. Define the group $D_4$:}
+
+\[
+D_4 = \langle r, s \mid r^4 = e,\ s^2 = e,\ sr = r^{-1}s \rangle.
+\]
+Here:
+
+\begin{itemize}
+    \item $r$ represents a rotation by $90^\circ$.
+    \item $s$ represents a reflection about some fixed axis.
+    \item $e$ is the identity.
+\end{itemize}
+
+\noindent
+The elements of $D_4$ can be listed as:
+\[
+D_4 = \{\, e,\ r,\ r^2,\ r^3,\ s,\ rs,\ r^2 s,\ r^3 s \}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{2. Conjugacy classes: general facts.}
+
+\noindent
+Recall that two elements $x,y \in D_4$ are conjugate if there exists a $g \in D_4$ such that
+\[
+g x g^{-1} = y.
+\]
+We use the defining relations of $D_4$ to check which elements are conjugate.
+
+\bigskip
+
+\noindent
+\textbf{3. Class containing the identity.}
+
+\[
+\text{Class}(e) = \{\, e \}.
+\]
+The identity element is always alone in its own conjugacy class.
+
+\bigskip
+
+\noindent
+\textbf{4. Class containing $r^2$.}
+
+\[
+r^2 \quad \text{has the property } r^2 r^2 = r^4 = e \quad \text{and also} \quad s r^2 s = r^{-2} = r^2.
+\]
+Hence $r^2$ commutes with both $r$ and $s$. Consequently, $r^2$ is central and must be in its own class:
+\[
+\text{Class}(r^2) = \{\,r^2\}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{5. Classes containing $r$ and $r^3$.}
+
+\begin{itemize}
+    \item Observe that $srs = r^{-1} = r^3$, so $r$ is conjugate to $r^3$.
+    \item Also, by powers of $r$, one sees $r$ cannot be sent to $r^2$ or $e$ under conjugation (different orders).
+\end{itemize}
+Thus 
+\[
+\text{Class}(r) = \text{Class}(r^3) = \{\, r,\ r^3 \}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{6. Classes containing reflections of the form $s$ and $r^k s$.}
+
+\noindent
+The remaining elements are reflections: $s, \,rs, \,r^2s, \,r^3s$. We can check conjugations systematically:
+
+\begin{itemize}
+    \item Conjugate $s$ by $r^2$:
+    \[
+    r^2 s (r^2)^{-1} = r^2 s r^{-2} = r^2 s r^2.
+    \]
+    Using the relation $s r^2 = r^2 s$, we get
+    \[
+    r^2 s r^2 = r^2 (r^2 s) = (r^2 r^2) s = r^4 s = e \cdot s = s.
+    \]
+    Hence $s$ and $r^2 s$ are conjugate. In fact,
+    \[
+    \text{Class}(s) = \{\, s,\ r^2 s \}.
+    \]
+
+    \item Similarly, $r s$ and $r^3 s$ turn out to be in the same class. For instance:
+    \[
+    s (rs) s = s (rs) s = (s r) (s s) = (r^{-1} s) \cdot e = r^{-1} s = r^3 s,
+    \]
+    showing $rs$ is conjugate to $r^3 s$. Thus:
+    \[
+    \text{Class}(rs) = \{\, rs,\ r^3 s \}.
+    \]
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{7. Final list of conjugacy classes in $D_4$:}
+
+\[
+\begin{aligned}
+&\text{Class}_1 = \{\, e \}, \\
+&\text{Class}_2 = \{\, r^2 \}, \\
+&\text{Class}_3 = \{\, r,\ r^3 \}, \\
+&\text{Class}_4 = \{\, s,\ r^2 s \}, \\
+&\text{Class}_5 = \{\, rs,\ r^3 s \}.
+\end{aligned}
+\]
+
+\bigskip
+
+\noindent
+Hence the group $D_4$ has precisely five conjugacy classes as listed above.
+
+\noindent
+\textbf{Problem Statement:} 
+
+Consider the quaternion group 
+\[
+Q_8 \;=\;\{\pm 1,\pm i,\pm j,\pm k\}
+\]
+with the usual relations
+\[
+i^2 = j^2 = k^2 = ijk = -1,
+\]
+acting by conjugation on the set of all its subgroups. Find the stabilizer (in $Q_8$) of the subgroup 
+\[
+H \;=\;\{\,1,\,-1,\,i,\,-i\}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{Solution:}
+
+\bigskip
+
+\noindent
+\textbf{1. Recall the definitions}
+
+\begin{itemize}
+    \item An action by conjugation means each $g \in Q_8$ sends a subgroup $K \le Q_8$ to
+    \[
+    g \cdot K \;=\; gKg^{-1} \;=\; \{\, g x g^{-1} \mid x \in K \}.
+    \]
+    \item The \emph{stabilizer} of $H$ is the set
+    \[
+    \mathrm{Stab}(H) \;=\;\{\,g \in Q_8 \mid gHg^{-1} = H \}.
+    \]
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{2. List the elements of $Q_8$ and the subgroup $H$}
+
+\[
+Q_8 \;=\; \{\, \pm 1,\, \pm i,\, \pm j,\, \pm k \},
+\quad
+H \;=\; \{\,1,\, -1,\, i,\, -i\}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{3. Recognize that $H$ is a subgroup of index 2}
+
+The group $Q_8$ has order $8$, and $H$ has order $4$. Hence $[\,Q_8 : H\,] = 2$. 
+
+\[
+\text{Whenever a subgroup has index }2,\text{ it is automatically normal.}
+\]
+Being normal is exactly the statement that $g H g^{-1} = H$ for \emph{all} $g\in Q_8.$ 
+
+Therefore $H$ is a normal (index 2) subgroup of $Q_8$.
+
+\bigskip
+
+\noindent
+\textbf{4. Consequence: the entire group stabilizes $H$}
+
+Since $H$ is normal, for every $g \in Q_8,$
+\[
+g H g^{-1} = H.
+\]
+That is precisely the condition for $g$ to lie in the stabilizer of $H$.
+
+Hence
+\[
+\mathrm{Stab}(H) \;=\; Q_8.
+\]
+
+\bigskip
+
+\noindent
+\textbf{5. (Optional) Direct check of conjugation}
+
+One can also check this more explicitly:
+
+\begin{itemize}
+    \item The elements $\pm 1$ are central (they commute with everything), so certainly $g (\pm 1) g^{-1} = \pm 1 \in H$.
+    \item For $i \in H$ and any $g \in Q_8,$ one finds that $g i g^{-1}$ must be either $i$ or $-i$. In either case, it stays in $\{\pm i\} \subset H$.
+\end{itemize}
+Since each element of $H$ stays within $H$ under any conjugation by $g \in Q_8,$ we conclude $g H g^{-1} = H$ for all $g$.
+
+\bigskip
+
+\noindent
+\textbf{Conclusion:} The stabilizer of $H$ under conjugation by $Q_8$ is the entire group $Q_8$.
+
+\noindent
+\textbf{Question:} Do the elements of a normal subgroup form \emph{a single} conjugacy class?
+
+\bigskip
+
+\noindent
+\textbf{Short Answer:} Not in general. A normal subgroup is, in fact, a \emph{union of entire conjugacy classes}, but it need not be just one. 
+
+\bigskip
+
+\noindent
+\textbf{Explanation:}
+
+\begin{enumerate}
+    \item \textbf{Definition:} 
+    A subgroup \(N \le G\) is \emph{normal} if for all \(g \in G\), 
+    \[
+    gNg^{-1} = N.
+    \]
+    This property implies that each conjugacy class of any element of \(N\) must lie wholly inside \(N\). Concretely, if \(x \in N\) and we look at the entire set
+    \[
+    \{g x g^{-1}\;|\; g \in G\},
+    \]
+    then every element of that set is still in \(N\). 
+
+    \item \textbf{Union of Conjugacy Classes:} 
+    Since every conjugacy class for an element of \(N\) stays inside \(N\), we see that 
+    \[
+    N \;\;=\;\; \bigsqcup_{x \in S} \text{Cl}(x),
+    \]
+    where \(\text{Cl}(x)\) denotes the conjugacy class of \(x\), and \(S \subseteq N\) is a set of representatives from the different conjugacy classes inside \(N\).
+
+    \item \textbf{One Conjugacy Class vs. Many:} 
+    \[
+    \text{If }N\text{ were a single conjugacy class, it would imply that all elements in }N\text{ are conjugate to each other.}
+    \]
+    That rarely happens, except in some special cases:
+    \begin{itemize}
+        \item The \(\{e\}\) subgroup (trivial) is itself a single conjugacy class (the identity only).
+        \item The whole group \(G\) might be one conjugacy class if \(G\) is very small (like the trivial group) or if it is the identity plus a single other element in an abelian case. Usually, though, even the whole group breaks into multiple classes.
+        \item In an abelian group, each element is its own conjugacy class. Then a subgroup is a \emph{union} of singletons, not one single class (unless that subgroup has only one element).
+    \end{itemize}
+
+    \item \textbf{Conclusion:}
+    In general, a normal subgroup is not one conjugacy class but a \emph{union} of (potentially many) conjugacy classes.
+
+\end{enumerate}
+\noindent
+\textbf{Concrete Example: The Klein Four Group $V_4$ in $S_4$}
+
+\bigskip
+
+\noindent
+\textbf{1. The subgroup:}
+
+Consider the symmetric group on four letters,
+\[
+S_4 = \{ \text{all permutations of } \{1,2,3,4\} \}.
+\]
+Inside $S_4$, define the subgroup
+\[
+V_4 \;=\; \{\, e,\;(12)(34),\;(13)(24),\;(14)(23)\}.
+\]
+This subgroup is known as the \emph{Klein four group}.
+
+\bigskip
+
+\noindent
+\textbf{2. $V_4$ is normal in $S_4$:}
+
+\begin{itemize}
+    \item $V_4$ has index 6 in $S_4$ (since $|V_4|=4$ and $|S_4|=24$).
+    \item In fact, it can be shown directly that $g\,V_4\,g^{-1} = V_4$ for all $g \in S_4$, but an easier way is to note that $V_4$ is the subgroup of all double transpositions (plus the identity), which is in the kernel of a certain homomorphism from $S_4$ to $S_3$ (the action on cosets of a normal subgroup). Hence $V_4 \triangleleft S_4$ is normal.
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{3. Conjugacy classes \emph{inside} $V_4$:}
+
+\begin{enumerate}
+    \item \textbf{Identity class:} $\{e\}$ (always a single-element conjugacy class).
+    \item \textbf{Double transpositions:} The remaining three elements 
+    \[
+    (12)(34),\quad (13)(24),\quad (14)(23)
+    \]
+    form a \emph{single} conjugacy class in $S_4$. In fact, they are all conjugate to one another (one can verify by explicit conjugation or by noting they share the same cycle structure of two disjoint 2-cycles).
+\end{enumerate}
+
+So \emph{within} $V_4$, we see $V_4$ is exactly the union of two distinct conjugacy classes:
+\[
+V_4 
+\;=\; \{e\} 
+\;\cup\; \{\,(12)(34),\;(13)(24),\;(14)(23)\}.
+\]
+Hence, $V_4$ has \emph{at least two} conjugacy classes internally (the identity alone, and the triple of double transpositions).
+
+\bigskip
+
+\noindent
+\textbf{4. Conclusion:} 
+
+The subgroup $V_4$ is \emph{normal} in $S_4$, yet it clearly contains more than one conjugacy class (in fact, it has exactly two). Therefore, it is a concrete example of a normal subgroup that is \emph{not} a single conjugacy class, but a union of multiple classes.
+
+\noindent
+\textbf{Expanding on Why $V_4$ Is Normal in $S_4$ via a Surjective Homomorphism to $S_3$}
+
+\bigskip
+
+\noindent
+\textbf{1. The Subgroup $V_4$:}\\
+Recall that in the symmetric group $S_4$, the \emph{Klein four group} is defined by
+\[
+V_4 \;=\; \{\, e,\,(12)(34),\,(13)(24),\,(14)(23)\}.
+\]
+These are exactly the identity and the three “double transpositions.” We want to show that $V_4 \triangleleft S_4$, i.e.\ it is a \emph{normal} subgroup. 
+
+\bigskip
+
+\noindent
+\textbf{2. A Surjective Homomorphism $\varphi: S_4 \to S_3$:}\\
+To see that $V_4$ is normal in a nice, conceptual way, we can construct a group homomorphism
+\[
+\varphi : S_4 \;\longrightarrow\; S_3
+\]
+whose kernel is exactly $V_4$. By the First Isomorphism Theorem, identifying
+\[
+\ker(\varphi) \;=\; V_4
+\quad\Longrightarrow\quad
+S_4 / V_4 \;\cong\; \mathrm{im}(\varphi) \;\subseteq\; S_3.
+\]
+But we will see $\mathrm{im}(\varphi)$ is \emph{all} of $S_3$, so the map is surjective.
+
+\bigskip
+
+\noindent
+\textbf{3. $S_4$ acting on the set of “$2$-partitions of size $2$” (the double transpositions)}\\
+Consider the following 3 ways to partition the set $\{1,2,3,4\}$ into two subsets each of size $2$:
+
+\[
+\begin{aligned}
+&\{\,1,2\} \cup \{\,3,4\}, \\
+&\{\,1,3\} \cup \{\,2,4\}, \\
+&\{\,1,4\} \cup \{\,2,3\}.
+\end{aligned}
+\]
+Equivalently, these partitions correspond to the double transpositions $(12)(34)$, $(13)(24)$, $(14)(23)$ in $S_4$. 
+
+\bigskip
+
+\noindent
+\textbf{(a) An action on 3 objects:}\\
+Any permutation $\sigma \in S_4$ naturally \emph{permutes} these 3 partitions: given a partition 
+\[
+\{a,b\}\cup\{c,d\},
+\]
+apply $\sigma$ to each element, and you get
+\[
+\{\sigma(a), \sigma(b)\} \cup \{\sigma(c), \sigma(d)\},
+\]
+which is again a partition of type $2+2$. Thus $S_4$ acts on the set of these 3 partitions. 
+
+\bigskip
+
+\noindent
+\textbf{(b) Induced group homomorphism:}\\
+From this action on a 3-element set, we get a group homomorphism
+\[
+\varphi : S_4 \;\longrightarrow\; S_3,
+\]
+where for each $\sigma \in S_4$, $\varphi(\sigma)$ is the induced permutation of the 3 partitions.
+
+\bigskip
+
+\noindent
+\textbf{4. The kernel of $\varphi$ is exactly $V_4$.}\\
+By definition,
+\[
+\ker(\varphi) 
+\;=\; \{\, \sigma \in S_4 \mid \text{$\sigma$ fixes \emph{each} of the 3 partitions}\}.
+\]
+But to “fix each partition” is to map $\{1,2\}\cup \{3,4\}$ to itself, $\{1,3\}\cup\{2,4\}$ to itself, and so on. One can check:
+
+\begin{itemize}
+\item The identity permutation $e$ certainly fixes all partitions.
+\item Each double transposition $(12)(34)$, $(13)(24)$, $(14)(23)$ also \emph{preserves} each of these partitions.  For instance, $(12)(34)$ obviously swaps $1\leftrightarrow 2$ and $3\leftrightarrow 4$, leaving each pair setwise intact.
+\item Any permutation outside $V_4$ inevitably sends at least one partition to a distinct one, hence \emph{does not} lie in the kernel.
+\end{itemize}
+
+Thus
+\[
+\ker(\varphi) \;=\; V_4.
+\]
+This shows $V_4$ is normal in $S_4$, since the kernel of any group homomorphism is always a normal subgroup.
+
+\bigskip
+
+\noindent
+\textbf{5. Surjectivity onto $S_3$:}\\
+Now we observe that $\varphi$ is onto because there are permutations in $S_4$ that \emph{rearrange} the three partitions in \emph{any} way we like. Concretely, choose suitable permutations that interchange two of the partitions while fixing the third, etc. Hence:
+
+\[
+\mathrm{im}(\varphi) = S_3
+\quad\Longrightarrow\quad
+|\,S_4 : \ker(\varphi)\,| = |\mathrm{im}(\varphi)| = 6.
+\]
+Since $|S_4|=24$, the kernel must have size $24/6=4$, and we already identified those 4 elements as $V_4$.
+
+\bigskip
+
+\noindent
+\textbf{6. Conclusion:}\\
+This “action on the three $2+2$ partitions” viewpoint gives a natural homomorphism
+\[
+\varphi: S_4 \,\twoheadrightarrow\, S_3
+\quad
+\text{whose kernel is exactly }V_4.
+\]
+Therefore $V_4 \triangleleft S_4$ is normal. Furthermore, it immediately implies the isomorphism
+\[
+S_4 / V_4 \;\cong\; S_3,
+\]
+giving a structural insight into how $V_4$ sits inside $S_4$.
+\noindent
+\textbf{Inner Automorphisms of a Group}
+
+\bigskip
+
+\noindent
+An \emph{inner automorphism} of a group $G$ is a special type of group automorphism defined by 
+\[
+x \;\mapsto\; gxg^{-1},
+\]
+where $g \in G$ is a fixed element. Concretely:
+
+\begin{enumerate}
+    \item Pick a fixed element $g \in G$.
+    \item Define a map $\varphi_g: G \to G$ by $\varphi_g(x) = gxg^{-1}$ for every $x \in G$.
+\end{enumerate}
+
+\noindent
+It's straightforward to check that $\varphi_g$ is:
+\begin{itemize}
+    \item \textbf{A homomorphism}:
+    \[
+    \varphi_g(xy) \;=\; g(xy)g^{-1} \;=\; gx(\underbrace{g^{-1}g}_{=e})yg^{-1} \;=\; (gxg^{-1})(gyg^{-1}) \;=\; \varphi_g(x)\,\varphi_g(y).
+    \]
+    \item \textbf{Bijective}: Its inverse is given by $\varphi_{g^{-1}}(x) = g^{-1}xg$.  
+\end{itemize}
+
+\medskip
+
+\noindent
+Hence each $\varphi_g$ is a \emph{group automorphism}. Every automorphism of this form is called an \emph{inner automorphism}.
+
+\bigskip
+
+\noindent
+\textbf{Inner Automorphism Group:}
+
+\noindent
+The set of all inner automorphisms of $G$ is usually denoted $\mathrm{Inn}(G)$. More precisely, there is a surjective group homomorphism
+\[
+\Psi : G \,\longrightarrow\, \mathrm{Aut}(G)
+\quad\text{given by}\quad
+g \,\mapsto\, \bigl[x \mapsto gxg^{-1}\bigr].
+\]
+The image of $\Psi$ is $\mathrm{Inn}(G)$, and $\ker(\Psi)$ is the \emph{center} of $G$, i.e.\ the set of elements that commute with everything in $G$. Thus:
+\[
+\mathrm{Inn}(G) \;\cong\; G / Z(G),
+\]
+where $Z(G)$ denotes the center of $G$.
+\noindent
+\textbf{Relationship Between Inner Automorphisms and Conjugacy Classes}
+
+\bigskip
+
+\noindent
+\textbf{1. Conjugation Action on a Group $G$:}\\
+An inner automorphism is, by definition, the map
+\[
+x \;\mapsto\; g x g^{-1},
+\]
+for some fixed \(g \in G\).  When we consider \emph{all} elements \(g \in G\), these maps collectively describe the \emph{conjugation action} of \(G\) on itself.
+
+\[
+\text{(Conjugation Action)} \quad G \times G \;\to\; G,\quad (g,x) \;\mapsto\; g\,x\,g^{-1}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{2. Conjugacy Classes as Orbits Under This Action:}\\
+Under the conjugation action, each element \(x \in G\) moves along the set
+\[
+\{\,g\,x\,g^{-1} \mid g \in G\}.
+\]
+This set is called the \emph{conjugacy class} of \(x\). In other words, the collection of conjugacy classes in \(G\) is the partition of \(G\) into orbits under the action by inner automorphisms:
+\[
+\text{Orbit of } x \;=\; \text{Cl}(x) \;=\; \{g\,x\,g^{-1} \mid g \in G\}.
+\]
+
+\bigskip
+
+\noindent
+\textbf{3. Inner Automorphisms Generate All Conjugations:}\\
+An \emph{inner automorphism} is exactly one “slice” of this bigger action:
+\[
+\varphi_g: x \;\mapsto\; g\,x\,g^{-1}.
+\]
+Hence, \(\varphi_g\) sends any element \(x\) to another element \emph{within} the same conjugacy class.  Different choices of \(g\) produce different inner automorphisms, but each such automorphism is a permutation of \(G\) that preserves conjugacy classes.
+
+\bigskip
+
+\noindent
+\textbf{4. Group of Inner Automorphisms and Conjugacy Classes:}\\
+The set of all inner automorphisms is a subgroup of the full automorphism group:
+\[
+\mathrm{Inn}(G) \;\subseteq\; \mathrm{Aut}(G).
+\]
+By definition,
+\[
+\mathrm{Inn}(G) \;=\; \bigl\{\,(x \mapsto g x g^{-1}) \;\big|\; g \in G \bigr\}.
+\]
+When $\mathrm{Inn}(G)$ acts on $G$, its orbits are precisely the conjugacy classes.
+
+\bigskip
+
+\noindent
+\textbf{5. Summary:}\\
+\begin{itemize}
+    \item A \emph{conjugacy class} is an orbit of an element under the group action given by \emph{all} conjugations $x \mapsto g x g^{-1}$.
+    \item An \emph{inner automorphism} is a \emph{specific} conjugation operation by a fixed $g$.
+    \item Thus, inner automorphisms and conjugacy classes are closely linked: the inner automorphisms are exactly the “building blocks” of the action that \emph{partitions} $G$ into its conjugacy classes.
+\end{itemize}
+
+
+\noindent
+\textbf{Relationship Between Conjugacy Classes and Cosets}
+
+\bigskip
+
+\noindent
+\textbf{1. Definitions}
+
+\begin{itemize}
+    \item \textbf{Cosets:} 
+    If $H \le G$ is a subgroup, then a \emph{(left) coset} of $H$ in $G$ is a set of the form 
+    \[
+    gH \;=\; \{\,g h \mid h \in H\}.
+    \]
+    The group $G$ is partitioned into disjoint cosets of $H$. If $H$ is normal, the coset multiplication $gH \cdot g'H = (gg')H$ is well-defined, and one obtains the \emph{quotient group} $G/H$.
+
+    \item \textbf{Conjugacy Classes:}
+    For $x \in G$, the \emph{conjugacy class} of $x$ is 
+    \[
+    \mathrm{Cl}(x) \;=\; \{\,g x g^{-1} \mid g \in G\}.
+    \]
+    Under the \emph{conjugation action} $g: x \mapsto g x g^{-1}$, $G$ is partitioned into \emph{disjoint} orbits (the conjugacy classes).
+
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{2. Comparing the Two Partitions}
+
+\begin{itemize}
+    \item \textbf{Different Equivalence Relations.} 
+
+    The partition of $G$ into cosets depends on a chosen subgroup $H$:
+    \[
+    g \sim h \;\;\Longleftrightarrow\;\; g^{-1}h \,\in\, H.
+    \]
+    Meanwhile, the partition into conjugacy classes depends on the conjugation relation:
+    \[
+    x \sim y \;\;\Longleftrightarrow\;\; \exists g\in G\text{ such that }y = g x g^{-1}.
+    \]
+    These are \emph{two distinct equivalence relations} on $G$ in general.
+
+    \item \textbf{Cosets Are Not Generally Conjugacy Classes.}
+
+    A coset $gH$ (for a fixed subgroup $H$) typically has no reason to coincide with a set of the form $\{\,a x a^{-1}\mid a \in G\}$.  In fact:
+    \[
+    \{\,x\}\cup\{\,g x g^{-1}\mid g\in G\}
+    \]
+    is not generally closed under multiplication (unless $x=e$, or $G$ is abelian and the class is just $\{x\}$).  By contrast, a coset $gH$ is always closed under left multiplication by elements of $H$ itself, but is not generally closed under the group operation of $G$ unless $H=G$ or $H = \{e\}$.
+
+    \item \textbf{Normal Subgroups vs.\ Conjugacy Classes.}
+
+    A subgroup $N$ is \emph{normal} in $G$ if $gNg^{-1} = N$ for every $g\in G$.  Such a subgroup is always a \emph{union of whole conjugacy classes} of $G$.  However, one \emph{normal subgroup} $N$ generally contains many different conjugacy classes.  (Only in very special cases is $N$ a single conjugacy class, e.g.\ $N=\{e\}$ in a nontrivial group.)
+
+    \item \textbf{Quotient vs.\ Conjugation Partition.}
+
+    - \emph{Cosets} of $N$ describe a \emph{quotient} $G/N$ (if $N$ is normal).
+    - \emph{Conjugacy classes} describe how elements of $G$ are “re-labeled” by the group’s internal symmetries (via $x \mapsto g x g^{-1}$).  
+
+    These two partitions reveal different structural properties of $G$:
+    \[
+    \text{Cosets: }G/N \quad\text{(external structure, factor group)}
+    \quad\text{vs.}\quad
+    \text{Conjugacy classes:  internal structure/characters.}
+    \]
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{3. Summary}
+
+\noindent
+\emph{Cosets} (with respect to a subgroup $H$) and \emph{conjugacy classes} (with respect to the conjugation action) are \textbf{fundamentally different} ways to partition a group $G$.  Cosets partition $G$ based on a subgroup membership relation, leading to quotient groups if the subgroup is normal.  Conjugacy classes partition $G$ based on an “internal symmetry” relation $x \mapsto gxg^{-1}$.  While both yield meaningful partitions of $G$, they answer different structural questions and generally do not coincide.
+
+\noindent
+\textbf{Question:} Are cosets subgroups?
+
+\bigskip
+
+\noindent
+\textbf{Short Answer:} 
+\emph{In general, no. A coset }$gH$\emph{ (where $H \le G$) is a subgroup of $G$ \underline{if and only if} $g \in H$.}
+
+\bigskip
+
+\noindent
+\textbf{1. Definitions.}
+\begin{itemize}
+    \item A \emph{left coset} of a subgroup $H$ in a group $G$ is any set of the form
+    \[
+      gH \;=\;\{\,g h \;\mid\; h \in H\}
+      \quad\text{for some fixed }g\in G.
+    \]
+    \item A subset $K \subseteq G$ is a \emph{subgroup} if:
+    \[
+      \text{(i) } e \in K,
+      \quad\quad
+      \text{(ii) }x, y \in K \implies xy \in K,
+      \quad\quad
+      \text{(iii) }x \in K \implies x^{-1} \in K.
+    \]
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{2. Typical Cosets Are Not Subgroups.}
+\begin{itemize}
+    \item \emph{Closure under multiplication fails:} 
+    If $gH$ is not the same as $H$ itself, pick any $x, y \in H$. Then $gx, gy \in gH$, but their product is
+    \[
+      (gx)(gy) \;=\; g\,x\,(\underbrace{g^{-1}g}_{=e})\,y \;=\; g\,(x y) \;\in\; gH.
+    \]
+    Actually, that \emph{might} still lie in $gH$, so let’s check the other subgroup axioms:
+    \item \emph{Identity in the coset:} 
+    For $gH$ to be a subgroup, it must contain $e$. But if $e \in gH$, then $e = gh$ for some $h \in H$. That implies $g = eh^{-1} = h^{-1} \in H$. Hence $g \in H$.
+    \item \emph{Inverses in the coset:} 
+    If $gH$ is to be a subgroup, for any $gh \in gH$, we need $(gh)^{-1} = h^{-1}g^{-1}$ also in $gH$. But that again forces $g \in H$, after examining possible elements $h, h^{-1}$.
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{3. The Crucial Condition.}
+\[
+  gH \;\text{is a subgroup} 
+  \quad\Longleftrightarrow\quad
+  g \in H.
+\]
+If $g \in H$, then $gH = H$ (the subgroup itself). Otherwise, $gH$ is just a “shifted” copy of $H$ and \emph{not} a subgroup.  
+
+\bigskip
+
+\noindent
+\textbf{4. Special Cases.}
+\begin{itemize}
+    \item \emph{Trivial subgroup:} If $H = \{e\}$, its cosets are all singletons $\{g\}$, and these \emph{are} subgroups \textbf{only} if $g = e$. Otherwise, singletons of non-identity elements are \emph{not} subgroups.
+    \item \emph{Whole group:} If $H = G$, the only coset is $G$ itself, which \emph{is} obviously a subgroup (the entire group).
+    \item \emph{Normal subgroups:} Even if $H$ is normal, each coset $gH$ is \emph{not} itself a subgroup unless $g \in H$. Normality just says $gH = Hg$ (the left coset equals the right coset), but does not make $gH$ a subgroup.
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{Conclusion:} 
+\[
+\text{In general, cosets are \emph{not} subgroups, except in trivial circumstances where the coset equals }H\text{ itself.}
+\]
+
+\noindent
+\textbf{Question:} Does having a transitive group action imply that there is only one conjugacy class?
+
+\bigskip
+
+\noindent
+\textbf{Short Answer:} \emph{No. They are different notions of "orbit," so a transitive group action on \textit{some set} $X$ does not imply there is only one conjugacy class (orbit under conjugation in $G$).}
+
+\bigskip
+
+\noindent
+\textbf{1. Two Different Kinds of Orbits}
+
+\begin{itemize}
+    \item \textbf{Transitive Action on a Set $X$:} 
+    A group $G$ acts on a set $X$ if there is a map 
+    \[
+       G \times X \;\to\; X, \quad (g,x) \;\mapsto\; g\cdot x,
+    \]
+    satisfying the usual action axioms.  This action is \emph{transitive} if there is only one \emph{orbit} in $X$, i.e.\ for every $x,y \in X$ there is some $g \in G$ with $g\cdot x = y$.
+
+    \item \textbf{Conjugacy Classes in $G$:}
+    Separately, the group $G$ can act on \emph{itself} by \emph{conjugation}, namely
+    \[
+       (g,x)\;\mapsto\; gxg^{-1}.
+    \]
+    The \emph{orbits} of this particular action on $G$ are exactly the \emph{conjugacy classes}
+    \[
+      \{\,g x g^{-1} \mid g \in G\}.
+    \]
+\end{itemize}
+
+These two concepts---a transitive action on \emph{some set} $X$ \emph{versus} the orbits \emph{within $G$ under conjugation}---are generally unrelated unless you're \emph{specifically} talking about “the action of $G$ on \emph{itself} by conjugation.”
+
+\bigskip
+
+\noindent
+\textbf{2. Transitive Action Does \emph{Not} Mean One Conjugacy Class}
+
+\begin{itemize}
+    \item Suppose $G$ acts transitively on a set $X$ (for example, $G$ acts by left multiplication on the set $G/H$ of cosets of some subgroup $H$).  That transitivity statement says \emph{nothing} about whether the group $G$ itself has multiple orbits \emph{inside $G$} when considered under \emph{conjugation}. 
+    \item In fact, $G$ will usually have several distinct conjugacy classes in $G$ unless the group is \emph{trivial} or in some degenerate situation where all elements happen to be conjugate (which essentially never happens for a nontrivial group).
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{3. Special Case: Conjugation Action Itself} 
+\begin{itemize}
+    \item If the \emph{specific} group action you mean is the \emph{conjugation} action $x \mapsto gxg^{-1}$, then it is \textbf{not} transitive for any nontrivial group.  The only way that would be transitive is if there is exactly one orbit under conjugation, i.e.\ all elements of $G$ lie in a single conjugacy class. 
+    \item That situation forces $gxg^{-1} = y$ for any $x,y$.  But that would mean any two elements $x,y$ are conjugate, implying the group is trivial or effectively collapses.  Indeed, in any non-abelian group, you certainly get multiple conjugacy classes; and in an abelian group (other than the trivial group), each element forms its own class, so you get many \emph{singletons} (not transitive).
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{4. Conclusion}
+\[
+\text{Having a transitive $G$-action on some set $X$ does \emph{not} imply that $G$ has only one conjugacy class.}
+\]
+They are fundamentally different partitions: “transitivity on $X$” is about how $G$ moves \emph{points of $X$}, whereas “conjugacy classes” is about how $G$ can re-label \emph{its own elements} by $x \mapsto gxg^{-1}.$
+
+\noindent
+\textbf{Theorem.} 
+\emph{Let $G$ be a finite group of order $p^n$, where $p$ is a prime and $n\in \mathbb{N}$. Then the center $Z(G)$ is nontrivial, i.e.\ $Z(G) \neq \{e\}$.}
+
+\bigskip
+
+\noindent
+\textbf{Proof (Step-by-Step):}
+
+\begin{enumerate}
+  \item \textbf{Notation and Setup.}
+
+  We denote by $Z(G)$ the \emph{center} of $G$:
+  \[
+    Z(G) \;=\; \{\, x \in G \;\mid\; xg = gx \text{ for all } g \in G\}.
+  \]
+  In other words, $Z(G)$ is the set of elements that commute with \emph{every} element of $G$. Clearly $Z(G)$ is a subgroup of $G$.  
+
+  \item \textbf{Group Action by Conjugation.}
+
+  Consider the action of $G$ on itself by conjugation:
+  \[
+    G \times G \;\longrightarrow\; G,
+    \quad (g,h) \;\mapsto\; g\,h\,g^{-1}.
+  \]
+  For each $h \in G$, its \emph{conjugacy class} is defined as
+  \[
+    \mathrm{Conj}(h) \;=\; \{\,g\,h\,g^{-1} \;|\; g \in G\}.
+  \]
+
+  \item \textbf{Size of the Conjugacy Class via Orbit--Stabilizer.}
+
+  By the orbit--stabilizer theorem, the size of the orbit $\mathrm{Conj}(h)$ divides the order of the group $|G| = p^n$. Indeed, the orbit--stabilizer theorem tells us:
+  \[
+    |\mathrm{Conj}(h)| \;=\; \frac{|G|}{|\mathrm{Stab}(h)|},
+  \]
+  and $|\mathrm{Stab}(h)|$ must be a divisor of $|G|$, making $|\mathrm{Conj}(h)|$ also a divisor of $p^n$ (i.e.\ a power of $p$).
+
+  \item \textbf{When is $|\mathrm{Conj}(h)| = 1$?}
+
+  The conjugacy class $\mathrm{Conj}(h)$ consists of exactly one element $\{h\}$ if and only if $g\,h\,g^{-1} = h$ for \emph{all} $g \in G$.  That condition is precisely $gh = hg$ for every $g \in G$; in other words, $h \in Z(G)$.  
+  Thus:
+  \[
+    \mathrm{Conj}(h) = \{h\}
+    \quad\Longleftrightarrow\quad
+    h \in Z(G).
+  \]
+
+  \item \textbf{Assume for Contradiction that $Z(G)=\{e\}$.}
+
+  Suppose $Z(G)$ is \emph{trivial}, meaning it only contains the identity $e$.  Then for every $h \neq e$ in $G$, we must have $|\mathrm{Conj}(h)| > 1$.  Since $|\mathrm{Conj}(e)| = 1$, the only single-element conjugacy class is that of $e$ itself.
+
+  \item \textbf{Conjugacy Classes Partition $G$.}
+
+  The group $G$ is the disjoint union of all its conjugacy classes.  We know one class is $\{e\}$ of size $1$, and every other class has size $|\mathrm{Conj}(h)|$ with $h \neq e$.  Since $Z(G)=\{e\}$, each $|\mathrm{Conj}(h)| > 1$ and is a power of $p$ that \emph{divides} $p^n$. Hence each non-identity conjugacy class has size $p^k$ for some $k\ge 1$.
+
+  \item \textbf{Counting Elements Yields a Contradiction.}
+
+  Write the partition of $G$:
+  \[
+    G \;=\; \{e\} \;\cup\; \mathrm{Conj}(h_1) \;\cup\;\mathrm{Conj}(h_2)\;\cup\;\dots,
+  \]
+  where each $|\mathrm{Conj}(h_i)| = p^{k_i}$ with $k_i \ge 1$.  Then
+  \[
+    |G| \;=\; 1 \;+\; p^{k_1} \;+\; p^{k_2} \;+\; \dots
+  \]
+  But $|G| = p^n$ is a \emph{power} of $p$, whereas $1 + \bigl(\text{sum of multiples of }p\bigr)$ cannot be a power of $p$ unless that sum is $0$---which would mean there are no non-identity elements.  More explicitly:
+  \[
+    p^n \;=\; 1 + p^k(\dots) 
+    \quad \Longrightarrow\quad
+    p \mid p^n \ \text{(obviously)},\ \text{but does $p$ divide 1?} \ \text{No.}
+  \]
+  Thus we get a contradiction.
+
+  \item \textbf{Conclusion.} 
+
+  The assumption $Z(G) = \{e\}$ leads to an impossibility. Therefore,
+  \[
+    Z(G)\text{ cannot be trivial. Hence }Z(G)\neq \{e\}.
+  \]
+  In other words, the center of a finite $p$-group $G$ has at least one non-identity element.
+
+\end{enumerate}
+
+\noindent
+\textbf{Remark:} 
+This argument is one of the core facts about \emph{$p$-groups}. It applies to any finite group whose order is a prime power $p^n$, ensuring that there is always a non-identity element in the center.
+\noindent
+\textbf{Proposition.} 
+\emph{Let $\sigma \in S_n$ be written as a disjoint product of cycles of lengths $n_1, n_2, \dots, n_m$ (so $\sum_{i=1}^m n_i = n$). Then the order of $\sigma$ is 
+\[
+\mathrm{LCM}(n_1, n_2, \dots, n_m).
+\]}
+
+\bigskip
+
+\noindent
+\textbf{Proof:}
+\begin{enumerate}
+    \item \textbf{Disjoint cycle decomposition.}
+    Any permutation $\sigma \in S_n$ can be written as a product of disjoint cycles.  Suppose 
+    \[
+      \sigma = (a_1 \, a_2 \, \dots \, a_{n_1})\; (a_{n_1+1} \, \dots \, a_{n_1+n_2}) \;\cdots\; (\,\dots\,),
+    \]
+    where the lengths of these cycles are $n_1, n_2, \dots, n_m$ respectively.  By reindexing if necessary, we can assume the cycle in the first parentheses has length $n_1$, the second has length $n_2$, and so on.
+
+    \item \textbf{Order of a single cycle.} 
+    Recall that a cycle of length $d$ in $S_n$ has order $d$.  Concretely, if 
+    \[
+       \tau = (b_1 \, b_2 \,\dots\, b_d),
+    \]
+    then $\tau^d$ is the identity permutation, and $d$ is the \emph{smallest positive integer} for which this is true.
+
+    \item \textbf{Order of $\sigma$ is the smallest $k$ with $\sigma^k = e$.}
+    By definition, the order of any element $x$ in a finite group $G$ is the minimal positive integer $k$ such that $x^k = e$.  Moreover, $x^k = e$ if and only if the order of $x$ divides $k$.  
+
+    \item \textbf{Behavior of disjoint cycles under exponentiation.}
+    Since the cycles in $\sigma$ are disjoint, raising $\sigma$ to a power $k$ can be viewed as raising each cycle to the power $k$:
+    \[
+      \sigma^k 
+      \;=\; (a_1 \,\dots\, a_{n_1})^k \;\;\bigl(a_{n_1+1}\,\dots\, a_{n_1+n_2}\bigr)^k \;\cdots.
+    \]
+    This product will be the identity permutation if and only if each individual cycle $(a_{\dots})^k$ is the identity.  A cycle of length $n_i$ becomes the identity exactly when $n_i \mid k$.  
+
+    \item \textbf{Conclusion via the LCM.}
+    Thus, $\sigma^k = e$ if and only if \emph{every} $n_i$ divides $k$.  The \emph{smallest positive} such $k$ is precisely the least common multiple of $n_1, n_2, \dots, n_m$.  Therefore:
+    \[
+      \text{ord}(\sigma) 
+      \;=\; \mathrm{LCM}(n_1, n_2, \dots, n_m).
+    \]
+
+\end{enumerate}
+
+\noindent
+This completes the proof.
+\noindent
+\textbf{Question:} 
+Is conjugation a bijection between two permutations of the same order?
+
+\bigskip
+
+\noindent
+\textbf{Short Answer:} 
+\emph{No. Having the same order is not enough for two permutations to be conjugate in $S_n$. Conjugacy in $S_n$ requires them to have the \textbf{same cycle structure}, which \emph{implies} the same order, but the converse does \emph{not} hold.}
+
+\bigskip
+
+\noindent
+\textbf{Explanation:}
+
+\begin{enumerate}
+    \item \textbf{Conjugation criterion in $S_n$:}
+    
+    In the symmetric group $S_n$, two permutations $\sigma$ and $\tau$ are conjugate if and only if they have the \emph{same cycle type} (i.e., the same partition of $n$ when written in disjoint cycle form). 
+
+    \item \textbf{Cycle type vs.\ order:}
+    
+    The order of a permutation is the least common multiple (\text{LCM}) of the lengths of the cycles in its disjoint cycle decomposition. Thus:
+    \[
+       \sigma = (\dots)\,(\dots)\,\cdots(\dots)
+       \quad\Longrightarrow\quad
+       \mathrm{ord}(\sigma)
+       = \mathrm{LCM}(\text{cycle lengths}).
+    \]
+    Two permutations that share the same cycle structure indeed have the same order. However, sharing just the same order does \emph{not} force them to have the same cycle structure. 
+
+    \item \textbf{Concrete example:} 
+    
+    - In $S_4$, consider:
+      \[
+        \sigma_1 = (12) \quad (\text{a single transposition})
+      \]
+      and 
+      \[
+        \sigma_2 = (12)(34) \quad (\text{product of two disjoint transpositions}).
+      \]
+      Each has order $2$ (a transposition has order $2$; a product of two disjoint transpositions also has order $2$).
+
+    - \emph{Do they have the same cycle structure?} No:
+      \[
+        (12) \quad\text{is a single 2-cycle,}
+        \quad
+        (12)(34) \quad\text{is two disjoint 2-cycles.}
+      \]
+      Hence they are \textbf{not} conjugate in $S_4$, even though both have order $2$.
+
+    \item \textbf{Conclusion:}
+    
+    - To be conjugate in $S_n$, two permutations must have the \emph{same cycle structure}, which automatically ensures they have the same order.
+    - Having the same order alone is \textbf{not sufficient} to guarantee conjugacy.
+
+\end{enumerate}
+
+\noindent
+\textbf{Theorem.} 
+\emph{Two permutations $\sigma,\tau \in S_n$ are conjugate in $S_n$ if and only if they have the same cycle structure.}
+
+\bigskip
+
+\noindent
+\textbf{Proof:}
+
+\begin{enumerate}
+
+\item \textbf{If they are conjugate, then they have the same cycle structure.}
+
+\noindent
+Suppose $\sigma,\tau \in S_n$ are conjugate, i.e.\ there is some $\alpha \in S_n$ such that 
+\[
+\tau \;=\; \alpha^{-1}\sigma\,\alpha.
+\]
+Write $\sigma$ in its disjoint cycle form.  Conjugating a permutation \emph{relables} the elements in each cycle, but it does not change the \emph{lengths} of these cycles.  Consequently, $\tau$ has the same cycle lengths as $\sigma$.  Hence $\sigma,\tau$ share the same cycle structure.
+
+\item \textbf{Conversely, if they have the same cycle structure, then they are conjugate.}
+
+\noindent
+Let $\sigma,\tau \in S_n$ each be written as a product of disjoint cycles.  Suppose the cycle decomposition of $\sigma$ is
+\[
+\sigma = (a_1\,\dots\,a_{r}) \; (a_{r+1}\,\dots\,a_{s}) \;\cdots\; (a_{t+1}\,\dots\,a_n),
+\]
+and $\tau$ has the \emph{same} partition of $n$ into cycle lengths, say
+\[
+\tau = (b_1\,\dots\,b_{r}) \; (b_{r+1}\,\dots\,b_{s}) \;\cdots\; (b_{t+1}\,\dots\,b_n).
+\]
+We can define a permutation $\alpha \in S_n$ by prescribing how it sends the elements that appear in each cycle of $\sigma$ to the corresponding elements in each cycle of $\tau$.  Concretely, set
+\[
+\alpha(a_i) = b_i 
+\quad\text{for each }i.
+\]
+Because the cycles $(a_1\,\dots\,a_r)$ and $(b_1\,\dots\,b_r)$ have the same length $r$, we can match up these elements in a cycle-by-cycle manner to get a well-defined bijection on $\{1,\dots,n\}$.  
+
+\item \textbf{Check that $\alpha^{-1}\tau\,\alpha = \sigma$.}
+
+\noindent
+One verifies directly that for each $i$,
+\[
+\alpha^{-1}\tau\,\alpha(a_i) \;=\; \alpha^{-1}\tau(b_i).
+\]
+But $\tau(b_i)$ is just the element that follows $b_i$ in the cycle decomposition of $\tau$ of the same “slot” as $a_i$ in $\sigma$.  In other words, $\alpha$ sends each $a_i$ to $b_i$ exactly preserving the cyclic ordering, ensuring that $\alpha^{-1}\tau\,\alpha$ agrees with $\sigma$ on all $a_i$.  Thus
+\[
+\alpha^{-1}\tau\,\alpha = \sigma.
+\]
+
+Hence $\sigma$ and $\tau$ are conjugate via $\alpha$.
+
+\end{enumerate}
+
+\noindent
+\textbf{Conclusion:} We have shown both directions: having the same cycle structure is precisely what characterizes when two permutations in $S_n$ are conjugate.
+
+\noindent
+\textbf{Theorem.}
+\emph{Let $\sigma \in S_n$ be expressed as a product of $m$ transpositions and also (in a different way) as a product of $n$ transpositions. Then $m$ and $n$ must have the same parity (i.e.\ $m - n$ is even).}
+
+\bigskip
+
+\noindent
+\textbf{Sketch of the Proof Idea:}
+We will show that every permutation $\sigma$ has a well-defined \emph{sign} or \emph{parity}, denoted $\mathrm{sgn}(\sigma)$, which is $+1$ if $\sigma$ can be written as a product of an \emph{even} number of transpositions, and $-1$ if it can be written as a product of an \emph{odd} number.  The main steps:
+
+\begin{enumerate}
+    \item Show that \emph{multiplying by a transposition} changes the sign from $+1$ to $-1$ or vice versa.
+    \item Conclude that if the same permutation $\sigma$ could be expressed with both an even number and an odd number of transpositions, it would lead to a contradiction.
+\end{enumerate}
+
+\noindent
+Thus any two expressions of $\sigma$ into transpositions must \emph{both be even-length} or \emph{both be odd-length}.
+
+\bigskip
+
+\noindent
+\textbf{Proof (Detailed Steps):}
+
+\medskip
+
+\noindent
+\textbf{1. Cycles of length $r$ can be written as $r-1$ transpositions.}
+
+\begin{itemize}
+    \item A cycle $(a_1\, a_2\,\dots\,a_r)$ in $S_n$ is expressible as
+    \[
+       (a_1\, a_2\,\dots\,a_r) \;=\; (a_1\, a_2)(a_2\, a_3)\cdots (a_{r-1}\, a_r).
+    \]
+    \item Hence each $r$-cycle can be viewed as a product of $r-1$ transpositions.
+\end{itemize}
+
+\medskip
+
+\noindent
+\textbf{2. Defining an “even” or “odd” permutation via even-length cycles.} 
+
+One approach (as seen in the excerpt) is to label a permutation \emph{even} or \emph{odd} by counting the number of \emph{even-length} cycles in its disjoint cycle decomposition.  Alternatively (and more standardly), we define:
+
+\[
+\mathrm{sgn}(\sigma) \;=\;
+\begin{cases}
++1, & \text{if $\sigma$ can be written as a product of an even number of transpositions,}\\
+-1, & \text{if $\sigma$ can be written as a product of an odd number of transpositions.}
+\end{cases}
+\]
+
+Either viewpoint will ultimately show that this definition does not depend on \emph{which} product of transpositions you choose.
+
+\medskip
+
+\noindent
+\textbf{3. Effect of multiplying by a single transposition.}
+
+Consider a transposition $(1\, i)$.  We examine $\mathrm{sgn}((1\, i)\,\sigma)$:
+
+\begin{itemize}
+    \item \emph{Case 1: $1$ and $i$ occur in the \textbf{same} cycle of $\sigma$.} 
+    Merging or splitting that cycle into new cycles changes the number of even-length cycles by exactly $1$.  Concretely, if that cycle has length $r$, then:
+    \[
+       (1\, i)(1\,2\,\dots\, i\,\dots\,r)
+       \;=\;
+       (\text{some new factorization})
+    \]
+    and it can be checked that either an even cycle becomes two odd cycles, or an odd cycle becomes two even cycles.  In each case, the parity of the permutation flips.
+
+    \item \emph{Case 2: $1$ and $i$ lie in \textbf{distinct} cycles.}
+    Then $(1\, i)$ merges those two cycles, again changing the count of even-length cycles by $1$.  Hence the parity flips again.
+\end{itemize}
+
+In both cases, multiplying on the left by $(1\,i)$ changes $\mathrm{sgn}(\sigma)$ to $-\mathrm{sgn}(\sigma)$.  Equivalently, \emph{each time you multiply by a transposition, you flip from “even” to “odd,” or vice versa}. 
+
+\medskip
+
+\noindent
+\textbf{4. Identity has sign $+1$, so an odd number of transpositions yields sign $-1$.}
+
+\begin{itemize}
+    \item Clearly, the identity $e$ in $S_n$ can be expressed as the product of \emph{zero} transpositions.  Zero is even, so $\mathrm{sgn}(e) = +1$.
+    \item By induction, if you multiply $e$ by $k$ transpositions, each one flips the sign. Hence:
+    \[
+    \text{the product of an odd number of transpositions has sign }-1,\quad
+    \text{the product of an even number has sign }+1.
+    \]
+\end{itemize}
+
+\medskip
+
+\noindent
+\textbf{5. Contradiction if a permutation $\sigma$ is written with $m$ transpositions and also $n$ transpositions, where $m$ and $n$ have different parity.}
+
+Suppose for contradiction that
+\[
+\sigma = t_1 \, t_2 \,\cdots\, t_m 
+\quad(\text{$m$ transpositions})
+\]
+and also
+\[
+\sigma = s_1 \, s_2 \,\cdots\, s_n
+\quad(\text{$n$ transpositions}),
+\]
+with $m$ odd and $n$ even (or vice versa). Then $\mathrm{sgn}(\sigma)$ would be both $+1$ and $-1$ at the same time.  This is impossible. Hence $m$ and $n$ must be the same parity. 
+
+\medskip
+
+\noindent
+\textbf{6. Conclusion.} 
+Any permutation $\sigma\in S_n$ has a well-defined parity (\emph{even} or \emph{odd}), independent of \emph{how} it is expressed as a product of transpositions. Thus, if one decomposition uses $m$ transpositions and another uses $n$, we must have 
+\[
+m \equiv n \pmod{2},
+\]
+i.e.\ $2 \mid (m-n)$. This completes the proof.
+\noindent
+\textbf{Proposition.} \emph{For $n \ge 2$, the alternating group $\mathrm{Alt}_n$ has size 
+\[
+|\mathrm{Alt}_n| \;=\; \frac{n!}{2}.
+\]}
+
+\bigskip
+
+\noindent
+\textbf{Proof:}
+
+\begin{enumerate}
+    \item \textbf{Recall $|\mathrm{Sym}_n| = n!$.} 
+    We know the full symmetric group on $n$ letters has $n!$ elements.
+
+    \item \textbf{Goal: Show $[\mathrm{Sym}_n : \mathrm{Alt}_n] = 2$.}
+    This means we want to show that $\mathrm{Alt}_n$ has exactly two (left) cosets in $\mathrm{Sym}_n$.  Equivalently,
+    \[
+    \frac{|\mathrm{Sym}_n|}{|\mathrm{Alt}_n|} \;=\; 2
+    \quad\Longrightarrow\quad
+    |\mathrm{Alt}_n| \;=\;\frac{n!}{2}.
+    \]
+
+    \item \textbf{Define $\mathrm{sgn}: \mathrm{Sym}_n \to \{\pm1\}$, the sign homomorphism.}
+    Every permutation $\sigma$ is either \emph{even} ($\mathrm{sgn}(\sigma) = +1$) or \emph{odd} ($\mathrm{sgn}(\sigma)=-1$), depending on whether $\sigma$ can be written as a product of an even or odd number of transpositions.  It is a standard fact that
+    \[
+      \mathrm{sgn}: \mathrm{Sym}_n \;\twoheadrightarrow\; \{\pm 1\}
+    \]
+    is a \emph{surjective group homomorphism.}
+
+    \item \textbf{$\mathrm{Alt}_n$ is the kernel of $\mathrm{sgn}$.}
+    By definition,
+    \[
+      \mathrm{Alt}_n 
+      \;=\; \{\sigma \in \mathrm{Sym}_n : \mathrm{sgn}(\sigma) = +1\}
+      \;=\; \ker(\mathrm{sgn}).
+    \]
+    The First Isomorphism Theorem then tells us:
+    \[
+      \mathrm{Sym}_n / \mathrm{Alt}_n 
+      \;\cong\; \{\pm1\}.
+    \]
+    Hence the index of $\mathrm{Alt}_n$ in $\mathrm{Sym}_n$ is $|\{\pm1\}| = 2$. 
+
+    \item \textbf{Conclude $|\mathrm{Alt}_n| = \tfrac{|\mathrm{Sym}_n|}{2} = \frac{n!}{2}$.}
+    Since $[\mathrm{Sym}_n : \mathrm{Alt}_n] = 2$, we have
+    \[
+      |\mathrm{Alt}_n|
+      \;=\;
+      \frac{|\mathrm{Sym}_n|}{2}
+      \;=\;
+      \frac{n!}{2}.
+    \]
+
+\end{enumerate}
+
+\noindent
+Thus, the subgroup of all even permutations has exactly half the size of the entire symmetric group, as desired.
+\noindent
+\textbf{Symmetries of the Cube in $\mathbb{R}^3$}
+
+\bigskip
+
+\noindent
+Consider a solid cube $X \subset \mathbb{R}^3$ centered at the origin. We study two subgroups of the full symmetry group:
+\[
+\mathrm{Sym}(X) \quad \text{and} \quad \mathrm{Rot}(X).
+\]
+Here:
+\begin{itemize}
+    \item $\mathrm{Sym}(X)$ is the group of \emph{all} symmetries of $X$, including rotations, reflections, and improper isometries such as the map $x \mapsto -x$.
+    \item $\mathrm{Rot}(X)$ (often denoted $\mathrm{Rot}\,\square$) is the subgroup consisting of \emph{only} rotational symmetries (elements representable by orthogonal $3\times 3$ matrices with determinant $+1$).
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{1. Size of $\mathrm{Sym}(X)$ is 48}
+
+\begin{itemize}
+    \item \textbf{Vertices of the cube.}
+    A cube has 8 vertices. Because $\mathrm{Sym}(X)$ acts \emph{transitively} on these 8 vertices, the orbit of any particular vertex has size 8.
+
+    \item \textbf{Stabilizer of a vertex is $D_3$.}
+    Pick one vertex $a$. The stabilizer $\mathrm{Stab}(a) = \{\,g \in \mathrm{Sym}(X) : g(a) = a\}\,$ consists of exactly those symmetries that keep $a$ fixed.  One can check that this stabilizer is isomorphic to $D_3$, the dihedral group of order $6$, because from vertex $a$ there are exactly 3 adjacent edges around that corner, giving 3-fold “local” symmetries (rotations and reflections in planes that keep $a$ fixed).
+
+    \item \textbf{Orbit-Stabilizer Theorem.}
+    By orbit-stabilizer, we have
+    \[
+      |\mathrm{Sym}(X)| 
+      \;=\; |\mathrm{Orb}(a)| \;\times\; |\mathrm{Stab}(a)| 
+      \;=\; 8 \times 6 
+      \;=\; 48.
+    \]
+    Hence $\mathrm{Sym}(X)$, the full symmetry group of the cube, has order 48.
+
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{2. Size of $\mathrm{Rot}(X)$ is 24}
+
+\begin{itemize}
+    \item \textbf{Rotational symmetries.}
+    Now consider only those symmetries that are pure rotations (no reflections or inversions).  These necessarily preserve orientation and are determined by orthogonal matrices with determinant +1 in 3D.
+
+    \item \textbf{Another application of orbit-stabilizer.}
+    The same logic applies if we restrict to rotations: a chosen vertex $a$ still has an orbit under $\mathrm{Rot}(X)$ of size 8, but its stabilizer (as a rotation group) has size 3 instead of 6, because we can only rotate around the axis passing through $a$ (and the center of the cube), thus ignoring reflections.  Indeed, around that corner there are 3 edges, and purely rotational symmetries that keep $a$ fixed correspond to a cyclic triple rotation of those edges.
+
+    \item \textbf{Hence $|\mathrm{Rot}(X)| = 8 \times 3 = 24$}
+
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{3. The structure of $\mathrm{Rot}(X)$ is isomorphic to $S_4$.}
+
+\begin{itemize}
+    \item \textbf{Reasoning:} 
+    One commonly identifies the rotational symmetries of a cube with the permutation group on the 4 long diagonals of the cube.  A cube has 4 distinct body diagonals (each connecting opposite vertices).  Each rotation permutes these 4 diagonals in some way, giving rise to a group homomorphism:
+    \[
+      \Phi : \mathrm{Rot}(X) \;\longrightarrow\; S_4.
+    \]
+    \item \textbf{Check surjectivity:}
+    Because $S_4$ is generated by transpositions of the diagonals, and we can realize any swap of two diagonals by a suitable rotation, $\Phi$ is surjective.
+
+    \item \textbf{Compare orders:}
+    Since $|\mathrm{Rot}(X)| = 24$ and $|S_4| = 24$, a surjective homomorphism from a group of size 24 onto a group of size 24 must be an \emph{isomorphism}.
+
+    \item \textbf{Conclusion:}
+    \[
+      \mathrm{Rot}(X) \;\cong\; S_4.
+    \]
+    So the rotational symmetry group of the cube is isomorphic to the symmetric group on 4 elements.
+
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{4. Full symmetry group as a semidirect product.}
+
+\begin{itemize}
+    \item Let $\tau$ be the symmetry $x \mapsto -x$ (which is \emph{not} a rotation).  Then one can show that 
+    \[
+      \mathrm{Sym}(X) \;=\; \mathrm{Rot}(X) \;\cup\; \tau\,\mathrm{Rot}(X),
+    \]
+    and indeed $\tau$ \emph{commutes} or “almost commutes” in a way that yields a semidirect product structure $\mathrm{Rot}(X) \rtimes \mathbb{Z}_2$.  In simpler terms, we have:
+    \[
+      \mathrm{Sym}(X) \;\cong\; \mathrm{Rot}(X)\,\rtimes\,\{\mathrm{id}, \tau\}
+      \quad \text{and} \quad
+      |\mathrm{Sym}(X)| = 24 \cdot 2 = 48.
+    \]
+
+\end{itemize}
+
+\bigskip
+
+\noindent
+\textbf{Summary:}
+\[
+|\mathrm{Sym}(X)| = 48, 
+\quad
+|\mathrm{Rot}(X)| = 24,
+\quad
+\mathrm{Rot}(X) \cong S_4.
+\]
+Hence the cube in $\mathbb{R}^3$ has $48$ symmetries in total, half of which (namely $24$) are pure rotations forming a group isomorphic to the full symmetric group on 4 objects.
+\noindent
+\textbf{Context:} 
+We have a cube, and its faces are colored (say, each face with a different color). 
+The claim is that \emph{given any two distinct colors on the cube, we can find a \underline{rotation} of the cube that swaps exactly those two colors while leaving the other faces (colors) in place.}
+
+\bigskip
+
+\noindent
+\textbf{Key Observation:} 
+A cube’s rotational symmetries can be viewed in terms of moving faces into each other’s positions. Specifically, for any two distinct faces \(F_1\) and \(F_2\), we can rotate the cube to swap those faces—while simultaneously ensuring all other faces remain fixed in place.
+
+\bigskip
+
+\noindent
+\textbf{Why This Is Possible:}
+
+\begin{enumerate}
+    \item \textbf{Identify opposite faces.}  
+    Each face \(F\) of the cube has a unique opposite face \(F^\prime\). If we want a rotation that swaps exactly \(F_1\) and \(F_2\), one straightforward scenario is when \(F_1\) and \(F_2\) are \emph{opposite} faces. For such opposite faces, a \(180^\circ\) rotation around the axis that pierces those faces will swap \(F_1\) and \(F_2\), and also swap their respective opposite edges and vertices, \emph{potentially} moving other faces too—so we have to be more precise if we want the other faces to remain “in place.”
+
+    \item \textbf{Ensuring the other faces don’t move.}  
+    The crucial geometric fact is that \emph{each face center is the endpoint of a unique diagonal line through the center of the cube}. If you imagine the axis going through the midpoints of \(F_1\) and \(F_2\), a \(180^\circ\) rotation about that axis will swap those faces. But what about the other faces? If those other faces happen to be \emph{perpendicular} to that axis, they will remain where they are in space, just possibly “spun around” in place (i.e.\ each of those faces is mapped onto itself).
+
+    \item \textbf{Concrete example.}
+    - Label the faces of the cube as: Top (T), Bottom (B), Front (F), Back (Bk), Left (L), Right (R).  
+    - If you want to swap Top (T) and Bottom (B) but fix Front, Back, Left, and Right, consider a \(180^\circ\) rotation about the horizontal axis that goes through the midpoints of the Left and Right faces. Under this rotation:
+    \[
+    T \leftrightarrow B,\quad
+    L \mapsto L,\quad
+    R \mapsto R,\quad
+    F \mapsto F,\quad
+    Bk \mapsto Bk.
+    \]
+    So T and B get swapped, and every other face is returned to itself.
+
+    \item \textbf{General two faces.}  
+    In general, for any two faces, you can rotate so that those two become “top” and “bottom” (by an initial orientation rotation), and then do exactly the \(180^\circ\) spin around the “horizontal” axis that interchanges top and bottom while leaving the other four faces exactly where they are. Because the group of rotational symmetries acts transitively on the set of faces, you can always re-label or re-orient so any chosen pair of faces is effectively top and bottom.  
+
+    Thus you realize a symmetry that \emph{only} interchanges those two given colors (faces) while leaving the others fixed.
+
+\end{enumerate}
+
+\bigskip
+
+\noindent
+\textbf{Conclusion:} 
+By orienting the cube so the two faces of interest become opposite faces (like top and bottom), and then performing a \(180^\circ\) rotation about the axis through the centers of the remaining (perpendicular) faces, we \emph{swap exactly} the two desired faces (colors) while fixing the other faces. Hence any two distinct colors on the cube can be transposed by some rotation, leaving the rest of the colors in place.
+\noindent
+\textbf{Claim.} \emph{The group $(\mathbb{Q}\setminus\{0\},\times)$ is not finitely generated.}
+
+\bigskip
+
+\noindent
+\textbf{Proof (Sketch):}
+
+\begin{enumerate}
+    \item \textbf{Recall what it means to be finitely generated.}
+    A group $G$ is finitely generated if there is a finite subset $X \subseteq G$ such that 
+    \[
+      \langle X \rangle = G 
+      \quad\text{(the subgroup generated by $X$ is all of $G$).}
+    \]
+    That means, starting from elements of $X$ and all their inverses, we can obtain \emph{every} element of $G$ by finitely many multiplications.
+
+    \item \textbf{Consider $(\mathbb{Q}\setminus\{0\},\times)$.}
+    This group consists of all nonzero rational numbers under multiplication.  We argue that no finite set of rationals can generate \emph{all} nonzero rationals.
+
+    \item \textbf{Key observation: infinitely many primes.}
+    By the Fundamental Theorem of Arithmetic, every nonzero rational number $q$ can be written uniquely (up to sign) as a product of prime powers, possibly with negative exponents. 
+    \[
+      q 
+      = \pm p_1^{e_1} \, p_2^{e_2} \cdots p_k^{e_k} \quad (p_i \text{ prime, } e_i \in \mathbb{Z}).
+    \]
+    There are infinitely many distinct primes $p$ in $\mathbb{N}$. 
+
+    \item \textbf{Contradiction if we try to generate all primes from a finite set.}
+    Suppose, for contradiction, that $X = \{x_1,x_2,\dots,x_n\}$ is a finite generating set in $\mathbb{Q}\setminus\{0\}$.  Then each $x_i$ can itself be factorized into prime powers:
+    \[
+      x_i = \pm \prod_{\alpha} p_{\alpha}^{e_{i,\alpha}},
+    \]
+    for a \emph{finite} collection of primes $p_{\alpha}$ that appear in $x_i$.
+
+    Since $X$ is finite, the total set of primes that appear in any $x_i$ is still a \emph{finite} set of primes:
+    \[
+      P := \{\text{all primes that appear in the prime factorization of any } x_i\}.
+    \]
+    This means that every product of these $x_i$'s (and their inverses) can only involve primes in $P$.  
+    In other words, any element of $\langle X\rangle$ has its prime factorization drawn \emph{only} from the finite set $P$.
+
+    \item \textbf{But $\mathbb{Q}\setminus\{0\}$ has elements using primes outside of $P$.}
+    Because there are infinitely many primes, pick a prime $p^*$ not in $P$. The rational number $p^*$ (itself) must lie in $\langle X\rangle$ if $\langle X\rangle$ were the whole group.  But that is impossible, since any product of the $x_i$'s (and their inverses) only contains primes in $P$.  Hence $p^*$ cannot be generated by $X$.
+
+    \item \textbf{Conclusion.}
+    We have found an element ($p^*$) in $(\mathbb{Q}\setminus\{0\},\times)$ that is \emph{not} in the subgroup generated by the finite set $X$.  Therefore, no finite $X$ can generate all of $(\mathbb{Q}\setminus\{0\},\times)$.  Hence $(\mathbb{Q}\setminus\{0\}, \times)$ is \emph{not} finitely generated.
+
+\end{enumerate}
+
+\noindent
+\textbf{Remark.}
+A more algebraic way to see this is that $(\mathbb{Q}\setminus\{0\}, \times)$ is isomorphic to 
+\[
+\{\pm 1\} \times \bigoplus_{\text{primes }p} \mathbb{Z}
+\]
+(where each prime $p$ corresponds to the exponent of $p$ in a rational).  This is an infinite direct sum of $\mathbb{Z}$, which clearly cannot be generated by any finite subset.
+
+\section*{Step-by-Step Explanation of Semidirect Products}
+
+We want to understand how a \textbf{semidirect product} of two groups $H$ and $K$ arises by
+``relaxing'' the requirements of the \emph{direct product}, namely that both factors be normal. 
+Below is a step-by-step guide (in words and formulas) to the construction and the key ideas.
+
+\subsection*{1. The Setup}
+
+\begin{itemize}
+    \item Suppose $G$ is a group containing subgroups $H$ and $K$.
+    \item Assume:
+    \[
+      H \triangleleft G, \quad H \cap K = \{1\},
+    \]
+    and note that $K$ need not be normal in $G$.
+    \item By group theory results, the set $HK = \{\,hk \mid h \in H,\, k \in K\}\subseteq G$ 
+          is itself a subgroup (under certain conditions, e.g.\ $H\triangleleft G$).
+    \item Also, every element of $HK$ can be written \emph{uniquely} in the form $hk$ 
+          with $h\in H$ and $k\in K$. 
+          (The uniqueness follows from $H \cap K = \{1\}$ and normality of $H$ in $G$.)
+\end{itemize}
+
+\subsection*{2. The Product in \boldmath$HK$}
+
+Take two elements of $HK$:
+\[
+  h_1 k_1 \quad \text{and} \quad h_2 k_2,
+\]
+where $h_1, h_2 \in H$ and $k_1, k_2 \in K$. We want to multiply these \emph{as elements of $G$} 
+and then rewrite the product in the normal form (\emph{something in $H$})(\emph{something in $K$}).
+
+\paragraph{Multiplying:}
+\[
+  (h_1 k_1)(h_2 k_2)
+  \;=\;
+  h_1 \;(\underbrace{k_1 h_2 k_1^{-1}}_{\in H \text{ since }H\triangleleft G})\; k_1\,k_2.
+\]
+
+We use the fact that $k_1 h_2 k_1^{-1} \in H$ (because $H$ is normal in $G$). 
+Set
+\[
+  h_3 \;=\; h_1 \,\bigl(k_1 h_2 k_1^{-1}\bigr) 
+  \quad\text{and}\quad
+  k_3 \;=\; k_1 k_2.
+\]
+Then the product can be expressed as
+\[
+  (h_1 k_1)(h_2 k_2)
+  \;=\;
+  \underbrace{h_1 \bigl(k_1 h_2 k_1^{-1}\bigr)}_{h_3 \,\in\, H}
+  \;\underbrace{k_1 k_2}_{k_3 \,\in\, K}
+  \;=\;
+  h_3 \,k_3.
+\]
+
+\subsection*{3. Conjugation Viewpoint and the Homomorphism \boldmath$\varphi$}
+
+Because $H$ is normal in $G$, the conjugation by any $k\in K$ (viewed as an element of $G$) 
+sends $H$ to itself. That is, for $k \in K$ and $h \in H$,
+\[
+  k \,h\, k^{-1} \;\in\; H.
+\]
+This induces a \emph{group homomorphism}
+\[
+  \varphi : K \;\longrightarrow\; \mathrm{Aut}(H),
+  \qquad
+  \varphi(k)(h) \;=\; k \,h\, k^{-1}.
+\]
+Hence, one can rewrite the product in $HK$ purely in terms of $H$, $K$, and $\varphi$. 
+Specifically,
+\[
+  (h_1, k_1)\,(h_2, k_2)
+  \;=\;
+  \bigl( h_1 \,\varphi(k_1)(h_2),\; k_1\,k_2\bigr).
+\]
+This is precisely the usual way to define the \textbf{semidirect product} $H \rtimes_\varphi K$.
+
+\subsection*{4. Defining \boldmath$H \rtimes_\varphi K$ from Scratch}
+
+In more abstract treatments, one starts only with:
+\[
+  H, \quad K, \quad \text{and a homomorphism } 
+  \varphi : K \to \mathrm{Aut}(H).
+\]
+Then we \emph{declare} the underlying set to be the Cartesian product $H \times K$, and define 
+the multiplication by
+\[
+  (h_1,k_1) \,\cdot\, (h_2,k_2)
+  \;=\;
+  \bigl(h_1\,\varphi(k_1)(h_2),\; k_1\,k_2\bigr).
+\]
+One verifies this indeed satisfies the group axioms, producing the semidirect product 
+\[
+  H \rtimes_{\varphi} K.
+\]
+In the special case where $\varphi$ is the \emph{trivial} homomorphism (sending every $k$ to the 
+identity automorphism of $H$), this construction recovers the usual \emph{direct product} $H \times K$.
+\section*{Examples of the Automorphism Group \texorpdfstring{$\mathrm{Aut}(G)$}{Aut(G)}}
+
+Recall that $\mathrm{Aut}(G)$ is the set of all isomorphisms from a group $G$ to itself, 
+with the group operation given by composition of these isomorphisms. 
+Below are some classic examples.
+
+\subsection*{1. \texorpdfstring{$\mathrm{Aut}(\mathbb{Z})$}{Aut(Z)}}
+
+The group $\mathbb{Z}$ (under addition) has exactly two automorphisms:
+\[
+  x \mapsto x 
+  \quad\text{and}\quad
+  x \mapsto -x.
+\]
+Hence,
+\[
+  \mathrm{Aut}(\mathbb{Z}) \;\cong\; \{\,\mathrm{id},\,(-1)\cdot(\,\cdot\,)\}
+  \;\cong\; \mathbb{Z}_2.
+\]
+In words, you can either send every integer to itself (the identity) or to its negative. 
+No other map $\mathbb{Z} \to \mathbb{Z}$ is a group isomorphism.
+
+\subsection*{2. \texorpdfstring{$\mathrm{Aut}(\mathbb{Z}_n)$}{Aut(Z\_n)}}
+
+Consider the cyclic group of order $n$, written additively: $\mathbb{Z}_n = \{0,1,\dots,n-1\}$. 
+Any automorphism of $\mathbb{Z}_n$ is determined by where it sends the generator $1$, 
+and it must send $1$ to some element $k \in \{0,1,\dots,n-1\}$ with $\gcd(k,n) = 1$ 
+(otherwise the map won't be bijective). Therefore,
+\[
+  \mathrm{Aut}(\mathbb{Z}_n) \;\cong\; \mathbb{Z}_n^{\times},
+\]
+the \emph{group of units modulo $n$}, i.e.\ the set of integers mod $n$ which are coprime to $n$, 
+under multiplication mod $n$. Its size is $\varphi(n)$, where $\varphi$ is Euler's totient function.
+
+\subsection*{3. \texorpdfstring{$\mathrm{Aut}(S_3)$}{Aut(S\_3)}}
+
+The symmetric group $S_3$ is the group of all permutations on three letters. 
+One can show that 
+\[
+  \mathrm{Aut}(S_3) \;\cong\; S_3 \quad(\text{i.e., all automorphisms are inner}).
+\]
+Informally, any automorphism of $S_3$ is given by ``conjugation by some element of $S_3$,'' 
+so the group of inner automorphisms (which is isomorphic to $S_3/Z(S_3)$) 
+actually accounts for all automorphisms. 
+Since $Z(S_3) = \{\mathrm{id}\}$ is trivial, 
+the inner automorphism group has $|S_3|=6$ elements, matching $\mathrm{Aut}(S_3)$ exactly.
+
+\subsection*{4. \texorpdfstring{$\mathrm{Aut}(\mathbb{Z}^n)$}{Aut(Z^n)}}
+
+For a free abelian group of rank $n$, $\mathbb{Z}^n$ (written additively),
+an automorphism must send a $\mathbb{Z}$-basis to another $\mathbb{Z}$-basis. 
+Equivalently, any automorphism corresponds to an $n \times n$ integer matrix 
+with \emph{determinant} $\pm 1$ (so that it is invertible over the integers). Hence
+\[
+  \mathrm{Aut}(\mathbb{Z}^n) \;\cong\; \mathrm{GL}_n(\mathbb{Z}),
+\]
+the group of all $n \times n$ integer matrices with determinant $\pm 1$.
+
+\bigskip
+
+\noindent \textbf{Summary of Examples:}
+\begin{itemize}
+\item $\mathrm{Aut}(\mathbb{Z}) \cong \mathbb{Z}_2$ (only flip and identity).
+\item $\mathrm{Aut}(\mathbb{Z}_n) \cong \mathbb{Z}_n^\times$ (units mod $n$).
+\item $\mathrm{Aut}(S_3) \cong S_3$ (all automorphisms are inner).
+\item $\mathrm{Aut}(\mathbb{Z}^n) \cong \mathrm{GL}_n(\mathbb{Z})$ (integer invertible matrices).
+\end{itemize}
+\section*{Why must \texorpdfstring{$k$}{k} be coprime to \texorpdfstring{$n$}{n}?}
+
+When describing an automorphism of the cyclic group $\mathbb{Z}_n$, we note that it is
+\textbf{completely determined} by where the generator $1 \in \mathbb{Z}_n$ is sent. Suppose we send
+\[
+  1 \;\mapsto\; k \,\in\, \{0,1,\dots,n-1\}.
+\]
+
+\subsection*{1. Surjectivity (Onto) Consideration}
+
+An automorphism must be \emph{onto}. But under the map $\varphi$ defined by
+\[
+  \varphi(1) \;=\; k,\quad
+  \varphi(x) \;=\; x \cdot k \quad(\text{in }\mathbb{Z}_n),
+\]
+the image of $\varphi$ is precisely the subgroup of $\mathbb{Z}_n$ generated by $k$. 
+
+\[
+  \mathrm{Im}(\varphi)
+  \;=\;
+  \langle k \rangle
+  \;=\;
+  \{\, 0,\,k,\,2k,\,3k,\,\dots \} \;\subseteq\; \mathbb{Z}_n.
+\]
+The only way for this image to be \emph{all} of $\mathbb{Z}_n$ (and hence for $\varphi$ to be onto)
+is if $k$ is a \emph{generator} of the whole group $\mathbb{Z}_n$. In a cyclic group of order $n$,
+the generators are exactly those elements $k$ for which 
+\[
+  \gcd(k,n) \;=\; 1.
+\]
+If $\gcd(k,n) = d > 1$, then the order of $k$ in $\mathbb{Z}_n$ is actually $\frac{n}{d}$, so the
+subgroup generated by $k$ would only have size $n/d < n$, making the map fail to be onto.
+
+\subsection*{2. Injectivity Consideration}
+
+An automorphism must also be \emph{injective}. However, in a finite group setting, a homomorphism
+is injective if and only if it is surjective (since the domain and codomain have the same finite
+cardinality). Hence we do not need a separate argument for injectivity: failing to be onto means 
+the map cannot be a bijection. 
+Thus we require that $\gcd(k,n) = 1$ to ensure bijectivity.
+
+\bigskip
+
+\noindent
+Therefore, to construct an automorphism of $\mathbb{Z}_n$, one chooses any $k$ with 
+\(\gcd(k,n) = 1\), and defines:
+\[
+  \varphi(1) \;=\; k, \quad
+  \varphi(x) \;=\; x \cdot k \quad (\text{mod }n).
+\]
+All such choices give distinct automorphisms, and all automorphisms arise in this way. Hence:
+\[
+  \mathrm{Aut}(\mathbb{Z}_n) \;\cong\; \mathbb{Z}_n^\times,
+\]
+where $\mathbb{Z}_n^\times$ is the group of units mod $n$ (all $[k] \in \{[0],[1],\dots,[n-1]\}$ 
+with $\gcd(k,n) = 1$) under multiplication modulo $n$.
+
+\section*{Why \texorpdfstring{$\mathrm{Aut}(S_3) \cong S_3$}{Aut(S3) is isomorphic to S3}}
+
+\textbf{Key idea}: All automorphisms of $S_3$ are \emph{inner}. Hence
+\[
+  \mathrm{Aut}(S_3) \;\cong\; \mathrm{Inn}(S_3).
+\]
+But since $Z(S_3)$ (the center of $S_3$) is trivial,
+\[
+  \mathrm{Inn}(S_3) \;\cong\; \dfrac{S_3}{Z(S_3)} \;\cong\; S_3.
+\]
+Thus $\mathrm{Aut}(S_3)$ has exactly 6 elements, matching $|S_3|=6$, and so we obtain the isomorphism.
+
+\subsection*{Step-by-step argument}
+
+\paragraph{1. Recall the definitions.}
+\begin{itemize}
+  \item $S_3$ is the symmetric group of all permutations on 3 letters $\{1,2,3\}$. It has 6 elements.
+  \item The \emph{center} $Z(G)$ of a group $G$ is the set of elements commuting with every element of $G$. 
+  \item An \emph{inner automorphism} of a group $G$ is a map $\varphi_g$ given by conjugation:
+    \[
+      \varphi_g(h) \;=\; g h g^{-1} \quad \text{for some fixed }g \in G.
+    \]
+    The set of all inner automorphisms is denoted $\mathrm{Inn}(G)$. This is always a normal subgroup of $\mathrm{Aut}(G)$.
+  \item The quotient $\mathrm{Inn}(G) \,\cong\, G / Z(G)$ (since $g,g'$ give the same inner automorphism if and only if $g'g^{-1}\in Z(G)$).
+\end{itemize}
+
+\paragraph{2. The center of \boldmath$S_3$ is trivial.}
+Observe that for $S_3$, no non-identity permutation commutes with \emph{all} permutations. For example,
+\[
+  (12) (13) \;=\;(132), \quad\quad (13)(12)\;=\;(123),
+\]
+which differ. Similarly any transposition will fail to commute with another transposition that moves a different pair of letters, and any 3-cycle fails to commute with most transpositions, etc. 
+Hence $Z(S_3)$ consists only of the identity permutation. Consequently:
+\[
+  \mathrm{Inn}(S_3) \;\cong\; \dfrac{S_3}{\{\mathrm{id}\}} \;\cong\; S_3.
+\]
+
+\paragraph{3. Show there are no outer automorphisms.}
+By definition, $\mathrm{Aut}(S_3)$ is a group of all \emph{bijections} $S_3 \to S_3$ that preserve the group operation. But:
+\[
+  \text{size}\bigl(\mathrm{Inn}(S_3)\bigr) \;=\; |S_3| \;=\; 6.
+\]
+Hence the group of \emph{inner automorphisms} already has exactly 6 elements. 
+On the other hand, $\mathrm{Aut}(S_3)$ cannot have more than 6 elements unless there exist
+\emph{outer automorphisms} (automorphisms not given by conjugation). 
+However, by a classification or direct check of how elements of different orders must map 
+(e.g.\ transpositions must map to elements of order 2, 3-cycles must map to 3-cycles, etc.), 
+no new automorphisms arise. 
+Therefore $\mathrm{Aut}(S_3)$ is also of size 6, forcing
+\[
+  \mathrm{Aut}(S_3) \;\cong\; \mathrm{Inn}(S_3).
+\]
+
+\paragraph{4. Conclusion.}
+Putting it all together:
+\[
+  \mathrm{Aut}(S_3) \;=\; \mathrm{Inn}(S_3) 
+  \;\cong\; \dfrac{S_3}{Z(S_3)}
+  \;=\; \dfrac{S_3}{\{\mathrm{id}\}}
+  \;\cong\; S_3.
+\]
+So $S_3$ itself is the full automorphism group; there are no outer automorphisms. 
+
+\section*{Step-by-Step Explanation of the Semidirect Product Construction}
+
+We have groups $H$ and $K$ along with a homomorphism 
+\[
+  \varphi \;:\; K \;\longrightarrow\; \mathrm{Aut}(H),
+\]
+which induces an action of $K$ on $H$ (sometimes written $k \cdot h$) and 
+lets us form the semidirect product $G = H \rtimes K$. 
+We identify $H$ and $K$ with corresponding subgroups of $G$ (as in Theorem~10 of typical group theory texts). 
+The example in the text shows how to build one such $\varphi$ in a natural way, 
+yielding an interesting extension of $H$ by $K$.
+
+\subsection*{1. The Data: \texorpdfstring{$H$}{H} abelian, \texorpdfstring{$K \cong \mathbb{Z}_2$}{K = Z2}}
+
+\begin{itemize}
+\item Let $H$ be \textbf{any abelian group} (which could be finite or infinite).
+\item Let $K = \langle x \rangle \cong \mathbb{Z}_2$, a group of order~2 generated by an element $x$ 
+      satisfying $x^2 = e$ (the identity element).
+\end{itemize}
+
+\subsection*{2. Defining the Homomorphism \boldmath$\varphi$}
+
+We must specify a homomorphism 
+\[
+  \varphi : K \to \mathrm{Aut}(H).
+\]
+Because $K$ has only one nontrivial element $x$ (other than the identity), 
+it suffices to define $\varphi(x)$ (and check $\varphi(x^2) = \varphi(e) = \mathrm{id}_H$ 
+to confirm the map is a group homomorphism).
+
+\smallskip
+\noindent
+\textbf{Rule:} \emph{Send $x$ to the automorphism ``inversion on $H$''}:
+\[
+  \varphi(x) \;:\; H \;\longrightarrow\; H, 
+  \quad
+  \varphi(x)(h) \;=\; h^{-1}.
+\]
+In other words, for the associated action we write
+\[
+  x \cdot h \;=\; h^{-1}.
+\]
+Since $H$ is abelian, the map $h \mapsto h^{-1}$ is indeed an automorphism (bijective and preserves the group operation in a commutative setting).
+
+\subsection*{3. Verifying \boldmath$\varphi$ is a Homomorphism}
+
+Because $K \cong \mathbb{Z}_2$, we only need to check that
+\[
+  \varphi(x^2) \;=\; \varphi(e) \;=\; \mathrm{id}_H.
+\]
+But $x^2 = e$, so 
+\[
+  \varphi(x^2)(h) 
+  \;=\; \varphi(x)\bigl(\varphi(x)(h)\bigr) 
+  \;=\; \varphi(x)\bigl(h^{-1}\bigr)
+  \;=\; \bigl(h^{-1}\bigr)^{-1}
+  \;=\; h,
+\]
+which is indeed the identity map on $H$. Thus $\varphi$ is a well-defined group homomorphism from $K$ into $\mathrm{Aut}(H)$.
+
+\subsection*{4. The Resulting Group \boldmath$G = H \rtimes K$}
+
+By definition, the semidirect product $H \rtimes K$ is given by:
+\[
+  G = \bigl\{\,(h,k) \mid h \in H,\, k \in K \bigr\}
+\]
+with the group law
+\[
+  (h_1,\,k_1)\,(h_2,\,k_2) 
+  \;=\;
+  \Bigl( h_1 \,\varphi(k_1)(h_2),\; k_1 k_2\Bigr).
+\]
+Concretely, since $K=\{e,x\}$, the only nontrivial action is 
+\[
+  x \cdot h \;=\; h^{-1}.
+\]
+
+\subsection*{5. Subgroup Structure and Index}
+
+When we embed $H$ into $G$, we identify $h \in H$ with $(h,e)\in H \rtimes K$. 
+The subgroup $H$ has index~2 in $G$ because the whole group $G$ consists of two cosets:
+\[
+  H \;\cup\; (H\,x).
+\]
+(This follows directly from the fact that $K$ has order~2.)
+
+\subsection*{6. Special Cases: Dihedral Groups}
+
+\begin{itemize}
+\item \textbf{If $H$ is cyclic of order $n$, i.e.\ $H \cong \mathbb{Z}_n$,} then the inversion map 
+  is the usual $h \mapsto -h$ (mod $n$). The resulting semidirect product $H \rtimes K$ 
+  is exactly the dihedral group $D_{2n}$ (the group of symmetries of a regular $n$-gon).
+\item \textbf{If $H \cong \mathbb{Z}$} (infinite cyclic), then this construction yields 
+  the \emph{infinite dihedral group}, often denoted $D_{\infty}$. 
+  It can be thought of as symmetries of an infinite line of equally spaced points.
+\end{itemize}
+
+\subsection*{Conclusion}
+
+Thus, by choosing $K=\mathbb{Z}_2$ to act on an abelian group $H$ through inversion, 
+we get a semidirect product $G=H \rtimes K$ that contains $H$ as an index-2 subgroup 
+and has an element $x$ which inverts every $h\in H$. This general framework 
+recovers all the classic \emph{dihedral-like} constructions when $H$ is cyclic.
+\section*{Example: Groups of Order 12}
+
+\textbf{Setup.}
+Let $G$ be a group of order 12.  By Sylow theory, we denote:
+\[
+   V \in \mathrm{Syl}_2(G)
+   \quad\text{and}\quad 
+   T \in \mathrm{Syl}_3(G).
+\]
+Since $|V|$ is a power of $2$ dividing 12, we have $|V|\in\{4,\,2,\,1\}$, 
+and since $|T|$ is a power of $3$ dividing 12, we get $|T|=3$.  
+A standard fact about groups of order 12 (proved in more advanced texts) is that
+\emph{either} $V$ \emph{or} $T$ is normal in $G$, and also $V \cap T = \{1\}$.  
+Hence $G$ can be viewed as a semidirect product
+\[
+  G \;=\; V \rtimes T
+  \quad\text{or}\quad 
+  G \;=\; T \rtimes V,
+\]
+depending on which subgroup is normal.
+
+Moreover, one can show $V$ must be (up to isomorphism) either $Z_4$ or $Z_2 \times Z_2$, 
+and $T \cong Z_3$.  
+We examine two main cases:
+
+\subsection*{Case 1: \boldmath{$V \triangleleft G$}}
+
+Here $G$ is a semidirect product $V \rtimes T$, so we get a group homomorphism
+\[
+  \varphi : T \;\longrightarrow\; \mathrm{Aut}(V).
+\]
+Since $T \cong Z_3$, we identify $T$ with the cyclic group $\langle y\rangle$ of order 3.  
+We must consider possible homomorphisms from a group of order 3 into $\mathrm{Aut}(V)$.
+
+\paragraph{(a) If $V \cong Z_4$.} 
+Then $\mathrm{Aut}(Z_4) \cong Z_2$.  
+But there are no nontrivial maps $Z_3 \to Z_2$ (because 3 does not divide 2, so any homomorphism must be trivial).  
+Hence $\varphi$ is the trivial homomorphism, giving us
+\[
+  G \;=\; V \times T \;\cong\; Z_4 \times Z_3 
+  \;\cong\; Z_{12}.
+\]
+Thus the only group of order 12 with a \emph{normal} $Z_4$ is the \emph{direct product} $Z_{12}$.
+
+\paragraph{(b) If $V \cong Z_2 \times Z_2$.}
+Then $\mathrm{Aut}(V) \cong S_3$.  
+(Indeed, the three non-identity elements of $Z_2 \times Z_2$ each generate a distinct subgroup of index 2, 
+and permuting these three subgroups yields a group of symmetries isomorphic to $S_3$.)
+
+Since $T \cong Z_3$, there is a unique subgroup of $\mathrm{Aut}(V) \cong S_3$ of order 3, namely the cyclic subgroup generated by a 3-cycle (call it $y$).  
+Hence any homomorphism $\varphi: T \to \mathrm{Aut}(V)$ is determined by where the generator $y$ of $T$ goes.  
+There are exactly three possibilities:
+\[
+  \varphi_i : T \;\longrightarrow\; S_3,
+  \quad 
+  \varphi_i(y) \;=\; y^i,
+  \quad 
+  i \;=\;0,1,2,
+\]
+where $y^0$ is the identity in $S_3$.
+
+\begin{itemize}
+\item \emph{Trivial map} $(i=0)$: \; $\varphi_0(y)$ is the identity in $S_3$.  
+  This yields the \textbf{direct product} $G = V \times T \cong Z_2 \times Z_2 \times Z_3$ (an abelian group).
+\item \emph{Nontrivial map} $(i=1 \text{ or } 2)$:  
+  These define isomorphic semidirect products (they differ only by relabeling the generator $y$).  
+  Both yield a \textbf{non-abelian} group of order 12, which one checks is isomorphic to $A_4$. 
+\end{itemize}
+In particular, there is a \emph{unique} non-abelian group of order 12 arising in this way, namely $A_4$.
+
+\subsection*{Case 2: \boldmath{$T \triangleleft G$}}
+
+Now $T \cong Z_3$ is normal in $G$, so $G$ is $T \rtimes V$, determined by a homomorphism
+\[
+  \psi: V \;\longrightarrow\; \mathrm{Aut}(T).
+\]
+Since $T \cong Z_3$, we have $\mathrm{Aut}(Z_3) \cong Z_2$.  
+Hence the image of $V$ in $Z_2$ is either trivial or a subgroup of order 2. 
+
+\paragraph{(a) \emph{Trivial homomorphism}.}
+If $\psi$ is the trivial map, we get the \emph{direct product} 
+\[
+  G \;=\; T \times V.
+\]
+\emph{E.g.}, if $V \cong Z_4$, we get $Z_3 \times Z_4 \cong Z_{12}$ again.  
+If $V \cong Z_2 \times Z_2$, we get $Z_3 \times (Z_2 \times Z_2) \cong Z_6 \times Z_2$ (an abelian group).
+
+\paragraph{(b) \emph{Nontrivial homomorphism}.}
+If $\psi$ is nontrivial, then the image has order 2.  
+This forces elements of $V$ in the kernel to act trivially on $T$, while any element outside the kernel inverts $T$ (sending its generator $t$ to $t^{-1}$).  
+Hence we get a \textbf{semidirect product} that is \emph{non-abelian} (since some part of $V$ flips elements of $T$).  
+
+\smallskip
+\noindent
+For instance:
+\begin{itemize}
+\item If $V \cong Z_4$, the nontrivial map $\psi$ makes one non-identity element of $Z_4$ invert $T$, giving a group isomorphic to $D_{6}$ (the dihedral group of order 12, which can also be seen as $S_3 \times Z_2$ depending on notation).
+\item If $V \cong Z_2\times Z_2$, one similarly finds exactly three distinct nontrivial homomorphisms (differing by which subgroup of $V$ is the kernel), all of which yield groups isomorphic to the same dihedral-like extension (isomorphic again to $S_3 \times Z_2$, up to standard group theory identifications).
+\end{itemize}
+
+\subsection*{Overall Classification}
+
+From these cases, one checks that (up to isomorphism) there are exactly \emph{five} groups of order 12:
+\[
+  Z_{12}, \quad
+  Z_6 \times Z_2, \quad
+  Z_3 \times Z_4, \quad
+  A_4, \quad
+  \text{and} \quad
+  D_{6} \;(\text{often presented as } S_3 \times Z_2).
+\]
+Three are abelian (all isomorphic to $Z_{12}$ or decompositions of it), and two are non-abelian ($A_4$ and the dihedral-type group).
+\section*{Why \texorpdfstring{$\mathrm{Aut}(Z_2 \times Z_2)$}{Aut(Z2 x Z2)} is isomorphic to \texorpdfstring{$S_3$}{S3}}
+
+\subsection*{1. Structure of \boldmath{$Z_2 \times Z_2$}}
+Recall that $Z_2 \times Z_2$ is a group with four elements:
+\[
+  (0,0),\quad (1,0),\quad (0,1),\quad (1,1).
+\]
+Here $(0,0)$ is the identity element.  Every \emph{non-identity} element has \emph{order 2}, because
+\[
+   (a,b) + (a,b) \;=\; (2a,\,2b) \;=\; (0,0)
+   \quad (\text{in mod 2 arithmetic}).
+\]
+Hence $(1,0)$, $(0,1)$, and $(1,1)$ each satisfy $2\cdot (a,b) = (0,0)$.
+
+\subsection*{2. Three Subgroups of Index 2}
+
+The group $Z_2 \times Z_2$ has exactly three subgroups of size 2:
+\[
+  \langle (1,0)\rangle \;=\;\{(0,0),\,(1,0)\}, \quad
+  \langle (0,1)\rangle \;=\;\{(0,0),\,(0,1)\}, \quad
+  \langle (1,1)\rangle \;=\;\{(0,0),\,(1,1)\}.
+\]
+Each of these subgroups is generated by exactly one non-identity element, 
+and each has \emph{index 2} in $Z_2 \times Z_2$ (since $\frac{|G|}{|H|}= \frac{4}{2} = 2$).
+
+\paragraph{Distinctness of the subgroups.} 
+Notice that $(1,0)$ cannot be in $\langle(0,1)\rangle$ or $\langle(1,1)\rangle$, etc. 
+So each non-identity element lies in a unique subgroup of size 2, meaning
+\[
+  (1,0) \;\mapsto\; \langle (1,0)\rangle, \quad
+  (0,1) \;\mapsto\; \langle (0,1)\rangle, \quad
+  (1,1) \;\mapsto\; \langle (1,1)\rangle.
+\]
+
+\subsection*{3. Automorphisms Permute These Three Subgroups}
+
+An automorphism of $Z_2 \times Z_2$ is a bijective group homomorphism from the group to itself.  
+Because \emph{all non-identity elements} have order 2, any automorphism must send a non-identity element (of order 2) to another non-identity element (of order 2).  Consequently, any automorphism induces a permutation of the \emph{set} 
+\[
+  \{ (1,0),\, (0,1),\, (1,1) \}.
+\]
+Equivalently, it induces a permutation of the three subgroups
+\[
+  \langle (1,0)\rangle, \quad \langle (0,1)\rangle, \quad \langle (1,1)\rangle,
+\]
+each of which is simply $\{ (0,0), (a,b)\}$ for one of the non-identity $(a,b)$.
+
+\subsection*{4. Group of All Permutations on Three Objects is \boldmath{$S_3$}}
+
+The set of all permutations of three distinct objects forms the \emph{symmetric group} $S_3$, which has $3!=6$ elements.  Thus there is a natural group homomorphism
+\[
+   \mathrm{Aut}(Z_2 \times Z_2)
+   \;\longrightarrow\; S_3,
+\]
+given by how an automorphism permutes the three non-identity elements.  
+
+\paragraph{Surjectivity.}
+It turns out this map is \emph{onto}: any permutation of the three non-identity elements can be realized by some automorphism of $Z_2 \times Z_2$.  (Concretely, you can define an automorphism by sending $(1,0)\mapsto$ whichever non-identity you want, then $(0,1)\mapsto$ a second choice of non-identity distinct from the first, etc.)
+
+\paragraph{Injectivity.}
+Different automorphisms must give different permutations of the three non-identity elements, so the map is also injective.  Therefore it is an \emph{isomorphism}.
+
+\subsection*{5. Conclusion}
+
+Hence 
+\[
+  \mathrm{Aut}(Z_2 \times Z_2)
+  \;\cong\;
+  S_3,
+\]
+since all automorphisms are in bijection with the permutations of the three non-identity elements (equivalently, the three subgroups of index 2).
+
+\bigskip
+
+\noindent
+\textbf{Summary.}  
+The group $Z_2 \times Z_2$ has exactly three non-identity elements, each generating a distinct subgroup of index 2.  Any automorphism must permute these subgroups.  The full set of permutations on three objects is exactly $S_3$, and one checks that every such permutation can be realized by a corresponding automorphism.  Therefore the automorphism group of $Z_2 \times Z_2$ is isomorphic to $S_3$.
+
+\section*{Why Every Finite Integral Domain is a Field}
+
+\subsection*{The Statement}
+\emph{If $R$ is a finite integral domain, then $R$ is in fact a field.}
+
+\subsection*{Key Definitions}
+\begin{itemize}
+    \item An \textbf{integral domain} is a commutative ring $R$ with unity $1 \neq 0$, such that $R$ has no zero-divisors. 
+      In other words, if $ab = 0$ in $R$, then either $a = 0$ or $b = 0$.
+    \item A \textbf{field} is a commutative ring $R$ with unity $1 \neq 0$ where \emph{every nonzero element} has a multiplicative inverse. 
+      Equivalently, $R^\times = R\setminus \{0\}$ (the set of units in $R$ is everything except $0$).
+\end{itemize}
+
+\subsection*{Overview of the Proof}
+To show $R$ is a field, we must prove that every nonzero element $a \in R$ has a multiplicative inverse.  
+Since $R$ is finite, we exploit the finiteness plus the \emph{cancellation property} (no zero-divisors) to conclude that 
+the map 
+\[
+  \psi : R \setminus \{0\}\;\longrightarrow\; R \setminus \{0\}, 
+  \quad
+  r \;\mapsto\; ra
+\]
+is not only injective but also surjective, hence it finds an element $b$ such that $ab = 1$.
+
+\subsection*{Step-by-Step Proof}
+
+\paragraph{1. Setup the map.}
+Fix a nonzero element $a \in R$.  
+Define the function
+\[
+  \psi : R \setminus \{0\} \;\to\; R \setminus \{0\}, 
+  \quad
+  \psi(r) = r\,a.
+\]
+
+\paragraph{2. Injectivity via the cancellation law.}
+Since $R$ is an integral domain, we have the \emph{cancellation property}:
+if $r_1 a = r_2 a$ in $R$, then $r_1 = r_2$, \emph{provided $a \neq 0$ and $r_1, r_2$ are in $R$}.  
+Hence $\psi(r_1) = \psi(r_2)$ implies $r_1 = r_2$.  
+Therefore $\psi$ is \textbf{injective}.
+
+\paragraph{3. Surjectivity in a finite set.}
+We are applying $\psi$ to $R\setminus\{0\}$, a \textbf{finite} set.  
+An injective map from a finite set to itself is automatically \textbf{surjective} 
+(because you cannot ``miss'' any elements without failing to be one-to-one on a finite set).
+
+\paragraph{4. Finding an inverse.}
+Since $\psi$ is surjective, there exists $b \in R\setminus\{0\}$ such that
+\[
+  \psi(b) \;=\; b\,a \;=\; 1.
+\]
+But $b\,a = 1$ exactly means $b$ is the multiplicative inverse of $a$.  
+Thus \emph{every nonzero $a$ has an inverse} in $R$.
+
+\paragraph{5. Conclusion.}
+Since $a$ was an arbitrary nonzero element of $R$, we have shown all nonzero elements are invertible. 
+Thus $R$ is a field.
+
+\bigskip
+
+\noindent
+\textbf{Corollary.}  
+A finite commutative ring with unity is either the zero ring or else has the property that 
+\[
+  \text{``no zero-divisors''} \;\implies\; \text{``all nonzero elements invertible''}.
+\]
+Hence being a ``finite integral domain'' forces the ring to be a field.
+
+\end{document}

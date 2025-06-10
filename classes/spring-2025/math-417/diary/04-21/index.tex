@@ -1,0 +1,215 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\paragraph{Polynomial rings in several variables.}
+Let $R$ be a (commutative) ring.  
+Adjoining a single indeterminate $X$ produces the polynomial ring $R[X]$.  
+Adjoining a second indeterminate $Y$ to this ring gives
+\[
+  R[X][Y],
+\]
+whose elements are polynomials in $Y$ with coefficients taken from $R[X]$.
+Because $X$ and $Y$ are independent, we suppress the nesting and write
+\[
+  R[X][Y] \;=\; R[X,Y].
+\]
+
+More generally, for $n\ge 1$ we define inductively
+\[
+  R[X_1,\dots,X_n]
+  \;=\;
+  R[X_1,\dots,X_{n-1}][X_n].
+\]
+
+Every polynomial $f\in R[X_1,\dots,X_n]$ has a \emph{unique} finite expansion
+\[
+  f
+  \;=\;
+  \sum_{i_1,\dots,i_n\ge 0}
+    a_{i_1\dots i_n}\,X_1^{\,i_1}\cdots X_n^{\,i_n},
+  \qquad
+  a_{i_1\dots i_n}\in R.
+\]
+
+Each product
+\[
+  m_{(i_1,\dots,i_n)}
+  \;=\;
+  X_1^{\,i_1}\cdots X_n^{\,i_n}
+\]
+is called a \emph{monomial}.  The collection of all such monomials forms an $R$‑basis of the ring $R[X_1,\dots,X_n]$.
+
+In the sequel we shall mostly work with the case where $R$ is a field, as this allows us to divide by any non‑zero coefficient and simplifies many arguments.
+\subsection{Characteristic of an Entire Ring}
+
+Let \(R\) be an \emph{entire} (i.e.\ non‑trivial, commutative, with no zero‑divisors) ring.
+Because \((R,+)\) is an abelian group, every element \(a\in R\) has an additive order:
+the least \(k>0\) such that \(ka=0\), or \(\infty\) if no such \(k\) exists.
+
+\begin{theorem}
+In an entire ring \(R\), the additive order of every non‑zero element is the same.
+If this common order is finite, then it is a \emph{prime} number.
+\end{theorem}
+
+\begin{proof}
+\textbf{(Equality of orders).}\;
+Choose a non‑zero element \(a\in R\) of \emph{minimal} finite additive order and
+denote this order by \(k>1\).  Then \(ka=0\).
+Multiplying by \(1_R\) on the left gives
+\[
+  (k\cdot1_R)a = 0.
+\]
+Since \(R\) has no zero‑divisors and \(a\neq0\), we must have \(k\cdot1_R=0\).
+For any $b\in R$ we now obtain
+\[
+  kb = (k\cdot1_R)b = 0,
+\]
+so every element has order dividing $k$.  
+Minimality of \(k\) forces every non‑zero element to have \emph{exactly} order~\(k\).
+If no element has finite order, all non‑zero elements share infinite order.
+
+\medskip\noindent
+\textbf{(Primality of the order).}\;
+Assume the common additive order \(k\) is finite.
+Write \(k=rs\) with \(1<r,s<k\).
+Then
+\[
+  0 = k\cdot1_R = (rs)1_R = (r1_R)(s1_R).
+\]
+Because \(R\) is entire, \(r1_R=0\) or \(s1_R=0\),
+contradicting the minimality of \(k=\operatorname{ord}(1_R)\).
+Hence \(k\) has no proper factorisation and is therefore prime.
+\end{proof}
+\paragraph{Concrete example.}
+Let the base ring be \(R=\mathbf{Q}\subseteq S=\mathbf{R}\) and adjoin \(\alpha=\sqrt2\).
+By definition
+\[
+  \mathbf{Q}[\sqrt2]
+  \;=\;
+  \left\{\,f(\sqrt2)\;\middle|\;f\in\mathbf{Q}[X]\right\}.
+\]
+
+\begin{itemize}
+  \item Since \((\sqrt2)^2 = 2\), any higher power of \(\sqrt2\) reduces to a
+        \(\mathbf{Q}\)-linear combination of \(1\) and \(\sqrt2\).
+  \item Consequently
+        \[
+          \boxed{\,\mathbf{Q}[\sqrt2]=\{\,a+b\sqrt2\mid a,b\in\mathbf{Q}\,\}\,}
+        \]
+        is a subring (indeed a field) between \(\mathbf{Q}\) and \(\mathbf{R}\).
+  \item For any subring \(T\subseteq\mathbf{R}\) containing
+        \(\mathbf{Q}\cup\{\sqrt2\}\) we have \(a+b\sqrt2\in T\), hence
+        \(\mathbf{Q}[\sqrt2]\subseteq T\).
+\end{itemize}
+
+Thus \(\mathbf{Q}[\sqrt2]\) is the smallest subring of \(\mathbf{R}\) containing
+both \(\mathbf{Q}\) and \(\sqrt2\).
+% ------------------------------------------------------------
+%  Adjoining elements — bracket notation R[α]
+%  (Requires the amsmath package for \middle, \text, \boxed)
+% ------------------------------------------------------------
+\subsection*{Adjoining Elements:  The Bracket Notation $R[\alpha]$}
+
+Let $R$ be a subring of a larger ring $S$ and let $\alpha\in S$.  
+The \emph{ring obtained from $R$ by adjoining $\alpha$} is written
+\[
+  R[\alpha]
+  \;=\;
+  \left\{\, f(\alpha)\;\middle|\; f\in R[X] \right\},
+\]
+i.e.\ all polynomial expressions in $\alpha$ whose coefficients lie in $R$.
+Equivalently, $R[\alpha]$ is the \textbf{smallest subring of $S$} that contains
+both $R$ and the element~$\alpha$.
+
+\paragraph{Example: $\mathbf{Q}[\sqrt{2}]$.}
+Inside the ambient ring $\mathbf{R}$ take $R=\mathbf{Q}$ and
+$\alpha=\sqrt{2}$.  Because $(\sqrt{2})^{2}=2$, every higher power of
+$\sqrt{2}$ reduces to a $\mathbf{Q}$–linear combination of $1$ and $\sqrt{2}$.
+Hence
+\[
+  \boxed{%
+    \mathbf{Q}[\sqrt{2}]
+      \;=\;
+      \{\,a+b\sqrt{2}\mid a,b\in\mathbf{Q}\,\}}
+\]
+is a \emph{quadratic field} sitting between $\mathbf{Q}$ and $\mathbf{R}$.
+
+\paragraph{Several generators.}
+Given $\alpha_{1},\dots,\alpha_{n}\in S$,
+\[
+  R[\alpha_{1},\dots,\alpha_{n}]
+  \;=\;
+  \left\{\, f(\alpha_{1},\dots,\alpha_{n})
+           \;\middle|\;
+           f\in R[X_{1},\dots,X_{n}] \right\}.
+\]
+For example,
+\[
+  \mathbf{Q}\!\left[\sqrt{2},\,i\right]
+  =\bigl\{\,a+b\sqrt{2}+ci+di\sqrt{2}\mid a,b,c,d\in\mathbf{Q}\bigr\}.
+\]
+
+\paragraph{Brackets vs.\ parentheses.}
+Square brackets \emph{do not} force reciprocals of new elements.  
+If one also wants to close under division, write
+\[
+  R(\alpha)
+  \;=\;
+  \text{the smallest \emph{field} containing } R[\alpha].
+\]
+When $R$ is already a field and $\alpha$ is \emph{algebraic} over $R$
+(e.g.\ $\sqrt{2}$ over $\mathbf{Q}$), one actually has $R[\alpha]=R(\alpha)$.
+For a \emph{transcendental} element (e.g.\ $\pi$) the two differ.
+\end{document}

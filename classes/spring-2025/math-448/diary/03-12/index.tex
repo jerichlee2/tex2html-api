@@ -1,0 +1,823 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+We wish to evaluate the integral
+\[
+\oint_C \frac{dz}{\left(z^3+1\right)^2},
+\]
+where \(C\) is the circle centered at \(-2\) with radius \(2\). We will solve this using the generalized Cauchy integral formula for derivatives.
+
+\section*{Step 1. Express the Integrand}
+
+Factor the denominator:
+\[
+z^3+1 = (z+1)(z^2-z+1).
+\]
+Thus, we have
+\[
+\frac{1}{\left(z^3+1\right)^2} = \frac{1}{(z+1)^2 (z^2-z+1)^2}.
+\]
+Define
+\[
+f(z) = \frac{1}{\left(z^2-z+1\right)^2}.
+\]
+Then the integrand becomes
+\[
+\frac{1}{\left(z^3+1\right)^2} = \frac{f(z)}{(z+1)^2}.
+\]
+
+\section*{Step 2. Locate the Singularities}
+
+The singularities of the integrand occur when
+\[
+z^3+1=0 \quad \Longrightarrow \quad z^3=-1.
+\]
+The cube roots of \(-1\) are:
+\[
+z=-1,\quad z=\frac{1}{2}+\frac{\sqrt{3}}{2}i,\quad z=\frac{1}{2}-\frac{\sqrt{3}}{2}i.
+\]
+Since the integrand has a squared factor in the denominator, each singularity is a double pole. The circle \( |z+2|=2 \) contains only the singularity at \( z=-1 \) (since \( |-1+2| = 1 < 2 \)).
+
+\section*{Step 3. Apply the Cauchy Integral Formula for Derivatives}
+
+The generalized Cauchy integral formula for derivatives states that if \( f \) is analytic inside and on a closed contour \( C \) and \( z_0 \) is inside \( C \), then
+\[
+\frac{1}{2\pi i}\oint_C \frac{f(z)}{(z-z_0)^{n+1}} \, dz = \frac{f^{(n)}(z_0)}{n!}.
+\]
+Here, with \( z_0=-1 \) and \( n=1 \) (since we have a double pole), we have
+\[
+\oint_C \frac{f(z)}{(z+1)^2} \, dz = 2\pi i\, f'(-1).
+\]
+
+\section*{Step 4. Compute \( f'(z) \)}
+
+Recall that
+\[
+f(z) = \frac{1}{\left(z^2-z+1\right)^2}.
+\]
+Let
+\[
+g(z)=z^2-z+1,
+\]
+so that
+\[
+f(z) = \frac{1}{[g(z)]^2}.
+\]
+Differentiating using the chain rule,
+\[
+f'(z) = -2 \frac{g'(z)}{[g(z)]^3}.
+\]
+Since
+\[
+g'(z)=\frac{d}{dz}(z^2-z+1)=2z-1,
+\]
+we evaluate at \( z=-1 \):
+\[
+g(-1)=(-1)^2-(-1)+1=1+1+1=3,
+\]
+\[
+g'(-1)=2(-1)-1=-2-1=-3.
+\]
+Thus,
+\[
+f'(-1) = -2\frac{-3}{3^3} = \frac{6}{27} = \frac{2}{9}.
+\]
+
+\section*{Step 5. Final Answer}
+
+Substituting back into the formula,
+\[
+\oint_C \frac{dz}{\left(z^3+1\right)^2} = 2\pi i\, f'(-1) = 2\pi i \left(\frac{2}{9}\right) = \frac{4\pi i}{9}.
+\]
+
+\[
+\boxed{\frac{4\pi i}{9}}
+\]
+
+\noindent
+\textbf{Problem Statement.} Let
+\[
+f(z) \;=\; z^{-1} \,\tan^2(z).
+\]
+\begin{enumerate}
+\item Characterize all singularities of $f$ as removable, pole, or essential.
+\item If removable, find the value that makes $f$ analytic at that point.
+\item If a pole, find its order.
+\item Finally, find the radius of convergence of the Taylor series of $f$ around $z=i$.
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Step 1: Identify potential singularities.}
+
+\begin{itemize}
+\item Since $f(z) = \dfrac{\tan^2(z)}{z}$, we see that $z=0$ might be a singularity (due to division by $z$).
+\item $\tan(z)$ has singularities (simple poles) where $\cos(z) = 0$, i.e., at 
+\[
+z \;=\; \frac{\pi}{2} + n\pi, \quad n \in \mathbb{Z}.
+\]
+Hence $\tan^2(z)$ has \emph{double poles} at these points. Dividing by $z$ does not cancel these poles (unless $z=0$ coincided with one, which it does not), so
+\[
+z \;=\; \frac{\pi}{2} + n\pi \quad (n \in \mathbb{Z})
+\]
+are also singularities of $f$.
+\end{itemize}
+
+\medskip
+\noindent
+\textbf{Step 2: Classify the singularity at \boldmath{$z=0$}.}
+
+\[
+f(z) \;=\; \frac{\tan^2(z)}{z}.
+\]
+Near $z=0$, recall the Maclaurin expansion:
+\[
+\tan(z) \;=\; z \;+\; \frac{z^3}{3} \;+\; O(z^5).
+\]
+Hence
+\[
+\tan^2(z) \;=\; \bigl(z + \tfrac{z^3}{3} + \dots\bigr)^2 
+\;=\; z^2 \;+\; \tfrac{2}{3}\,z^4 \;+\; O(z^6).
+\]
+Dividing by $z$, we get
+\[
+\frac{\tan^2(z)}{z} \;=\; z \;+\; \frac{2}{3}\,z^3 \;+\; O(z^5).
+\]
+As $z \to 0$, this expression tends to $0$. Therefore:
+\[
+\lim_{z \to 0} f(z) \;=\; 0.
+\]
+This shows that $z=0$ is a \emph{removable singularity}, since $f(z)$ remains finite (indeed goes to $0$) as $z \to 0$. 
+
+\medskip
+\noindent
+\textbf{Value at \boldmath{$z=0$}.} We can make $f$ analytic at $z=0$ by defining
+\[
+f(0) \;=\; 0.
+\]
+
+\medskip
+\noindent
+\textbf{Step 3: Classify the singularities at \boldmath{$z = \tfrac{\pi}{2} + n\pi$}.}
+
+Since $\tan(z)$ has a simple pole at each $z = \tfrac{\pi}{2} + n\pi$, $\tan^2(z)$ has a \emph{double} pole there. Dividing by $z$ does not remove or reduce the order of the pole (because $z \neq 0$ at these points). Therefore,
+\[
+z \;=\; \frac{\pi}{2} + n\pi \quad (n \in \mathbb{Z})
+\]
+are \emph{poles of order 2} (double poles) of $f(z)$. 
+
+\medskip
+\noindent
+\textbf{Conclusion on singularities:}
+\begin{itemize}
+\item $z=0$ is a \emph{removable singularity} with the removable value $f(0) = 0$.
+\item $z = \frac{\pi}{2} + n\pi$, $n \in \mathbb{Z}$, are \emph{double poles} of $f$.
+\item There are no essential singularities.
+\end{itemize}
+
+\medskip
+\noindent
+\textbf{Step 4: Radius of convergence of the Taylor series about \boldmath{$z=i$}.}
+
+The radius of convergence of a Taylor (power) series centered at $z=i$ is the distance from $i$ to the nearest singularity in the complex plane. Once we remove the singularity at $z=0$ (by defining $f(0)=0$), $f$ is analytic at $0$. Thus the \emph{true} singularities for the extended function are the poles at
+\[
+z = \frac{\pi}{2} + n\pi, \quad n \in \mathbb{Z}.
+\]
+
+We must compute
+\[
+\min_{n \in \mathbb{Z}} \Bigl|\,i - \bigl(\tfrac{\pi}{2} + n\pi\bigr)\Bigr|.
+\]
+Since $i$ has imaginary part $1$ and real part $0$, the distance to any real number $x$ is
+\[
+|\,i - x| \;=\; \sqrt{x^2 + 1}.
+\]
+We want to minimize $\sqrt{\left(\tfrac{\pi}{2} + n\pi\right)^2 + 1}$ with respect to $n \in \mathbb{Z}$. 
+
+Observe that $\left|\tfrac{\pi}{2} + n\pi\right|$ is minimized by $n=0$ or $n=-1$:
+\[
+\tfrac{\pi}{2} \approx 1.5708,\quad
+-\tfrac{\pi}{2} \approx -1.5708.
+\]
+Hence 
+\[
+\min_{n\in\mathbb{Z}} \left(\tfrac{\pi}{2} + n\pi\right)^2
+= \left(\pm\,\tfrac{\pi}{2}\right)^2
+= \frac{\pi^2}{4}.
+\]
+Thus the distance to the nearest pole from $z=i$ is
+\[
+\sqrt{\frac{\pi^2}{4} + 1} 
+\;=\;
+\sqrt{\frac{\pi^2 + 4}{4}}
+\;=\;
+\frac{\sqrt{\pi^2 + 4}}{2}.
+\]
+Therefore, the radius of convergence of the Taylor series of $f$ about $z = i$ is
+\[
+R \;=\; \frac{\sqrt{\pi^2 + 4}}{2}.
+\]
+
+\medskip
+\noindent
+\textbf{Final Answer.}
+\begin{itemize}
+\item \underline{Singularity at $z=0$:} Removable; $f(0)=0$.
+\item \underline{Singularities at $z = \frac{\pi}{2} + n\pi$:} Poles of order 2.
+\item \underline{Radius of convergence about $z=i$:} 
+\[
+R \;=\; \frac{\sqrt{\pi^2 + 4}}{2}.
+\]
+\end{itemize}
+\textbf{Problem Statement.} 
+Let $f$ be analytic in $0 < |z - z_0| < r$ and suppose that $f$ has an \emph{essential singularity} at $z_0$. Let $w$ be any complex number. Define
+\[
+g(z) \;=\; \frac{1}{f(z) - w}, \quad z \in D,
+\]
+where $D$ is some punctured neighborhood $\{\,0 < |z - z_0| < r\}$ of $z_0$. Show that $g$ is not bounded in any punctured disc $0 < |z - z_0| < \varepsilon < r$. (Hint: If $g$ is bounded, then show $f$ has a pole or removable singularity at $z_0$ --- contradicting the assumption that $z_0$ is an essential singularity.) Conclude that the range of $f$ comes arbitrarily close to \emph{every} point in the complex plane near $z_0$. Finally, discuss how this result differs from the cases of removable singularities and poles.
+
+\bigskip
+\noindent
+\textbf{Step-by-Step Solution.}
+
+\medskip
+\noindent
+\textbf{1. Assume $g$ is bounded near $z_0$.}
+
+Suppose, for the sake of contradiction, that there exists a punctured disc 
+\[
+0 < |z - z_0| < \varepsilon
+\]
+in which
+\[
+\bigl|g(z)\bigr| \;=\; \left|\frac{1}{f(z) - w}\right|\quad
+\text{is bounded by some constant } M > 0.
+\]
+Equivalently,
+\[
+|f(z) - w| \;\ge\; \frac{1}{M} \quad \text{for all } 0 < |z - z_0| < \varepsilon.
+\]
+Hence $f(z) \neq w$ for $0 < |z - z_0| < \varepsilon$.
+
+\medskip
+\noindent
+\textbf{2. Define an extended function at $z_0$.}
+
+Since $g$ is bounded in the punctured disc, we can attempt to \emph{extend} $g$ to the full disc (including $z_0$) by setting
+\[
+g(z_0) \;:=\; 0.
+\]
+\emph{Claim:} With this definition, $g$ becomes an analytic function on the entire disc $|z - z_0| < \varepsilon$. 
+
+\smallskip
+\noindent
+\emph{Justification:} By Riemann's Removable Singularity Theorem, a bounded holomorphic function on a punctured disc can be extended holomorphically to the center if it has a removable singularity there. The key point is that $g$ is bounded near $z_0$ and $f(z) \neq w$ in that region, so there is no pole or essential behavior for $g$ itself. Therefore, $z_0$ is a removable singularity for $g$.
+
+\medskip
+\noindent
+\textbf{3. Relate the extension of $g$ to $f$.}
+
+Now that $g$ extends to an analytic function on $|z - z_0| < \varepsilon$, define
+\[
+h(z) \;=\; \frac{1}{g(z)} \;=\; f(z) - w.
+\]
+Because $g$ is analytic and nonzero in the punctured disc, $h$ is also analytic there. Moreover, at $z_0$ we have
+\[
+g(z_0) = 0 
+\quad\Longrightarrow\quad 
+h(z_0) = \frac{1}{g(z_0)} \;=\; \text{``infinite'' or undefined a priori}.
+\]
+But since $g$ extends to be analytic (with $g(z_0)=0$), $1/g(z)$ could develop either a \emph{pole} or a \emph{removable} singularity at $z_0$. Thus $h(z) = f(z) - w$ can have at most a pole or be analytic at $z_0$. 
+
+\medskip
+\noindent
+\textbf{4. Contradiction with the assumption of an essential singularity.}
+
+If $h(z) = f(z) - w$ is either
+\begin{itemize}
+\item \textbf{analytic at $z_0$,} or
+\item \textbf{has a pole at $z_0$,}
+\end{itemize}
+then $f(z) = h(z) + w$ also has, respectively, a \emph{removable} singularity or a \emph{pole} at $z_0$. \emph{Either case contradicts the hypothesis that $z_0$ is an essential singularity of $f$.}
+
+Therefore, our original assumption that $g(z) = 1/(f(z) - w)$ is bounded in the punctured disc must be false. Hence,
+\[
+g(z) \;=\; \frac{1}{f(z) - w}
+\]
+\emph{cannot be bounded} in \emph{any} punctured disc around $z_0$.
+
+\medskip
+\noindent
+\textbf{5. Conclusion: The image of $f$ is dense near $w$.}
+
+From the unboundedness of $g(z)$ in every neighborhood of $z_0$, we deduce that $|f(z) - w|$ must come arbitrarily close to $0$ (otherwise $1/(f(z)-w)$ would stay bounded). This is precisely the essence of the \emph{Casorati--Weierstrass Theorem}: near an essential singularity, $f(z)$ takes values \emph{arbitrarily close} to \emph{every} complex number $w$. Equivalently, $f$'s image is dense in the complex plane in any neighborhood of $z_0$.
+
+\medskip
+\noindent
+\textbf{6. How this differs from removable singularities and poles.}
+
+\begin{itemize}
+\item \textbf{Removable Singularity:} If $z_0$ is a removable singularity, then after defining $f(z_0)$ suitably, $f$ becomes \emph{holomorphic} (analytic) at $z_0$. There is no wild behavior of $f$ near $z_0$; in particular, $f$ cannot be dense in $\mathbb{C}$ near $z_0$.
+\item \textbf{Pole:} If $z_0$ is a pole of $f$, then $|f(z)| \to \infty$ as $z \to z_0$. Again, $f$ does not take values arbitrarily close to \emph{every} complex number in any neighborhood of $z_0$. Instead, $f$ ``blows up'' to infinity near $z_0$.
+\item \textbf{Essential Singularity:} By contrast, an essential singularity exhibits the most complicated local behavior. The Casorati--Weierstrass Theorem (or the Great Picard Theorem, in a stronger form) ensures that the image of $f$ near $z_0$ is \emph{extremely dense} in $\mathbb{C}$. Indeed, $f$ takes on almost all complex values (with at most one exception) infinitely often in any neighborhood of $z_0$.
+\end{itemize}
+
+
+\textbf{Problem Statement.} 
+Find the Laurent series of 
+\[
+f(z) = \frac{1}{(z+1)^2} \;+\; \frac{1}{(z-2)^3}
+\]
+in powers of $z$ for the annulus $1 < |z| < 2$. Then express the coefficient of $z^n$ in terms of $n$.
+
+\medskip
+
+\textbf{Solution.}
+
+We want to write each term as a series in powers of $z$ that converges in the region $1 < |z| < 2$. Notice:
+
+\[
+f(z) \;=\; (z+1)^{-2} \;+\; (z-2)^{-3}.
+\]
+
+We will expand each part separately.
+
+\medskip
+
+\noindent
+\textbf{1) Expansion of $(z+1)^{-2}$ for $|z| > 1$.}
+
+Observe that
+\[
+(z+1)^{-2}
+= \bigl[z\bigl(1 + \tfrac{1}{z}\bigr)\bigr]^{-2}
+= z^{-2} \,\bigl(1 + \tfrac{1}{z}\bigr)^{-2}.
+\]
+We can use the binomial (or generalized binomial) expansion for $(1 + w)^{-2}$ with $w = 1/z$, valid for $|w|<1$ (i.e.\ $|z|>1$):
+\[
+(1 + w)^{-2}
+= \sum_{k=0}^{\infty} \binom{-2}{k} \, w^k.
+\]
+A known identity for binomial coefficients with negative upper index gives
+\[
+\binom{-2}{k} 
+= (-1)^k \,\binom{k + 2 - 1}{2 - 1}
+= (-1)^k (k+1).
+\]
+Hence,
+\[
+(1 + w)^{-2}
+= \sum_{k=0}^{\infty} (-1)^k (k+1)\, w^k.
+\]
+Substituting $w = 1/z$ and multiplying by $z^{-2}$, we get
+\[
+(z+1)^{-2}
+= z^{-2} \sum_{k=0}^{\infty} (-1)^k (k+1)\,\frac{1}{z^k}
+= \sum_{k=0}^{\infty} (-1)^k (k+1)\, z^{-2 - k}.
+\]
+If we let $n = -2 - k$, then as $k$ runs from $0$ to $\infty$, $n$ runs from $-2$ down to $-\infty$. Thus we can write
+\[
+(z+1)^{-2}
+= \sum_{n=-2}^{-\infty} a_n\, z^n
+\quad\text{where}\quad
+a_n = (-1)^n(-n-1)
+\;\;\;\text{for}\;n \le -2.
+\]
+(One can check directly that $(-1)^n(-n-1)$ matches $(-1)^k(k+1)$ upon substituting $n=-2-k$.)
+
+\medskip
+
+\noindent
+\textbf{2) Expansion of $(z-2)^{-3}$ for $|z| < 2$.}
+
+Now write
+\[
+z-2 = -2\Bigl(1 - \tfrac{z}{2}\Bigr),
+\]
+so
+\[
+(z-2)^{-3}
+= (-2)^{-3}\,\Bigl(1 - \tfrac{z}{2}\Bigr)^{-3}
+= -\tfrac{1}{8}\,\Bigl(1 - \tfrac{z}{2}\Bigr)^{-3}.
+\]
+We use the binomial expansion again, now for $(1 - w)^{-3}$ with $w = z/2$, valid when $|z/2|<1$ (i.e.\ $|z|<2$):
+\[
+(1 - w)^{-3}
+= \sum_{k=0}^{\infty} \binom{k+2}{2}\, w^k.
+\]
+Hence,
+\[
+(z-2)^{-3}
+= -\tfrac{1}{8}\,
+\sum_{k=0}^{\infty} \binom{k+2}{2}\,\Bigl(\tfrac{z}{2}\Bigr)^k
+= -\tfrac{1}{8}\,
+\sum_{k=0}^{\infty} \binom{k+2}{2}\,\tfrac{z^k}{2^k}.
+\]
+Thus we can write
+\[
+(z-2)^{-3}
+= \sum_{k=0}^{\infty} b_k\,z^k
+\quad\text{where}\quad
+b_k 
+= -\tfrac{1}{8}\,\binom{k+2}{2}\,\tfrac{1}{2^k}.
+\]
+
+\medskip
+
+\noindent
+\textbf{3) Combine the expansions in the annulus $1<|z|<2$.}
+
+Since $(z+1)^{-2}$ converges for $|z|>1$ and $(z-2)^{-3}$ converges for $|z|<2$, their sum
+\[
+f(z) = (z+1)^{-2} + (z-2)^{-3}
+\]
+admits a Laurent series valid for $1<|z|<2$, obtained by simply adding the two expansions:
+
+\[
+f(z)
+= \underbrace{\sum_{n=-2}^{-\infty} (-1)^n(-n-1)\,z^n}_{\text{from }(z+1)^{-2}}
+\;+\;
+\underbrace{\sum_{k=0}^{\infty} \Bigl[-\tfrac{1}{8}\,\binom{k+2}{2}\,\tfrac{1}{2^k}\Bigr]\,z^k}_{\text{from }(z-2)^{-3}}.
+\]
+Hence the full Laurent series in powers of $z$ (negative and nonnegative) is:
+
+\[
+\boxed{
+f(z) 
+= \sum_{n=-\infty}^{-2} \bigl[\,(-1)^n(-n-1)\bigr]\,z^n
+\;+\;
+\sum_{n=0}^{\infty} \bigl[\,-\tfrac{1}{8}\,\binom{n+2}{2}\,\tfrac{1}{2^n}\bigr]\,z^n,
+\quad
+1 < |z| < 2.
+}
+\]
+
+\medskip
+
+\noindent
+\textbf{4) Coefficients of $z^n$.}
+
+To express the coefficient of $z^n$ in one piecewise formula:
+
+\[
+\text{Coefficient of } z^n 
+= 
+\begin{cases}
+(-1)^n \,(-n-1), 
+& \text{for } n \le -2, \\[6pt]
+-\tfrac{1}{8}\,\displaystyle\binom{n+2}{2}\,\tfrac{1}{2^n}, 
+& \text{for } n \ge 0, \\[6pt]
+0,
+& \text{for } -1 \le n \le -1 
+\text{ (i.e.\ there are no terms with } n=-1 \text{).}
+\end{cases}
+\]
+
+This completes the determination of the Laurent series in the annulus $1 < |z| < 2$.
+
+\noindent
+\textbf{Goal:} Show how Equation~(7) is derived from Equation~(6). We start with the statement of these equations (as seen in the text):
+
+\[
+\text{(6)} \quad f(z) \;=\; \sum_{k=0}^{\infty} a_k\,(z - z_0)^{\,k - m},
+\]
+\[
+\text{(7)} \quad \mathrm{Res}\bigl(f;z_0\bigr)
+\;=\;
+\frac{1}{(m-1)!}\,\left.\frac{d^{\,m-1}}{dz^{\,m-1}}
+\Bigl[\,(z - z_0)^m\,f(z)\Bigr]\right|_{z=z_0}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 1. Identify the residue as the coefficient of \((z - z_0)^{-1}\).}
+
+\[
+f(z) \;=\; \sum_{k=0}^{\infty} a_k\,(z - z_0)^{k - m}.
+\]
+In a Laurent series expansion around \(z_0\), the residue at \(z_0\) is precisely the coefficient of \((z - z_0)^{-1}\). In the above sum, that term corresponds to
+\[
+k - m \;=\; -1
+\quad\Longrightarrow\quad
+k \;=\; m-1.
+\]
+Hence,
+\[
+\mathrm{Res}\bigl(f;z_0\bigr)
+\;=\;
+a_{m-1}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 2. Express \(a_{m-1}\) in terms of the derivatives of \((z - z_0)^m f(z)\).}
+
+Since \(f(z) = \frac{H(z)}{(z - z_0)^m}\) with \(H(z)\) analytic at \(z=z_0\), we can write
+\[
+H(z) \;=\; (z - z_0)^m\,f(z).
+\]
+Because \(H(z)\) is analytic, it has a Taylor series expansion around \(z_0\):
+\[
+H(z)
+\;=\;
+\sum_{k=0}^{\infty} \frac{H^{(k)}(z_0)}{k!}\,(z - z_0)^k.
+\]
+But from Equation~(6), we also know
+\[
+H(z)
+\;=\;
+\sum_{k=0}^{\infty} a_k\,(z - z_0)^k.
+\]
+By matching coefficients in these two expansions of \(H(z)\), we see that
+\[
+a_k
+\;=\;
+\frac{H^{(k)}(z_0)}{k!}.
+\]
+Thus,
+\[
+a_{m-1}
+\;=\;
+\frac{H^{(m-1)}(z_0)}{(m-1)!}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 3. Rewrite \(H^{(m-1)}(z_0)\) in terms of \(\frac{d^{m-1}}{dz^{m-1}}\bigl[(z - z_0)^m f(z)\bigr]\).}
+
+Since \(H(z) = (z - z_0)^m\,f(z)\), we have
+\[
+H^{(m-1)}(z_0)
+\;=\;
+\left.
+\frac{d^{m-1}}{dz^{m-1}}
+\Bigl[\,(z - z_0)^m\,f(z)\Bigr]
+\right|_{z = z_0}.
+\]
+Therefore,
+\[
+a_{m-1}
+\;=\;
+\frac{1}{(m-1)!}
+\left.
+\frac{d^{m-1}}{dz^{m-1}}
+\Bigl[\,(z - z_0)^m\,f(z)\Bigr]
+\right|_{z = z_0}.
+\]
+
+\bigskip
+\noindent
+\textbf{Step 4. Conclude that \(\mathrm{Res}\bigl(f;z_0\bigr) = a_{m-1}\).}
+
+Putting it all together,
+\[
+\mathrm{Res}\bigl(f;z_0\bigr)
+\;=\;
+a_{m-1}
+\;=\;
+\frac{1}{(m-1)!}
+\left.
+\frac{d^{m-1}}{dz^{m-1}}
+\Bigl[\,(z - z_0)^m\,f(z)\Bigr]
+\right|_{z = z_0}.
+\]
+This final expression is exactly Equation~(7), completing the derivation.
+\noindent
+\textbf{Problem Statement.}
+Let $f$ be an analytic function in $\mathbb{C}\setminus\{0\}$. Suppose
+\[
+|f(z)| \;\le\; |z|^{-10} + |z|^{10}
+\quad\text{for all }z \neq 0.
+\]
+Prove that $f$ is a rational function. (Hint: Use Cauchy estimates for Laurent series.)
+
+\bigskip
+
+\begin{proof}
+We will show that $f$ can only have finitely many negative-power terms in its Laurent expansion around $0$ and also finitely many positive-power terms in its Laurent expansion around $\infty$. This implies $f$ must be a rational function.
+
+\bigskip
+
+\noindent
+\textbf{Step 1. Laurent expansion around $z=0$.}
+
+Since $f$ is analytic on $\mathbb{C}\setminus\{0\}$, it admits a Laurent series expansion around $z=0$ of the form
+\[
+f(z) \;=\; \sum_{n=-\infty}^{\infty} a_n \, z^n
+\quad\text{for } 0 < |z| < R,
+\]
+where $R>0$ can be any positive radius not enclosing other singularities (if any exist elsewhere, but none are given except possibly at $0$).
+
+\medskip
+
+\noindent
+\underline{Claim:} $a_n = 0$ for all $n < -10$. 
+
+\smallskip
+
+\noindent
+\emph{Proof of the claim:}
+
+\begin{itemize}
+\item By Cauchy's integral formula for Laurent coefficients, for any integer $n$,
+\[
+a_n \;=\; \frac{1}{2\pi i} \int_{|z|=r} \frac{f(z)}{z^{n+1}} \, dz,
+\]
+for sufficiently small $r>0$.
+\item Take $r>0$ small enough so that $|z|=r<1$. Then, by hypothesis,
+\[
+|f(z)| \;\le\; |z|^{-10} + |z|^{10} \;=\; r^{-10} + r^{10}.
+\]
+Hence
+\[
+|a_n| 
+\;\le\; \frac{1}{2\pi} \int_{|z|=r} \frac{|f(z)|}{|z|^{n+1}} \, |dz|
+\;\le\; \frac{1}{2\pi} \int_{|z|=r} \frac{r^{-10} + r^{10}}{r^{\,n+1}} \,|dz|.
+\]
+\item Since the circumference of $|z|=r$ is $2\pi r$, we get
+\[
+|a_n|
+\;\le\; \frac{1}{2\pi} \cdot (r^{-10} + r^{10}) \cdot \frac{1}{r^{\,n+1}} \cdot 2\pi r
+\;=\; (r^{-10} + r^{10}) \cdot \frac{1}{r^n}.
+\]
+\item Thus
+\[
+|a_n| \;\le\; r^{-10-n} + r^{10-n}.
+\]
+\item Now let $r \to 0$. 
+  - If $n < -10$, then $-10 - n > 0$, so $r^{-10-n} \to \infty$ as $r \to 0$. This does \emph{not} immediately help unless we think carefully: we want $a_n$ finite.  
+  - A better approach is to notice that if $n < -10$, the term $r^{10-n} = r^{(10-n)}$ goes to $0$ as $r \to 0$ \emph{only if} $(10-n)>0 \implies n<10$. This is always true for $n< -10$. Meanwhile, $r^{-10-n} = r^{-(n+10)}$ blows up unless $a_n = 0$. 
+\end{itemize}
+
+Another standard way: If $n < -10$, consider the product $z^{10}f(z)$. Its Laurent coefficient for $z^n$ in $f(z)$ becomes the coefficient for $z^{n+10}$ in $z^{10}f(z)$. If $n+10 < 0$, then by Cauchy estimates on $z^{10}f(z)$ near $0$, one deduces that those coefficients must be zero (because the product $z^{10} f(z)$ would still be bounded near $0$). This is a more direct argument:
+
+\[
+z^{10} f(z) \quad \text{near } z=0 \;\; \Longrightarrow \;\; 
+|z^{10} f(z)| \;\le\; |z|^{10} \bigl(|z|^{-10} + |z|^{10}\bigr) = 1 + |z|^{20}.
+\]
+So $z^{10} f(z)$ is analytic at $0$ (removable singularity) and remains bounded as $z\to 0$. Hence its Laurent expansion has no negative powers of $z$. That implies $f(z)$ has no terms $z^n$ with $n < -10$. Thus $a_n=0$ for $n < -10$.
+
+\medskip
+
+\noindent
+Therefore, near $z=0$, $f$ can only have a pole of order at most $10$ (i.e., at most $10$ negative-power terms). Equivalently,
+\[
+f(z) = \sum_{n=-10}^{\infty} a_n \, z^n
+\quad\text{for small }|z|.
+\]
+
+\bigskip
+
+\noindent
+\textbf{Step 2. Laurent expansion around $z=\infty$.}
+
+To analyze the behavior at infinity, perform the change of variable $w = \frac{1}{z}$. Then $z = \frac{1}{w}$, and $f\bigl(\tfrac{1}{w}\bigr)$ is analytic in $\mathbb{C}\setminus\{0\}$ with a possible singularity at $w=0$ (which corresponds to $z=\infty$).
+
+Define
+\[
+g(w) \;=\; f\!\Bigl(\frac{1}{w}\Bigr).
+\]
+The hypothesis $|f(z)| \le |z|^{-10} + |z|^{10}$ becomes
+\[
+|g(w)| 
+\;=\;
+\left|\,f\!\Bigl(\tfrac{1}{w}\Bigr)\right|
+\;\le\;
+\left|\frac{1}{w}\right|^{-10} + \left|\frac{1}{w}\right|^{10}
+\;=\;
+|w|^{10} + |w|^{-10}.
+\]
+Hence, near $w=0$ (i.e.\ $z=\infty$), we have the same type of bound we had near $z=0$.
+
+\medskip
+
+By the same argument as in Step~1 (using a Laurent expansion for $g(w)$ around $w=0$ and Cauchy estimates), one shows that $g(w)$ can have at most a pole of order $10$ at $w=0$. 
+
+\smallskip
+
+\noindent
+\underline{Equivalently}, in terms of $z$, this means $f(z)$ can have at most a pole of order $10$ at $z=\infty$. 
+
+\bigskip
+
+\noindent
+\textbf{Step 3. Conclusion that $f$ is rational.}
+
+A function $f$ that is analytic on $\mathbb{C}\setminus\{0\}$ and has at most a pole of order $10$ at $0$ and at most a pole of order $10$ at $\infty$ must be a rational function with:
+\begin{itemize}
+\item Numerator of degree at most $10$ (to ensure at most a pole of order $10$ at $\infty$),
+\item Denominator of degree at most $10$ (to ensure at most a pole of order $10$ at $0$).
+\end{itemize}
+
+Thus $f(z)$ is a rational function whose only possible poles are at $z=0$ and $z=\infty$, each of order at most $10$. 
+
+Hence,
+\[
+\boxed{f \text{ is a rational function.}}
+\]
+
+\end{proof}
+
+$f(z) = \frac{(z^{2})(e^{\frac{4\pi i}{z}})}{(z+1)(z-2)^{3}}$ 
+$f(z) = \sum_{i=-\infty }^{\infty }a_{k}(z+1)^{k} $ 
+$f(z) = (z-1)^{-1}, \left\vert z+1 \right\vert > 2$
+
+We wish to expand
+\[
+f(z)=\frac{1}{z-1}
+\]
+as a Laurent series in powers of \(z+1\) for the region \(|z+1| < 2\).
+
+\section*{Step 1: Substitute \(w = z+1\)}
+Let
+\[
+w = z+1 \quad \Longrightarrow \quad z = w-1.
+\]
+Then,
+\[
+z-1 = (w-1) - 1 = w-2,
+\]
+so that
+\[
+\frac{1}{z-1} = \frac{1}{w-2}.
+\]
+
+\section*{Step 2: Rewrite \(\frac{1}{w-2}\) for \(|w| < 2\)}
+We note that
+\[
+w-2 = -\bigl(2-w\bigr) = -2\left(1-\frac{w}{2}\right).
+\]
+Thus,
+\[
+\frac{1}{w-2} = \frac{-1}{2}\cdot\frac{1}{1-\frac{w}{2}}.
+\]
+
+\section*{Step 3: Expand using the geometric series}
+For \(\left|\frac{w}{2}\right|<1\) (which holds because \(|w|<2\)), we have the geometric series expansion:
+\[
+\frac{1}{1-\frac{w}{2}} = \sum_{n=0}^{\infty} \left(\frac{w}{2}\right)^n.
+\]
+Thus,
+\[
+\frac{1}{w-2} = \frac{-1}{2} \sum_{n=0}^{\infty} \left(\frac{w}{2}\right)^n.
+\]
+
+\section*{Step 4: Substitute back \(w=z+1\)}
+Returning to the original variable \(z\), we have:
+\[
+\frac{1}{z-1} = -\frac{1}{2} \sum_{n=0}^{\infty} \left(\frac{z+1}{2}\right)^n, \quad |z+1| < 2.
+\]
+
+\section*{Final Answer}
+The Laurent series expansion is
+\[
+\boxed{\frac{1}{z-1} = -\frac{1}{2}\sum_{n=0}^{\infty} \left(\frac{z+1}{2}\right)^n, \quad |z+1| < 2.}
+\]
+$\sum_{i=-\infty }^{-1} a_-k(z-z_0)^{-k}$ 
+\end{document}

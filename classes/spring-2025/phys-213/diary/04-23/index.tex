@@ -1,0 +1,1560 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% --------------------------------------------------------------------------
+% Clear, step-by-step explanation of the “Phases” vignette
+% (place inside any article document)
+
+\subsection*{Understanding Phase Diagrams via Chemical Potential}
+
+\paragraph{1.  Free energy of a multi-phase system.}
+For a fixed temperature \(T\) and pressure \(p\) we write the Gibbs free
+energy of \(N\) water molecules split between two phases
+(liquid \(\ell\) and gas \(g\)) as
+\[
+  G_{\mathrm{tot}}
+  \;=\;
+  \mu_{\ell}(p,T)\,N_{\ell} \;+\; \mu_{g}(p,T)\,N_{g},
+  \qquad
+  N_{\ell}+N_{g}=N_{\mathrm{w}} .
+\]
+Here \(\mu_{\alpha}(p,T)\) is the \emph{chemical potential}
+(Gibbs free energy per molecule) of phase~\(\alpha\).
+Because \(p\) and \(T\) are imposed by the surroundings,
+\(\mu_{\ell}\) and \(\mu_{g}\) are just two \emph{numbers};
+the \emph{only} variables the system can adjust are
+\(N_{\ell}\) and \(N_{g}\).
+
+\paragraph{2.  Minimising \(G_{\mathrm{tot}}\) picks the stable phase.}
+\begin{itemize}
+  \item If \(\mu_{\ell} < \mu_{g}\), the derivative
+        \(\partial G_{\mathrm{tot}}/\partial N_{\ell} = \mu_{\ell}-\mu_{g}\)
+        is \emph{negative}.  Decreasing \(G_{\mathrm{tot}}\)
+        therefore means converting every molecule to the liquid:
+        \(N_{\ell}=N_{\mathrm{w}}\), \(N_{g}=0\).
+  \item Conversely, if \(\mu_{g} < \mu_{\ell}\) the gas is favoured:
+        \(N_{g}=N_{\mathrm{w}}\), \(N_{\ell}=0\).
+  \item If \(\mu_{\ell} = \mu_{g}\) the derivative vanishes and
+        \(G_{\mathrm{tot}}\) is \emph{flat} along the
+        \((N_{\ell},N_{g})\)-direction.  Any mixture of the two phases
+        has the same \(G_{\mathrm{tot}}\);
+        liquid and vapour may therefore coexist at equilibrium.
+\end{itemize}
+
+\paragraph{3.  Phase-diagram interpretation.}
+\begin{enumerate}[label=\textbf{\arabic*.}, itemsep=0.4em]
+  \item The \emph{phase boundaries} (solid curves in Fig.\,2)
+        are the \((p,T)\) pairs satisfying
+        \(\mu_{\ell}(p,T)=\mu_{g}(p,T)\)
+        (or \(\mu_{\ell}=\mu_{s}\) for solid/liquid, \(\mu_{g}=\mu_{s}\) for
+        solid/gas).  Crossing such a line swaps the order of the
+        two chemical potentials and thus swaps the stable phase.
+  \item At the \emph{triple point} all three chemical potentials coincide,
+        \(\mu_{\ell}=\mu_{g}=\mu_{s}\); ice, water, and vapour may all
+        coexist.
+  \item Beyond the \emph{critical point} the distinction between liquid
+        and gas disappears: their chemical potentials remain equal even
+        though the densities merge into a single \emph{supercritical} phase.
+\end{enumerate}
+
+\paragraph{4.  Why we seldom see coexistence in everyday life.}
+At ordinary atmospheric pressure $\SI{101}{kPa}$ the equality
+\(\mu_{\ell}=\mu_{g}\) holds only at \(T=\SI{100}{\text{celsius} }\).
+At room temperature \(\mu_{\ell}<\mu_{g}\), so liquid water is stable and
+any vapour eventually condenses; below $\SI{0}{\text{celsius} }$,
+\(\mu_{s}<\mu_{\ell}\) and ice is ultimately favoured.
+Coexistence is thus confined to
+\emph{one-dimensional} curves in the two-dimensional \((p,T)\)-plane,
+making it a comparatively rare occurrence outside controlled
+laboratory conditions.
+
+\bigskip
+\noindent
+\textbf{Key takeaway:} \emph{A phase diagram is nothing more than a map
+of which phase has the lowest chemical potential at each \((p,T)\).
+Lines and points where two or more chemical potentials coincide mark
+where phases can coexist.}
+\paragraph{Problem.}
+An ideal gas of He atoms is heated from \(T_1 = 200\;\mathrm{K}\) to \(T_2 = 400\;\mathrm{K}\).
+The root–mean–squared speed is defined by
+\[
+  v_{\mathrm{rms}}
+  \;=\;
+  \sqrt{\langle |{\bf v}|^{2}\rangle }.
+\]
+By what factor does \(v_{\mathrm{rms}}\) increase?
+
+\paragraph{Solution (step–by–step).}
+\begin{enumerate}
+  \item For a monatomic ideal gas,
+        \[
+          v_{\mathrm{rms}}
+          \;=\;
+          \sqrt{\frac{3k_{\mathrm B}T}{m}},
+        \]
+        where \(k_{\mathrm B}\) is Boltzmann’s constant and \(m\) is the particle mass.
+        Hence \(v_{\mathrm{rms}}\propto\sqrt{T}\) for a fixed species.
+
+  \item Form the ratio of the rms speeds at the two temperatures:
+        \[
+          \frac{v_{\mathrm{rms},2}}{v_{\mathrm{rms},1}}
+          \;=\;
+          \sqrt{\frac{T_2}{T_1}}
+          \;=\;
+          \sqrt{\frac{400\;\mathrm{K}}{200\;\mathrm{K}}}
+          \;=\;
+          \sqrt{2}.
+        \]
+
+  \item Therefore, when the temperature is doubled, the rms speed
+        increases by a factor of \(\boxed{\sqrt{2}}\).
+\end{enumerate}
+\paragraph{Problem.}
+A helium balloon is initially at \(T_1 = \SI{23}{\celsius}\) with volume
+\(V_1 = \SI{0.0042}{\meter^{3}}\).
+The balloon is flexible, so its internal pressure always equals the external
+(atmospheric) pressure \(p = \SI{101.3}{\kilo\pascal}\).
+After lying in the sun the volume increases by \(12\%\).
+Find the new temperature \(T_2\).
+
+\paragraph{Solution (step by step).}
+
+\begin{enumerate}
+  \item \textbf{Convert the initial temperature to kelvin.}
+        \[
+          T_1 = 23^{\circ}\mathrm{C}
+          = 23 + 273.15
+          = \SI{296.15}{\kelvin}.
+        \]
+
+  \item \textbf{State the relationship for an isobaric ideal-gas process.}\\
+        Because the pressure is constant and the number of moles does not
+        change, Charles’s law applies:
+        \[
+          \frac{V}{T} = \text{constant}
+          \quad\Longrightarrow\quad
+          \frac{V_2}{V_1} = \frac{T_2}{T_1}.
+        \]
+
+  \item \textbf{Insert the \(12\%\) volume increase.}
+        \[
+          V_2 = 1.12\,V_1
+          \quad\Longrightarrow\quad
+          T_2 = 1.12\,T_1.
+        \]
+
+  \item \textbf{Compute \(T_2\).}
+        \[
+          T_2
+          = 1.12 \times \SI{296.15}{\kelvin}
+          = \SI{331.7}{\kelvin}.
+        \]
+
+  \item \textbf{Convert back to degrees Celsius (if desired).}
+        \[
+          T_2
+          = 331.7 - 273.15
+          \approx \boxed{\SI{58.5}{\celsius}}.
+        \]
+\end{enumerate}
+
+\noindent
+\textbf{Answer:} The balloon’s temperature rises to approximately
+\(\boxed{T_2 \approx 3.32\times 10^{2}\;\text{K} \;(\sim\!59^{\circ}\text{C})}\).
+\paragraph{Work done \emph{by} the gas during the isobaric expansion.}
+
+\begin{enumerate}
+  \item \textbf{Initial and final volumes.}
+        \[
+          V_1 = \SI{0.0042}{\meter^{3}}, 
+          \qquad
+          V_2 = V_1 \,(1+0.12) = 1.12\,V_1
+        \]
+        \[
+          \Delta V = V_2 - V_1 = 0.12\,V_1
+                   = 0.12 \times \SI{0.0042}{\meter^{3}}
+                   = \SI{5.04e-4}{\meter^{3}}.
+        \]
+
+  \item \textbf{Constant external pressure.}
+        \[
+          p = \SI{101.3}{\kilo\pascal} = \SI{101.3e3}{\pascal}.
+        \]
+
+  \item \textbf{Isobaric work (positive when done \emph{by} the gas).}
+        \[
+          W_{\text{by}} = p\,\Delta V
+          = (\SI{101.3e3}{\pascal}) \times (\SI{5.04e-4}{\meter^{3}})
+          \approx \SI{5.1e1}{\joule}.
+        \]
+\end{enumerate}
+
+
+  \[
+    \boxed{%
+      W_{\text{by}} \;\approx\; \SI{5.1e1}{\joule}%
+    }
+\]
+\paragraph{Concept check.}
+For an ideal gas the root–mean–squared speed is
+\[
+  v_{\mathrm{rms}}
+  = \sqrt{\frac{3k_{\mathrm B}T}{m}},
+\]
+which depends \emph{only} on the absolute temperature \(T\) and the molecular mass \(m\).
+
+\begin{enumerate}[label=\textbf{\alph*.}]
+  \item Compressing the gas to half its volume (at fixed \(T\)) \emph{raises the pressure} according to Boyle’s law, \(pV=\text{const.}\)
+  \item However, because \(T\) is specified to remain constant, the average kinetic energy per particle \(\tfrac{3}{2}k_{\mathrm B}T\) is unchanged.
+  \item Therefore \(v_{\mathrm{rms}}\) is unaffected.
+\end{enumerate}
+
+\[
+  \boxed{\text{\(v_{\mathrm{rms}}\) would remain the same.}}
+\]
+\subsection*{Equilibrium partition of volume}
+
+\paragraph{Given data}
+\[
+  N_A = 1~\text{mol}, \qquad
+  N_B = 2~\text{mol}, \qquad
+  V_{\text{tot}} = 1~\text{m}^{3}, \qquad
+  b = 4\times 10^{-4}~\text{m}^{3}\!\big/\text{mol}.
+\]
+
+\paragraph{Entropy of each compartment}
+\[
+  S_A = N_A k_B \ln\!\bigl(V_A - bN_A\bigr) + f(U_A,N_A),
+  \qquad
+  S_B = N_B k_B \ln(V_B) + f(U_B,N_B),
+\]
+where the energy–dependent terms \(f\) do not involve the volumes.
+With the movable, impermeable membrane \(V_A+V_B = V_{\text{tot}}\) is fixed.
+
+\paragraph{Maximising the total entropy}
+Set \(S_{\text{tot}} = S_A + S_B\) and vary \(V_A\) while holding
+\(V_{\text{tot}}\) constant.
+
+\[
+  \frac{\partial S_{\text{tot}}}{\partial V_A}
+  = \frac{\partial S_A}{\partial V_A}
+    + \frac{\partial S_B}{\partial V_A}
+  = N_A k_B \frac{1}{V_A - bN_A}
+    - N_B k_B \frac{1}{V_{\text{tot}}-V_A}
+  \stackrel{!}{=} 0 .
+\]
+
+\textbf{Cancel \(k_B\)} and rearrange:
+\[
+  \frac{N_A}{V_A - bN_A} \;=\; \frac{N_B}{V_{\text{tot}}-V_A}.
+\]
+
+Insert the numerical values:
+
+\[
+  \frac{1}{V_A - 4\times10^{-4}}
+  = \frac{2}{1 - V_A}.
+\]
+
+Cross-multiply:
+\[
+  1 - V_A \;=\; 2\,V_A - 8\times10^{-4}
+  \;\;\Longrightarrow\;\;
+  3\,V_A = 1 + 8\times10^{-4}.
+\]
+
+Hence
+\[
+  V_A = \frac{1.0008}{3} \,\text{m}^{3}
+       \approx 0.3336~\text{m}^{3}.
+\]
+
+\paragraph{Result}
+\[
+  \boxed{\,V_A^{\ast} \;\approx\; 3.34\times10^{-1}\ \text{m}^{3}\,}
+\]
+and therefore \(V_B^{\ast} = V_{\text{tot}} - V_A^{\ast} \approx 0.6664\;\text{m}^{3}\).
+The tiny excluded volume (\(bN_A \sim 4\times10^{-4}\,\text{m}^{3}\)) causes
+only a negligible shift from the naïve one-third / two-thirds split.
+\paragraph{Concept.}
+For an ideal gas the state equation is
+\[
+  pV = nRT.
+\]
+During an \emph{isochoric} process \(V=\text{const}\) (and \(n\) is fixed),
+so the pressure is directly proportional to the absolute temperature:
+\[
+  \frac{p_2}{p_1} = \frac{T_2}{T_1}.
+\]
+Therefore, to \textbf{increase} the pressure at constant volume we must
+\emph{increase the temperature}.
+
+\paragraph{Choice.}
+\begin{itemize}
+  \item[\(\square\)] Cool down the gas
+  \item[\(\boxtimes\)] \textbf{Heat up the gas} \hfill (correct)
+  \item[\(\square\)] Push a piston down into the gas \emph{(changes volume)}
+  \item[\(\square\)] Pull a piston out, increasing container size
+                      \emph{(changes volume)}
+\end{itemize}
+Heating the gas raises \(T\), which by \(p\propto T\) raises \(p\) while
+leaving \(V\) unchanged—exactly the desired isochoric pressure increase.
+\paragraph{Entropy change from volume term only (adiabatic, ideal Ar gas)}
+
+\begin{enumerate}
+  \item \textbf{Number of moles.}\\
+        Initial state: 
+        \(p_i = \SI{100}{\kilo\pascal},\;
+          V_i = \SI{0.01}{\meter^{3}},\;
+          T_i = \SI{300}{\kelvin}\).
+        Using \(n = \dfrac{p_i V_i}{RT_i}\):
+        \[
+          n 
+          = \frac{\SI{100e3}{\pascal}\times \SI{0.01}{\meter^{3}}}
+                 {\SI{8.314}{\joule\per\mole\per\kelvin}\times \SI{300}{\kelvin}}
+          \approx \SI{0.40}{\mole}.
+        \]
+
+  \item \textbf{Volume ratio.}\\
+        \(V_f = \SI{0.025}{\meter^{3}}\), so
+        \[
+          \frac{V_f}{V_i} = \frac{0.025}{0.01} = 2.5.
+        \]
+
+  \item \textbf{Entropy contribution from volume change.}\\
+        For an \(\alpha\)-ideal gas
+        \(\displaystyle
+          \Delta S_V = nR\ln\!\bigl(V_f/V_i\bigr).
+        \)
+        Hence
+        \[
+          \Delta S_V
+          = (\SI{0.40}{\mole})
+            \,(\SI{8.314}{\joule\per\mole\per\kelvin})
+            \,\ln(2.5)
+          \approx \boxed{\SI{3.05}{\joule\per\kelvin}}.
+        \]
+\end{enumerate}
+\subsection*{Argon expansion: sanity check}
+
+\paragraph{Given data}
+\[
+  p_i = \SI{100}{\kilo\pascal},\;
+  T_i = \SI{300}{\kelvin},\;
+  V_i = \SI{0.010}{\metre^{3}},\;
+  V_f = \SI{0.025}{\metre^{3}}.
+\]
+
+Argon is monatomic, so \(N_{\text{DOF}} = 3\) and
+\[
+  \alpha = \frac{N_{\text{DOF}}}{2} = \frac{3}{2}, 
+  \qquad
+  \gamma = \frac{\alpha+1}{\alpha} = \frac{5}{3}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{1.  Moles of gas (needed for \(\Delta S\))}
+\[
+  n
+  = \frac{p_i V_i}{RT_i}
+  = \frac{(100\times10^{3})\,(0.010)}
+         {8.314\,(300)}
+  \simeq 0.401\;\text{mol}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{2.  Final temperature \(T_f\) (adiabatic law)}
+For a reversible adiabatic process
+\(T V^{\gamma-1} = \text{const}\):
+\[
+  T_f
+  = T_i \!\left(\frac{V_i}{V_f}\right)^{\gamma-1}
+  = 300 \left(\frac{0.010}{0.025}\right)^{2/3}
+  \approx \boxed{\SI{163}{\kelvin}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{3.  Entropy change from the \emph{temperature} term}
+\[
+  \Delta S_T
+  = \alpha\,nR \ln\!\Bigl(\tfrac{T_f}{T_i}\Bigr)
+  = (1.5)(0.401)(8.314)\,\ln\!\Bigl(\tfrac{163}{300}\Bigr)
+  \approx \boxed{-\,\SI{3.05}{\joule\per\kelvin}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{4.  Entropy change from the \emph{volume} term}
+\[
+  \Delta S_V
+  = nR \ln\!\Bigl(\tfrac{V_f}{V_i}\Bigr)
+  = (0.401)(8.314)\,\ln(2.5)
+  \approx \boxed{+\SI{3.05}{\joule\per\kelvin}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{5.  Total entropy change}
+\[
+  \Delta S_{\text{total}}
+  = \Delta S_T + \Delta S_V
+  \approx -3.05 + 3.05
+  \approx \boxed{0\;(\text{within rounding})}.
+\]
+
+\noindent
+\textbf{Interpretation:} for a slow, perfectly insulating (reversible adiabatic)
+expansion, the entropy produced by the volume increase is exactly cancelled
+by the entropy decrease from cooling, so the net change in entropy is zero—
+consistent with \(S = \text{const}\) for a reversible adiabatic path.
+\paragraph{Problem recap}
+Two identical samples of \({N2}\) at 
+\(T_i = 30^{\circ}\text{C}=303.15\;\text{K}\) and \(p=\SI{1}{atm}\)  
+fill containers of volume \(V_i=\SI{0.5}{L}=5.0\times10^{-4}\,\text{m}^3\).
+
+* **Container X** is \emph{rigid} (\(V=\text{const}\)).
+* **Container Y** has a frictionless piston so the gas stays at \(p=\text{const}\).
+
+Both gases are warmed by \(\Delta T = 10\;\text{K}\).  
+\(Q_X\) and \(Q_Y\) are the heats required; find \(Q_X-Q_Y\).
+
+---------------------------------------------------------------------------
+\paragraph{1.  Moles of nitrogen}
+\[
+  n \;=\; \frac{pV}{RT}
+        = \frac{(1.013\times10^{5}\,\text{Pa})(5.0\times10^{-4}\,\text{m}^3)}
+               {(8.314\,\text{J mol}^{-1}\,\text{K}^{-1})(303.15\,\text{K})}
+        \;\approx\; 0.0201\;\text{mol}.
+\]
+
+---------------------------------------------------------------------------
+\paragraph{2.  Heat at constant volume vs.\ pressure}
+For an ideal gas  
+\(Q = nC\,\Delta T\) where \(C=C_V\) (rigid) or \(C=C_P\) (piston).
+
+Hence
+\[
+  Q_X - Q_Y
+  = nC_V\Delta T - nC_P\Delta T
+  = n(C_V-C_P)\Delta T
+  = -\,nR\,\Delta T
+  \quad(\because C_P - C_V = R).
+\]
+
+---------------------------------------------------------------------------
+\paragraph{3.  Numerical value}
+\[
+  Q_X - Q_Y
+  = -\,(0.0201\;\text{mol})(8.314\;\text{J mol}^{-1}\text{K}^{-1})(10\;\text{K})
+  \approx \boxed{-\,1.67\;\text{J}}.
+\]
+\[
+\begin{aligned}
+C_P
+  &= \left(\frac{\partial H}{\partial T}\right)_P
+   = \left(\frac{\partial U}{\partial T}\right)_P
+     + \left(\frac{\partial (pV)}{\partial T}\right)_P \\[6pt]
+  &= \underbrace{\left(\frac{\partial U}{\partial T}\right)_V}_{C_V}
+     + \underbrace{\left(\frac{\partial U}{\partial V}\right)_T
+                    \left(\frac{\partial V}{\partial T}\right)_P}_{\;=\,0}
+     + \frac{\partial (RT)}{\partial T} \\[6pt]
+  &= C_V + R .
+\end{aligned}
+\]
+% ---------------------------------------------------------------------------
+%  Detailed step-by-step derivation of  C_P - C_V = R   (one mole, ideal gas)
+% ---------------------------------------------------------------------------
+
+\paragraph{1.  Start with the definition of enthalpy}
+\[
+  H(T,p)\;=\;U(T,V)\;+\;pV.
+\]
+
+For an \emph{ideal} gas, the state equation is \(pV = RT\) (one mole) and
+the internal energy depends only on temperature: \(U = U(T)\).
+
+\bigskip
+\paragraph{2.  Differentiate \(H\) with respect to \(T\) at constant pressure}
+\[
+  C_P \;\equiv\;
+  \left(\frac{\partial H}{\partial T}\right)_P
+  \;=\;
+  \left(\frac{\partial U}{\partial T}\right)_P
+  \;+\;
+  \left(\frac{\partial (pV)}{\partial T}\right)_P .
+\]
+
+\bigskip
+\paragraph{3.  Expand the first term with the chain rule}
+\[
+  \begin{aligned}
+  \left(\frac{\partial U}{\partial T}\right)_P
+      &=\left(\frac{\partial U}{\partial T}\right)_V
+        +\left(\frac{\partial U}{\partial V}\right)_T
+         \underbrace{\left(\frac{\partial V}{\partial T}\right)_P}_{\displaystyle (*)}\\[6pt]
+      &=\underbrace{\left(\dfrac{\partial U}{\partial T}\right)_V}_{C_V}\;
+        +\;
+        0\times(*) .
+  \end{aligned}
+\]
+
+The last factor vanishes because \(U\) for an ideal gas is *independent of*
+\(V\); hence \(\left(\partial U/\partial V\right)_T = 0\).
+
+\bigskip
+\paragraph{4.  Evaluate the second term}
+\[
+  \left(\frac{\partial (pV)}{\partial T}\right)_P
+  =\frac{\partial (RT)}{\partial T}
+  = R,
+\]
+because \(pV = RT\) and \(R\) is a constant.
+
+\bigskip
+\paragraph{5.  Collect the pieces}
+\[
+  \boxed{\,C_P
+    = C_V + R\,}.
+\]
+
+The difference \(C_P - C_V = R\) is therefore the constant extra energy
+per kelvin that must be supplied at constant pressure to provide the
+expansion work \(p\,dV\) of one mole of ideal gas.
+% ---------------------------------------------------------------------------
+%  What does the sub-script “\(P\)” on a partial derivative mean?
+% ---------------------------------------------------------------------------
+
+When a thermodynamic function depends on several independent variables,
+we must specify which ones are held fixed during differentiation.
+For example, for enthalpy \(H=H(T,p)\),
+
+\[
+  \left(\frac{\partial H}{\partial T}\right)_{\!P}
+  \quad\text{means “differentiate }H\text{ with respect to }T
+            \text{ \emph{while keeping the pressure } }p \text{ fixed.”}
+\]
+
+The sub-script lists every variable that is \emph{held constant}; all
+variables not shown are allowed to vary consistently with the state
+relation(s).
+
+\bigskip
+\paragraph{Ideal-gas illustration (one mole)}
+\[
+  H(T,p)=U(T)+pV,
+  \qquad pV = RT,
+  \qquad U=U(T).
+\]
+
+\[
+\begin{aligned}
+\left(\frac{\partial H}{\partial T}\right)_{\!P}
+ &= \underbrace{\left(\frac{\partial U}{\partial T}\right)_{P}}_{=\,C_V}
+    +\left(\frac{\partial (pV)}{\partial T}\right)_{P} \\[6pt]
+ &= C_V + \frac{\partial (RT)}{\partial T}
+  = C_V + R,
+\end{aligned}
+\]
+
+because \(pV=RT\) and \(R\) is constant.  
+If instead the volume were held fixed,
+
+\[
+  \left(\frac{\partial H}{\partial T}\right)_{V}=C_V,
+\]
+
+since \(p\,dV=0\).  The difference arises solely from the different
+constraint indicated by the sub-script.
+---------------------------------------------------------------------------
+\paragraph{Interpretation}
+The constant-pressure sample (Y) needs an extra \(nR\Delta T\) of energy to
+supply the \(p\Delta V\) work done while expanding, so \(Q_Y\) exceeds \(Q_X\)
+by \(\sim1.7\;\text{J}\) for this small system.
+\subsection*{“Almost–ideal” gas with excluded volume}
+
+The entropy model is
+\[
+  S = nR\ln\!\bigl(V - nb\bigr)+\text{const},
+\]
+so at equilibrium
+\[
+  \frac{p}{T} \;=\;
+  \pdv{S}{V} = \frac{nR}{V-nb}
+  \;\Longrightarrow\;
+  p\bigl(V-nb\bigr)=nRT.
+\]
+This is the usual ideal–gas relation with the volume replaced by the
+\emph{free} volume \(V-nb\).
+
+%--------------------------------------------------------------------
+\paragraph{1.  Find \(T\): \(b=8\times10^{-4}\,\text{m}^{3}\!/\text{mol},
+                           n=30.2\;\text{mol},
+                           V=1.00\;\text{m}^{3},
+                           p=101300\;\text{Pa}\)}
+
+\[
+  V-nb
+  = 1.00 - (30.2)(8.0\times10^{-4})
+  = 1.00 - 0.02416
+  = 0.97584\;\text{m}^{3}.
+\]
+
+\[
+  T
+  = \frac{p\bigl(V-nb\bigr)}{nR}
+  = \frac{(1.013\times10^{5})(0.97584)}
+         {(30.2)(8.314)}
+  \approx \boxed{3.94\times10^{2}\;\text{K}}
+  \;(\text{about }394\;\text{K}).
+\]
+
+%--------------------------------------------------------------------
+\paragraph{2.  Find \(V\): \(b=8\times10^{-4}\,\text{m}^{3}\!/\text{mol},
+                           n=1.50\;\text{mol},
+                           T=350\;\text{K},
+                           p=101300\;\text{Pa}\)}
+
+Re-arrange the same equation for \(V\):
+\[
+  V = nb + \frac{nRT}{p}.
+\]
+
+\[
+  nb = (1.50)(8.0\times10^{-4}) = 0.00120\;\text{m}^{3},
+  \qquad
+  \frac{nRT}{p}
+  = \frac{(1.50)(8.314)(350)}{1.013\times10^{5}}
+  = 0.04305\;\text{m}^{3}.
+\]
+
+\[
+  V
+  = 0.00120 + 0.04305
+  \approx \boxed{4.43\times10^{-2}\;\text{m}^{3}}
+  \;(\text{about }0.0443\;\text{m}^{3}).
+\]
+
+\medskip
+\textit{Common slip:} if you neglect the excluded volume \(nb\) in part 2 you
+get \(V \approx 0.0431\;\text{m}^{3}\), which is slightly low (your entry
+\(0.0432\;\text{m}^{3}\) shows exactly that omission).  Always add the \(nb\)
+term for the “almost–ideal” gas.
+\subsection*{Excluded–volume gas: pressure before and after isothermal expansion}
+
+The equation of state is
+\[
+  p\bigl(V - Nb\bigr) = NkT,
+\]
+where \(b\) is the excluded volume \emph{per molecule}.
+
+\paragraph{Constants and data}
+\[
+  \begin{aligned}
+    n &= 3.00\;\text{mol},
+    &
+    N &= nN_A = 3(6.022\times10^{23}) = 1.807\times10^{24}\;\text{molecules}, \\[4pt]
+    b &= 1.3\times10^{-28}\;\text{m}^{3}\!/\text{molecule},
+    &
+    k &= 1.380649\times10^{-23}\;\text{J K}^{-1}, \\[4pt]
+    T &= 300\;\text{K}.
+  \end{aligned}
+\]
+
+--------------------------------------------------------------------
+\paragraph{1. Initial pressure \((V_i = 0.001\,\text{m}^{3})\)}
+
+\[
+  V_i - Nb \;=\;
+  0.001 - (1.807\times10^{24})(1.3\times10^{-28})
+  = 7.65\times10^{-4}\;\text{m}^{3}.
+\]
+
+\[
+  p_i
+  = \frac{NkT}{V_i - Nb}
+  = \frac{(1.807\times10^{24})(1.380649\times10^{-23})(300)}
+         {7.65\times10^{-4}}
+  \approx \boxed{9.8\times10^{6}\;\text{Pa}}.
+\]
+
+--------------------------------------------------------------------
+\paragraph{2. Final pressure \((V_f = 0.002\,\text{m}^{3})\)}
+
+\[
+  V_f - Nb
+  = 0.002 - 2.35\times10^{-4}
+  = 1.77\times10^{-3}\;\text{m}^{3}.
+\]
+
+\[
+  p_f
+  = \frac{NkT}{V_f - Nb}
+  = \frac{(1.807\times10^{24})(1.380649\times10^{-23})(300)}
+         {1.77\times10^{-3}}
+  \approx \boxed{4.2\times10^{6}\;\text{Pa}}.
+\]
+
+--------------------------------------------------------------------
+\paragraph{Check}  
+Because the expansion is isothermal, \(NkT\) is constant, so doubling the
+container volume more than halves the pressure; the excluded volume term
+\(Nb\) reduces the available space in both cases, giving
+\(p_f/p_i \approx (V_i-Nb)/(V_f-Nb) \approx 0.43\), consistent with the
+numerical results.
+\paragraph{Work done during the isothermal expansion}
+
+For the excluded-volume gas the equation of state is  
+\(p(V-Nb)=NkT\), so along an isotherm
+
+\[
+  p \;=\; \frac{NkT}{V-Nb}.
+\]
+
+The reversible work is  
+
+\[
+  W = \int_{V_i}^{V_f} p \,\dd V
+      = NkT\int_{V_i}^{V_f} \frac{\dd V}{V-Nb}
+      = NkT \,\ln\!\Bigl(\frac{V_f-Nb}{V_i-Nb}\Bigr).
+\]
+
+\[
+  \begin{aligned}
+    N &= nN_A = 3(6.022\times10^{23})
+         = 1.807\times10^{24}\;\text{molecules},\\[4pt]
+    Nb &= (1.807\times10^{24})(1.3\times10^{-28})
+          = 2.35\times10^{-4}\;\text{m}^{3},\\[6pt]
+    V_i-Nb &= 0.00100-0.000235 = 7.65\times10^{-4}\;\text{m}^{3},\\
+    V_f-Nb &= 0.00200-0.000235 = 1.77\times10^{-3}\;\text{m}^{3}.
+  \end{aligned}
+\]
+
+\[
+  NkT = (1.807\times10^{24})(1.380\,649\times10^{-23})(300)
+       = 2.50\times10^{4}\;\text{J}.
+\]
+
+\[
+  W
+  = (2.50\times10^{4})\,
+    \ln\!\Bigl(\tfrac{1.77\times10^{-3}}{7.65\times10^{-4}}\Bigr)
+  \approx \boxed{6.3\times10^{3}\;\text{J}}.
+\]
+
+\[
+  W \;\approx\; 6.26 \times 10^{3}\,\text{J} \quad(\text{consistent with }6.27\text{e3}).
+\]
+\paragraph{Answer.}
+The \(\mathbf{1{,}600^{\circ}\!\text{C}}\) design would have the higher
+\emph{theoretical maximum} efficiency.
+
+\paragraph{Why?}
+For any heat engine the Carnot limit is
+\[
+  \eta_{\text{max}}
+  = 1 - \frac{T_C}{T_H},
+\]
+where \(T_H\) is the hot‐reservoir temperature and \(T_C\) the cold‐reservoir
+temperature (both in kelvin).  
+With \(T_C\) fixed, a larger \(T_H\) makes the fraction
+\(T_C/T_H\) smaller, hence \(1-T_C/T_H\) larger.  
+Therefore raising the furnace temperature from \(1{,}400^{\circ}\text{C}\)
+to \(1{,}600^{\circ}\text{C}\) increases the maximum possible efficiency.
+\subsection*{Isothermal compression of an ideal gas}
+
+Given  
+\(n = 2.5\ \text{mol},\;
+ T = 310\ \text{K},\;
+ V_i = 0.500\ \text{m}^3\).
+
+\paragraph{1. Initial pressure}
+\[
+  p_i = \frac{nRT}{V_i}
+       = \frac{(2.5)(8.314\ \text{J mol}^{-1}\text{K}^{-1})(310\ \text{K})}
+              {0.500\ \text{m}^{3}}
+       \approx \boxed{1.29\times10^{4}\ \text{Pa}}.
+\]
+
+\paragraph{2. Final volume at \(p_f = 1.546404\times10^{4}\ \text{Pa}\) (isothermal)}
+\[
+  V_f = \frac{nRT}{p_f}
+       = \frac{(2.5)(8.314)(310)}
+              {1.546404\times10^{4}}
+       \approx \boxed{4.17\times10^{-1}\ \text{m}^{3}}.
+\]
+
+\paragraph{3. Work \emph{done on} the gas}
+For a reversible isothermal change,
+\[
+  W_{\text{by}} = nRT\ln\!\Bigl(\frac{V_f}{V_i}\Bigr),
+  \quad
+  W_{\text{on}} = -\,W_{\text{by}}.
+\]
+
+\[
+  W_{\text{by}}
+  = (2.5)(8.314)(310)\,
+    \ln\!\Bigl(\tfrac{0.4167}{0.5000}\Bigr)
+  = -1.17\times10^{3}\ \text{J},
+\]
+
+\[
+  \boxed{W_{\text{on}} \;\approx\; +1.17\times10^{3}\ \text{J}}.
+\]
+
+(The positive sign indicates work is done \emph{on} the gas during compression.)
+%---------------------------------------------------------------------------
+\paragraph{Reservoir temperatures (convert to kelvin)}
+\[
+  T_H = 60^{\circ}\text{C} + 273.15 = 333.15\;\text{K},
+  \qquad
+  T_C = -15^{\circ}\text{C} + 273.15 = 258.15\;\text{K}.
+\]
+
+%---------------------------------------------------------------------------
+\paragraph{Carnot relations}
+For a reversible Carnot engine
+\[
+  \frac{Q_C}{Q_H} = \frac{T_C}{T_H},
+  \qquad
+  \eta_{\max} = 1 - \frac{T_C}{T_H}.
+\]
+
+Given \(Q_H = 600\;\text{J}\):
+
+%---------------------------------------------------------------------------
+\begin{enumerate}
+  \item \textbf{Heat expelled to the cold reservoir}
+        \[
+          Q_C
+          = Q_H \frac{T_C}{T_H}
+          = (600)\frac{258.15}{333.15}
+          \approx \boxed{4.65\times10^{2}\ \text{J}}.
+        \]
+
+  \item \textbf{Work done by the engine in 27 min}
+        \[
+          W_{\text{by}}
+          = Q_H - Q_C
+          = 600 - 464.9
+          \approx \boxed{1.35\times10^{2}\ \text{J}}.
+        \]
+
+  \item \textbf{Maximum (Carnot) efficiency}
+        \[
+          \eta_{\max}
+          = 1 - \frac{T_C}{T_H}
+          = 1 - \frac{258.15}{333.15}
+          \approx \boxed{0.225}\;(\text{or }22.5\%).
+        \]
+\end{enumerate}
+
+\medskip
+\noindent
+These represent the \emph{best-case} limits; any real engine will be less efficient and expel more than \(4.65\times10^{2}\,\text{J}\) of heat for every \(600\,\text{J}\) it absorbs from the \(60^{\circ}\text{C}\) reservoir.
+\paragraph{Step-by-step reasoning}
+
+\begin{enumerate}
+  \item \textbf{Convert reservoir temperatures to kelvin.}
+        \[
+          T_H = 400^{\circ}\text{C}+273.15 = 673.15\;\text{K},
+          \qquad
+          T_C =  30^{\circ}\text{C}+273.15 = 303.15\;\text{K}.
+        \]
+
+  \item \textbf{Ideal Carnot efficiency (no leak).}
+        \[
+          \eta_{\text{Carnot}}
+          = 1 - \frac{T_C}{T_H}
+          = 1 - \frac{303.15}{673.15}
+          \approx 0.550.
+        \]
+
+  \item \textbf{Relate work to heat entering the engine.}\\
+        With \(\eta_{\text{Carnot}}=0.550\),
+        \[
+          W_{\text{by}} = \eta_{\text{Carnot}}\;Q_{H1}
+                        = 0.550\,Q_{H1}.
+        \]
+
+  \item \textbf{Overall efficiency (including the leak) is given as}
+        \(\eta_{\text{overall}} = 0.25\):
+        \[
+          \eta_{\text{overall}}
+          = \frac{W_{\text{by}}}{Q_{H1}+Q_{H2}}
+          = 0.25.
+        \]
+        Substitute \(W_{\text{by}}\) from step 3:
+        \[
+          0.25\,(Q_{H1}+Q_{H2}) = 0.550\,Q_{H1}.
+        \]
+
+  \item \textbf{Solve for the ratio \(Q_{H1}/Q_{H2}\).}
+        \[
+          0.25Q_{H1} + 0.25Q_{H2} = 0.550Q_{H1}
+          \quad\Longrightarrow\quad
+          0.25Q_{H2} = 0.300Q_{H1}
+          \quad\Longrightarrow\quad
+          \frac{Q_{H1}}{Q_{H2}} = \frac{0.25}{0.30}
+          = \frac{5}{6}
+          \approx 0.83.
+        \]
+\end{enumerate}
+
+\[
+  \boxed{\dfrac{Q_{H1}}{Q_{H2}} \;\approx\; 0.83} \qquad
+  (\text{i.e.\ the leak carries about }20\%\text{ more heat than the engine.})
+\]
+%--------------------------------------------------------------------
+\subsection*{Reversible refrigerator between $60^{\circ}$C and $-15^{\circ}$C}
+
+\begin{enumerate}
+  \item \textbf{Convert reservoir temperatures to kelvin.}
+        \[
+          T_H = 60^{\circ}\mathrm{C} + 273.15 = 333.15\;\mathrm{K},
+          \qquad
+          T_C = -15^{\circ}\mathrm{C} + 273.15 = 258.15\;\mathrm{K}.
+        \]
+
+  \item \textbf{Carnot coefficient of performance (COP).}
+        \[
+          \text{COP}_{\text{Carnot}}
+          = \frac{Q_C}{W_{\text{on}}}
+          = \frac{1}{T_H/T_C - 1}
+          = \frac{1}{333.15/258.15 - 1}
+          \approx 3.44.
+        \]
+
+  \item \textbf{Heat extracted from the cold reservoir.}\\
+        Work input is given as \(W_{\text{on}} = 1100\ \text{J}\):
+        \[
+          Q_C
+          = \text{COP}_{\text{Carnot}}\; W_{\text{on}}
+          = 3.44 \times 1100\ \text{J}
+          \;\approx\;
+          \boxed{3.78 \times 10^{3}\ \text{J}}.
+        \]
+
+  \item \textbf{Heat expelled to the hot reservoir.}
+        \[
+          Q_H
+          = Q_C + W_{\text{on}}
+          \approx 3.78 \times 10^{3} + 1.10 \times 10^{3}
+          \;\approx\;
+          \boxed{4.88 \times 10^{3}\ \text{J}}.
+        \]
+
+  \item \textbf{Coefficient of performance (already obtained).}
+        \[
+          K \equiv \text{COP}_{\text{Carnot}}
+          \;\approx\;
+          \boxed{3.44}.
+        \]
+\end{enumerate}
+\begin{problem}
+  Suppose two rigid containers, $A$ and $B$, each hold the \emph{same} non-ideal gas at a common temperature $T$ and an externally fixed pressure $P$.
+  After we open a valve that allows particle exchange but \emph{not} heat or work transfer, we observe a net flow of particles from container $B$ to container $A$.
+  Determine the relationship between the chemical potentials $\mu_A$ and $\mu_B$ of the gas in the two containers \emph{at the instant the valve is opened}.  
+  \end{problem}
+  
+  \begin{solution}
+  \begin{enumerate}
+      \item \textbf{Equilibrium condition.}  
+            For systems that can exchange particles at fixed $T$ and $P$, thermodynamic equilibrium requires the Gibbs free energy to be minimized.  
+            Since $G = N\mu$ for a single species, equilibrium demands
+            \[
+                \mu_A \;=\; \mu_B.
+            \]
+      \item \textbf{Direction of spontaneous particle flow.}  
+            If the chemical potentials initially differ, particles spontaneously flow from the region of \emph{higher} chemical potential to the region of \emph{lower} chemical potential in order to decrease the total Gibbs free energy.
+            Hence the observed flow $B \to A$ implies
+            \[
+                \mu_B \;>\; \mu_A.
+            \]
+      \item \textbf{Conclusion.}  
+            Therefore, at the moment we open the valve and witness particles moving from $B$ to $A$, the inequality
+            \[
+                \boxed{\mu_A \;<\; \mu_B}
+            \]
+            must hold.  
+            (Once enough particles have transferred so that $\mu_A=\mu_B$, the net flow will cease and equilibrium is reached.)
+  \end{enumerate}
+  \end{solution}
+\subsection*{Ideal (and almost-ideal) gas in a $T,p,N$ ensemble}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{1.  Derivative of $G$ with respect to $V$ (fixed $T,p,N$)}
+
+For one mole of an \emph{ideal} gas  
+\(G = U + pV - TS\) with \(U=U(T)\) only and  
+\(S = Nk\ln V + \text{const}\).
+
+\[
+  \pdv{G}{V}_{T,p,N}
+  = p - T\!\left(\pdv{S}{V}\right)_{T,N}
+  = p \;-\; T\,\frac{Nk}{V}
+  = p - \frac{nRT}{V},
+\]
+where we used \(Nk = nR\).
+
+---
+\begin{problem}
+  One mole of an \emph{ideal} gas is in equilibrium at a fixed temperature $T$ (e.g.\ 300 K) and a fixed pressure $p$ (e.g.\ $10^{6}\,\text{Pa}$).
+  At those conditions, evaluate the derivative of the Gibbs free energy with respect to volume:
+  \[
+  \left.\frac{\partial G}{\partial V}\right|_{T,p,N}\;=\;\;?
+  \]
+  (Report the result in $\text{J}\,\text{m}^{-3}$.)
+  \end{problem}
+  
+  \begin{solution}
+  \begin{enumerate}
+      \item \textbf{Thermodynamic identity for $G$.}  
+            For a simple, \emph{single‐component} system,
+            \[
+                \boxed{\;\mathrm{d}G \;=\; -S\,\mathrm{d}T \;+\; V\,\mathrm{d}p \;+\; \mu\,\mathrm{d}N\;}
+            \]
+            where $S$ is entropy, $V$ the volume, $\mu$ the chemical potential, and $N$ the amount of substance.
+      \item \textbf{Hold $T$, $p$, and $N$ fixed.}  
+            Under the stated conditions $\mathrm{d}T=\mathrm{d}p=\mathrm{d}N=0$, so the total differential reduces to
+            \[
+                \mathrm{d}G\;=\;0.
+            \]
+            Hence $G$ is \emph{constant} as long as $T$, $p$, and $N$ are fixed.
+      \item \textbf{Derivative with respect to $V$.}  
+            Because $G$ is a function only of $(T,p,N)$, it has \emph{no explicit dependence on $V$} when those variables are treated as the independent set.  Therefore
+            \[
+                \boxed{\;\left.\frac{\partial G}{\partial V}\right|_{T,p,N}\;=\;0\;}
+                \qquad\bigl(\text{units: } \text{J}\,\text{m}^{-3}\bigr).
+            \]
+            In words, once $T$ and $p$ are fixed, varying $V$ is not an independent operation for an ideal gas (because $pV = NRT$ already constrains $V$); consequently the partial derivative vanishes.
+  \end{enumerate}
+  \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{2.  Equilibrium volume for $T=300$ K and $p=10^{6}$ Pa}
+
+Setting the derivative to zero gives the ideal-gas relation
+
+\[
+  p = \frac{nRT}{V}
+  \quad\Longrightarrow\quad
+  V_{\text{eq}} = \frac{nRT}{p}.
+\]
+
+For one mole:
+
+\[
+  V_{\text{eq}}
+  = \frac{(1.00\;\text{mol})(8.314\;\text{J mol}^{-1}\text{K}^{-1})(300\;\text{K})}
+         {1.0\times10^{6}\;\text{Pa}}
+  \approx \boxed{2.49\times10^{-3}\;\text{m}^{3}}.
+\]
+
+---
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{3.  Gas with an excluded volume $b$}
+
+If the entropy’s volume term is \(S = Nk\ln(V - Nb)\) 
+(\(b = 1.1\times10^{-28}\,\text{m}^{3}\) per molecule), then
+
+\[
+  \pdv{G}{V}_{T,p,N}
+  = p - \frac{nRT}{V - Nb}.
+\]
+
+Equilibrium (\(\pdv*{G}{V}=0\)) now requires
+
+\[
+  p = \frac{nRT}{V - Nb}
+  \quad\Longrightarrow\quad
+  \boxed{\,V = \frac{nRT}{p} + N b\,}.
+\]
+
+Numerically (one mole, same $T$ and $p$):
+
+\[
+  N b = N_A b = (6.022\times10^{23})(1.1\times10^{-28})
+       = 6.62\times10^{-5}\;\text{m}^{3},
+\]
+\[
+  V_{\text{eq}}
+  = 2.49\times10^{-3} + 6.62\times10^{-5}
+  \approx \boxed{2.56\times10^{-3}\;\text{m}^{3}}.
+\]
+
+\medskip
+\noindent
+\textit{Keep the algebraic result}
+\[
+  V = \frac{nRT}{p} + N b
+\]
+for later exercises.
+\[
+  \left( \pdv{S(U,V)}{V} \right)_{U}
+  \;=\;
+  \frac{p}{T}.
+\]
+
+\textbf{Derivation (one line).}\;
+With $dU=0$ (holding $U$ fixed), the fundamental relation
+$T\,dS = dU + p\,dV$ simplifies to
+$T\,dS = p\,dV$, so $dS/dV = p/T$ at constant $U$.
+
+\begin{align*}
+  \textbf{Given:}\qquad 
+  & S=S(U,V)\quad\text{(fixed particle number)} \\[4pt]
+  &\displaystyle dS \;=\;
+    \left(\frac{\partial S}{\partial U}\right)_{V}\! dU
+    +\left(\frac{\partial S}{\partial V}\right)_{U}\! dV
+    \tag{1}
+  \end{align*}
+  
+  \begin{enumerate}
+  \item \textbf{Use the Fundamental Relation of Thermodynamics} (equilibrium):
+    \[
+      TdS \;=\; dU + p\,dV .
+    \]
+  
+  \item \textbf{Solve for \(dS\)} by dividing by \(T\):
+    \[
+      dS \;=\; \frac{1}{T}\,dU + \frac{p}{T}\,dV .
+      \tag{2}
+    \]
+  
+  \item \textbf{Match coefficients of \(dU\) and \(dV\)} between (1) and (2):
+    \[
+      \left(\frac{\partial S}{\partial U}\right)_{V} = \frac{1}{T},
+      \qquad
+      \left(\frac{\partial S}{\partial V}\right)_{U} = \frac{p}{T}.
+    \]
+  
+  \item \textbf{Answer}:
+    \[
+      \boxed{\displaystyle\left(\frac{\partial S}{\partial V}\right)_{U} = \frac{p}{T}}.
+    \]
+  \end{enumerate}
+  Below is a complete, copy-paste-ready LaTeX walkthrough for part 2.
+
+\begin{align*}
+\textbf{Objective:}\qquad 
+\left(\frac{\partial U}{\partial S}\right)_V \;=\; ?
+\end{align*}
+
+\begin{enumerate}
+\item \textbf{Treat \(U\) as a function of \(S\) and \(V\).}  
+      In equilibrium we may write \(U = U(S,V)\).  
+      Its total differential is
+      \[
+          dU
+          \;=\;
+          \left(\frac{\partial U}{\partial S}\right)_V dS
+          +\left(\frac{\partial U}{\partial V}\right)_S dV .
+          \tag{1}
+      \]
+
+\item \textbf{Insert the Fundamental Relation of Thermodynamics}  
+      (valid in equilibrium):
+      \[
+          TdS = dU + p\,dV
+          \;\;\Longrightarrow\;\;
+          dU = T\,dS - p\,dV .
+          \tag{2}
+      \]
+
+\item \textbf{Compare coefficients of differentials in (1) and (2).}  
+      Setting \(dV=0\) (i.e.\ taking the partial derivative at constant \(V\)),
+      \[
+          \left(\frac{\partial U}{\partial S}\right)_V dS \;=\; T\,dS
+          \quad\Longrightarrow\quad
+          \boxed{\displaystyle
+          \left(\frac{\partial U}{\partial S}\right)_V = T }.
+      \]
+      (For completeness, the \(dV\)-terms show 
+      \(\bigl(\frac{\partial U}{\partial V}\bigr)_S = -p\).)
+\end{enumerate}
+\begin{align*}
+  \textbf{Objective:}\qquad 
+  \left(\frac{\partial U}{\partial V}\right)_S \;=\; ?
+  \end{align*}
+  
+  \begin{enumerate}
+  \item \textbf{Regard \(U\) as a function of \((S,V)\):}
+        \[
+          dU
+          \;=\;
+          \left(\frac{\partial U}{\partial S}\right)_V dS
+          +\left(\frac{\partial U}{\partial V}\right)_S dV .
+          \tag{1}
+        \]
+  
+  \item \textbf{Use the Fundamental Relation of Thermodynamics (equilibrium):}
+        \[
+          TdS \;=\; dU + p\,dV
+          \;\;\Longrightarrow\;\;
+          dU = T\,dS - p\,dV .
+          \tag{2}
+        \]
+  
+  \item \textbf{Hold \(S\) constant (\(dS=0\)).}  
+        From (2) this gives
+        \[
+          dU\big|_{dS=0} \;=\; -p\,dV .
+        \]
+  
+  \item \textbf{Identify the coefficient of \(dV\).}  
+        Comparing with (1) when \(dS=0\):
+        \[
+          \left(\frac{\partial U}{\partial V}\right)_S dV \;=\; -p\,dV
+          \quad\Longrightarrow\quad
+          \boxed{\displaystyle
+          \left(\frac{\partial U}{\partial V}\right)_S = -\,p }.
+        \]
+  \end{enumerate}
+  \begin{align*}
+    \textbf{Objective:}\qquad
+    \left(\frac{\partial F}{\partial V}\right)_T
+    \end{align*}
+    
+    \begin{enumerate}
+    \item \textbf{Define the Helmholtz free energy.}
+          \[
+            F(T,V) \;=\; U - T\,S .
+          \]
+    
+    \item \textbf{Take the total differential of \(F\).}
+          \[
+            dF
+            \;=\;
+            dU - T\,dS - S\,dT .
+            \tag{1}
+          \]
+    
+    \item \textbf{Insert the Fundamental Relation of Thermodynamics (equilibrium):}
+          \[
+            T\,dS \;=\; dU + p\,dV
+            \;\;\Longrightarrow\;\;
+            dU \;=\; T\,dS - p\,dV .
+            \tag{2}
+          \]
+    
+    \item \textbf{Substitute (2) into (1).}
+          \[
+            dF
+            \;=\;
+            \bigl(T\,dS - p\,dV\bigr) - T\,dS - S\,dT
+            \;=\;
+            -\,p\,dV - S\,dT .
+            \tag{3}
+          \]
+    
+    \item \textbf{Hold temperature \(T\) constant (\(dT = 0\)).}
+          Under this condition, (3) reduces to
+          \[
+            dF\big|_{dT=0} \;=\; -\,p\,dV .
+          \]
+    
+    \item \textbf{Identify the coefficient of \(dV\).}
+          Comparing \(dF = \bigl(\partial F/\partial V\bigr)_T\,dV\) with the result above,
+          \[
+            \boxed{\displaystyle
+              \left(\frac{\partial F}{\partial V}\right)_T = -\,p }.
+          \]
+    \end{enumerate}
+    \begin{align*}
+      \textbf{Objective:}\qquad 
+      \left(\frac{\partial F}{\partial T}\right)_V
+      \end{align*}
+      
+      \begin{enumerate}
+      \item \textbf{Helmholtz free energy definition.}
+            \[
+              F(T,V) \;=\; U - T\,S .
+            \]
+      
+      \item \textbf{Take the total differential of \(F\).}
+            \[
+              dF
+              \;=\;
+              dU - T\,dS - S\,dT .
+              \tag{1}
+            \]
+      
+      \item \textbf{Insert the Fundamental Relation of Thermodynamics (equilibrium).}
+            \[
+              T\,dS = dU + p\,dV
+              \;\;\Longrightarrow\;\;
+              dU = T\,dS - p\,dV .
+              \tag{2}
+            \]
+      
+      \item \textbf{Substitute (2) into (1).}
+            \[
+              dF
+              \;=\;
+              (T\,dS - p\,dV) - T\,dS - S\,dT
+              \;=\;
+              -p\,dV - S\,dT .
+              \tag{3}
+            \]
+      
+      \item \textbf{Hold the volume \(V\) constant (\(dV = 0\)).}
+            Under this condition, (3) becomes
+            \[
+              dF\big|_{dV = 0} \;=\; -\,S\,dT .
+            \]
+      
+      \item \textbf{Identify the coefficient of \(dT\).}
+            Comparing \(dF = (\partial F/\partial T)_V\,dT\) with the above result,
+            \[
+              \boxed{\displaystyle
+                \left(\frac{\partial F}{\partial T}\right)_V = -\,S } .
+            \]
+      \end{enumerate}
+      \begin{align*}
+        \textbf{Objective:}\qquad
+        \left(\frac{\partial G}{\partial T}\right)_p
+        \end{align*}
+        
+        \begin{enumerate}
+        \item \textbf{Define the Gibbs free energy.}
+              \[
+                G(T,p)\;=\; U \;-\; T\,S \;+\; p\,V .
+              \]
+        
+        \item \textbf{Take the total differential of \(G\).}
+              \[
+                dG
+                \;=\;
+                dU \;-\; T\,dS \;-\; S\,dT \;+\; p\,dV \;+\; V\,dp .
+                \tag{1}
+              \]
+        
+        \item \textbf{Insert the Fundamental Relation of Thermodynamics (equilibrium).}
+              \[
+                T\,dS \;=\; dU \;+\; p\,dV
+                \;\;\Longrightarrow\;\;
+                dU = T\,dS \;-\; p\,dV .
+                \tag{2}
+              \]
+        
+        \item \textbf{Substitute (2) into (1).}
+              \[
+                dG
+                \;=\;
+                \bigl(T\,dS - p\,dV\bigr)
+                - T\,dS
+                - S\,dT
+                + p\,dV
+                + V\,dp
+                \;=\;
+                -\,S\,dT
+                + V\,dp .
+                \tag{3}
+              \]
+        
+        \item \textbf{Hold the pressure \(p\) constant (\(dp = 0\)).}
+              Under this condition, (3) reduces to
+              \[
+                dG\big|_{dp = 0} \;=\; -\,S\,dT .
+              \]
+        
+        \item \textbf{Identify the coefficient of \(dT\).}
+              Comparing \(dG = \bigl(\partial G/\partial T\bigr)_p\,dT\) with the result above,
+              \[
+                \boxed{\displaystyle
+                  \left(\frac{\partial G}{\partial T}\right)_p = -\,S } .
+              \]
+        \end{enumerate}
+        \begin{align*}
+          \textbf{Objective:}\qquad
+          \left(\frac{\partial G}{\partial p}\right)_T
+          \end{align*}
+          
+          \begin{enumerate}
+          \item \textbf{Gibbs free energy definition.}
+                \[
+                  G(T,p)\;=\; U \;-\; T\,S \;+\; p\,V .
+                \]
+          
+          \item \textbf{Take the total differential of \(G\).}
+                \[
+                  dG
+                  \;=\;
+                  dU \;-\; T\,dS \;-\; S\,dT \;+\; p\,dV \;+\; V\,dp .
+                  \tag{1}
+                \]
+          
+          \item \textbf{Insert the Fundamental Relation of Thermodynamics (equilibrium).}
+                \[
+                  T\,dS \;=\; dU \;+\; p\,dV
+                  \;\;\Longrightarrow\;\;
+                  dU = T\,dS \;-\; p\,dV .
+                  \tag{2}
+                \]
+          
+          \item \textbf{Substitute (2) into (1).}
+                \[
+                  dG
+                  \;=\;
+                  \bigl(T\,dS - p\,dV\bigr)
+                  - T\,dS
+                  - S\,dT
+                  + p\,dV
+                  + V\,dp
+                  \;=\;
+                  -\,S\,dT
+                  + V\,dp .
+                  \tag{3}
+                \]
+          
+          \item \textbf{Hold the temperature \(T\) constant (\(dT = 0\)).}
+                With \(dT = 0\), equation (3) simplifies to
+                \[
+                  dG\big|_{dT=0} \;=\; V\,dp .
+                \]
+          
+          \item \textbf{Identify the coefficient of \(dp\).}
+                Comparing \(dG = \bigl(\partial G/\partial p\bigr)_T\,dp\) with the result above,
+                \[
+                  \boxed{\displaystyle
+                    \left(\frac{\partial G}{\partial p}\right)_T = V } .
+                \]
+          \end{enumerate}
+          Below is a self-contained LaTeX walkthrough you can copy straight into your editor and compile.
+
+\begin{align*}
+\textbf{Data:}\;
+&n = 1\;\text{mol},\;
+T = 300\;\text{K},\;
+p_1 = 4.0 \times 10^{5}\;\text{Pa},\;
+p_2 = 2.0 \times 10^{5}\;\text{Pa}. \\[6pt]
+\textbf{Goal:}\;
+&\Delta G \;\;\text{for an \emph{isothermal} ideal-gas expansion ( } T=\text{const}\text{).}
+\end{align*}
+
+\begin{enumerate}
+\item \textbf{Start from the thermodynamic definition of \(G\):}
+  \[
+     G \;=\; U - TS + pV .
+  \]
+
+  Hence for any change between states 1 and 2,
+  \[
+     \Delta G \;=\; \Delta U \;-\; T\,\Delta S \;+\; \Delta(pV).
+  \]
+
+\item \textbf{Internal energy change.}  
+      For an ideal gas \(U(T)\) depends only on \(T\); here \(T\) is constant, so
+      \[
+        \boxed{\Delta U = 0 } .
+      \]
+
+\item \textbf{Entropy change for an isothermal ideal-gas expansion.}  
+      Using \(pV = nRT\) and \(S = nR\ln V + \text{const}\),
+      \[
+         \Delta S
+         \;=\;
+         nR\ln\!\frac{V_2}{V_1}
+         \;=\;
+         nR\ln\!\frac{p_1}{p_2},
+         \quad
+         \bigl(V\propto 1/p \text{ at fixed } T\bigr).
+      \]
+      With \(p_1/p_2 = 4.0\times10^{5}/2.0\times10^{5}=2\),
+      \[
+         \Delta S
+         \;=\;
+         (1\;\text{mol})(8.314\;\tfrac{\text{J}}{\text{mol\,K}})\,
+         \ln 2
+         \;=\;
+         5.76\;\text{J\,K}^{-1}.
+      \]
+
+\item \textbf{Change in \(pV\).}  
+      Because \(pV = nRT\) and both \(n\) and \(T\) are constant,
+      \[
+        p_1V_1 = p_2V_2 = nRT
+        \;\;\Longrightarrow\;\;
+        \boxed{\Delta(pV)=0 } .
+      \]
+
+\item \textbf{Assemble the pieces.}
+      \[
+        \Delta G
+        \;=\;
+        0
+        \;-\;
+        T\,\Delta S
+        \;+\;
+        0
+        \;=\;
+        -\,T\,\Delta S
+        \;=\;
+        -\,(300\;\text{K})(5.76\;\text{J\,K}^{-1})
+        \;=\;
+        -1.73\times10^{3}\;\text{J}.
+      \]
+
+\item \textbf{Result.}
+      \[
+        \boxed{\displaystyle \Delta G = -1.73 \times 10^{3}\ \text{J}}
+      \]
+      The Gibbs free energy decreases by \(1.73\;\text{kJ}\) during the
+      isothermal expansion.
+\end{enumerate}
+\end{document}

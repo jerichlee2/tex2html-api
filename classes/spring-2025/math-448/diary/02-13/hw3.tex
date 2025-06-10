@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\newcommand{\Log}{\operatorname{Log}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Important Theorems and Key Equations}}
+\end{center}
+\vspace{1em}
+
+\section*{I. Elementary Derivatives}
+
+\begin{theorem}[Derivatives of Sine and Cosine]
+\label{thm:sin-cos-derivatives}
+\[
+\frac{d}{dz}\bigl(\sin z\bigr) = \cos z,
+\quad
+\frac{d}{dz}\bigl(\cos z\bigr) = -\sin z.
+\]
+\end{theorem}
+
+\begin{theorem}[Derivatives of Hyperbolic Sine and Cosine]
+\[
+\frac{d}{dz}\bigl(\sinh z\bigr) = \cosh z,
+\quad
+\frac{d}{dz}\bigl(\cosh z\bigr) = \sinh z.
+\]
+\end{theorem}
+
+\begin{theorem}[Derivative of the Tangent]
+\[
+\frac{d}{dz}\bigl(\tan z\bigr) \;=\; \sec^2 z.
+\]
+\end{theorem}
+
+\begin{theorem}[Derivatives of the Inverse Trigonometric Functions]
+\[
+\frac{d}{dz}\bigl(\arcsin z\bigr) = \frac{1}{\sqrt{1 - z^2}},
+\quad
+\frac{d}{dz}\bigl(\arctan z\bigr) = \frac{1}{1 + z^2}.
+\]
+\end{theorem}
+
+
+\section*{II. Chain Rule and Related Examples}
+
+\begin{theorem}[Chain Rule in the Complex Plane]
+If \(f\) is analytic on a domain \(D\) and \(g\) is analytic on a domain \(\Omega\) containing the range of \(f\), then \(g\circ f\) is analytic on \(D\).  Moreover,
+\[
+\bigl(g(f(z))\bigr)' 
+\;=\;
+g'\bigl(f(z)\bigr)\;f'(z).
+\]
+\end{theorem}
+
+\begin{theorem}[Examples of the Chain Rule]
+\ 
+\begin{itemize}
+\item \(\displaystyle \frac{d}{dz}\bigl[(z^3 + 100)^{-4}\bigr]
+  = -12\,z^2\,(z^3 + 100)^{-5}.\)
+\smallskip
+\item \(\displaystyle \frac{d}{dz}\bigl[(\Log z)^3\bigr]
+  = \frac{3\,(\Log z)^2}{z}.\)
+\smallskip
+\item \(\displaystyle \frac{d}{dz}\bigl[\sinh(e^z)\bigr]
+  = \cosh(e^z)\,\cdot\,e^z.\)
+\end{itemize}
+\end{theorem}
+
+
+\section*{III. Sum, Product, and Quotient Rules}
+
+\begin{theorem}[Sum Rule]
+\label{thm:sum-rule}
+If \(f\) and \(g\) are analytic on a domain \(D\), then
+\[
+(f + g)'(z) \;=\; f'(z) + g'(z).
+\]
+\end{theorem}
+
+\begin{theorem}[Product Rule]
+\label{thm:product-rule}
+If \(f\) and \(g\) are analytic on a domain \(D\), then
+\[
+(f\,g)'(z) \;=\; f'(z)\,g(z) \;+\; f(z)\,g'(z).
+\]
+\end{theorem}
+
+\begin{theorem}[Quotient Rule]
+\label{thm:quotient-rule}
+If \(f\) and \(g\) are analytic on a domain \(D\) and \(g(z)\neq 0\), then
+\[
+\biggl(\frac{f}{g}\biggr)'(z)
+\;=\;
+\frac{f'(z)\,g(z) - f(z)\,g'(z)}{g(z)^2}.
+\]
+\end{theorem}
+
+\section*{IV. Zeros of the Derivative \(\implies\) Constant Function}
+
+\begin{theorem}[Identity Theorem for the Derivative Zero Case]
+\label{thm:constant-if-deriv-zero}
+Let \(f\) be analytic on a domain \(D\).  If \(f'(z)=0\) for all \(z \in D\), then \(f\) is constant on \(D\).
+\end{theorem}
+
+\section*{V. Non-Analytic Example}
+
+\begin{theorem}[\(\overline{z}\) is Not Analytic]
+\label{thm:zbar-non-analytic}
+The function \(h(z) = \overline{z}\) is \emph{not} analytic on any domain in \(\mathbb{C}\).  Indeed, its partial derivatives fail the Cauchy--Riemann equations everywhere except possibly at isolated points.
+\end{theorem}
+
+\section*{VI. Power-Series Radius of Convergence: Key Formulas}
+
+\begin{theorem}[Radius of Convergence via Root Test]
+\label{thm:radius-of-convergence}
+For a power series 
+\(\displaystyle \sum_{k=0}^{\infty} a_k (z - z_0)^k,\)
+the radius of convergence \(R\) is given by
+\[
+R 
+\;=\;
+\frac{1}{\limsup_{k \to \infty} \sqrt[k]{|a_k|}}
+\quad
+\Bigl(\text{provided the limit supremum is }>0\Bigr).
+\]
+\end{theorem}
+
+\begin{example}[Illustrations]
+\ 
+\begin{itemize}
+\item \(\displaystyle \sum_{k=1}^{\infty} k\,(z-1)^k\):
+\quad
+Here \(a_k = k\).  Since \(\lim_{k\to \infty}\sqrt[k]{k}=1,\) the radius of convergence is \(R=1.\)
+
+\item \(\displaystyle \sum_{j=0}^{\infty}\frac{z^{3j}}{2^j}\):
+\quad
+Geometric in \(z^3/2\).  Converges if \(\bigl|\tfrac{z^3}{2}\bigr|<1,\) i.e.\ \(|z|<\sqrt[3]{2}.\)
+\end{itemize}
+\end{example}
+
+\section*{VII. Selected Maclaurin Series}
+
+\begin{theorem}[Exponential and Cosine Expansions]
+\ 
+\begin{align*}
+& e^{-z} 
+  \;=\;
+  \sum_{n=0}^\infty \frac{(-z)^n}{n!}
+  \;=\;
+  \sum_{n=0}^\infty 
+  (-1)^n \,\frac{z^n}{n!}.
+\\[6pt]
+& \cos z
+  \;=\;
+  \sum_{n=0}^\infty (-1)^n \,\frac{z^{2n}}{(2n)!}
+  \quad\Longrightarrow\quad
+  z^2\,\cos z
+  \;=\;
+  \sum_{n=0}^\infty (-1)^n \,\frac{z^{2n+2}}{(2n)!}.
+\end{align*}
+\end{theorem}
+
+\begin{theorem}[Geometric-Type Expansions]
+For \(|z|<1,\)
+\[
+\frac{1}{1-z} \;=\; \sum_{n=0}^{\infty} z^n,
+\quad
+\frac{1+z}{1-z}
+\;=\;
+1 \;+\; 2\sum_{n=1}^\infty z^n,
+\quad
+\frac{z^3}{1 - z^3}
+\;=\;
+\sum_{n=1}^\infty z^{3n}.
+\]
+\end{theorem}
+
+\begin{theorem}[Example with \((4 - z)^{-2}\)]
+\[
+\frac{1}{(4 - z)^2}
+\;=\;
+\frac{1}{16}\,\frac{1}{\bigl(1 - \tfrac{z}{4}\bigr)^2}
+\;=\;
+\sum_{n=0}^\infty 
+(n+1)\,\frac{z^n}{4^{n+2}}
+\quad (\text{for }|z|<4).
+\]
+\end{theorem}
+
+
+\section*{VIII. Examples of Summation to Closed Form}
+
+\begin{theorem}[Examples of Closed-Form Sums]
+\ 
+\begin{itemize}
+\item \(\displaystyle \sum_{n=0}^{\infty} \frac{z^{2n}}{n!} 
+    \;=\;
+    e^{z^2}.\)
+
+\item \(\displaystyle \sum_{n=1}^{\infty} z^{3n}
+    \;=\;
+    \frac{z^3}{1 - z^3}
+    \quad (|z^3|<1).\)
+
+\item \(\displaystyle \sum_{n=1}^{\infty} n\,(z-1)^{n-1}
+    \;=\;
+    \frac{1}{(2 - z)^2}
+    \quad (|z-1|<1).\)
+\end{itemize}
+\end{theorem}
+
+\end{document}

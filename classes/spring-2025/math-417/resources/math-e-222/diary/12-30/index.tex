@@ -1,0 +1,160 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Equivalence relations; Cosets; Examples}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{note}
+    The group $ S_n $ consists of all permutations of $ \{1, 2, \dots, n\} $. Each permutation is determined by $ n $ choices for the image of $ 1 $, then $ n-1 $ choices for the image of $ 2 $, and so on. Hence:
+    \begin{align}
+        |S_n| \;=\; n!.
+    \end{align}
+    Define:
+    \begin{align}
+        f \colon S_n \to \{\pm1\}
+    \end{align}
+    by:
+    \begin{align}
+        f(\sigma) \;=\; 
+        \begin{cases}
+            +1, & \text{if $\sigma$ is an even permutation}, \\
+            -1, & \text{if $\sigma$ is an odd permutation}.
+        \end{cases}
+    \end{align}
+    This is well-defined (the parity of transposition decompositions is invariant) and can be easily checked to be a group homomorphism.
+    \begin{enumerate}
+        \item The identity permutation is even ($f(e) = +1$).
+        \item Any transposition $(i\, j)$ is odd ($f((i\, j)) = -1$).
+    \end{enumerate}
+    Thus, $f$ is onto $\{\pm1\}$.
+
+    By definition:
+    \begin{align}
+        \ker(f) \;=\; \{\sigma \in S_n \mid f(\sigma) = +1\} 
+        \;=\; \text{(even permutations)} 
+        \;=\; A_n.
+    \end{align}
+
+    Since $f$ is surjective:
+    \begin{align}
+        |S_n| \;=\; |\ker(f)| \times |f(S_n)|
+        \;\;\Longrightarrow\;\;
+        n! \;=\; |A_n| \times 2 
+        \;\;\Longrightarrow\;\;
+        |A_n| \;=\; \frac{n!}{2}.
+    \end{align} 
+\end{note}
+
+\begin{note}
+    A group $ G $ is cyclic if there exists an element $ g \in G $ such that:
+    \begin{align}
+        G = \langle g \rangle = \{ g^n : n \in \mathbb{Z} \}.
+    \end{align}
+    Equivalently (in additive notation):
+    \begin{align}
+        G = \langle a \rangle = \{ na : n \in \mathbb{Z} \}.
+    \end{align}
+    Examples of cyclic groups include:
+    \begin{align}
+        \mathbb{Z}, \quad \mathbb{Z}_n, \quad \text{the } n\text{-th roots of unity in } \mathbb{C}.
+    \end{align}
+    Note:
+    \begin{align}
+        \text{All cyclic groups are abelian, but not all abelian groups are cyclic.}
+    \end{align}
+\end{note}
+
+\begin{note}
+    Consider $ S_3 $:
+    \begin{align}
+        S_3 = \{\mathrm{id}, (12), (13), (23), (123), (132)\}.
+    \end{align}
+    Properties of $ S_3 $:
+    \begin{enumerate}
+        \item Order: $ |S_3| = 3! = 6 $.
+        \item Operation: composition of permutations.
+        \item Properties: non-abelian, no element of order $6$ (hence not cyclic).
+    \end{enumerate}
+\end{note}
+
+
+\subsubsection*{Reading} $\S$$\S$  2.5, 2.6
+\subsubsection*{HW:} 2.5.1, 2.5.6, 2.6.2, 2.6.4, 2.6.5
+
+\subsubsection*{Reading for next lecture:} $\S$ 2.9
+
+\begin{problem}[2.5.1]
+    Prove that the nonempty fibres of a map form a partition of the domain.
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.5.6]
+    \noindent
+   \begin{enumerate}
+    \item Prove that the relation $x$ conjugate to $y$ in a group $G$ is an equivalence relation on $G$ .
+    \item Describe the elements $a$ whose conjugacy class ($=$ equivalence class) consists of the element $a$ alone.
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.6.2]
+   Prove directly that distinct cosets do not overlap. 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.6.4]
+   Give an example showing that left cosets and right cosets of $GL_2(\mathbb{{R}})$ in $GL_2(\mathbb{{C}})$ are not always equal.
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.6.5]
+   Let $H,K$ be subgroups of a group $G$ of orders $3,5$ respectfully. Prove that $H \cap K=\left\{ 1 \right\} $  . 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\end{document}

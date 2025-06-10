@@ -1,0 +1,153 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\textbf{Derivation of the residue formula:}
+
+\bigskip
+
+Let $f$ be a function with an isolated singularity at $z_0$. Then in a punctured neighborhood of $z_0$, $f$ can be expanded in a Laurent series:
+\[
+f(z) \;=\; \sum_{n=-\infty}^{\infty} a_{n} \,(z - z_0)^n.
+\]
+
+By definition, the residue of $f$ at $z_0$ is the coefficient of $(z - z_0)^{-1}$ in this expansion:
+\[
+\operatorname{Res}(f; z_0) \;=\; a_{-1}.
+\]
+
+Now consider the contour integral of $f(z)$ around a small circle $|z - z_0| = s$. Substitute the Laurent series into the integral:
+\[
+\int_{|z - z_0|=s} f(z)\, dz
+\;=\;
+\int_{|z - z_0|=s} \sum_{n=-\infty}^\infty a_n (z - z_0)^n \, dz.
+\]
+By uniform convergence on the circle, we can interchange the sum and the integral:
+\[
+\int_{|z - z_0|=s} \sum_{n=-\infty}^\infty a_n (z - z_0)^n \, dz
+\;=\;
+\sum_{n=-\infty}^\infty
+a_n \int_{|z - z_0|=s} (z - z_0)^n \, dz.
+\]
+Parametrize the contour by $z - z_0 = s e^{i\theta}$ with $\theta$ going from $0$ to $2\pi$. One finds that
+\[
+\int_{|z - z_0|=s} (z - z_0)^n \, dz = 
+\begin{cases}
+0, & n \neq -1, \\
+2\pi i, & n = -1.
+\end{cases}
+\]
+Hence, the only term that survives is the one for $n = -1$:
+\[
+\int_{|z - z_0|=s} f(z)\, dz
+\;=\;
+a_{-1} \cdot 2\pi i
+\;=\;
+2\pi i \,\operatorname{Res}(f; z_0).
+\]
+Therefore,
+\[
+\operatorname{Res}(f; z_0)
+\;=\;
+\frac{1}{2\pi i}
+\int_{|z - z_0| = s} f(z)\, dz.
+\]
+\textbf{Relationship between the Residue Theorem and Cauchy's Integral Formula:}
+
+\medskip
+
+\noindent
+\textbf{Cauchy's Integral Formula:}  
+If $f$ is holomorphic in a simply connected domain containing $z_0$, then Cauchy's integral formula states
+\[
+f(z_0)
+\;=\;
+\frac{1}{2\pi i}
+\int_{\Gamma}
+\frac{f(z)}{z - z_0}\, dz,
+\]
+where $\Gamma$ is a simple closed contour enclosing $z_0$.
+
+\medskip
+
+\noindent
+\textbf{Residue Theorem:}  
+If $g(z)$ is meromorphic in a domain bounded by $\Gamma$ and on $\Gamma$, with isolated singularities $z_1, z_2, \dots, z_n$ inside, then the residue theorem says
+\[
+\int_{\Gamma} g(z)\, dz
+\;=\;
+2\pi i
+\sum_{k=1}^n
+\operatorname{Res}\bigl(g; z_k\bigr).
+\]
+
+\medskip
+
+\noindent
+\textbf{Connecting Them:}  
+To see how Cauchy's integral formula follows from the residue theorem, let
+\[
+g(z)
+\;=\;
+\frac{f(z)}{z - z_0}.
+\]
+The only singularity of $g(z)$ inside $\Gamma$ is a simple pole at $z = z_0$, and its residue there is $f(z_0)$. By the residue theorem:
+\[
+\int_{\Gamma}
+\frac{f(z)}{z - z_0}
+\,dz
+\;=\;
+2\pi i
+\,\operatorname{Res}\!\Bigl(\tfrac{f(z)}{z - z_0};\, z_0\Bigr)
+\;=\;
+2\pi i
+\,f(z_0).
+\]
+Dividing both sides by $2\pi i$ gives the statement of Cauchy's integral formula.
+
+\end{document}

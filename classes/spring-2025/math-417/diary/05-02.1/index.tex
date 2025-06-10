@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{cancel}   % provides \cancel, \bcancel, \xcancel, …
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\[
+\begin{aligned}
+\chi_1-\chi_2
+  &=\!\bigl(1+\sqrt{2}+\sqrt{3+\sqrt2}\bigr)
+    -\bigl(1-\sqrt{2}+\sqrt{3-\sqrt2}\bigr) \\[2pt]
+  &= (1-1) + \sqrt2 + \sqrt2
+     +\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\\[2pt]
+  &= 2\sqrt2 + \Bigl(\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\Bigr),
+\\[12pt]
+\chi_3-\chi_4
+  &=\!\bigl(1+\sqrt{2}-\sqrt{3+\sqrt2}\bigr)
+    -\bigl(1-\sqrt{2}-\sqrt{3-\sqrt2}\bigr) \\[2pt]
+  &= (1-1) + \sqrt2 + \sqrt2
+     -\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\\[2pt]
+  &= 2\sqrt2 + \Bigl(-\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\Bigr).
+\\[12pt]
+\text{Add the two differences:}\quad
+\chi_1-\chi_2+\chi_3-\chi_4
+  &=\Bigl[2\sqrt2+\bigl(\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\bigr)\Bigr] \\
+  &\quad+\Bigl[2\sqrt2+\bigl(-\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\bigr)\Bigr]\\[4pt]
+  &= 4\sqrt2
+    +\cancel{\sqrt{3+\sqrt2}}
+    -\cancel{\sqrt{3-\sqrt2}}
+    -\cancel{\sqrt{3+\sqrt2}}
+    +\cancel{\sqrt{3-\sqrt2}}\\[4pt]
+  &= 4\sqrt2.
+\end{aligned}
+\]
+
+Hence
+\[
+\boxed{\ \chi_{1}-\chi_{2}+\chi_{3}-\chi_{4}-4\sqrt2 = 0\ }.
+\]\[
+  \begin{aligned}
+  \chi_1-\chi_2
+    &=\!\bigl(1+\sqrt{2}+\sqrt{3+\sqrt2}\bigr)
+      -\bigl(1-\sqrt{2}+\sqrt{3-\sqrt2}\bigr) \\[2pt]
+    &= (1-1) + \sqrt2 + \sqrt2
+       +\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\\[2pt]
+    &= 2\sqrt2 + \Bigl(\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\Bigr),
+  \\[12pt]
+  \chi_3-\chi_4
+    &=\!\bigl(1+\sqrt{2}-\sqrt{3+\sqrt2}\bigr)
+      -\bigl(1-\sqrt{2}-\sqrt{3-\sqrt2}\bigr) \\[2pt]
+    &= (1-1) + \sqrt2 + \sqrt2
+       -\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\\[2pt]
+    &= 2\sqrt2 + \Bigl(-\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\Bigr).
+  \\[12pt]
+  \text{Add the two differences:}\quad
+  \chi_1-\chi_2+\chi_3-\chi_4
+    &=\Bigl[2\sqrt2+\bigl(\sqrt{3+\sqrt2}-\sqrt{3-\sqrt2}\bigr)\Bigr] \\
+    &\quad+\Bigl[2\sqrt2+\bigl(-\sqrt{3+\sqrt2}+\sqrt{3-\sqrt2}\bigr)\Bigr]\\[4pt]
+    &= 4\sqrt2
+      +\cancel{\sqrt{3+\sqrt2}}
+      -\cancel{\sqrt{3-\sqrt2}}
+      -\cancel{\sqrt{3+\sqrt2}}
+      +\cancel{\sqrt{3-\sqrt2}}\\[4pt]
+    &= 4\sqrt2.
+  \end{aligned}
+  \]
+  
+  Hence
+  \[
+  \boxed{\ \chi_{1}-\chi_{2}+\chi_{3}-\chi_{4}-4\sqrt2 = 0\ }.
+  \]
+\end{document}

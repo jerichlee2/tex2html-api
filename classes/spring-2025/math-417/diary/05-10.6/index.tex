@@ -1,0 +1,439 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% Intuitive explanation that  \operatorname{Aut}(P)\cong\bigl(\mathbb{Z}/p\mathbb{Z}\bigr)^{\times}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Aut}{\operatorname{Aut}}
+
+\begin{center}
+\textbf{Why $\Aut(P)\;\cong\;\bigl(\Z/p\Z\bigr)^{\times}$ when $P$ is cyclic of order $p$}
+\end{center}
+
+\medskip
+Let 
+\[
+   P \;=\; \bigl(\, \Z/p\Z,\,+\,\bigr)
+\]
+be the \emph{additive} cyclic group of prime order~$p$.
+
+\begin{enumerate}
+   \item \textbf{Every automorphism is determined by where it sends a generator.}\\
+         The element~$1\in P$ generates the whole group.  
+         An automorphism $\alpha\in\Aut(P)$ must send $1$ to some element 
+         $\alpha(1)=a\in P$ that is \emph{also} a generator.
+         \[
+            \alpha(k)\;=\;\alpha\!\bigl(1+\dots+1\bigr)
+            \;=\;k\,\alpha(1)
+            \;=\;k\,a\quad(\text{$k$ times}).
+         \]
+         Thus $\alpha$ is nothing more than ``multiplication by~$a$''.
+
+   \item \textbf{Which $a$ work?  Exactly the units $\pmod{p}$.}\\
+         An element~$a\in P$ generates $P$ iff $\gcd(a,p)=1$,
+         i.e.\ $a\not\equiv 0\pmod{p}$.  
+         So the $p-1$ valid choices for $a$ are precisely the
+         \emph{units} in the ring $\Z/p\Z$, denoted
+         $\bigl(\Z/p\Z\bigr)^{\times}$.
+
+   \item \textbf{Define the mapping}
+         \[
+            \Phi : \bigl(\Z/p\Z\bigr)^{\times}\;\longrightarrow\;\Aut(P),
+            \qquad
+            a \;\longmapsto\;(x\mapsto ax).
+         \]
+         \begin{itemize}
+            \item \emph{Homomorphism:}
+                  $\Phi(ab)(x)=abx=\Phi(a)\!\bigl(\Phi(b)(x)\bigr)$,  
+                  so $\Phi(ab)=\Phi(a)\circ\Phi(b)$.
+            \item \emph{Injective:}
+                  $\Phi(a)=\Phi(b)\;\Rightarrow\;ax=bx$ for all $x$,
+                  hence $a=b$.
+            \item \emph{Surjective:}
+                  Every automorphism is ``multiplication by some generator’’,
+                  so each $\alpha\in\Aut(P)$ equals $\Phi(a)$
+                  for the unique $a=\alpha(1)\in(\Z/p\Z)^{\times}$.
+         \end{itemize}
+
+   \item \textbf{Conclusion.}\;
+         $\Phi$ is a bijective homomorphism, hence an isomorphism:
+         \[
+            \boxed{\;\Aut(P)\;\cong\;\bigl(\Z/p\Z\bigr)^{\times}\,. }
+         \]
+\end{enumerate}
+
+\medskip
+\textit{Intuition in one sentence:}  
+an automorphism of a cyclic group just “rescales’’ its generator,
+and the permissible rescalings are precisely the non-zero
+integers modulo~$p$, which multiply exactly like
+the unit group~$\bigl(\Z/p\Z\bigr)^{\times}$.
+% The multiplicative group modulo 11
+
+\newcommand{\units}[1]{\bigl(\Z/#1\Z\bigr)^{\times}}
+
+\[
+  \units{11}
+  \;=\;
+  \{\,1,2,3,4,5,6,7,8,9,10\,\},
+\]
+with the group operation given by multiplication modulo 11.
+
+\begin{itemize}
+  \item \textbf{Order.}  
+        Because \(11\) is prime, every non-zero residue mod 11 is invertible,  
+        so \(|\units{11}| = 11-1 = 10\).
+
+  \item \textbf{Structure.}  
+        A classical result says that \(\units{p}\) is \emph{cyclic} for any prime \(p\);  
+        hence
+        \[
+            \units{11}\;\cong\;C_{10},
+        \]
+        the cyclic group of order 10.
+
+  \item \textbf{Primitive roots (generators).}  
+        Any element whose order is 10 generates the whole group.
+        For example, \(2\) is a primitive root modulo 11:
+        \[
+           2^1= 2,\;
+           2^2= 4,\;
+           2^3= 8,\;
+           2^4= 5,\;
+           2^5=10,\;
+           2^6= 9,\;
+           2^7= 7,\;
+           2^8= 3,\;
+           2^9= 6,\;
+           2^{10}\equiv 1\pmod{11}.
+        \]
+        Thus
+        \[
+           \langle 2\rangle
+           \;=\;
+           \{\,1,2,4,8,5,10,9,7,3,6\,\}
+           \;=\;\units{11}.
+        \]
+        Other generators (primitive roots) modulo 11 are \(2, 6, 7, 8\).
+\end{itemize}
+\begin{solution}
+  \textbf{Problem.}\;
+  Let \(G\) be a finite group of order
+  \[
+     |G| \;=\; 3^{2}\cdot 11 \;=\; 99 .
+  \]
+  
+  \medskip
+  \textbf{(a) A unique Sylow \(11\)-subgroup.}
+  
+  Write \(n_{11}\) for the number of Sylow \(11\)-subgroups of \(G\).
+  Sylow’s theorems give the two conditions  
+  \[
+     n_{11}\;\bigm|\;3^{2},
+     \qquad
+     n_{11}\,\equiv\,1\pmod{11}.
+  \]
+  Hence \(n_{11}\in\{1,9\}\) but also \(n_{11}\equiv1\pmod{11}\),
+  so the only possibility is
+  \[
+     n_{11}=1.
+  \]
+  Therefore \(G\) contains \emph{exactly one} subgroup of order \(11\).
+  Because conjugation permutes the Sylow \(11\)-subgroups,
+  this unique subgroup is fixed under conjugation and is hence
+  \emph{normal} in \(G\).
+  
+  Let us denote it by
+  \[
+     N \;:=\; \text{Sylow}_{11}(G)
+     \;\cong\;C_{11}\;\trianglelefteq\;G.
+  \]
+  
+  \medskip
+  \textbf{(b) Must \(G\) be abelian?}
+  
+  Let \(P\le G\) be any Sylow \(3\)-subgroup; then \(|P|=3^{2}=9\).
+  
+  \smallskip
+  \emph{Step 1.\; All groups of order \(\mathbf{9}\) are abelian.}  
+  There are only two isomorphism types:
+  \(C_{9}\) and \(C_{3}\times C_{3}\), both abelian.
+  
+  \smallskip
+  \emph{Step 2.\; Conjugation gives a homomorphism into
+  \(\operatorname{Aut}(N)\).}  
+  Because \(N\trianglelefteq G\), conjugation by an element
+  \(g\in G\) restricts to an automorphism of \(N\).
+  Thus the action of \(P\) on \(N\) defines a homomorphism
+  \[
+     \varphi : P \;\longrightarrow\; \operatorname{Aut}(N).
+  \]
+  Since \(N\cong C_{11}\) is cyclic of prime order,
+  \[
+     \operatorname{Aut}(N)\;\cong\;(\mathbb Z/11\mathbb Z)^{\times}
+     \;\cong\;C_{10},
+  \]
+  a cyclic group of order \(10\).
+  
+  \smallskip
+  \emph{Step 3.\; The image of \(\varphi\) is trivial.}  
+  The order of \(\operatorname{Im}\varphi\) divides both \(|P|=9\)
+  and \(|\operatorname{Aut}(N)|=10\), hence divides
+  \(\gcd(9,10)=1\).  Therefore \(\operatorname{Im}\varphi=\{1\}\) and
+  \[
+     \varphi \ \text{ is the trivial homomorphism}.
+  \]
+  
+  \smallskip
+  \emph{Step 4.\; \(P\) centralises \(N\).}  
+  A trivial action means every element of \(P\) commutes
+  with every element of \(N\); equivalently,
+  \(P\le C_{G}(N)\).
+  
+  \smallskip
+  \emph{Step 5.\; \(G\) is a direct product of abelian groups.}  
+  Because \(N\cap P=\{1\}\) and \(NP=G\)
+  (\(|N|\cdot|P|=11\cdot9=99=|G|\)),
+  we have
+  \[
+     G \;=\; N\cdot P \;=\; N \times P .
+  \]
+  Both \(N\) and \(P\) are abelian,
+  so their direct product \(G\) is abelian.
+  
+  \medskip
+  \textbf{Conclusion.}\;
+  Every group of order \(99=3^{2}\cdot11\) is necessarily abelian.  
+  (No non-abelian example exists.)
+  \end{solution}
+  \begin{problem}
+    Let \(G\) be a group of order
+    \[
+       45 \;=\; 3^{2}\cdot5.
+    \]
+    \begin{enumerate}[]
+       \item
+          Using Sylow’s theorems, show that \(G\) contains a \emph{unique}
+          Sylow \(5\)-subgroup.  Deduce that this subgroup is normal in \(G\).
+       \item
+          Must \(G\) be abelian?  
+          Either prove that it is, or construct an explicit non-abelian
+          group of order \(45\) and justify your example.
+    \end{enumerate}
+    \end{problem}
+    \begin{remark}
+      \textbf{Why a \emph{unique} Sylow \(p\)-subgroup is automatically normal.}
+      
+      Let \(G\) be a finite group and let \(P\le G\) be its (unique) Sylow
+      \(p\)-subgroup.
+      \begin{enumerate}
+         \item[\(\triangleright\)]
+               \emph{Conjugates are Sylow.}  
+               For any \(g\in G\), the subgroup
+               \(gPg^{-1}\) has the same order as \(P\)
+               (conjugation preserves order) and is therefore also a Sylow
+               \(p\)-subgroup.
+         \item[\(\triangleright\)]
+               \emph{Uniqueness forces equality.}  
+               Because \(P\) is the \emph{only} Sylow \(p\)-subgroup,
+               every such conjugate must coincide with \(P\) itself:
+               \[
+                  gPg^{-1}=P
+                  \quad\text{for all }g\in G.
+               \]
+         \item[\(\triangleright\)]
+               \emph{Definition of normality.}  
+               The condition \(gPg^{-1}=P\) for all \(g\in G\) is
+               exactly the statement that \(P\) is a \emph{normal} subgroup
+               (\(P\trianglelefteq G\)).
+      \end{enumerate}
+      Hence a Sylow subgroup is normal whenever it is unique.
+      \end{remark}
+      %--------------------------------------------------------------------
+%  Expanding the “trivial versus non-trivial” action for |G| = 63
+%--------------------------------------------------------------------
+
+
+\begin{center}
+\large Groups of order \(63 = 3^{2}\cdot7\) via semidirect products
+\end{center}
+
+\bigskip
+\textbf{Step 0.  The two Sylow subgroups}
+
+\[
+   |G| \;=\; 3^{2}\cdot7
+   \quad\Longrightarrow\quad
+   \begin{cases}
+      N := \text{Sylow}_{7}(G), & |N| = 7,\\[3pt]
+      Q := \text{Sylow}_{3}(G), & |Q| = 9.
+   \end{cases}
+\]
+By Sylow’s theorems \(N\trianglelefteq G\) (it is the \emph{only}
+Sylow \(7\)-subgroup), so every group of order~63 is an extension
+\[
+   1\;\longrightarrow\;N\;\longrightarrow\;G
+     \;\xrightarrow{\;\;\pi\;\;}\;Q\;\longrightarrow\;1.
+\]
+
+\bigskip
+\textbf{Step 1.  Encoding the extension by an action}
+
+Because \(N\cong C_{7}\) is cyclic, its automorphism group is
+\[
+   \Aut(N)\;\cong\;(\Z/7\Z)^{\times}\;\cong\;C_{6}
+   \;=\;\langle\;\alpha\;|\;\alpha^{6}=1\rangle,
+   \quad
+   \alpha:\;a\longmapsto a^{2},
+\]
+where \(a\) is a fixed generator of \(N\).
+
+Conjugation in \(G\) gives a homomorphism
+\[
+   \varphi : Q \;\longrightarrow\; \Aut(N),\qquad
+   x \;\longmapsto\;(a\mapsto xax^{-1}).
+\]
+The structure of \(G\) is completely determined (up to isomorphism)
+by the pair \(\bigl(Q,\varphi\bigr)\).
+
+\bigskip
+\textbf{Step 2.  Possible images of \(\varphi\)}
+
+\[
+   |\Aut(N)| = 6,\quad |Q| = 9
+   \;\;\Longrightarrow\;\;
+   |\varphi(Q)| \,\bigm|\,\gcd(9,6) = 3.
+\]
+Hence \(\varphi(Q)\) has order \(1\) or \(3\).
+
+\smallskip
+\begin{enumerate}
+   \item[\(\boldsymbol{|\,\varphi(Q)| = 1}\)] (\emph{trivial action})\\
+         \(\varphi\) is the zero homomorphism, so \(Q\) centralises \(N\).
+         The extension splits as a \emph{direct} product
+         \[
+            G \;\cong\; N\times Q
+            \;\cong\; C_{7}\times Q,
+         \]
+         which is abelian.  Since every group of order \(9\) is abelian,
+         the two possibilities are
+         \[
+            C_{7}\times C_{9}
+            \quad\text{or}\quad
+            C_{7}\times (C_{3}\times C_{3}).
+         \]
+   \item[\(\boldsymbol{|\,\varphi(Q)| = 3}\)] (\emph{non-trivial action})\\
+         The image is the unique subgroup of order \(3\) inside \(C_{6}\),
+         namely \(\langle\alpha^{2}\rangle\) or \(\langle\alpha^{4}\rangle\).
+         Any such action is equivalent (via automorphisms of \(N\))
+         to the one determined by
+         \[
+            \alpha^{2}:\; a\longmapsto a^{2}\quad
+            \bigl(\text{note }2^{3} \equiv 1\pmod{7}\bigr).
+         \]
+         \emph{Cyclic \(Q\).}  
+         For the map \(\varphi\) to have cyclic image of order 3, one needs
+         a cyclic \(Q\) of order 9 with a kernel of index 3.
+         Concretely, take
+         \[
+            Q = \langle\,b \mid b^{9}=1\,\rangle,
+            \qquad
+            \varphi(b)\;=\;\alpha^{2}.
+         \]
+         Then \(K := \ker\varphi = \langle b^{3}\rangle \cong C_{3}\).
+
+         \smallskip
+         The resulting group is the \emph{semidirect} product
+         \[
+            G \;\cong\;
+            C_{7}\rtimes_{\varphi} C_{9}
+            \;=\;
+            \bigl\langle\,a,b
+              \;\bigm|\;
+                 a^{7}=1,\;
+                 b^{9}=1,\;
+                 b^{-1}ab = a^{2}\bigr\rangle.
+         \]
+         Because \(b\) does not commute with \(a\) (\(a^{2}\neq a\)),
+         this \(G\) is \emph{non-abelian}.
+
+         \emph{Elementary-abelian \(Q\).}  
+         If \(Q\cong C_{3}\times C_{3}\), every homomorphism from \(Q\)
+         to a cyclic group is trivial (all elements of \(Q\) have order 3),
+         so \(|\varphi(Q)|=3\) is \emph{impossible} in that case.
+\end{enumerate}
+
+\bigskip
+\textbf{Step 3.  Classification summary}
+
+Every group of order \(63\) is isomorphic to \emph{exactly one} of the
+following:
+\[
+\begin{array}{ll}
+\text{(i)} & C_{7}\times C_{9}\quad (\text{abelian}),\\[4pt]
+\text{(ii)} & C_{7}\times(C_{3}\times C_{3})\quad (\text{abelian}),\\[4pt]
+\text{(iii)} & C_{7}\rtimes C_{9}
+             = \langle a,b \mid a^{7}=b^{9}=1,\;
+               b^{-1}ab=a^{2}\rangle\quad (\text{non-abelian}).
+\end{array}
+\]
+Thus the “\(|\varphi(Q)| = 1\)” line in the note leads to the two
+abelian direct products, while the “\(|\varphi(Q)| = 3\)” line
+produces the unique non-abelian semidirect product of order \(63\).
+\end{document}

@@ -1,0 +1,399 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417: HW 9}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+
+    Show that the quotient ring
+    \[
+      \mathbb{R}[x]\big/\bigl((x-1)(x-2)\bigr)
+      \;\cong\;
+      \mathbb{R}\;\oplus\;\mathbb{R}.
+    \]
+
+    
+    \begin{proof}[Step–by–step solution]
+    \textbf{Step 1:  Define an evaluation homomorphism.}\newline
+    Let
+    \[
+      \varphi:\mathbb{R}[x]\;\longrightarrow\;\mathbb{R}\oplus\mathbb{R},
+      \qquad
+      f(x)\;\longmapsto\;\bigl(f(1),\,f(2)\bigr).
+    \]
+    Clearly $\varphi$ preserves addition and multiplication, so it is a ring
+    homomorphism.
+    
+    \bigskip
+    \textbf{Step 2:  Show that $\varphi$ is surjective.}\newline
+    Given any pair $(a,b)\in\mathbb{R}\oplus\mathbb{R}$, construct the linear
+    polynomial
+    \[
+      g(x)\;=\;a\,\frac{x-2}{1-2}\;+\;b\,\frac{x-1}{2-1}
+             \;=\;a\,(x-2)\;-\;b\,(x-1).
+    \]
+    Then $g(1)=a$ and $g(2)=b$, so $\varphi(g)=(a,b)$.  Thus $\operatorname{Im}\varphi
+    =\mathbb{R}\oplus\mathbb{R}$.
+    
+    \bigskip
+    \textbf{Step 3:  Identify $\ker\varphi$.}\newline
+    A polynomial $f(x)\in\mathbb{R}[x]$ lies in $\ker\varphi$ iff
+    \[
+      f(1)=0\quad\text{and}\quad f(2)=0,
+    \]
+    which holds precisely when $f(x)$ is divisible by both $(x-1)$ and $(x-2)$.
+    Because these two linear factors are coprime,
+    \[
+      \ker\varphi
+      \;=\;\bigl((x-1)\bigr)\cap\bigl((x-2)\bigr)
+      \;=\;\bigl((x-1)(x-2)\bigr).
+    \]
+    
+    \bigskip
+    \textbf{Step 4:  Apply the First Isomorphism Theorem.}\newline
+    The theorem states that
+    \[
+      \mathbb{R}[x]/\ker\varphi
+      \;\cong\;
+      \operatorname{Im}\varphi.
+    \]
+    Substituting the results of Steps 2–3 yields
+    \[
+      \boxed{\;
+        \mathbb{R}[x]\big/\bigl((x-1)(x-2)\bigr)
+        \;\cong\;
+        \mathbb{R}\;\oplus\;\mathbb{R}\;} .
+    \]
+    
+    \bigskip
+    \textbf{Alternative viewpoint (Chinese Remainder Theorem).}\newline
+    Since the ideals $(x-1)$ and $(x-2)$ are coprime,
+    the Chinese Remainder Theorem gives
+    \[
+      \mathbb{R}[x]\big/\bigl((x-1)(x-2)\bigr)
+      \;\cong\;
+      \mathbb{R}[x]/(x-1)\;\oplus\;\mathbb{R}[x]/(x-2)
+      \;\cong\;
+      \mathbb{R}\;\oplus\;\mathbb{R},
+    \]
+    confirming the result.
+    \end{proof} 
+
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+    Show that the ring of Gaussian integers
+    \[
+      \mathbb{Z}[i]\;=\;\{\,a+bi \mid a,b\in\mathbb{Z}\,\}
+    \]
+    is a \emph{Euclidean domain}.
+    
+    \begin{proof}[Step–by–step solution]
+    Recall that an integral domain $R$ is \emph{Euclidean} if there exists a
+    function $N:R\setminus\{0\}\to\mathbb{Z}_{\ge 0}$ (a \textbf{Euclidean norm})
+    such that for every $a,b\in R$ with $b\neq 0$ there are $q,r\in R$ satisfying
+    \[
+      a \;=\; bq + r
+      \quad\text{with}\quad
+      r=0\;\text{ or }\;N(r)<N(b).
+    \]
+    
+    \bigskip
+    \textbf{Step 1:  Choose the norm.}\newline
+    For $z=a+bi\in\mathbb{Z}[i]\setminus\{0\}$ define
+    \[
+      N(z)\;=\;a^{2}+b^{2}\;=\;|z|^{2}.
+    \]
+    \emph{Why this works:}
+    \begin{itemize}
+      \item $N(z)\in\mathbb{Z}_{\ge 0}$ for every $z\in\mathbb{Z}[i]\setminus\{0\}$.
+      \item $N$ is \emph{multiplicative}: $N(zw)=N(z)N(w)$, because
+            $|zw|=|z||w|$ in~$\mathbb{C}$.
+    \end{itemize}
+    
+    \bigskip
+    \textbf{Step 2:  Find a “nearest” Gaussian integer.}\newline
+    Let $z\in\mathbb{C}$ be arbitrary.  Write $z=x+iy$ with $x,y\in\mathbb{R}$ and set
+    \[
+      q=\bigl(\!\lfloor x+\tfrac12 \rfloor\bigr)
+         +
+         \bigl(\!\lfloor y+\tfrac12 \rfloor\bigr)i
+         \;\in\;\mathbb{Z}[i],
+    \]
+    i.e.\ round each coordinate to the nearest integer.
+    Then
+    \[
+      |x-\Re(q)|\le \tfrac12,
+      \quad
+      |y-\Im(q)|\le \tfrac12,
+      \quad\Longrightarrow\quad
+      |z-q|
+      \;=\;
+      \sqrt{(x-\Re q)^{2}+(y-\Im q)^{2}}
+      \;\le\;
+      \sqrt{\tfrac12}
+      \;=\;
+      \frac{1}{\sqrt{2}}.
+    \]
+    
+    \bigskip
+    \textbf{Step 3:  Perform Euclidean division.}\newline
+    Given $a,b\in\mathbb{Z}[i]$ with $b\neq 0$, put
+    \[
+      z \;=\; \frac{a}{b}\in\mathbb{C},
+      \qquad
+      q \text{ as in Step 2},
+      \qquad
+      r \;=\; a-bq.
+    \]
+    By construction $q\in\mathbb{Z}[i]$ and therefore $r\in\mathbb{Z}[i]$.
+    Moreover
+    \[
+      |r|
+      \;=\;
+      |a-bq|
+      \;=\;
+      |b|\cdot\bigl|z-q\bigr|
+      \;\le\;
+      |b|\cdot\frac1{\sqrt{2}},
+      \qquad\Longrightarrow\qquad
+      N(r)=|r|^{2}\;\le\;\frac12\,|b|^{2}\;=\;\frac12\,N(b)\;<\;N(b).
+    \]
+    If $|z-q|=0$ then $r=0$, so the remainder condition is satisfied as well.
+    
+    \bigskip
+    \textbf{Step 4:  Conclude.}\newline
+    Because every pair $(a,b)$ with $b\ne 0$ admits such $q,r$, the function
+    $N(a+bi)=a^{2}+b^{2}$ is a Euclidean norm on $\mathbb{Z}[i]$.
+    Hence $\boxed{\;\mathbb{Z}[i]\text{ is a Euclidean domain.}\;}$
+    \end{proof}
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+    Let $I=(2+i)\subseteq\mathbb{Z}[i]$ be the principal ideal generated by the
+    Gaussian integer $2+i$.  Prove
+    
+    \begin{enumerate}[label=\textup{(\alph*)}]
+      \item $1\notin I$;
+      \item $\displaystyle\mathbb{Z}[i]\big/I\;\cong\;\mathbb{Z}_5$.
+    \end{enumerate}
+    
+    \emph{Hint:}  Consider the homomorphism
+    $\psi:\mathbb{Z}\longrightarrow\mathbb{Z}[i]/I,\;n\mapsto n+I$.
+    
+    \begin{proof}[Step--by--step solution]
+    Throughout, recall the \emph{norm} on $\mathbb{Z}[i]$,
+    \(
+      N(a+bi)=a^{2}+b^{2},
+    \)
+    which is multiplicative: $N(zw)=N(z)\,N(w)$.
+    
+    \bigskip
+    \textbf{(a) Show that $1\notin I$.}
+    
+    \begin{enumerate}[label=\arabic*.]
+      \item If $1\in I$ then there exists $u\in\mathbb{Z}[i]$ such that
+            \(
+              1=(2+i)\,u.
+            \)
+      \item Taking norms gives
+            \(
+              1
+              \;=\;
+              N(1)
+              \;=\;
+              N\bigl((2+i)u\bigr)
+              \;=\;
+              N(2+i)\;N(u).
+            \)
+      \item Compute $N(2+i)=2^{2}+1^{2}=5$.
+            Hence we would have $1=5\,N(u)$, an impossibility because
+            $5\nmid 1$ in~$\mathbb{Z}$.
+    \end{enumerate}
+    Therefore \(1\notin I\).
+    
+    \bigskip
+    \textbf{(b) Show that \(\mathbb{Z}[i]/I\cong\mathbb{Z}_5\).}
+    
+    \smallskip
+    \textit{Step 1:  Define a convenient homomorphism.}
+    
+    \[
+      \psi:\mathbb{Z}\;\longrightarrow\;\mathbb{Z}[i]/I,
+      \qquad
+      n\;\longmapsto\;n+I.
+    \]
+    
+    \smallskip
+    \textit{Step 2:  Determine \(\ker\psi\).}
+    
+    \begin{enumerate}[label=\alph*.]
+      \item An integer $n$ lies in $\ker\psi$ iff $n\in I$, i.e.\ $n=(2+i)(a+bi)$
+            for some $a,b\in\mathbb{Z}$.
+      \item Taking norms again,
+            \(
+              n^{2}=N(n)=N(2+i)\,N(a+bi)
+                     =5\bigl(a^{2}+b^{2}\bigr).
+            \)
+            Hence $5\mid n^{2}$, so $5\mid n$.
+      \item Conversely, if $n=5k$ then
+            \(
+              5k=(2+i)\bigl(k(2-i)\bigr)\in I,
+            \)
+            so $5k\in\ker\psi$.
+    \end{enumerate}
+    Thus
+    \[
+      \ker\psi = 5\mathbb{Z}.
+    \]
+    
+    \smallskip
+    \textit{Step 3:  Show that \(\psi\) is surjective.}
+    
+    Given any $z=a+bi\in\mathbb{Z}[i]$, perform Euclidean division by $2+i$:
+    there exist $q,r\in\mathbb{Z}[i]$ with
+    \(
+      z=(2+i)q+r,\;N(r)<5.
+    \)
+    Because $N(r)<5$, the only possible norms are $0,1,2,4$; hence
+    $N(r)\in\{0,1,4\}$ and in each case $r$ is congruent modulo~$I$
+    to some integer in $\{0,1,2,3,4\}$.  Consequently every coset of $I$ has a
+    \emph{integer} representative, so $\psi$ hits them all.
+    
+    \smallskip
+    \textit{Step 4:  Apply the First Isomorphism Theorem.}
+    
+    Since $\psi$ is a surjective ring homomorphism with kernel $5\mathbb{Z}$,
+    \[
+      \mathbb{Z}[i]/I
+      \;\cong\;
+      \mathbb{Z}\big/\ker\psi
+      \;=\;
+      \mathbb{Z}\big/5\mathbb{Z}
+      \;=\;
+      \boxed{\mathbb{Z}_5}.
+    \]
+    \end{proof}
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+    Let $x$ be a \emph{nilpotent} element in a ring $R$ with identity~$1$; that is,
+    there exists some integer $n\ge 1$ such that $x^{\,n}=0$.
+    Show that $1-x$ is invertible in~$R$.
+    
+    \begin{proof}[Step–by–step solution]
+    \textbf{Step 1:  Use the definition of nilpotence.}\newline
+    Because $x$ is nilpotent, choose the least positive integer $n$ such that
+    \[
+      x^{\,n}=0.
+    \]
+    
+    \bigskip
+    \textbf{Step 2:  Construct a candidate for the inverse.}\newline
+    Define
+    \[
+      y \;=\; 1 + x + x^{\,2} + \dots + x^{\,n-1}\;\in R.
+    \]
+    
+    \bigskip
+    \textbf{Step 3:  Verify the left inverse property.}\newline
+    Multiply:
+    \[
+      (1 - x)\,y
+      \;=\;
+      (1 - x)\bigl(1 + x + x^{\,2} + \dots + x^{\,n-1}\bigr)
+      \;=\;
+      1 - x^{\,n}
+      \;=\;
+      1,
+    \]
+    because every intermediate term cancels in pairs and $x^{\,n}=0$.
+    
+    \bigskip
+    \textbf{Step 4:  Verify the right inverse property.}\newline
+    By associativity in~$R$,
+    \[
+      y\,(1 - x)
+      \;=\;
+      \bigl(1 + x + x^{\,2} + \dots + x^{\,n-1}\bigr)(1 - x)
+      \;=\;
+      1 - x^{\,n}
+      \;=\;
+      1.
+    \]
+    
+    \bigskip
+    \textbf{Step 5:  Conclude invertibility.}\newline
+    The element $y$ satisfies
+    \(
+      (1-x)\,y = y\,(1-x) = 1,
+    \)
+    hence $y=(1-x)^{-1}$.
+    Therefore
+    \[
+      \boxed{\,1 - x\ \text{is invertible in}\ R.}
+    \]
+    \end{proof}
+\end{solution}
+\end{document}

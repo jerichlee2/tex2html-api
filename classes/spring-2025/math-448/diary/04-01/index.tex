@@ -1,0 +1,732 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+   
+We are given that for a single particle in a volume \(V\), the number of single-particle states (or single-particle phase space volume, up to constants) is
+\[
+\Omega_1 = g\,V,
+\]
+where \(g\) is a factor that may depend on the specific gas and temperature, but will not affect changes in entropy.
+
+For \(N\) non-interacting, \emph{identical} particles, the total number of ways to distribute the particles is found by taking the product of single-particle states for each particle and then dividing by \(N!\) to account for the indistinguishability of the particles. Thus,
+\[
+\Omega_N \;=\; \frac{\bigl(\Omega_1\bigr)^N}{N!} \;=\; \frac{\bigl(g\,V\bigr)^N}{N!}.
+\]
+ 
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Entropy of $N$ Particles}
+
+We have already found that the total number of microstates for $N$ 
+identical, non-interacting particles is
+\[
+\Omega_N \;=\; \frac{(gV)^N}{N!}\,.
+\]
+The entropy $S$ (in units where $k_B=1$ for simplicity; otherwise 
+include $k_B$ as a multiplicative factor) is given by
+\[
+S \;=\; \ln \Omega_N \;=\; \ln \left(\frac{(gV)^N}{N!}\right)
+\;=\; N \ln(gV) \;-\; \ln(N!)\,.
+\]
+Using the properties of logarithms, we can leave the answer in this form or 
+apply Stirling's approximation for large $N$:
+\[
+\ln(N!) \;\approx\; N \ln N \;-\; N.
+\]
+Thus,
+\[
+S \;\approx\; N \ln(gV) \;-\; \bigl(N \ln N - N\bigr) 
+\;=\; N \ln(gV) \;-\; N \ln N \;+\; N.
+\]
+Rearranging terms,
+\[
+S \;\approx\; N \ln\!\biggl(\frac{gV}{N}\biggr) \;+\; N.
+\]
+If we reinstate Boltzmann's constant $k_B$, the final expression becomes
+\[
+S \;\approx\; k_B \, N \ln\!\biggl(\frac{gV}{N}\biggr) 
+\;+\; k_B \, N.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Volume Expansion and the Change in Entropy}
+
+We have already determined that the entropy of $N$ identical, 
+non-interacting particles in volume $V$ is (with $k_B=1$ for simplicity):
+\[
+S(N,V) \;=\; \ln \left(\frac{(gV)^N}{N!}\right) 
+\;=\; N \ln(gV) \;-\; \ln(N!)\,.
+\]
+Now, consider a process in which the gas expands at constant temperature 
+from an initial volume $V_i$ to a final volume $V_f$. The number of 
+particles $N$ remains the same, and $g$ is a constant factor 
+(independent of $V$). 
+
+\subsection*{Change in Entropy}
+
+The change in entropy $\Delta S$ is given by
+\[
+\Delta S \;=\; S(N,V_f) \;-\; S(N,V_i).
+\]
+Explicitly,
+\[
+S(N,V_f) \;=\; N \ln\bigl(g\,V_f\bigr) - \ln(N!),
+\]
+\[
+S(N,V_i) \;=\; N \ln\bigl(g\,V_i\bigr) - \ln(N!).
+\]
+Subtracting these,
+\[
+\Delta S \;=\; \Bigl[N \ln\bigl(g\,V_f\bigr) - \ln(N!)\Bigr] 
+\;-\; \Bigl[N \ln\bigl(g\,V_i\bigr) - \ln(N!)\Bigr].
+\]
+Notice that the $\ln(N!)$ terms cancel:
+\[
+\Delta S \;=\; N \ln\bigl(g\,V_f\bigr) 
+\;-\; N \ln\bigl(g\,V_i\bigr).
+\]
+We can combine the logarithms:
+\[
+\Delta S \;=\; N \Bigl[\ln\bigl(g\,V_f\bigr) 
+\;-\; \ln\bigl(g\,V_i\bigr)\Bigr]
+\;=\; N \ln\!\Bigl(\frac{g\,V_f}{g\,V_i}\Bigr).
+\]
+Because $g$ is a common factor in the numerator and denominator, it cancels out:
+\[
+\Delta S \;=\; N \ln\!\Bigl(\frac{V_f}{V_i}\Bigr).
+\]
+Reinstating Boltzmann's constant $k_B$ if desired, the final expression is
+\[
+\Delta S \;=\; k_B \, N \,\ln\!\Bigl(\frac{V_f}{V_i}\Bigr).
+\]
+Hence, we see explicitly that $g$ does not affect the \emph{change} 
+in entropy and drops out of the final result.
+
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    
+\section*{Computation: Change in Entropy and Factor Increase in Microstates}
+
+We have $N = 10^{23}$ particles expanding from an initial volume 
+$V_i = SI{1}{m^3}$ to a final volume $V_f = SI{1.5}{m^3}$ at constant temperature. 
+From the previous result, the change in entropy is
+\[
+\Delta S \;=\; k_B\,N \,\ln\!\Bigl(\frac{V_f}{V_i}\Bigr).
+\]
+Here $k_B$ is Boltzmann's constant, $k_B \approx SI{1.380649e-23}{J/K}$. 
+
+\subsection*{Numerical Value of $\Delta S$}
+
+First, compute the dimensionless quantity 
+\(\ln(V_f/V_i) = \ln(1.5)\). Numerically,
+\[
+\ln(1.5) \;\approx\; 0.405360.
+\]
+Therefore,
+\[
+\Delta S \;=\; \bigl(SI{1.380649e-23}{J/K}\bigr)\,\times\,10^{23}\,
+\times\,0.405360.
+\]
+Note that
+\[
+(SI{1.380649e-23}{J/K}) \times 10^{23} \;=\; SI{1.380649}{J/K}.
+\]
+Hence,
+\[
+\Delta S \;\approx\; SI{1.380649}{J/K} \times 0.405360 
+\;\approx\; SI{0.56}{J/K}.
+\]
+
+\subsection*{Factor Increase in the Number of Microstates}
+
+Recall that $S = k_B \ln\Omega$, so a change in entropy corresponds to 
+a multiplicative change in the number of microstates:
+\[
+\Delta S \;=\; k_B \,\ln\!\Bigl(\frac{\Omega_f}{\Omega_i}\Bigr)
+\;\Longrightarrow\;
+\frac{\Omega_f}{\Omega_i} \;=\; \exp\!\Bigl(\tfrac{\Delta S}{k_B}\Bigr).
+\]
+From the formula for $\Delta S$, we have
+\[
+\frac{\Delta S}{k_B} \;=\; N \,\ln\!\Bigl(\frac{V_f}{V_i}\Bigr)
+\;=\; 10^{23} \times 0.405360 
+\;=\; 4.0536 \times 10^{22}.
+\]
+Hence,
+\[
+\frac{\Omega_f}{\Omega_i}
+\;=\;
+\exp\bigl(4.0536\times 10^{22}\bigr).
+\]
+This is an extraordinarily large factor (far beyond normal 
+calculator ranges).  In exponential form, we simply leave the answer as
+\[
+\frac{\Omega_f}{\Omega_i}
+\;=\;
+e^{4.05\times 10^{22}}.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Flipping Coins}
+
+If we flip a fair coin $10$ times, each flip has two possible outcomes 
+(Heads or Tails). Since the flips are independent, the total number of 
+different outcomes is given by
+\[
+2^{10} \;=\; 1024.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Probability of Getting 10 Heads in 10 Flips}
+
+When flipping a coin 10 times, the total number of possible outcomes is 
+\(2^{10} = 1024\). To find the probability of obtaining exactly 
+\(N_H = 10\) heads, we count how many ways this can occur and divide by 
+the total number of outcomes.
+
+The number of ways to choose exactly 10 heads out of 10 flips is given by 
+the binomial coefficient \(\binom{10}{10}\). In particular:
+\[
+\binom{10}{10} = 1.
+\]
+Hence, there is exactly one way (all heads) to get 10 heads in 10 flips. 
+Therefore, the probability of this event is
+\[
+P(N_H = 10) 
+\;=\; \frac{\binom{10}{10}}{2^{10}}
+\;=\; \frac{1}{2^{10}}
+\;=\; \frac{1}{1024}.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Probability of Getting 5 Heads in 10 Flips}
+
+When flipping a fair coin 10 times, each flip can be either Heads (H) 
+or Tails (T). The total number of possible outcomes is \(2^{10} = 1024.\)
+
+To find the probability of obtaining exactly \(N_H = 5\) heads (and 
+thus 5 tails), we count how many ways we can choose 5 flips (out of 10) 
+to be heads. This is given by the binomial coefficient:
+\[
+\binom{10}{5} \;=\; \frac{10!}{5!\,5!} \;=\; 252.
+\]
+Thus, there are 252 distinct outcomes in which exactly 5 of the flips 
+are heads. Therefore, the probability is
+\[
+P(N_H = 5) 
+\;=\; \frac{\binom{10}{5}}{2^{10}}
+\;=\; \frac{252}{1024}
+\;=\; \frac{63}{256}
+\;\approx\; 0.246.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    
+\section*{Computation for $N=20$ Coin Flips}
+
+Consider flipping a fair coin $N=20$ times. We want to compare two specific 
+macrostates:
+\begin{enumerate}
+  \item The ``extreme'' macrostate where \(\displaystyle N_H = N = 20\) heads 
+        (i.e.\ all heads).
+  \item The most likely macrostate where \(\displaystyle N_H = N/2 = 10\) heads.
+\end{enumerate}
+
+\subsection*{Total Number of Outcomes}
+
+The total number of ways to flip 20 coins is 
+\[
+2^{20} \;=\; 1{,}048{,}576.
+\]
+
+\subsection*{Probability of All Heads (\texorpdfstring{$N_H=20$}{NH=20})}
+
+There is exactly 1 way to get 20 heads (all flips come up heads). 
+Hence the probability is
+\[
+P(N_H = 20) 
+\;=\; \frac{1}{2^{20}}
+\;=\; \frac{1}{1{,}048{,}576}
+\;\approx\; 9.54\times 10^{-7}.
+\]
+
+\subsection*{Probability of 10 Heads (\texorpdfstring{$N_H=10$}{NH=10})}
+
+The number of ways to get exactly 10 heads (and thus 10 tails) is 
+given by the binomial coefficient
+\[
+\binom{20}{10}
+\;=\; \frac{20!}{10!\,10!}
+\;=\; 184{,}756.
+\]
+Thus, the probability of exactly 10 heads is
+\[
+P(N_H = 10) 
+\;=\; \frac{\binom{20}{10}}{2^{20}}
+\;=\; \frac{184{,}756}{1{,}048{,}576}
+\;\approx\; 0.176.
+\]
+
+\subsection*{Comparison of Probabilities and Entropy}
+
+Clearly, 
+\[
+P(N_H = 10) \;\gg\; P(N_H = 20).
+\]
+In fact, their ratio is
+\[
+\frac{P(N_H=20)}{P(N_H=10)}
+\;=\;
+\frac{1/2^{20}}{\binom{20}{10}/2^{20}}
+\;=\;
+\frac{1}{\binom{20}{10}}
+\;=\;
+\frac{1}{184{,}756}
+\;\approx\; 5.41\times 10^{-6}.
+\]
+The macrostate with 10 heads (half heads, half tails) has 
+\emph{higher} entropy, because it corresponds to a much larger number of 
+microstates (184,756 ways) than the macrostate with 20 heads (only 1 way). 
+Remember, entropy $S$ is related to the logarithm of the number of 
+microstates $\Omega$:
+\[
+S \;=\; k_B \ln \Omega.
+\]
+Hence, the larger $\Omega$, the larger the entropy.
+
+\subsection*{What Happens for Large $N$?}
+
+As $N$ grows large, the binomial distribution for the number of heads 
+becomes increasingly peaked around $N/2$. In other words, states near 
+half heads, half tails dominate overwhelmingly. These are the 
+\emph{high-entropy} states because they have the greatest number of 
+microstates. The ``low-entropy'' extremes (like all heads or all tails) 
+become vanishingly improbable, since there is essentially only one 
+microstate for all heads, versus the enormous number of ways to get 
+close to half heads, half tails. 
+
+This ties in with the principle that an isolated system in equilibrium 
+is found (with overwhelmingly high probability) in its state of maximum 
+entropy. For a large number of coin flips, the system is \emph{almost 
+certain} to be near $N/2$ heads.
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Deriving Equilibrium Between Two Blocks}
+
+\subsection*{Setup}
+
+We have two blocks:
+\begin{itemize}
+    \item A block of aluminum (initially at $100^\circ\mathrm{C}$),
+    \item A block of gold (initially at $20^\circ\mathrm{C}$).
+\end{itemize}
+They are placed in thermal contact but are thermally isolated from the rest of 
+the environment. Thus, \emph{no} heat flows in or out of the combined system, 
+and the total internal energy of the two-block system is conserved.
+
+Denote:
+\[
+U_{\mathrm{Al}} \quad \text{as the internal energy of the aluminum block,}
+\]
+\[
+U_{\mathrm{Au}} \quad \text{as the internal energy of the gold block,}
+\]
+\[
+U_{\mathrm{Al}} + U_{\mathrm{Au}} \;=\; A \;=\; \text{constant}.
+\]
+
+Each block has its own entropy, $S_{\mathrm{Al}}(U_{\mathrm{Al}})$ and 
+$S_{\mathrm{Au}}(U_{\mathrm{Au}})$. The total entropy is
+\[
+S_{\mathrm{tot}} 
+\;=\; S_{\mathrm{Al}}(U_{\mathrm{Al}}) \;+\; S_{\mathrm{Au}}(U_{\mathrm{Au}}).
+\]
+
+\subsection*{Condition for Equilibrium}
+
+Since $U_{\mathrm{Al}} + U_{\mathrm{Au}} = A$ is fixed, we can express 
+$U_{\mathrm{Au}} = A - U_{\mathrm{Al}}$. Hence,
+\[
+S_{\mathrm{tot}}(U_{\mathrm{Al}}) 
+\;=\; S_{\mathrm{Al}}\bigl(U_{\mathrm{Al}}\bigr) 
+\;+\; S_{\mathrm{Au}}\bigl(A - U_{\mathrm{Al}}\bigr).
+\]
+The equilibrium state is found by maximizing $S_{\mathrm{tot}}$ with respect 
+to $U_{\mathrm{Al}}$. Therefore, we set the derivative to zero:
+\[
+\frac{dS_{\mathrm{tot}}}{dU_{\mathrm{Al}}} 
+\;=\; \frac{dS_{\mathrm{Al}}}{dU_{\mathrm{Al}}}
+\;+\; \underbrace{\frac{dS_{\mathrm{Au}}}{dU_{\mathrm{Au}}}
+\,\frac{dU_{\mathrm{Au}}}{dU_{\mathrm{Al}}}}_{\text{chain rule}} 
+\;=\; 0.
+\]
+But since $U_{\mathrm{Au}} = A - U_{\mathrm{Al}}$, we have 
+$dv{U_{\mathrm{Au}}}{U_{\mathrm{Al}}} = -1$. Thus,
+\[
+\frac{dS_{\mathrm{tot}}}{dU_{\mathrm{Al}}} 
+\;=\; \frac{dS_{\mathrm{Al}}}{dU_{\mathrm{Al}}}
+\;-\; \frac{dS_{\mathrm{Au}}}{dU_{\mathrm{Au}}}
+\;=\; 0.
+\]
+Recall the thermodynamic definition of temperature:
+\[
+\frac{dS_X}{dU_X} \;=\; \frac{1}{T_X}
+\quad
+(\text{at constant volume, particle number, etc.}).
+\]
+Hence the condition for equilibrium becomes
+\[
+\frac{1}{T_{\mathrm{Al}}}
+\;-\;
+\frac{1}{T_{\mathrm{Au}}}
+\;=\; 0
+\;\;\;\Longrightarrow\;\;\;
+T_{\mathrm{Al}} \;=\; T_{\mathrm{Au}}.
+\]
+\textbf{Conclusion:} 
+At equilibrium, the two blocks must be at the same temperature.
+
+\subsection*{Physical Interpretation}
+
+Because no energy is lost to the surroundings, the final equilibrium temperature 
+$T_{\mathrm{eq}}$ lies somewhere between the two initial temperatures 
+($100^\circ\mathrm{C}$ for Al and $20^\circ\mathrm{C}$ for Au). 
+If the heat capacities are (approximately) constant, one can solve 
+\emph{energy conservation} to find $T_{\mathrm{eq}}$ explicitly:
+\[
+m_{\mathrm{Al}} c_{\mathrm{Al}}\,\bigl(T_{\mathrm{eq}} - 100^\circ\mathrm{C}\bigr)
+\;+\;
+m_{\mathrm{Au}} c_{\mathrm{Au}}\,\bigl(T_{\mathrm{eq}} - 20^\circ\mathrm{C}\bigr)
+\;=\; 0,
+\]
+where $m_{\mathrm{Al}}$, $c_{\mathrm{Al}}$ are the mass and specific heat 
+of aluminum, and similarly for gold. Solving gives
+\[
+T_{\mathrm{eq}} 
+\;=\;
+\frac{
+m_{\mathrm{Al}} c_{\mathrm{Al}} \times 100^\circ\mathrm{C}
+\;+\;
+m_{\mathrm{Au}} c_{\mathrm{Au}} \times 20^\circ\mathrm{C}
+}{
+m_{\mathrm{Al}} c_{\mathrm{Al}} + m_{\mathrm{Au}} c_{\mathrm{Au}}}.
+\]
+This result is consistent with the more fundamental thermodynamic statement 
+that maximizing total entropy requires the two bodies to share a common 
+temperature at equilibrium.
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Change in Internal Energy \(\Delta U\) at Constant Volume}
+
+\subsection*{First Law of Thermodynamics}
+
+The first law of thermodynamics states:
+\[
+dU \;=\; dQ \;-\; p\,dV.
+\]
+At \emph{constant volume}, \(dV = 0\), so
+\[
+dU \;=\; dQ.
+\]
+
+\subsection*{Heat Capacity at Constant Volume}
+
+The heat capacity at constant volume, \(C_V\), is defined by
+\[
+C_V \;=\; \left(\frac{dQ}{dT}\right)_{V}.
+\]
+Since \(dQ = dU\) at constant volume, we have
+\[
+dU \;=\; C_V \, dT.
+\]
+
+\subsection*{Integrating from \(\displaystyle T_i\) to \(\displaystyle T_f\)}
+
+To find the change in internal energy when the temperature changes from \(T_i\) 
+to \(T_f\), we integrate:
+\[
+\Delta U 
+\;=\; \int_{U(T_i)}^{U(T_f)} dU
+\;=\; \int_{T_i}^{T_f} C_V(T)\,dT.
+\]
+In the simplest case where \(C_V\) is a constant (independent of \(T\)), 
+this integral becomes
+\[
+\Delta U \;=\; C_V \,\bigl(T_f - T_i\bigr).
+\]
+If \(C_V\) depends on \(T\), then we must keep it inside the integral:
+\[
+\Delta U 
+\;=\; \int_{T_i}^{T_f} C_V(T)\,dT.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Change in Entropy \(\Delta S\) in Terms of Heat Capacity}
+
+We start from the thermodynamic identity (at constant volume) that
+\[
+dU \;=\; C_V \, dT,
+\]
+and use the definition
+\[
+\frac{dS}{dU} \;=\; \frac{1}{T}.
+\]
+Then
+\[
+dS 
+\;=\; \frac{dU}{T} 
+\;=\; \frac{C_V\,dT}{T}.
+\]
+To find the total change in entropy from an initial temperature \(T_i\) 
+to a final temperature \(T_f\), we integrate:
+\[
+\Delta S 
+\;=\; \int_{S(T_i)}^{S(T_f)} dS
+\;=\; \int_{T_i}^{T_f} \frac{C_V(T)}{T}\,dT.
+\]
+If \(C_V\) is constant (independent of temperature), the integral 
+simplifies to
+\[
+\Delta S 
+\;=\; C_V \,\ln\!\Bigl(\frac{T_f}{T_i}\Bigr).
+\]
+If \(C_V\) depends on \(T\), then the more general form is
+\[
+\Delta S 
+\;=\; \int_{T_i}^{T_f} \frac{C_V(T)}{T}\,dT.
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Non-Constant Heat Capacity: \texorpdfstring{$C_V(T) = A + B\,T$}{CV(T) = A + B T}}
+
+Suppose the heat capacity at constant volume of a material is 
+\[
+C_V(T) \;=\; A \;+\; B\,T,
+\]
+where \(A\) and \(B\) are constants, and \(T\) is the temperature 
+(measured in kelvins). We want to find the changes in internal energy 
+\(\Delta U\) and entropy \(\Delta S\) when the temperature increases 
+from \(T_i\) to \(T_f\) at constant volume.
+
+\subsection*{Change in Internal Energy \(\Delta U\)}
+
+At constant volume, we have
+\[
+dU \;=\; C_V(T)\,dT \;=\; \bigl(A + B\,T\bigr)\,dT.
+\]
+Hence, integrating from \(T_i\) to \(T_f\):
+\[
+\Delta U 
+\;=\; \int_{T_i}^{T_f} \bigl(A + B\,T\bigr)\,dT 
+\;=\; A\,\bigl(T_f - T_i\bigr)
+\;+\; \frac{B}{2}\,\bigl(T_f^2 - T_i^2\bigr).
+\]
+
+\subsection*{Change in Entropy \(\Delta S\)}
+
+The entropy change at constant volume can be written as
+\[
+dS \;=\; \frac{dQ}{T} 
+\;=\; \frac{C_V(T)\,dT}{T} 
+\;=\; \frac{A + B\,T}{T}\,dT 
+\;=\; \left(\frac{A}{T} + B\right)\,dT.
+\]
+Thus,
+\[
+\Delta S 
+\;=\; \int_{T_i}^{T_f} \left(\frac{A}{T} + B\right)\,dT 
+\;=\; A \int_{T_i}^{T_f} \frac{dT}{T} 
+\;+\; B \int_{T_i}^{T_f} dT.
+\]
+These integrals are straightforward:
+\[
+\Delta S 
+\;=\; A\,\ln\!\Bigl(\frac{T_f}{T_i}\Bigr)
+\;+\; B\,\bigl(T_f - T_i\bigr).
+\]
+
+\paragraph{Final Results:}
+\[
+\boxed{
+\Delta U 
+\;=\; A\,(T_f - T_i)
+\;+\; \frac{B}{2}\,\bigl(T_f^2 - T_i^2\bigr),
+\quad
+\Delta S 
+\;=\; A\,\ln\!\Bigl(\tfrac{T_f}{T_i}\Bigr)
+\;+\; B\,\bigl(T_f - T_i\bigr).
+}
+\]
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \section*{Change in Entropy for \texorpdfstring{$C_V(T) = A + B\,T$}{CV(T) = A + B T}}
+We are given:
+\[
+A = 1\,\frac{\text{J}}{\text{K}}, 
+\quad 
+B = 0.02\,\frac{\text{J}}{\text{K}^2},
+\quad
+T_i = 300\,\text{K},
+\quad
+T_f = 301\,\text{K}.
+\]
+From the general formula for the entropy change at constant volume
+\[
+\Delta S 
+\;=\; \int_{T_i}^{T_f} \frac{C_V(T)}{T}\,dT
+\;=\; \int_{T_i}^{T_f} \frac{A + B\,T}{T}\,dT
+\;=\; A \ln\!\Bigl(\frac{T_f}{T_i}\Bigr) 
+\;+\; B\,\bigl(T_f - T_i\bigr),
+\]
+we substitute the given values:
+
+\[
+\Delta S 
+\;=\; 1 \times \ln\!\Bigl(\tfrac{301}{300}\Bigr) 
+\;+\; 0.02 \times (301 - 300).
+\]
+Numerically,
+\[
+\ln\!\Bigl(\tfrac{301}{300}\Bigr) \;\approx\; 0.00331,
+\]
+so
+\[
+\Delta S 
+\;\approx\; 1 \times 0.00331 \;+\; 0.02 \times 1 
+\;=\; 0.00331 \;+\; 0.02 
+\;=\; 0.02331 \,\text{J/K}.
+\]
+
+\subsection*{Ratio of Microstates}
+The entropy is related to the number of microstates $\Omega$ via
+\[
+S \;=\; k_B \,\ln \Omega 
+\quad\Longrightarrow\quad
+\Delta S 
+\;=\; k_B \,\ln\!\Bigl(\frac{\Omega_f}{\Omega_i}\Bigr).
+\]
+Hence
+\[
+\ln\!\Bigl(\tfrac{\Omega_f}{\Omega_i}\Bigr)
+\;=\;
+\frac{\Delta S}{k_B}
+\quad\Longrightarrow\quad
+\frac{\Omega_f}{\Omega_i}
+\;=\;
+\exp\!\Bigl(\tfrac{\Delta S}{k_B}\Bigr).
+\]
+Using Boltzmann's constant $k_B \approx 1.380649\times 10^{-23}\,\text{J/K}$,
+\[
+\frac{\Delta S}{k_B}
+\;=\;
+\frac{0.02331\,\text{J/K}}{1.380649\times 10^{-23}\,\text{J/K}}
+\;\approx\;
+1.69\times 10^{21}.
+\]
+Thus the ratio of microstates is
+\[
+\frac{\Omega_f}{\Omega_i}
+\;=\;
+\exp\bigl(1.69\times 10^{21}\bigr),
+\]
+an extraordinarily large number---far beyond normal calculator ranges.
+
+\subsection*{Why Does the Higher Temperature State Have More Microstates?}
+
+As temperature increases, a system can access a larger range of 
+microscopic energy configurations (microstates). Even a small increase 
+in temperature for a macroscopic system can correspond to an enormous 
+increase in the number of accessible states, because of the huge number 
+of particles and degrees of freedom involved. Hence the final state at 
+the higher temperature has a vastly greater number of microstates than 
+the initial state.
+\end{solution}
+\end{document}

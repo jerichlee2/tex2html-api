@@ -1,0 +1,299 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+can you explain why 
+\begin{align}
+    \left\vert \int_{0}^{\pi}f(Re^{i \theta})Re^{i \theta}  \,\mathrm{d}\theta  \right\vert \leq R \int_{0}^{\pi}\frac{e^{-R\sin \theta}}{R^{2}-\alpha^{2}}  \,\mathrm{d}\theta 
+\end{align} 
+
+\section*{Explanation of the Inequality}
+\[
+\left\lvert \int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,Re^{i\theta}\,d\theta \right\rvert 
+\;\;\le\;\;
+R \int_{0}^{\pi} \frac{e^{-R\sin(\theta)}}{\,R^{2}-\alpha^{2}\,} \,d\theta.
+\]
+
+\subsection*{1. Parametrization and Factor of \(\lvert dz\rvert\)}
+When integrating over the semicircle in the upper half-plane of radius $R$, we set 
+\[
+z(\theta) = Re^{i\theta},\quad \theta\in[0,\pi].
+\]
+Then 
+\[
+dz = iRe^{i\theta}\,d\theta,\quad \text{so } |dz| = R\,d\theta.
+\]
+Hence, inside the integral
+\[
+|f(z)\,dz| \le \bigl|f(Re^{i\theta})\bigr|\cdot R\,d\theta.
+\]
+Often we rewrite it as $f(Re^{i\theta})\,Re^{i\theta}\,d\theta$ in the integrand. Taking the absolute value yields a factor $R$ times $|f(Re^{i\theta})|$.
+
+\subsection*{2. Exponential Factor and Decay}
+If $f(z)$ involves $e^{iz}$ or $e^{iRe^{i\theta}}$, then
+\[
+\left\lvert e^{\,iRe^{i\theta}}\right\rvert 
+= \exp\!\bigl(\Re\bigl(iRe^{i\theta}\bigr)\bigr)
+= \exp\!\bigl(-\,R\,\sin(\theta)\bigr).
+\]
+This provides a decaying exponential factor $e^{-\,R\sin\theta}$ for $\theta\in(0,\pi)$.
+
+\subsection*{3. Denominator Bound}
+If the denominator is something like $(z^2+\alpha^2)$, then on the circle $|z|=R$,
+\[
+|z^2 + \alpha^2|
+\;\ge\;
+\bigl||z^2| - |\alpha^2|\bigr|
+= \bigl|R^2 - \alpha^2\bigr|.
+\]
+Hence
+\[
+\left\lvert \frac{e^{\,iRe^{i\theta}}}{\,z^2 + \alpha^2}\right\rvert
+\;\le\;
+\frac{e^{-\,R\sin(\theta)}}{\,R^2 - \alpha^2\,}.
+\]
+
+\subsection*{4. Putting It All Together}
+Combining these points:
+
+\begin{itemize}
+\item The factor $R$ from $|dz|$,
+\item The exponential decay $e^{-R\sin(\theta)}$,
+\item The denominator bound $R^2 - \alpha^2$,
+\end{itemize}
+we get:
+\[
+\bigl\lvert f(Re^{i\theta})\,Re^{i\theta}\bigr\rvert 
+\;\le\; 
+R\,\frac{e^{-R\sin(\theta)}}{\,R^2-\alpha^2\,}.
+\]
+Thus
+\[
+\left\lvert \int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,Re^{i\theta}\,d\theta\right\rvert
+\;\le\;
+\int_{0}^{\pi} \Bigl\lvert f(Re^{i\theta})\,Re^{i\theta}\Bigr\rvert d\theta
+\;\le\;
+R \int_{0}^{\pi} \frac{e^{-R\sin(\theta)}}{\,R^2 - \alpha^2\,}\,d\theta.
+\]
+
+\section*{Derivation of \(\lvert e^{\,i R e^{i\theta}} \rvert = e^{-\,R\sin(\theta)}\)}
+
+\subsection*{Step 1: Express \(i R e^{i\theta}\) in Cartesian Form}
+
+We have:
+\[
+i R e^{i\theta} 
+= i R \bigl(\cos\theta + i\,\sin\theta\bigr)
+= i R \cos\theta \;+\; i^2 R \sin\theta 
+= i R \cos\theta \;-\; R \sin\theta.
+\]
+Hence, in terms of real and imaginary parts:
+\[
+i R e^{i\theta} 
+= \underbrace{(- R \sin\theta)}_{\text{Real part}}
+\;+\;
+\underbrace{\bigl(i R \cos\theta\bigr)}_{\text{Imag.\ part}}.
+\]
+
+\subsection*{Step 2: Exponential of a Complex Number}
+
+Recall that for any complex number \(z = x + i y\),
+\[
+\bigl\lvert e^z \bigr\rvert 
+= e^{\Re(z)}.
+\]
+Here, \(\Re(z)\) is the real part of \(z\). In our problem, let
+\[
+z = i R e^{i\theta} = - R \sin\theta + i\bigl(R\cos\theta\bigr).
+\]
+Hence, \(\Re\bigl(i R e^{i\theta}\bigr) = -R \sin\theta\).
+
+\subsection*{Step 3: Combine the Results}
+
+Therefore,
+\[
+\left\lvert e^{\,i R e^{i\theta}} \right\rvert 
+= \exp\!\Bigl(\Re\bigl(i R e^{i\theta}\bigr)\Bigr)
+= \exp\bigl(-R \sin\theta\bigr).
+\]
+
+\subsection*{Conclusion}
+
+Hence we have shown that
+\[
+\boxed{
+\bigl\lvert e^{\,i R e^{i\theta}}\bigr\rvert 
+= e^{-\,R\,\sin(\theta)},
+\quad \theta\in(0,\pi).
+}
+\]
+
+\section*{Computing \(\mathrm{Re}\bigl(i R e^{i\theta}\bigr)\) via \(\frac{z + \overline{z}}{2}\)}
+
+\subsection*{1. Write \(z = i R e^{i\theta}\) in standard form}
+
+First, note that
+\[
+e^{i\theta} = \cos\theta + i\sin\theta.
+\]
+Hence,
+\[
+z = i R e^{i\theta}
+= i R (\cos\theta + i\sin\theta)
+= iR\cos\theta + i^2 R\sin\theta
+= iR\cos\theta \;-\; R\sin\theta.
+\]
+Therefore, in standard ``\(x + i\,y\)'' form,
+\[
+z = -\,R\sin\theta \;+\; i\bigl(R\cos\theta\bigr).
+\]
+
+\subsection*{2. Find the Complex Conjugate \(\overline{z}\)}
+
+The conjugate is obtained by negating the imaginary part:
+\[
+\overline{z} 
+= -\,R\sin\theta \;-\; i\bigl(R\cos\theta\bigr).
+\]
+
+\subsection*{3. Apply the Formula \(\mathrm{Re}(z) = \frac{z + \overline{z}}{2}\)}
+
+\[
+z + \overline{z}
+= \Bigl[-\,R\sin\theta + i(R\cos\theta)\Bigr]
+ + \Bigl[-\,R\sin\theta - i(R\cos\theta)\Bigr]
+= -\,2\,R\,\sin\theta.
+\]
+Divide by 2:
+\[
+\mathrm{Re}(z)
+= \frac{z + \overline{z}}{2}
+= \frac{-2R\sin\theta}{2}
+= -\,R\,\sin\theta.
+\]
+
+\subsection*{4. Conclusion}
+
+Thus, by using the real-part formula,
+\[
+\boxed{
+\mathrm{Re}\bigl(iR e^{i\theta}\bigr)
+= -\,R\,\sin(\theta).
+}
+\]
+
+
+\section*{Why the Integral is Bounded by \(\frac{\pi R}{R^2-\alpha^2}\) and Tends to 0}
+
+In many contour‐integration arguments (Jordan's lemma–type estimates), one examines
+\[
+\left\lvert \int_{0}^{\pi} f\bigl(Re^{i\theta}\bigr)\,Re^{i\theta}\,d\theta \right\rvert 
+\;\;\le\;\;
+R \int_{0}^{\pi} \frac{e^{-R\sin(\theta)}}{\,R^2 - \alpha^2\,}\,d\theta,
+\]
+and then shows this goes to zero as \(R \to \infty\).  Here is why:
+
+\subsection*{1. Factor \(R\) from the Parametrization}
+
+If \(z=Re^{i\theta}\), then \(dz = iRe^{i\theta} d\theta\).  In magnitude,
+\[
+|dz| = R\,d\theta.
+\]
+Hence there is a factor of \(R\) in front when bounding \(\bigl|f(Re^{i\theta})\,dz\bigr|\).
+
+\subsection*{2. Exponential Decay: \(e^{-R\sin\theta}\le 1\)}
+
+On the upper semicircle, $0 \le \theta \le \pi$, we have $\sin\theta \ge 0$, so
+\[
+e^{-R\sin\theta} \;\le\; 1.
+\]
+Thus,
+\[
+\frac{e^{-R\sin\theta}}{R^2 - \alpha^2} 
+\;\le\; \frac{1}{R^2 - \alpha^2}.
+\]
+
+\subsection*{3. Integral Bound over $0 \le \theta \le \pi$}
+
+Therefore,
+\[
+R \int_{0}^{\pi} \frac{e^{-R\sin(\theta)}}{\,R^2 - \alpha^2\,}\,d\theta
+\;\;\le\;\;
+R \int_{0}^{\pi} \frac{1}{\,R^2 - \alpha^2\,}\,d\theta
+= \frac{R}{R^2 - \alpha^2} \,\times\, \pi.
+\]
+Hence
+\[
+\Bigl\lvert \int_{0}^{\pi} f(Re^{i\theta})\,Re^{i\theta}\,d\theta \Bigr\rvert
+\;\le\;
+\frac{\pi R}{\,R^2 - \alpha^2\,}.
+\]
+
+\subsection*{4. Limit as $R \to \infty$}
+
+As $R\to\infty$, the ratio $\frac{R}{R^2 - \alpha^2}$ behaves like $\frac{R}{R^2}=\frac{1}{R}$, so
+\[
+\frac{\pi R}{\,R^2 - \alpha^2\,}
+\;\longrightarrow\; 0.
+\]
+Hence the integral goes to zero.
+
+\subsection*{Conclusion}
+
+The steps are:
+\begin{itemize}
+\item Factor out $R$ from $|dz|$,
+\item Bound $e^{-R\sin\theta}$ by 1 (since $\sin\theta\ge 0$),
+\item Integrate a constant $\frac{R}{R^2-\alpha^2}$ over $\theta\in[0,\pi]$,
+\item Observe it vanishes like $\frac{1}{R}$ as $R\to\infty$.
+\end{itemize}
+Therefore the entire integral tends to $0$.
+how do we know $\sin \theta \geq (\frac{2}{\pi})\theta$ for $0\leq \theta \leq \frac{\pi}{2}$  
+\end{document}

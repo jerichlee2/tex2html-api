@@ -1,0 +1,602 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Practice Final Exam 2 Solution}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  \textbf{Problem 1. Chains in power sets}
+  
+  Let \(A\) be a set whose power set \(\mathcal P(A)\), ordered by
+  inclusion \(\subseteq\), is a \emph{chain}.  Recall that a chain means:
+  for every \(X,Y\subseteq A\) we have either \(X\subseteq Y\) or
+  \(Y\subseteq X\).
+  
+  \medskip
+  \textbf{Claim.}  The chain condition holds \emph{iff}
+  \(\lvert A\rvert\le 1\).
+  
+  \begin{proof}[Proof of the claim]
+  \emph{(Necessity).}
+  Assume, to obtain a contradiction, that \(\lvert A\rvert\ge 2\).
+  Pick two distinct elements \(a,b\in A\).
+  Consider the singleton subsets
+  \[
+     \{a\}\quad\text{and}\quad\{b\}.
+  \]
+  Neither is contained in the other, i.e.
+  \(\{a\}\nsubseteq\{b\}\) and \(\{b\}\nsubseteq\{a\}\).
+  Thus \(\mathcal P(A)\) fails to be a chain.  Hence a chain power set
+  implies \(\lvert A\rvert\le 1\).
+  
+  \smallskip
+  \emph{(Sufficiency).}
+  \begin{itemize}
+      \item If \(A=\varnothing\) then \(\mathcal P(A)=\{\varnothing\}\)
+            has a single element and is trivially a chain.
+      \item If \(A=\{a\}\) then
+            \(\mathcal P(A)=\{\varnothing,\{a\}\}\) and the two subsets
+            satisfy \(\varnothing\subseteq\{a\}\); again a chain.
+  \end{itemize}
+  Therefore whenever \(\lvert A\rvert\le 1\), the power set is a chain.
+  
+  \smallskip
+  Combining both directions gives the desired equivalence.
+  \end{proof}
+  
+  \medskip
+  \textbf{Conclusion.}
+  The only sets whose power sets are chains (under inclusion) are
+  \[
+     A=\varnothing
+     \quad\text{or}\quad
+     A=\{a\}\ \text{for some element }a.
+  \]
+  \(\square\)
+  \end{solution}
+  %-------------------------------------------------------------------
+%  Problem 2 – Equivalence classes induced by a preorder
+%-------------------------------------------------------------------
+\begin{solution}
+  
+Let \(A\) be a set and \(R\subset A\times A\) a \emph{pre-order}
+(reflexive and transitive).  Define
+\[
+   \widetilde R
+      \;=\;
+   \bigl\{\, (a,b)\in A\times A
+            \;\bigm|\;
+            (a,b)\in R\ \text{and}\ (b,a)\in R
+       \bigr\}.
+\]
+
+\bigskip
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \textit{\(\widetilde R\) is an equivalence relation.}
+
+\begin{itemize}
+   \item \emph{Reflexive:}  
+         For every \(a\in A\) we have \((a,a)\in R\)
+         (reflexivity of \(R\)); hence \((a,a)\in\widetilde R\).
+
+   \item \emph{Symmetric:}  
+         If \((a,b)\in\widetilde R\) then \((a,b)\in R\) and \((b,a)\in R\).
+         Interchanging \(a,b\) shows \((b,a)\in\widetilde R\).
+
+   \item \emph{Transitive:}  
+         Suppose \((a,b)\in\widetilde R\) and \((b,c)\in\widetilde R\).
+         Then
+         \((a,b),\,(b,a),\,(b,c),\,(c,b)\in R\).
+         By transitivity of \(R\):
+         \[
+            (a,c)\in R \quad\text{and}\quad (c,a)\in R ,
+         \]
+         so \((a,c)\in\widetilde R\).
+\end{itemize}
+Thus \(\widetilde R\) is reflexive, symmetric and transitive; i.e.\ an
+\emph{equivalence relation} on \(A\).
+
+%-----------------------------------------------------------------
+\item \textit{The quotient set \(A/{\sim}\) is partially ordered.}
+
+For \(a\in A\) write
+\[
+   S_a=\{\,x\in A\mid(a,x)\in\widetilde R\}
+\]
+for its \(\widetilde R\)-equivalence class, and define
+\[
+   S_a\;\le\;S_b
+   \quad\Longleftrightarrow\quad
+   (a,b)\in R .
+\]
+We must check that this relation is
+
+\smallskip\emph{(i) well-defined.}
+If \(a'\in S_a\) and \(b'\in S_b\) (i.e.\ \((a,a')\in\widetilde R\) and
+\((b,b')\in\widetilde R\)), then
+\[
+   (a',b')\in R:
+   \quad
+   (a',a),(a,b),(b,b')\in R
+   \;\Longrightarrow\;
+   (a',b')\in R\ \text{(transitivity).}
+\]
+Hence \(S_a\le S_b\) does not depend on the chosen representatives.
+
+\smallskip\emph{(ii) reflexive.}
+\((a,a)\in R\) for every \(a\), so \(S_a\le S_a\).
+
+\smallskip\emph{(iii) antisymmetric.}
+If \(S_a\le S_b\) and \(S_b\le S_a\) then \((a,b),(b,a)\in R\);
+thus \((a,b)\in\widetilde R\) and \(S_a=S_b\).
+
+\smallskip\emph{(iv) transitive.}
+If \(S_a\le S_b\) and \(S_b\le S_c\) then
+\((a,b),(b,c)\in R\); transitivity of \(R\) gives
+\((a,c)\in R\), hence \(S_a\le S_c\).
+
+\smallskip
+Therefore the relation \(\le\) on the set of classes
+\(\{S_a : a\in A\}\) satisfies reflexivity, antisymmetry, and
+transitivity; it is a \emph{partial order}.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}
+  \textbf{Problem 3.  Linear extensions of finite partial orders}
+  
+  Let \((L,\le)\) be a finite partially ordered set (poset).  
+  We prove that \(L\) admits a \emph{total} (linear) order \(\preceq\) that
+  \emph{extends} \(\le\); that is,
+  \[
+     \forall\,x,y\in L,\qquad x\le y\;\Longrightarrow\;x\preceq y.
+  \]
+  
+  \medskip
+  \textbf{Proof by induction on \(\lvert L\rvert\).}
+  
+  \smallskip
+  \emph{Base case \(\lvert L\rvert=1\).}
+  With a single element, the unique binary relation is already a total
+  order extending \(\le\).
+  
+  \smallskip
+  \emph{Inductive step.}
+  Assume every poset with at most \(n\) elements has a linear extension.  
+  Let \((L,\le)\) have \(n+1\) elements.
+  
+  \begin{enumerate}
+      \item[\textbf{1.}] \emph{Choose a minimal element.}
+            Because \(L\) is finite, it contains at least one
+            \(\le\)-minimal element.  Fix such an element and call it
+            \(m\).
+  
+      \item[\textbf{2.}] \emph{Apply the induction hypothesis to the
+            remainder.}
+            Set \(L' := L\setminus\{m\}\); then \(\lvert L'\rvert = n\).
+            The restriction of \(\le\) to \(L'\) is a poset, so by the
+            inductive hypothesis there exists a total order
+            \(\preceq'\) on \(L'\) extending \(\le\).
+  
+      \item[\textbf{3.}] \emph{Adjoin \(m\) at the bottom.}
+            Define a relation \(\preceq\) on \(L\) by
+            \[
+               m \preceq x\quad
+               \text{for all }x\in L,
+               \qquad\text{and}\qquad
+               x\preceq y\iff x \preceq' y
+               \ \text{for }x,y\in L'.
+            \]
+  
+      \item[\textbf{4.}] \emph{Verify that \(\preceq\) is a linear
+            extension of \(\le\).}
+            \begin{itemize}
+                \item \emph{Totality:}  
+                      For any \(x,y\in L\) there are two cases.
+                      If one of them is \(m\), then \(m\preceq x,y\).
+                      Otherwise both lie in \(L'\) and are comparable by
+                      \(\preceq'\).
+                \item \emph{Transitivity and antisymmetry} follow from the
+                      corresponding properties of \(\preceq'\).
+                \item \emph{Extension property:}
+                      If \(x\le y\) and \(x=m\) then \(m\preceq y\) by
+                      definition.  If \(x\ne m\) then \(x,y\in L'\) and
+                      \(x\preceq' y\), hence \(x\preceq y\).
+            \end{itemize}
+            Thus \(\preceq\) is a linear order on \(L\) extending \(\le\).
+  \end{enumerate}
+  
+  By induction, every finite poset admits such a linear extension.
+  
+  \medskip
+  \textbf{Alternative proof via Zorn’s Lemma (sketch).}
+  Let \(\mathcal{F}\) be the set of partial orders on \(L\) that include
+  \(\le\), partially ordered by inclusion of relations.
+  Every chain \(\mathcal{C}\subseteq\mathcal{F}\) has an upper bound
+  given by the union of its relations.  By Zorn’s Lemma,
+  \(\mathcal{F}\) possesses a maximal element \(\preceq_{\max}\).
+  If \(\preceq_{\max}\) were \emph{not} total, pick incomparable
+  \(x,y\).  Adding either \(x\preceq_{\max} y\) or
+  \(y\preceq_{\max} x\) enlarges the relation but keeps it a partial
+  order extending \(\le\), contradicting maximality.  Hence
+  \(\preceq_{\max}\) is total, furnishing the desired extension.
+  \end{solution}
+  \begin{solution}
+    \textbf{Problem 4.  A lattice in which every chain is bounded above
+    has a \emph{unique} maximal element}
+    
+    Let \(L\) be a lattice (i.e.\ every pair \(x,y\in L\) has both a join
+    \(x\vee y\) and a meet \(x\wedge y\)).
+    Assume that \emph{every} chain \(C\subseteq L\) possesses an upper
+    bound in \(L\).
+    
+    \medskip
+    \textbf{Step 1:  Existence of (at least one) maximal element.}
+    
+    Because \((L,\le)\) itself is a partially ordered set and every chain
+    has an upper bound, the hypotheses of Zorn’s Lemma are satisfied.
+    Hence \(L\) contains a maximal element; denote one such element by
+    \(m\).
+    
+    \medskip
+    \textbf{Step 2:  Uniqueness of the maximal element.}
+    
+    Suppose, for contradiction, that \(m_1\) and \(m_2\) are \emph{two}
+    distinct maximal elements of \(L\).
+    Since \(L\) is a lattice, their join \(m_1\vee m_2\) is defined
+    and satisfies
+    \[
+          m_1 \;\le\; m_1\vee m_2,
+          \qquad
+          m_2 \;\le\; m_1\vee m_2.
+    \]
+    By maximality, nothing can strictly exceed either \(m_1\) or \(m_2\),
+    so the above inequalities force
+    \[
+          m_1\vee m_2 = m_1
+          \quad\text{and}\quad
+          m_1\vee m_2 = m_2.
+    \]
+    Consequently \(m_1 = m_2\), contradicting the assumption that the two
+    maximal elements were distinct.
+    
+    \medskip
+    \textbf{Conclusion.}
+    There exists precisely one maximal element of \(L\).
+    \(\square\)
+    \end{solution}
+%-------------------------------------------------------------------
+%  Problem 5 —  Removing a finite or countable subset
+%-------------------------------------------------------------------
+
+\begin{solution}
+  
+Let \(A\) be an infinite set and \(B\subset A\).  
+Write \(C:=A\setminus B\).
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \textit{\(B\) finite.  Construct an explicit bijection
+      \(\varphi:A\to C\).}
+
+      Enumerate the elements of \(B\) as
+      \(B=\{b_{1},\dots,b_{m}\}\) \(\;(m<\infty)\).
+      Because \(A\) is infinite, we may choose \emph{distinct}
+      elements \(c_{1},\dots,c_{m}\in C\).
+
+      Define
+      \[
+         \varphi(a)=
+         \begin{cases}
+            c_{k}, &\text{if }a=b_{k}\ (1\le k\le m),\\[4pt]
+            a,     &\text{if }a\in C.
+         \end{cases}
+      \]
+
+      \emph{Injective.}
+      If \(\varphi(a_{1})=\varphi(a_{2})\) there are two cases:
+      \begin{itemize}
+         \item both \(a_{1},a_{2}\in C\) \(\Rightarrow\) \(a_{1}=a_{2}\);
+         \item say \(a_{1}=b_{k}\).  Then
+               \(\varphi(a_{1})=c_{k}\).
+               If \(\varphi(a_{2})=c_{k}\) either \(a_{2}=b_{k}\)
+               (so \(a_{1}=a_{2}\)) or \(a_{2}=c_{k}\in C\),
+               contradicting distinctness of the \(c_{j}\).
+      \end{itemize}
+
+      \emph{Surjective.}
+      Every \(c\in C\) is either one of the chosen \(c_{k}\) (hit by
+      \(b_{k}\)) or belongs to \(C\setminus\{c_{1},\dots,c_{m}\}\) and
+      is fixed by \(\varphi\).
+      Thus \(\varphi\) is bijective, so \(|A|=|C|\).
+
+%-----------------------------------------------------------------
+\item \textit{\(B\) countable, \(A\) uncountable.
+      Show \(|A|=|C|\).}
+
+      Enumerate \(B=\{b_{1},b_{2},\dots\}\).
+      Since \(A\) is uncountable and \(B\) is countable,
+      \(C=A\setminus B\) is still uncountable; hence
+      we can pick a sequence of \emph{distinct} elements
+      \(\{c_{1},c_{2},\dots\}\subset C\).
+
+      Define
+      \[
+         \psi:A\longrightarrow C,
+         \qquad
+         \psi(a)=
+         \begin{cases}
+            c_{k}, & a=b_{k}\;(k\ge1),\\[4pt]
+            a,     & a\in C.
+         \end{cases}
+      \]
+
+      The proof that \(\psi\) is injective and surjective is identical
+      to the finite case, using distinctness of the \(c_{k}\).
+      Therefore \(\psi\) is a bijection, and
+      \[
+         \boxed{|A|=|C|}.
+      \]
+
+\end{enumerate}
+\end{solution}
+
+\begin{solution}
+  \textbf{Problem 6.  Exponent law for cardinals: \(d^{\,e_1+e_2}=d^{\,e_1}\cdot d^{\,e_2}\)}
+  
+  \medskip
+  \textbf{Setup.}
+  Fix pairwise disjoint sets
+  \[
+     D,\;E_1,\;E_2
+     \quad\text{with}\quad
+     |D|=d,\;\;|E_1|=e_1,\;\;|E_2|=e_2.
+  \]
+  (If the original \(E_1,E_2\) are \emph{not} disjoint, replace them by
+  \(E_1\times\{1\}\) and \(E_2\times\{2\}\).)
+  
+  For any set \(E\) write
+  \[
+     D^{E}\;=\;\{\,f:E\to D\,\},
+  \]
+  so \(\bigl|D^{E}\bigr| = d^{\,|E|}\).
+  
+  \medskip
+  \textbf{Define the bijection.}
+  Consider the function
+  \[
+     \Phi:
+     D^{\,E_1\cup E_2}\;\longrightarrow\;
+     D^{\,E_1}\times D^{\,E_2},
+     \qquad
+     \Phi(f) \;=\; (\,f|_{E_1},\,f|_{E_2}\,),
+  \]
+  where \(f|_{E_i}\) is the restriction of \(f\) to \(E_i\).
+  
+  \begin{enumerate}
+      \item \emph{Injectivity.}
+            If \(\Phi(f)=\Phi(g)\) then \(f|_{E_i}=g|_{E_i}\)
+            for \(i=1,2\).
+            Since every element of \(E_1\cup E_2\) lies in exactly one
+            \(E_i\), it follows that \(f=g\).
+      \item \emph{Surjectivity.}
+            Given a pair \(\bigl(f_1,f_2\bigr)\in
+            D^{\,E_1}\times D^{\,E_2}\), define
+            \[
+                h:E_1\cup E_2 \longrightarrow D,
+                \qquad
+                h(x)=
+                \begin{cases}
+                    f_1(x), & x\in E_1,\\[4pt]
+                    f_2(x), & x\in E_2.
+                \end{cases}
+            \]
+            Then \(\Phi(h)=(f_1,f_2)\).
+  \end{enumerate}
+  Hence \(\Phi\) is a bijection.
+  
+  \medskip
+  \textbf{Cardinality identity.}
+  Taking cardinalities yields
+  \[
+      d^{\,e_1+e_2}
+      \;=\;
+      \bigl|D^{\,E_1\cup E_2}\bigr|
+      \;=\;
+      \bigl|D^{\,E_1}\times D^{\,E_2}\bigr|
+      \;=\;
+      d^{\,e_1}\cdot d^{\,e_2}.
+  \]
+  \(\square\)
+  \end{solution}
+%--------------------------------------------------------------------
+%  Problem 7 – Large and small open sets in an infinite metric space
+%--------------------------------------------------------------------
+
+\begin{solution}
+Let \((M,D)\) be an \emph{infinite} metric space.  
+Show that there exists an open set \(U\subset M\) such that both
+\(U\) and \(M\setminus U\) are infinite.
+
+\bigskip
+
+We distinguish two mutually exclusive cases, following the hint.
+
+\medskip
+\textbf{Case 1. \(M\) has an isolated point.}
+
+Pick an isolated point \(p\in M\); hence
+\(\{p\}=B(p,\varepsilon_{0})\) for some \(\varepsilon_{0}>0\).
+Because \(M\) is infinite we can choose an infinite sequence of
+\emph{distinct} points
+\(
+    \{q_{1},q_{2},\dots\}\subset M\setminus\{p\}.
+\)
+For each \(n\) set
+\(
+   \varepsilon_{n}:=\frac12D(q_{n},\{p,q_{1},\dots,q_{n-1}\})>0
+\)
+so that the open balls
+\(B(q_{n},\varepsilon_{n})\) are pairwise disjoint and avoid \(p\).
+
+Define
+\[
+   U:=\bigcup_{n\text{ even}} B(q_{n},\varepsilon_{n}).
+\]
+Then \(U\) is open and contains infinitely many \(q_{2k}\); its
+complement contains \(p\) and the infinitely many points \(q_{2k-1}\):
+\[
+   |U|=\infty,\qquad |M\setminus U|=\infty.
+\]
+
+\medskip
+\textbf{Case 2. \(M\) has no isolated points (every point is a
+limit point).}
+
+Fix any \(x_{0}\in M\).
+Because \(x_{0}\) is a limit point, every ball \(B(x_{0},r)\) contains
+infinitely many points of \(M\).
+Pick radii \(r_{1}>r_{2}>\dots\to0\) such that the annuli
+\[
+   A_{n}:=B(x_{0},r_{n})\setminus\overline{B}(x_{0},r_{n+1})
+\]
+are all non–empty; choose a point \(x_{n}\in A_{n}\) for each \(n\).
+Now set
+\[
+   U := \bigcup_{n\text{ even}} B\!\bigl(x_{n},\tfrac{r_{n}-r_{n+1}}{3}\bigr).
+\]
+The chosen radii make these balls pairwise disjoint, hence \(U\) is open
+and infinite.
+The balls with odd indices lie in \(M\setminus U\), so the complement is
+also infinite.
+
+\medskip
+\textbf{Conclusion.}
+In either case we have produced an open set \(U\subset M\) with
+\[
+   |U|=\infty
+   \quad\text{and}\quad
+   |M\setminus U|=\infty,
+\]
+as required.
+\qed
+\end{solution}
+
+\begin{solution}
+  \textbf{Problem 8.  Countable well–ordering implies well–ordering}
+  
+  Let \(C\) be a chain (i.e.\ a linearly ordered set) with the property:
+  
+  \begin{quote}
+  \(\bigl(\star\bigr)\) \emph{Every countable subset of \(C\) is well‑ordered
+  by the inherited order.}
+  \end{quote}
+  
+  We prove that \(C\) itself is well‑ordered.
+  
+  \medskip
+  \textbf{Recall.}
+  A linear order is \emph{well‑ordered} iff every non‑empty subset has a
+  least element.  Equivalently, a linear order fails to be well‑ordered
+  iff it contains a strictly \emph{descending} infinite sequence
+  \[
+     x_0 > x_1 > x_2 > \dotsb
+  \]
+  (thus the subset \(\{x_n:n\in\mathbb N\}\) has no least element).
+  
+  \medskip
+  \textbf{Contrapositive strategy.}
+  Assume, for contradiction, that \(C\) is \emph{not} well‑ordered.
+  Then there exists a non‑empty subset \(S\subseteq C\) that has no least
+  element.  We show this leads to a countable subset of \(C\) that is
+  not well‑ordered, contradicting \((\star)\).
+  
+  \smallskip
+  \emph{Constructing a descending sequence.}
+  Because \(S\) lacks a least element we can pick \(x_0\in S\).
+  Inductively, having chosen \(x_n\in S\) (with \(n\ge 0\)), the set
+  \(\{\,y\in S: y<x_n\}\) is non‑empty (otherwise \(x_n\) would be the
+  least element of \(S\)).  Choose
+  \[
+     x_{n+1}\in S
+     \quad\text{with}\quad
+     x_{n+1}<x_n.
+  \]
+  By recursion on \(n\in\mathbb N\) (formally justified by the Axiom of
+  Dependent Choice, though only countably many choices are needed) we
+  obtain an infinite strictly descending sequence
+  \[
+     x_0 > x_1 > x_2 > \dotsb
+  \]
+  inside \(S\).
+  
+  \smallskip
+  \emph{A bad countable subset.}
+  Set \(X=\{x_n:n\in\mathbb N\}\).
+  The set \(X\) is countable yet has no least element, because for any
+  \(x_n\in X\) we have \(x_{n+1}<x_n\).
+  Thus \(X\) is \emph{not} well‑ordered, contradicting property
+  \((\star)\).
+  
+  \medskip
+  \textbf{Conclusion.}
+  Our assumption that \(C\) is not well‑ordered is untenable; hence
+  \(C\) must be well‑ordered.
+  \(\square\)
+  \end{solution}
+  
+\end{document}

@@ -1,0 +1,777 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%-------------------------------------------------------------
+%  Detail for Step (ii) — complements belong to 𝓜*
+%-------------------------------------------------------------
+\begin{enumerate}[label=\textbf{(ii)}]
+  \item \textbf{Goal.}  
+        Show that if $E\in\mathcal{M}^{*}$ then $E^{c}\in\mathcal{M}^{*}$.
+
+  \item \textbf{Data for $E$.}  
+        Because $E\in\mathcal{M}^{*}$, we can choose
+        \[
+            A,\;B\in\mathcal{M},
+            \quad
+            A\subset E\subset B,
+            \quad
+            \mu\!\bigl(B\setminus A\bigr)=0.
+        \]
+
+  \item \textbf{Take complements.}  
+        Since $\mathcal{M}$ is a $\sigma$–algebra, it is closed under complements, so
+        \[
+            A^{c},\;B^{c}\in\mathcal{M}.
+        \]
+        Reversing inclusions gives
+        \[
+            B^{c}\subset E^{c}\subset A^{c}.
+        \]
+        Hence $B^{c}$ will play the role of the \emph{inner} measurable set
+        and $A^{c}$ the \emph{outer} one for $E^{c}$.
+
+  \item \textbf{Difference of the outer and inner sets.}  
+        Compute
+        \[
+            A^{c}\setminus B^{c}
+            ~=~A^{c}\cap B
+            ~=~B\setminus A.
+        \]
+        (First equality: by definition of set difference.
+         Second equality: $x\in A^{c}$ and $x\in B$ precisely when $x\in B$ but $x\notin A$.)
+
+        Therefore
+        \[
+            \mu\bigl(A^{c}\setminus B^{c}\bigr)
+            ~=~\mu\bigl(B\setminus A\bigr)
+            ~=~0.
+        \]
+
+  \item \textbf{Conclusion.}  
+        We have found $B^{c},A^{c}\in\mathcal{M}$ such that
+        \[
+            B^{c}\subset E^{c}\subset A^{c},
+            \qquad
+            \mu\bigl(A^{c}\setminus B^{c}\bigr)=0,
+        \]
+        which is exactly the criterion for $E^{c}$ to lie in $\mathcal{M}^{*}$.
+
+        Hence
+        \[
+            E\in\mathcal{M}^{*}\;\Longrightarrow\;E^{c}\in\mathcal{M}^{*}.
+        \]
+        This verifies the \emph{closure‐under‐complements} axiom for the enlarged $\sigma$–algebra $\mathcal{M}^{*}$.
+\end{enumerate}
+\pagebreak
+%-----------------------------------------------------------------------
+%  Detailed expansion of Step (iii):  countable unions and additivity
+%-----------------------------------------------------------------------
+\begin{enumerate}[label=\textbf{(iii)}]
+  \item \textbf{Objective.}  
+        Verify that $\mathcal{M}^{*}$ is closed under countable unions
+        and that the extended measure $\mu$ is countably additive.
+
+  \item \textbf{Setup.}  
+        Let $\{E_i\}_{i=1}^{\infty}\subset\mathcal{M}^{*}$.  
+        For each $i$ choose measurable sets 
+        $$A_i,\;B_i\in\mathcal{M}\quad\text{with}\quad
+              A_i\subset E_i\subset B_i,
+              \qquad
+              \mu(B_i\setminus A_i)=0.$$
+
+  \item \textbf{Build unions of the ``inner'' and ``outer'' sets.}  
+        Define
+        \[
+            A \;:=\;\bigcup_{i=1}^{\infty}A_i,
+            \qquad
+            B \;:=\;\bigcup_{i=1}^{\infty}B_i.
+        \]
+        Because $\mathcal{M}$ is a $\sigma$--algebra, both 
+        $A$ and $B$ lie in $\mathcal{M}$.  
+        Moreover
+        \[
+            A\;\subset\;\bigcup_{i=1}^{\infty}E_i\;\subset\;B .
+        \]
+
+  \item \textbf{The gap has measure zero.}  
+        Compute
+        \[
+            B\setminus A
+            ~=~\Bigl(\;\bigcup_{i=1}^{\infty}B_i\Bigr)
+             \setminus
+             \Bigl(\;\bigcup_{i=1}^{\infty}A_i\Bigr)
+            ~=~\bigcup_{i=1}^{\infty}\bigl(B_i\setminus A_i\bigr).
+        \]
+        Each $B_i\setminus A_i$ is null, and the countable union of
+        null sets is still null, hence
+        \[
+            \mu(B\setminus A)=0.
+        \]
+        Therefore
+        \[
+            E \;:=\;\bigcup_{i=1}^{\infty}E_i
+            \quad\Longrightarrow\quad
+            E\in\mathcal{M}^{*}.
+        \]
+
+  \item \textbf{Countable additivity.}  
+        Assume now that the $\{E_i\}$ are pairwise \emph{disjoint}.  
+        Then the corresponding $\{A_i\}$ are also disjoint
+        (because $A_i\subset E_i$).  
+        Using the definition $\mu(E_i)=\mu(A_i)$,
+        \[
+            \mu(E)
+            =\mu(A)
+            =\mu\!\Bigl(\bigsqcup_{i=1}^{\infty}A_i\Bigr)
+            =\sum_{i=1}^{\infty}\mu(A_i)
+            =\sum_{i=1}^{\infty}\mu(E_i),
+        \]
+        where $\bigsqcup$ denotes a disjoint union and we used the
+        countable additivity of $\mu$ on $\mathcal{M}$ for the second equality.
+
+        Hence $\mu$ is countably additive on $\mathcal{M}^{*}$.
+\end{enumerate}
+\pagebreak
+%-----------------------------------------------------------------
+%  Why  B - A = ⋃_{i}(B_i - A)  and  ⊆ ⋃_{i}(B_i - A_i)
+%-----------------------------------------------------------------
+\[
+\begin{aligned}
+B - A
+&:= B\setminus A
+      && \text{(definition of set difference)}\\[4pt]
+&=   \Bigl(\bigcup_{i=1}^{\infty} B_i\Bigr)
+      \setminus
+      \Bigl(\bigcup_{j=1}^{\infty} A_j\Bigr)
+      && \text{(because }B=\bigcup B_i,\; A=\bigcup A_j\text{)}\\[6pt]
+&=   \bigcup_{i=1}^{\infty}\Bigl( B_i\setminus\bigl(\bigcup_{j=1}^{\infty} A_j\bigr) \Bigr)
+      && \text{(set--difference distributes over unions: }
+         (X\cup Y)\setminus Z=(X\setminus Z)\cup(Y\setminus Z))\\[6pt]
+&=   \bigcup_{i=1}^{\infty}\bigl( B_i\setminus A \bigr)
+      && \text{(since }A=\bigcup_j A_j\text{).}
+\end{aligned}
+\]
+
+\[
+\text{\bf Inclusion } \bigl(B - A\bigr)\subset
+                     \bigcup_{i=1}^{\infty}\bigl(B_i\setminus A_i\bigr)
+\]
+
+For each fixed \(i\) we have \(A_i\subset A\).  
+Therefore
+\[
+    B_i\setminus A
+    \;\subset\;
+    B_i\setminus A_i.
+\]
+Taking the union over all \(i\) preserves inclusion, giving
+\[
+    \bigcup_{i=1}^{\infty}\bigl(B_i\setminus A\bigr)
+    \;\subset\;
+    \bigcup_{i=1}^{\infty}\bigl(B_i\setminus A_i\bigr).
+\]
+Combining the equality and the inclusion yields
+\[
+    B - A
+    \;=\;
+    \bigcup_{i=1}^{\infty}(B_i - A)
+    \;\subset\;
+    \bigcup_{i=1}^{\infty}(B_i - A_i),
+\]
+which is precisely the line quoted in the text.
+\pagebreak
+%-------------------------------------------------------------------
+%  Expanded explanation of the paragraph preceding Theorem 1.37
+%-------------------------------------------------------------------
+\begin{remark}[Enlarged notion of measurability \& its usefulness]
+  \mbox{}\\[-0.8\baselineskip]
+  \begin{enumerate}
+      \item \textbf{Why enlarge the definition?}  
+            Lebesgue integration ignores what happens on sets of measure~$0$
+            (``null sets’’).  
+            If two functions differ only on a null set they have the \emph{same} integral
+            and are therefore indistinguishable from the point of view of integration.
+            This suggests that our notion of ``measurable function’’ should not be
+            overly sensitive to values taken on null sets.
+
+      \item \textbf{The new convention.}  
+            Let \(E\in\mathcal{M}\) with \(\mu(E^{c})=0\).  
+            A function \(f:E\to\mathbb{R}\) (or \(\mathbb{C}\)) is declared 
+            \emph{measurable on \(X\)} if
+            \(
+                f^{-1}(V)\cap E
+            \) is measurable for every open set \(V\subset\mathbb{R}\).
+            In practice one then \emph{extends} \(f\) to all of \(X\) by setting
+            \(
+                f(x)=0
+            \)
+            (or any convenient value) whenever \(x\in E^{c}\).
+            The integral
+            \(
+                \displaystyle\int_{A}f\,d\mu
+            \)
+            for any \(A\in\mathcal{M}\) is unaffected by how we choose the
+            values of \(f\) on \(E^{c}\) because \(\mu(A\cap E^{c})=0\).
+
+      \item \textbf{Role of completeness.}  
+            If the measure space \((X,\mathcal{M},\mu)\) is \emph{complete}
+            (i.e.\ every subset of a null set is measurable),
+            then \emph{any} arbitrary definition of \(f\) on \(E^{c}\)
+            still yields a measurable function on \(X\).
+            In a non-complete space one can first pass to the
+            \(\mu\)\nobreakdash–completion \(\mathcal{M}^{*}\) (Theorem~1.36) and obtain
+            completeness for free.
+
+      \item \textbf{Independence of the integral.}  
+            Because \(f\) is integrable only through its values on~\(E\),
+            \[
+                \int_{A}f\,d\mu
+                \;=\;
+                \int_{A\cap E}f\,d\mu,
+                \qquad
+                \forall\,A\in\mathcal{M},
+            \]
+            so the choice of extension on \(E^{c}\) is literally irrelevant
+            to every Lebesgue integral.
+
+      \item \textbf{Natural situations where this matters.}
+            \begin{enumerate}[]
+                \item \emph{Differentiability a.e.}  
+                      A real-valued function \(f\) may possess a derivative 
+                      \(f'\) only almost everywhere.  
+                      Under suitable hypotheses one can still prove
+                      \(f(x)=f(a)+\displaystyle\int_{a}^{x}f'(t)\,dt\)
+                      for all \(x\) (Fundamental Theorem of Calculus, a.e. version).
+                      The derivative is ignored on the null set
+                      where it fails to exist.
+                \item \emph{Almost-everywhere convergence.}  
+                      If a sequence \(\{f_n\}\) of measurable functions on \(X\) 
+                      converges to a function \(f\) \emph{almost everywhere},
+                      the pointwise limit may disagree with the limiting values
+                      on a null set.  
+                      With the enlarged notion we simply define \(f\) on that null
+                      set arbitrarily; \(f\) is automatically measurable, so
+                      results like the Dominated Convergence Theorem apply
+                      without having to ``trim’’ the domain.
+            \end{enumerate}
+  \end{enumerate}
+\end{remark}
+\pagebreak
+%-----------------------------------------------------------------
+%  Detailed proof of Theorem 1.39(a)
+%-----------------------------------------------------------------
+\begin{proof}[Proof of part (a)]
+  Assume $f:X\to[0,\infty]$ is measurable, $E\in\mathcal{M}$, and
+  \[
+      \int_{E} f\,d\mu \;=\;0.
+  \]
+  We must show $f=0$ almost everywhere (a.e.) on $E$.
+
+  \medskip\noindent
+  \textbf{Step 1:  Construct level sets that isolate the ``positive’’ region.}  
+  For each $n\in\mathbb{N}$ define
+  \[
+      A_n \;:=\;\bigl\{x\in E : f(x)>\tfrac1n \bigr\}.
+  \]
+  Because $f$ is measurable, each $A_n$ is measurable.
+
+  \medskip\noindent
+  \textbf{Step 2:  Relate the integral over $A_n$ to its measure.}  
+  On the set $A_n$ we have $f(x)>\tfrac1n$, so
+  \[
+      f(x) \;\ge\;\frac1n\quad\text{for all }x\in A_n .
+  \]
+  Integrating this inequality over $A_n$ gives
+  \[
+      \int_{A_n} f\,d\mu
+      \;\ge\;
+      \int_{A_n} \frac1n \,d\mu
+      \;=\;
+      \frac1n\,\mu(A_n).
+  \tag{$\ast$}
+  \]
+
+  \medskip\noindent
+  \textbf{Step 3:  Compare with the integral over $E$.}  
+  Since $A_n\subset E$ and $f\ge0$, we also have
+  \[
+      0 \;\le\;\int_{A_n} f\,d\mu
+      \;\le\;
+      \int_{E} f\,d\mu
+      \;=\;0,
+  \]
+  hence
+  \[
+      \int_{A_n} f\,d\mu = 0.
+  \]
+  Combining this with $(\ast)$ forces
+  \[
+      \frac1n\,\mu(A_n)=0
+      \quad\Longrightarrow\quad
+      \mu(A_n)=0
+      \qquad (n=1,2,\dots).
+  \]
+
+  \medskip\noindent
+  \textbf{Step 4:  Cover the set where $f$ is strictly positive.}  
+  Observe that
+  \[
+      \bigl\{x\in E : f(x)>0\bigr\}
+      \;=\;
+      \bigcup_{n=1}^{\infty} A_n ,
+  \]
+  because any $x$ with $f(x)>0$ satisfies $f(x)>\tfrac1n$ for some~$n$.
+
+  \medskip\noindent
+  \textbf{Step 5:  Conclude measure zero and the desired result.}  
+  By countable sub-additivity,
+  \[
+      \mu\bigl(\{x\in E : f(x)>0\}\bigr)
+      \;\le\;
+      \sum_{n=1}^{\infty}\mu(A_n)
+      \;=\;0.
+  \]
+  Therefore $f(x)=0$ for $\mu$-almost every $x\in E$, as claimed.
+\end{proof}
+\pagebreak
+%------------------------------------------------------------------
+%  Why $\displaystyle\int_E f\,d\mu = 0$ (with $f\ge 0$) implies 
+%  $f=0$ \emph{almost} everywhere, not everywhere
+%------------------------------------------------------------------
+
+\begin{remark}
+  The Lebesgue integral is insensitive to what happens on sets of
+  measure\/ $0$.  
+  Hence an equation such as
+  \[
+      \int_E f\,d\mu = 0, 
+      \qquad f\ge 0,
+  \]
+  can control $f$ only on the $\mu$--\emph{significant} part of $E$.
+  On a subset of $E$ that already has measure $0$, the integral
+  provides no information; $f$ may take arbitrary (even positive)
+  values there.  
+  Therefore the strongest universal conclusion one can draw is
+  \[
+      f=0 \quad\text{$\mu$--almost everywhere on $E$.}
+  \]
+\end{remark}
+
+\begin{example}[Why ``a.e.'' cannot be strengthened to ``everywhere'']
+  Define
+  \[
+      f(x)=
+      \begin{cases}
+          1, & x\in \mathbb{Q}\cap[0,1],\\[4pt]
+          0, & x\in[0,1]\setminus\mathbb{Q},
+      \end{cases}
+      \qquad
+      E=[0,1], 
+      \qquad
+      \mu=\lambda\ \text{(Lebesgue measure).}
+  \]
+  Then
+  \[
+      \int_E f\,d\lambda
+      =\lambda(\mathbb{Q}\cap[0,1]) = 0,
+  \]
+  but $f(x)=1$ for every rational $x\in[0,1]$.  
+  Because the rationals have Lebesgue measure\/ $0$, we conclude
+  $f=0$ \emph{a.e.} on $E$, yet $f$ certainly is not zero
+  \emph{everywhere}.
+\end{example}
+
+\begin{center}
+  \hrulefill
+\end{center}
+
+\noindent\textbf{Summary.}
+\begin{enumerate}
+  \item The proof of Theorem~1.39(a) shows that the set
+        $\{x\in E:f(x)>0\}$ has measure\/ $0$.
+  \item A statement about integrals cannot rule out exceptional
+        behaviour on such null sets.
+  \item Thus ``$f=0$ a.e.'' is optimal without extra regularity
+        assumptions (e.g.\ continuity) on $f$.
+\end{enumerate}
+\pagebreak
+%--------------------------------------------------------------------
+%  Theorem 1.40  –  Step-by-step proof (with detailed commentary)
+%--------------------------------------------------------------------
+\begin{problem}
+  \textbf{Theorem 1.40.}
+  Suppose $\mu(X)<\infty$, $f\in L^{1}(\mu)$, $S\subset\mathbb{C}$ is
+  closed, and
+  \[
+      A_{E}(f)
+      \;:=\;
+      \frac{1}{\mu(E)}\int_{E}f\,d\mu
+      \;\in\;S
+      \qquad
+      \text{for every }E\in\mathcal{M}\text{ with }0<\mu(E)<\infty.
+  \]
+  Then $f(x)\in S$ for $\mu$-almost every $x\in X$.
+
+  \begin{enumerate}
+      %----------------------------------------------------------
+      \item \textbf{Reduce to discs that miss $S$.}\label{step:discs}
+            \begin{enumerate}
+                \item $S^{c}$ is an \emph{open} subset of $\mathbb{C}$,
+                      hence it can be written as a countable union of
+                      closed discs  
+                      \(
+                          S^{c}=\bigcup_{k\ge1}\Delta_{k},
+                      \)
+                      where $\Delta_{k}$ has centre $\alpha_{k}$ and radius $r_{k}>0$.
+                \item Proving $\mu\!\bigl(f^{-1}(S^{c})\bigr)=0$
+                      is thus equivalent to proving
+                      $\mu\!\bigl(f^{-1}(\Delta_{k})\bigr)=0$ for
+                      \emph{each} $k\in\mathbb{N}$.
+            \end{enumerate}
+
+      %----------------------------------------------------------
+      \item \textbf{Fix one disc and show its pre-image is null.}
+            Pick a particular $k$ and set
+            \[
+                \Delta:=\Delta_{k}
+                \quad(\text{centre }\alpha,\ \text{radius }r),
+                \qquad
+                E:=f^{-1}(\Delta)\in\mathcal{M}.
+            \]
+            We will prove $\mu(E)=0$.
+
+            \begin{enumerate}
+                \item \textit{Assume, toward contradiction, that $\mu(E)>0$.}
+                \item By hypothesis, $A_{E}(f)\in S$.
+                      Compute
+                      \[
+                          \bigl|A_{E}(f)-\alpha\bigr|
+                          =\left|
+                              \frac{1}{\mu(E)}
+                              \int_{E}\bigl(f-\alpha\bigr)\,d\mu
+                            \right|
+                          \le
+                          \frac{1}{\mu(E)}
+                          \int_{E}\bigl|f-\alpha\bigr|\,d\mu
+                          \le r ,
+                      \]
+                      because $|f(x)-\alpha|\le r$ for all $x\in E$ 
+                      (that is, $f(E)\subset\Delta$).
+                \item Consequently $A_{E}(f)\in\overline{\Delta}$, 
+                      yet $\overline{\Delta}\subset S^{c}$ by construction,
+                      contradicting $A_{E}(f)\in S$.
+                \item Hence our assumption $\mu(E)>0$ is impossible;
+                      therefore $\mu(E)=0$.
+            \end{enumerate}
+
+      %----------------------------------------------------------
+      \item \textbf{Finish the argument.}
+            Since each set $f^{-1}(\Delta_{k})$ has measure $0$ and
+            \(
+              f^{-1}(S^{c})
+              =\displaystyle\bigcup_{k\ge1}f^{-1}(\Delta_{k}),
+            \)
+            countable sub-additivity gives
+            \[
+                \mu\bigl(f^{-1}(S^{c})\bigr)=0.
+            \]
+            Hence $f(x)\in S$ for $\mu$-almost every $x\in X$.
+  \end{enumerate}
+\end{problem}
+\pagebreak
+%--------------------------------------------------------------------
+%  Detailed justification of the chain of inequalities
+%--------------------------------------------------------------------
+\[
+\bigl|A_{E}(f)-\alpha\bigr|
+      =\left|
+          \frac{1}{\mu(E)}\int_{E}\bigl(f-\alpha\bigr)\,d\mu
+        \right|
+      \;\le\;
+      \frac{1}{\mu(E)}\int_{E}\bigl|f-\alpha\bigr|\,d\mu
+      \;\le\;
+      r.
+\]
+
+\begin{enumerate}
+    \item \textbf{Definition of the average}  
+          By definition
+          \[
+              A_{E}(f)
+              =\frac{1}{\mu(E)}\int_{E}f\,d\mu .
+          \]
+          Therefore
+          \[
+              A_{E}(f)-\alpha
+              =\frac{1}{\mu(E)}\int_{E}\bigl(f-\alpha\bigr)\,d\mu .
+          \]
+
+    \item \textbf{Absolute value moves inside an integral.}  
+          For any integrable complex-valued function $g$ we have
+          \[
+              \Bigl|\int_{E}g\,d\mu\Bigr|
+              \;\le\;
+              \int_{E}|g|\,d\mu ,
+          \]
+          which is just the triangle inequality in integral form
+          (sometimes called Jensen’s inequality for the modulus).
+          Apply this to $g=f-\alpha$:
+          \[
+              \Bigl| \int_{E}(f-\alpha)\,d\mu \Bigr|
+              \;\le\;
+              \int_{E}|f-\alpha|\,d\mu .
+          \]
+          Dividing by the positive constant $\mu(E)$ preserves the inequality:
+          \[
+              \left|
+                \frac{1}{\mu(E)}\int_{E}(f-\alpha)\,d\mu
+              \right|
+              \;\le\;
+              \frac{1}{\mu(E)}\int_{E}|f-\alpha|\,d\mu .
+          \]
+
+    \item \textbf{Bounding the integrand by \(r\).}  
+          Because $E=f^{-1}(\Delta)$ and $\Delta$ is the closed disc
+          \(\{z\in\mathbb{C}:|z-\alpha|\le r\}\),
+          every $x\in E$ satisfies
+          \(|f(x)-\alpha|\le r\).
+          Hence
+          \[
+              \int_{E}|f-\alpha|\,d\mu
+              \;\le\;
+              \int_{E} r\,d\mu
+              = r\,\mu(E).
+          \]
+
+    \item \textbf{Combine the estimates.}  
+          Insert the bound from step~(3) into the right-hand side of
+          step~(2) to obtain
+          \[
+              \bigl|A_{E}(f)-\alpha\bigr|
+              \;\le\;
+              \frac{1}{\mu(E)} \bigl(r\,\mu(E)\bigr)
+              = r.
+          \]
+\end{enumerate}
+
+This completes the detailed verification of the displayed inequality.
+\pagebreak
+\paragraph{Why the identity holds}
+
+Start with the definition of the average (or “mean value’’) of $f$ on $E$:
+\[
+    A_E(f) \;=\; \frac{1}{\mu(E)}\int_E f\,d\mu .
+\]
+
+Subtracting the \emph{constant} $\alpha$ gives
+\[
+    A_E(f)-\alpha
+    \;=\;
+    \frac{1}{\mu(E)}\int_E f\,d\mu
+    \;-\;
+    \alpha .
+\]
+
+\begin{enumerate}
+    \item \textbf{Rewrite the constant as an integral.}  
+          Because $\alpha$ does not depend on $x$,
+          \[
+              \alpha
+              \;=\;
+              \frac{1}{\mu(E)}\underbrace{\bigl(\alpha\,\mu(E)\bigr)}_{\displaystyle=\int_E \alpha\,d\mu}
+              \;=\;
+              \frac{1}{\mu(E)}\int_E \alpha\,d\mu .
+          \]
+
+    \item \textbf{Use linearity of the integral.}  
+          Now subtract the two integrals that share the same prefactor:
+          \[
+              \frac{1}{\mu(E)}
+              \Bigl(\,\int_E f\,d\mu \;-\; \int_E \alpha\,d\mu \Bigr)
+              \;=\;
+              \frac{1}{\mu(E)}
+              \int_E (f-\alpha)\,d\mu .
+          \]
+          The equality
+          \[
+              \int_E f\,d\mu - \int_E \alpha\,d\mu
+              \;=\;
+              \int_E\bigl(f-\alpha\bigr)\,d\mu
+          \]
+          is simply the additivity (linearity) of the Lebesgue integral.
+\end{enumerate}
+
+Combining these two observations yields
+\[
+    A_E(f)-\alpha
+    \;=\;
+    \frac{1}{\mu(E)}\int_E (f-\alpha)\,d\mu,
+\]
+which is exactly the identity used in the proof.
+\pagebreak
+%--------------------------------------------------------------------
+%  Motivation for \emph{Lebesgue measure} via linear functionals
+%--------------------------------------------------------------------
+\begin{problem}
+  \textbf{Why do we introduce Lebesgue measure and how does the
+  linear functional $\displaystyle\Lambda f=\int_0^1 f(x)\,dx$
+  guide its construction?}
+  \begin{enumerate}
+  %----------------------------------------------------------------
+  \item \textbf{Integration as a linear (positive) functional.}
+        \begin{enumerate}[label=(\alph*)]
+            \item The space 
+                  \(
+                      C=C([0,1];\mathbb{C})
+                  \)
+                  of continuous functions on $[0,1]$ is a vector space.
+            \item The usual Riemann integral
+                  \(
+                      \Lambda:C\to\mathbb{C},\;
+                      \Lambda f=\int_0^1 f(x)\,dx
+                  \)
+                  is \emph{linear}:
+                  $\Lambda(af+bg)=a\Lambda f+b\Lambda g$.
+            \item It is also \emph{positive}:
+                  for $f\ge0$ (pointwise) we have $\Lambda f\ge0$.
+        \end{enumerate}
+  %----------------------------------------------------------------
+  \item \textbf{Recovering ``length’’ from $\Lambda$.}
+        \begin{enumerate}[label=(\alph*)]
+            \item Fix an interval $(a,b)\subset[0,1]$.
+                  Consider the class
+                  \[
+                      \mathcal{F}_{(a,b)}
+                      =\Bigl\{f\in C:0\le f\le1\text{ on }[0,1]
+                             \text{ and }f(x)=0\text{ for }x\notin(a,b)\Bigr\}.
+                  \]
+            \item For any $f\in\mathcal{F}_{(a,b)}$ we have
+                  $\Lambda f\le b-a$ because $f\le1$ and is supported
+                  on $(a,b)$.
+            \item By choosing ``tall\,/\,thin’’ bumps that approximate
+                  the indicator $\chi_{(a,b)}$, we can make $\Lambda f$
+                  arbitrarily close to $b-a$:
+                  \[
+                      \sup_{f\in\mathcal{F}_{(a,b)}}\Lambda f=b-a.
+                  \]
+            \item Hence \emph{interval length is encoded in $\Lambda$}.  
+                  We want a set function $m$ on \emph{all} subsets of
+                  $[0,1]$ that extends this idea.
+        \end{enumerate}
+  %----------------------------------------------------------------
+  \item \textbf{From lengths of intervals to a measure on \boldmath$[0,1]$.}
+        \begin{enumerate}[label=(\alph*)]
+            \item Start with outer measure:
+                  \[
+                      m^\ast(E)=\inf\Bigl\{\;\sum_{k} (b_k-a_k):
+                      E\subset\bigcup_k(a_k,b_k)\Bigr\}.
+                  \]
+                  The infimum is taken over \emph{all} open covers by
+                  countable unions of intervals.
+            \item Use Carathéodory’s \emph{criterion} to carve out the
+                  $\sigma$--algebra of $m^\ast$–measurable sets; the
+                  resulting restriction
+                  \(
+                      m=m^\ast|_{\mathcal{L}}
+                  \)
+                  is the \textbf{Lebesgue measure}.
+            \item By construction $m((a,b))=b-a$ and
+                  $m$ is complete, translation‐invariant, and countably
+                  additive.
+        \end{enumerate}
+  %----------------------------------------------------------------
+  \item \textbf{Why not stay with Riemann?}
+        \begin{enumerate}[label=(\alph*)]
+            \item Riemann integration fails for many limits:
+                  if $f_n\to f$ pointwise but not uniformly, 
+                  interchange of limit and integral breaks down.
+            \item Sets of ``size’’ zero (e.g.\ Cantor set) can still
+                  carry functions whose Riemann integral is undefined,
+                  yet Lebesgue theory handles them effortlessly.
+            \item In $L^p$ analysis, probability, Fourier transform
+                  theory, etc., we \emph{must} integrate highly
+                  discontinuous functions; Lebesgue’s extension
+                  provides the required robustness.
+        \end{enumerate}
+  %----------------------------------------------------------------
+  \item \textbf{Functional perspective summarised.}
+        \begin{itemize}
+            \item A positive linear functional on $C([0,1])$
+                  ``remembers’’ the length of intervals via the
+                  approximation argument in step~\textbf{2}.
+            \item The Riesz–Markov representation theorem
+                  (proved later) formalises this:
+                  every positive linear functional on $C([0,1])$
+                  arises from a \emph{unique} Borel measure $\mu$
+                  such that
+                  \[
+                      \Lambda f=\int_{[0,1]} f\,d\mu
+                      \quad (f\in C).
+                  \]
+            \item When $\Lambda$ is the usual Riemann integral,
+                  the representing measure \emph{must} coincide with
+                  Lebesgue measure.
+            \item Thus Lebesgue measure is \emph{the canonical measure}
+                  whose integrals extend and complete the classical
+                  Riemann process \emph{while retaining linearity and
+                  positivity}.
+        \end{itemize}
+  \end{enumerate}
+\end{problem}
+\end{document}

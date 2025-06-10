@@ -1,0 +1,432 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\newtheorem{procedure}{Procedure}
+
+\newtheorem{explanation}{Explanation}
+
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{proposition}
+  Let \(p\) be a prime number and let \(G\) be a finite group with
+  \(\lvert G\rvert = p^{2}\).
+  Then the center \(Z(G)\) is non-trivial; in fact 
+  \[
+     \lvert Z(G)\rvert \in \{p,\;p^{2}\}.
+  \]
+  \end{proposition}
+  
+  \begin{proof}
+  Because \(\lvert G\rvert = p^{2}\) is a power of the prime \(p\),
+  \(G\) is a \(p\)--group.
+  A standard fact about \(p\)--groups is that their centers are non-trivial; nevertheless, we provide a direct argument for this special case using the class equation.
+  
+  \medskip
+  \noindent\textbf{1.  The class equation.}
+  Write the class equation of \(G\):
+  \[
+     \lvert G\rvert
+        \;=\;
+        \lvert Z(G)\rvert
+        \;+\;
+        \sum_{i=1}^{k}\,
+        \lvert\Cl_{G}(g_{i})\rvert,
+  \]
+  where each \(g_{i}\notin Z(G)\) and
+  \(\Cl_{G}(g_{i})=\{\,xg_{i}x^{-1}:x\in G\,\}\) is the conjugacy
+  class of \(g_{i}\).
+  
+  \medskip
+  \noindent\textbf{2.  Sizes of the conjugacy classes.}
+  For any \(g\in G\) the size of its conjugacy class satisfies
+  \[
+     \lvert\Cl_{G}(g)\rvert
+        = \frac{\lvert G\rvert}{\lvert C_{G}(g)\rvert},
+  \]
+  where \(C_{G}(g)=\{\,x\in G : xg=gx\,\}\) is the centralizer of \(g\).
+  Hence \(\lvert\Cl_{G}(g)\rvert\) divides \(\lvert G\rvert=p^{2}\).
+  If \(g\notin Z(G)\) then \(C_{G}(g)\neq G\), so
+  \(\lvert C_{G}(g)\rvert\) must equal \(p\) (it cannot be \(1\) because
+  \(e\in C_{G}(g)\)).
+  Consequently
+  \[
+     \lvert\Cl_{G}(g)\rvert
+        =\frac{p^{2}}{p}=p .
+  \]
+  
+  \medskip
+  \noindent\textbf{3.  Applying the class equation.}
+  Assume, for contradiction, that \(Z(G)=\{e\}\),
+  so \(\lvert Z(G)\rvert=1\).
+  Then every non-central element lies in some conjugacy class of size \(p\).
+  Because each such class has \(p\) elements and they are pairwise
+  disjoint, the class equation gives
+  \[
+     p^{2}=\underbrace{1}_{\lvert Z(G)\rvert}
+            \;+\;
+            k\,p
+     \;\;\Longrightarrow\;\;
+     p^{2}-1 = k\,p .
+  \]
+  Dividing both sides by \(p\) yields
+  \(p-1 = k\), so \(k=p-1\).
+  But then the total number of elements outside the center is
+  \(k\,p = (p-1)p = p^{2}-p\),
+  and together with the central element \(e\) this accounts for exactly
+  \(p^{2}-p+1\) elements—\emph{strictly fewer} than \(p^{2}\) when
+  \(p>1\).
+  This contradiction shows that our assumption was false; hence
+  \(\lvert Z(G)\rvert>1\).
+  
+  \medskip
+  \noindent\textbf{4.  Determining \(\lvert Z(G)\rvert\).}
+  Since \(\lvert Z(G)\rvert\) divides \(\lvert G\rvert=p^{2}\) and is
+  greater than \(1\), it must be \(p\) or \(p^{2}\).
+  If \(\lvert Z(G)\rvert=p^{2}\), then \(Z(G)=G\) and \(G\) is abelian.
+  Otherwise \(\lvert Z(G)\rvert=p\).
+  
+  \medskip
+  \noindent\textbf{Conclusion.}
+  In every case, the center \(Z(G)\) is non-trivial, completing the
+  proof.
+  \end{proof}
+  \begin{explanation}
+    \textbf{What does “cyclic’’ mean?}  
+    A group \(G\) is called \emph{cyclic} if there exists an element
+    \(g\in G\) such that every element of \(G\) can be written as a power
+    (of \(g\)) in multiplicative notation or a multiple (of \(g\)) in
+    additive notation:
+    \[
+       G \;=\; \langle g\rangle
+         \;=\;\{\,g^{k} : k\in\mathbb{Z}\,\}.
+    \]
+    Such an element \(g\) is a \emph{generator} of \(G\).
+    
+    \medskip
+    Below are the most common strategies for proving that a concrete group
+    is cyclic.  Pick whichever fits the information you know about the
+    group in question.
+    
+    \begin{enumerate}[label=\textbf{(\arabic*)},leftmargin=2.2em]
+    
+      \item \textbf{Find an element whose order equals
+            \(\lvert G\rvert\) (finite case).}\\
+            Thanks to Lagrange’s theorem, every element order divides
+            \(\lvert G\rvert\).  
+            Hence if you can exhibit an element \(g\) with
+            \(\operatorname{ord}(g)=\lvert G\rvert\), then
+            \(\langle g\rangle\) already contains \(\lvert G\rvert\)
+            distinct elements—so it \emph{must} be all of \(G\).
+    
+            \smallskip
+            \textit{Typical tools:}
+            \begin{itemize}
+              \item Cauchy’s theorem (for prime divisors of \(\lvert G\rvert\));
+              \item the structure theorem for finite abelian groups;
+              \item counting arguments that show some element attains the
+                    maximum possible order.
+            \end{itemize}
+    
+      \item \textbf{Show that \(G\) has at most one subgroup of each order
+            dividing \(\lvert G\rvert\).}\\
+            A classical theorem says:
+            \[
+               \text{“A finite group is cyclic}
+               \;\Longleftrightarrow\;
+               \text{it has exactly one subgroup of every divisor of
+               its order.”}
+            \]
+            Thus, if you can prove the uniqueness of subgroups of each
+            possible order (for example via group actions or counting),
+            cyclicity follows automatically.
+    
+      \item \textbf{Exploit the structure of abelian groups.}\\
+            If \(G\) is \emph{finite abelian}, write its primary
+            decomposition
+            \(
+                G \;\cong\;
+                C_{p_{1}^{\,a_{1}}}\times\cdots\times
+                C_{p_{k}^{\,a_{k}}}.
+            \)
+            Choose generators \(g_{i}\) of each cyclic
+            factor; then the element
+            \(
+                g \;:=\;
+                g_{1}\,g_{2}\cdots g_{k}
+            \)
+            has order
+            \(
+                \operatorname{lcm}\bigl(
+                      p_{1}^{\,a_{1}},\dots,p_{k}^{\,a_{k}}
+                \bigr)=\lvert G\rvert,
+            \)
+            so \(G=\langle g\rangle\).
+            (The same idea works Sylow–group–by–Sylow–group if you have
+            already shown each Sylow subgroup is cyclic.)
+    
+      \item \textbf{Infinite groups:  build an isomorphism with
+            \((\mathbb{Z},+)\).}\\
+            Show there is a surjective homomorphism
+            \(f:\mathbb{Z}\twoheadrightarrow G\);  
+            its kernel is of the form \(n\mathbb{Z}\), so by the First
+            Isomorphism Theorem,
+            \(
+               G\cong \mathbb{Z}/n\mathbb{Z}
+               \;(n<\infty)
+               \quad\text{or}\quad
+               G\cong \mathbb{Z}
+               \;(n=0).
+            \)
+            Either way \(G\) is cyclic, generated by \(f(1)\).
+    
+      \item \textbf{Small–order tricks.}\\
+            For very small orders there are only a handful of possible
+            groups, so classification works quickly:
+    
+            \begin{center}
+            \begin{tabular}{c|l}
+               \(\lvert G\rvert\) & Result\\\hline
+               \(p\) (prime)      & \(G\) is automatically cyclic.\\
+               \(p^{2}\)          & \(G\cong C_{p^{2}}\) or
+                                    \(C_{p}\times C_{p}\);
+                                    find an element of order \(p^{2}\) to
+                                    settle the first case.\\
+               \(4,6,8,10,\dots\) & Exploit generators of known
+                                    presentations, e.g.\ \(D_{2n}\) is
+                                    not cyclic because every element has
+                                    order dividing \(n\).
+            \end{tabular}
+            \end{center}
+    
+    \end{enumerate}
+    
+    \medskip
+    \noindent\textbf{Key takeaway.}
+    \emph{To prove a group is cyclic, your main objective is to locate one
+    element whose powers (or multiples) exhaust the entire group.}
+    Most techniques above are simply different ways to guarantee such an
+    element exists.
+    \end{explanation}
+    \begin{procedure}[Determining the conjugacy classes of the dihedral group]
+      \textbf{Goal.}
+      Given an integer \(n\ge 2\), let
+      \[
+         D_{2n}
+            \;=\;
+            \bigl\langle\,r,s
+            \;\bigm|\;
+              r^{n}=e,\;
+              s^{2}=e,\;
+              srs=r^{-1}
+            \bigr\rangle
+            \quad
+            (\lvert D_{2n}\rvert = 2n).
+      \]
+      We describe a practical, step–by–step method for listing all conjugacy
+      classes of \(D_{2n}\).
+      
+      \medskip
+      \begin{enumerate}[label=\textbf{Step \arabic*.},leftmargin=2.8em]
+      
+      \item \textbf{Separate the two types of elements.}
+            \[
+               \underbrace{\langle r\rangle
+                 \;=\;\{e,r,r^{2},\dots,r^{n-1}\}}_{\text{rotations}}
+               \quad\sqcup\quad
+               \underbrace{
+                 \bigl\{\,s r^{k}\;:\;0\le k\le n-1\bigr\}
+               }_{\text{reflections}}.
+            \]
+            Conjugacy relations interact differently inside each part, so
+            treat rotations and reflections separately.
+      
+      \item \textbf{Handle the rotations.}
+            \begin{itemize}
+               \item Because \(r\) commutes with every
+                     power of itself, conjugating \(r^{k}\) by a rotation
+                     does nothing.
+               \item Conjugating \(r^{k}\) by a reflection flips the
+                     exponent:
+                     \(
+                       s\,r^{k}\,s^{-1}=r^{-k}=r^{n-k}.
+                     \)
+            \end{itemize}
+            Therefore
+            \[
+               \Cl\bigl(r^{k}\bigr)=
+               \begin{cases}
+                  \{\,r^{k},\,r^{n-k}\,\},
+                     & k\not\equiv -k\pmod{n};\\[4pt]
+                  \{\,r^{k}\,\}, & k\equiv -k\pmod{n}.
+               \end{cases}
+            \]
+            Concretely:
+            \begin{itemize}
+               \item If \(n\) is odd:
+                     the non-trivial rotations split into
+                     \((n-1)/2\) two-element classes
+                     \(\{r^{k},r^{n-k}\}\) \((1\le k\le (n-1)/2)\).
+               \item If \(n\) is even:
+                     the rotation \(r^{n/2}\) is central, so
+                     \(\{r^{n/2}\}\) is a singleton class;
+                     the remaining \(n/2-1\) pairs
+                     \(\{r^{k},r^{n-k}\}\) form the other classes.
+            \end{itemize}
+      
+      \item \textbf{Handle the reflections.}
+            Write every reflection as \(s r^{k}\).
+            Conjugating by a rotation gives
+            \[
+               r^{m}\,(s r^{k})\,r^{-m}=s r^{k-2m},
+            \]
+            so rotation conjugation acts by \(\;k\mapsto k-2m\pmod{n}\).
+      
+            \vspace{2pt}
+            \begin{itemize}
+               \item If \(n\) is \emph{odd}, the map \(m\mapsto 2m\)
+                     is a bijection on \(\mathbb{Z}/n\mathbb{Z}\); hence
+                     the orbit of any \(k\) is all of \(\mathbb{Z}/n\mathbb{Z}\).
+                     \[
+                        \boxed{\text{All \(n\) reflections form one class.}}
+                     \]
+               \item If \(n\) is \emph{even}, the map \(m\mapsto 2m\)
+                     hits only the even residues.
+                     Thus the reflections split into two orbits:
+                     \[
+                       \begin{aligned}
+                          \mathcal{R}_{0}
+                             &=\{\,s r^{k}\;:\;k\text{ even}\},\\
+                          \mathcal{R}_{1}
+                             &=\{\,s r^{k}\;:\;k\text{ odd}\}.
+                       \end{aligned}
+                     \]
+                     Each set has size \(n/2\) and is a conjugacy class.
+                     (Geometrically these correspond to axes through
+                     opposite vertices versus opposite edges of the regular
+                     \(n\)-gon.)
+            \end{itemize}
+      
+      \item \textbf{Collect the results.}
+            \[
+               \boxed{
+                  \begin{aligned}
+                     &\text{Identity: }\{e\};\\
+                     &\text{Rotations: as in Step 2;}\\
+                     &\text{Reflections: as in Step 3.}
+                  \end{aligned}
+               }
+            \]
+      
+      \end{enumerate}
+      
+      \noindent\textbf{Quick summary of class counts.}
+      
+      \begin{center}
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{c|c|c}
+         & \(n\) odd & \(n\) even\\\hline
+         rotation classes &
+            \(1\;+\;\dfrac{n-1}{2}\)
+               & \(2\;+\;\bigl(\dfrac{n}{2}-1\bigr)\)\\
+         reflection classes & \(1\) & \(2\)\\\hline
+         \textbf{total classes} &
+            \(\dfrac{n+3}{2}\) &
+            \(\dfrac{n}{2}+3\)
+      \end{tabular}
+      \end{center}
+      \end{procedure}
+      \begin{remark}[Conjugacy classes of the quaternion group \(Q_{8}\)]
+        Recall
+        \[
+           Q_{8}
+              \;=\;
+              \bigl\{\,\pm1,\;\pm i,\;\pm j,\;\pm k\bigr\},
+              \qquad
+              i^{2}=j^{2}=k^{2}=ijk=-1.
+        \]
+        Its center is
+        \(
+           Z(Q_{8})=\{\pm1\},
+        \)
+        so each element of \(Z(Q_{8})\) forms a singleton conjugacy class.
+        For the remaining elements one checks that
+        \[
+           x^{-1}\,i\,x
+              \in\{\pm i\},
+           \quad
+           x^{-1}\,j\,x
+              \in\{\pm j\},
+           \quad
+           x^{-1}\,k\,x
+              \in\{\pm k\}
+           \quad
+           \text{for all }x\in Q_{8}.
+        \]
+        Hence the conjugacy classes are
+        \[
+           \boxed{
+           \{\,1\},
+           \;\{-1\},
+           \;\{\,i,-i\},
+           \;\{\,j,-j\},
+           \;\{\,k,-k\}.
+           }
+        \]
+        There are \(5\) classes in total:
+        two of size \(1\) (the central elements) and three of size \(2\).
+        \end{remark}
+\end{document}

@@ -1,0 +1,1630 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{\today}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\textbf{Problem Statement:} 
+Describe and sketch the image of the line 
+\[
+L = \{z \in \mathbb{C} : \Re(z) = 1\}
+\]
+under the map 
+\[
+f: \mathbb{C}\setminus\{0\} \to \mathbb{C}, \quad f(z) = \frac{1}{z}.
+\]
+
+\textbf{Solution (Step-by-step):}
+
+\textbf{1. Parametrize the line \(\Re(z) = 1\).}
+
+Any point \(z\) on the line \(L\) can be written as 
+\[
+z = 1 + i\,y, \quad \text{where } y \in \mathbb{R}.
+\]
+Hence,
+\[
+L = \{1 + i y : y \in \mathbb{R}\}.
+\]
+
+\textbf{2. Apply the map \(f(z) = 1/z\) to this parametrization.}
+
+For \(z = 1 + i\,y\), we compute
+\[
+f(1 + i\,y) \;=\; \frac{1}{1 + i\,y}.
+\]
+
+\textbf{3. Rationalize the denominator.}
+
+To simplify, multiply numerator and denominator by the complex conjugate of the denominator:
+\[
+\frac{1}{1 + i\,y} 
+\;=\; 
+\frac{1}{1 + i\,y} \cdot \frac{1 - i\,y}{1 - i\,y}
+\;=\;
+\frac{\,1 - i\,y\,}{(1 + i\,y)(1 - i\,y)}.
+\]
+Note that
+\[
+(1 + i\,y)(1 - i\,y) \;=\; 1 + y^2.
+\]
+Thus,
+\[
+f(1 + i\,y) 
+\;=\; 
+\frac{\,1 - i\,y\,}{1 + y^2}.
+\]
+
+\textbf{4. Separate into real and imaginary parts.}
+
+Write \(f(1 + i\,y) = x + i\,u\). Then
+\[
+x \;=\; \Re\!\Bigl(\frac{1 - i\,y}{1 + y^2}\Bigr) 
+= \frac{1}{1 + y^2},
+\quad
+u \;=\; \Im\!\Bigl(\frac{1 - i\,y}{1 + y^2}\Bigr)
+= \frac{-y}{1 + y^2}.
+\]
+Hence, the image point \(w = f(z)\) in the complex plane is
+\[
+w = x + i\,u = \frac{1}{1 + y^2} \;-\; i \,\frac{y}{1 + y^2}.
+\]
+
+\textbf{5. Find the geometric locus of these points \((x,u)\).}
+
+We want to eliminate the parameter \(y\). From
+\[
+x = \frac{1}{1 + y^2},
+\]
+we see 
+\[
+1 + y^2 = \frac{1}{x} 
+\quad \Longrightarrow \quad
+y^2 = \frac{1}{x} - 1.
+\]
+Also,
+\[
+u = -\frac{y}{1 + y^2} = -y \, x
+\]
+because multiplying top and bottom of \(\frac{-y}{1+y^2}\) by \(x = \frac{1}{1+y^2}\) gives
+\[
+u = -\,y \, \Bigl(\frac{1}{1 + y^2}\Bigr) = -\,y \,x.
+\]
+Squaring \(u\):
+\[
+u^2 = y^2 \, x^2.
+\]
+But \(y^2 = \tfrac{1}{x} - 1\). Thus,
+\[
+u^2 = \bigl(\tfrac{1}{x} - 1\bigr)\,x^2 = x \,(1 - x),
+\]
+since
+\[
+\bigl(\tfrac{1}{x} - 1\bigr)\,x^2 
+= x^2 \cdot \tfrac{1}{x} - x^2
+= x - x^2.
+\]
+Therefore,
+\[
+u^2 = x - x^2 
+\quad \Longrightarrow \quad
+x^2 + u^2 = x.
+\]
+Rewriting,
+\[
+x^2 - x + u^2 = 0 
+\quad \Longrightarrow \quad
+x^2 - x + \tfrac{1}{4} + u^2 = \tfrac{1}{4},
+\]
+which gives
+\[
+\bigl(x - \tfrac{1}{2}\bigr)^2 + u^2 = \bigl(\tfrac{1}{2}\bigr)^2.
+\]
+
+\textbf{6. Interpret this locus: it is a circle.}
+
+The equation
+\[
+\bigl(x - \tfrac{1}{2}\bigr)^2 + u^2 = \bigl(\tfrac{1}{2}\bigr)^2
+\]
+represents a circle in the \((x,u)\)-plane (i.e.\ the image plane) with center 
+\(\bigl(\tfrac{1}{2},\,0\bigr)\) and radius \(\tfrac{1}{2}\).
+
+\textbf{7. Determine which points on the circle are attained.}
+
+As \(y\) varies over all real numbers:
+\[
+x = \frac{1}{1 + y^2} \quad \text{takes values in } (0,1].
+\]
+- When \(y = 0\), we get \(x = 1\) and \(u = 0\). This corresponds to the point \((1,0)\) on the circle, i.e.\ \(w = 1\).
+- As \(|y|\to \infty\), we have \(x \to 0\) and \(u \to 0\). So the image approaches \((0,0)\) on the circle. 
+
+\emph{However}, there is no finite \(y\) for which \(x = 0\). Hence the point \((0,0)\) (the origin in the \(w\)-plane) is a limit point that is \emph{not actually attained} by \(f(1 + i\,y)\). Thus:
+
+\[
+\text{Image of the line } \{ \Re(z) = 1 \}
+\;=\;
+\Bigl\{
+w : (x - \tfrac{1}{2})^2 + u^2 = \bigl(\tfrac{1}{2}\bigr)^2
+\Bigr\}
+\setminus
+\{0\}.
+\]
+In words, it is the circle of radius \(1/2\) centered at \(\bigl(\tfrac{1}{2},0\bigr)\), \emph{minus} the point \(w = 0\). 
+
+\textbf{8. Sketch.}
+
+\begin{itemize}
+\item Draw the circle centered at \(\bigl(\tfrac{1}{2},\,0\bigr)\) with radius \(\tfrac{1}{2}\). 
+\item This circle passes through the points \((0,0)\) and \((1,0)\) on the real axis.
+\item The image is the entire circle \emph{except} that \((0,0)\) (the origin) is not attained. It is only approached as \(|y|\to\infty\).
+\end{itemize}
+
+\[
+\boxed{
+\text{The image is the circle } (x-\tfrac{1}{2})^2 + u^2 = \bigl(\tfrac{1}{2}\bigr)^2 \text{ in the } w\text{-plane, minus the point } w=0.
+}
+\]
+\textbf{Problem (b).} Find the power series expansion
+\[
+\frac{1}{(z - 5)^3}
+\;=\;
+\sum_{n=0}^{\infty} a_n \,(z+2)^n
+\quad
+\text{and determine for which } z \text{ it converges.}
+\]
+
+\textbf{Solution:}
+
+\textbf{Step 1: Rewrite the function in terms of } \(\,w = z + 2.\)
+
+Set \(w = z + 2\). Then
+\[
+z - 5 \;=\; (z + 2) - 7 \;=\; w - 7.
+\]
+Thus,
+\[
+\frac{1}{(z - 5)^3}
+\;=\;
+\frac{1}{(w - 7)^3}.
+\]
+
+\textbf{Step 2: Factor out } \(7\) \textbf{ to prepare for a binomial expansion.}
+
+\[
+\frac{1}{(w - 7)^3}
+\;=\;
+\frac{1}{7^3}\,\frac{1}{\Bigl(1 - \tfrac{w}{7}\Bigr)^3}.
+\]
+Hence,
+\[
+\frac{1}{(z - 5)^3}
+\;=\;
+\frac{1}{7^3}\,\frac{1}{\Bigl(1 - \tfrac{w}{7}\Bigr)^3}.
+\]
+
+\textbf{Step 3: Use the generalized binomial series (or known formula) for } 
+\(\,(1 - x)^{-m}.\)
+
+Recall the standard series expansion for \((1 - x)^{-m}\), valid for \(\lvert x\rvert < 1\):
+\[
+\frac{1}{(1 - x)^m}
+\;=\;
+\sum_{n=0}^{\infty} \binom{n+m-1}{m-1}\,x^n,
+\]
+where \(\displaystyle \binom{n+m-1}{m-1}\) is a binomial coefficient. 
+
+In our case, \(m = 3\). Thus
+\[
+\frac{1}{(1 - x)^3}
+\;=\;
+\sum_{n=0}^{\infty} \binom{n+2}{2}\, x^n
+\;=\;
+\sum_{n=0}^{\infty} \frac{(n+1)(n+2)}{2}\, x^n.
+\]
+
+\textbf{Step 4: Apply this to } \(x = \tfrac{w}{7}.\)
+
+So
+\[
+\frac{1}{(1 - \tfrac{w}{7})^3}
+\;=\;
+\sum_{n=0}^{\infty} \binom{n+2}{2} 
+\biggl(\tfrac{w}{7}\biggr)^n.
+\]
+Multiplying by \(\tfrac{1}{7^3}\):
+\[
+\frac{1}{(w-7)^3}
+\;=\;
+\frac{1}{7^3}\;
+\sum_{n=0}^{\infty}
+\binom{n+2}{2}\,
+\biggl(\tfrac{w}{7}\biggr)^n
+\;=\;
+\sum_{n=0}^{\infty}
+\binom{n+2}{2}\,
+\frac{w^n}{7^{n+3}}.
+\]
+
+\textbf{Step 5: Substitute back } \(w = z + 2.\)
+
+Therefore,
+\[
+\frac{1}{(z - 5)^3}
+\;=\;
+\sum_{n=0}^{\infty}
+\binom{n+2}{2}
+\frac{(z+2)^n}{7^{n+3}}
+\;=\;
+\sum_{n=0}^{\infty}
+\frac{(n+1)(n+2)}{2}\;
+\frac{(z+2)^n}{7^{n+3}}.
+\]
+Hence the coefficients \(a_n\) in the power series expansion
+\[
+\sum_{n=0}^{\infty} a_n\,(z+2)^n
+\]
+are
+\[
+a_n
+\;=\;
+\frac{(n+1)(n+2)}{2}\,\frac{1}{7^{n+3}},
+\quad n=0,1,2,\dots
+\]
+
+\textbf{Step 6: Determine the region of convergence.}
+
+Since we have expanded around the point \(z=-2\), the radius of convergence is determined by the distance from \(-2\) to the nearest singularity of the function \(\frac{1}{(z-5)^3}\). The only singularity is at \(z=5\). The distance between \(-2\) and \(5\) is \(\lvert -2 - 5\rvert = 7\). Therefore, the series converges for
+\[
+\lvert z + 2\rvert < 7.
+\]
+
+\[
+\boxed{
+\frac{1}{(z-5)^3}
+\;=\;
+\sum_{n=0}^{\infty}
+\frac{(n+1)(n+2)}{2\,7^{\,n+3}}\,(z+2)^n
+\quad
+\text{for}
+\quad
+\lvert z+2\rvert < 7.
+}
+\]
+
+\textbf{Geometric interpretation:} The largest circle (in the complex plane) centered at \(z=-2\) that does not contain the pole \(z=5\) has radius \(7\). Thus the series expansion about \(z=-2\) is valid exactly within that circle, i.e.\ for \(\lvert z+2\rvert < 7\).
+$\sum_{i=0}^{\infty} a_n(z-z_0)^{n}$ 
+
+
+\textbf{Derivative of a Power Series.}
+
+Let 
+\[
+f(z) \;=\; \sum_{n=0}^{\infty} a_n \,\bigl(z - z_0\bigr)^n.
+\]
+We can differentiate term-by-term (within the radius of convergence) to obtain
+\[
+f'(z)
+\;=\;
+\sum_{n=0}^{\infty} \frac{d}{dz} 
+\Bigl[ a_n \,\bigl(z - z_0\bigr)^n \Bigr].
+\]
+Since
+\[
+\frac{d}{dz}\Bigl[(z - z_0)^n\Bigr]
+=
+n\,(z - z_0)^{\,n-1},
+\]
+each term with \(n=0\) vanishes (the constant term). For \(n \ge 1\),
+\[
+\frac{d}{dz}\Bigl[a_n (z - z_0)^n\Bigr]
+=
+a_n \cdot n\, (z - z_0)^{n-1}.
+\]
+Hence
+\[
+f'(z)
+\;=\;
+\sum_{n=1}^{\infty}
+n\,a_n\,\bigl(z - z_0\bigr)^{\,n-1}.
+\]
+
+\[
+\boxed{
+\text{If } f(z) = \sum_{n=0}^{\infty} a_n (z - z_0)^n,
+\quad\text{then}\quad
+f'(z) = \sum_{n=1}^{\infty} n\,a_n \,(z - z_0)^{n-1}.
+}
+\]
+
+\textbf{Problem:} Evaluate
+\[
+\int_{\lvert z\rvert = 1} \frac{z}{z^2 - 2}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{Step 1: Identify the singularities of the integrand.}
+
+The integrand is 
+\[
+f(z) \;=\; \frac{z}{z^2 - 2}.
+\]
+The denominator \(z^2 - 2 = 0\) gives \(z = \pm \sqrt{2}\). Thus the singularities (poles) are at \(z = \sqrt{2}\) and \(z = -\sqrt{2}\).
+
+\textbf{Step 2: Check whether these singularities lie inside the contour \(\lvert z\rvert=1\).}
+
+Both \(\pm \sqrt{2}\) have magnitude \(\sqrt{2}\approx 1.414\). Hence 
+\(\lvert \pm \sqrt{2}\rvert = \sqrt{2} > 1.\)
+So neither pole lies within the unit circle \(\lvert z\rvert=1\).
+
+\textbf{Step 3: Apply Cauchy's Theorem.}
+
+Since \(f(z)\) is analytic on and inside the circle \(\lvert z\rvert=1\) (the only singularities are outside), Cauchy's Theorem states that the contour integral of an analytic function around a closed curve is \(0\). Hence,
+\[
+\int_{\lvert z\rvert=1} \frac{z}{z^2 - 2}\,dz
+\;=\;
+0.
+\]
+
+\[
+\boxed{0}
+\]
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z\rvert = 1} \frac{z}{z^2 - 2}\,dz.
+\]
+
+\textbf{Step-by-Step Solution using Cauchy’s Integral Formula:}
+
+\textbf{1. Identify the singularities.}
+
+The integrand
+\[
+f(z) \;=\; \frac{z}{z^2 - 2}
+\]
+has singularities where the denominator vanishes: \(z^2 - 2 = 0\). Hence the poles are
+\[
+z = \sqrt{2}
+\quad\text{and}\quad
+z = -\sqrt{2}.
+\]
+Since \(\sqrt{2} \approx 1.414\), both poles lie \emph{outside} the unit circle \(\lvert z\rvert=1\).
+
+\textbf{2. Recall the relevant form of Cauchy’s Integral Formula / Residue Theorem.}
+
+- \textbf{Cauchy's Integral Formula} (basic form) says that if \(g\) is analytic inside and on a simple closed contour \(\Gamma\), then
+\[
+\int_{\Gamma} \frac{g(z)}{z-z_0}\,dz 
+\;=\;
+2\pi i \,g(z_0),
+\quad
+\text{provided } z_0 \text{ is inside } \Gamma.
+\]
+- \textbf{Residue Theorem} (a direct extension) says the integral of a meromorphic function around a closed contour is \(2\pi i\) times the sum of its residues at poles lying inside the contour.
+
+\textbf{3. Rewrite or decompose the integrand to expose possible residues.}
+
+We can do a partial-fraction decomposition (though here it is very quick to see there will be no poles inside):
+
+\[
+\frac{z}{z^2 - 2}
+\;=\;
+\frac{z}{(z-\sqrt{2})(z+\sqrt{2})}
+\;=\;
+\frac{A}{z-\sqrt{2}} \;+\; \frac{B}{z+\sqrt{2}}
+\]
+for some constants \(A\) and \(B\). Regardless of \(A\) and \(B\), both denominators \(\bigl(z-\sqrt{2}\bigr)\) and \(\bigl(z+\sqrt{2}\bigr)\) vanish only at \(z=\pm\sqrt{2}\). These are both outside \(\lvert z\rvert=1\).
+
+\textbf{4. Conclude using the Residue Theorem (or Cauchy’s Integral Formula).}
+
+Since neither \(\sqrt{2}\) nor \(-\sqrt{2}\) lies within the unit circle, there are \emph{no poles} of \(f(z)\) inside \(\lvert z\rvert=1\). Thus, by the Residue Theorem,
+\[
+\int_{\lvert z\rvert=1} \frac{z}{z^2 - 2}\,dz
+\;=\;
+2\pi i \times \bigl(\text{sum of residues of }f \text{ inside }|z|=1\bigr).
+\]
+But there are \emph{no} poles inside, so the sum of residues inside is \(0\). Hence
+\[
+\int_{\lvert z\rvert=1} \frac{z}{z^2 - 2}\,dz 
+\;=\;
+0.
+\]
+
+\textbf{5. Alternatively, use Cauchy’s Integral Formula directly for ``analytic inside'' argument.}
+
+Observe that \(\displaystyle \frac{z}{z^2 - 2}\) is analytic for \(\lvert z\rvert < 1\) (no singularities there). By Cauchy’s Theorem (which itself can be seen as a special case of the integral formula with no poles inside),
+\[
+\int_{\lvert z\rvert=1} \frac{z}{z^2 - 2}\,dz \;=\; 0.
+\]
+
+\[
+\boxed{ \text{The value of the integral is } 0. }
+\]
+
+\textbf{Problem:} Evaluate
+\[
+\int_{\lvert z\rvert=2} \frac{e^z}{z-3}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{Step 1: Identify the singularity of the integrand.}
+
+The integrand is
+\[
+f(z) = \frac{e^z}{z-3}.
+\]
+Since \(e^z\) is entire (no singularities), the only possible singularity arises from the factor \((z-3)\) in the denominator, giving a simple pole at \(z = 3\).
+
+\textbf{Step 2: Determine whether the singularity is inside the contour \(\lvert z\rvert=2\).}
+
+The circle \(\lvert z\rvert = 2\) is centered at \(0\) with radius \(2\). The point \(z=3\) clearly satisfies \(\lvert 3\rvert=3\), which is \emph{greater} than \(2\). Hence \(z=3\) lies \emph{outside} the contour \(\lvert z\rvert=2\).
+
+\textbf{Step 3: Apply Cauchy's Theorem or the Residue Theorem.}
+
+Because \(f(z)\) is analytic on and inside the circle \(\lvert z\rvert=2\) (its only pole at \(z=3\) is outside), it follows from Cauchy's Theorem that
+\[
+\int_{\lvert z\rvert=2} \frac{e^z}{z-3}\,dz 
+\;=\; 0.
+\]
+
+\[
+\boxed{0}
+\]
+
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z\rvert=2} \frac{e^z}{z-3}\,dz.
+\]
+
+\textbf{Step-by-Step Solution using Cauchy’s Integral Formula:}
+
+\textbf{1. Identify the singularity.}
+
+The only singularity of
+\[
+f(z) \;=\; \frac{e^z}{z-3}
+\]
+occurs at \(z=3\), where the denominator vanishes.
+
+\textbf{2. Check if \(z=3\) lies inside the contour \(\lvert z\rvert=2\).}
+
+The contour \(\lvert z\rvert=2\) is the circle of radius \(2\) centered at the origin. Clearly,
+\[
+|3| = 3 \;>\; 2,
+\]
+so \(z=3\) is \emph{outside} the circle \(\lvert z\rvert=2\).
+
+\textbf{3. Recall Cauchy’s Integral Formula.}
+
+If \(g\) is analytic inside and on a simple closed contour \(\Gamma\) and \(z_0\) is a point \emph{inside} \(\Gamma\), then
+\[
+\int_{\Gamma} \frac{g(z)}{z - z_0}\,dz 
+\;=\;
+2\pi i \,g(z_0).
+\]
+However, if \(z_0\) is \emph{outside} \(\Gamma\), then the integral is \(0\) because there is no contribution from any singularity inside the contour.
+
+\textbf{4. Apply Cauchy’s Integral Formula to our integrand.}
+
+Set \(g(z) = e^z\). Then \(f(z) = \dfrac{g(z)}{z-3}\). The point \(z_0 = 3\) (the pole) is \emph{not} inside the circle \(\lvert z\rvert=2\). Therefore, by Cauchy’s Integral Formula,
+\[
+\int_{\lvert z\rvert=2} \frac{e^z}{z-3}\,dz
+\;=\; 0
+\]
+since there is no singularity enclosed by \(\lvert z\rvert=2\).
+
+\[
+\boxed{0}
+\]
+
+\textbf{Geometric/Residue Interpretation:} 
+The function \(e^z\) is entire (no singularities), and \(\frac{1}{z-3}\) has a simple pole at \(z=3\). Because that pole lies \emph{outside} the given contour, there are no residues to collect \emph{inside} \(\lvert z\rvert=2\). Hence, the integral vanishes.
+$\int_{}^{\left\vert z \right\vert =2}  \,\frac{e^{z}}{z}\mathrm{d}z $
+
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z\rvert = 2} \frac{e^z}{z}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{1. Identify the singularity.}
+
+The integrand
+\[
+f(z) = \frac{e^z}{z}
+\]
+has a simple pole at \(z = 0\). 
+
+\textbf{2. Check whether the singularity is inside the contour \(\lvert z\rvert=2\).}
+
+The contour \(\lvert z\rvert=2\) is the circle of radius \(2\) centered at the origin. Since \(\lvert 0\rvert=0 < 2\), the pole at \(z=0\) \emph{is} inside the contour.
+
+\textbf{3. Apply Cauchy’s Integral Formula.}
+
+Recall Cauchy’s Integral Formula: if \(g\) is analytic inside and on a simple closed contour \(\Gamma\) and \(z_0\) is a point inside \(\Gamma\), then
+\[
+\int_{\Gamma} \frac{g(z)}{z - z_0}\,dz \;=\; 2\pi i \,g(z_0).
+\]
+Here, set \(g(z) = e^z\). Then \(g\) is entire (analytic everywhere), and we have
+\[
+f(z) = \frac{g(z)}{z - 0} = \frac{e^z}{z}.
+\]
+Since \(z_0 = 0\) lies inside \(\lvert z\rvert=2\), Cauchy’s Integral Formula directly gives:
+\[
+\int_{\lvert z\rvert = 2} \frac{e^z}{z}\,dz 
+\;=\;
+2\pi i\,g(0)
+\;=\;
+2\pi i\,e^0
+\;=\;
+2\pi i.
+\]
+
+\textbf{4. Conclusion.}
+
+Therefore,
+\[
+\boxed{
+\int_{\lvert z\rvert = 2} \frac{e^z}{z}\,dz = 2\pi i.
+}
+\]
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z\rvert=2} \frac{z^2}{4 - z^2}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{1. Locate the singularities.}
+
+We have
+\[
+f(z) \;=\;\frac{z^2}{4 - z^2}.
+\]
+The denominator \(4 - z^2 = 0\) implies \(z^2 = 4\), so
+\[
+z = \pm 2.
+\]
+Hence \(f\) has simple poles at \(z=2\) and \(z=-2\).
+
+\textbf{2. Observe that these poles lie on the contour \(\lvert z\rvert=2\).}
+
+The circle \(\lvert z\rvert=2\) is centered at \(0\) with radius \(2\).  Both points \(z=2\) and \(z=-2\) lie \emph{exactly} on this contour.
+
+\textbf{3. Why the usual Cauchy’s Theorem does not directly apply.}
+
+Cauchy’s Theorem requires \(f(z)\) to be analytic on and \emph{inside} the contour.  Here, \(f\) fails to be analytic on the boundary itself, since \(z=\pm 2\) are singularities.  Strictly speaking, the integral
+\(\displaystyle \int_{\lvert z\rvert=2} \frac{z^2}{4-z^2}\,dz\)
+is not defined in the standard sense if the integrand blows up on the path.
+
+\textbf{4. Use a limiting argument with circles of radius \(2 \pm \varepsilon\).}
+
+One way to interpret the integral is to consider two families of contours:
+\[
+\Gamma_{\text{in}}(\varepsilon): \quad \lvert z\rvert = 2 - \varepsilon,
+\qquad
+\Gamma_{\text{out}}(\varepsilon): \quad \lvert z\rvert = 2 + \varepsilon,
+\]
+for small \(\varepsilon>0\).  On each of these circles, the function \(\frac{z^2}{4-z^2}\) is analytic (no poles lie strictly inside \(\Gamma_{\text{in}}(\varepsilon)\), and both poles lie inside \(\Gamma_{\text{out}}(\varepsilon)\)).
+
+\begin{itemize}
+\item
+\(\displaystyle \lvert z\rvert = 2 - \varepsilon\).  
+No poles are enclosed, so by Cauchy’s Theorem,
+\[
+\int_{\lvert z\rvert=2-\varepsilon} \frac{z^2}{4 - z^2}\,dz = 0.
+\]
+
+\item
+\(\displaystyle \lvert z\rvert = 2 + \varepsilon\).  
+Both poles \(z=2\) and \(z=-2\) are enclosed.  We can compute the sum of their residues to see if the integral is nonzero:
+
+\textbf{Residue at \(\boldsymbol{z=2}\).}  
+\[
+\operatorname{Res}\Bigl(\frac{z^2}{4-z^2},\,z=2\Bigr)
+=
+\lim_{z\to 2} (z-2)\,\frac{z^2}{4-z^2}.
+\]
+Since \(4 - z^2 = -(z-2)(z+2)\), we get
+\[
+(z-2)\,\frac{z^2}{4-z^2}
+= 
+(z-2)\,\frac{z^2}{-(z-2)(z+2)}
+= 
+-\,\frac{z^2}{z+2}.
+\]
+Evaluating at \(z=2\):
+\[
+\operatorname{Res}\Bigl(\frac{z^2}{4-z^2},\,z=2\Bigr)
+= 
+-\,\frac{2^2}{2+2}
+= 
+-\frac{4}{4}
+= 
+-1.
+\]
+
+\textbf{Residue at \(\boldsymbol{z=-2}\).}  
+Similarly,
+\[
+\operatorname{Res}\Bigl(\frac{z^2}{4-z^2},\,z=-2\Bigr)
+= 
+\lim_{z\to -2} (z+2)\,\frac{z^2}{4-z^2}
+= 
+-\,\frac{z^2}{z-2}\Bigg|_{z=-2}
+= 
+-\,\frac{(-2)^2}{-2-2}
+= 
+-\,\frac{4}{-4}
+= 
+1.
+\]
+Hence the sum of residues inside \(\lvert z\rvert=2+\varepsilon\) is \((-1) + (1) = 0\).  By the Residue Theorem,
+\[
+\int_{\lvert z\rvert=2+\varepsilon} \frac{z^2}{4-z^2}\,dz
+=
+2\pi i\,\bigl[\text{sum of residues inside}\bigr]
+= 
+2\pi i \cdot 0
+= 
+0.
+\]
+\end{itemize}
+
+Thus, for any \(\varepsilon>0\),
+\[
+\int_{\lvert z\rvert=2-\varepsilon} \frac{z^2}{4-z^2}\,dz = 0
+\quad\text{and}\quad
+\int_{\lvert z\rvert=2+\varepsilon} \frac{z^2}{4-z^2}\,dz = 0.
+\]
+
+\textbf{5. Conclude the value on the boundary.}
+
+Since both integrals are \(0\) for all \(\varepsilon>0\), it is natural to define
+\[
+\int_{\lvert z\rvert=2} \frac{z^2}{4-z^2}\,dz
+\]
+as the limiting value from either side.  In that sense,
+\[
+\lim_{\varepsilon\to 0^+} 
+\int_{\lvert z\rvert=2-\varepsilon} \dots
+= 0
+\quad\text{and}\quad
+\lim_{\varepsilon\to 0^+}
+\int_{\lvert z\rvert=2+\varepsilon} \dots
+= 0.
+\]
+Hence one consistently assigns
+\[
+\int_{\lvert z\rvert=2} \frac{z^2}{4 - z^2}\,dz = 0
+\]
+(understood as an appropriate limit or principal-value interpretation).
+
+\[
+\boxed{0}
+\]
+
+\textbf{Remark on “half residues.”}  
+When a simple pole lies exactly on a contour, one sometimes encounters a “half‐residue” contribution in real‐axis integrals or in certain deformations of the contour.  In this problem, however, the two boundary poles \(z=2\) and \(z=-2\) happen to have residues \(-1\) and \(+1\) that sum to zero.  Thus even if each pole contributed “half” (in opposite signs), the net effect would be zero.  The limiting‐circle argument above is often the cleanest justification: circles just inside radius 2 enclose no poles; circles just outside radius 2 enclose both poles whose residues cancel.  Either way, the integral is \(0\).
+$\int_{\left\vert z+1 \right\vert=2 }^{\infty} \frac{z^{2}}{4-z^{2}} \,\mathrm{d}x $ 
+
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z+1\rvert=2} \frac{z^2}{4 - z^2}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{1. Identify the singularities of the integrand.}
+
+The integrand is
+\[
+f(z) = \frac{z^2}{4 - z^2}.
+\]
+The denominator \(4 - z^2 = 0\) implies \(z^2 = 4\), so the singularities (simple poles) are
+\[
+z = 2
+\quad\text{and}\quad
+z = -2.
+\]
+
+\textbf{2. Determine which singularities lie inside the contour \(\lvert z+1\rvert=2\).}
+
+Our contour is the circle of radius 2 centered at \(-1\).  A point \(z\) is inside this circle if \(\lvert z+1\rvert < 2\).  We check each singularity:
+
+\begin{itemize}
+\item For \(z=2\):
+\[
+\lvert 2 + 1\rvert = \lvert 3\rvert = 3 \;>\; 2,
+\]
+so \(z=2\) is \emph{outside} the circle.
+
+\item For \(z=-2\):
+\[
+\lvert -2 + 1\rvert = \lvert -1\rvert = 1 \;<\; 2,
+\]
+so \(z=-2\) \emph{is} inside the circle.
+\end{itemize}
+
+Hence the only pole inside \(\lvert z+1\rvert=2\) is \(z=-2\).
+
+\textbf{3. Compute the residue of \(f(z)\) at the pole \(z=-2\).}
+
+We have 
+\[
+f(z) = \frac{z^2}{4 - z^2}.
+\]
+At \(z=-2\), factor the denominator:
+\[
+4 - z^2 = -(z^2 - 4) = -(z-2)(z+2).
+\]
+A standard way to compute the residue at a simple pole \(z=-2\) is:
+\[
+\operatorname{Res}\Bigl(f,\,z=-2\Bigr)
+= \lim_{z\to -2} (z+2)\,\frac{z^2}{4 - z^2}.
+\]
+Notice
+\[
+(z+2)\,\frac{z^2}{4 - z^2}
+= (z+2)\,\frac{z^2}{-(z-2)(z+2)}
+= -\,\frac{z^2}{z-2}.
+\]
+Now evaluate at \(z=-2\):
+\[
+-\,\frac{(-2)^2}{-2 - 2}
+= -\,\frac{4}{-4}
+= 1.
+\]
+Hence
+\[
+\operatorname{Res}\Bigl(\tfrac{z^2}{4 - z^2},\,z=-2\Bigr) = 1.
+\]
+
+\textbf{4. Apply the Residue Theorem (or Cauchy’s Integral Formula).}
+
+Since \(z=-2\) is the only pole inside the contour, the integral is
+\[
+\int_{\lvert z+1\rvert=2} \frac{z^2}{4 - z^2}\,dz
+\;=\;
+2\pi i \,\times\, \bigl[\text{sum of residues inside}\bigr]
+\;=\;
+2\pi i \times 1
+\;=\;
+2\pi i.
+\]
+
+\[
+\boxed{ \int_{\lvert z+1\rvert=2} \frac{z^2}{4 - z^2}\,dz = 2\pi i. }
+\]
+
+\textbf{Summary:}
+- Poles are at \(z=\pm2\).
+- The circle \(\lvert z+1\rvert=2\) encloses \(z=-2\) but not \(z=2\).
+- The residue at \(z=-2\) is \(1\).
+- By the Residue Theorem, the integral is \(2\pi i\cdot1 = 2\pi i\).
+
+
+\textbf{Problem.} Evaluate
+\[
+\int_{\lvert z+1\rvert=2} \frac{z^2}{4-z^2}\,dz.
+\]
+
+\textbf{Solution using Cauchy's Integral Formula:}
+
+\textbf{Step 1: Identify the singularities and the contour.} 
+
+The integrand is
+\[
+f(z)=\frac{z^2}{4-z^2}.
+\]
+We factor the denominator as
+\[
+4-z^2 = -(z-2)(z+2).
+\]
+Thus,
+\[
+f(z) = \frac{z^2}{4-z^2} = -\frac{z^2}{(z-2)(z+2)}.
+\]
+The singularities occur where \(z^2=4\); that is, at \(z=2\) and \(z=-2\).  
+Our contour is the circle
+\[
+\lvert z+1\rvert=2,
+\]
+which is centered at \(-1\) with radius \(2\). It can be verified that
+\[
+\lvert -2+1\rvert = \lvert -1\rvert = 1 < 2 \quad \text{(so \(z=-2\) is inside)},
+\]
+and
+\[
+\lvert 2+1\rvert = 3 > 2 \quad \text{(so \(z=2\) is outside)}.
+\]
+Thus, the only singularity enclosed is \(z=-2\).
+
+\textbf{Step 2: Rewrite the integrand in the form required by Cauchy's Integral Formula.}
+
+We want to write \(f(z)\) in the form
+\[
+\frac{g(z)}{z-(-2)} = \frac{g(z)}{z+2},
+\]
+where \(g(z)\) is analytic at \(z=-2\).
+
+Starting with
+\[
+f(z) = -\frac{z^2}{(z-2)(z+2)},
+\]
+we factor out the \(z+2\) term:
+\[
+f(z) = \frac{1}{z+2}\left[-\frac{z^2}{z-2}\right].
+\]
+Thus, define
+\[
+g(z) = -\frac{z^2}{z-2}.
+\]
+Note that \(g(z)\) is analytic at \(z=-2\) since the only potential singularity of \(g(z)\) is at \(z=2\), which is not equal to \(-2\).
+
+\textbf{Step 3: Evaluate \(g(z)\) at the singularity \(z=-2\).}
+
+We compute:
+\[
+g(-2) = -\frac{(-2)^2}{-2-2} 
+=\; -\frac{4}{-4} 
+=\; 1.
+\]
+
+\textbf{Step 4: Apply Cauchy's Integral Formula.}
+
+Cauchy's Integral Formula states that if \(g\) is analytic inside and on a closed contour \(\Gamma\) and \(z_0\) is a point inside \(\Gamma\), then
+\[
+\int_{\Gamma} \frac{g(z)}{z-z_0}\,dz = 2\pi i\, g(z_0).
+\]
+Here, \(z_0=-2\) and \(g(-2)=1\). Therefore,
+\[
+\int_{\lvert z+1\rvert=2} \frac{z^2}{4-z^2}\,dz 
+=\; \int_{\lvert z+1\rvert=2} \frac{g(z)}{z+2}\,dz 
+=\; 2\pi i \,g(-2)
+=\; 2\pi i.
+\]
+
+\[
+\boxed{2\pi i}
+\]
+
+\textbf{Problem:} Evaluate
+\[
+\int_{\lvert z\rvert=1} \frac{\sin z}{z}\,dz.
+\]
+
+\textbf{Solution:}
+
+\textbf{1. Check for singularities of the integrand \(\frac{\sin z}{z}\).}
+
+The only potential issue is at \(z=0\), because of the factor \(\frac{1}{z}\). However, recall that
+\[
+\sin z = z - \frac{z^3}{3!} + \frac{z^5}{5!} - \cdots
+\]
+Thus
+\[
+\frac{\sin z}{z}
+= 1 - \frac{z^2}{3!} + \frac{z^4}{5!} - \cdots
+\]
+This power‐series expansion is perfectly well‐defined at \(z=0\) (the limit is \(1\) there). Hence \(z=0\) is a \emph{removable} singularity. We can define 
+\(\frac{\sin z}{z}\bigl|_{z=0} = 1\)
+to make it analytic everywhere inside \(\lvert z\rvert=1\).
+
+\textbf{2. Apply Cauchy’s Theorem (or the Residue Theorem).}
+
+Since \(\frac{\sin z}{z}\) is analytic on and inside the circle \(\lvert z\rvert=1\) (after handling the removable singularity at \(z=0\)), it has no poles in that region. By Cauchy’s Theorem (or the Residue Theorem with zero residues inside),
+\[
+\int_{\lvert z\rvert=1} \frac{\sin z}{z}\,dz 
+\;=\; 0.
+\]
+
+\textbf{3. Alternative approach: Power‐series integration.}
+
+We can also expand \(\frac{\sin z}{z}\) in a Maclaurin series and integrate term by term:
+\[
+\frac{\sin z}{z}
+= \sum_{n=0}^{\infty} (-1)^n \,\frac{z^{2n}}{(2n+1)!}.
+\]
+Then
+\[
+\int_{\lvert z\rvert=1} \frac{\sin z}{z}\,dz
+= \int_{\lvert z\rvert=1} 
+\sum_{n=0}^{\infty} (-1)^n \,\frac{z^{2n}}{(2n+1)!}\,dz.
+\]
+Term‐by‐term, each integral
+\(\displaystyle \int_{\lvert z\rvert=1} z^{2n}\,dz\)
+is zero for \(2n \neq -1\). Since \(2n\) is never \(-1\), each term vanishes. Hence the entire sum integrates to \(0\).
+
+\textbf{Conclusion:}
+\[
+\boxed{
+\int_{\lvert z\rvert=1} \frac{\sin z}{z}\,dz = 0.
+}
+\]
+
+\textbf{Question:} 
+Why does the identity
+\[
+\int_{0}^{\infty}\cos(t^2)\,dt \;-\; i \int_{0}^{\infty}\sin(t^2)\,dt
+\;=\;
+\frac{1}{2}\sqrt{\frac{\pi}{2}}\;e^{-\,i\pi/4}
+\]
+imply
+\[
+\int_{0}^{\infty}\cos(t^2)\,dt
+\;=\;
+\int_{0}^{\infty}\sin(t^2)\,dt
+\;=\;
+\sqrt{\frac{\pi}{8}}\,?
+\]
+
+\textbf{Short Answer:} 
+
+Because 
+\[
+\cos(t^2) \;-\; i\,\sin(t^2) \;=\; e^{-\,i\,t^2},
+\]
+the left‐hand side is the real part minus \(i\) times the imaginary part of \(e^{-i\,t^2}\).  Evaluating 
+\(\displaystyle \int_0^\infty e^{-\,i\,t^2}\,dt\)
+via contour integration yields
+\(\displaystyle \frac12 \sqrt{\frac{\pi}{2}}\,e^{-\,i\pi/4}.\)
+Comparing real and imaginary parts on both sides shows that
+\(\displaystyle \int_{0}^{\infty}\cos(t^2)\,dt = \int_{0}^{\infty}\sin(t^2)\,dt = \sqrt{\frac{\pi}{8}}.\)
+
+\bigskip
+
+\textbf{Detailed Explanation:}
+
+\begin{enumerate}
+\item \textbf{Rewrite the integrals in terms of exponentials.}
+
+   Note that
+   \[
+   \cos(t^2) \;-\; i\,\sin(t^2)
+   \;=\;
+   e^{-\,i\,t^2}.
+   \]
+   Therefore,
+   \[
+   \int_{0}^{\infty}\cos(t^2)\,dt
+   \;-\;
+   i \int_{0}^{\infty}\sin(t^2)\,dt
+   \;=\;
+   \int_{0}^{\infty} e^{-\,i\,t^2}\,dt.
+   \]
+
+\item \textbf{Known result from contour integration.}
+
+   By using a standard contour‐integration argument (similar to the one used for 
+   \(\displaystyle \int_{0}^{\infty} e^{\,i\,t^2}\,dt\), 
+   but with a slightly different orientation), one shows:
+   \[
+   \int_{0}^{\infty} e^{-\,i\,t^2}\,dt
+   \;=\;
+   \frac12 \,\sqrt{\frac{\pi}{2}}\;e^{-\,i\,\pi/4}.
+   \]
+   (The factor \(e^{-i\pi/4}\) is \(\cos(-\pi/4) + i\,\sin(-\pi/4) = \frac{1}{\sqrt{2}} - i\,\frac{1}{\sqrt{2}}\).)
+
+\item \textbf{Match real and imaginary parts.}
+
+   The left side of
+   \[
+   \int_{0}^{\infty}\cos(t^2)\,dt \;-\; i \int_{0}^{\infty}\sin(t^2)\,dt
+   \;=\;
+   \frac12 \,\sqrt{\frac{\pi}{2}}\;e^{-\,i\,\pi/4}
+   \]
+   can be viewed as:
+   \[
+   \bigl(\text{Real Part}\bigr)
+   \;-\;
+   i\;\bigl(\text{Imag Part}\bigr).
+   \]
+   Meanwhile, on the right side,
+   \[
+   \frac12 \,\sqrt{\frac{\pi}{2}}\;e^{-\,i\,\pi/4}
+   \;=\;
+   \frac12 \,\sqrt{\frac{\pi}{2}}\;
+   \Bigl(\cos(-\pi/4) + i\,\sin(-\pi/4)\Bigr)
+   =
+   \frac12 \,\sqrt{\frac{\pi}{2}}\;
+   \Bigl(\tfrac{1}{\sqrt{2}} \;-\; i\,\tfrac{1}{\sqrt{2}}\Bigr).
+   \]
+   Hence the real part on the right is 
+   \(\displaystyle \frac12 \sqrt{\tfrac{\pi}{2}} \cdot \tfrac{1}{\sqrt{2}} = \sqrt{\tfrac{\pi}{8}},\)
+   and the imaginary part on the right is
+   \(-\,\sqrt{\tfrac{\pi}{8}}.\)
+
+\item \textbf{Equate real parts and imaginary parts.}
+
+   - \(\displaystyle \text{Real part:}\)
+     \(\displaystyle \int_{0}^{\infty}\cos(t^2)\,dt \;=\;\sqrt{\tfrac{\pi}{8}}.\)
+   - \(\displaystyle \text{Imag part:}\)
+     \(-\,\int_{0}^{\infty}\sin(t^2)\,dt = -\,\sqrt{\tfrac{\pi}{8}}.\)
+     Hence
+     \(\displaystyle \int_{0}^{\infty}\sin(t^2)\,dt = \sqrt{\tfrac{\pi}{8}}.\)
+
+\item \textbf{Conclusion.}
+
+   We see that
+   \[
+   \int_{0}^{\infty}\cos(t^2)\,dt 
+   \;=\;
+   \int_{0}^{\infty}\sin(t^2)\,dt 
+   \;=\;
+   \sqrt{\frac{\pi}{8}}.
+   \]
+   That is exactly the desired Fresnel‐type result.
+
+\end{enumerate}
+
+\[
+\textbf{Problem: Evaluate } \int_{\lvert z+i\rvert=2}\,\frac{dz}{\bigl(z^2+4\bigr)^3}.
+\]
+
+\textbf{Step 1: Identify the singularities of the integrand.}
+
+The integrand is
+\[
+f(z) \;=\; \frac{1}{(z^2 + 4)^3}.
+\]
+The singularities occur where the denominator \((z^2+4)^3 = 0\), i.e.\ when \(z^2+4=0\).  This gives
+\[
+z^2 = -4 
+\quad\Longrightarrow\quad
+z = \pm\,2i.
+\]
+
+\textbf{Step 2: Determine which singularities lie inside the contour.}
+
+The contour is the circle
+\[
+\lvert z + i\rvert \;=\; 2.
+\]
+We check the distance from \(-i\) to the points \(\pm\,2i\):
+\[
+\lvert -2i + i\rvert \;=\;\lvert -i\rvert \;=\;1,
+\quad
+\lvert 2i + i\rvert \;=\;\lvert 3i\rvert \;=\;3.
+\]
+Thus, \(z=-2i\) (distance 1 from \(-i\)) is \emph{inside} the circle, while \(z=2i\) (distance 3) is \emph{outside}.
+
+\textbf{Step 3: Classify the pole and set up the residue calculation.}
+
+At \(z=-2i\), the factor \(z^2+4\) vanishes to first order, but since the integrand has \((z^2+4)^3\) in the denominator, the pole is of order \(3\).  Writing
+\[
+(z^2+4)
+\;=\;
+(z-2i)\,(z+2i),
+\]
+we have
+\[
+(z^2+4)^3 
+\;=\; (z-2i)^3 \,(z+2i)^3,
+\]
+so
+\[
+f(z) 
+\;=\;
+\frac{1}{(z-2i)^3 (z+2i)^3}.
+\]
+
+\textbf{Step 4: Use the residue theorem for a pole of order 3.}
+
+For an \(n\)th-order pole at \(z=z_0\), the residue of \(f\) at \(z_0\) is given by
+\[
+\operatorname{Res}(f, z_0)
+\;=\;
+\frac{1}{(n-1)!}
+\lim_{z \to z_0}
+\frac{d^{\,n-1}}{dz^{\,n-1}}
+\Bigl[(z-z_0)^n \, f(z)\Bigr].
+\]
+Here, \(n=3\) and \(z_0=-2i\).  We compute:
+\[
+(z+2i)^3 \, f(z)
+\;=\;
+\frac{(z+2i)^3}{(z-2i)^3 (z+2i)^3}
+\;=\;
+\frac{1}{(z-2i)^3}.
+\]
+Hence
+\[
+\operatorname{Res}\bigl(f,-2i\bigr)
+\;=\;
+\frac{1}{2!}
+\lim_{z \to -2i}
+\frac{d^2}{dz^2}
+\Bigl[\,(z+2i)^3 f(z)\Bigr]
+\;=\;
+\frac{1}{2}
+\lim_{z \to -2i}
+\frac{d^2}{dz^2}
+\Bigl[\,(z-2i)^{-3}\Bigr].
+\]
+
+\textbf{Step 5: Differentiate and evaluate the limit.}
+
+First derivative:
+\[
+\frac{d}{dz}\,\bigl((z-2i)^{-3}\bigr)
+\;=\;
+-3\,(z-2i)^{-4}.
+\]
+Second derivative:
+\[
+\frac{d^2}{dz^2}\,\bigl((z-2i)^{-3}\bigr)
+\;=\;
+-3\,\frac{d}{dz}\,\bigl((z-2i)^{-4}\bigr)
+\;=\;
+-3 \times (-4)\,(z-2i)^{-5}
+\;=\;
+12\,(z-2i)^{-5}.
+\]
+Evaluate at \(z=-2i\):
+\[
+(z-2i)\Bigl|_{z=-2i}
+\;=\;
+-2i - 2i
+\;=\;
+-4i,
+\]
+so
+\[
+12\,(-4i)^{-5}.
+\]
+Since \((-4i)^5 = (-4i)^4 \cdot (-4i) = \bigl(256 i^4\bigr)\,(-4i) = 256 \cdot 1 \cdot (-4i) = -1024\,i,\)
+we get
+\[
+12\,(-4i)^{-5}
+\;=\;
+12 \,\frac{1}{-1024\,i}
+\;=\;
+-\frac{12}{1024}\,\frac{1}{i}
+\;=\;
+-\frac{12}{1024}\,(-i)
+\;=\;
+\frac{12\,i}{1024}
+\;=\;
+\frac{3\,i}{256}.
+\]
+Thus
+\[
+\operatorname{Res}\bigl(f,-2i\bigr)
+\;=\;
+\frac{1}{2} \times \frac{3\,i}{256}
+\;=\;
+\frac{3\,i}{512}.
+\]
+
+\textbf{Step 6: Apply the residue theorem.}
+
+The contour integral around \(\lvert z+i\rvert=2\) is
+\[
+\int_{\lvert z+i\rvert=2} 
+\frac{dz}{(z^2+4)^3}
+\;=\;
+2\pi i \times \Bigl[\text{sum of residues inside}\Bigr]
+\;=\;
+2\pi i \times \operatorname{Res}\bigl(f,-2i\bigr)
+\;=\;
+2\pi i \times \frac{3\,i}{512}.
+\]
+Since \(i \times i = i^2 = -1\),
+\[
+2\pi i \;\cdot\; \frac{3\,i}{512}
+\;=\;
+\frac{6\,\pi\, (i^2)}{512}
+\;=\;
+-\,\frac{6\,\pi}{512}
+\;=\;
+-\,\frac{3\,\pi}{256}.
+\]
+
+\[
+\boxed{
+\int_{\lvert z+i\rvert=2} \frac{dz}{(z^2+4)^3}
+\;=\;
+-\,\frac{3\,\pi}{256}.
+}
+\]```
+
+\[
+\textbf{Problem: Evaluate } 
+\int_{\lvert z + i\rvert=2}\,\frac{dz}{(z^2 + 4)^3}.
+\]
+
+\textbf{Step 1: Rewrite the integrand in a suitable form for Cauchy's formula.}
+
+Observe that
+\[
+\frac{1}{(z^2 + 4)^3}
+\;=\;
+\frac{1}{\bigl(z - 2i\bigr)^3 \,\bigl(z + 2i\bigr)^3}.
+\]
+We focus on the pole at \(z = -2i\), which lies inside the circle \(\lvert z + i\rvert = 2\).  
+To use Cauchy's formula around \(z_0 = -2i\), note that
+\[
+z + 2i \;=\; z - (-2i),
+\]
+so we want the denominator to look like \(\bigl(z - (-2i)\bigr)^3\).  Hence, write
+\[
+\frac{1}{(z^2 + 4)^3}
+\;=\;
+\underbrace{\frac{1}{(z - 2i)^3}}_{=:f(z)} 
+\;\times\;
+\frac{1}{(z + 2i)^3}.
+\]
+Define
+\[
+f(z) \;=\; \frac{1}{(z - 2i)^3}.
+\]
+Then the integrand becomes
+\[
+\frac{f(z)}{(z + 2i)^3},
+\]
+which is precisely of the form needed for Cauchy's Integral Formula for the second derivative (because the power is 3, corresponding to an \((n+1)\)th power with \(n=2\)).
+
+\textbf{Step 2: State the generalized Cauchy Integral Formula (for the \(n\)th derivative).}
+
+If \(g\) is analytic in and on a simple closed contour \(C\), then for any \(z_0\) inside \(C\),  
+\[
+\frac{1}{2\pi i}\,\int_C 
+\frac{g(z)}{\bigl(z - z_0\bigr)^{n+1}}
+\,dz
+\;=\;
+\frac{1}{n!}\,g^{(n)}(z_0).
+\]
+In our situation:
+\[
+g(z) = f(z) = \frac{1}{(z - 2i)^3},
+\quad
+z_0 = -2i,
+\quad
+n = 2
+\ (\text{because we have a cube in the denominator}).
+\]
+Hence, the integral
+\[
+\int_C \frac{f(z)}{\bigl(z + 2i\bigr)^3}\,dz
+\;=\;
+\int_C \frac{f(z)}{\bigl(z - (-2i)\bigr)^3}\,dz
+\]
+will be \(2\pi i\) times the corresponding expression involving the second derivative of \(f\) at \(z=-2i\).
+
+\textbf{Step 3: Compute the required derivative of \(f(z)\).}
+
+We have
+\[
+f(z) \;=\; (z - 2i)^{-3}.
+\]
+Differentiate:
+\[
+f'(z) 
+\;=\;
+-3\,(z - 2i)^{-4},
+\]
+\[
+f''(z)
+\;=\;
+-3\,\frac{d}{dz}\bigl[(z - 2i)^{-4}\bigr]
+\;=\;
+-3\bigl(-4\,(z - 2i)^{-5}\bigr)
+\;=\;
+12\,(z - 2i)^{-5}.
+\]
+Next, evaluate at \(z = -2i\):
+\[
+f''(-2i)
+\;=\;
+12\bigl((-2i) - 2i\bigr)^{-5}
+\;=\;
+12\,(-4i)^{-5}.
+\]
+Since
+\[
+(-4i)^5 
+\;=\; 
+(-4i)^4 \times (-4i) 
+\;=\;
+\bigl(256\,i^4\bigr)\,(-4i)
+\;=\;
+256\times 1 \times (-4i)
+\;=\;
+-\,1024\,i,
+\]
+we get
+\[
+(-4i)^{-5}
+\;=\;
+\frac{1}{-\,1024\,i}
+\;=\;
+-\,\frac{1}{1024}\,\frac{1}{i}
+\;=\;
+-\,\frac{1}{1024}\,\bigl(-i\bigr)
+\;=\;
+\frac{i}{1024}.
+\]
+Hence
+\[
+f''(-2i)
+\;=\;
+12 \cdot \frac{i}{1024}
+\;=\;
+\frac{12\,i}{1024}
+\;=\;
+\frac{3\,i}{256}.
+\]
+
+\textbf{Step 4: Apply the generalized Cauchy Integral Formula.}
+
+Since \(n=2\),
+\[
+\int_C \frac{f(z)}{(z + 2i)^3}\,dz
+\;=\;
+2\pi i \times \frac{f''(-2i)}{2!}
+\;=\;
+2\pi i \times \frac{\tfrac{3\,i}{256}}{2}
+\;=\;
+2\pi i \times \frac{3\,i}{512}
+\;=\;
+\frac{6\pi\,i^2}{512}
+\;=\;
+-\frac{6\pi}{512}
+\;=\;
+-\frac{3\pi}{256}.
+\]
+
+\textbf{Step 5: Conclude.}
+
+Therefore,
+\[
+\boxed{
+\int_{\lvert z + i\rvert=2}\,\frac{dz}{(z^2 + 4)^3}
+\;=\;
+-\;\frac{3\pi}{256}.
+}
+\]
+$\frac{\pi(1-(\ln(2)+\frac{\pi}{2}))}{32}$ 
+
+\[
+\textbf{Problem: Evaluate } \int_{\lvert z + 3i\rvert=2}
+   \frac{\log(z)\,dz}{\bigl(z^{2}+4\bigr)^{2}}.
+\]
+
+\textbf{Step 1: Identify the singularities and which are inside the contour.}
+
+Factor
+\[
+z^{2} + 4 \;=\;(z - 2i)\,(z + 2i).
+\]
+Thus
+\[
+\frac{\log(z)}{(z^{2}+4)^{2}}
+\;=\;
+\frac{\log(z)}{\bigl(z - 2i\bigr)^{2}\,\bigl(z + 2i\bigr)^{2}}.
+\]
+The poles are at \(z = \pm 2i\).  Our contour is the circle
+\[
+\lvert z + 3i\rvert \;=\; 2,
+\]
+centered at \(-3i\) with radius \(2\).  Note that
+\[
+\lvert -2i + 3i\rvert 
+\;=\;\lvert i\rvert 
+\;=\;1 
+\quad(< 2),
+\qquad
+\lvert 2i + 3i\rvert 
+\;=\;\lvert 5i\rvert 
+\;=\;5 
+\quad(> 2).
+\]
+Hence \(z = -2i\) is \emph{inside} the circle and \(z = 2i\) is \emph{outside}.
+
+\textbf{Step 2: Express the integrand in the form for the ``second‐order'' Cauchy formula.}
+
+Since the only relevant pole is at \(z_0 = -2i\), notice
+\[
+(z+2i) \;=\;(z - (-2i)).
+\]
+Hence
+\[
+\frac{\log(z)}{(z^{2}+4)^{2}}
+\;=\;
+\frac{\log(z)}{\bigl(z - 2i\bigr)^{2}}\,\cdot\,\frac{1}{\bigl(z - (-2i)\bigr)^{2}}.
+\]
+Define
+\[
+g(z)
+\;=\;
+\frac{\log(z)}{\bigl(z - 2i\bigr)^{2}},
+\]
+which is analytic at \(z=-2i\) (the factor \((z-2i)\) does \emph{not} vanish at \(z=-2i\)).  Then the integrand is
+\[
+\frac{g(z)}{\bigl(z - (-2i)\bigr)^{2}}.
+\]
+By the Cauchy Integral Formula for derivatives (in the version for a second‐order pole),
+\[
+\int_{C}
+  \frac{g(z)}{\bigl(z - z_0\bigr)^{2}}\;dz
+\;=\;
+2\pi i \, g'(z_0)
+\quad
+(\text{where }z_0 \text{ is inside }C).
+\]
+Here \(z_0 = -2i\).
+
+\textbf{Step 3: Differentiate } \(g(z)\) \textbf{ and evaluate at } \(-2i\).
+
+We have
+\[
+g(z)
+\;=\;
+\log(z)\,\cdot\,\bigl(z - 2i\bigr)^{-2}.
+\]
+Use the product rule:
+\[
+g'(z)
+\;=\;
+\bigl(z - 2i\bigr)^{-2}\cdot \frac{d}{dz}\bigl[\log(z)\bigr]
+\;+\;
+\log(z)\,\cdot
+\frac{d}{dz}\bigl[(z - 2i)^{-2}\bigr].
+\]
+Since \(\frac{d}{dz}\log(z)=\frac{1}{z}\) and
+\(\frac{d}{dz}(z-2i)^{-2}=-2(z-2i)^{-3}\),
+\[
+g'(z)
+\;=\;
+\frac{1}{z\,(z - 2i)^{2}}
+\;-\;
+2\,\log(z)\,(z - 2i)^{-3}.
+\]
+Evaluate at \(z=-2i\).  Note that \((-2i)-2i=-4i\).  Then
+\[
+g'(-2i)
+\;=\;
+\frac{1}{\,(-2i)\,(-4i)^{2}\!}
+\;-\;
+2\,\log(-2i)\,\frac{1}{(-4i)^{3}}.
+\]
+Since \((-4i)^{2}=-16\) and \((-4i)^{3}=64\,i,\)
+\[
+\frac{1}{(-2i)\,(-4i)^{2}}
+\;=\;
+\frac{1}{(-2i)\,(-16)}
+\;=\;
+\frac{1}{32\,i}
+\;=\;
+-\;\frac{i}{32},
+\]
+and
+\[
+-\,2\,\log(-2i)\,\frac{1}{(-4i)^{3}}
+\;=\;
+-\,2\,\log(-2i)\,\frac{1}{64\,i}
+\;=\;
+-\,\frac{1}{32\,i}\,\log(-2i)
+\;=\;
+\frac{i}{32}\,\log(-2i),
+\]
+where we used \(1/i = -\,i\).  Combining,
+\[
+g'(-2i)
+\;=\;
+-\;\frac{i}{32}
+\;+\;
+\frac{i}{32}\,\log(-2i)
+\;=\;
+\frac{i}{32}\,\bigl[\log(-2i)-1\bigr].
+\]
+
+\textbf{Step 4: Apply the ``second‐order'' Cauchy Integral Formula.}
+
+Hence
+\[
+\int_{\lvert z+3i\rvert=2}
+\frac{\log(z)\,dz}{\bigl(z^{2}+4\bigr)^{2}}
+\;=\;
+2\pi i \;\times\; g'(-2i)
+\;=\;
+2\pi i\;\times\;
+\frac{i}{32}\,\bigl[\log(-2i)-1\bigr].
+\]
+Since \(i\times i = i^{2}=-1,\)
+\[
+2\pi i \cdot \frac{i}{32}
+\;=\;
+\frac{2\pi\,i^{2}}{32}
+\;=\;
+-\,\frac{\pi}{16}.
+\]
+Therefore,
+\[
+\int_{\lvert z+3i\rvert=2}
+\frac{\log(z)\,dz}{\bigl(z^{2}+4\bigr)^{2}}
+\;=\;
+-\,\frac{\pi}{16}\,\bigl[\log(-2i)-1\bigr]
+\;=\;
+\frac{\pi}{16}\,\bigl[\,1 - \log(-2i)\bigr].
+\]
+
+\textbf{Step 5 (Optional): Express \(\log(-2i)\) in terms of real/imag parts.}
+
+On the principal branch (argument in \((-\pi,\pi]\)), 
+\(\log(-2i)\;=\;\log(2)\,-\,\tfrac{\pi}{2}\,i.\)
+Hence
+\[
+1 - \log(-2i) 
+\;=\;
+1\;-\;\log(2)\;+\;\tfrac{\pi}{2}\,i,
+\]
+and
+\[
+\frac{\pi}{16}\,\bigl[\,1 - \log(-2i)\bigr]
+\;=\;
+\frac{\pi}{16}\,\bigl[\,1 - \log(2)\bigr]
+\;+\;
+i\,\frac{\pi^{2}}{32}.
+\]
+Thus a perfectly nice final form is
+\[
+\boxed{
+\int_{\lvert z+3i\rvert=2}
+\frac{\log(z)\,dz}{(z^{2}+4)^{2}}
+\;=\;
+\frac{\pi}{16}\,\bigl[\,1 - \log(2)\bigr]
+\;+\;
+i\,\frac{\pi^{2}}{32}.
+}
+\]
+
+$\frac{1}{32i}+\frac{-2(\ln(2)=i(\frac{\pi}{2}))}{64i}$ 
+\end{document}

@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+$\int_{2}^{i} \overline{z}  \,\mathrm{d}z $ 
+$\int_{C}^{} \frac{1}{\overline{z}^{2} -1} \,\mathrm{d}z $ 
+$\int_{-i}^{3i} \frac{1}{z^{2}} \,\mathrm{d}z $ 
+$\int_{\left\vert z+1 \right\vert =2}^{}\frac{z^{2}}{4-z^{2}}  \,\mathrm{d}z $
+$\int_{\left\vert z+i \right\vert =2}^{} \frac{1}{(z^{2}+4)^{3}} \,\mathrm{d}z $
+$\int_{\gamma}^{}\frac{\Log z}{(z^{2}+4)^{2}}  \,\mathrm{d}z $   
+$f(z)=z^{-1}\tan^{2}z$
+$f(z)=(z+1)^{-2}+(z-2)^{-3}$
+$1<\left\vert z \right\vert <2$   
+$f(z)=\frac{1}{1-e^{z}}$ 
+$f(z)=\frac{z}{\sin^{2}z}$ 
+$\int_{\left\vert z \right\vert =1, 4}^{} \frac{1}{e^{z}-e^{-z}} \,\mathrm{d}z $
+$\int_{\left\vert z \right\vert =1}^{}\frac{1}{z^{2}(e^{z}-1)}  \,\mathrm{d}z $  
+$\int_{0}^{2} \overline{z}  \,\mathrm{d}z $ 
+$\int_{-2}^{-i} \frac{1}{z} \,\mathrm{d}z $
+$f(z)=(z^{2}+z-2)^{2}(e^{i\pi z}-1)$  
+$f(z)=\frac{z^{2}(e^{\frac{4\pi i}{z}-1})}{(z+1)(z-2)^{3}}$
+$\sum_{-\infty}^{\infty} a_{n}(z+1)^{n}$ 
+$f(z)=(z-1)^{-1}$
+$\left\{ z:\left\vert z+1 \right\vert  >2\right\} $   
+$f: A\to B$ and $g: B\to C$  
+\end{document}
+

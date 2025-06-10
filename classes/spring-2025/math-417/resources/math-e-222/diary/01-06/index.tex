@@ -1,0 +1,280 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % Normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+
+% Title information
+\title{Congruence mod n; (Z/nZ)*}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+\maketitle
+Do exercises $2.9.2, 2.9.4, 2.9.5, 2.9.8$
+Read $\S 2.10$  
+\begin{problem}[2.9.2]
+   \noindent
+   \begin{enumerate}
+    \item Prove that the square $a^{2}$ of an integer $a$ is congruent to $0$ or $1$ modulo $4$.
+    \item What are the possible values of $a^{2}$ modulo $8$?    
+   \end{enumerate} 
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.9.4]
+   Prove that every integer $a$ is congruent to the sum of its decimal digits modulo $9$.  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.9.5]
+   Solve the congruence $2x \equiv 5$:
+   \noindent
+   \begin{enumerate}
+    \item modulo $9$
+    \item modulo $6$  
+   \end{enumerate}  
+\end{problem}
+\begin{solution}
+    
+\end{solution}
+\begin{problem}[2.9.8]
+   Use Proposition (2.6) to prove the Chinese Remainder Theorem: Let $m,n,a,b$ be integers, and assume that the greatest common divisor of $m$ and $n$ is $1$. Then there is an integer $x$ such that $x \equiv a$ (modulo $m$) and $x \equiv b$(modulo $n$).
+   \begin{proposition}[2.6]
+    Let $a,b$ be integers, not both zero, and let $d$ be the positive integer which generates the subgroup $a\mathbb{{Z}}+b\mathbb{{Z}}$. Then
+    \noindent
+    \begin{enumerate}
+        \item $d$ can be written in the form $d=ar + bs$ for some integers $r$ and $s$ .
+        \item $d$ divides $a$ and $b$ .
+        \item If an integer $e$ divides $a$ and $b$, it also divides $d$ .
+    \end{enumerate} 
+   \end{proposition}     
+\end{problem}
+\begin{solution}
+  
+\begin{problem}[2.9.8]
+Use Proposition (2.6) to prove the Chinese Remainder Theorem: Let $m,n,a,b$ be integers, and assume that $\gcd(m,n) = 1$. Then there is an integer $x$ such that 
+\begin{align}
+x \equiv a \ (\mathrm{mod}\ m)
+\quad \text{and} \quad
+x \equiv b \ (\mathrm{mod}\ n).
+\end{align}
+\end{problem}
+
+\begin{proposition}[2.6]
+Let $a,b$ be integers, not both zero, and let $d$ be the positive integer which generates the subgroup $a\mathbb{Z} + b\mathbb{Z}$. Then:
+\begin{enumerate}
+\item $d$ can be written in the form $d = ar + bs$ for some integers $r$ and $s$.
+\item $d$ divides $a$ and $b$.
+\item If an integer $e$ divides $a$ and $b$, it also divides $d$.
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Chinese Remainder Theorem for $\gcd(m,n) = 1$]
+Suppose $\gcd(m,n) = 1$. Let $m,n,a,b$ be integers. Then there exists an integer $x$ satisfying
+\begin{align}
+\begin{cases}
+x \equiv a \pmod{m},\\[5pt]
+x \equiv b \pmod{n}.
+\end{cases}
+\end{align}
+\end{theorem}
+
+
+\section*{Statement of the Problem}
+
+\begin{theorem}[Chinese Remainder Theorem for Two Moduli]
+Let $m$ and $n$ be coprime positive integers, and let $a,b$ be integers. The system of congruences
+\begin{align}
+\begin{cases}
+x \equiv a \pmod{m}, \\[6pt]
+x \equiv b \pmod{n}
+\end{cases}
+\end{align}
+has a unique solution modulo $mn$. In fact, there is an explicit formula:
+\begin{align}
+x \;\equiv\; a \;+\; m\bigl((b - a)\,m^{-1} \bmod n\bigr)
+\;\pmod{mn},
+\end{align}
+where $m^{-1}$ is the multiplicative inverse of $m$ modulo $n$, i.e.\ an integer satisfying
+\begin{align}
+m \cdot m^{-1} \equiv 1 \pmod{n}.
+\end{align}
+\end{theorem}
+
+\section*{Step-by-Step Explanation}
+
+\subsection*{1. Invertibility}
+
+Since $\gcd(m,n) = 1$, we know that there exists an integer $m^{-1}$ such that
+\begin{align}
+m \cdot m^{-1} \;\equiv\; 1 \pmod{n}.
+\end{align}
+This $m^{-1}$ is called the \emph{multiplicative inverse of $m$ modulo $n$}.
+\subsection*{1. Invertibility}
+
+Since $\gcd(m,n) = 1$, we know from elementary number theory (specifically, Bezout's identity) that there exist integers $x, y$ such that
+\begin{align}
+m \,x + n \,y \;=\; 1.
+\end{align}
+Rearranging this, we get
+\begin{align}
+m \,x \;=\; 1 - n\,y.
+\end{align}
+Now, consider what happens \emph{modulo} $n$. We see
+\begin{align}
+m \,x 
+\;\equiv\; 1 - n\,y 
+\;\equiv\; 1
+\pmod{n}.
+\end{align}
+Hence $m \,x \equiv 1 \pmod{n}$, which shows $x$ is a multiplicative inverse of $m$ modulo $n$. We typically denote this inverse by $m^{-1}$, so we write
+\begin{align}
+m \cdot m^{-1} \;\equiv\; 1 \pmod{n}.
+\end{align}
+This integer $m^{-1}$ is called the \emph{multiplicative inverse of $m$ modulo $n$}.
+
+\begin{remark}
+In practice, we often find $m^{-1}$ using the \emph{Extended Euclidean Algorithm}. The algorithm not only computes the greatest common divisor of $m$ and $n$, but also finds the Bezout coefficients $x$ and $y$ such that
+\begin{align}
+m x + n y = \gcd(m,n).
+\end{align}
+Since $\gcd(m,n)=1$, it follows that
+\begin{align}
+m x + n y = 1,
+\end{align}
+which immediately yields $m\,x \equiv 1 \pmod{n}$. Thus $m^{-1} \equiv x \pmod{n}$.
+\end{remark}
+\subsection*{2. Motivating the Formula for $x$}
+
+We wish to solve:
+\begin{align}
+\begin{cases}
+x \equiv a \pmod{m}, \\
+x \equiv b \pmod{n}.
+\end{cases}
+\end{align}
+
+\begin{enumerate}
+\item Since $x \equiv a \pmod{m}$, we can write
+\begin{align}
+x = a + m\,k
+\end{align}
+for some integer $k$.  
+
+\item Substituting $x = a + m\,k$ into $x \equiv b \pmod{n}$ gives:
+\begin{align}
+a + m\,k \;\equiv\; b \pmod{n} 
+\quad \Longrightarrow \quad 
+m\,k \;\equiv\; b - a \pmod{n}.
+\end{align}
+Because $m$ has an inverse $m^{-1}$ modulo $n$, we can multiply the above congruence by $m^{-1}$ to obtain
+\begin{align}
+k \;\equiv\; (b - a)\, m^{-1} \pmod{n}.
+\end{align}
+\end{enumerate}
+
+Hence $k$ is determined modulo $n$.
+
+\subsection*{3. Constructing the Solution}
+
+From the above, we choose
+\begin{align}
+k \;\equiv\; (b - a)\, m^{-1} \pmod{n},
+\end{align}
+and hence we \emph{define}
+\begin{align}
+x \;=\; a + m \bigl((b-a)\,m^{-1} \bmod n\bigr).
+\end{align}
+This ensures $x\equiv a \pmod{m}$ by construction.
+
+\subsection*{4. Verifying the Two Congruences}
+
+\paragraph{(i) Modulo $m$:}
+\begin{align}
+x = a + m \bigl((b-a)\,m^{-1}\bigr) 
+\;\equiv\; a \;+\; 0
+\;\equiv\; a 
+\pmod{m},
+\end{align}
+since $m\cdot(\dots)$ vanishes modulo $m$.
+
+\paragraph{(ii) Modulo $n$:}
+We use $m\,m^{-1} \equiv 1 \pmod{n}$. Then
+\begin{align}
+m \bigl((b-a)\,m^{-1}\bigr) 
+\;\equiv\; (b-a)\,\underbrace{(m \,m^{-1})}_{\equiv 1 \,(\bmod\,n)} 
+\;\equiv\; b-a \pmod{n}.
+\end{align}
+Hence
+\begin{align}
+x 
+\;=\;
+a + m\bigl((b-a)\,m^{-1}\bigr)
+\;\equiv\; 
+a + (b-a)
+\;=\;
+b \pmod{n}.
+\end{align}
+Thus $x\equiv a \pmod{m}$ and $x\equiv b \pmod{n}$, as required.
+
+\subsection*{5. Uniqueness Modulo $mn$}
+
+Suppose $x$ and $x'$ both solve the system:
+\begin{align}
+\begin{cases}
+x \equiv a \pmod{m}, & x \equiv b \pmod{n},\\
+x' \equiv a \pmod{m}, & x' \equiv b \pmod{n}.
+\end{cases}
+\end{align}
+Then
+\begin{align}
+x' \equiv x \pmod{m}
+\quad\text{and}\quad
+x' \equiv x \pmod{n}.
+\end{align}
+Hence $m\mid (x'-x)$ and $n\mid (x'-x)$.  Because $\gcd(m,n) = 1$, it follows that $mn \mid (x'-x)$. Thus
+\begin{align}
+x' \equiv x \pmod{mn}.
+\end{align}
+Consequently, the solution is unique up to adding multiples of $mn$. 
+
+\medskip
+
+\noindent
+\textbf{Therefore, there is exactly one solution in the ring of integers modulo $mn$.}
+
+\end{solution}
+\end{document}

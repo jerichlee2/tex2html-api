@@ -1,0 +1,739 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\linespread{1.5}
+
+
+% hyperref should be LAST
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+% !TEX program = pdflatex
+
+% --- packages you’ll need ---
+
+\geometry{paperwidth=8.5in,paperheight=11in,margin=1in}
+
+\begin{document}
+\begin{titlepage}
+  \centering
+  \vspace*{-3cm}                                   % push image up a bit
+  \includegraphics[width=0.75\textwidth]{tailmate_render.png}\par
+  \vspace{1cm}
+
+  {\Huge\bfseries Tail Mate\par}
+  \vspace{0.4cm}
+  {\Large Dog Potty Collector\par}
+
+  \vfill                                            % stretch to vertical center
+
+  {\large\scshape ME170 Design Team\par}
+  \vspace{0.2cm}
+  {\large AB5-2\par}
+
+  \vspace{0.8cm}
+
+  {\Large Team Members\par}
+  \vspace{0.3cm}
+  \begin{tabular}{c}
+    Trayvonn Foster\\
+    Jennifer Ren\\
+    Navya Nair\\
+    Sophie Li
+  \end{tabular}
+
+  \vfill
+
+  {\large Date: 05/09/2025\par}
+\end{titlepage}
+
+\tableofcontents
+\pagebreak
+\section{Introduction / Product Description}
+\vspace{.5cm}
+Our project began with a focus on college students and young adults living in dorms
+or shared apartments who own dogs. These individuals often face unique challenges
+in maintaining consistent pet care due to limited time, space, and budget. To
+understand their needs, we followed the Human-Centered Design (HCD) process
+and conducted interviews aimed at uncovering specific pain points in their daily
+routines.
+
+\vspace{.5cm}
+We asked questions such as:
+\vspace{.5cm} 
+\noindent
+\begin{enumerate}
+  \item "Walk me through a typical weekday with your pet."
+\item "Which parts of your pet-care routine feel most time-consuming or tricky?"
+\item "How does your living space influence how you store pet gear or set up
+potty/play areas?"
+
+\item
+"When shopping for pet products, what do you prioritize—price, size,
+features?"
+
+\item
+"If you could improve one thing about your routine, what would it be and
+why?"
+\end{enumerate}
+\vspace{.5cm} 
+From our interviews, we identified recurring issues:
+\vspace{.5cm} 
+\noindent
+\begin{enumerate}
+  \item  Rushing down stairs for every potty break disrupted schedules.
+ \item Small or shared living spaces made it hard to store bulky pet equipment
+\item Budget constraints limited access to helpful tools.
+
+We translated these insights into “How Might We” (HMW) questions to drive ideation:
+
+
+\end{enumerate}
+\noindent
+\begin{enumerate}
+  \item How might we reduce the time and effort needed for potty breaks?
+
+\item How might we provide hygienic solutions that fit small spaces and budgets?
+
+
+\end{enumerate}
+\vspace{.5cm} 
+These questions led us to create \textbf{TailMate} — a small, lightweight clip that attaches to
+a dog’s tail and holds a standard poop bag to catch waste right away. This
+hands-free solution removes the need for pet owners to bend down or use their
+hands to clean up, making the process much faster and more hygienic. Users just
+clip it on, insert a bag, and let the product do the rest.
+
+Though we originally designed TailMate for busy students, we soon realized it could
+help many other groups as well — especially elderly pet owners or those with limited
+mobility. For them, picking up waste the traditional way can be painful or even
+impossible. TailMate allows these users to care for their pets more independently,
+with less physical strain and discomfort.
+
+TailMate is also \textbf{affordable and flexible}. Unlike similar products that require users to
+buy expensive custom bags, our design works with any standard poop bag — the
+kind most pet owners already buy. This not only keeps costs low but also saves
+users from needing to reorder special supplies. The compact clip is easy to store in
+small living spaces like dorms or apartments, and it's quick to use on the go.
+
+What makes TailMate stand out is its \textbf{simplicity, compatibility, and inclusive
+design.} There’s no need for bulky tools or complicated gadgets — just a small,
+comfortable clip that helps all kinds of pet owners handle an everyday task more
+easily. Whether you're a student rushing to class, a senior with back pain, or
+someone who just wants a cleaner way to clean up, TailMate makes pet care less of
+a hassle.
+\pagebreak
+
+\section{Concept Sketches Initial to Finalized:}
+The development of our product began with a series of conceptual sketches
+exploring different mechanisms to solve a simple yet specific problem: how to hold
+open a dog waste bag securely and hands-free during cleanup. Our goal was to
+create a lightweight, non-invasive attachment that would improve convenience for
+dog owners without compromising the dog’s comfort or safety.
+
+In the early stages, our design ideas varied significantly. Some sketches
+focused on rigid clamp-style mechanisms that would grip the bag from the outside,
+while others explored wearable devices attached to the leash or the user’s wrist. We
+used ideation cards in order to get different variations in designs and create the most
+efficient part to complete the task. As we evaluated these concepts, we prioritized
+simplicity, manufacturability, and ease of use in real-world scenarios. 
+Comfort for the dog was also a top concern, which influenced every design decision moving forward.
+
+Our design process began with individual ideation and sketching to encourage
+a wide range of creative solutions. Each of the four team members was responsible
+for generating five unique sketches of the same product concept, using ideation
+cards to alter the design approach and stimulate divergent thinking. These cards
+introduced constraints or prompts—such as modifying materials, altering user
+interaction, or reimagining form—that pushed us to think beyond initial assumptions.
+
+Once all twenty sketches (five per team member) were completed, each
+individual reviewed their own concepts and selected the most promising design from
+their set. These four selected concepts were then brought forward as finalists and
+evaluated using a Pugh matrix, where we compared them against weighted criteria
+such as functionality, comfort, manufacturability, and feasibility.
+
+Below are all of the initial concept sketches, each accompanied by a brief
+description. The designs that were selected to move forward into the final
+design phase are outlined in red:
+\pagebreak
+\subsubsection*{Person \#1 Initial Sketches:}
+Basically a belt around the body of the dog. And we
+use buckle to open and close the belt. And there are three sub-belts from different
+sides of the body, making sure the whole belt sticks to the dog. We add three hooks
+at the end of the strings, and we attach the bag using the hooks.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{2.1.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\subsubsection*{Person \#2 Initial Sketches:}
+This innovative device is designed for easy attachment
+to a dog's tail to streamline the cleanup of waste. It features a soft, bendable tail clip
+that ensures comfort for the dog. This clip connects to a disposable bag equipped
+with a liner, making the entire setup completely disposable. The product is
+particularly beneficial for elderly users or dogs that cannot produce solid waste,
+simplifying waste management and keeping backyards clean. It's an ideal solution
+for maintaining hygiene with minimal effort.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{2.2.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+\subsubsection*{Person \#3 Initial Sketches:}
+A plastic clip is clipped around the dogs' tail and
+fastened by a buckle. The buckle can be tightened more or less depending on the
+dog's tail size (think of a fanny pack belt buckle). Inside the clip is a roll of plastic
+bags that can be pulled out of the clip when needed and hang directly out of the clip
+and under the dog's bottom. We need to consider how bags will be refilled into the
+clip and how to put the bag in if pulled out too much.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{2.3.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\subsubsection*{Person \#4 Initial Sketches:}
+An adjustable belt that attaches to a plastic bag for
+collecting your pet's waste, which is perfect for indoors. First, clip the belt around the
+torso of the dog, attach the ends of the three straps to the ends of the waste bag,
+and tighten the adjustable straps to bring the bag to the rear of the dog. After that,
+you're ready to go!
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{2.4.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\subsubsection*{Transition to the Final Design}
+After reviewing our initial concepts, we identified a recurring design
+opportunity: leveraging the dog’s tail as a passive support structure. This inspired a
+shift toward tail-mounted mechanisms, which would allow the product to hold the
+waste bag open at the source while remaining unobtrusive.
+
+From this insight, we iteratively refined our sketches toward a clip-based
+system that could securely fasten to a dog’s tail without causing discomfort. The
+solution took shape as a putty clip—a two-part injection-molded component using a
+slotted spring pin hinge, with a flexible interface to gently clamp onto the tail. The clip
+features a secure press fit for the pin on one side and a rotating clearance fit on the
+other, allowing for smooth opening and closing of the bag holder arms.
+
+This final design balances durability, comfort, and usability. It emerged
+through deliberate exploration of form factors, analysis of mechanical constraints,
+and a deep consideration of user and animal experience. The progression from early
+rough concepts to a purpose-built clip demonstrates our iterative approach and
+commitment to functional, user-centered design.
+
+\subsubsection*{This was also systematically decided using this Pugh Matrix:}
+
+We chose this as our datum because it's
+a product that already exists and has
+multiple good reviews. This product has
+already been used by some customers
+and has worked for some of them so we
+know this is an idea that is both feasible
+and functional.
+
+\begin{table}[h]
+  \centering
+  \small                       % (optional) slightly smaller text
+  \setlength\tabcolsep{4pt}    % default is 6 pt – tighten it a bit
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} lccccc}
+      \toprule
+      \textbf{Criteria} & \textbf{Datum} &
+      \textbf{Concept 1} & \textbf{Concept 2} &
+      \textbf{Concept 3} & \textbf{Concept 4}\\
+      \midrule
+      Ergonomics                  &        & $-$ & $+$ & $-$ & $-$\\
+      Safety                      &        & $-$ & $+$ & $-$ & $-$\\
+      Comfort                     & D      & $-$ & $-$ & $-$ & $-$\\
+      Materials                   & A      & $+$ & $-$ & $+$ & $+$\\
+      Product Life Span           & T      & S   & $-$ & $+$ & $-$\\
+      Performance                 & U      & $-$ & $+$ & S   & $-$\\
+      Size \& Weight              & M      & $+$ & $+$ & $-$ & $+$\\
+      Environmental Consideration &        & S   & S   & S   & $-$\\
+      Target Product Cost         &        & S   & S   & $-$ & $+$\\
+      Maintenance                 &        & S   & $+$ & $-$ & $-$\\
+      \midrule
+      \textbf{Total “+”}          &        & 2   & 5   & 2   & 3\\
+      \textbf{Total “–”}          &        & 4   & 4   & 6   & 7\\
+      \textbf{Net Score}          &        & $-2$& $+1$& $-4$& $-4$\\
+      \bottomrule
+  \end{tabular*}
+  \caption{Decision matrix comparison of dog-waste collection concepts
+           (S = same as datum, “+” = better, “–” = worse).}
+\end{table}
+
+After evaluating all four selected concepts using a weighted decision matrix, we
+decided to move forward with Concept 2. This concept achieved the highest overall
+score based on key criteria such as functionality, ease of use, comfort for the dog,
+and manufacturability. Its strong performance across multiple categories made it the
+most well-rounded and feasible option for further development.
+
+\pagebreak
+\section{Product Design Specifications}
+
+\subsubsection*{Description}
+
+This product features a clip that attaches to a dog's tail, designed to streamline the
+waste collection process. When the dog relieves itself, the waste is directly captured
+into an attached bag, eliminating the need for manual cleanup. This is particularly
+useful for dealing with non-solid waste or for owners who prefer a more hands-off
+approach to waste management. Simply attach the clip before letting your dog
+outside, and upon their return, remove and dispose of the bag. This system provides
+a convenient and hygienic solution for managing pet waste.
+
+\subsubsection*{29 Primary Elements}
+\noindent
+\begin{enumerate}
+  \item Performance: The clip must securely attach to a dog's tail and hold the waste
+  bag open during use.
+  \item Environment: Designed for outdoor use in various weather conditions,
+  should be waterproof.
+  \item Service Life: Should last for at least 5 years of regular use without breaking
+  or losing function.
+  \item Maintenance: Minimal; users may rinse the product with water if it becomes
+  dirty.
+  \item Targets Costs: $10 to $15 dollar selling price and $1 to $5 dollar production
+  cost
+  \item Competition: Competes with hands-free dog waste tools and traditional bag
+  dispensers by allowing users to attach their own bags.
+  \item Shipping: Lightweight and compact enough for low-cost shipping in bulk.
+  \item Product Volume(quantity): Initially targeted for large-scale production and
+  global-scale testing with 1 million products being made initially.
+  \item Packing: Simple plastic or cardboard packaging with basic instructions.
+  \item Manufacturing Facility: The clip must be produced in a facility with
+  cleanroom manufacturing standards; quality control inspections should be
+  conducted.
+  \item Size: Designed for plastic injection molding at small to medium manufacturing
+  facilities.
+  \item Weight: Compact—should not exceed 100 mm in any dimension.
+  \item Aesthetics and Finish: Should be visibly appealing and have rounded edges
+  for a sleek design look
+  \item Materials: Should be hard plastic for structure and soft for interaction with
+  dog.
+  \item Product Life Span: Should last for at least 5 years of regular use without
+  breaking or losing function.
+  \item Standards, Specifications and Legal Aspects: Must comply with basic
+  consumer safety and pet product guidelines.
+  \item Ergonomics: Must fit the dog well and be very user-friendly with the human
+  interaction (taking the bag off and putting on the clip)
+  \item Customer: Pet owners seeking a cleaner, hands-free waste collection
+  method. Older users who can’t reach down and collect poop. Old dogs who
+  have loose stool.
+  \item Quality and Reliability: Should function consistently and withstand regular
+  use without failure.
+  \item Shelf Life: At least 2 years in storage without material degradation.
+  \item Processes: Designed for injection molding, simple pin assembly for hinge.
+  \item Timescales: All designs and reports should be done before Friday May 9th
+  \item Testing: No testing required
+  \item Safety: Must not harm the dog’s tail or cause discomfort; edges should be
+  smooth.
+  \item Company Constraints: Designed within the scope of a first-year university
+  design project.
+  \item Market Constraints: Limited initial market awareness; targeted toward niche
+  or novelty pet owners.
+  \item Patents, Literature and Product Data: Reviewed similar products to ensure
+  originality; no known patent conflicts.
+  \item Political and Social Implications: Promotes responsible pet ownership and
+  cleaner public spaces.
+  \item Disposal: Recyclable plastic components where local facilities allow. 
+\end{enumerate}
+\pagebreak
+
+\section{CAD Assembly Models}
+\subsubsection*{Full Assembly Model}
+This is the complete Tail Mate assembly, displaying all components in their
+assembled configuration.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{170-4.1.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\subsubsection*{Cross Section of Shaft with Torsion Spring}
+This view demonstrates the
+connection between the torsion spring
+dowel and the top and bottom clips,
+showing how they assemble into a
+functional hinge.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{170-4.2.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+\subsubsection*{Bag Connector Section View}
+This view illustrates how the bag connector interfaces with the bottom clip.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{170-4.3.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\subsubsection*{Spring Locking Mechanism Section View}
+This view shows the interface between the spring and the bag connector,
+illustrating how the locking mechanism functions with both springs attached.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{170-4.4.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+\subsubsection*{Exploded View of all components}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{170-4.5.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+
+\section{Exploded Assembly with BOM}
+\subsubsection*{Exploded Assembly View}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{170-5.1.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+\section{Cross-section assembly drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{170-6.1.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+
+\section{Detailed Engineering Drawings}
+\subsubsection*{Bottom Clip Drawings}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{7.1.png}
+  \caption{Page 1}
+  \label{fig:}
+\end{figure}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{7.2.png}
+  \caption{Page 2}
+  \label{fig:}
+\end{figure}
+\pagebreak
+\subsubsection*{Top Clip Drawings}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{7.3.png}
+  \caption{Page 1}
+  \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{7.4.png}
+  \caption{Page 2}
+  \label{fig:}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Spring Case Drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{7.5.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Spring Pin Drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{7.6.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Flex Insert Drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{7.7.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Baggie Sealer Drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{7.8.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+
+\pagebreak
+\subsubsection*{Baggie Connector Drawing}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{7.9.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\pagebreak
+
+\section{Radial and Axial Fit Tolerance Analysis – Slotted Spring Pin in Top
+and Bottom Clip System}
+
+This section presents a tolerance analysis of the fits used in a slotted spring pin
+assembly within an injection-molded clip mechanism. The pin is press-fit into one
+component, preventing axial movement, and allows rotation within another
+component. The analysis classifies fits based on their functional constraints—radial
+(rotation) and axial (linear retention)—and uses worst-case tolerancing to validate fit
+performance under manufacturing variation.
+
+\subsubsection*{Component Overview}
+\noindent
+\begin{enumerate}
+  \item \textbf{Material}: Injection-molded Polypropylene
+  (medium impact copolymer)
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{81.png}
+    \caption{}
+    \label{fig:}
+  \end{figure}
+  \item \textbf{Slotted Spring Pin}: $3/32$" nominal diameter
+  ($2.38125$ mm), per ASME B$18.8.2$ 
+
+  \item \textbf{Axial Fit: Fixed Hole on Bottom Clip
+  (Interference fit/press fit)}: $\varnothing 2.3368 \pm$ mm
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{82.png}
+    \caption{}
+    \label{fig:}
+  \end{figure}
+  \pagebreak
+  \item \textbf{Radial Fit: Rotating Hole on Top Clip
+  (clearance fit)}: $\varnothing 2.4892 \pm 0.0254$ mm  
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{83.png}
+    \caption{}
+    \label{fig:}
+  \end{figure}
+\end{enumerate}
+\subsubsection*{Axial Fit Info}:
+\textbf{Interference Fit - Fixed Hole (Top Clip)}:
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{84.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+The fixed hole provides axial retention for the spring pin. The selected tolerance
+results in an interference fit based on the nominal pin diameter.
+\noindent
+\begin{enumerate}
+  \item \textbf{Hole size range:}  2.3114 mm(minimum) to 2.3622mm (maximum)
+\item
+\textbf{Pin diameter (nominal)} : 2.38125 mm
+\end{enumerate}
+\textbf{Worst-Case Interference Calculations:} 
+\vspace{.5cm} 
+\noindent
+\begin{enumerate}
+  \item \textbf{Maximum Interference}  = 2.38125 - 2.3114 = 0.06985 mm
+  \item
+  \textbf{Minimum Interference}  = 2.38125 - 2.3622 = 0.01905 mm
+\end{enumerate}
+\vspace{.5cm} 
+\textbf{Fit Type Equivalent} : ISO \textbf{H7/s6}  (locational interference fit)
+The interference is designed to be manageable by hand during assembly due to the
+spring pin's compressibility and the compliance of polypropylene. This ensures that
+the pin stays fixed axially and provides consistent alignment between components.
+\pagebreak
+\subsubsection*{Radial Fit Info}:
+\textbf{Clearance Fit – Rotating
+Hole(Bottom Clip)}: The rotating hole allows the second
+component to pivot around the spring
+pin. A clearance fit is applied to ensure
+smooth motion.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{85.png}
+  \caption{}
+  \label{fig:}
+\end{figure}
+\noindent
+\begin{enumerate}
+  \item \textbf{Hole size range} : 2.4638 mm (minimum) to 2.5146 mm (maximum)
+  \item \textbf{Pin diameter}  (nominal): 2.38125 mm
+\end{enumerate}
+
+\textbf{Worst-Case Clearance Calculations}:
+\vspace{.5cm} 
+\noindent
+\begin{enumerate}
+  \item \textbf{Maximum Clearance}  = 2.5146 - 2.38125 = 0.13335 mm
+  
+ \item \textbf{Minimum Clearance}  =2.4638 - 2.38125 = 0.08255 mm
+\end{enumerate} 
+\textbf{Fit Type Equivalent} : ISO \textbf{H7/g6} (running fit)
+This clearance range ensures reliable rotation of the component without jamming,
+even when accounting for molding variation or slight warping. The fit is sufficiently
+tight to maintain positional stability while allowing smooth, repeatable rotation.
+
+\textbf{Conclusion}:
+The selected tolerances for the fixed and rotating holes produce appropriate
+interference and clearance fits for the slotted spring pin. The worst-case analysis
+confirms that:
+\noindent
+\begin{enumerate}
+  \item The \textbf{fixed hole} retains the pin with up to \textbf{0.06985 mm}  interference, ensuring
+  stable axial positioning.
+  \item 
+  The \textbf{rotating hole}  provides \textbf{0.08255-0.13335 mm} clearance, enabling free
+  rotation.
+\end{enumerate}
+Together, these fits support the intended mechanical function of the clip system by
+balancing secure retention with smooth rotational movement. During repeated
+use—such as opening and closing the Tail Mate on a dog's tail—it is critical that the
+hinge mechanism maintains durability without loosening or detaching over time. By
+selecting these specific tolerances, we ensure the product remains structurally sound
+and functions reliably under normal and worst-case conditions. The analysis also
+confirms that the tolerances are suitable for injection molding, allow for hand
+assembly, and provide consistent mechanical performance.
+\pagebreak
+\section{Materials and Manufacturing With Bill of Materials}
+
+\begin{table}[h]
+  \centering
+  \scriptsize
+  \renewcommand{\arraystretch}{1.1}
+  \setlength\tabcolsep{2pt}
+
+  \begin{tabular}{l l p{4cm} c c c r}
+    \toprule
+    Part \# & Description &
+    \shortstack[l]{Material and Manufacturing Method (or order details if an\\off-the-shelf item)} &
+    Part Cost & Quantity Needed & Total Part Cost & Investment Costs \\
+    \midrule
+    Part 1 & Bottom Bag Liner & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.01 & 1 & \$0.02 & \$5,553.90 \\
+    Part 2 & Bottom Clip & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.16 & 1 & \$0.16 & \$9,585.82 \\
+    Part 3 & Top Clip & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.14 & 1 & \$0.14 & \$7,860.77 \\
+    Part 4 & Flexible & Plastic Molding - Closed-Cell Resin Croslite & \$0.11 & 2 & \$0.22 & \$4,843.44 \\
+    Part 5 & Spring Case & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.04 & 1 & \$0.04 & \$4,349.47 \\
+    Part 6 & Spring Pin & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.24 & 1 & \$0.24 & \$4,367.95 \\
+    Part 7 & Spring Dowel & 18-8 Stainless Steel Slotted Spring Pin 3/32" Diameter, 3/4" Long & \$0.21 & 1 & \$0.21 & \$0 \\
+    Part 8 & Compression Spring & PC012-088-6630-MW-0190-C-N-IN & \$0.22 & 1 & \$0.22 & \$0 \\
+    Part 9 & Torsion Spring & 0.0006 Inch-Pounds per Degree Rate Music Wire Torsion Spring & \$0.10 & 2 & \$0.10 & \$0 \\
+    Part 10 & Top Bag Liner & Plastic Molding - Polypropylene Med Impact Copol: Injection Molding & \$0.04 & 1 & \$0.04 & \$0 \\
+    \midrule
+    \multicolumn{5}{l}{Totals} & \$1.25 & \$42,526.02 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Cost BOM and Total Cost Calculations.}
+\end{table}
+
+The table above outlines the Bill of Materials (BOM) for our final product: It includes
+all components required for a single assembled unit, along with material specifications,
+manufacturing methods, individual part costs, quantities needed, and associated investment
+costs.
+
+Each part is identified with a Part Number and a Description, followed by the material
+used and the manufacturing process (primarily injection molding using polypropylene, a
+cost-effective and flexible thermoplastic suitable for pet products). Off-the-shelf components
+such as springs and dowels are also listed with sourcing details.
+
+The Part Cost reflects the cost to produce or purchase a single unit of each item. The
+Quantity Needed shows how many of that item are required in one complete product.
+Multiplying these two gives the Total Part Cost for that item in one unit.
+
+The Investment Cost column refers to estimated tooling or setup costs associated
+with manufacturing that specific part, primarily related to injection molding.
+
+In total:
+\noindent
+\begin{enumerate}
+  \item The material and part cost per product is \textbf{\$1.25} , making the product cost-effective to
+  manufacture in bulk.
+\item The total estimated investment cost for mold tooling and setup across all plastic
+components is \textbf{\$42,526.02}.
+\end{enumerate}
+
+We plan to sell the product at a retail price of \textbf{\$10.99} , which offers a strong profit margin.
+After subtracting the \$1.25 unit cost, the gross margin per unit is \$9.74, or roughly 89\%. This
+margin not only covers packaging, marketing, distribution, and labor but also allows for
+reinvestment into future product development and scaling.
+In terms of market positioning, \$10.99 is competitive:
+
+\noindent
+\begin{enumerate}
+  \item It aligns with prices for other pet accessories and hands-free waste solutions.
+  \item It is affordable for the average pet owner, yet perceived as a premium, specialized
+  product due to its innovation and convenience.
+\end{enumerate}
+\vspace{.5cm} 
+Overall, the pricing strategy balances affordability for consumers, profitability for the
+company, and scalability in production, making it a sustainable and competitive product in
+the pet accessory market.
+\end{document}

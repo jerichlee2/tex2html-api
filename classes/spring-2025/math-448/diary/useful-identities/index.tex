@@ -1,0 +1,185 @@
+\documentclass[9pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{Useful Identities in Complex Variables}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\subsubsection*{Complex Conjugate of $z$}
+\begin{align}
+    \overline{z} = x-iy
+\end{align}
+\subsubsection*{Division of Complex Numbers}
+\begin{align}
+    \frac{z}{w}= \frac{(xs+yt)+i(ys-xt)}{s^{2}+t^{2}}, w \neq 0
+\end{align}
+\subsubsection*{$z\overline{z}$}
+\begin{align}
+    \left( x+iy \right)\left( x-iy \right)=x^{2}+y^{2}=\left\vert z \right\vert ^{2}  
+\end{align}
+\subsubsection*{Some useful equivalences}
+\noindent
+\begin{enumerate}
+    \item \begin{align}
+    \left\vert zw \right\vert = \left\vert z \right\vert \left\vert w \right\vert 
+    \end{align}
+    \item \begin{align}
+        \overline{zw}= \overline{z} \overline{w}  
+    \end{align}
+\end{enumerate}
+\subsubsection*{Modulus of $z$}
+\begin{align}
+    \left\vert z \right\vert = \sqrt{x^{2}+y^{2}} 
+\end{align}
+\subsubsection*{Polar Repr. of $z$}
+\begin{align}
+    z = \left\vert z \right\vert \left( \cos \theta+ i \sin \theta \right) 
+\end{align}
+\subsubsection*{DeMoivre's Theorem}
+\begin{align}
+   \left( \cos\theta + i \sin \theta \right)^{n}=\cos n\theta + i \sin n\theta  
+\end{align}
+\subsubsection*{Arguments}
+\begin{align}
+    \text{Arg}(zw)= \text{Arg} z+ \text{Arg} w \left( \text{mod} 2\pi \right) 
+\end{align}
+\subsubsection*{Closed form of $\sum_{k=1}^{n} kx^{k}$}
+\begin{align}
+    \sum_{k=1}^n k\,x^k
+= x \cdot \frac{d}{dx}\left(\sum_{k=0}^n x^k\right)
+= x \cdot \frac{d}{dx}\left(\frac{1 - x^{n+1}}{1 - x}\right)
+= \frac{x \bigl[1 - (n+1)x^n + n x^{n+1}\bigr]}{(1-x)^2}.
+\end{align}
+\subsubsection*{Closed form of $\sum_{k=1}^{n} n$ }
+\begin{align}
+    n + n + \cdots + n \quad (\text{\(n\) times}) \;=\; n \cdot n \;=\; n^2.
+\end{align}
+\subsubsection*{Closed form of $\sum_{k=1}^{n} x^{k}$ (Geometric Series)}
+\begin{align}
+\sum_{k=1}^{n} x^{k}
+= \frac{x \bigl(1 - x^n\bigr)}{1 - x},
+\quad x \neq 1,
+\quad\text{and} \quad
+\sum_{k=1}^{n} 1^k = n
+\end{align}
+\subsubsection*{Appolonius' Circle}
+    We want to show that
+\[
+4\Bigl(\lvert z\rvert^{2} \;-\; 2\,\mathrm{Re}(z\,\overline{i}) \;+\; \lvert i\rvert^{2}\Bigr)
+\;=\;
+\lvert z\rvert^{2} \;-\; 2\,\mathrm{Re}(z) \;+\; 1
+\]
+implies
+\[
+3\,\lvert z\rvert^{2} \;-\;8\,\mathrm{Im}(z) \;+\;2\,\mathrm{Re}(z)
+\;=\;
+-3.
+\]
+
+First, note that $\lvert z\rvert^{2} = z\,\overline{z}$ and $\lvert i\rvert^{2} = 1$.  
+Also, $\mathrm{Re}(z) = \frac{z + \overline{z}}{2}$, $\mathrm{Im}(z) = \frac{z - \overline{z}}{2\,i}$, and $\overline{i} = -\,i$.  
+Hence 
+\[
+\mathrm{Re}\bigl(z\,\overline{i}\bigr) 
+= 
+\mathrm{Re}(-\,i\,z) 
+= 
+-\,\mathrm{Im}(z).
+\]
+
+On the left, 
+\[
+4\Bigl(\lvert z\rvert^{2} - 2\,\mathrm{Re}[z\,\overline{i}] + \lvert i\rvert^{2}\Bigr)
+=
+4\Bigl(z\,\overline{z} + 2\,\mathrm{Im}(z) + 1\Bigr)
+=
+4\,z\,\overline{z} + 8\,\mathrm{Im}(z) + 4.
+\]
+
+On the right, 
+\[
+\lvert z\rvert^{2} - 2\,\mathrm{Re}(z) + 1
+=
+z\,\overline{z} - 2\,\mathrm{Re}(z) + 1.
+\]
+
+Equating and moving all terms to one side:
+\[
+4\,z\,\overline{z} + 8\,\mathrm{Im}(z) + 4
+=
+z\,\overline{z} - 2\,\mathrm{Re}(z) + 1
+\;\;\Longrightarrow\;\;
+3\,z\,\overline{z} + 2\,\mathrm{Re}(z) + 8\,\mathrm{Im}(z) + 3 
+= 
+0.
+\]
+Since $z\,\overline{z} = \lvert z\rvert^{2}$,
+\[
+3\,\lvert z\rvert^{2} + 2\,\mathrm{Re}(z) + 8\,\mathrm{Im}(z) = -3.
+\]
+Often, one writes
+\(
+3\,\lvert z\rvert^{2} - 8\,\mathrm{Im}(z) + 2\,\mathrm{Re}(z) = -3
+\)
+depending on the chosen sign for $\mathrm{Im}(z)$.
+\subsubsection*{Projections of Complex Numbers}
+\noindent
+\begin{enumerate}
+    \item \begin{align}
+        \text{Re}(z) = \frac{z+\overline{z} }{2}
+    \end{align}
+    \item \begin{align}
+        \text{Im} (z)= \frac{z-\overline{z} }{2i}
+    \end{align}
+    \item \begin{align}
+        \overline{i} = -i
+    \end{align}
+\end{enumerate}
+
+\subsubsection*{hyperbolic trig}
+\begin{align}
+    \cosh^{2}x-\sinh^{2}x=1 \\[10pt] 
+    \cosh z = \frac{1}{2}(e^{z}+e^{-z}) \\[10pt] 
+    \sinh z = \frac{1}{2}(e^{z}-e^{-z})
+\end{align}
+\end{document}

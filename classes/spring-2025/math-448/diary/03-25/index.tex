@@ -1,0 +1,174 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\section*{Evaluation of $\displaystyle \int_{0}^{\infty} \frac{\ln x}{x^2 + 4}\,dx$}
+
+We wish to evaluate the integral
+\[
+I \;=\; \int_{0}^{\infty} \frac{\ln x}{x^2 + 4}\,dx
+\]
+using complex analysis. Define the function
+\[
+f(z) \;=\; \frac{\log z}{z^2 + 4},
+\]
+where we take the principal branch of the logarithm, $\log z = \ln|z| + i\,\arg(z)$ with $0 \le \arg z \le \pi$.
+
+\subsection*{Contour Setup}
+
+Consider a keyhole contour that runs along the positive real axis from $r$ to $R$, circles around the origin in a small arc $C_r$ of radius $r$, runs back along the negative real axis from $-R$ to $-r$ just below it, and finally circles back via a large semicircle $C_R$ of radius $R$ in the upper half-plane. We will let $R \to \infty$ and $r \to 0$.
+
+By the residue theorem, the contour integral is
+\[
+\int_{L_{+}} f(z)\,dz 
+\;+\;\int_{L_{-}} f(z)\,dz 
+\;+\;\int_{C_{R}} f(z)\,dz 
+\;-\;\int_{C_{r}} f(z)\,dz
+\;=\; 2\pi i \,\mathrm{Res}(f,2i),
+\]
+where the minus sign comes from the fact that $C_r$ is traversed clockwise.
+
+\subsection*{Integrals along $L_{+}$ and $L_{-}$}
+
+\paragraph{Along $L_{+}$ (the positive real axis).}
+Here $z=x>0$, and $\log z = \ln x$. Thus
+\[
+\int_{L_{+}} f(z)\,dz 
+\;=\;\int_{r}^{R} \frac{\ln x}{x^2 + 4}\,dx
+\;\xrightarrow[r \to 0,\, R \to \infty]{}\; \int_{0}^{\infty} \frac{\ln x}{x^2 + 4}\,dx
+\;=\; I.
+\]
+
+\paragraph{Along $L_{-}$ (just below the negative real axis).}
+Here $z=x<0$ and on the chosen branch, $\arg(z) = \pi$, so $\log z = \ln|x| + i\pi$. Parametrize $x$ from $-R$ to $-r$. Then
+\[
+\int_{L_{-}} f(z)\,dz 
+\;=\;\int_{-R}^{-r} \frac{\ln|x| + i\pi}{x^2 + 4}\,dx.
+\]
+With $x = -u$ ($u>0$), the integral becomes
+\[
+\int_{R}^{r} \frac{\ln u + i\pi}{u^2 + 4}\,(-du)
+\;=\;\int_{r}^{R} \frac{\ln u + i\pi}{u^2 + 4}\,du.
+\]
+As $r \to 0$, $R \to \infty$, the real part is again $I$, and the imaginary part adds
+\[
+i\pi \int_{0}^{\infty} \frac{du}{u^2 + 4}
+\;=\; i\pi \cdot \frac{\pi}{4}
+\;=\; i\,\frac{\pi^2}{4}.
+\]
+Hence
+\[
+\int_{L_{-}} f(z)\,dz 
+\;\xrightarrow[r \to 0,\, R \to \infty]{}
+I + i\,\frac{\pi^2}{4}.
+\]
+
+\subsection*{Arc Integrals}
+
+One shows via standard estimates that the integrals over the large semicircle $C_R$ and the small circle $C_r$ both tend to zero as $R\to\infty$ and $r\to0$ (using bounds like $|\log z| \sim \ln R$ and $|f(z)| \sim \frac{\ln R}{R^2}$, etc.).
+
+\subsection*{Residue at $z=2i$}
+
+Inside the contour, the only pole of $f(z)$ in the upper half-plane is $z=2i$, where $z^2+4 = (z-2i)(z+2i)$. Thus
+\[
+\mathrm{Res}(f,2i)
+\;=\;\lim_{z\to 2i} \;(z-2i)\,\frac{\log z}{z^2 + 4}
+\;=\;\frac{\log(2i)}{4i}.
+\]
+Since $|2i|=2$ and $\arg(2i)=\pi/2$, on the principal branch
+\[
+\log(2i) \;=\;\ln 2 + i\,\frac{\pi}{2}.
+\]
+Hence
+\[
+\mathrm{Res}(f,2i)
+\;=\;\frac{\ln 2 + i\,\frac{\pi}{2}}{4i}.
+\]
+
+\subsection*{Putting it all Together}
+
+The residue theorem gives
+\[
+\left(\int_{L_{+}} + \int_{L_{-}} + \int_{C_R} - \int_{C_r}\right) f(z)\,dz
+\;=\;
+2\pi i \,\mathrm{Res}(f,2i).
+\]
+In the limit, the left-hand side is
+\[
+I + \bigl(I + i\,\tfrac{\pi^2}{4}\bigr) + 0 - 0
+\;=\;
+2I + i\,\frac{\pi^2}{4},
+\]
+while the right-hand side is
+\[
+2\pi i 
+\;\times\;
+\frac{\ln 2 + i\,\tfrac{\pi}{2}}{4i}
+\;=\;
+\frac{\pi}{2} \Bigl(\ln 2 + i\,\tfrac{\pi}{2}\Bigr)
+\;=\;
+\frac{\pi}{2}\,\ln 2 
+\;+\; 
+i\,\frac{\pi^2}{4}.
+\]
+Matching real and imaginary parts, we see the imaginary part matches on both sides, and for the real part:
+\[
+2I \;=\; \frac{\pi}{2}\,\ln 2
+\;\;\Longrightarrow\;\;
+I \;=\; \frac{\pi}{4}\,\ln 2.
+\]
+
+\[
+\boxed{
+\int_{0}^{\infty} \frac{\ln x}{x^2 + 4}\,dx
+\;=\;
+\frac{\pi}{4}\,\ln 2.
+}
+\]
+
+\end{document}

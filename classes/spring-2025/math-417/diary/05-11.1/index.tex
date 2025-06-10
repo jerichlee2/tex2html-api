@@ -1,0 +1,940 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\ord}{Ord}
+\DeclareMathOperator{\Aut}{Aut}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417 Practice Exam 2 Solution}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  Let 
+  \[
+     U_{8}\;=\;\{\,1,3,5,7\,\}
+     \subset\bigl(\Bbb Z/8\Bbb Z\bigr)^{\times},
+     \qquad 
+     a\*b\;:=\;ab\pmod{8}.
+  \]
+  Because each element of $U_{8}$ is relatively prime to~$8$, the product
+  of any two elements again lies in~$U_{8}$, so $(U_{8},\*)$ is a group.
+  
+  \bigskip
+  \begin{enumerate}[]
+  \item \textbf{Cayley table of $(U_{8},\*)$.}\;
+        Compute every product modulo~$8$:
+  
+        \[
+        \renewcommand{\arraystretch}{1.2}
+        \begin{array}{c|cccc}
+            \* & 1 & 3 & 5 & 7\\\hline
+            1  & 1 & 3 & 5 & 7\\
+            3  & 3 & 1 & 7 & 5\\
+            5  & 5 & 7 & 1 & 3\\
+            7  & 7 & 5 & 3 & 1
+        \end{array}
+        \]
+  
+  \item \textbf{Identity element.}\;
+        From the first row (or column) we see that 
+        $\boxed{\,1\,}$ satisfies $1\*a=a\*1=a$ for all $a\in U_{8}$, 
+        so $1$ is the identity.
+  
+  \item \textbf{Inverses.}\;
+        Inspecting the diagonal of the Cayley table (or using $a^{2}\equiv1\pmod8$ for every $a\in U_{8}$) gives
+        \[
+           1^{-1}=1,\qquad
+           3^{-1}=3,\qquad
+           5^{-1}=5,\qquad
+           7^{-1}=7.
+        \]
+        Thus every non-identity element is its own inverse; the group
+        $(U_{8},\*)$ is isomorphic to the Klein four group
+        $C_{2}\times C_{2}$.
+  \end{enumerate}
+  \end{solution}
+  \begin{problem}
+    Let $p$ be prime and suppose $|G| = p^{2}$.
+    \begin{enumerate}[]
+       \item Prove that the center $Z(G)$ is non-trivial.
+       \item Deduce that $G$ is abelian, and hence
+             \[
+                G \;\cong\; \Bbb Z_{p^{2}}
+                \quad\text{or}\quad
+                G \;\cong\; \Bbb Z_{p}\;\oplus\;\Bbb Z_{p}.
+             \]
+    \end{enumerate}
+    \end{problem}
+    
+    \begin{solution}
+    Recall the \emph{class equation}
+    \[
+       |G| \;=\; |Z(G)| \;+\;
+                \sum_{i=1}^{k} [G : C_{G}(g_{i})],
+    \]
+    where $g_{1},\dots,g_{k}$ run through one representative from each
+    non-central conjugacy class
+    and $C_{G}(g_{i})=\{\,x\in G \mid xg_{i}=g_{i}x\,\}$ is the
+    centraliser of~$g_{i}$.
+    
+    \bigskip
+    \textbf{(a)  $Z(G)$ is non-trivial.}
+    
+    Since $|G|=p^{2}$, every index $[G : C_{G}(g_{i})]$ divides $|G|$ and is
+    strictly larger than $1$ for non-central $g_{i}$.
+    Hence each such index equals~$p$.
+    
+    \[
+       \Longrightarrow\quad
+       p^{2}=|G|
+       \;=\;
+       |Z(G)| + m\,p,
+       \qquad m\in\Bbb Z_{\ge0}.
+    \]
+    Taking both sides modulo~$p$ gives $|Z(G)|\equiv0\pmod{p}$, so
+    \[
+       |Z(G)| \;=\; p \quad\text{or}\quad |Z(G)|=p^{2}.
+    \]
+    Either way $|Z(G)|>1$, hence $Z(G)\neq\{1\}$ is \emph{non-trivial}.
+    
+    \bigskip
+    \textbf{(b)  $G$ is abelian and its classification.}
+    
+    \smallskip
+    \emph{Case 1: $|Z(G)|=p^{2}$.}\;
+    Then $Z(G)=G$ and $G$ is abelian.
+    
+    \smallskip
+    \emph{Case 2: $|Z(G)|=p$.}\;
+    Consider the quotient
+    \[
+       G/Z(G).
+    \]
+    Its order is
+    \(
+       |G|/|Z(G)| = p^{2}/p = p,
+    \)
+    so $G/Z(G)$ is \emph{cyclic}.
+    Whenever a group is modded out by its centre and the quotient is
+    cyclic, the group itself must be abelian:
+    pick $xZ(G)$ as a generator;
+    every element of $G$ can be written $x^{k}z$ with $z\in Z(G)$, and such
+    elements commute.
+    
+    \medskip
+    Consequently $G$ is abelian in \emph{all} cases.
+    
+    \paragraph{Structure of abelian groups of order $p^{2}$.}
+    The classification theorem for finite abelian groups yields exactly two
+    possibilities:
+    \[
+       G \;\cong\; \Bbb Z_{p^{2}}
+       \quad\text{or}\quad
+       G \;\cong\; \Bbb Z_{p}\;\oplus\;\Bbb Z_{p}.
+    \]
+    
+    \smallskip
+    \[
+       \boxed{\;Z(G)\text{ is non-trivial and }G\text{ is abelian of one of
+       the two above types.}\;}
+    \]
+    \end{solution}
+    \begin{solution}
+      \textbf{Notation.}  
+      Let $\Bbb Z_{24}=\langle\overline{1}\rangle=\{\overline{0},\overline{1},
+      \ldots,\overline{23}\}$ (bars denote residue classes modulo $24$).
+      Because $\Bbb Z_{24}$ is cyclic, each divisor $d\mid24$ corresponds to
+      a \emph{unique} subgroup of order $d$, namely
+      \[
+              H_{d}\;=\;\bigl\langle\,\overline{24/d}\,\bigr\rangle.
+      \]
+      The index of $H_{d}$ in $\Bbb Z_{24}$ is $[\Bbb Z_{24}:H_{d}]=24/d$.
+      
+      \bigskip
+      \noindent
+      \textbf{(a)  All subgroups of $\Bbb Z_{24}$ and their indices}
+      
+      \[
+      \renewcommand{\arraystretch}{1.25}
+      \begin{array}{c|c|c}
+      \text{generator(s)} & |H_{d}| & [\Bbb Z_{24}:H_{d}]\\\hline
+      \{\overline{0}\} & 1 & 24\\
+      \langle\overline{12}\rangle & 2 & 12\\
+      \langle\overline{8}\rangle  & 3 & 8\\
+      \langle\overline{6}\rangle  & 4 & 6\\
+      \langle\overline{4}\rangle  & 6 & 4\\
+      \langle\overline{3}\rangle  & 8 & 3\\
+      \langle\overline{2}\rangle  & 12 & 2\\
+      \langle\overline{1}\rangle=\Bbb Z_{24} & 24 & 1
+      \end{array}
+      \]
+      
+      Each row gives the subgroup, its order, and its index in $\Bbb Z_{24}$.
+      
+      \bigskip
+      \noindent
+      \textbf{(b)  Subgroup lattice of $\Bbb Z_{24}$}
+      
+      Below is the Hasse diagram (cover–relation diagram) of the subgroup
+      lattice.  An edge joins $H_{d}$ to $H_{e}$ precisely when
+      $H_{e}\subset H_{d}$ and there is no subgroup strictly between them
+      (\,equivalently, $e\mid d$ but $e\!\nmid d'$ for any $e<d'<d$\,).
+      
+      
+
+      \emph{Reading the diagram.}  
+      The top node represents the whole group (order $24$);
+      moving downward corresponds to taking proper subgroups whose orders are
+      divisors of the one above.  
+      Indices can be read by comparing levels  
+      (e.g.\ the subgroup of order $6$ has index $4$ in $\Bbb Z_{24}$).
+      \end{solution}
+      \begin{solution}
+        \begin{enumerate}[]
+        %---------------------------------------------------------------
+        \item \textbf{Compute $7^{222}\pmod{13}$.}
+        
+        \[
+        \varphi(13)=12
+        \quad\Longrightarrow\quad
+        7^{12}\equiv1\pmod{13}.
+        \]
+        \[
+        222 = 12\cdot18 + 6
+        \quad\Longrightarrow\quad
+        7^{222}\equiv 7^{6}\pmod{13}.
+        \]
+        Now
+        \[
+        7^{2}=49\equiv10,\qquad
+        7^{4}\equiv 10^{2}=100\equiv 9,\qquad
+        7^{6}\equiv 7^{4}\!\cdot7^{2}\equiv9\cdot10=90\equiv12.
+        \]
+        Hence
+        \[
+        \boxed{\,7^{222}\equiv12\pmod{13}\;(-1\text{ mod }13)\, }.
+        \]
+        
+        %---------------------------------------------------------------
+        \item \textbf{Compute $9^{1000}\pmod{31}$.}
+        
+        \[
+        \varphi(31)=30
+        \quad\Longrightarrow\quad
+        9^{30}\equiv1\pmod{31}.
+        \]
+        \[
+        1000\equiv 10\pmod{30}
+        \quad\Longrightarrow\quad
+        9^{1000}\equiv 9^{10}\pmod{31}.
+        \]
+        Step-by-step powers:
+        \[
+        9^{2}=81\equiv19,\qquad
+        9^{4}\equiv19^{2}=361\equiv20,\qquad
+        9^{8}\equiv20^{2}=400\equiv28.
+        \]
+        \[
+        9^{10}=9^{8}\cdot9^{2}\equiv28\cdot19=532\equiv5.
+        \]
+        Therefore
+        \[
+        \boxed{\,9^{1000}\equiv5\pmod{31}\, }.
+        \]
+        
+        %---------------------------------------------------------------
+        \item \textbf{Last two digits of $3^{123}$ (i.e.\ $3^{123}\pmod{100}$).}
+        
+        Since $\gcd(3,100)=1$,
+        \[
+        \varphi(100)=40
+        \quad\Longrightarrow\quad
+        3^{40}\equiv1\pmod{100}.
+        \]
+        (Indeed, already $3^{20}\equiv1\pmod{100}$, so $3^{40}\equiv1$ as well.)
+        
+        \[
+        123 = 40\cdot3 + 3
+        \quad\Longrightarrow\quad
+        3^{123}\equiv 3^{3}=27\pmod{100}.
+        \]
+        
+        Hence the last two digits are
+        \[
+        \boxed{\,27\, }.
+        \]
+        \end{enumerate}
+        \end{solution}
+        \begin{solution}
+          Recall that \(\Bbb Z_{10}^{\times}\) is the set of residue classes
+          \(\overline{a}\) modulo \(10\) with \(\gcd(a,10)=1\).
+          
+          \bigskip
+          \textbf{(a)  All units of \(\Bbb Z_{10}\) and their inverses.}
+          
+          \[
+          \renewcommand{\arraystretch}{1.3}
+          \begin{array}{c|c}
+          a\;(\text{mod }10) & a^{-1}\;(\text{mod }10) \\\hline
+          1 & 1 \\ 
+          3 & 7 \\ 
+          7 & 3 \\ 
+          9 & 9
+          \end{array}
+          \]
+          
+          \bigskip
+          \textbf{(b)  Elements satisfying \(a^{-1}=a\).}
+          
+          From the table we see
+          \[
+             a^{-1}=a \quad\Longleftrightarrow\quad a\in\{\,1,\;9\,\}.
+          \]
+          
+          Hence the only self–inverse units modulo \(10\) are
+          \[
+          \boxed{\;\overline{1}\text{ and }\overline{9}\;}.
+          \]
+          \end{solution}
+          \begin{solution}
+            Let $\varphi:G\longrightarrow H$ be a group homomorphism and
+            fix $a\in G$.
+            
+            \medskip
+            \noindent
+            \textbf{Step 1.\;}  Write $n=\ord_{G}(a)$.  
+            By definition, $n$ is the \emph{least positive} integer with
+            $a^{\,n}=e_{G}$ (the identity in $G$).
+            
+            \medskip
+            \noindent
+            \textbf{Step 2.\;}  Apply $\varphi$ to the relation $a^{\,n}=e_{G}$:
+            \[
+               \varphi\!\bigl(a^{\,n}\bigr)
+               =\varphi(e_{G})
+               =e_{H}.
+            \]
+            Because $\varphi$ is a homomorphism,
+            \[
+               \varphi\!\bigl(a^{\,n}\bigr)
+                  =\bigl(\varphi(a)\bigr)^{n}.
+            \]
+            Hence
+            \[
+               \bigl(\varphi(a)\bigr)^{n}=e_{H}.
+            \]
+            
+            \medskip
+            \noindent
+            \textbf{Step 3.\;}  Let $m=\ord_{H}\!\bigl(\varphi(a)\bigr)$.  
+            By definition, $m$ is the \emph{least positive} integer satisfying
+            \(
+               \bigl(\varphi(a)\bigr)^{m}=e_{H}.
+            \)
+            Since $\bigl(\varphi(a)\bigr)^{n}=e_{H}$, the integer $n$ is a positive
+            multiple of~$m$.  
+            Formally, the least–positive–integer property gives
+            \[
+               m \;\mid\; n
+               \quad\Longleftrightarrow\quad
+               \ord_{H}\!\bigl(\varphi(a)\bigr)
+                 \;\mid\;
+               \ord_{G}(a).
+            \]
+            
+            \medskip
+            \[
+               \boxed{\;
+                  \ord_{H}\!\bigl(\varphi(a)\bigr)
+                  \,\mid\,
+                  \ord_{G}(a)
+                  \quad\text{for every }a\in G.
+               \;}
+            \]
+            \end{solution}
+            \begin{solution}
+              \textbf{Goal.}\;
+              Let
+              \[
+                 C_{n}
+                    \;=\;
+                 \Bigl\{\,e^{2\pi i k/n}\;\Bigm|\;k=0,1,\dots,n-1\Bigr\}
+                 \;\subset\;\Bbb C^{\times}.
+              \]
+              We will show
+              \begin{enumerate}[]
+                 \item $C_{n}$ is a \emph{cyclic} subgroup of $(\Bbb C^{\times},\cdot)$;
+                 \item $C_{n}\cong\Bbb Z_{n}$.
+              \end{enumerate}
+              
+              \bigskip
+              \textbf{1.\;Closure, identity, inverses.}
+              For $k,\ell\in\{0,\dots,n-1\}$,
+              \[
+                 e^{2\pi i k/n}\,e^{2\pi i \ell/n}
+                    =e^{2\pi i (k+\ell)/n}
+                    \in C_{n},
+              \]
+              so $C_{n}$ is closed under multiplication.
+              
+              \[
+                 e^{2\pi i\cdot 0/n}=1
+                 \quad\text{acts as the identity,}\qquad
+                 \bigl(e^{2\pi i k/n}\bigr)^{-1}=e^{-2\pi i k/n}=e^{2\pi i (n-k)/n}\in C_{n}.
+              \]
+              
+              Hence $C_{n}$ is a finite subgroup of $\Bbb C^{\times}$ of size $n$.
+              
+              \bigskip
+              \textbf{2.\;Cyclicity.}
+              Set
+              \[
+                 \zeta=e^{2\pi i/n}\qquad(\text{a \emph{primitive} $n$th root of unity}).
+              \]
+              Its successive powers are
+              \[
+                 \zeta^{k}=e^{2\pi i k/n},\quad k=0,\dots,n-1,
+              \]
+              which are precisely the $n$ distinct elements of $C_{n}$.
+              Thus
+              \[
+                 C_{n}=\langle\zeta\rangle
+              \]
+              and the group is cyclic, generated by $\zeta$.
+              
+              \bigskip
+              \textbf{3.\;Explicit isomorphism with \(\Bbb Z_{n}\).}
+              
+              Define
+              \[
+                 \Phi:\Bbb Z\;\longrightarrow\;C_{n},
+                 \qquad
+                 \Phi(k)=\zeta^{\,k}=e^{2\pi i k/n}.
+              \]
+              \begin{itemize}
+                 \item $\Phi$ is a homomorphism:
+                       \(
+                         \Phi(k+\ell)=\zeta^{k+\ell}=\zeta^{k}\zeta^{\ell}
+                                    =\Phi(k)\Phi(\ell).
+                       \)
+                 \item $\ker\Phi=\{\,k\in\Bbb Z\mid\zeta^{\,k}=1\}
+                                  =n\Bbb Z.
+                       $
+              \end{itemize}
+              By the First Isomorphism Theorem,
+              \[
+                 \Bbb Z/\ker\Phi
+                    \;\cong\;
+                 \operatorname{im}\Phi
+                    =C_{n}.
+              \]
+              Since $\ker\Phi=n\Bbb Z$, the quotient is
+              \(
+                 \Bbb Z_{n}=\Bbb Z/n\Bbb Z.
+              \)
+              
+              \[
+                 \boxed{\;
+                   C_{n}\;\cong\;\Bbb Z_{n}
+                 \;}
+              \]
+              and this bijection is concretely given by
+              \(
+                 \overline{k}\longmapsto e^{2\pi i k/n}.
+              \)
+              
+              \end{solution}
+              \begin{solution}
+                \textbf{Step 1.\;Prime–power decomposition.}  
+                \[
+                   72 \;=\; 2^{3}\,3^{2}.
+                \]
+                
+                \textbf{Step 2.\;Classify the $p$–primary parts.}  
+                For a fixed prime power $p^{k}$, finite abelian $p$–groups correspond
+                bijectively to \emph{partitions} of~$k$.
+                
+                \[
+                \renewcommand{\arraystretch}{1.2}
+                \begin{array}{c|c|c}
+                p & k & \text{partitions of }k \Longrightarrow \text{$p$-groups}\\\hline
+                2 & 3 & (3)\;\Longrightarrow\;\Bbb Z_{8}\\
+                  &   & (2+1)\;\Longrightarrow\;\Bbb Z_{4}\oplus\Bbb Z_{2}\\
+                  &   & (1+1+1)\;\Longrightarrow\;\Bbb Z_{2}\oplus\Bbb Z_{2}\oplus\Bbb Z_{2}\\\hline
+                3 & 2 & (2)\;\Longrightarrow\;\Bbb Z_{9}\\
+                  &   & (1+1)\;\Longrightarrow\;\Bbb Z_{3}\oplus\Bbb Z_{3}
+                \end{array}
+                \]
+                
+                \textbf{Step 3.\;Form all direct products.}  
+                An abelian group of order $72=8\cdot9$
+                is the direct product of one $2$–primary group (order $8$)
+                and one $3$–primary group (order $9$).
+                \[
+                  \renewcommand{\arraystretch}{1.3}
+                  \begin{array}{l|l|l}   % ← three columns now
+                  \text{$2$-part} & \text{$3$-part} & \text{direct product}\\\hline
+                  \Bbb Z_{8} & \Bbb Z_{9} & \Bbb Z_{8}\oplus\Bbb Z_{9}\;\cong\;\Bbb Z_{72}\\
+                  \Bbb Z_{8} & \Bbb Z_{3}\oplus\Bbb Z_{3} 
+                             & \Bbb Z_{8}\oplus\Bbb Z_{3}\oplus\Bbb Z_{3}
+                               \;\cong\;\Bbb Z_{24}\oplus\Bbb Z_{3}\\\hline
+                  \Bbb Z_{4}\oplus\Bbb Z_{2} & \Bbb Z_{9} 
+                             & (\Bbb Z_{4}\oplus\Bbb Z_{9})\oplus\Bbb Z_{2}
+                               \;\cong\;\Bbb Z_{36}\oplus\Bbb Z_{2}\\
+                  \Bbb Z_{4}\oplus\Bbb Z_{2} & \Bbb Z_{3}\oplus\Bbb Z_{3}
+                             & \Bbb Z_{4}\oplus\Bbb Z_{2}\oplus\Bbb Z_{3}\oplus\Bbb Z_{3}
+                               \;\cong\;\Bbb Z_{6}\oplus\Bbb Z_{12}\\\hline
+                  \Bbb Z_{2}\oplus\Bbb Z_{2}\oplus\Bbb Z_{2} & \Bbb Z_{9}
+                             & (\Bbb Z_{2}\oplus\Bbb Z_{9})\oplus\Bbb Z_{2}\oplus\Bbb Z_{2}
+                               \;\cong\;\Bbb Z_{18}\oplus\Bbb Z_{2}\oplus\Bbb Z_{2}\\
+                  \Bbb Z_{2}\oplus\Bbb Z_{2}\oplus\Bbb Z_{2} & \Bbb Z_{3}\oplus\Bbb Z_{3}
+                             & \Bbb Z_{2}\oplus\Bbb Z_{2}\oplus\Bbb Z_{2}\oplus
+                               \Bbb Z_{3}\oplus\Bbb Z_{3}
+                               \;\cong\;\Bbb Z_{2}\oplus\Bbb Z_{6}\oplus\Bbb Z_{6}
+                  \end{array}
+                  \] 
+                
+                \textbf{Step 4.\;Invariant–factor list (each divisor of the next).}
+                \[
+                \boxed{
+                \begin{aligned}
+                1.\;&\Bbb Z_{72}\\
+                2.\;&\Bbb Z_{24}\;\oplus\;\Bbb Z_{3}\\
+                3.\;&\Bbb Z_{36}\;\oplus\;\Bbb Z_{2}\\
+                4.\;&\Bbb Z_{12}\;\oplus\;\Bbb Z_{6}\\
+                5.\;&\Bbb Z_{18}\;\oplus\;\Bbb Z_{2}\;\oplus\;\Bbb Z_{2}\\
+                6.\;&\Bbb Z_{6}\;\oplus\;\Bbb Z_{6}\;\oplus\;\Bbb Z_{2}
+                \end{aligned}}
+                \]
+                
+                \paragraph{Conclusion.}
+                There are exactly \(\mathbf{6}\) abelian groups (up to isomorphism) of
+                order \(72\), listed above in invariant-factor form.
+                \end{solution}
+                \begin{solution}
+                  Let $p$ be an \emph{odd} prime and suppose $\lvert G\rvert = 2p$.
+                  
+                  \bigskip
+                  \textbf{1.\;A unique Sylow–$p$ subgroup is normal.}
+                  
+                  Let $n_{p}$ be the number of Sylow–$p$ subgroups.  
+                  Sylow’s theorems say
+                  \[
+                     n_{p}\;\mid\;2
+                     \quad\text{and}\quad
+                     n_{p}\equiv 1 \pmod{p}.
+                  \]
+                  Because $p$ is odd, the divisors of $2$ are $1,2$ and only
+                  $n_{p}=1$ satisfies the congruence.  
+                  Hence the Sylow–$p$ subgroup
+                  \[
+                     P=\;\text{the unique subgroup of order }p
+                  \]
+                  is \emph{normal} in $G$:
+                  \[
+                     P\;\trianglelefteq\;G.
+                  \]
+                  
+                  \bigskip
+                  \textbf{2.\;Write $G$ as a semidirect product $P\rtimes C_{2}$.}
+                  
+                  Pick an element $r\in G\smallsetminus P$; then $r^{2}=e$ by Lagrange,
+                  so $\langle r\rangle\cong C_{2}$ and
+                  \[
+                     G = P\langle r\rangle,\qquad P\cap\langle r\rangle=\{e\},
+                  \]
+                  i.e.\ $G \cong P\rtimes_{\!\varphi} C_{2}$,
+                  where the action is given by conjugation:
+                  \[
+                     \varphi:C_{2}\longrightarrow\Aut(P),
+                     \qquad
+                     \varphi(r)(x)=rxr^{-1}.
+                  \]
+                  Because $P\cong\Bbb Z_{p}$ is cyclic, 
+                  $\Aut(P)\cong\Bbb Z_{p-1}$ is cyclic of order $p-1$.
+                  
+                  \bigskip
+                  \textbf{3.\;Only two possible actions.}
+                  
+                  The image of $\varphi$ is a subgroup of $\Aut(P)$ whose order divides
+                  both $\lvert C_{2}\rvert=2$ and $\lvert\Aut(P)\rvert=p-1$.
+                  Hence
+                  \[
+                     \lvert\operatorname{im}\varphi\rvert = 1
+                     \quad\text{or}\quad
+                     \lvert\operatorname{im}\varphi\rvert = 2.
+                  \]
+                  
+                  \smallskip
+                  \emph{(i) Trivial action $\bigl(\operatorname{im}\varphi=\{1\}\bigr)$.}\;
+                  Then $r$ commutes with $P$ and
+                  \[
+                     G \;\cong\; P\times\langle r\rangle
+                               \;\cong\; \Bbb Z_{p}\times\Bbb Z_{2}
+                               \;\cong\; \Bbb Z_{2p},
+                  \]
+                  because $\gcd(p,2)=1$ implies the direct product is cyclic.
+                  
+                  \smallskip
+                  \emph{(ii) Non-trivial action of order $2$.}\;
+                  Since $\Aut(\Bbb Z_{p})$ is cyclic, it has a \emph{unique} element of
+                  order $2$, namely $x\mapsto x^{-1}$.  
+                  Thus
+                  \[
+                     \varphi(r)(x)=x^{-1},\qquad x\in P,
+                  \]
+                  and $G$ has the presentation
+                  \[
+                     G
+                       \;=\;
+                     \Bigl\langle\,a,r\;\Bigm|\;
+                                a^{p}=r^{2}=e,\; rar^{-1}=a^{-1}\Bigr\rangle
+                       \;=\; D_{2p},
+                  \]
+                  the dihedral group of order $2p$.
+                  
+                  \bigskip
+                  \textbf{4.\;Conclusion.}
+                  Exactly two (and only two) isomorphism types occur:
+                  \[
+                     \boxed{%
+                        G\;\cong\;\Bbb Z_{2p}
+                        \quad\text{or}\quad
+                        G\;\cong\;D_{2p}.}
+                  \]
+                  \end{solution}
+                  \begin{solution}
+                    \textbf{(a)  \(F=\Bbb Z_{2}[x]/(x^{3}+x+1)\) is a field of order \(8\).}
+                    
+                    \medskip
+                    \emph{Irreducibility of \(x^{3}+x+1\) over \(\Bbb Z_{2}\).}  
+                    A cubic over a field is irreducible iff it has no root in that field.
+                    \[
+                    f(x)=x^{3}+x+1\in\Bbb Z_{2}[x], 
+                    \qquad
+                    f(0)=1\neq0,\; f(1)=1+1+1=1\neq0,
+                    \]
+                    so \(f\) has no root in \(\Bbb Z_{2}\) and is therefore irreducible.
+                    
+                    \medskip
+                    \emph{Consequences.}  
+                    Because \(f\) is irreducible, the quotient ring
+                    \(\Bbb Z_{2}[x]/(f)\) is a field.  
+                    Its elements are the residue classes of polynomials of degree
+                    \(\le2\), i.e.\ the \(2^{3}=8\) vectors
+                    \[
+                    \{\,0,1,x,x+1,x^{2},x^{2}+1,x^{2}+x,x^{2}+x+1\,\},
+                    \]
+                    so \(\lvert F\rvert = 8\).
+                    
+                    \bigskip
+                    \textbf{(b)  Multiplicative order of \(\alpha=x+(x^{3}+x+1)\in F\).}
+                    
+                    Write simply \(\alpha=x\).  
+                    Inside \(F\) we have the relation
+                    \[
+                       x^{3} = x+1
+                       \quad\Longrightarrow\quad
+                       x^{3}+x = 1.
+                    \]
+                    
+                    \smallskip
+                    \emph{Powers of \(\alpha\):}
+                    \[
+                    \begin{aligned}
+                    \alpha^{1} &= x,\\
+                    \alpha^{2} &= x^{2},\\
+                    \alpha^{3} &= x^{3}=x+1,\\
+                    \alpha^{4} &= \alpha^{3}\alpha = (x+1)x = x^{2}+x,\\
+                    \alpha^{5} &= \alpha^{4}\alpha = (x^{2}+x)x = x^{3}+x^{2}= (x+1)+x^{2}=x^{2}+x+1,\\
+                    \alpha^{6} &= \alpha^{5}\alpha = (x^{2}+x+1)x = x^{3}+x^{2}+x = (x+1)+x^{2}+x = x^{2}+1,\\
+                    \alpha^{7} &= \alpha^{6}\alpha = (x^{2}+1)x = x^{3}+x = 1.
+                    \end{aligned}
+                    \]
+                    
+                    \emph{Minimality.}  
+                    None of \(\alpha,\alpha^{2},\dots,\alpha^{6}\) equals \(1\); hence
+                    \(\operatorname{ord}_{F^{\times}}(\alpha)=7\).
+                    
+                    \smallskip
+                    \emph{Observation.}  
+                    The multiplicative group \(F^{\times}\) has order \(8-1=7\) and is
+                    cyclic. Because \(7\) is prime, \emph{every} non-zero element has order
+                    \(7\).  Thus \(\alpha\) is a generator of \(F^{\times}\).
+                    
+                    \[
+                    \boxed{\;\operatorname{ord}(\alpha)=7\;}
+                    \]
+                    \end{solution}
+                    \begin{solution}
+                      We work in the Euclidean domain $\Bbb Z[i]$ with norm
+                      $N(z)=z\overline z=x^{2}+y^{2}$ for $z=x+iy$.
+                      
+                      \bigskip
+                      \textbf{Euclidean algorithm.}
+                      
+                      \[
+                      \renewcommand{\arraystretch}{1.2}
+                      \begin{array}{r|c|c|c}
+                      k & r_{k} & q_{k} & r_{k-1}=q_{k}r_{k}+r_{k+1}\\\hline
+                      0 & a_{0}=15+11i &      & \\[2pt]
+                      1 & a_{1}=4+9i   & q_{1}=2-i
+                            & 15+11i=(2-i)(4+9i)+\boxed{(-2-3i)}\\[4pt]
+                      2 & r_{1}=-2-3i  & q_{2}=-3
+                            & 4+9i=(-3)(-2-3i)+\boxed{(-2)}\\[4pt]
+                      3 & r_{2}=-2     & q_{3}=1+2i
+                            & -2-3i=(1+2i)(-2)+\boxed{i}\\[4pt]
+                      4 & r_{3}=i      &           & (-2)=(-i)\,i+0
+                      \end{array}
+                      \]
+                      
+                      The last non–zero remainder is a \emph{unit} $r_{3}=i$, so
+                      \[
+                      \gcd\bigl(15+11i,\;4+9i\bigr)\;=\;\pm1,\;\pm i.
+                      \]
+                      
+                      \bigskip
+                      \textbf{Bézout coefficients.}
+                      
+                      Back-substitute to express $i$ (and hence $1$) as a $\Bbb Z[i]$–linear
+                      combination of the two inputs.
+                      
+                      \[
+                      \begin{aligned}
+                      i
+                        &\;=\;(-2-3i) - (1+2i)(-2)\\[4pt]
+                        &\;=\; \bigl(15+11i-(2-i)(4+9i)\bigr) - (1+2i)\bigl(4+9i+3(-2-3i)\bigr)\\[4pt]
+                        &\;=\;(-2-6i)\,(15+11i) \;+\; (9+8i)\,(4+9i).
+                      \end{aligned}
+                      \]
+                      
+                      Multiply both sides by $-i$ to obtain the Bézout identity with right-hand
+                      side $1$:
+                      
+                      \[
+                      \boxed{\;
+                      1 \;=\;(-6+2i)\,(15+11i) \;+\; (8-9i)\,(4+9i).
+                      \;}
+                      \]
+                      
+                      Thus $u=-6+2i$ and $v=8-9i$ satisfy
+                      \[
+                      u\,(15+11i) + v\,(4+9i)=1,
+                      \]
+                      confirming that the two Gaussian integers are coprime.
+                      \end{solution}
+                      \begin{solution}
+                        \textbf{(a)  Exactly half of the permutations are even: \(\lvert A_{n}\rvert=\dfrac{n!}{2}\).}
+                        
+                        \smallskip
+                        \emph{Sign homomorphism.}  
+                        Define
+                        \[
+                        \varepsilon:S_{n}\;\longrightarrow\;\{\pm1\},\qquad
+                        \varepsilon(\sigma)=
+                          \begin{cases}
+                             +1 &\text{if }\sigma\text{ is even},\\[-2pt]
+                             -1 &\text{if }\sigma\text{ is odd}.
+                          \end{cases}
+                        \]
+                        Because the parity of a product of permutations is the product of their
+                        parities, \(\varepsilon\) is a group homomorphism.
+                        
+                        \smallskip
+                        \emph{Kernel and image.}  
+                        The kernel of \(\varepsilon\) is the alternating group
+                        \(A_{n}\) (all even permutations).  
+                        Transpositions show that \(\varepsilon\) is \emph{surjective}, so
+                        \(\operatorname{im}\varepsilon=\{\pm1\}\) has order \(2\).
+                        
+                        \smallskip
+                        \emph{Counting.}  
+                        By the First Isomorphism Theorem,
+                        \[
+                        \lvert A_{n}\rvert
+                           =\lvert\ker\varepsilon\rvert
+                           =\frac{\lvert S_{n}\rvert}{\lvert\operatorname{im}\varepsilon\rvert}
+                           =\frac{n!}{2}.
+                        \]
+                        
+                        \[
+                        \boxed{\;\lvert A_{n}\rvert=\dfrac{n!}{2}\;}
+                        \]
+                        
+                        %--------------------------------------------------------------------
+                        \bigskip
+                        \textbf{(b)  The permutation \(\sigma=(12)(13)(1456)\) in \(S_{6}\).}
+                        
+                        \emph{Disjoint–cycle decomposition}  
+                        (write cycles right-to-left):
+                        
+                        \[
+                        \begin{aligned}
+                        1&\mapsto4\mapsto5\mapsto6\mapsto3\mapsto2\mapsto1,\\
+                        \text{all other points are included above}.
+                        \end{aligned}
+                        \qquad\Longrightarrow\qquad
+                        \sigma=(1\,4\,5\,6\,3\,2).
+                        \]
+                        
+                        \emph{Order of \(\sigma\).}  
+                        A \(k\)-cycle has order \(k\); here \(k=6\), so
+                        \[
+                        \operatorname{ord}(\sigma)=6.
+                        \]
+                        
+                        \emph{Parity of \(\sigma\).}  
+                        A \(k\)-cycle is even iff \(k-1\) is even.  
+                        Since \(6-1=5\) is odd, the \(6\)-cycle above is \emph{odd}.  
+                        (Equivalently, \((12)\) and \((13)\) are odd, \((1456)\) is odd
+                        \((4-1=3)\); the product of three odd permutations is odd.)
+                        
+                        \[
+                        \boxed{\;
+                           \sigma=(1\,4\,5\,6\,3\,2),\quad
+                           \operatorname{ord}(\sigma)=6,\quad
+                           \sigma\text{ is odd}.
+                        \;}
+                        \]
+                        \end{solution}
+                        \begin{solution}
+                          Recall the quaternion group
+                          \[
+                             Q_{8}= \{\pm1,\;\pm i,\;\pm j,\;\pm k\},
+                             \qquad
+                             i^{2}=j^{2}=k^{2}=ijk=-1 .
+                          \]
+                          
+                          %-----------------------------------------------------------------
+                          \bigskip
+                          \textbf{(a) Conjugacy classes in \(Q_{8}\).}
+                          
+                          Because
+                          \(\langle -1\rangle\subset Z(Q_{8})\), multiplication by \(-1\)
+                          takes each element to a central one, so \(\pm x\) always belong to the
+                          \emph{same} class.  Direct calculation (or symmetry) gives
+                          \[
+                             \boxed{\;
+                               \{1\},\;
+                               \{-1\},\;
+                               \{\,i,-i\,\},\;
+                               \{\,j,-j\,\},\;
+                               \{\,k,-k\,\}.
+                             \;}
+                          \]
+                          
+                          %-----------------------------------------------------------------
+                          \bigskip
+                          \textbf{(b) The centre and the class equation.}
+                          
+                          Every element commutes with \(\pm1\), while
+                          \(i,j,k\) fail to commute with each other.
+                          Hence
+                          \[
+                             Z(Q_{8})=\{\,\pm1\,\},
+                             \quad\text{so }|Z(Q_{8})|=2.
+                          \]
+                          Using the conjugacy–class sizes found in~(a):
+                          \[
+                             1 + 1 + 2 + 2 + 2 \;=\; 8
+                             \quad\Longrightarrow\quad
+                             |Z(Q_{8})|+\sum\limits_{\text{non-central classes}}|C|
+                             =|Q_{8}|,
+                          \]
+                          verifying the class equation.
+                          
+                          %-----------------------------------------------------------------
+                          \bigskip
+                          \textbf{(c) The automorphism group \(\Aut(Q_{8})\).}
+                          
+                          \begin{enumerate}[label=\arabic*., leftmargin=*]
+                          \item An automorphism is completely determined by the images of \(i\)
+                                and \(j\), provided those images \emph{generate} \(Q_{8}\) and
+                                satisfy the relation
+                                \(\varphi(j)\,\varphi(i)=\varphi(k)=-\varphi(i)\,\varphi(j)\).
+                          
+                          \item The set
+                                \(\{\pm i,\pm j,\pm k\}\) contains \(6\) elements of order \(4\).
+                                To generate \(Q_{8}\) we may send
+                                \[
+                                    i \longmapsto \epsilon_{1}x, \qquad
+                                    j \longmapsto \epsilon_{2}y,
+                                \]
+                                where
+                                \(x\neq \pm y\) are chosen from \(\{i,j,k\}\)
+                                and \(\epsilon_{1},\epsilon_{2}\in\{\pm1\}\).
+                                \begin{itemize}
+                                   \item There are \(3\cdot2=6\) ordered pairs
+                                         \((x,y)\) with \(x\neq y\).
+                                   \item For each such pair there are \(2\cdot2=4\) sign choices.
+                                \end{itemize}
+                                Hence \(|\Aut(Q_{8})| = 6\cdot4 = 24\).
+                          
+                          \item Composition with the natural action on the set
+                                \(\{\pm i,\pm j,\pm k\}/\{\pm1\}=\{\,\{\pm i\},\{\pm j\},\{\pm k\}\}\)
+                                gives a faithful homomorphism
+                                \[
+                                    \Aut(Q_{8})\;\hookrightarrow\;S_{4},
+                                \]
+                                whose image has order \(24\); therefore
+                                \[
+                                    \boxed{\;
+                                       \Aut(Q_{8})\;\cong\;S_{4},\qquad
+                                       |\Aut(Q_{8})|=24 .
+                                    \;}
+                                \]
+                          \end{enumerate}
+                          \end{solution}
+\end{document}

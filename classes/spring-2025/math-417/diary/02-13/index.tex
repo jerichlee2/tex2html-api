@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+We want to show why
+\[
+\lvert G\rvert \;=\; \lvert \operatorname{Im}(f)\rvert\;\lvert \ker(f)\rvert
+\]
+holds for a finite group $G$ and a group homomorphism $f: G \to K$.
+
+\subsection*{Step 1: First Isomorphism Theorem}
+The First Isomorphism Theorem tells us
+\[
+G \big/ \ker(f) \;\cong\; \operatorname{Im}(f).
+\]
+Since isomorphic groups have the same number of elements, we immediately get
+\[
+\lvert G/\ker(f)\rvert \;=\; \lvert \operatorname{Im}(f)\rvert.
+\]
+
+\subsection*{Step 2: The size of a quotient group}
+From basic group theory, if $H$ is a subgroup of $G$ of finite index, then the index of $H$ in $G$ is defined as
+\[
+\lvert G : H\rvert \;=\; \frac{\lvert G\rvert}{\lvert H\rvert}.
+\]
+Moreover, when $H \trianglelefteq G$ is a normal subgroup, the quotient group $G/H$ is well-defined and it has
+\[
+\lvert G/H\rvert \;=\; \lvert G : H\rvert \;=\; \frac{\lvert G\rvert}{\lvert H\rvert}.
+\]
+Applying this to $H = \ker(f)$ (which is necessarily normal) gives
+\[
+\lvert G/\ker(f)\rvert \;=\; \frac{\lvert G\rvert}{\lvert \ker(f)\rvert}.
+\]
+
+\subsection*{Combining both facts}
+Putting these two observations together:
+\[
+\lvert G/\ker(f)\rvert
+= \lvert \operatorname{Im}(f)\rvert
+\quad\text{and}\quad
+\lvert G/\ker(f)\rvert 
+= \frac{\lvert G\rvert}{\lvert \ker(f)\rvert},
+\]
+immediately gives us
+\[
+\frac{\lvert G\rvert}{\lvert \ker(f)\rvert}
+\;=\;
+\lvert \operatorname{Im}(f)\rvert
+\quad\Longrightarrow\quad
+\lvert G\rvert 
+\;=\; 
+\lvert \operatorname{Im}(f)\rvert 
+\;\lvert \ker(f)\rvert.
+\]
+
+\noindent
+\textbf{Claim.} $\operatorname{GL}_n(\mathbb{R}) \big/ \operatorname{SL}_n(\mathbb{R}) \;\cong\; \mathbb{R}^{\times}.$
+
+\subsection*{Step 1: Define the map}
+Consider the determinant map
+\[
+\det:\; \operatorname{GL}_n(\mathbb{R})\;\longrightarrow\;\mathbb{R}^\times,
+\]
+where $\mathbb{R}^\times$ is the group of all nonzero real numbers under multiplication. Since every matrix in $\operatorname{GL}_n(\mathbb{R})$ is invertible, its determinant is a nonzero real number, so the map is well-defined.
+
+\subsection*{Step 2: Show that $\operatorname{Im}(\det) = \mathbb{R}^\times$}
+For any $\alpha \in \mathbb{R}^\times$, we can construct a diagonal matrix 
+\[
+D =
+\begin{pmatrix}
+\alpha & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1
+\end{pmatrix}
+\]
+which clearly lies in $\operatorname{GL}_n(\mathbb{R})$ and has determinant $\alpha$. Hence the determinant map is \emph{onto} (surjective).
+
+\subsection*{Step 3: Identify the kernel of $\det$}
+The kernel of the determinant map is
+\[
+\ker(\det) 
+\;=\; 
+\{\, A \in \operatorname{GL}_n(\mathbb{R}) \;\mid\; \det(A) = 1 \}
+\;=\;
+\operatorname{SL}_n(\mathbb{R}),
+\]
+the special linear group of all $n \times n$ real matrices with determinant $1$.
+
+\subsection*{Step 4: Apply the First Isomorphism Theorem}
+The First Isomorphism Theorem tells us that
+\[
+\operatorname{GL}_n(\mathbb{R}) \,\big/\, \ker(\det)
+\;\cong\;
+\operatorname{Im}(\det).
+\]
+From Steps 2 and 3, we know
+\[
+\ker(\det) = \operatorname{SL}_n(\mathbb{R})
+\quad\text{and}\quad
+\operatorname{Im}(\det) = \mathbb{R}^\times.
+\]
+Hence,
+\[
+\operatorname{GL}_n(\mathbb{R}) \,\big/\, \operatorname{SL}_n(\mathbb{R})
+\;\cong\;
+\mathbb{R}^\times.
+\]
+
+\subsection*{Conclusion}
+We have established a natural isomorphism between the quotient group $\operatorname{GL}_n(\mathbb{R})/\operatorname{SL}_n(\mathbb{R})$ and the multiplicative group of nonzero real numbers $\mathbb{R}^\times$ by way of the determinant map.
+
+
+\section*{Solution to Part (b)}
+
+\noindent
+\textbf{Claim.} $\displaystyle \mathbb{C}^{\times} \big/ C_n \;\cong\; \mathbb{C}^{\times},$ 
+where 
+\[
+C_n \;=\; \bigl\{\, e^{2\pi i k/n}\;:\; k=0,1,\dots,n-1\bigr\}
+\]
+is the group of $n$th roots of unity under multiplication, and $\mathbb{C}^\times$ is the multiplicative group of all nonzero complex numbers.
+
+\subsection*{Step 1: Define the map}
+Consider the map
+\[
+\varphi:\;\mathbb{C}^\times \;\longrightarrow\;\mathbb{C}^\times,
+\quad
+z \;\longmapsto\; z^n.
+\]
+Since $z \neq 0$ in $\mathbb{C}^\times$, $z^n$ is also a nonzero complex number, so $\varphi$ is well-defined.
+
+\subsection*{Step 2: Surjectivity of $\varphi$}
+Let $w \in \mathbb{C}^\times$ be arbitrary. We want to solve $z^n = w$ for $z \in \mathbb{C}^\times$. By choosing any branch of the complex $n$th root of $w$, we see there is at least one solution $z$ with $z^n = w$. Indeed, if $w = re^{i\theta}$ in polar form, then a principal $n$th root for $w$ can be chosen as
+\[
+z = r^{1/n}e^{i \theta/n}.
+\]
+Hence, $\varphi$ is onto: $\operatorname{Im}(\varphi) = \mathbb{C}^\times$.
+
+\subsection*{Step 3: Kernel of $\varphi$}
+The kernel of $\varphi$ is precisely the set of $z \in \mathbb{C}^\times$ such that $z^n = 1$. These are precisely the $n$th roots of unity, i.e.\
+\[
+\ker(\varphi)
+\;=\;
+\bigl\{\,z \in \mathbb{C}^\times : z^n = 1 \bigr\}
+\;=\;
+C_n.
+\]
+
+\subsection*{Step 4: Apply the First Isomorphism Theorem}
+Since $\mathbb{C}^\times$ is abelian, $C_n$ is a normal subgroup. By the First Isomorphism Theorem,
+\[
+\mathbb{C}^\times \,\big/\, \ker(\varphi) 
+\;\cong\;
+\operatorname{Im}(\varphi).
+\]
+From Steps 2 and 3, we know that
+\[
+\ker(\varphi) = C_n
+\quad\text{and}\quad
+\operatorname{Im}(\varphi) = \mathbb{C}^\times.
+\]
+Hence,
+\[
+\mathbb{C}^\times \,\big/\, C_n 
+\;\cong\; 
+\mathbb{C}^\times,
+\]
+as desired.
+
+\subsection*{Conclusion}
+We have shown that the quotient of $\mathbb{C}^\times$ by the subgroup of $n$th roots of unity $C_n$ is isomorphic to $\mathbb{C}^\times$, using the natural map $z \mapsto z^n$.
+
+\end{document}

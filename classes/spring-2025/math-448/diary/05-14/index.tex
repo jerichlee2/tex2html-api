@@ -1,0 +1,1236 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  Let $f$ be analytic in the punctured plane $\mathbb{C}\setminus\{0\}$ and
+  assume the global estimate
+  \[
+     |f(z)| \;\le\; |z|^{-10.5},
+     \qquad z\neq 0.
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{1.\ Laurent expansion about the origin.}
+  
+  Because $f$ is analytic on an annulus centred at~$0$ of \emph{any} positive
+  inner and outer radius, it admits a Laurent series that converges
+  throughout $\mathbb{C}\setminus\{0\}$:
+  \[
+     f(z)
+     \;=\;
+     \sum_{n=-\infty}^{+\infty} a_n z^{\,n},
+     \qquad z\neq 0.
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{2.\ Cauchy estimates for Laurent coefficients.}
+  
+  For any radius $R>0$ let
+  \[
+     M_R \;:=\; \max_{|z|=R} |f(z)|.
+  \]
+  By hypothesis, $M_R\le R^{-10.5}$.  
+  Cauchy’s integral formula for Laurent coefficients gives
+  \[
+     a_n
+     \;=\;
+     \frac{1}{2\pi i} \oint_{|z|=R} \frac{f(z)}{z^{\,n+1}}\;dz,
+     \qquad\text{so that}\qquad
+     |a_n|
+     \;\le\;
+     \frac{M_R}{R^{\,n}}
+     \;=\;
+     R^{-10.5-n}.
+  \]
+  This inequality is valid for \emph{every} $R>0$.
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{3.\ Vanishing of all coefficients.}
+  
+  \begin{itemize}
+    \item[(i)] \emph{Coefficients with $n\ge -10$.}\;
+          Fix such an integer $n$ and let $R\to\infty$ in the estimate
+          $|a_n|\le R^{-10.5-n}$.  Because $-10.5-n<0$, the right‑hand side
+          tends to $0$, hence $a_n=0$.
+  
+    \item[(ii)] \emph{Coefficients with $n\le -11$.}\;
+          Now fix $n\le-11$ and let $R\to 0^{+}$.  Since
+          $-10.5-n>0$, we still have $R^{-10.5-n}\to 0$, giving $a_n=0$.
+  \end{itemize}
+  
+  Thus $a_n=0$ for \emph{all} $n\in\mathbb{Z}$.
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{4.\ Conclusion.}
+  
+  Every Laurent coefficient of $f$ vanishes, whence $f$ itself is
+  identically zero on $\mathbb{C}\setminus\{0\}$:
+  \[
+     \boxed{\,f(z)=0\quad\text{for all }z\neq 0.}
+  \]
+  \end{solution}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Cauchy estimates for Laurent coefficients (fully expanded)}
+
+\paragraph{ Laurent series of $f$.}
+Because $f$ is analytic on the punctured plane $\mathbb{C}\setminus\{0\}$,
+it admits a \emph{globally convergent} Laurent expansion  
+\[
+   f(z)=\sum_{n=-\infty}^{+\infty} a_n z^{\,n},
+   \qquad z\neq 0.
+\]
+
+\paragraph{Coefficient formula.}
+For any fixed radius $R>0$ the circle $\Gamma_R:=\{\,|z|=R\,\}$
+lies entirely inside the domain of analyticity,
+so Cauchy’s integral representation for Laurent coefficients gives  
+\begin{equation}\label{eq:coeff}
+   a_n
+   \;=\;
+   \frac{1}{2\pi i}
+   \oint_{\Gamma_R}
+      \frac{f(z)}{z^{\,n+1}}\,
+   dz,
+   \qquad n\in\mathbb{Z} .
+\end{equation}
+
+\paragraph{Bounding $|a_n|$.}
+Write $M_R:=\max_{|z|=R} |f(z)|$.
+Taking moduli in~\eqref{eq:coeff} and using
+$|dz|=R\,d\theta$ (arc‑length element) and $|z|=R$ on $\Gamma_R$,
+\[
+   |a_n|
+   \;\le\;
+   \frac{1}{2\pi}
+   \int_{0}^{2\pi}
+      \frac{M_R}{R^{\,n+1}}\,
+      R\,d\theta
+   \;=\;
+   \frac{M_R}{R^{\,n}},
+   \qquad\text{for every }R>0.
+\]
+
+\paragraph{Inserting the growth hypothesis.}
+The problem assumes $|f(z)|\le |z|^{-10.5}$ for all $z\neq 0$,
+hence $M_R\le R^{-10.5}$.
+Substituting,
+\[
+   \boxed{\;
+      |a_n|
+      \;\le\;
+      R^{-10.5-n},
+      \qquad\text{for \emph{every} }R>0\text{ and all }n\in\mathbb{Z}.
+   \;}
+\]
+
+\medskip
+\noindent
+\textsl{Why this single inequality is so powerful.}
+\begin{itemize}
+   \item If $n\ge -10$, choose $R\to\infty$.
+         Then the exponent $-10.5-n<0$, so $R^{-10.5-n}\to 0$,
+         forcing $a_n=0$.
+   \item If $n\le -11$, choose $R\to 0^{+}$.
+         Now $-10.5-n>0$ and again $R^{-10.5-n}\to 0$,
+         giving $a_n=0$.
+\end{itemize}
+Because \emph{every} integer satisfies one of these two cases, all
+coefficients vanish and thus $f\equiv 0$ in $\mathbb{C}\setminus\{0\}$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\begin{problem}
+   Find the Laurent expansion 
+   \[
+      f(z)\;=\;2\,z^{-3}+\frac1{z+2}
+      \;=\;
+      \sum_{n=-\infty}^{\infty} a_n\,(z-1)^{\,n},
+      \qquad 
+      1<|z-1|<3 .
+   \]
+   \end{problem}
+
+   \begin{solution}
+   Throughout we set 
+   \[
+      w:=z-1,
+      \qquad\qquad
+      z=1+w .
+   \]
+   The annulus $1<|w|<3$ is centred at $w=0$.
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{(a) A series for \boldmath$z^{-1}$ valid when $|w|>1$}
+   
+   \[
+      \frac1{z}
+      =\frac1{1+w}
+      =\frac1{w}\,\frac1{1+\dfrac1{w}}
+      =\frac1{w}\sum_{k=0}^{\infty}(-1)^{k}\,w^{-k}
+      =\sum_{k=0}^{\infty}(-1)^{k}\,w^{-(k+1)} .
+   \]
+   
+   Renaming the index $n:=-(k+1)$ ($n=-1,-2,\dots$) we obtain
+   \[
+      \boxed{\;
+         \displaystyle
+         z^{-1}
+         =\sum_{n=-\infty}^{-1} (-1)^{\,n+1}\,w^{\,n},
+         \quad |w|>1
+      \;}
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{(b) A series for \boldmath$2\,z^{-3}$}
+   
+   Because $\dfrac{d^{\,2}}{dz^{2}}(z^{-1})=2\,z^{-3}$, we may differentiate
+   the series in (a) termwise:
+   
+   \[
+   \begin{aligned}
+      \frac{d}{dz}\bigl(w^{\,n}\bigr)
+         &= n\,w^{\,n-1},\\[2pt]
+      \frac{d^{\,2}}{dz^{2}}\bigl(w^{\,n}\bigr)
+         &= n(n-1)\,w^{\,n-2}.
+   \end{aligned}
+   \]
+   
+   Hence
+   \[
+      2\,z^{-3}
+      =\sum_{n=-\infty}^{-1} (-1)^{\,n+1}\,
+        n(n-1)\,w^{\,n-2}
+      =\sum_{m=-\infty}^{-3}
+         (-1)^{\,m+1}\,(m+2)(m+1)\,w^{\,m},
+   \]
+   where we have set $m:=n-2$.
+   Thus
+   \[
+      \boxed{\;
+         2\,z^{-3}
+         =\sum_{n=-\infty}^{-3}
+             (-1)^{\,n+1}\,(n+2)(n+1)\,w^{\,n},
+         \quad |w|>1
+      \;}
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{(c) A series for \boldmath$(z+2)^{-1}$ valid when $|w|<3$}
+   
+   \[
+      \frac1{z+2}
+      =\frac1{3+w}
+      =\frac1{3}\,\frac1{1+\dfrac{w}{3}}
+      =\frac1{3}\sum_{k=0}^{\infty}(-1)^{k}\Bigl(\frac{w}{3}\Bigr)^{k}
+      =\sum_{k=0}^{\infty}
+           (-1)^{k}\,3^{-(k+1)}\,w^{\,k}.
+   \]
+   
+   Relabelling $n:=k$ ($n=0,1,2,\dots$) we have
+   \[
+      \boxed{\;
+         \frac1{z+2}
+         =\sum_{n=0}^{\infty}
+            (-1)^{\,n}\,3^{-(n+1)}\,w^{\,n},
+         \quad |w|<3
+      \;}
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{(d) Combine the series}
+   
+   Both series in (b) and (c) converge in the overlap $1<|w|<3$, so their
+   sum gives the desired Laurent expansion of $f$:
+   
+   \[
+      f(z)
+      =\sum_{n=-\infty}^{-3}
+           (-1)^{\,n+1}\,(n+2)(n+1)\,w^{\,n}
+        \;+\;
+        \sum_{n=0}^{\infty}
+           (-1)^{\,n}\,3^{-(n+1)}\,w^{\,n},
+      \qquad 1<|w|<3 .
+   \]
+   
+   \bigskip
+   \noindent
+   \textbf{Coefficients $a_n$.}
+   Reading off the coefficients of $w^{\,n}=(z-1)^{\,n}$:
+   
+   \[
+      a_n =
+      \begin{cases}
+         (-1)^{\,n+1}\,(n+2)(n+1), & n\le -3,\\[6pt]
+         0,                        & n=-2,-1,\\[6pt]
+         (-1)^{\,n}\,3^{-(n+1)},   & n\ge 0.
+      \end{cases}
+   \]
+   
+   \[
+      \boxed{\displaystyle
+         f(z)=\sum_{n=-\infty}^{\infty} a_n\,(z-1)^{\,n},
+         \quad
+         a_n\text{ as above},
+         \quad
+         1<|z-1|<3
+      }
+   \]
+   \end{solution}
+   \pagebreak
+   \begin{theorem}[Schwarz’s Lemma]
+      Let $f$ be analytic on the open unit disc
+      \[
+         \mathbb{D} := \{\,z\in\mathbb{C}:|z|<1\,\},
+         \qquad
+         f(0)=0,
+         \qquad
+         |f(z)|\le 1 \;\text{ for all } z\in\mathbb{D}.
+      \]
+      Then
+      \[
+         |f(z)|\le |z|,
+         \qquad |z|<1.
+      \]
+      Moreover, if equality holds at some point $z_0\ne 0$, then
+      $f(z)=\lambda z$ for all $z\in\mathbb{D}$ with $|\lambda|=1$.
+      \end{theorem}
+      
+      \begin{proof}
+      \textbf{1.  Define an auxiliary function.}
+      Because $f(0)=0$, the quotient
+      \[
+         g(z):=\frac{f(z)}{z},
+         \qquad z\in\mathbb{D}\setminus\{0\},
+      \]
+      extends analytically to $z=0$ by setting $g(0):=f'(0)$ (removable
+      singularity).  Hence $g$ is analytic on the whole disc $\mathbb{D}$.
+      
+      \medskip
+      \textbf{2.  Boundary estimate on a circle of radius $r<1$.}
+      Fix $0<r<1$ and consider the circle $\Gamma_r=\{\,|z|=r\,\}$.
+      For $z\in\Gamma_r$ we have
+      \[
+         |g(z)|
+         =\frac{|f(z)|}{|z|}
+         \le\frac{1}{r},
+      \]
+      because $|f(z)|\le 1$ by hypothesis and $|z|=r$.
+      
+      \medskip
+      \textbf{3.  Maximum‑modulus principle.}
+      Since $g$ is analytic on $|z|\le r$ and $|g(z)|\le r^{-1}$ on the
+      boundary, the maximum‑modulus principle gives
+      \[
+         |g(z)|\le \frac{1}{r},
+         \qquad |z|<r.
+      \]
+      Because $r$ can be chosen arbitrarily close to $1$, letting $r\to 1^{-}$
+      yields
+      \[
+         |g(z)|\le 1,
+         \qquad |z|<1.
+      \]
+      
+      \medskip
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Step 3 (expanded):  Application of the Maximum–Modulus Principle}
+
+\textbf{Set–up.}  
+Fix a number $r$ with $0<r<1$ and denote by
+\[
+   \overline{D_r}\;:=\;\{\,z\in\mathbb{C} : |z|\le r\,\}, 
+   \qquad 
+   \partial D_r=\{\,|z|=r\,\}
+\]
+the closed disc of radius $r$ and its boundary circle, respectively.
+The auxiliary function
+\[
+   g(z):=\frac{f(z)}{z}
+\]
+is analytic on the open unit disc $\mathbb{D}$ and therefore analytic on the
+smaller open disc $D_r=\{\,|z|<r\,\}$ as well; in addition, $g$ is
+\emph{continuous} on the closure $\overline{D_r}$.
+
+\medskip
+\textbf{Boundary estimate.}  
+By hypothesis $|f(z)|\le 1$ for every $z\in\mathbb{D}$, and on $\partial D_r$
+we have $|z|=r$; hence for $z\in\partial D_r$
+\[
+   |g(z)|
+   \;=\;\frac{|f(z)|}{|z|}
+   \;\le\;\frac{1}{r}.
+\]
+
+\medskip
+\textbf{Maximum–Modulus Principle (MMP).}  
+Because $g$ is analytic on $D_r$ and continuous on $\overline{D_r}$,
+the MMP states that
+\[
+   \max_{|z|\le r}|g(z)|
+   \;=\;
+   \max_{|z|=r}|g(z)|.
+\]
+The right–hand side is bounded by $1/r$, so
+\[
+   |g(z)|\;\le\;\frac{1}{r},
+   \qquad
+   \text{for every }z\text{ with }|z|<r.
+\]
+
+\medskip
+\textbf{Passing to the unit disc.}  
+The radius $r$ was \emph{arbitrary} in $(0,1)$.
+Letting $r\to 1^{-}$ (i.e.\ choosing radii closer and closer to~$1$),
+the bound $1/r$ decreases to $1$:
+\[
+   \forall\,z\in\mathbb{D}\; (|z|<1)\quad
+   |g(z)|
+   \;\le\;
+   \lim_{r\to 1^-} \frac{1}{r}
+   = 1.
+\]
+
+\[
+   \boxed{\;|g(z)|\le 1,\quad |z|<1\;}
+\]
+
+\noindent
+This inequality is the crucial bridge between the given constraint
+$|f(z)|\le 1$ and the desired estimate $|f(z)|\le |z|$, because
+$f(z)=z\,g(z)$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{4.  Inequality for $f$.}
+      Recalling that $g(z)=f(z)/z$ we obtain
+      \[
+         |f(z)|
+         =|z|\,|g(z)|
+         \le |z|\cdot 1
+         = |z|,
+         \qquad |z|<1.
+      \]
+      
+      \medskip
+      \textbf{5.  Characterisation of the equality case.}
+      Assume there exists $z_0\in\mathbb{D}\setminus\{0\}$ with
+      $|f(z_0)|=|z_0|$.  Then $|g(z_0)|=1$, so $|g|$ attains its maximum
+      value inside $\mathbb{D}$.  By the maximum‑modulus principle, $g$ must
+      be constant:
+      \[
+         g(z)\equiv\lambda,
+         \qquad |\lambda|=1.
+      \]
+      Consequently $f(z)=\lambda z$ for all $z\in\mathbb{D}$.
+      
+      \end{proof}
+      %---------------------------------------------------------
+%  Intuitive meaning of Schwarz’s Lemma
+%---------------------------------------------------------
+\pagebreak
+\begin{solution}
+
+   \begin{center}
+   \begin{tabular}{|l|p{8cm}|}
+   \hline
+   \textbf{Formal hypothesis} & \textbf{Geometric meaning} \\ \hline\hline
+   $f$ analytic on the unit disc $\mathbb{D}:=\{\,|z|<1\}$ and $f(0)=0$
+     & The map is holomorphic everywhere inside the disc and \emph{anchors} the centre to itself. \\ \hline
+   $|f(z)|\le 1$ for all $z\in\mathbb{D}$
+     & $f$ never leaves the unit disc—it is “confined’’ by the same circular boundary. \\ \hline
+   \end{tabular}
+   \end{center}
+   
+   \bigskip
+   \subsection*{1.\ A “speed‑limit’’ inside the disc}
+   Visualise the unit disc as a sheet of perfectly elastic rubber whose centre is nailed to the table.
+   Schwarz’s Lemma states that
+   \[
+      |f(z)|\le |z| \quad (|z|<1),
+   \]
+   which means: \emph{when you tug on any interior point, you can never move it farther from the centre than you moved your own finger}.  
+   The map cannot \emph{expand} radial distances; it can only shrink them.
+   
+   \bigskip
+   \subsection*{2.\ Local‐to‐global control}
+   The inequality is global—it holds for \emph{every} $z$—yet it is forced purely by local analyticity plus the boundary bound.
+   In complex analysis, boundary information “leaks’’ into the interior.
+   
+   \bigskip
+   \subsection*{3.\ The rigidity phenomenon}
+   If equality occurs at some interior point $z_0\neq0$, i.e.\ $|f(z_0)|=|z_0|$, the rubber sheet is stretched to its limit there.
+   Analyticity forbids any further distortion, so the entire map must be a rigid rotation:
+   \[
+      f(z)=\lambda z, \qquad |\lambda|=1.
+   \]
+   
+   \bigskip
+   \subsection*{4.\ Derivative bound at the centre}
+   Zooming in at $z=0$,
+   \[
+      |f'(0)|\le 1.
+   \]
+   The initial “speed’’ with which $f$ moves points away from $0$ cannot exceed the speed limit set by Schwarz’s Lemma.  
+   If $|f'(0)|=1$, then $f(z)=\lambda z$ globally.
+   
+   \bigskip
+   \subsection*{5.\ Practical takeaway}
+   Schwarz’s Lemma is the prototype of many \emph{distortion theorems}:
+   \[
+      \text{Boundary control} \;+\; \text{analyticity} \;\Longrightarrow\; \text{strong interior control}.
+   \]
+   Holomorphic maps are dramatically less flexible than real‐variable functions; once pinned down at a point and bounded on the boundary, their stretching behaviour—and, in extremal cases, their entire form—is essentially dictated.
+   
+   \end{solution}
+   %---------------------------------------------------------
+%  How the Maximum–Modulus Principle (MMP) drives Schwarz’s Lemma
+%---------------------------------------------------------
+\begin{solution}
+
+   \subsection*{1.\  The two ingredients of Schwarz’s Lemma}
+   
+   \begin{enumerate}[label=\textbf{\arabic*.},wide,labelwidth=!, labelindent=0pt]
+     \item \textbf{Boundary control}  
+           We are told that the analytic map $f$ never leaves the unit disc:
+           \[
+              |f(z)| \;\le\; 1
+              \quad\text{for all } z\text{ with }|z|<1.
+           \]
+     \item \textbf{Anchoring condition}  
+           The origin is fixed: $f(0)=0$.
+   \end{enumerate}
+   
+   \medskip
+   \subsection*{2.\  Rephrasing the problem in terms of \boldmath$g(z)=\frac{f(z)}{z}$}
+   
+   Since $f(0)=0$, the quotient
+   \[
+      g(z):=\frac{f(z)}{z}
+   \]
+   is analytic on the whole disc (removable singularity at $z=0$).  
+   If we can show that $|g(z)|\le1$ inside $\mathbb{D}$, then multiplying by $|z|$
+   immediately gives the desired inequality
+   $|f(z)|\le|z|$.
+   
+   \medskip
+   \subsection*{3.\  What the Maximum–Modulus Principle (MMP) says intuitively}
+   
+   > *“An analytic function cannot achieve a \emph{strict} maximum of its
+   >  modulus in the interior of a domain—unless it is constant.”*
+   
+   Picture the modulus $|g|$ as a flexible membrane stretched over the
+   disc: the MMP forces this membrane to attain all its high points on the
+   boundary and to “sag’’ inward everywhere else.
+   
+   \medskip
+   \subsection*{4.\  Applying the MMP on concentric circles}
+   
+   \begin{enumerate}[label=\textbf{\alph*.},wide,labelwidth=!, labelindent=0pt]
+     \item Fix a radius $r$ with $0<r<1$ and look at the \emph{smaller} disc
+           $D_r:=\{\,|z|<r\,\}$.\par
+           \vskip4pt
+           Along its boundary $|z|=r$ we already know
+           \[
+              |g(z)| = \frac{|f(z)|}{|z|}
+                      \;\le\; \frac{1}{r}.
+           \]
+     \item By the MMP this boundary bound automatically pushes into the interior:
+           \[
+              |g(z)|\;\le\;\frac{1}{r},
+              \qquad |z|<r.
+           \]
+   \end{enumerate}
+   
+   \medskip
+   \subsection*{5.\  Expanding the control to the \emph{whole} unit disc}
+   
+   The crucial observation: the radius $r$ was arbitrary.  
+   As we let $r\uparrow1$, the factor $1/r$ slides down to~$1$.  
+   Therefore
+   \[
+      |g(z)|\;\le\;1
+      \quad\text{for every } z\text{ with }|z|<1,
+   \]
+   which instantly yields
+   \[
+      |f(z)| \;=\; |z|\cdot|g(z)|
+                 \;\le\; |z|.
+   \]
+   
+   \medskip
+   \subsection*{6.\  Where does the \emph{rigidity} come from?}
+   
+   Suppose equality happens at a single interior point $z_0\neq0$:
+   $|f(z_0)|=|z_0|$.  
+   Then $|g(z_0)|=1$, so the modulus $|g|$ attains its \emph{maximum} value
+   inside the domain, contradicting the MMP \emph{unless $g$ is constant}.
+   Hence $g(z)\equiv\lambda$ with $|\lambda|=1$, and
+   \[
+      f(z)=\lambda z
+   \]
+   is forced globally.  
+   One point of equality rigidly determines the entire map.
+   
+   \bigskip
+   \noindent
+   \textbf{Take‑home intuition.}\;
+   The MMP is the engine that turns a \emph{weak}, one–line boundary
+   condition ($|f|\le1$) into a \emph{strong}, everywhere‑inside constraint
+   ($|f(z)|\le|z|$) and, in the extremal case, pins the whole function down
+   to a rigid rotation.  Holomorphy couples boundary behaviour to interior
+   behaviour so tightly that a single inequality on the rim controls every
+   point in the disc.
+   
+   \end{solution}
+   \noindent
+   \begin{enumerate}
+      \item From the upper semi-circle from [-1,1] to the upper half plane: $w = -\left[ (z+1)^{-1}-\frac{1}{2} \right]^{2} $
+      \item reducing from the upper half-plane strip from [-1,1] to case 1: $i(e^{\frac{\pi i z}{2}}$ 
+      \item from the upper half-plane, excluding all points from [0,i] on the imaginary axis: $w=(z^{2}+1)^{\frac{1}{2}}$
+      \item from the entire plane excluding $\left[ -\infty, -1 \right] \cup\left[ 1,\infty  \right] $: $w=\sqrt{2}i \left[ (z+1)^{-1}- \frac{1}{2} \right]^{\frac{1}{2}}  $
+      \item reducing from the upper semi-circle from $\left[ -1,1 \right] $ excluding all points from $\left[ 0, \frac{i}{2} \right] $  on the imaginary axis: $i(\frac{6}{5}((\frac{1}{(z^{2}+1)}-\frac{1}{2})))$ to case 3
+      \item from the horizontal strip from negative infinity to positive infinity and from -i to i, excluding the negative real axis: $w=i(e^{\pi z}-1)^{\frac{1}{2}}$ 
+      \item the upper ellipse segment from -1 to 1, with tangent angles of alpha at the end points of -1 and 1: $w = -(\frac{2}{z+1}-1)^{\frac{\pi}{2}}$ 
+      \item the circle centered at zero excluding the negative real axis and all real values greater than 1/3: $w= i(\frac{3}{4(\frac{2}{z+1}-1)^{2}-1}-1)^{\frac{1}{2}}$ 
+   \end{enumerate}
+   \begin{solution}
+      We build the map  
+      \[
+      F(z)\;=\;i\bigl(e^{\pi z}-1\bigr)^{\tfrac12}
+      \]
+      as the composition of four elementary conformal maps.  Throughout,
+      the \emph{principal branch} of every multi–valued function is used.
+      
+      \medskip
+      %-------------------------------
+      \textbf{Domain to be mapped.}
+      \[
+      \boxed{
+         \mathcal S
+         =\bigl\{\,z\in\mathbb{C} : -1<\Im z<1\bigr\}
+          \setminus (-\infty,0)
+       }
+      \]
+      is the horizontal strip of height~$2$, with the \emph{negative real
+      axis} removed.
+      
+      \medskip
+      %-------------------------------
+      \begin{enumerate}[label=\textbf{Step \arabic*:}, itemsep=1.4ex]
+      
+      %---------------------------------
+      \item  \textbf{Exponentiation to a slit plane.}  
+      \[
+      u \;=\; e^{\pi z}.
+      \]
+      Write $z=x+iy$; then  
+      $u=e^{\pi x}\,e^{i\pi y}$ with
+      \(
+      -\pi<\arg u<\pi.
+      \)
+      Hence
+      \[
+      \mathcal S
+      \;\xrightarrow{\,e^{\pi z}\,}\;
+      \mathcal D_1
+        = \mathbb{C}\setminus(-\infty,0],
+      \]
+      the plane cut along the \emph{non–positive} real axis.  
+      The strip’s excluded set $(-\infty,0)$ (real, $y=0$) is mapped to the
+      interval $(0,1)$ on the \emph{positive} real axis, so that
+      \(
+      \mathcal D_1
+      =\mathbb{C}\setminus(-\infty,1].
+      \)
+      
+      %---------------------------------
+      \item \textbf{Translate the cut so it starts at the origin.}  
+      \[
+      v \;=\; u-1.
+      \]
+      This sends the point $u=1$ to the origin, converting the slit
+      $(-\infty,1]$ into
+      \[
+      (-\infty,0].
+      \]
+      Thus
+      \[
+      \mathcal D_2
+        = \mathbb{C}\setminus(-\infty,0],
+      \]
+      a plane cut exactly along the \emph{negative} real axis.
+      
+      %---------------------------------
+      \item \textbf{Principal square root to the right half–plane.}  
+      \[
+      w_0 \;=\; \sqrt{v},
+      \qquad
+      -\pi<\arg v<\pi.
+      \]
+      Because $\sqrt{\;}$ halves arguments,
+      \(
+      -\tfrac{\pi}{2}<\arg w_0<\tfrac{\pi}{2},
+      \)
+      so
+      \[
+      \mathcal D_2
+      \;\xrightarrow{\,\sqrt{\;}\,}\;
+      \mathcal D_3
+        = \{w_0\in\mathbb{C} : \Re w_0>0\},
+      \]
+      the \emph{right half–plane}.  
+      (The negative real cut becomes the imaginary axis,
+      which is the branch cut of the square root.)
+      
+      %---------------------------------
+      \item \textbf{Quarter-turn into the upper half–plane.}  
+      \[
+      w \;=\; i\,w_0.
+      \]
+      Multiplying by $i$ rotates the right half–plane
+      counter-clockwise by~$90^{\circ}$:
+      \[
+      \mathcal D_3
+      \;\xrightarrow{\,i\cdot\,}\;
+      \boxed{
+         \mathcal H
+         = \{w\in\mathbb{C} : \Im w>0\}
+       }.
+      \]
+      
+      \end{enumerate}
+      
+      \medskip
+      %-------------------------------
+      \textbf{Summary.}  
+      The composite map
+      \[
+      \boxed{\;
+         F(z)=i\bigl(e^{\pi z}-1\bigr)^{\tfrac12}
+       \;}
+      \]
+      is analytic and one–to–one on the strip
+      $\mathcal S$, and carries $\mathcal S$ \emph{onto} the standard
+      upper half–plane~$\mathcal H$.
+      \end{solution} 
+      %==========================================================
+%           Conformal Mapping ― Quick-Reference
+%==========================================================
+% Minimal preamble additions you might need:
+%
+% \usepackage{amsmath,amssymb}   % basic math
+% \usepackage{mathtools}         % \coloneqq etc. (optional)
+%----------------------------------------------------------
+
+\begin{center}
+   \Large\bfseries Conformal Mapping Cheat Sheet
+ \end{center}
+ \medskip
+ 
+ \begin{itemize}
+ %-----------------------------------------------------------------
+ \item[\textbf{(1)}] \textbf{Definition.}
+       A function \(f\colon\Omega\!\to\!\Bbb C\) on a domain
+       \(\Omega\subset\Bbb C\) is \emph{conformal} at
+       \(z_{0}\in\Omega\) iff it is analytic there and
+       \(f'(z_{0})\neq 0\).
+       (Equivalent: it preserves oriented angles and infinitesimal
+       shapes.)
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(2)}] \textbf{Cauchy–Riemann $\Longrightarrow$ conformal.}
+       If \(u,v\) satisfy the C–R system
+       \(u_{x}=v_{y},\;u_{y}=-v_{x}\) and
+       \(\nabla u\neq(0,0)\) at a point, then
+       \(f=u+iv\) is conformal there.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(3)}] \textbf{Angle preservation.}
+       For curves \(\gamma_{1},\gamma_{2}\) meeting at \(z_{0}\),
+       the oriented angle between \(f\!\circ\!\gamma_{1}\) and
+       \(f\!\circ\!\gamma_{2}\) equals the angle between
+       \(\gamma_{1},\gamma_{2}\).
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(4)}] \textbf{Local similarity.}
+       Near \(z_{0}\):
+       \[
+         f(z) \;=\; f(z_{0}) + f'(z_{0})\,(z-z_{0})
+                   + \mathcal O(|z-z_{0}|^{2}),
+       \]
+       so up to first order \(f\) is a rotation–dilation by
+       \(f'(z_{0})\).
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(5)}] \textbf{Möbius (linear‐fractional) maps.}
+       \[
+         T(z)=\frac{az+b}{cz+d},
+         \quad ad-bc\neq0,
+       \]
+       send circles/lines to circles/lines and are conformal on
+       \(\widehat{\Bbb C}\) minus the pole \(z=-d/c\).
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(6)}] \textbf{Automorphisms of classic domains.}
+       \[
+         \varphi_{\alpha}(z)=e^{i\theta}\,
+           \frac{z-\alpha}{1-\overline{\alpha}\,z},
+         \quad |\alpha|<1,
+       \qquad
+         \psi_{a}(z)=\frac{az+b}{\overline{b}z+\overline{a}},
+         \quad a\overline{a}-b\overline{b}>0,
+       \]
+       give all conformal self-maps of the unit disc
+       \(\Bbb D\) and the upper half-plane \(\mathcal H\)
+       respectively.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(7)}] \textbf{Riemann Mapping Theorem.}
+       Any simply connected, proper open set
+       \(\Omega\subsetneq\Bbb C\) is conformally equivalent to
+       \(\Bbb D\).  (Uniqueness up to a disc automorphism.)
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(8)}] \textbf{Maximum Modulus \& Open Mapping.}
+       Non-constant analytic $\to $  modulus attains no interior maxima and
+       image of an open set is open.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(9)}] \textbf{Schwarz Lemma (Disc $\to$ Disc).}
+       \(f(0)=0\Rightarrow |f(z)|\le|z|\) and
+       \(|f'(0)|\le 1\); equality $\to $  \(f\) is a rotation.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(10)}] \textbf{Schwarz Reflection Principle.}
+       If \(f\) is analytic in a domain symmetric about a line/arc and
+       real-valued on the symmetric subset, then it extends
+       analytically by reflection.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(11)}] \textbf{Schwarz–Christoffel (polygon maps).}
+       The integral
+       \(
+         F(z)=A + C\int^{z}\prod_{k}(t-z_{k})^{\alpha_{k}-1}dt
+       \)
+       sends \(\mathcal H\) (or \(\Bbb D\)) onto a polygon whose
+       interior angles are \(\alpha_{k}\pi\).
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(12)}] \textbf{Koebe $1/4$ Theorem.}
+       If \(f\colon\Bbb D\to\Bbb C\) is univalent with \(f(0)=0\) and
+       \(f'(0)=1\), then \(f(\Bbb D)\) contains the disc
+       \(|w|<\tfrac14\).
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(13)}] \textbf{Conformal invariants.}
+       Cross-ratio
+       \(
+         (z_{1},z_{2};z_{3},z_{4})
+         =
+         \dfrac{(z_{1}-z_{3})(z_{2}-z_{4})}
+               {(z_{1}-z_{4})(z_{2}-z_{3})}
+       \)
+       is preserved by Möbius maps.  
+       Harmonic measure, Green’s function, and Laplace’s equation are
+       invariant under conformal maps.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(14)}] \textbf{Normal Families (Montel).}
+       A locally bounded family of analytic maps is
+       a normal family; Vitali + Arzelà–Ascoli yield subsequence
+       convergence.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(15)}] \textbf{Removal, Pole, Essential.}
+       Isolated singularities of analytic functions fall into:
+       removable, pole (order $m$), or essential; behaviour detected
+       by Laurent series coefficients.
+ 
+ %-----------------------------------------------------------------
+ \item[\textbf{(16)}] \textbf{Principle of Conformal Mapping.}
+       Analytic solutions of boundary–value PDEs (Laplace, Poisson)
+       can be transplanted via conformal maps:
+       \(u\circ f^{-1}\) is harmonic if \(u\) is harmonic.
+ 
+ \end{itemize}
+ 
+ \vspace{1em}
+ \hrule
+ \centerline{\small * Memorise these \(16\) facts and most exam‐style
+ conformal‐mapping problems collapse to a line or two of work!}
+ \pagebreak
+ %==========================================================
+ \begin{solution}
+   Let
+   \[
+     D \;=\;
+     \bigl\{\,z\in\mathbb{C} : \Im z>0,\; |z|>1,\;\Re z<1\bigr\},
+     \qquad
+     f(z)=\frac1z .
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{1.  Decompose the boundary of \(D\)}
+   Write \(D=D_{1}\cap D_{2}\cap D_{3}\), where
+   \[
+     \boxed{D_{1}}=\{\Im z>0\},\qquad
+     \boxed{D_{2}}=\{|z|>1\},\qquad
+     \boxed{D_{3}}=\{\Re z<1\}.
+   \]
+   The boundary is the union of three oriented curves
+   \[
+     \ell_{1}: \Im z=0,\quad
+     \ell_{2}: |z|=1\ (\text{upper semicircle}),\quad
+     \ell_{3}: \Re z=1,\; \Im z>0.
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{2.  Map each piece under \(f(z)=1/z\)}
+   \begin{itemize}
+     \item \(\displaystyle f(\ell_{1})=\Im w=0.\)
+           (Inversion takes the real axis to itself.)
+     \item \(\displaystyle f(\ell_{2})=\{|w|=1\}.\)
+           (The unit circle is invariant, with inside/outside interchanged.)
+     \item \(\displaystyle f(\ell_{3})=\bigl\{\,w:|w-\tfrac12|=\tfrac12\bigr\}.\)
+           Indeed, for \(z=1+iy\) we have
+           \(
+             w=\dfrac{1-iy}{1+y^{2}},\;
+             |w-\tfrac12|=\tfrac12
+           \).
+   \end{itemize}
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{3.  Map the three half/open sets}
+   \[
+     \begin{aligned}
+       f(D_{1})&=\{\Im w<0\}
+         &&\text{(upper $\to$ lower half--plane)},\\
+       f(D_{2})&=\{|w|<1\}
+         &&\text{(exterior $\to$ interior of unit circle)},\\
+       f(D_{3})&=\{\,w:|w-\tfrac12|>\tfrac12\}
+         &&\text{(left of \(x=1\) $\to$ \emph{outside} the circle)}.
+     \end{aligned}
+   \]
+   
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \subsection*{4.  Intersection gives the image domain}
+   \[
+     f(D)
+     =f(D_{1})\cap f(D_{2})\cap f(D_{3})
+     \;=\;
+     \boxed{\;
+       \bigl\{\,w\in\mathbb{C} :
+          \Im w<0,\;
+          |w|<1,\;
+          |\,w-\frac12\,|>\frac12
+       \bigr\}
+     \;}.
+   \]
+   
+   \vspace{0.5em}
+   Thus \(f\) carries \(D\) onto the shaded lens--shaped region inside the 
+   unit disc, \emph{below} the real axis, but \emph{outside} the little circle 
+   of radius \(\tfrac12\) centred at \(w=\tfrac12\).
+   \end{solution}
+   %==========================================================
+%   Key Properties of the Möbius Transformation f(z)=1/z
+%==========================================================
+% Needs only amsmath/amsfonts/amssymb if not already loaded
+%----------------------------------------------------------
+
+\begin{itemize}
+   %----------------------------------------------------------
+   \item[\textbf{Analyticity}] 
+         \(f(z)=1/z\) is meromorphic on the extended plane  
+         \(\widehat{\Bbb C}=\Bbb C\cup\{\infty\}\)
+         with a single simple pole at \(z=0\) and a removable
+         singularity at \(\infty\) (where \(f(\infty)=0\)).
+   
+   %----------------------------------------------------------
+   \item[\textbf{Derivative}] 
+         \[
+           f'(z)=-\frac{1}{z^{2}},\qquad z\neq0,
+         \]
+         so \(f'(z)\neq0\) everywhere on its domain of holomorphy.
+         Hence \(f\) is conformal (angle‐preserving) at every finite
+         point \(\,z\neq0\) and at \(\infty\).
+   
+   %----------------------------------------------------------
+   \item[\textbf{Involution}] 
+         \(f\) is its own inverse:
+         \[
+             f\bigl(f(z)\bigr)=\frac{1}{1/z}=z
+             \quad
+             (\forall z\in\widehat{\Bbb C}\setminus\{0,\infty\}).
+         \]
+         Thus \(f\) is a \emph{Möbius involution} of order~\(2\).
+   
+   %----------------------------------------------------------
+   \item[\textbf{Effect on Modulus}] 
+         \[
+           |f(z)|=\frac{1}{|z|}.
+         \]
+         Hence the unit circle \(\{|z|=1\}\) is \emph{invariant},
+         the exterior \(\{|z|>1\}\) is sent to the interior
+         \(\{|w|<1\}\), and vice versa.
+   
+   %----------------------------------------------------------
+   \item[\textbf{Effect on Argument}] 
+         \[
+           \arg f(z)= -\arg z \pmod{2\pi}.
+         \]
+         Rays through the origin are preserved
+         but their orientation is reversed.
+   
+   %----------------------------------------------------------
+   \item[\textbf{Upper/Lower Half–Planes}] 
+         \[
+           \Im z>0 \;\Longrightarrow\; \Im\!\bigl(1/z\bigr)<0,
+         \qquad
+           \Im z<0 \;\Longrightarrow\; \Im\!\bigl(1/z\bigr)>0.
+         \]
+         Thus \(f\) swaps the upper and lower half–planes.
+   
+   %----------------------------------------------------------
+   \item[\textbf{Circles and Lines}] 
+         As a Möbius map, \(f\) sends generalized circles
+         (lines and circles) to generalized circles.  
+         In particular:
+         \begin{itemize}
+           \item Lines through \(0\) map to themselves.
+           \item A circle not passing through \(0\) maps to another circle.
+           \item A circle through \(0\) maps to a line not passing through \(0\).
+         \end{itemize}
+   
+   %----------------------------------------------------------
+   \item[\textbf{Orientation}] 
+         Because \(f\) is holomorphic (not antiholomorphic),
+         it is orientation–preserving on the Riemann sphere.
+   
+   %----------------------------------------------------------
+   \item[\textbf{Cross–Ratio Preservation}] 
+         Being Möbius, \(f\) preserves the cross–ratio:
+         \[
+           (z_{1},z_{2};z_{3},z_{4})
+             =(f(z_{1}),f(z_{2});f(z_{3}),f(z_{4})).
+         \]
+   
+   %----------------------------------------------------------
+   \item[\textbf{Critical Points}] 
+         \(f'(z)\) never vanishes, so \(f\) has \emph{no} critical
+         points; it is univalent (injective) on
+         \(\widehat{\Bbb C}\setminus\{0,\infty\}\).
+   
+   \end{itemize}
+   
+   %==========================================================
+   \begin{solution}
+      Let \(f(z)=1/z\) and write \(z=x+iy\) with \(x=\Re z\), \(y=\Im z\).  
+      We want to prove that the half–plane
+      \[
+           D_{3}=\{z\in\mathbb{C}:\;x<1\}
+      \]
+      is carried by \(f\) onto the exterior of the little circle
+      \(\displaystyle C=\bigl\{\,w:|w-\tfrac12|=\tfrac12\bigr\}\).
+      
+      %-----------------------------------------------------------------
+      \subsection*{1.  The image of the \(\boldsymbol{\,\Re z=1\,}\) boundary}
+      
+      Set \(x=1\).  Then
+      \[
+         z=1+iy
+         \quad\Longrightarrow\quad
+         w=f(z)=\frac{1-iy}{1+y^{2}}
+              =\frac{1}{1+y^{2}}-i\frac{y}{1+y^{2}} .
+      \]
+      Compute its distance from the centre \(w_{0}=\tfrac12\):
+      \[
+        \bigl|\,w-w_{0}\bigr|^{2}
+          =\Bigl(\frac{1}{1+y^{2}}-\frac12\Bigr)^{2}
+           +\Bigl(\frac{y}{1+y^{2}}\Bigr)^{2}
+          =\frac14 .
+      \]
+      Hence every point of the vertical line \(\Re z=1\) lands on the
+      circle \(C\); conversely every point of \(C\) has a pre-image with
+      \(x=1\).  Thus
+      \[
+         f\bigl(\Re z=1\bigr)=C.
+      \]
+      
+      %-----------------------------------------------------------------
+      \subsection*{2.  Inequality characterisation of the image domain}
+      
+      For general \(z=x+iy\) (\emph{with} \(z\neq0\)) put
+      \(r=x^{2}+y^{2}>0\).  Then
+      \[
+           w=\frac{x-iy}{r},
+           \qquad
+           \bigl|\,w-\tfrac12\bigr|^{2}
+             =\Bigl(\frac{x}{r}-\frac12\Bigr)^{2}
+              +\Bigl(\frac{y}{r}\Bigr)^{2}.
+      \]
+      We need to decide when the inequality
+      \(\bigl|w-\tfrac12\bigr|>\tfrac12\) holds.  Square both sides and
+      multiply by \(4r^{2}\):
+      \[
+         4\Bigl(x-\frac{r}{2}\Bigr)^{2} + 4y^{2} > r^{2}.
+      \]
+      Expand and simplify:
+      \[
+         4\bigl(x^{2}+y^{2}\bigr) - 4xr > 0
+         \;\;\Longleftrightarrow\;\;
+         4r(1-x) > 0.
+      \]
+      Because \(r>0\), the strict inequality is equivalent to
+      \(\boxed{x<1}\).
+      
+      \medskip
+      \noindent
+      \emph{Conclusion:}
+      \[
+            x<1
+            \quad\Longleftrightarrow\quad
+            \bigl|w-\tfrac12\bigr|>\tfrac12 .
+      \]
+      Therefore
+      \[
+         f(D_{3})
+           =\{\,w:|w-\tfrac12|>\tfrac12\},
+      \]
+      exactly the shaded region \emph{outside} the circle of radius
+      \(\tfrac12\) centred at \(w=\tfrac12\).
+      
+      %-----------------------------------------------------------------
+      \subsection*{3.  Orientation check (optional)}
+      
+      Pick a test point to see which side of the boundary goes where:  
+      \(z=i\) lies in \(D_{3}\) (because \(\Re i=0<1\)), and
+      \(w=f(i)=-i\) satisfies
+      \(\bigl|-i-\tfrac12\bigr|=\sqrt{\tfrac14+1}>\tfrac12\),
+      hence indeed lands \emph{outside} \(C\).
+      
+      \end{solution}
+      \pagebreak
+      \begin{remark}
+         Recall that \(f(z)=1/z\) behaves like an \emph{inversion} with respect
+         to the unit circle together with a reflection across the real axis:
+         
+         \[
+             z \;\longmapsto\; \underbrace{\frac{\overline{z}}{|z|^{2}}}_{\text{reflect + rescale}}
+                              =\frac{1}{z}.
+         \]
+         
+         \textbf{1.  What happens to a straight line that \emph{misses} the
+         origin?}\\
+         Any line or circle that does \emph{not} pass through the origin is
+         sent to a \emph{circle}.  
+         Why?  Because the cross–ratio is preserved by Möbius maps; lines are
+         “circles through $\infty$,” and inversion swaps
+         finite points with \(\infty\) unless the line already passes through
+         the origin.
+         
+         Here the boundary line is \(\Re z = 1\).  
+         It is one unit to the right of the origin, so it certainly misses~\(0\);
+         hence its image must be a circle.  
+         A quick calculation shows that every point on \(\Re z=1\) lands at
+         distance \(1/2\) from the point \(w_{0}=1/2\), so the entire line
+         wraps onto that little circle.
+         
+         \textbf{2.  Which \emph{side} of the line becomes the \emph{outside}
+         of the circle?}\\
+         Inversion flips “near” and “far”:
+         
+         \[
+            |z|\;\text{small} \;\;\Longrightarrow\;\;
+            |1/z|\;\text{large},
+            \qquad
+            |z|\;\text{large} \;\;\Longrightarrow\;\;
+            |1/z|\;\text{small}.
+         \]
+         
+         The region \(\Re z<1\) is the half–plane that \emph{contains} the
+         origin (points there can be arbitrarily close to \(0\)).
+         Those near–zero points are hurled far away by \(1/z\);
+         they cannot fit inside the little circle, whose radius is only \(1/2\).
+         Therefore the “origin side’’ of the line must map to the
+         \emph{exterior} of the circle.
+         
+         \textbf{3.  Visual check with two sample points.}
+         
+         \begin{center}
+         \begin{tabular}{c|c|c}
+         \(z\) & in \(\Re z<1\)? & \(w=1/z\) \\
+         \hline
+         \( z = \tfrac12\)      & yes & \( w = 2     \quad (\text{outside})\) \\
+         \( z = 2             \) & no  & \( w = \tfrac12\quad(\text{inside})\)
+         \end{tabular}
+         \end{center}
+         
+         The first point lands \emph{outside} the little circle, the second
+         lands \emph{inside}.  
+         That empirical test matches the geometric reasoning.
+         
+         \medskip
+         \noindent
+         \emph{Hence:} the half–plane \(\Re z<1\) (shaded to the left of the
+         vertical line) must go to the region \emph{outside} the circle centred
+         at \(1/2\) with radius \(1/2\).
+         \end{remark}
+\end{document}

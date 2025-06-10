@@ -1,0 +1,182 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\renewcommand{\labelenumi}{(\alph{enumi})} % Change numbering to (a), (b), ...
+
+% Define the solution environment with normal text
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+
+% Title information
+\title{MATH 447: Real Variables - Homework 10}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[26.6]
+    \noindent 
+    Let $ s(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots $ and $ c(x) = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots $ for $ x \in \mathbb{R} $.
+    \begin{enumerate}
+        \item Prove $ s' = c $ and $ c' = -s $.
+        \item Prove $ (s^2 + c^2)' = 0 $.
+        \item Prove $ s^2 + c^2 = 1 $.
+    \end{enumerate}
+    
+    Actually, $ s(x) = \sin x $ and $ c(x) = \cos x $, but you do \textbf{not} need these facts.
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item  \begin{enumerate}
+            \item  \begin{proof}
+        For $x\in\mathbb{R}$: 
+   \begin{align}
+    s(x) &= x-\frac{x^{3}}{3!}+\frac{x^{5}}{5!}-\ldots \\[10pt] 
+    c(x) &= 1-\frac{x^{2}}{2!}+\frac{x^{4}}{4!}-\ldots \\[10pt] 
+    \lim_{t \to x} \phi(t)&=\lim_{t \to x} \frac{f(t)-f(x)}{t-x}\\[10pt] 
+    s(x)&=\sum_{n=0}^{\infty} \frac{x^{2n+1}(-1)^{n}}{(2n+1)}! \\[10pt] 
+    &=\sum_{n=0}^{\infty} \frac{(-1)^{n}x^{2n+1}}{\left( 2n+1 \right)! } \\[10pt] 
+    c(x) &= \sum_{n=0}^{\infty} \frac{(-1)^{n}x^{(2x)}}{\left( 2n \right)! }\\[10pt] 
+    s^\prime (x)&=\sum_{n=0}^{\infty} \frac{(-1)^{n}(2n+1)x^{2n}}{\left( 2n+1 \right) !} \\[10pt] 
+    &= \frac{(-1)^{n}x^{2n}}{\left( 2n \right) !} \\[10pt] 
+    &= c(x)
+   \end{align} 
+    \end{proof}
+    \item \begin{proof}
+        \begin{align}
+            c(x)&=\sum_{n=0}^{\infty} \frac{(-1)^{n}x^{2n}}{\left( 2n \right) !}\\[10pt] 
+            c^\prime (x)&=\sum_{n=0}^{\infty} \frac{(-1)^{n}(2n)x^{2n-1}}{(2n)!}\\[10pt] 
+            &= \frac{(-1)^{n}x^{2n-1}}{(2n-1)!}\\[10pt] 
+            &= \sum_{n=1}^{\infty} \frac{(-1)^{n+1}x^{2n-1}}{(2n-1)!}\\[10pt] 
+            &= -s(x)
+        \end{align}
+    \end{proof}
+        \end{enumerate}    
+        \item \begin{proof}
+            \begin{align}
+            \left( s^{2}+c^{2} \right)^\prime &=0 \\[10pt] 
+            &= \sum_{k=0}^{\infty} \frac{(-1)^{k}x^{2k+1}}{(2k+1)!} + \sum_{k=0}^{\infty} \frac{(-1)^{k}x^{2k}}{(2k)!}\\[10pt] 
+            &= \sum_{k=0}^{\infty} \left( \frac{(-1)^{k}x^{2k+1}}{(2k+1)!} + \frac{(-1)^{k}x^{2k}}{(2k)!} \right) \\[10pt] 
+            &= 0
+        \end{align}
+        \end{proof}    
+        \item todo
+    \end{enumerate}
+   \end{solution}
+\begin{problem}[33.3]
+
+    \noindent A function $ f $ on $[a, b]$ is called a \emph{step function} if there exists a partition 
+    \begin{align}    
+    P = \{a = u_0 < u_1 < \cdots < u_m = b\}
+    \end{align}
+    of $[a, b]$ —not $ P = \{a = u_0 < u_1 < \cdots < c_m = b\} $, as stated in the textbook— such that $ f $ is constant on each interval $(u_{j-1}, u_j)$, say $ f(x) = c_j $ for $ x $ in $(u_{j-1}, u_j)$.
+    
+    \begin{enumerate}
+        \item Show that a step function $ f $ is integrable and evaluate $ \int_a^b f $.
+    \end{enumerate}
+    
+\end{problem}
+\begin{solution}
+   \begin{proof}
+    If $f$ is constant on every interval, then $M_i = m_i$. Then, $f$ is monotone and bounded on $\left( u_{j-1}, u_{j} \right) $, (in fact it is constant from $\left( u_{j-1},u_{j} \right) $), so therefore it is uniformly continuous, which implies that
+    there exists a continuous extension to the closed set $[u_{j-1}, u_{j}] $. Invoking Theorem (3.38) from Ross (Piecewise Monotone), we show that $f\in \mathcal{R}$.   
+   \end{proof} 
+\end{solution}
+\begin{problem}[33.7]
+    Let $ f $ be a bounded function on $[a, b]$, so that there exists $ B > 0 $ such that $ |f(x)| \leq B $ for all $ x \in [a, b] $.
+
+\begin{enumerate}
+    \item Show
+    $$
+    U(f^2, P) - L(f^2, P) \leq 2B[U(f, P) - L(f, P)]
+    $$
+    for all partitions $ P $ of $[a, b]$. \emph{hint:} $ f(x)^2 - f(y)^2 = [f(x) + f(y)] \cdot [f(x) - f(y)] $.
+    \item Show that if $ f $ is integrable on $[a, b]$, then $ f^2 $ also is integrable on $[a, b]$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        $f$ is a bounded function on $[a,b]$, so there exists $B>0 \ s.t. \ \left\vert f(x) \right\vert \leq B$ for all $x\in[a,b]$.
+        \begin{align}
+            u(f^{2},p) &= \sum_{i=1}^{\infty} M_i^{2}\Delta x_{i} \\[10pt] 
+            &= M_i^{2} = \sup f(x)^{2} \\[10pt] 
+            &= \sum_{i=1}^{n} \left( M_i^{2}-m_i^{2} \right)\Delta x_i \\[10pt] 
+            &= \sum_{i=1}^{n} \left( M_{i+m_i}  \right)\left( M_{i} - m_i \right)\Delta x_{i} \\[10pt] 
+            &\leq \sum_{i=1}^{n} 2B\left( M_{i}-m_{i} \right)\Delta x_{i} \\[10pt] 
+            &= 2B \sum_{i=1}^{\infty} \left( M_i - m_i \right)\Delta x_{i} \\[10pt] 
+            &= 2B \left( U(f,p)-L(f,p) \right) 
+        \end{align} 
+    \end{proof}
+\end{solution}
+\begin{problem}[34.2]
+    \noindent Calculate
+
+\begin{enumerate}
+    \item $ \lim_{h \to 0} \frac{1}{h} \int_3^{3+h} e^{t^2} \, dt $.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+   \begin{proof}
+    \begin{align}
+        \int_{3}^{3+h}e^{t^{2}} \,\mathrm{d}t \\[10pt] 
+        &= \lim_{h \to 0} \frac{F(3+h)-F(3)}{h}\\[10pt] 
+    \end{align}
+    By FTC I,
+    \begin{align}
+        F^\prime (3)  = e^{9} 
+    \end{align}
+   \end{proof} 
+\end{solution}
+\begin{problem}[34.5]
+    \noindent  Let $ f $ be a continuous function on $ \mathbb{R} $ and define
+
+\begin{align}    
+F(x) = \int_{x-1}^{x+1} f(t) \, dt \quad \text{for } x \in \mathbb{R}.
+\end{align}
+
+Show $ F $ is differentiable on $ \mathbb{R} $ and compute $ F' $.
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        \begin{align}
+            F(x) &= \int_{x}^{0} f(t) \,\mathrm{d}t + \int_{0}^{x+1} f(t) \,\mathrm{d}t \\[10pt] 
+            &= -\int_{0}^{x-1} f(t) \,\mathrm{d}t + \int_{0}^{x+1} f(t) \,\mathrm{d}t \\[10pt] 
+        \end{align}
+        By FTC II, we get:
+        \begin{align}
+            F^\prime (x_0) &= f(x_{0}+1) - f(x_{0}-1) 
+        \end{align}
+    \end{proof}
+\end{solution}
+\begin{problem}
+    \noindent \textbf{A. [Bonus problem]} Suppose $ f $ is a continuous non-negative function on $[a, b]$, with 
+\begin{align}
+M = \max_{x \in [a, b]} f(x).
+\end{align}
+For $ n \in \mathbb{N} $, let
+\begin{align} 
+M_n = \left( \int_a^b f^n \, dt \right)^{1/n}.
+\end{align}
+Prove that $ \lim M_n = M $.
+\end{problem}
+\begin{solution}
+   \begin{proof}
+    \begin{align}
+        \left( \int_{a}^{b} f^{n}  \right)^{\frac{1}{n}} &\leq \left( (b-a)(M^{n}) \right)^{\frac{1}{n}} \\[10pt] 
+        &= \lim_{n \to \infty} \underbrace{(b-a)^{\frac{1}{n}}}_{1} M = M 
+    \end{align}
+   \end{proof} 
+\end{solution}
+\end{document}

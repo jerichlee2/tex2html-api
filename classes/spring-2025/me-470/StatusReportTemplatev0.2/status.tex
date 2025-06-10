@@ -1,0 +1,165 @@
+\documentclass[hidelinks,11pt]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+
+\usepackage{amssymb,amsmath,cancel}
+\numberwithin{equation}{subsection}
+\usepackage[labelsep=period]{caption}
+\usepackage{subcaption}
+
+\usepackage{tikz} 
+\usepackage{afterpage} 
+\usepackage{titlesec}
+
+\usepackage{amssymb,amsmath} %Standard libraries that add lots of equation features and math symbols
+%\numberwithin{equation}{subsection} %This makes equations numbered by section rather than sequentially overall. 
+\usepackage[labelsep=period]{caption}
+\usepackage{subcaption}
+\usepackage{hyperref} %Adds some useful tricks with references
+\hypersetup{ %Makes all sections in ToC, figure and table numbers, and references clickable
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{lipsum} % generates filler text for template
+\usepackage{tikz} %Package for making diagrams
+\usepackage{afterpage} 
+\usepackage{paralist,multirow}
+\usetikzlibrary{decorations.pathreplacing, calc} 
+\usetikzlibrary{snakes,shapes,decorations.text}
+
+\newcommand{\degrees}{\ensuremath{^\circ}} %use this command to insert a degree symbol in text mode
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0em}
+\renewcommand{\baselinestretch}{1}\normalsize
+
+ %setup spacing between sections and sizes of sections and subsection
+\titlespacing*{\section}
+{0pt}{2.5ex plus 1ex minus .2ex}{1.0ex plus .2ex}
+\titleformat{\section}
+  {\normalfont\fontsize{14}{14}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\fontsize{11}{11}\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+\noindent {\LARGE \bfseries Status Report} \\[0.2cm]
+\begin{tabular}{l l}
+\textbf{To:} & Sponsor Name \\
+\textbf{Date:} & Date Here \\
+\textbf{From:} & University of Illinois at Urbana-Champaign ME470 Team \# N:\\
+& Student A, Student B, Student C, Student D, Student E
+\end{tabular}\\[0.2cm]
+\noindent {\Large \bfseries Long Title of Project} 
+
+
+\section*{Purpose} %Ensure all section/subsections include asterisks like this so that the sections don't get numbered. 
+
+This is a draft of a~\LaTeX ~template for use for the status report in ME470 at UIUC. If you find any bugs or have any suggestions, please email Christopher Marry at \href{mailto:cmarry2@illinois.edu}{cmarry2@illinois.edu}. This template is a modified version of my proposal report from when I took senior design in Spring 2016, and was originally created by James Buckland. Future versions of this document will be intended to serve as both a template and a~\LaTeX~tutorial for a undergraduate student. Some comments have been added throughout to provide explanation of how the template works, but they are not yet comprehensive. I recommend that you use this template only if someone on your team already has some~\LaTeX~knowledge since the learning curve is somewhat steep.
+
+\section*{Introduction}
+
+\lipsum[1-2]
+
+\section*{Discussion}
+
+\subsection*{Topic 1}
+
+Reference a figure like this: Fig.~\ref{fig:theta}. Another figure is Fig. \ref{fig:MELmap}. The last figure is Fig.~\ref{fig:cat}. Reference a table like this: Table~\ref{table:deliverables}. Another table is Table \ref{table:budget}. Make sure every figure/table is referenced in text somewhere.
+Include a citation like this:~\cite{me470site}. Cite multiple sources at once like this: \cite{Nguyen2015,Hovakimyan2010}
+
+\subsection*{Topic 2}
+
+\lipsum[1]
+
+\subsection*{Topic 3}
+
+\lipsum[1-2]
+
+\section*{Conclusion}
+
+\lipsum[1-2]
+\pagebreak
+%Place all your figure and table setup text after your body text to encourage LaTeX to put them after all your text. Use the [p] location specifier to force figures/tables onto special float pages
+
+\begin{figure}[p]
+%This is an example of creating subfigures. For more details and more complex examples, see the package documentation:
+%http://mirror.las.iastate.edu/tex-archive/obsolete/macros/latex/contrib/subfigure/subfigure.pdf
+  \centering
+  \begin{subfigure}[b]{0.7\textwidth}
+    \centering
+		\includegraphics[width=1\textwidth]{fig/plot-zplots.png}
+    \caption{$z$}
+    \label{fig:plot-z}
+  \end{subfigure}
+  \\[1cm]
+  \begin{subfigure}[b]{0.7\textwidth}
+    \centering
+		\includegraphics[width=1\textwidth]{fig/plot-thetafittedvsoriginal.png}
+    \caption{$\theta$}
+    \label{fig:plot-theta}
+  \end{subfigure}
+  \caption{Comparison of Original and Fitted $z$ and $\theta$}
+  \label{fig:theta}
+\end{figure}
+
+
+\begin{figure}[h] 
+  \centering %usually you'll want your figure to be centered. 
+	\includegraphics[width=0.6\textwidth]{fig/MELmap.png} % Replace fig/MELmap.png with the local path to your image file. Change the number in front of \textwidth to change the size of the figure as appropriate
+    \caption{Map of the first floor of the Mechanical Engineering Laboratory at UIUC, and also a demonstration of how to create a basic figure}
+    \label{fig:MELmap} %this is the name that you use when referencing the figure
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+		\includegraphics[width=0.9\textheight,angle=90]{fig/cat.jpg} 
+    \caption{This is my cat, Vincent, who is a very good boy. This is also a demonstration of how to have a rotated figure, such as for a Gantt Chart.}
+    \label{fig:cat}
+\end{figure}
+
+\begin{table}[p]
+    \centering
+    \caption{Deliverables}
+		\begin{tabular} { r | r l l}
+			\textbf{Deliverable} & \textbf{Lead} & \textbf{Start Date} & \textbf{Completion Date} \\ \hline
+			Constructing Half-Scale Machine & Student A & 2/4 & 2/18 \\
+			Refining Half-Scale Machine & Student B & 3/5 & 3/9 \\
+			Status Report & Student C,D & 3/5 & 3/15 \\
+			First Iteration of Full-Scale Machine & Student E & 2/23 & 3/21 \\
+			Refinements to Full-Scale Design & Student A & 3/21 & 4/6 \\
+			Final Report & All & 4/6 & 5/6 \\
+		\end{tabular}
+		    \label{table:deliverables}
+
+\end{table}
+
+
+\begin{table}[p]
+  \centering
+    \caption{Budget}
+		\begin{tabular}{r | l l l}
+		\multirow{2}{*}{\textbf{Item}} & \textbf{Unit Price} & \textbf{Quantity} & \textbf{Total} \\
+		 & \$/Unit & Unit & \$ \\ \hline
+		 Item1  	& 0.11/ft   & 100ft & 11.00 \\
+		 Item2 		& 2.10		& 4		& 8.40 \\
+		 Item3		& 29.98		& 1		& 29.98 \\
+		 Item4		& 299.98	& 1		& 299.68 \\
+		 Item5 		& 12.97		& 4		& 51.88 \\
+		 Item6		& 22.50		& 3		& 22.50 \\
+		 Item7	    & 24.95		& 1		& 24.95 \\
+		 Item8 		& 8.49		& 1		& 8.49 \\
+		 Item9		& 10.00		& 1		& 10.00 \\
+		 \hline
+		 \textbf{Machining Cost}			&59.00/hr& 3 hr		&\$177.00 \\
+		 \textbf{Total Cost}			&		& 	& \$643.88
+		\end{tabular}
+		\label{table:budget}
+
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\bibliography{status} 
+
+\end{document}

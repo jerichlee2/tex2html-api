@@ -1,0 +1,318 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+A one-dimensional harmonic oscillator potential contains an electron. The ground state energy is measured to be $10$ meV. 
+\noindent
+\begin{enumerate}
+    \item What wavelength electromagnetic radiation will promote the electron from the ground state $(n=0)$ to the 6th excited ground state $(n=6)$? 
+    \noindent
+    \begin{enumerate}
+        \item 124000 nm
+        \item 10300 nm
+        \item 124 nm
+        \item 9.54 nm
+        \item 9540 nm
+    \end{enumerate}
+    \item A muon is an elementary particle that is essentially a heavy electron. It has the same charge as the electron, but its mass is $m_{muon}=207 m_e = 1.88e-28= 105.66 \frac{MeV}{c^{2}}$. What is the energy of a muon held in the same potential energy function oas the electron in the previous problem (i.e., with the same effective spring constant), but in the $n=0$ state?
+    \noindent
+    \begin{enumerate}
+        \item 1030 meV
+        \item .348 meV
+        \item 2070 meV
+        \item 0.695 meV
+        \item 144 meV
+    \end{enumerate}
+\end{enumerate}
+
+\noindent \textbf{Problem Statement:}\\
+A one-dimensional harmonic oscillator potential contains an electron. 
+The ground-state energy is measured to be $E_{0} = 10\text{ meV}$. 
+
+\noindent\textbf{Part (1).} 
+Find the wavelength of the electromagnetic radiation that promotes the electron from the ground state ($n=0$) to the $n=6$ state.
+
+\[
+\underline{\text{Step 1: Relation between ground-state energy and } \omega.}
+\]
+For a quantum harmonic oscillator, the energy levels are given by:
+\[
+E_{n} \;=\; \hbar \omega \left(n + \tfrac12 \right).
+\]
+Since the ground state corresponds to $n=0$, its energy is
+\[
+E_{0} \;=\; \tfrac12 \,\hbar \omega.
+\]
+We know $E_{0} = 10\text{ meV}$, hence
+\[
+\tfrac12 \,\hbar \omega \;=\; 10\text{ meV} 
+\quad\Longrightarrow\quad
+\hbar \omega \;=\; 20\text{ meV}.
+\]
+
+\[
+\underline{\text{Step 2: Energy of the }n=6\text{ state and the energy difference.}}
+\]
+The $n$th level has energy $E_{n} = \hbar \omega \left(n + \tfrac12\right)$.  
+So for $n=6$,
+\[
+E_6 \;=\; \hbar \omega \left(6 + \tfrac12\right)
+        \;=\; \hbar \omega \,(6.5).
+\]
+However, the transition from $n=0$ to $n=6$ depends on 
+\[
+\Delta E \;=\; E_6 - E_0 
+           \;=\; \hbar\omega \,(6.5 - 0.5) 
+           \;=\; 6\,\hbar \omega.
+\]
+Since $\hbar \omega = 20\text{ meV}$, we get
+\[
+\Delta E \;=\; 6 \times 20\text{ meV} 
+            \;=\; 120\text{ meV}.
+\]
+
+\[
+\underline{\text{Step 3: Convert } \Delta E \text{ to wavelength.}}
+\]
+We use the relation $E = \frac{hc}{\lambda}$.  In convenient units, 
+\[
+hc \;\approx\; 1240 \text{ eV}\cdot \text{nm}.
+\]
+Now, $120\text{ meV} = 0.120\text{ eV}$. Thus,
+\[
+\lambda 
+   \;=\; \frac{hc}{\Delta E} 
+   \;=\; \frac{1240\text{ eV}\cdot\text{nm}}{0.120\text{ eV}} 
+   \;=\; \frac{1240}{0.120}\,\text{nm}
+   \;\approx\; 10333\,\text{nm}.
+\]
+From the options given, the nearest is $\boxed{10300\text{ nm}.}$
+
+\vspace{1em}
+\noindent\textbf{Part (2).} 
+A muon is essentially a heavy electron, having the same charge but mass $m_{muon} = 207\, m_e$. 
+What is the energy of the muon in the same potential, in the $n=0$ state?
+
+\[
+\underline{\text{Step 4: Relation of }\omega\text{ to mass.}}
+\]
+The angular frequency of a 1D harmonic oscillator is given by 
+\[
+\omega = \sqrt{\frac{k}{m}},
+\]
+where $k$ is the spring constant.  Since the potential is unchanged, $k$ stays the same.
+
+\[
+\underline{\text{Step 5: Muon frequency.}}
+\]
+Replacing $m$ by $m_{muon} = 207\,m_e$, we get
+\[
+\omega_{muon} 
+   \;=\; \sqrt{\frac{k}{m_{muon}}} 
+   \;=\; \sqrt{\frac{k}{207\,m_e}}
+   \;=\; \frac{1}{\sqrt{207}} \,\sqrt{\frac{k}{m_e}}
+   \;=\; \frac{\omega_e}{\sqrt{207}},
+\]
+where $\omega_e$ is the electron's oscillator frequency.
+
+\[
+\underline{\text{Step 6: Muon ground-state energy.}}
+\]
+The ground-state energy for any harmonic oscillator is
+\[
+E_0 = \tfrac12 \,\hbar \,\omega.
+\]
+Hence, for the muon,
+\[
+E_{0}^{(muon)} 
+   \;=\; \tfrac12 \,\hbar \,\omega_{muon} 
+   \;=\; \tfrac12 \,\hbar \,\Bigl(\frac{\omega_e}{\sqrt{207}}\Bigr) 
+   \;=\; \frac{1}{\sqrt{207}} \,\bigl(\tfrac12 \hbar \omega_e \bigr).
+\]
+We already know $\tfrac12 \hbar \omega_e = 10\text{ meV}$. Therefore,
+\[
+E_{0}^{(muon)} 
+   \;=\; \frac{10\text{ meV}}{\sqrt{207}}.
+\]
+Numerically, $\sqrt{207} \approx 14.387$, so
+\[
+E_{0}^{(muon)} 
+   \;\approx\; \frac{10\text{ meV}}{14.387}
+   \;\approx\; 0.695\text{ meV}.
+\]
+From the multiple-choice list, the correct value is $\boxed{0.695\text{ meV}.}$
+
+\vspace{1em}
+\noindent \textbf{Final Answers:}\\
+(1) $10300\text{ nm}$\\
+(2) $0.695\text{ meV}$
+
+
+\noindent
+\textbf{Stern-Gerlach Experiment: Probability Calculation} 
+
+\bigskip
+\noindent
+\textbf{Setup:} 
+A silver atom with \emph{random} spin passes through:
+\begin{enumerate}
+    \item a $+y$ filter (i.e.\ spin up along the $y$-axis), 
+    \item followed by a $-x$ filter (spin down along the $x$-axis).
+\end{enumerate}
+We want the probability that the atom passes \emph{both} filters.
+
+\bigskip
+\noindent
+\textbf{Step 1: Passing the $+y$ filter.}\\
+Since the initial spin state is completely random, the probability of measuring spin-up along $y$ (i.e.\ projecting onto $\lvert +y \rangle$) is
+\[
+P(\lvert +y\rangle) \;=\; \tfrac{1}{2}.
+\]
+After this measurement, the spin state \emph{collapses} to $\lvert +y\rangle$.
+
+\bigskip
+\noindent
+\textbf{Step 2: Probability of then being spin-down along $x$.}\\
+Next, the atom is sent through an $x$-axis Stern-Gerlach filter, keeping only the $\lvert -x\rangle$ output. 
+We need
+\[
+P(\lvert -x\rangle \,\big\vert\, \lvert +y\rangle) 
+\;=\; \bigl|\langle -x \mid +y\rangle \bigr|^2.
+\]
+A standard spin-$\tfrac12$ calculation shows 
+\[
+\lvert +y \rangle \;=\; 
+    \frac{1}{\sqrt{2}}
+    \bigl( \lvert +x\rangle + i\lvert -x\rangle \bigr),
+\]
+so 
+\[
+\langle -x \mid +y \rangle 
+   = \frac{i}{\sqrt{2}} 
+   \quad\Longrightarrow\quad
+\bigl|\langle -x \mid +y \rangle \bigr|^2 
+   = \tfrac{1}{2}.
+\]
+Hence, if the spin is already in $\lvert +y\rangle,$ the probability to measure it as $\lvert -x\rangle$ is $\frac12.$
+
+\bigskip
+\noindent
+\textbf{Step 3: Combine the two stages.}\\
+Since each of those probabilities is $\tfrac12,$ the overall probability of passing \emph{both} filters is
+\[
+P(\lvert +y\rangle)\;\times\;P(\lvert -x\rangle \mid \lvert +y\rangle)
+\;=\;\tfrac12 \;\times\;\tfrac12 
+\;=\;\boxed{\tfrac14}.
+\]
+
+\bigskip
+\noindent
+\textbf{Conclusion:} The probability that a random spin state passes through a $+y$ filter \emph{and} subsequently through a $-x$ filter is $\frac14.$
+
+\noindent
+\textbf{Computing } $\langle -x \mid +y \rangle$:
+
+\bigskip
+\noindent
+\textbf{Step 1. Express the states in the $\lvert +z\rangle,\lvert -z\rangle$ basis.}\\
+One common choice of phase conventions is:
+\[
+\lvert +y\rangle 
+  \;=\; \frac{1}{\sqrt{2}} 
+  \begin{pmatrix}
+  1 \\[5pt]
+  i
+  \end{pmatrix},
+\qquad
+\lvert -x\rangle 
+  \;=\; \frac{1}{\sqrt{2}}
+  \begin{pmatrix}
+  1 \\[5pt]
+  -1
+  \end{pmatrix}.
+\]
+Here, we use 
+$\lvert +z\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ and 
+$\lvert -z\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ 
+as our standard basis.
+
+\bigskip
+\noindent
+\textbf{Step 2. Take the inner product.}\\
+The bra $\langle -x\vert$ is the conjugate transpose of $\lvert -x\rangle$, i.e.
+\[
+\langle -x\vert 
+  \;=\; \frac{1}{\sqrt{2}} 
+  \bigl(1,\,-1\bigr).
+\]
+Hence,
+\[
+\langle -x \mid +y \rangle
+  \;=\; 
+  \biggl(\frac{1}{\sqrt{2}} \bigl(1,\,-1\bigr)\biggr)
+  \biggl(\frac{1}{\sqrt{2}}\begin{pmatrix}1\\[4pt] i\end{pmatrix}\biggr)
+  \;=\;
+  \frac{1}{2} \bigl(1 - i\bigr).
+\]
+Often, you will see this written (up to an overall phase) as 
+\[
+\frac{i}{\sqrt{2}},
+\]
+since $1 - i = \sqrt{2}\, e^{-\,i\pi/4}$.
+
+\bigskip
+\noindent
+\textbf{Step 3. Check the magnitude.}\\
+Either way,
+\[
+\bigl|\langle -x \mid +y \rangle \bigr|^2
+  \;=\; \frac12,
+\]
+showing that the probability of measuring $\lvert -x\rangle$ given the spin is in $\lvert +y\rangle$ is~$1/2$.
+
+\end{document}

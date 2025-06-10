@@ -1,0 +1,425 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432: HW 5}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \noindent
+    \textbf{Claim.} If $d,e_1,e_2$ are cardinal numbers, then
+    \[
+    d^{\,e_1 + e_2} \;=\; d^{\,e_1}\,d^{\,e_2}.
+    \]
+    
+    \medskip
+    
+    \noindent
+    \textbf{Sketch of Proof (via sets and functions).}\\
+    By definition, writing $d^{e}$ for cardinal exponentiation means: 
+    \[
+    d^{\,e} \;=\; \bigl|\{\,f: E \to D \}\bigr|,
+    \]
+    where $|E|=e$ and $|D|=d$.  
+    
+    \smallskip
+    
+    \noindent
+    So let $B$ and $C$ be \emph{disjoint} sets with $|B|=e_1$ and $|C|=e_2$, 
+    and let $B \cup C$ have cardinality $e_1 + e_2.$  
+    Also let $D$ be a set of cardinality $d.$
+    
+    \smallskip
+    
+    \noindent
+    Then $d^{\,e_1 + e_2}$ is the cardinality of the set $D^{B \cup C}$ 
+    (of all functions $f:(B \cup C)\to D$), 
+    while 
+    \[
+    d^{\,e_1}\,d^{\,e_2} \;=\; \bigl|D^B\bigr| \,\times\, \bigl|D^C\bigr|
+    \;=\; \bigl|D^B \times D^C\bigr|.
+    \]
+    
+    \smallskip
+    
+    \noindent
+    \emph{Define a map}
+    \[
+    \Phi: D^{B \cup C}\;\longrightarrow\; D^B \times D^C
+    \]
+    by sending each function $f:(B \cup C)\to D$ 
+    to the ordered pair $\bigl(f|_B,\;f|_C\bigr)$ 
+    where $f|_B$ is the restriction of $f$ to $B$ 
+    and $f|_C$ is the restriction of $f$ to $C.$  
+    
+    \smallskip
+    
+    \noindent
+    \textbf{1.}\ \emph{Injectivity.}  
+    If $f$ and $g$ differ on $B \cup C,$ 
+    they differ on at least one of $B$ or $C,$ 
+    so $(f|_B,f|_C)\neq(g|_B,g|_C).$  
+    Hence $\Phi$ is injective.
+    
+    \smallskip
+    
+    \noindent
+    \textbf{2.}\ \emph{Surjectivity.}  
+    Given any pair $(u,v)\in D^B\times D^C$ (i.e.\ $u$ is a function $B\to D$ and $v$ is a function $C\to D$), 
+    we can define 
+    \[
+    f(x)\;=\;\begin{cases}
+    u(x), & x\in B,\\[6pt]
+    v(x), & x\in C.
+    \end{cases}
+    \]
+    Then $f$ is in $D^{B \cup C}$, 
+    and clearly $\Phi(f)=(u,v).$
+    
+    \smallskip
+    
+    \noindent
+    Thus $\Phi$ is a bijection, implying
+    \[
+    \bigl|D^{\,B \cup C}\bigr| \;=\; \bigl|D^B \times D^C\bigr|.
+    \]
+    In terms of cardinal arithmetic, this precisely says 
+    \[
+    d^{\,e_1 + e_2} \;=\; d^{\,e_1}\,d^{\,e_2},
+    \]
+    as required.
+     
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \noindent
+\textbf{Claim.}\; Suppose $e$ is an infinite cardinal and $d$ is a cardinal satisfying 
+\[
+2 \;\le\; d \;\le\; 2^e.
+\]
+Then 
+\[
+d^e \;=\; 2^e.
+\]
+
+\bigskip
+
+\noindent
+\textbf{Proof.} 
+We show two inequalities, $2^e \le d^e$ and $d^e \le 2^e$, and then invoke the 
+Cantor--Bernstein (Schroeder--Bernstein) theorem to conclude $d^e = 2^e.$
+
+\medskip
+
+\noindent
+\textbf{1.} \emph{Proof that }$2^e \;\le\; d^e.$
+
+Since $2 \le d$, there is an injective map $i: \{0,1\} \to D$, where $|D|=d$.  
+Fix a set $E$ with $|E|=e$.  
+Then any function $f:E \to \{0,1\}$ can be turned into a function $f':E \to D$ by 
+\[
+f'(x)\;=\;i\bigl(f(x)\bigr).
+\]
+This defines an injection 
+\[
+\Phi:\ \{0,1\}^E \;\longrightarrow\; D^E
+\quad\text{(i.e.\ }2^e \;\to\; d^e\text{),}
+\]
+since distinct $f$ produce distinct $f'$.  
+Hence $2^e \le d^e.$
+
+\medskip
+
+\noindent
+\textbf{2.} \emph{Proof that }$d^e \;\le\; 2^e.$
+
+By hypothesis $d \le 2^e$, so there is an injective map $j: D \to \mathcal{P}(E)$, 
+the power set of $E$ (where $|\mathcal{P}(E)|=2^e$).  
+Given a function $g:E \to D$, define $\widetilde{g} \subseteq E \times E$ by 
+\[
+\widetilde{g} \;=\; \bigl\{(x,y)\in E\times E:\; y \in j\bigl(g(x)\bigr)\bigr\}.
+\]
+One checks this yields an injection 
+\[
+\Psi:\ D^E \;\longrightarrow\; \mathcal{P}(E\times E),
+\]
+and $|E \times E| = e\cdot e = e$ for infinite $e$.  
+Thus $\mathcal{P}(E \times E)$ has cardinality $2^e$.  
+Hence $d^e \le 2^e.$
+
+\medskip
+
+\noindent
+\textbf{3.} \emph{Conclusion.}
+
+We have established injections 
+\[
+2^e \;\longrightarrow\; d^e 
+\quad\text{and}\quad
+d^e \;\longrightarrow\; 2^e.
+\]
+By the Cantor--Bernstein theorem, there is a bijection between $2^e$ and $d^e$.  
+Thus $2^e = d^e,$ completing the proof.
+
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{Claim.}\; If $D$ is an infinite set of cardinality $d$, then there are exactly $2^{d}$ 
+    different subsets of $D$ that themselves have cardinality $d.$
+    
+    \medskip
+    
+    \noindent
+    \textbf{Proof.}\; Write
+    \[
+    \bigl\{\,S\subseteq D : |S|=d\bigr\}
+    \]
+    for the family of all subsets of $D$ of size $d.$  We must show 
+    \[
+    \left|\bigl\{S\subseteq D : |S|=d\bigr\}\right| \;=\; 2^{d}.
+    \]
+    We split the proof into two inequalities:
+    
+    \medskip
+    
+    \noindent
+    \textbf{(1) Upper bound: } 
+    Clearly,
+    \[
+    \bigl\{S\subseteq D : |S|=d\bigr\} \;\subseteq\;\mathcal{P}(D),
+    \]
+    so its cardinality is at most $|\mathcal{P}(D)| = 2^{d}.$
+    
+    \medskip
+    
+    \noindent
+    \textbf{(2) Lower bound: } 
+    We construct an \emph{injection}
+    \[
+    \phi:\ \mathcal{P}(D_0)\ \longrightarrow\ \bigl\{S \subseteq D : |S|=d \bigr\},
+    \]
+    for some carefully chosen $D_0\subseteq D,$ and show that 
+    $|\mathcal{P}(D_0)|=2^{d}.$
+    
+    Since $|D|=d$ and $d$ is infinite, we can choose a \emph{subset} 
+    $D_0\subseteq D$ with $|D_0|=d.$  
+    Recall that for an infinite cardinal $d,$ we have 
+    $|\mathcal{P}(D_0)| = 2^{d}.$  
+    
+    Define $\phi$ on those subsets $X\subseteq D_0$ \emph{whose cardinality is \textup{strictly less} 
+    than $d$} (for instance, $X$ could be finite or countably infinite if $d$ is uncountable).  
+    Set
+    \[
+    \phi(X)\;=\;(D_0 \setminus X)\ \cup\ (D\setminus D_0).
+    \]
+    We claim that $|\phi(X)|=d$.  
+    Indeed, $D_0$ has size $d$ (infinite), and removing a \emph{smaller--than--$d$} subset $X$ 
+    leaves a set $D_0\setminus X$ of cardinality still $d$.  
+    Also, $(D\setminus D_0)$ has size at most $d$, and the union of two sets of cardinality $d$ 
+    still has size $d$.  
+    Hence $\phi(X)$ has cardinality $d.$  
+    
+    Finally, $\phi$ is \emph{injective}, since if $X\neq Y$ (as subsets of $D_0$) 
+    then $(D_0\setminus X)\neq(D_0\setminus Y)$, so the resulting $\phi(X)\neq\phi(Y).$
+    
+    Thus we have an injection from a set of cardinality $2^{d}$ (namely all ``small'' subsets of $D_0$) 
+    into $\{\,S\subseteq D : |S|=d\}$.  
+    This shows 
+    \[
+    2^{d}\;\le\;\bigl|\{S\subseteq D : |S|=d\}\bigr|.
+    \]
+    
+    \medskip
+    
+    \noindent
+    Combining (1) and (2) gives
+    \[
+    2^{d}\;\le\;\bigl|\{S\subseteq D : |S|=d\}\bigr|\;\le\;2^{d}.
+    \]
+    By Cantor--Bernstein (Schr\"oder--Bernstein), these cardinalities agree, i.e.
+    \[
+    \bigl|\{S\subseteq D : |S|=d\}\bigr|\;=\;2^{d}.
+    \]
+    \quad $\Box$ 
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{Claim.}\; Let $C$ be a chain (totally ordered set) in which \emph{every countable subset} is well--ordered by the same ordering.  Then $C$ itself is well--ordered.
+
+    \medskip
+    
+    \noindent
+    \textbf{Proof.}\; 
+    Recall that a linear order is well--ordered if \emph{every nonempty subset} has a least element.  
+    Thus we must show: for any nonempty $S\subseteq C$, there is some $x\in S$ such that $x$ is minimal in $S$.
+    
+    \smallskip
+    
+    Suppose, for contradiction, that $C$ is \emph{not} well--ordered.  
+    Then there is some nonempty $S\subseteq C$ that has \emph{no} minimal element.  
+    Because $C$ is a chain, so is any subset $S$, and so within $S$ one can inductively build a strictly descending sequence
+    \[
+    x_1 \;>\; x_2 \;>\; x_3 \;>\;\cdots
+    \]
+    by repeatedly choosing $x_{n+1}\in S$ strictly below $x_n$ (which is always possible, since no element of $S$ can be minimal).
+    
+    \smallskip
+    
+    But now $\{\,x_1,x_2,x_3,\dots\}$ is a \emph{countable} subset of $C$.  
+    By hypothesis, every countable subset of $C$ is well--ordered, so this set $\{x_n\}$ must have a least element.  
+    However, the very construction of $x_1 > x_2 > x_3 >\cdots$ shows there can be no least element in $\{x_n\}$.  
+    This contradiction proves our assumption was wrong.  
+    
+    Therefore \emph{every} nonempty subset $S\subseteq C$ \emph{does} possess a least element, 
+    and so $C$ is well--ordered. 
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \textbf{(a)} Let $C$ be a well-ordered set and let $f\colon C\to C$ be an injective, 
+    order-preserving map (i.e.\ $a \le b$ implies $f(a)\le f(b)$).  
+    Show that $a \le f(a)$ for every $a\in C$.  
+    
+    \smallskip
+    
+    \textbf{Proof.}
+    Suppose, for a contradiction, that there is some $a\in C$ with $a > f(a).$  
+    Among all such elements, pick one of \emph{minimal} rank in $C$; call it $x$.  
+    Thus 
+    \[
+    x > f(x)\quad\text{but for every }y<x,\text{ we have }y \le f(y).
+    \]
+    Now set $y := f(x)$.  Then $y < x$ (by hypothesis).  
+    By the minimality of $x$, we must have $y \le f(y)$.  
+    But $f$ is order-preserving, so $f(y) < f(x)=y$ is impossible.  
+    Thus we cannot have $y \le f(y)$ and $f(y)<y$ simultaneously.  
+    This contradiction shows our assumption $x>f(x)$ was false.
+    
+    Hence \emph{no} such $x$ exists, and so $a \le f(a)$ for \emph{all} $a\in C.$
+    
+    \bigskip
+    
+    \noindent
+    \textbf{(b)} \emph{Deduce Theorem~20 from part (a).}
+    
+    \smallskip
+    
+    A typical form of \textbf{Theorem~20} states:  
+    \emph{``A well-ordered set $C$ cannot be put into a one-to-one, 
+    order-preserving correspondence with a \emph{proper} initial segment of itself.''}
+    
+    \smallskip
+    
+    \noindent
+    \emph{Argument.}  
+    Suppose, toward a contradiction, 
+    that there is an injective, order-preserving map 
+    \[
+    f\colon C\;\longrightarrow\;C
+    \]
+    whose image $f(C)$ is a \emph{proper initial segment} of $C$.  
+    Being a proper initial segment means there is some $m\in C$ not in $f(C)$, 
+    and also that $f(C)$ is \emph{downward closed} (if $x\in f(C)$ and $y<x$ then $y\in f(C)$).  
+    
+    Part~(a) shows $a \le f(a)$ for each $a\in C$.  
+    Thus $f$ cannot ``jump over'' any element.  
+    But if $f(C)$ misses the point $m$, then all elements of $C$ \emph{above} $m$ 
+    must also be missing (because $f(C)$ is an initial segment).  
+    In other words, $f(C)$ would be contained in $\{\,x\in C:x<m\}.$  
+    Yet the map $a\mapsto f(a)$ is supposed to be \emph{onto} that entire initial segment 
+    (because $f$ is order-preserving and injective).  
+    That forces $m$ itself to be a least upper bound of $f(C)$ in $C$, 
+    contradicting $a \le f(a)$ (there is simply no room for each $a$ to map \emph{forward} 
+    and still avoid~$m$).  
+    
+    Hence no such injection onto a proper initial segment can exist, 
+    which is exactly the statement of Theorem~20.  
+     
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    Let $A$ be a chain (totally ordered set) with $A = B \cup C$, where $B$ and $C$ are well-ordered (under the order inherited from $A$).  Show that $A$ is well-ordered.
+    
+    \bigskip
+    
+    \noindent
+    \textbf{Solution.}\;  
+    Recall that to prove $A$ is well-ordered, we must show that \emph{every nonempty} subset $S \subseteq A$ has a least element.  
+    Since $A$ is the disjoint union $B \cup C$ (some elements might be in only $B$, others in only $C$, but $B$ and $C$ cover all of $A$):
+    
+    \begin{enumerate}
+    \item If $S \subseteq A$ is \emph{entirely contained} in $B$, then $S$ has a least element because $B$ is well-ordered.
+    \item If $S \subseteq A$ is \emph{entirely contained} in $C$, then $S$ has a least element because $C$ is well-ordered.
+    \item Otherwise, $S$ meets \emph{both} $B$ and $C$.  In that case, consider the nonempty subsets $S \cap B$ and $S \cap C$:
+    
+    \begin{itemize}
+    \item Since $S \cap B$ is a nonempty subset of $B$, it has a least element $b_0$ because $B$ is well-ordered.
+    \item Since $S \cap C$ is a nonempty subset of $C$, it has a least element $c_0$ because $C$ is well-ordered.
+    \end{itemize}
+    
+    Because $A$ is a chain, we can compare $b_0$ and $c_0$: one of them is smaller or they are equal.  Whichever is smaller is automatically the least element of \emph{all} of $S$, since every element of $S$ lies in either $B$ or $C$.  Hence $S$ has a least element in this case as well.
+    \end{enumerate}
+    
+    In all scenarios, every nonempty $S \subseteq A$ has a least element.  
+    Therefore $A$ is well-ordered.
+     
+\end{solution}
+\end{document}

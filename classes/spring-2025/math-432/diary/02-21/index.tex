@@ -1,0 +1,496 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432: HW 4}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[1]
+    Let $L$ be a lattice in which every chain has an upper bound. Then $L$ has a unique maximal element.
+\end{problem}
+\begin{solution}
+
+        \begin{proof}
+        \textbf{Step 1: Existence of a maximal element.}
+        
+        \begin{enumerate}
+            \item[(a)] A \emph{chain} in $L$ is a totally ordered subset of $L$.
+            \item[(b)] The hypothesis states that every chain in $L$ has an upper bound in $L$. 
+            \item[(c)] By a application of Zorn's Lemma, if every chain in a partially ordered set has an upper bound, then there exists at least one maximal element. Hence $L$ has at least one maximal element.
+        \end{enumerate}
+        
+        \noindent
+        \textbf{Step 2: Uniqueness of the maximal element.}
+        
+        \begin{enumerate}
+            \item[(a)] Suppose, for contradiction, that $L$ has two distinct maximal elements $m_1$ and $m_2$.
+            \item[(b)] Since $L$ is a lattice, we can form the join $m_1 \vee m_2$. 
+            \item[(c)] Because $m_1$ is maximal, we must have either $m_1 \vee m_2 = m_1$ or $m_1 \vee m_2$ is not greater than $m_1$. But in a lattice, $m_1 \leq m_1 \vee m_2$, so maximality of $m_1$ forces
+            \[
+                m_1 = m_1 \vee m_2.
+            \]
+            \item[(d)] Similarly, by the maximality of $m_2$, we must have
+            \[
+                m_2 = m_1 \vee m_2.
+            \]
+            \item[(e)] From (c) and (d), we get $m_1 = m_1 \vee m_2 = m_2$, which contradicts our assumption that $m_1$ and $m_2$ are distinct.
+        \end{enumerate}
+        
+        \noindent
+        Thus there cannot be two distinct maximal elements. Combining Step 1 and Step 2 shows that there is exactly one maximal element in $L$.
+        
+        \end{proof}
+\end{solution}
+
+
+\begin{problem}[2]
+    Any partially ordered set (poset) contains a maximal totally unordered subset.
+\end{problem}
+\begin{solution}
+
+        \begin{proof}
+
+        \noindent
+
+        \textbf{Step 1: Define the collection of totally unordered subsets (antichains).}
+        \begin{enumerate}
+            \item Let $P$ be a partially ordered set.
+            \item A \emph{totally unordered} subset (also called an \emph{antichain}) of $P$ is a subset $A \subseteq P$ such that for any two distinct elements $x,y \in A$, $x$ and $y$ are not comparable in $P$.
+            \item Denote by $\mathcal{A}$ the family of all antichains of $P$. That is,
+            \[
+                \mathcal{A} = \{ A \subseteq P : A \text{ is totally unordered} \}.
+            \]
+        \end{enumerate}
+        
+        \noindent
+        \textbf{Step 2: Partial order on $\mathcal{A}$.}
+        \begin{enumerate}
+            \item We partially order $\mathcal{A}$ by set inclusion: for $A, B \in \mathcal{A}$, define
+            \[
+                A \leq B \quad \Longleftrightarrow \quad A \subseteq B.
+            \]
+        \end{enumerate}
+        
+        \noindent
+        \textbf{Step 3: Show that every chain in $\mathcal{A}$ has an upper bound in $\mathcal{A}$.}
+        \begin{enumerate}
+            \item Let $\{A_i\}_{i \in I}$ be a chain in $\mathcal{A}$. This means for any $i, j \in I$, either $A_i \subseteq A_j$ or $A_j \subseteq A_i$.
+            \item Consider the set $A = \bigcup_{i \in I} A_i$. We claim $A$ is also totally unordered.
+        
+            Suppose $x, y \in A$ are distinct elements. Then $x \in A_{i_1}$ and $y \in A_{i_2}$ for some $i_1, i_2 \in I$. Since $\{A_i\}$ is a chain under inclusion, either $A_{i_1} \subseteq A_{i_2}$ or $A_{i_2} \subseteq A_{i_1}$. Hence both $x$ and $y$ lie in the same $A_j$ for some $j \in I$. But each $A_j$ is an antichain, so $x$ and $y$ are not comparable in $A_j$, and thus they are not comparable in $A$. 
+            \item Therefore $A$ is a totally unordered subset of $P$, i.e.\ $A \in \mathcal{A}$.
+            \item Since $A$ contains each $A_i$ as a subset, $A$ is an upper bound for the chain $\{A_i\}_{i \in I}$ in $\mathcal{A}$.
+        \end{enumerate}
+        
+        \noindent
+        \textbf{Step 4: Apply Zorn's Lemma.}
+        \begin{enumerate}
+            \item By Step 3, every chain in $\mathcal{A}$ has an upper bound in $\mathcal{A}$.
+            \item By Zorn's Lemma, $\mathcal{A}$ must have a maximal element, say $M$.
+            \item This $M$ is a maximal antichain in $P$, i.e.\ a maximal totally unordered subset of $P$.
+        \end{enumerate}
+        
+        \noindent
+        \textbf{Conclusion:} We have shown that $P$ contains a maximal totally unordered subset $M \subseteq P$. This completes the proof.
+        
+        \end{proof}
+    
+    
+\end{solution}
+
+\begin{problem}[3]
+    Let $(L,\leq)$ be a partially ordered set. Then there exists a (total) chain relation on $L$ extending $\leq$. 
+\end{problem}
+\begin{solution}
+
+        \begin{proof}
+        \textbf{Step 1: Reformulate ``extending $\leq$'' in terms of binary relations.}
+        
+        \begin{enumerate}
+            \item[(a)] Recall that a \emph{partial order} on $L$ can be viewed as a subset of $L \times L$ satisfying:
+            \[
+              \text{(Reflexivity)} \quad
+              \text{(Antisymmetry)} \quad
+              \text{(Transitivity)}.
+            \]
+            \item[(b)] To say that a partial order $R$ on $L$ \emph{extends} $\leq$ means:
+            \[
+               (x,y) \in \leq \quad \Longrightarrow \quad (x,y) \in R 
+               \quad \text{for all } x,y \in L.
+            \]
+            In other words, $R$ contains all the ordered pairs that are in the original relation $\leq$.
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 2: Construct the set of all partial orders extending $\leq$.}
+        
+        \begin{enumerate}
+            \item[(a)] Define
+            \[
+                \mathcal{P} = \{\, R \subseteq L \times L : R \text{ is a partial order on } L \text{ and } \leq \subseteq R \}.
+            \]
+            \item[(b)] Observe that $\mathcal{P}$ is nonempty since $\leq$ itself is in $\mathcal{P}$ (it is a partial order extending itself).
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 3: Partially order $\mathcal{P}$ by inclusion.}
+        
+        \begin{enumerate}
+            \item[(a)] For $R_1, R_2 \in \mathcal{P}$, we write 
+            \[
+               R_1 \leq R_2 \quad \Longleftrightarrow \quad R_1 \subseteq R_2.
+            \]
+            \item[(b)] This is a legitimate partial order on $\mathcal{P}$ (reflexive, antisymmetric, transitive in the usual sense of set inclusion).
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 4: Show every chain in $\mathcal{P}$ has an upper bound in $\mathcal{P}$.}
+        
+        \begin{enumerate}
+            \item[(a)] Let $\{R_i\}_{i \in I}$ be a chain in $\mathcal{P}$. This means that for any $R_i, R_j$ in this family, either $R_i \subseteq R_j$ or $R_j \subseteq R_i$.
+            \item[(b)] Define
+            \[
+                R^* = \bigcup_{i \in I} R_i.
+            \]
+            \item[(c)] We claim $R^*$ is a partial order on $L$. 
+            \begin{itemize}
+                \item \emph{Reflexivity}: Each $R_i$ is reflexive, so for every $x \in L$, $(x,x)\in R_i$ for all $i$, hence $(x,x)\in R^*$.
+                \item \emph{Antisymmetry}: Suppose $(x,y)$ and $(y,x)$ are in $R^*$. Then there exist $R_i$ and $R_j$ in the chain such that $(x,y)\in R_i$ and $(y,x)\in R_j$. By the chain property, one of $R_i \subseteq R_j$ or $R_j \subseteq R_i$ holds, so both $(x,y)$ and $(y,x)$ lie in the same $R_k$. But each $R_k$ is antisymmetric, so $x=y$.
+                \item \emph{Transitivity}: If $(x,y)\in R^*$ and $(y,z)\in R^*$, then $(x,y)\in R_i$ and $(y,z)\in R_j$ for some $i,j$. By the chain property, assume w.l.o.g.\ $R_i \subseteq R_j$. Then $(x,y)$ and $(y,z)$ are both in $R_j$, and since $R_j$ is transitive, $(x,z)\in R_j$. Hence $(x,z)\in R^*$.
+            \end{itemize}
+            \item[(d)] Clearly $R^*$ extends $\leq$ because each $R_i$ does, so $\leq \subseteq R_i \subseteq R^*$.
+            \item[(e)] Thus $R^* \in \mathcal{P}$ and $R^*$ is an \emph{upper bound} for the chain $\{R_i\}_{i\in I}$ under inclusion.
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 5: Apply Zorn's Lemma to get a maximal partial order extending $\leq$.}
+        
+        \begin{enumerate}
+            \item[(a)] By Step 4, every chain in $\mathcal{P}$ has an upper bound in $\mathcal{P}$.
+            \item[(b)] Therefore, by Zorn's Lemma, there is a \emph{maximal} element $M \in \mathcal{P}$. In other words, $M$ is a partial order extending $\leq$ such that no strictly larger partial order (under set inclusion) in $\mathcal{P}$ contains $M$.
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 6: Prove that $M$ is a total (chain) order on $L$.}
+        
+        \begin{enumerate}
+            \item[(a)] Suppose, for contradiction, that $M$ is \emph{not} total. Then there exist $x,y \in L$ with $x \neq y$ and neither $(x,y)\in M$ nor $(y,x)\in M$.
+            \item[(b)] We will try to ``force'' comparability by adding one of these pairs to $M$. Define
+            \[
+               M' := M \cup \{(x,y)\}.
+            \]
+            \item[(c)] Check if $M'$ is still a partial order:
+            \begin{itemize}
+                \item \emph{Reflexivity}: Already present in $M$, and adding $(x,y)$ does not affect reflexivity for other elements.
+                \item \emph{Antisymmetry}: If adding $(x,y)$ breaks antisymmetry, it would mean $(y,x)$ is in $M$ and $x\neq y$. But by assumption $(y,x)\notin M$. So no issue here.
+                \item \emph{Transitivity}: If adding $(x,y)$ to $M$ violates transitivity, it means there is some $u,v \in L$ with $(u,x)\in M$, $(x,y)\in M'$, $(y,v)\in M$ but $(u,v)\notin M$. In that case, we try the alternative:
+                \[
+                    M'' := M \cup \{(y,x)\}.
+                \]
+                One of $M'$ or $M''$ will remain transitive (because exactly one of $(x,y)$ or $(y,x)$ can be added without creating a cycle, given that $x,y$ were incomparable in $M$).
+            \end{itemize}
+            \item[(d)] Thus we can extend $M$ by adding exactly one of the pairs $(x,y)$ or $(y,x)$ to obtain a larger partial order $M^*$ (either $M'$ or $M''$) that still extends $\leq$.
+            \item[(e)] But $M^*$ then strictly contains $M$ (because $M^*$ has at least one more pair). This contradicts the maximality of $M$ in $\mathcal{P}$.
+            \item[(f)] Hence our assumption that $M$ is not total is false. Therefore, $M$ is a \emph{total} (or chain) order on $L$ extending $\leq$.
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \noindent
+        \textbf{Conclusion:} By Zorn's Lemma, there exists a maximal partial order $M$ extending $\leq$, and that maximality forces $M$ to be a total order. Therefore, every partially ordered set $(L,\leq)$ can be extended to a chain.
+        
+        \end{proof}
+
+\end{solution}
+    \begin{problem}[4]
+        Let $L$ be a lattice in which every chain has both a least upper bound and a greatest lower bound. Then $L$ is \emph{complete}, i.e.\ every subset of $L$ has a supremum and an infimum in $L$.
+    \end{problem}
+    \begin{solution}
+
+            \begin{proof}
+            \textbf{Step 1: Notation and goal.}
+            \begin{enumerate}
+                \item[(a)] Let $S \subseteq L$ be an arbitrary (possibly infinite) subset.
+                \item[(b)] We will show that $S$ has a least upper bound in $L$. (A symmetrical argument will show that $S$ has a greatest lower bound in $L$.)
+            \end{enumerate}
+            
+            \vspace{0.3cm}
+            \textbf{Step 2: The set of upper bounds.}
+            \begin{enumerate}
+                \item[(a)] Define
+                \[
+                    U(S) \;=\; \{\, x \in L : s \le x \;\text{for all}\; s \in S \}.
+                \]
+                Elements of $U(S)$ are precisely the \emph{upper bounds} of $S$ in $L$.
+                \item[(b)] Our goal is to show there is a \emph{minimal} element of $U(S)$ under the usual order $\le$ in $L$. This minimal element will be the supremum of $S$.
+            \end{enumerate}
+            
+            \vspace{0.3cm}
+            \textbf{Step 3: Apply Zorn's Lemma to $(U(S), \ge)$.}
+            \begin{enumerate}
+                \item[(a)] Instead of ordering $U(S)$ by $\le$, let us order it by the \emph{reverse} order $\ge$. Concretely, for $x,y \in U(S)$, we say
+                \[
+                   x \preceq y \quad \Longleftrightarrow \quad x \ge y 
+                   \quad (\text{in the usual order on } L).
+                \]
+                \item[(b)] A chain in $(U(S), \preceq)$ is then a subset $C \subseteq U(S)$ such that for any $x,y \in C$, either $x \ge y$ or $y \ge x$ in the usual order $\le$. Equivalently, $C$ is a chain in $L$ in the \emph{usual} sense (totally ordered by $\le$).
+                \item[(c)] By hypothesis, every chain in $L$ has a least upper bound (supremum). So let $C$ be a chain in $U(S)$ (viewed inside $L$). Its supremum in $L$, call it $m := \sup(C)$, exists in $L$.
+                \item[(d)] We claim $m \in U(S)$. Indeed, since each $x \in C$ is an upper bound of $S$, we have $s \le x$ for every $s \in S$ and every $x \in C$. By definition of supremum, $x \le m$ for all $x \in C$. Hence for every $s \in S$, $s \le x \le m$. Therefore $s \le m$, so $m$ is also an upper bound of $S$. Thus $m \in U(S)$.
+                \item[(e)] Moreover, $m$ is an \emph{upper bound} of $C$ in the partial order $\preceq$ on $U(S)$. In other words, for every $x \in C$, we have $x \preceq m$ (since $x \ge m$ in the reversed order would mean $x \le m$ in the usual order, which is true).
+                \item[(f)] We have shown that every chain $C$ in $(U(S), \preceq)$ has an upper bound $m \in U(S)$. By Zorn's Lemma, $(U(S), \preceq)$ therefore has a maximal element $u_{\mathrm{max}}$.
+            \end{enumerate}
+            
+            \vspace{0.3cm}
+            \textbf{Step 4: Interpret the maximal element as the least upper bound in the usual order.}
+            \begin{enumerate}
+                \item[(a)] A \emph{maximal} element $u_{\mathrm{max}}$ in $(U(S), \preceq)$ means that there is no strictly larger element $v \in U(S)$ with $u_{\mathrm{max}} \prec v$. In terms of the usual order $\le$, this says there is no $v \in U(S)$ such that $v > u_{\mathrm{max}}$.
+                \item[(b)] Equivalently, $u_{\mathrm{max}}$ is \emph{minimal} in $U(S)$ under the usual order $\le$. That is,
+                \[
+                   \text{for all } x \in U(S), \quad x \le u_{\mathrm{max}} \implies x = u_{\mathrm{max}}.
+                \]
+                \item[(c)] This precisely means $u_{\mathrm{max}}$ is the \emph{least} element of $U(S)$ in the usual order, i.e.\ the least upper bound of $S$. Thus 
+                \[
+                   u_{\mathrm{max}} = \sup(S).
+                \]
+            \end{enumerate}
+            
+            \vspace{0.3cm}
+            \textbf{Step 5: Existence of $\inf(S)$.}
+            \begin{enumerate}
+                \item[(a)] By a completely symmetrical argument, one shows that the set of all \emph{lower bounds} of $S$ has a \emph{maximal} element in the usual order $\le$, which serves as the greatest lower bound (infimum) of $S$.
+            \end{enumerate}
+            
+            \vspace{0.3cm}
+            \textbf{Conclusion:} 
+            Since every subset $S$ of $L$ has both a supremum and an infimum, $L$ is a \emph{complete} lattice.
+            
+            \end{proof}
+
+    \end{solution}
+        \begin{problem}[5]
+            \label{thm:cc_equals_2c}
+            If $c = |\mathbb{R}|$, then $c^c = 2^c$.
+        \end{problem}
+        \begin{solution}
+   
+                
+                \medskip
+                
+                \noindent
+                \textbf{Background/Context.} 
+                \begin{itemize}
+                \item We denote by $c$ the cardinality of the continuum, i.e.\ $c = |\mathbb{R}|$.
+                \item We write $c^c$ to mean $\left|\mathbb{R}^{\mathbb{R}}\right|$, the set of all functions from $\mathbb{R}$ to $\mathbb{R}$.
+                \item We write $2^c$ to mean $\left|\{0,1\}^{\mathbb{R}}\right|$, the set of all $\{0,1\}$-valued functions on $\mathbb{R}$ (equivalently, the cardinality of the power set of a set of cardinality $c$).
+                \item We want to show $c^c = 2^c$ \emph{without} relying on the usual “cardinal arithmetic” theorems (often labeled as Theorems 13 and 14 in some texts).
+                \end{itemize}
+                
+                \begin{proof}
+                \textbf{Step 1. Show $c^c \ge 2^c$.}
+                \begin{enumerate}
+                    \item[(a)] Recall that $2^c = \left|\{0,1\}^{\mathbb{R}}\right|$.
+                    \item[(b)] Observe that $\{0,1\}^{\mathbb{R}}$ is a subset of all functions from $\mathbb{R}$ to $\mathbb{R}$, because $0$ and $1$ are real numbers. Formally:
+                    \[
+                       \{0,1\}^{\mathbb{R}} \;\subseteq\; \mathbb{R}^{\mathbb{R}}.
+                    \]
+                    \item[(c)] Therefore there is a natural \emph{injection}
+                    \[
+                       \iota:\{0,1\}^{\mathbb{R}} \;\hookrightarrow\; \mathbb{R}^{\mathbb{R}}, 
+                       \quad 
+                       (\iota \text{ is just the identity on each function viewed in } \mathbb{R}^{\mathbb{R}}).
+                    \]
+                    \item[(d)] By definition of cardinalities, this injection shows
+                    \[
+                       2^c \;=\; \bigl|\{0,1\}^{\mathbb{R}}\bigr|
+                       \;\le\;
+                       \bigl|\mathbb{R}^{\mathbb{R}}\bigr|
+                       \;=\;
+                       c^c.
+                    \]
+                \end{enumerate}
+                
+                \medskip
+                \textbf{Step 2. Show $c^c \le 2^c$.}
+                \begin{enumerate}
+                    \item[(a)] We will construct an \emph{injection}
+                    \[
+                       \Phi : \mathbb{R}^{\mathbb{R}} \;\;\hookrightarrow\;\; 
+                       \mathcal{P}(\mathbb{R}\times \mathbb{R}),
+                    \]
+                    where $\mathcal{P}(\,\cdot\,)$ denotes the power set. 
+                    \item[(b)] Note that $\bigl|\mathcal{P}(\mathbb{R}\times\mathbb{R})\bigr| = 2^{|\mathbb{R}\times\mathbb{R}|}$. 
+                    \item[(c)] Since $|\mathbb{R}\times\mathbb{R}| = c$ (the product of two sets of cardinal $c$ still has cardinal $c$), it follows that 
+                    \[
+                       \bigl|\mathcal{P}(\mathbb{R}\times\mathbb{R})\bigr|
+                       \;=\;
+                       2^{c}.
+                    \]
+                    \item[(d)] \textbf{Define the injection $\Phi$:} For each function $f \colon \mathbb{R} \to \mathbb{R}$, let
+                    \[
+                       G_f \;=\; \{(x,y) \in \mathbb{R}\times\mathbb{R} : y < f(x)\}.
+                    \]
+                    Then set 
+                    \[
+                       \Phi(f) \;:=\; G_f.
+                    \]
+                    \item[(e)] \textbf{Check injectivity:} Suppose $f \neq g$. Then there exists some $x_0 \in \mathbb{R}$ such that $f(x_0) \neq g(x_0)$. 
+                    \[
+                      \text{Without loss of generality, assume } f(x_0) < g(x_0).
+                    \]
+                    Pick a real $y_0$ with $f(x_0) < y_0 < g(x_0)$. Then $(x_0, y_0) \in G_g$ but $(x_0, y_0) \notin G_f$. Hence $G_f \neq G_g$, so $\Phi(f) \neq \Phi(g)$. Thus $\Phi$ is injective.
+                    \item[(f)] Hence we have 
+                    \[
+                       \bigl|\mathbb{R}^{\mathbb{R}}\bigr|
+                       \;=\;
+                       c^c
+                       \;\le\;
+                       \bigl|\mathcal{P}(\mathbb{R}\times \mathbb{R})\bigr|
+                       \;=\;
+                       2^c.
+                    \]
+                \end{enumerate}
+                
+                \medskip
+                \textbf{Step 3. Conclude that $c^c = 2^c$.}
+                \begin{enumerate}
+                    \item[(a)] Combining the two inequalities:
+                    \[
+                       2^c \;\le\; c^c \;\le\; 2^c,
+                    \]
+                    we get $c^c = 2^c$ by the Cantor--Bernstein (Schröder--Bernstein) Theorem (or simply by noting that a double inequality of cardinals implies equality).
+                \end{enumerate}
+                
+                \medskip
+                \noindent
+                \textbf{Remark on $c^c$ vs.\ $c$.} 
+                \emph{It is \textbf{not} true in ZFC that $c^c = c$.  In fact, Cantor's Theorem implies $2^c > c$, and from the above we see $c^c = 2^c$, so $c^c$ is strictly bigger than $c$.  Thus $c^c = c$ would contradict standard set theory (unless one is in a very non-standard setting).  The statement we \textbf{can} prove in ZFC is $c^c = 2^c$, as shown.}
+                
+                \end{proof}
+               
+        \end{solution}
+
+\begin{problem}[6]
+    \label{thm:countable_union_same_card}
+    Let $\{A_i\}_{i=1}^\infty$ be a countably infinite collection of infinite sets, each having the same cardinality $d$. Then
+    \[
+       \left|\bigcup_{i=1}^\infty A_i\right| \;=\; d.
+    \]
+\end{problem}
+\begin{solution}
+        
+        \begin{proof}
+        \textbf{Step 1: Establish a lower bound for the union.}
+        \begin{enumerate}
+            \item[(a)] Since each $A_i$ has cardinality $d$, we know $|A_i| = d$ for every $i \in \mathbb{N}$.
+            \item[(b)] Pick any particular $A_j$ (say $j=1$). Clearly,
+            \[
+               A_j \;\subseteq\; \bigcup_{i=1}^\infty A_i.
+            \]
+            \item[(c)] By monotonicity of cardinalities, we get
+            \[
+               \left|\bigcup_{i=1}^\infty A_i\right|
+               \;\ge\;
+               |A_j|
+               \;=\;
+               d.
+            \]
+            \item[(d)] Thus
+            \[
+               \left|\bigcup_{i=1}^\infty A_i\right|
+               \;\ge\;
+               d.
+            \]
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 2: Establish an upper bound for the union.}
+        \begin{enumerate}
+            \item[(a)] Since each $A_i$ has cardinality $d$, there exists an injective map 
+            \[
+               f_i: A_i \;\longrightarrow\; S
+            \]
+            for some set $S$ with $|S| = d$. (In many contexts, one can simply take $S = A_i$ itself if needed, or another set of cardinality $d$.)
+            \item[(b)] Define an injection from $\bigcup_{i=1}^\infty A_i$ into $S \times \mathbb{N}$ by
+            \[
+               g: \bigcup_{i=1}^\infty A_i \;\longrightarrow\; S \times \mathbb{N}, \quad
+               x \mapsto (\,f_i(x),\, i\,) \quad \text{if } x \in A_i.
+            \]
+            \item[(c)] This map $g$ is well-defined because each $x$ belongs to at least one $A_i$, and $g$ is injective: if $x \in A_i$ and $y \in A_j$ with $g(x) = g(y)$, then $(f_i(x), i) = (f_j(y), j)$. By comparing components, $i=j$ and hence $f_i(x) = f_i(y)$. Since $f_i$ is injective, $x = y$.
+            \item[(d)] Since $|S| = d$ and $|\mathbb{N}| = \aleph_0$, we know (for infinite $d$) that
+            \[
+               |S \times \mathbb{N}|
+               \;=\;
+               d \cdot \aleph_0
+               \;=\;
+               d.
+            \]
+            \item[(e)] Therefore $g$ is an injection from $\bigcup_{i=1}^\infty A_i$ into a set of cardinality $d$, giving
+            \[
+               \left|\bigcup_{i=1}^\infty A_i\right|
+               \;\le\;
+               d.
+            \]
+        \end{enumerate}
+        
+        \vspace{0.3cm}
+        \textbf{Step 3: Conclude that the union has cardinality $d$.}
+        \begin{enumerate}
+            \item[(a)] From Step 1 and Step 2, we have
+            \[
+               d
+               \;\le\;
+               \left|\bigcup_{i=1}^\infty A_i\right|
+               \;\le\;
+               d.
+            \]
+            \item[(b)] Hence by the Cantor--Bernstein (Schr\"oder--Bernstein) Theorem (or by the definition of cardinal equality), we conclude
+            \[
+               \left|\bigcup_{i=1}^\infty A_i\right| \;=\; d.
+            \]
+        \end{enumerate}
+        
+        \end{proof}
+\end{solution}
+
+\end{document}

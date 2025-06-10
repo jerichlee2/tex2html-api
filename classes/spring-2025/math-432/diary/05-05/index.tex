@@ -1,0 +1,1203 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{booktabs}
+
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Measure Theory in Finite Element Analysis}
+
+\subsection*{0.  Why ``measure theory’’ at all?}
+At its heart, FEM approximates \emph{integral} identities that describe a
+boundary–value problem (BVP).  
+To make those integrals precise—especially on irregular domains and for
+functions that may be only piecewise smooth—we need the full power of modern
+integration theory:
+\[
+	\int_\Omega f(x)\,dx 
+	\quad\text{means Lebesgue integration over a measurable set }
+	\Omega\subset\mathbb{R}^d .
+\]
+Measure theory guarantees that these integrals exist, behave well under
+limits, and interact correctly with differentiation (via the divergence,
+Green, and trace theorems in their measure‑theoretic formulations).
+
+\subsection*{1.  Weak formulations live in $L^p$ and Sobolev spaces}
+\begin{itemize}
+	\item \textbf{Lebesgue spaces.}
+		The canonical energy or \emph{variational} norm for a PDE is almost
+		always an $L^p(\Omega)$ norm, defined through the Lebesgue integral
+		\(
+			\|u\|_{L^p} = \bigl(\int_\Omega |u|^p\,dx\bigr)^{\!1/p}.
+		\)
+	\item \textbf{Sobolev spaces $W^{k,p}(\Omega)$.}
+		Weak derivatives are defined via integration by parts; their very
+		definition relies on Lebesgue integration and the ability to move
+		derivatives onto test functions.  The FEM solution space
+		$V_h\subset H^1(\Omega)=W^{1,2}(\Omega)$ is measurable,
+		complete, and \emph{reflexive} because of measure theory.
+\end{itemize}
+
+\subsection*{2.  Existence and uniqueness (Lax–Milgram, Céa)}
+Proofs hinge on:
+\[
+	a(u,v)=\int_\Omega A\nabla u\!\cdot\!\nabla v\,dx ,
+	\quad
+	\ell(v)=\int_\Omega fv\,dx ,
+\]
+with $a(\,\cdot\!,\cdot\,)$ coercive and continuous on $H^1(\Omega)$.
+All three ingredients—integrals, norms, and dual pairings—are rigorously
+measure‑theoretic.
+
+\subsection*{3.  Defining the actual finite‑element space}
+\begin{itemize}
+	\item Each element \(K\) is a \emph{measurable} subset.
+	\item Shape functions $\varphi_i$ live in $L^p(K)$ and inherit their
+	      approximation properties (e.g.\ Bramble–Hilbert lemma) from
+	      measure‑based norms.
+\end{itemize}
+
+\subsection*{4.  Numerical quadrature (Gauss, Dunavant, \dots)}
+When we replace an exact integral by a quadrature rule,
+\[
+	\int_K g(x)\,dx \;\approx\; \sum_{q=1}^Q w_q\,g(x_q),
+\]
+error estimates ($\mathcal{O}(h^{m})$) are derived by comparing two \emph{measures}:
+the exact Lebesgue measure $dx$ and the atomic measure
+$\mu_Q=\sum w_q\delta_{x_q}$.
+
+\subsection*{5.  Convergence and error analysis}
+Key theorems such as
+\[
+	\|u - u_h\|_{H^1(\Omega)}
+	\;\le\; C\,\inf_{v_h\in V_h}\|u-v_h\|_{H^1(\Omega)}
+\]
+rely on:
+\begin{enumerate}
+	\item \emph{Projection operators} $P_h:H^1\to V_h$ that are bounded in
+	      $L^p$ and $H^1$ norms (both Lebesgue‑defined);
+	\item \emph{Compactness} (Rellich–Kondrachov) and \emph{interpolation}
+	      inequalities—both purely measure‑theoretic statements.
+\end{enumerate}
+
+\subsection*{6.  Irregular data and domains}
+\begin{itemize}
+	\item Loads in $H^{-1}$ or even in the space of bounded measures
+	      $\mathcal{M}(\Omega)$ require integrals of the form
+	      $\langle f, v\rangle = \int_\Omega v\,d\mu$, again a
+	      measure‑theoretic pairing.
+	\item For crack tips or re‑entrant corners, $u\notin H^2$; Lebesgue
+	      theory is indispensable for estimating singular
+	      behaviour and designing graded meshes.
+\end{itemize}
+
+\subsection*{7.  Beyond the deterministic setting}
+Stochastic FEM introduces random parameters
+\(
+	\omega\mapsto \kappa(\omega,x)
+\)
+on a probability space $(\Omega_\mathrm{prob},\mathcal{F},\mathbb{P})$,
+merging \emph{probability measures} with the Lebesgue measure on the
+physical domain—an explicit product‑measure construction.
+
+\subsection*{8.  Summary}
+Measure theory is not a decorative abstraction; it
+\begin{enumerate}
+	\item legitimises every integral in the weak form,
+	\item defines the function spaces where solutions live,
+	\item provides the tools (dual spaces, projections, compactness) for
+	      proving FEM convergence,
+	\item underpins quadrature error bounds,
+	\item and extends naturally to discontinuous, singular, or random data.
+\end{enumerate}
+Without it, the celebrated accuracy and reliability of the finite‑element
+method would rest on heuristic ground.
+\section*{Why Finite‐Element Analysis Still Matters in the Age of Machine Learning}
+
+\begin{enumerate}
+  \item \textbf{First‑principles insight \& interpretability.}\\
+        FEA solves the governing \emph{partial differential equations}
+        (balance of linear momentum, heat conduction, mass transport)
+        subject to well‑understood boundary conditions.  
+        The resulting stress, strain, and temperature fields have a
+        one‑to‑one physical meaning, enabling root‑cause analysis
+        and mechanism discovery—something ``black‑box’’ regressors
+        cannot guarantee.
+
+  \item \textbf{Reliable extrapolation to novel alloys and load cases.}\\
+        ML excels at \emph{interpolation} inside its training envelope.
+        When a new alloy composition, heat‑treatment, or loading path
+        pushes the system into an unseen regime, physics‑based models
+        (with material parameters calibrated once) maintain predictive
+        power, whereas purely data‑driven surrogates often fail silently.
+
+  \item \textbf{Sparse– or high‑cost–data regimes.}\\
+        Obtaining comprehensive fatigue‑life data for a single
+        Ti-6Al-4V batch can take months and $\mathcal{O}(10^5)$ in
+        test coupons.
+        FEA lets a researcher explore hundreds of \emph{virtual}
+        geometries and loading histories from that same sparse dataset,
+        amortising the cost.
+
+  \item \textbf{Design iteration and gradient information.}\\
+        Topology optimisation, shape sensitivity, and adjoint
+        gradient‑based design all rely on the variational structure of
+        the PDE.  
+        FEA produces the consistent derivatives that drive these
+        algorithms; generic ML models do not provide such physics‑aware
+        sensitivities out‑of‑the‑box.
+
+  \item \textbf{Verification, validation, and certification.}\\
+        Regulatory bodies (FAA, EASA, DoD) already publish
+        verification‐and‑validation guidelines for FEA of
+        safety‑critical metallic components.
+        No analogous, universally accepted framework yet exists for
+        certifying ML predictions, especially those that cannot supply
+        conservative bounds on failure risk.
+
+  \item \textbf{Error control and adaptivity.}\\
+        FEA offers \emph{a posteriori} error estimators that drive
+        mesh-refinement algorithms until a target tolerance is met.
+        Such guaranteed error bars are essential when a 1 % stress
+        mis‑prediction can halve high‑cycle fatigue life.
+
+  \item \textbf{Micro‐to‑macro scale bridging.}\\
+        Crystal‑plasticity finite‑element models (CPFEM) explicitly
+        resolve grain orientations and slip‑system kinetics, linking
+        microstructural features to macroscopic anisotropy and fatigue
+        crack initiation—physics that ML has difficulty inferring
+        without enormous labelled microstructure datasets.
+
+  \item \textbf{Synergy: FEA \emph{feeds} and \emph{accelerates} ML.}\\
+        \begin{itemize}
+          \item \emph{Data augmentation}: high‑fidelity FEA generates
+                synthetic training data for ML regressors or classifiers.
+          \item \emph{Model reduction}: ML surrogates (e.g.\ neural ODEs,
+                graph networks) replace repeated FEA solves in
+                real‑time digital twins, but are trained on an FEA
+                backbone.
+          \item \emph{Physics‑informed ML}: hybrid approaches embed the
+                weak form of the PDE as a soft constraint in the loss
+                function, marrying both worlds rather than superseding
+                one with the other.
+        \end{itemize}
+
+  \item \textbf{Community trust and knowledge transfer.}\\
+        Decades of metallurgical research—constitutive models, damage
+        criteria, S–N curves—are encoded in FEA user subroutines
+        (\texttt{UMAT}, \texttt{VUMAT}, \texttt{UEL}).
+        Abandoning that trove would discard hard‑won domain knowledge
+        that ML alone has yet to capture fully.
+\end{enumerate}
+
+\paragraph{Bottom line.}
+Machine learning is transforming \emph{how} we run FEA (faster solvers,
+surrogate models, automated parameter identification), but not \emph{why} we
+need it.  
+For structural metals—where safety factors are tight, microstructures
+matter, and regulatory scrutiny is intense—physics‑grounded finite‑element
+models remain the non‑negotiable foundation on which data‑driven
+accelerators are being built.
+
+\section*{Functional Analysis in Finite Element Analysis}
+
+\subsection*{0.  Why “functional analysis’’?}
+FEM is a \emph{Galerkin} projection of an operator equation
+\(
+	\mathcal{A}u = f
+\)
+posed on an infinite‑dimensional space $V$.  
+Functional analysis provides the language (Hilbert/Banach spaces),
+the tools (duality, projections, spectrum), and the theorems
+(existence, stability, convergence) that make this projection rigorous.
+
+\subsection*{1.  Casting the PDE as an operator equation}
+\[
+	\mathcal{A}:V \longrightarrow V', 
+	\qquad 
+	\text{find }u\in V\text{ such that } \langle \mathcal{A}u,\,v\rangle = \langle f,\,v\rangle \;\;\forall v\in V ,
+\]
+where $V$ is typically $H^1(\Omega)$ or $H(\mathrm{div};\Omega)$ and
+$V'$ its dual.  
+Everything here—weak derivatives, dual pairings—belongs to functional
+analysis.
+
+\subsection*{2.  Existence \& uniqueness: Lax–Milgram and Babuška–Brezzi}
+\begin{itemize}
+  \item \textbf{Hilbert spaces and bounded bilinear forms.}\\
+        For symmetric problems, $a(u,v)$ is a bounded, coercive
+        bilinear form on a Hilbert space; the Lax–Milgram theorem then
+        guarantees a unique solution.
+  \item \textbf{Inf–sup (BB) conditions.}\\
+        Mixed formulations (e.g.\ Stokes, incompressible elasticity)
+        rely on the Babuška–Brezzi inf–sup condition—again a purely
+        functional‑analytic stability criterion.
+\end{itemize}
+
+\subsection*{3.  The Galerkin method as an \emph{orthogonal projection}}
+Given a finite‑dimensional subspace $V_h\subset V$,
+the Galerkin solution $u_h$ satisfies
+\[
+	u_h = P_h u,
+	\qquad
+	a(u-u_h,\,v_h)=0\quad\forall v_h\in V_h,
+\]
+where $P_h$ is the $a$‑orthogonal projector onto $V_h$.  
+Properties of projections in Hilbert spaces (idempotence, stability)
+drive the entire error analysis.
+
+\subsection*{4.  Céa’s lemma (quasi‑optimality)}
+\[
+	\|u-u_h\|_V \;\le\; \frac{C}{\alpha}\;
+	\inf_{v_h\in V_h}\|u-v_h\|_V ,
+\]
+with $\alpha$ the coercivity constant and $C$ the continuity constant of
+the bilinear form.  
+Céa’s lemma is nothing but the estimate for a bounded projector on a
+normed space.
+
+\subsection*{5.  Approximation theory \& interpolation operators}
+\begin{itemize}
+  \item \emph{Scott–Zhang}, \emph{Clément}, or canonical nodal
+        interpolants $\Pi_h:V\to V_h$ are bounded linear operators;
+        their approximation properties stem from functional‑analytic
+        inequalities such as the Bramble–Hilbert lemma.
+  \item Sobolev embeddings, Poincaré and trace inequalities—all
+        functional‑analytic—supply the constants in those estimates.
+\end{itemize}
+
+\subsection*{6.  Eigenvalue problems \& spectral theory}
+For
+\(
+	\mathcal{A}u = \lambda Mu
+\)
+(FEM stiffness $A$ and mass $M$ matrices) the continuous problem is
+framed via compact, self‑adjoint operators.  
+The min–max (Courant–Fischer) principle gives ordering and
+convergence of discrete eigenpairs.
+
+\subsection*{7.  Non‑linear operators and monotonicity}
+When $\mathcal{A}$ is monotone or pseudo‑monotone (e.g.\ $p$‑Laplacian,
+viscoplasticity), Browder–Minty and Leray–Schauder theorems guarantee
+solvability.  
+FEM inherits these results through discrete analogues defined on $V_h$.
+
+\subsection*{8.  Duality, goal‑oriented error control}
+A posteriori estimators such as the \emph{dual‑weighted residual} rely
+on solving an \emph{adjoint} problem in $V'$, exploiting the reflexive
+duality provided by functional analysis to translate residual norms
+into observable error bounds.
+
+\subsection*{9.  Compactness \& convergence of adaptive meshes}
+Adaptive algorithms often need
+\(
+	V_h \to V \text{ in } H^1, \quad h\!\to\!0 ,
+\)
+which follows from Rellich–Kondrachov compactness and Banach–Alaoglu
+weak convergence, ensuring that limit points of mesh‑refinement
+sequences are indeed solutions.
+
+\subsection*{10.  Summary}
+Functional analysis supplies:
+\begin{enumerate}
+  \item the \emph{spaces} ($H^1$, $H(\mathrm{curl})$, $\dots$) and their duals,
+  \item the \emph{operators} and their spectral or monotone properties,
+  \item the \emph{projections} underpinning Galerkin orthogonality,
+  \item the \emph{inequalities} driving approximation and stability,
+  \item the \emph{convergence theorems}—for both linear and non‑linear,
+        steady and eigenvalue problems.
+\end{enumerate}
+Strip these pieces away and FEM would be a collection of heuristics
+without mathematical guarantees; with them, it is a provably convergent,
+systematically improvable framework for solving PDEs in structural
+mechanics and beyond.
+\section*{Differential Geometry in Elasticity Theory}
+
+\subsection*{0.  Why “differential geometry’’ at all?}
+Large‑deformation elasticity describes a body that moves from a
+\emph{reference configuration} $\mathcal{B}_0$ to a
+\emph{current configuration} $\mathcal{B}_t$ via a smooth embedding
+\[
+	\boldsymbol{\varphi}:\mathcal{B}_0 \longrightarrow \mathbb{R}^3 .
+\]
+Treating $\mathcal{B}_0$ and $\mathcal{B}_t$ as 3‑dimensional
+\emph{Riemannian manifolds} turns every kinematic and energetic quantity
+into a coordinate‑free geometric object.
+
+\subsection*{1.  Tangent map and deformation gradient}
+\[
+	F = T\boldsymbol{\varphi} : T\mathcal{B}_0 \longrightarrow T\mathcal{B}_t ,
+	\qquad 
+	F^i_{\;A} = \frac{\partial \varphi^i}{\partial X^A} .
+\]
+Here $T\mathcal{B}_0$ is the tangent bundle of the material manifold.
+Interpreting $F$ as a \emph{bundle map} clarifies how it pushes forward
+material line elements and how its pull‑back acts on covectors.
+
+\subsection*{2.  Metric pull‑back and Green–Lagrange strain}
+\[
+	C := \varphi^{\!*}g_t = F^\top g_t F ,
+	\qquad
+	E := \tfrac12\!\left(C - g_0\right) ,
+\]
+where $g_0$ and $g_t$ are the metric tensors on
+$\mathcal{B}_0$ and $\mathcal{B}_t$ respectively.
+Strain is therefore \textit{intrinsically} the change in metric induced
+by the deformation—not merely a matrix of numbers in a chosen chart.
+
+\subsection*{3.  Volume forms and Jacobian}
+Let $\mathrm{d}V_0$ and $\mathrm{d}v_t$ be the natural volume
+elements associated with $g_0$ and $g_t$.
+Then
+\[
+	J = \frac{\mathrm{d}v_t}{\mathrm{d}V_0} = \det F
+\]
+arises from the pull‑back of the volume form
+$\varphi^{\!*}(\mathrm{d}v_t) = J\,\mathrm{d}V_0$.
+Conservation of mass is simply the statement that $J\rho = \rho_0$.
+
+\subsection*{4.  Covariant derivatives and balance laws}
+\begin{itemize}
+  \item \textbf{Material derivative:} 
+        $\displaystyle \frac{\mathrm{D}}{\mathrm{D}t} = 
+           \partial_t + v^i\nabla_i$,
+        with $\nabla$ the Levi‑Civita connection of $g_t$.
+  \item \textbf{Divergence theorem on manifolds:} 
+        $\displaystyle \int_{\mathcal{B}_t}\!\!\nabla\!\cdot\!\sigma\,\mathrm{d}v_t
+        = \int_{\partial\mathcal{B}_t}\!\!\sigma n\,\mathrm{d}a_t$,
+        valid because $\nabla$ is metric‑compatible.
+\end{itemize}
+Using intrinsic divergence removes any dependence on Cartesian
+coordinates and extends immediately to shells or rods embedded in
+$\mathbb{R}^3$.
+
+\subsection*{5.  Curvature and incompatibility}
+\[
+	R_{ABC}^{\;\;\;\;\;D} = 0 \quad\Longleftrightarrow\quad
+	\text{strain field $E_{AB}$ is \emph{compatible}.}
+\]
+Compatibility conditions for strain are geometric statements about the
+vanishing of the Riemann curvature of the induced connexion on
+$\mathcal{B}_0$.  
+In plates and shells, Gaussian curvature dictates whether a given
+in‑plane strain can be realised without out‑of‑plane bending
+(Gauss–Codazzi equations).
+
+\subsection*{6.  Stress as a covector‑valued 2‑form}
+The Cauchy stress can be written
+\[
+	\boldsymbol{\sigma}^\flat := \sigma_{ij}\,e^i\!\otimes\!e^j
+	\quad\Longrightarrow\quad
+	\mathfrak{t} = \star\,\boldsymbol{\sigma}^\flat
+\]
+where $\star$ is the Hodge star.  
+Balance of linear momentum becomes
+$\mathrm{d}\mathfrak{t} + \boldsymbol{b}\,\mathrm{d}v_t = 0$,
+i.e.\ a single exterior‑calculus equation.
+
+\subsection*{7.  Surface and shell theories}
+Mid‑surfaces are 2‑manifolds $(\mathcal{S},\bar{g})$ whose
+\emph{second fundamental form} $b$ encodes curvature.  
+Koiter–Naghdi shell models express energy in terms of the change of
+$(\bar{g},b)$—purely differential‑geometric invariants—under
+deformation.
+
+\subsection*{8.  Material symmetry and Lie groups}
+Crystal rotations constitute the Lie group $\mathrm{SO}(3)$ acting on
+the material manifold.  
+Using group theory one writes constitutive laws as
+\(
+	W(F) = \widehat{W}(C) \quad\text{with}\quad
+	\widehat{W}(Q^\top C Q)=\widehat{W}(C)\,\forall Q\in\mathrm{SO}(3),
+\)
+achieving frame‑indifference by construction.
+
+\subsection*{9.  Geodesic distance in defect mechanics}
+Dislocations and disclinations are modelled by torsion and curvature
+of an \emph{affine connection}.  
+The closure failure of Burgers circuits is measured by parallel
+transport—another quintessential differential‑geometric concept.
+
+\subsection*{10.  Summary}
+Differential geometry supplies:
+\begin{enumerate}
+  \item Coordinate‑free definitions of strain, stress, and volume change;
+  \item Intrinsic balance laws via covariant derivatives and Stokes’ theorem;
+  \item Compatibility and curvature criteria tying strain to geometry;
+  \item Natural frameworks for shells, rods, and crystal defects;
+  \item Group‑theoretic tools ensuring material frame‑indifference.
+\end{enumerate}
+Without this geometric backbone, non‑linear elasticity would devolve
+into cumbersome tensor calculus tied to specific coordinate charts;
+with it, the theory becomes compact, elegant, and readily extensible to
+complex bodies, surfaces, and micro‑structured materials.
+\section*{What Does It Mean to \emph{Do} Differential Geometry Numerically?}
+
+\subsection*{0.  Big picture}
+A geometric object (manifold, vector field, connection, curvature,
+$\dots$) is defined analytically by smooth maps and limits.
+\emph{Numerical differential geometry} replaces those infinite‑precision
+objects with \textbf{finite, computable data structures}—meshes,
+simplicial complexes, sparse matrices—and algorithms whose outputs
+converge to the smooth theory as the discretisation is refined.
+
+\subsection*{1.  Discretising the manifold}
+\begin{itemize}
+  \item \textbf{Meshes:} triangles (2‑D), tetrahedra (3‑D), hexahedra,
+        or higher‑order Bézier/NURBS patches (isogeometric analysis).
+  \item \textbf{Point clouds:} unstructured samples augmented by
+        neighbourhood graphs (for intrinsic methods on scanned data).
+\end{itemize}
+The mesh is a piecewise‑linear (or higher‑order) \emph{chart atlas}
+providing local coordinates for computation.
+
+\subsection*{2.  Discrete differential forms}
+Via the \emph{de Rham complex}
+\(
+	0 \!\to\! \Omega^0 \!\xrightarrow{d}\! \Omega^1 \!\xrightarrow{d}\! \dots,
+\)
+one replaces smooth $k$‑forms by:
+\[
+	\underbrace{\text{vertex values}}_{\text{0‑forms}},\;
+	\underbrace{\text{edge integrals}}_{\text{1‑forms}},\;
+	\underbrace{\text{face fluxes}}_{\text{2‑forms}},\;\dots
+\]
+together with a \emph{coboundary} operator—an incidence matrix that
+satisfies $d^2=0$ exactly on the computer.
+
+\subsection*{3.  Exterior calculus on a computer}
+Operations such as 
+\(
+	\mathrm{d},\;\star,\;\wedge,\;\delta=\pm\!\star\!d\star
+\)
+are encoded as sparse matrices acting on the discrete forms above.
+This is the essence of \textbf{Discrete Exterior Calculus (DEC)} and
+\textbf{Finite‑Element Exterior Calculus (FEEC)}.
+
+\subsection*{4.  Metric information}
+Geometry enters through:
+\[
+	\text{Mass matrix }M_k
+	\;=\;\bigl[\!\int_{\text{cell}} \varphi_i \,\varphi_j\,\mathrm{d}A
+	\bigr]
+	\quad\text{or}\quad
+	\bigl[\!\int_{\text{cell}} \alpha_i \!\wedge\! \star\alpha_j\bigr],
+\]
+built from local pull‑backs of the smooth metric.
+These matrices weight inner products, Laplacians, and energies.
+
+\subsection*{5.  Numerical curvature}
+\begin{itemize}
+  \item \emph{Gaussian curvature} via angle deficits (Regge calculus).
+  \item \emph{Mean curvature} via cotangent Laplacian or surface FEM.
+  \item \emph{Riemann curvature} tensors approximated by parallel
+        transport around discrete loops (lattice gauge theory).
+\end{itemize}
+
+\subsection*{6.  Geodesics and parallel transport}
+Algorithms such as:
+\[
+	\text{Dijkstra / fast marching (intrinsic distance)}, \qquad
+	\text{geodesic shooting (variational, FEM)}, \qquad
+	\text{log–exp maps (manifold optimisation)}.
+\]
+Parallel transport is realised via discrete connections: rotation angles
+on edges or $SO(3)$ matrices on tetrahedral faces.
+
+\subsection*{7.  Geometric PDEs}
+Heat flow, mean‑curvature flow, Hodge–Laplace eigenproblems, and elastic
+shell equations are solved with FEM/DEC/FEEC on the discrete manifold,
+preserving identities like the discrete Leibniz rule and $d^2\!=\!0$.
+
+\subsection*{8.  Structure preservation}
+Good discretisations are \emph{mimetic}: they conserve topological
+invariants (cohomology), symmetries (Noether), or energies exactly at
+the discrete level, ensuring physical fidelity and numerical stability.
+
+\subsection*{9.  Convergence + error control}
+As mesh size $h\!\to\!0$ (or element order $p\!\to\!\infty$),
+discrete operators and solutions converge to their smooth counterparts,
+with rates proven by \textbf{approximation theory on manifolds}
+(FEEC, isogeometric analysis) or empirically observed via mesh studies.
+
+\subsection*{10.  Summary}
+“Doing differential geometry numerically’’ means:
+\begin{enumerate}
+  \item Representing manifolds and tensor fields with finite data;
+  \item Implementing discrete analogues of $\mathrm{d}$, $\star$, $\nabla$ that
+        respect algebraic identities exactly;
+  \item Solving geometric PDEs and optimisation problems on those
+        discrete structures while controlling errors;
+  \item Preserving geometric/topological invariants to maintain physical
+        realism and stability.
+\end{enumerate}
+The result is a toolbox that brings the elegance of smooth geometry to
+real‑world computation, from curvature‑driven surface design to general
+relativity, robotics, and computer graphics.
+
+\section*{FEM \& Exterior Calculus on a Computer:  A Unified View}
+
+\subsection*{0.\  Same DNA, different dialects}
+Both frameworks discretise \emph{weak forms} of PDEs:
+\[
+  \text{continuous problem:}\quad
+  \int_\Omega \!\langle \mathcal{A}u , v \rangle \, \mathrm{d}x
+  \;=\; \int_\Omega \!\langle f , v\rangle \, \mathrm{d}x ,
+  \qquad \forall v\in V,
+\]
+but they package the ingredients differently:  
+classical FEM speaks in \emph{scalars, vectors, tensors};  
+exterior calculus speaks in \emph{$k$‑forms, $d$, $\star$, $\wedge$}.  
+On a computer, the two dialects can be translated back and forth.
+
+\subsection*{1.\  Whitney forms = lowest‑order finite elements}
+For a simplicial mesh,
+\[
+  \text{\emph{Whitney~0‑forms}} \;\;\Longleftrightarrow\;\; P^1
+  \text{ (linear Lagrange shape functions)},\\
+  \text{\emph{Whitney~1‑forms}} \;\;\Longleftrightarrow\;\;
+     \text{Nédélec edge elements},\\
+  \text{\emph{Whitney~2‑forms}} \;\;\Longleftrightarrow\;\;
+     \text{Raviart–Thomas face elements}.
+\]
+Thus a large subset of everyday FEM bases are \emph{already}
+discrete differential forms.
+
+\subsection*{2.\  Hilbert complexes and FEEC}
+\begin{itemize}
+  \item \textbf{Hilbert complex:}\;
+        \( H\Lambda^0 \xrightarrow{d} H\Lambda^1 \xrightarrow{d}
+        \cdots \) is a sequence of Sobolev spaces of differential forms.
+  \item \textbf{Finite‑Element Exterior Calculus (FEEC)} chooses
+        compatible subspaces
+        \( V_h^k \subset H\Lambda^k \) such that
+        \( d(V_h^k) \subset V_h^{k+1} \).
+  \item \textbf{Pay‑off:}\; commuting diagrams $d\Pi_h = \Pi_h d$
+        give stability and optimal error estimates \emph{automatically},
+        reproducing Céa's lemma within each de-Rham block.
+\end{itemize}
+
+\subsection*{3.\  DEC: purely topological, metric added later}
+\[
+  C^k(\mathcal{T}) \xrightarrow{\;\delta\;} C^{k+1}(\mathcal{T}),
+  \qquad \delta^2 = 0 \text{ exactly at the matrix level.}
+\]
+DEC fixes the \emph{coboundary} operator first (incidence matrices),
+then introduces metric data via diagonal Hodge‑star matrices
+(cotangent weights, Voronoi areas).  
+It is the \emph{finite‑difference} analogue to FEEC’s finite‑element
+approach.
+
+\subsection*{4.\  Variational crimes made safe}
+Classical FEM sometimes breaks algebraic identities
+(e.g.\ $\nabla\!\times\nabla = 0$) on coarse meshes.  
+DEC/FEEC preserve $d^2=0$, Poincaré duality, and Green–Stokes theorems
+\emph{by construction}, giving:
+\[
+  \text{exact charge conservation in Maxwell,}\quad
+  \text{exact mass conservation in geophysical flow,}\;\ldots
+\]
+
+\subsection*{5.\  What DEC/FEEC add to FEM}
+\begin{enumerate}
+  \item Coordinate‑free assembly of stiffness and mass matrices;
+  \item Guaranteed compatibility for mixed problems
+        (e.g.\ Stokes, elasticity with weak symmetry);
+  \item Built‑in topological invariants (cohomology classes) that act
+        as error checks for mesh defects.
+\end{enumerate}
+
+\subsection*{6.\  What FEM adds to DEC/FEEC}
+\begin{enumerate}
+  \item High‑order polynomial spaces ($p$‑version, $hp$ adaptive);
+  \item Efficient quadrature and sparse linear‑algebra technology;
+  \item Mature a~posteriori error estimators and mesh generators,
+        crucial for large‑scale science/engineering simulations.
+\end{enumerate}
+
+\subsection*{7.\  Hybrid algorithms in practice}
+\begin{itemize}
+  \item \textbf{Electromagnetics:}\; Nédélec/Whitney elements with
+        DEC‑style Hodge stars ensure lossless energy transfer in RF
+        cavities.
+  \item \textbf{Elastic shells:}\; FEEC provides $H^2$‑conforming
+        spaces on curved surfaces; FEM handles geometric non‑linearity.
+  \item \textbf{Fluids on the sphere:}\; DEC guarantees
+        divergence‑free velocity; FEM gives high‑order accuracy for
+        climate models.
+\end{itemize}
+
+\subsection*{8.\  Summary}
+\begin{align}
+  &\textbf{FEM} = \text{high-order polynomial approximation +
+                    variational machinery},\\
+  &\textbf{Exterior calculus on a computer} = \text{topology‑preserving
+     algebra for }d,\star,\wedge.\\[4pt]
+  &\textbf{Together:}\\
+  &\phantom{=}\;\;
+     \boxed{\text{Structure‑preserving, high‑accuracy,
+              mesh‑flexible solvers for geometric PDEs.}}
+\end{align}
+\section*{Graduate–Level Mathematics Courses That Pay Dividends in Prof.\ Sehitoglu’s Lab}
+
+\noindent
+The High Temperature Materials Lab tackles \emph{fatigue\,/\,plasticity\,/\,phase transformation} problems that cut across
+\[
+  \text{continuum mechanics} \;+\;
+  \text{atomistic simulations} \;+\;
+  \text{data‐driven predictions}.
+\]
+A mathematics M.S.\ student can contribute most effectively by mastering the
+courses below, grouped by theme and ordered (roughly) from \emph{foundational}
+to \emph{lab‐specific impact}.%
+\footnote{Where a title seems “applied,” check your math department;
+many now cross‐list these courses with engineering.}
+
+%-----------------------------------------------------------------------
+\subsection*{1.\  Functional and Real Analysis (core toolkit)}
+\begin{itemize}
+  \item \textbf{Measure–theoretic Real Analysis}
+        \\Solid footing for Lebesgue integration, Sobolev spaces, and weak
+        solutions of PDEs used in fatigue and phase‐field models.
+  \item \textbf{Functional Analysis}
+        \\Banach/Hilbert space theory, Lax–Milgram, compactness—all
+        underpin finite‑element convergence proofs and homogenisation
+        theorems that appear in strain–gradient plasticity.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{2.\  Partial Differential Equations (linear $\Rightarrow$ nonlinear)}
+\begin{itemize}
+  \item \textbf{Elliptic \& Parabolic PDEs I\,/\,II}
+        \\Existence, regularity, and maximum principles for
+        diffusion‐type and elasticity equations.
+  \item \textbf{Nonlinear PDEs}
+        \\Critical for martensitic phase‐transformation models
+        (e.g.\ Allen–Cahn, Cahn–Hilliard) and crystal plasticity
+        formulations with rate dependence.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{3.\  Calculus of Variations \& Nonlinear Elasticity}
+\begin{itemize}
+  \item Direct methods, quasiconvexity, $\Gamma$‐convergence
+        \\Provide the language for energy‐minimising microstructures,
+        twin‐boundary motion, and fatigue crack‐tip fields.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{4.\  Numerical Analysis \& Scientific Computing}
+\begin{itemize}
+  \item \textbf{Finite Element Methods (FEM)}
+        \\Mandatory for implementing crystal‐plasticity UMAT/VUMATs and
+        phase‐field fatigue simulations in \textsc{abaqus}, \textsc{moose}, etc.
+  \item \textbf{Numerical Linear Algebra}
+        \\Sparse factorizations, Krylov solvers, pre‑conditioning for the
+        very large FE systems that arise in 3‑D crack‐growth studies.
+  \item \textbf{Computational PDEs / Adaptive Meshes}
+        \\Vital when coupling atomistic length scales (nanometres) to
+        macro fatigue lives (centimetres).
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{5.\  Differential Geometry \& Tensor Calculus (for finite strains)}
+\begin{itemize}
+  \item Frame‐indifferent kinematics, covariant derivatives, pull‑back of
+        metrics—precisely the language used in finite‐deformation
+        plasticity and shape‑memory constitutive models.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{6.\  Probability, Stochastic Processes \& Uncertainty Quantification}
+\begin{itemize}
+  \item Fatigue life scatter is inherently statistical; crack‐nucleation
+        models often couple Weibull statistics with deterministic FEM
+        fields.  Bayesian UQ courses help quantify model/form parameter
+        uncertainty.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{7.\  Dynamical Systems \& Asymptotic/Multiscale Analysis}
+\begin{itemize}
+  \item Bifurcations in cyclic loading, time‐scale separation between
+        dislocation glide and fatigue crack advance, and
+        homogenisation of heterogeneous alloys all draw on these topics.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{8.\  Optimisation \& Inverse Problems}
+\begin{itemize}
+  \item Gradient‐based calibration of crystal‐plasticity parameters,
+        phase‐field mobility tensors, or DFT‐informed interatomic
+        potentials relies on PDE‑constrained optimisation.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{9.\  Data-Driven and Machine-Learning Methods for Scientific Computing}
+\begin{itemize}
+  \item Physics‑informed neural networks (PINNs) and reduced‐order
+        models accelerate FE simulations and ab‑initio workflows
+        currently explored in the lab; a modern ML elective slots here.
+\end{itemize}
+
+%-----------------------------------------------------------------------
+\subsection*{10.\  Cross‑listed Engineering Electives (optional but synergistic)}
+\begin{itemize}
+  \item \textbf{Continuum Mechanics / Elasticity / Plasticity}
+  \item \textbf{Crystal Plasticity \& Phase‐Field Modeling}
+\end{itemize}
+Even one such course bridges abstract math to the specific material
+behaviours Prof.\ Sehitoglu studies.
+
+%-----------------------------------------------------------------------
+\subsection*{Putting it together}
+Aim for a balanced transcript:
+\[
+  \underbrace{\text{(1–3) rigorous analysis}}_{\text{proof‐level depth}}
+  \;+\;
+  \underbrace{\text{(4,7) numerical \& multiscale}}_{\text{computability}}
+  \;+\;
+  \underbrace{\text{(5,6,9) mechanics \& data}}_{\text{lab relevance}}.
+\]
+This blend positions you to
+\begin{enumerate}
+  \item formulate new fatigue / phase‐transformation PDEs,
+  \item prove well‐posedness or derive reduced models,
+  \item implement efficient FEM or ML‑accelerated solvers,
+  \item quantify uncertainty—all skills that directly enhance the
+        High Temperature Materials Lab’s mission.
+\end{enumerate}
+\section*{Should You Interlace Mathematics \& TAM Coursework?}
+
+\subsection*{0.\  Guiding principle}
+\[
+  \textbf{Synergy} \;=\; 
+    \bigl[\text{rigorous math foundation}\bigr]
+    + \bigl[\text{mechanics depth}\bigr]
+    + \bigl[\text{efficient time--to–degree}\bigr].
+\]
+Interlacing the \emph{right} mathematics electives with your TAM
+sequence tends to \emph{increase} synergy and \emph{decrease} total
+time spent re–learning prerequisites.  
+The caveat: do not overload any single semester with all‑theory courses
+\emph{and} the most concept‑heavy TAM offerings.
+
+%--------------------------------------------------------------------
+\subsection*{1.\  Identify the “mathematical spine’’ already inside TAM}
+
+\begin{itemize}
+  \item \textbf{TAM 541–542} (Mathematical Methods I–II)  
+        \quad$\Rightarrow$ complex analysis, special functions, Greens
+        functions, integral transforms.
+  \item \textbf{TAM 549} (Asymptotic Methods)  
+        \quad$\Rightarrow$ matched‐layer expansions, multiple scales.
+  \item \textbf{TAM 574} (Advanced FEM)  
+        \quad$\Rightarrow$ weak formulations, Sobolev norms.
+\end{itemize}
+
+\noindent
+These already cover \emph{applied} complex analysis, perturbation, and
+finite‑element theory.  
+Pure‑math electives should therefore \emph{complement} (not duplicate)
+these topics.
+
+%--------------------------------------------------------------------
+\subsection*{2.\  High‑impact math electives to weave in}
+
+\vspace{-1em}
+\begin{center}
+\begin{tabular}{@{}llc@{}}
+\toprule
+\textbf{Math Course} & \textbf{Why it pairs well} & \textbf{Insert before$^\dagger$} \\ 
+\midrule
+Functional Analysis & Lax–Milgram, spectral theory                          & TAM 574, 551 \\
+Measure‑theoretic Real Analysis & Lebesgue/Sobolev tools for PDE proofs      & TAM 549, 559 \\
+Numerical Linear Algebra & Krylov, pre‑conditioning for large FE systems     & TAM 574, 570 \\
+Partial Differential Equations I–II & Existence/regularity for elasticity    & TAM 551–552, 554 \\
+Calculus of Variations & Energy principles, fracture, phase–field           & TAM 555, 561 \\
+Probability & Stochastic fatigue, random media                               & TAM 557 \\
+Optimization / Inverse Problems & Parameter ID, design                      & TAM 574, 598 (topics) \\
+Differential Geometry & Finite‑strain kinematics, shell models               & TAM 545, 554 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begingroup\footnotesize
+\noindent
+$^\dagger$“Insert before’’ means \emph{take these math courses one
+semester earlier} than the paired TAM class so the theory is fresh when
+you need it.
+\endgroup
+
+%--------------------------------------------------------------------
+\subsection*{3.\  A balanced 4‑semester template}
+
+\begin{center}
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{Sem} & \textbf{Core TAM} & \textbf{Math / Complement} \\
+\midrule
+1 & TAM 541 (Math Meth I), TAM 551 (Solid I)    & Real Analysis, Num.\ Linear Alg. \\
+2 & TAM 542 (Math Meth II), TAM 552 (Solid II)  & Functional Analysis, PDE I \\
+3 & TAM 574 (Adv.\ FEM), TAM 555 (Fracture)     & PDE II, Calc.\ of Variations \\
+4 & TAM 545 (Cont.\ Mech.), TAM 559 (Atomistic) & Prob./UQ or Diff.\ Geometry \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+*Swap Fluid‑ or Wave‑track courses as needed; the logic—\emph{math
+just‐ahead‐of‐application}—remains.*
+
+%--------------------------------------------------------------------
+\subsection*{4.\  When \emph{not} to interlace}
+\begin{enumerate}
+  \item Heavy experimental semester (e.g.\ TAM 537) where lab time is
+        the bottleneck.
+  \item Qualifying‑exam periods where mastering TAM content trumps
+        additional theory.
+  \item If math and TAM offerings clash in the timetable \emph{and}
+        postponing the math does not delay research progress.
+\end{enumerate}
+
+%--------------------------------------------------------------------
+\subsection*{5.\  Take‑away checklist}
+\begin{enumerate}
+  \item \textbf{Map each TAM course to its math prerequisite.}
+        If it already \emph{teaches} the math, do not duplicate.
+  \item \textbf{Front‑load} foundational pure‑math electives so later
+        continuum mechanics feels “plug‑and‑play.’’
+  \item \textbf{Pair} computational math (numerical linear algebra,
+        scientific computing) directly with TAM 574/570 semesters.
+  \item \textbf{Leave slack.}  One rigorous proof course + one
+        concept‑heavy TAM class per term is usually the upper safe limit.
+\end{enumerate}
+
+\paragraph{Bottom line.}
+Strategic interlacing beats strict separation: you reinforce theoretical
+concepts just before applying them, shorten the learning curve for
+advanced mechanics topics, and demonstrate an integrative skill set that
+Prof.\ Sehitoglu’s lab—and the broader solid‑mechanics community—values
+highly.
+
+\section*{Which \textsc{Math} Courses Best Position You for
+Prof.\ Sehitoglu’s  Fatigue\;/\,Plasticity Lab?}
+
+\noindent
+The lab’s core research themes
+\[
+  \underbrace{\text{non‑linear continuum mechanics}}_{\text{finite strain,
+       crystal plasticity}}
+  \;+\;
+  \underbrace{\text{multiscale\,/\,atomistic modeling}}_{\text{ab‑initio,
+       dislocation–twin interactions}}
+  \;+\;
+  \underbrace{\text{computational fatigue}}_{\text{phase‑field,
+       FEM, UQ}}
+\]
+draw far more on \emph{analysis, geometry, numerics, probability} than on
+\emph{abstract algebra, algebraic geometry, or set theory}.  
+Below is a filtered “menu’’ of graduate mathematics that will
+\emph{directly} accelerate your PhD trajectory, followed by a practical
+2‑year (4‑semester) timetable that dovetails with finishing the TAM M.S.
+
+%---------------------------------------------------------------------
+\subsection*{1.\  High‑leverage courses (strongly recommended)}
+
+\begin{tabular}{@{}p{2.8cm}p{9.6cm}@{}}
+\toprule
+\textbf{Course} & \textbf{Why it matters for fatigue/plasticity} \\
+\midrule
+\textbf{MATH 540 Real Analysis} &
+Sobolev/Lebesgue machinery that underlies weak forms, energy methods,
+and homogenisation. \\[0.2em]
+\textbf{MATH 541 Functional Analysis} &
+Lax–Milgram, compactness, spectral theory $\;\Rightarrow\;$ existence,
+stability, and convergence proofs for FEM and phase‑field models. \\[0.2em]
+\textbf{MATH 552 Numerical Methods for PDEs} &
+Sparse solvers, error analysis, Krylov/AMG pre‑conditioning—
+exactly what TAM 574 (\emph{Adv.\ FEM}) builds on. \\[0.2em]
+\textbf{MATH 553 \& 554 PDE I–II} &
+Linear operators, distribution theory, Fourier–Sobolev tools used in
+elasticity and viscoelasticity (TAM 529). \\[0.2em]
+\textbf{MATH 555 Non‑linear PDE} &
+Variational inequalities, finite‑time blow‑up, and regularity—central
+for phase‑field fracture, cyclic‑plasticity models. \\[0.2em]
+\textbf{MATH 558 Applied Math Methods} &
+Matched‑asymptotics, multiscale homogenisation, stochastic averaging—
+connects atomistic length scales to macro fatigue life. \\[0.2em]
+\textbf{MATH 518 Differentiable Manifolds I} &
+Coordinate‑free strain, covariant derivatives, and pull‑backs used in
+TAM 545 and finite‑strain crystal plasticity UMATs. \\[0.2em]
+\textbf{MATH 522 Lie Groups I} &
+SO(3) symmetry, lattice point groups, slip‑system rotations—minimal but
+powerful group theory for crystallography. \\[0.2em]
+\textbf{MATH 561 Probability I} &
+Weibull life scatter, stochastic crack‑nucleation, uncertainty
+quantification for fatigue design. \\[0.2em]
+\textbf{MATH 589 Convex Analysis \& Optim.} &
+PDE‑constrained optimisation for parameter ID \& microstructure‑aware
+topology optimisation. \\
+\bottomrule
+\end{tabular}
+
+%---------------------------------------------------------------------
+\subsection*{2.\  Nice‑to‑have electives (if time/interest permits)}
+
+\begin{itemize}
+  \item \textbf{MATH 546 Hilbert Spaces} – spectral decompositions for
+        elastodynamics (TAM 514) and wave motion (TAM 518).
+  \item \textbf{MATH 520 Symplectic Geometry} – Hamiltonian structure of
+        finite‑strain dynamics; useful but not essential.
+  \item \textbf{MATH 562 Stochastic Processes} – random‑load spectra,
+        Markov crack‑growth models.
+\end{itemize}
+
+\noindent
+Courses \emph{least} connected to Sehitoglu‑style mechanics  
+(Abstract/Commutative Algebra, Algebraic Geometry, Topology II, Logic,
+Set Theory, most of Graph/Combinatorics) are intellectually rich but
+unlikely to translate into lab impact.
+
+%---------------------------------------------------------------------
+\subsection*{3.\  Two‑year (4‑semester) math M.S.\ template}
+
+\begin{center}
+\begin{tabular}{@{}cll@{}}
+\toprule
+\textbf{Sem} & \textbf{Core Math} & \textbf{Elective/Bridge to TAM} \\
+\midrule
+1 & MATH 540 (Real An.) & MATH 553 (PDE I) \\
+2 & MATH 541 (Func.\ An.) & MATH 552 (Num.\ PDE) \\
+3 & MATH 554 (PDE II) & MATH 518 (Manifolds I) or 522 (Lie Gp) \\
+4 & MATH 555 (Non‑lin.\ PDE) & MATH 558 (Applied Math) or 561 (Prob.)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+*Overlap strategy*:  
+Take MATH 540 during your \emph{final} TAM semester; the rest of the
+sequence then lines up naturally with thesis research.
+
+%---------------------------------------------------------------------
+\subsection*{4.\  Research synergy tips}
+
+\begin{itemize}
+  \item \textbf{Integrate early}—use class projects in MATH 552/554/555
+        to prototype phase‑field or FEM codes you can later port into
+        \textsc{abaqus} \texttt{UEL}/\texttt{UMAT} frameworks.
+  \item \textbf{Leverage Lie groups}—a small independent study on
+        crystal symmetry links directly to slip‑system activation rules
+        in Sehitoglu’s shape‑memory work.
+  \item \textbf{Probability ties to experiments}—combine MATH 561 with
+        TAM 557 (\emph{Random Media}) to model microstructure‑induced
+        scatter in fatigue crack‑growth rates.
+\end{itemize}
+
+%---------------------------------------------------------------------
+\subsection*{5.\  Bottom line}
+
+Focus your mathematics M.S.\ on \textit{analysis, PDEs, numerics,
+differential geometry, and probability}.  
+These subjects are the proven workhorses behind cutting‑edge research in
+fatigue, crystal plasticity, and multiscale materials modeling—the very
+problems Prof.\ Sehitoglu’s lab will expect you to tackle during your
+PhD.
+%%--------------------------------------------------------------------
+%%  Paste this into any LaTeX document.
+%%  Requires:  \usepackage{amsmath,amssymb,booktabs}
+%%--------------------------------------------------------------------
+
+\section*{Integrated 7--Semester Plan\\
+(M.Eng.\ Mechanical Engineering \textit{+\;} M.S.\ Mathematics)}
+
+\subsection*{1.\ Three--Semester \textbf{M.Eng.\ Mechanical Engineering}
+(Fall 2025 → Fall 2026)}
+
+\begin{center}
+\begin{tabular}{@{}ccp{8cm}p{4.9cm}@{}}
+\toprule
+\textbf{Term} & \textbf{Credits} & \textbf{Engineering Core \& Electives}
+& \textbf{Math (banked for M.S.)} \\ \midrule
+Fall 2025 & 12 &
+\textbf{TAM 551 Solid Mechanics I} (4)\\[-2pt]
+& & \textbf{TAM 541 Mathematical Methods I} (4) &
+\textbf{MATH 540 Real Analysis} (4) \\[6pt]
+Spring 2026 & 12 &
+\textbf{TAM 552 Solid Mechanics II} (4)\\[-2pt]
+& & \textbf{TAM 542 Mathematical Methods II} (4) &
+\textbf{MATH 541 Functional Analysis} (4) \\[6pt]
+Fall 2026 & 12 &
+\textbf{TAM 531 Inviscid Flow} (4)\\[-2pt]
+& & Professional–Development Elective$^\dagger$ (4) &
+\textbf{MATH 518 Differentiable Manifolds I} (4) \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\emph{M.Eng.\ credit summary:}\;
+4xx h = 12,\; 5xx h = 20,\; prof‑dev = 4 \quad$\Rightarrow$\quad
+\textbf{Total = 32 h}
+
+%--------------------------------------------------------------------
+\subsection*{2.\ Four--Semester \textbf{M.S.\ Mathematics}
+(Fall 2026 → Spring 2028)}
+
+\begin{center}
+\begin{tabular}{@{}ccp{7.5cm}p{5.4cm}@{}}
+\toprule
+\textbf{Term} & \textbf{Credits} & \textbf{Core Analysis / Geometry / PDE}
+& \textbf{Depth \& Application Electives} \\ \midrule
+\multicolumn{4}{@{}l}{\textit{Carry‑over from Fall 2026:}
+MATH 518 (4 h) already earned} \\[4pt]
+Fall 2026 & +4 &
+\textbf{MATH 552 Numerical Methods for PDEs} (4) & --- \\[6pt]
+Spring 2027 & 12 &
+\textbf{MATH 553 PDE I} (4)\\[-2pt]
+& & \textbf{MATH 554 PDE II} (4) &
+\textbf{MATH 561 Probability I} (4) \\[6pt]
+Fall 2027 & 12 &
+\textbf{MATH 555 Non‑linear PDE} (4) &
+\textbf{MATH 522 Lie Groups I} (4)\\[-2pt]
+& & & MATH 546 Hilbert Spaces (4) \\[6pt]
+Spring 2028 & 12 &
+\textbf{MATH 558 Applied Math Methods} (4) &
+\textbf{MATH 589 Convex Analysis \& Optimization} (4)\\[-2pt]
+& & & \textit{Optional:} MATH 562 Stochastic Processes (0–4) \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\emph{Math M.S.\ credit summary:}\;
+Analysis/PDE 20 h,\; Geometry/Group 8 h,\; Numerics/Prob/Optim 8 h
+\quad$\Rightarrow$\quad
+\textbf{Total = 36 h}  
+(4 h cushion for seminar, reading, or thesis research if desired)
+
+%--------------------------------------------------------------------
+\subsection*{3.\ Milestone Calendar}
+
+\begin{center}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\textbf{2025--26 AY} & \textbf{2026--27 AY} & \textbf{2027--28 AY} \\ \midrule
+\textbf{F 25:} M.Eng.\ Yr 1 start & \textbf{F 26:} Finish M.Eng.; begin Math M.S. &
+\textbf{F 27:} Math M.S.\ Yr 2 (Non‑lin.\ PDE) \\[2pt]
+\textbf{S 26:} Solid II + Func.\ An. &
+\textbf{S 27:} Math M.S.\ Yr 1 spring (PDE pair) &
+\textbf{S 28:} Math M.S.\ finish / thesis defense \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+$^\dagger$ Examples: \textit{ENGR 572 Engineering Law},
+\textit{ENGR 573 Tech Entrepreneurship}, or an approved internship/co‑op.
+
+\medskip\noindent
+\textbf{Target PhD start date:} August 2028
+
+Subject: Prospective M.Eng. student interested in summer fatigue research
+
+Dear Professor Sehitoglu,
+
+My name is <Name>; I have applied for Fall 2025 entry to the
+M.Eng. in Mechanical Engineering (decision expected late May).
+My goal is to pursue fatigue and phase‑transformation research
+and ultimately a PhD in your High‑Temperature Materials Lab.
+
+• Background – B.S. ME (UIUC ’25, GPA 3.8).  Senior capstone: finite‑difference
+  thermal modeling of steel compressor blades (TAM 470).  
+• Skills – ABAQUS UMAT scripting, Python + NumPy for post‑processing,
+  and introductory DFT (VASP) from a materials informatics project.
+
+I will be in Champaign this summer (June – August) and can commit
+10–15 h/week to a volunteer or hourly project—e.g., calibrating
+a phase‑field fatigue model or helping a PhD student with dislocation
+image‑correlation analysis.  If no slots are available, any advice on
+datasets or reading you recommend would still be invaluable.
+
+I have attached a two‑page résumé; a brief project portfolio is
+here (<GitHub link>).  Would it be possible to discuss potential
+involvement at your convenience?
+
+Thank you for your time.
+
+Best regards,
+
+<Name>  
+<UIUC NetID>  |  <Phone>
+Subject: Summer research help for fatigue / thermo‑mechanical projects
+
+Dear Professor Sehitoglu,
+
+I will graduate this May with a B.S. in Engineering Mechanics (minor: Mathematics) and have applied for Fall 2025 entry to the M.Eng.–ME program; admission decisions arrive later this month.  My long‑term aim is a PhD focused on thermo‑mechanical fatigue and phase transformation in structural metals, and your High Temperature Materials Lab is an ideal fit.
+
+• Senior capstone (TAM 470): finite‑difference model of 2‑D transient heat conduction from a stationary laser on steel; implemented Newton–Raphson iteration and von Neumann stability checks.  
+• Internships:  
+  – Caterpillar Inc.—Python automation of Fatigue Equivalent Load Analysis; full Rainflow implementation and documentation.  
+  – Littelfuse Inc.—CNC manufacturing workflow → software tool to map fuse‑body geometries.  
+• Tools: ABAQUS user subroutines (UMAT basics), Python/NumPy, GitHub portfolio (linked below).
+
+I will be on campus 3 June – 9 August and can commit 10–15 h/week—volunteer or hourly—to assist with, for example, phase‑field fatigue calibration or slip/twin post‑processing.  If no positions are available, I would still value any recommended readings or datasets to study in preparation for graduate work.
+
+Résumé (pdf) and brief code samples are attached.  Thank you for considering my request; I would welcome the chance to discuss how I might contribute this summer.
+
+Best regards,
+
+<Your Name>  
+UIUC B.S. Engineering Mechanics '25  
+\end{document}

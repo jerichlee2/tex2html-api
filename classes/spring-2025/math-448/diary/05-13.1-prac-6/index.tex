@@ -1,0 +1,168 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\arctanh}{arctanh}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 6}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+  
+  %-----------------------------------------------------------
+  \begin{problem}[Values and properties of elementary functions]\mbox{}\\[4pt]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Find \emph{all} values of $\bigl(\sqrt{2}+i\sqrt{2}\bigr)^{9/2}$ and write each value in the form $x+iy$ with $x,y\in\mathbb{R}$.
+    \item Show that, for every $z\in\mathbb{C}\setminus\{1\}$,
+          \[
+            \arctanh z
+            \;=\;
+            \tfrac12\,
+            \Log\!\Bigl(\tfrac{1+z}{1-z}\Bigr),
+          \]
+          where $\Log$ is the principal logarithm, and state the maximal simply‑connected domain on which the identity holds.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Isolated singularities]\mbox{}\\[4pt]
+  Consider
+  \[
+    f(z)=\frac{e^{\frac{1}{z-2}}}{(z+1)^{4}}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Classify the isolated singularities of $f$ at $z=2$ and $z=-1$.
+    \item Compute the residues $\operatorname*{Res}_{z=2}f(z)$ and $\operatorname*{Res}_{z=-1}f(z)$.
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Find Laurent series in an annulus]\mbox{}\\[4pt]
+  Find the Laurent expansion
+  \[
+    \sum_{n=-\infty}^{\infty} a_{n}\,(z-1)^{n}
+  \]
+  of the function
+  \[
+    f(z)=2z^{-3}+\frac{1}{z+2},
+  \]
+  valid in the annulus \(1<\lvert z-1\rvert<3\), as follows:
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Find a suitable series for \(z^{-1}\) that is valid when \(\lvert z-1\rvert>1\).
+    \item Differentiate your result from part (a) term‑by‑term (twice) to obtain a series for \(2z^{-3}\).
+    \item Find a suitable series for \((z+2)^{-1}\) that is valid when \(\lvert z-1\rvert<3\).
+    \item Combine the results of parts (b) and (c) to write the Laurent expansion of \(f\) in the stated annulus and express the general coefficient \(a_{n}\) explicitly in terms of \(n\).
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Evaluate an integral over a closed contour]\mbox{}\\[4pt]
+  Evaluate
+  \[
+    \oint_{\lvert z-2\rvert=3}\frac{z^{2}}{(z^{2}+1)(z-1)^{2}}\,dz
+  \]
+  using the residue theorem.
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Evaluate an improper integral]\mbox{}\\[4pt]
+  Show that
+  \[
+    I=\int_{0}^{\infty}\frac{x\sin(2x)}{(x^{2}+1)^{2}}\,dx
+  \]
+  converges and compute its exact value.
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Find the number of zeros of a function]\mbox{}\\[4pt]
+  Let
+  \[
+    F(z)=z^{7}+3z^{3}+5.
+  \]
+  Use Rouché’s Theorem to determine how many zeros of $F$ lie strictly inside the unit circle \(\lvert z\rvert=1\).
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Find a conformal map]\mbox{}\\[4pt]
+  Construct an explicit conformal map \(T\) that sends the horizontal strip
+  \[
+    S=\{z:0<\operatorname{Im}z<\pi\}
+  \]
+  onto the open unit disc \(\mathbb{D}=\{w:\lvert w\rvert<1\}\).  
+  Describe each intermediate mapping you use.
+  \end{problem}
+  
+  \pagebreak
+  %-----------------------------------------------------------
+  \begin{problem}[Schwarz‑type estimate]\mbox{}\\[4pt]
+  Let \(f\) be analytic on the unit disc \(\mathbb{D}=\{z:\lvert z\rvert<1\}\) and suppose
+  \[
+    f(0)=0,\qquad f'(0)=0,\qquad 
+    \lvert f(z)\rvert\;\le\;\lvert z\rvert^{2}\quad\text{for all }z\in\mathbb{D}.
+  \]
+  \begin{enumerate}[label=(\alph*),itemsep=6pt]
+    \item Prove that \(\lvert f(z)\rvert\le\lvert z\rvert^{2}\) indeed holds (state the classical result you invoke).
+    \item Show that \(\lvert f''(0)\rvert\le 2\).
+    \item If there exists \(z_{0}\neq0\) with \(\lvert f(z_{0})\rvert=\lvert z_{0}\rvert^{2}\), prove that \(f(z)=c z^{2}\) for some constant \(c\) with \(\lvert c\rvert=1\).
+  \end{enumerate}
+  (Hint: Apply the Schwarz Lemma to \(g(z)=\tfrac{f(z)}{z^{2}}\).)
+  \end{problem}
+\end{document}

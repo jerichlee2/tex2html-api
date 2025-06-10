@@ -1,0 +1,1568 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  \textbf{Equation of state}\\[-4pt]
+  \[
+  (P+a)V=nRT,\qquad a=\text{constant},\qquad\text{monatomic gas (equipartition).}
+  \]
+  
+  \textbf{1. General identity}\\[-4pt]
+  For any single–component fluid,
+  \[
+  C_P-C_V
+     =T\bigl(\partial_T P\bigr)_V\bigl(\partial_T V\bigr)_P.
+  \]
+  
+  \textbf{2. Required derivatives}\\[-4pt]
+  \[
+  \bigl(\partial_T P\bigr)_V
+     =\frac{nR}{V},
+  \qquad
+  V=\frac{nRT}{P+a}
+     \;\;\Longrightarrow\;\;
+  \bigl(\partial_T V\bigr)_P
+     =\frac{nR}{P+a}.
+  \]
+  
+  \textbf{3. Compute the product}\\[-4pt]
+  \[
+  T\bigl(\partial_T P\bigr)_V\bigl(\partial_T V\bigr)_P
+     =T\left(\frac{nR}{V}\right)\left(\frac{nR}{P+a}\right)
+     =\frac{T\,n^2R^2}{V(P+a)}
+     =\frac{T\,n^2R^2}{\displaystyle nRT}\;(=nR)
+     =nR.
+  \]
+  
+  \textbf{4. Numerical value for \(n=7\)}\\[-4pt]
+  \[
+  C_P-C_V=nR=(7)(8.314\ \text{J\,mol}^{-1}\text{K}^{-1})
+          =5.82\times10^{1}\ \text{J\,K}^{-1}.
+  \]
+  
+  \[
+  \boxed{C_P-C_V=5.82\times10^{1}\ \text{J\,K}^{-1}}\quad(\text{option (a)})
+  \]
+  \end{solution}
+  \begin{solution}
+    \[
+    \textbf{Equation of state\,:}\qquad
+    (P+a)V = nRT,\qquad a=0.10\;\text{atm}. \\[4pt]
+    \textbf{Internal energy assumption\,:}\qquad
+    \displaystyle U = \frac{3}{2}\,nRT + \phi(V), 
+    \]
+    with $\phi(V)$ still to be determined.
+    
+    % ------------------------------------------------
+    \subsection*{1.\;Heat‑capacity identities (from the snapshot)}
+    \[
+    C \;\equiv\; \frac{dQ}{dT},\qquad
+    C_V \;=\;\Bigl(\frac{dU}{dT}\Bigr)_{V},\qquad
+    C_P \;=\;\Bigl(\frac{dU}{dT}\Bigr)_{P} + P\Bigl(\frac{dV}{dT}\Bigr)_{P}.
+    \]
+    
+    % ------------------------------------------------
+    \subsection*{2.\;Express $C_P-C_V$ }
+    Write $U(T,V)$ explicitly in the total derivative at constant $P$:
+    \[
+    \Bigl(\frac{dU}{dT}\Bigr)_{P}
+       =\Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+       +\Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}
+        \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+    \]
+    
+    Hence
+    \[
+    C_P-C_V
+      =\Bigl[\;P+\Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\Bigr]
+        \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+    \tag{1}
+    \]
+    
+    % ------------------------------------------------
+    \subsection*{3.\;Find the \emph{internal pressure} $\displaystyle
+    \pi_T\equiv\Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}$}
+    
+    A standard Maxwell‑relation result for any simple fluid is
+    \[
+    \boxed{\;
+    \pi_T
+       \;=\;
+       T\Bigl(\frac{\partial P}{\partial T}\Bigr)_{V} - P
+    \;} .
+    \]
+    
+    Apply the given EOS:
+    \[
+    P = \frac{nRT}{V} - a
+          \;\;\Longrightarrow\;\;
+    \Bigl(\frac{\partial P}{\partial T}\Bigr)_{V} = \frac{nR}{V}.
+    \]
+    
+    Therefore
+    \[
+    \pi_T
+      = T\frac{nR}{V} -\Bigl(\frac{nRT}{V}-a\Bigr)
+      = a.   \tag{2}
+    \]
+    (The fluid’s “internal pressure’’ is the same constant $a$ that appears in the equation of state.)
+    
+    % ------------------------------------------------
+    \subsection*{4.\;Obtain $(\partial V/\partial T)_P$}
+    
+    From \((P+a)V=nRT\):
+    \[
+    V = \frac{nRT}{P+a}
+       \;\;\Longrightarrow\;\;
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}
+       = \frac{nR}{P+a}. \tag{3}
+    \]
+    
+    % ------------------------------------------------
+    \subsection*{5.\;Assemble $C_P-C_V$}
+    
+    Insert (2) and (3) into (1):
+    \[
+    C_P-C_V
+       = \bigl[P+\pi_T\bigr]
+         \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}
+       = (P+a)\,\frac{nR}{P+a}
+       = nR. \tag{4}
+    \]
+    
+    % ------------------------------------------------
+    \subsection*{6.\;Numerical value for \(n=7\)}
+    
+    \[
+    C_P-C_V
+       = nR
+       = 7\,(8.314\ \text{J\,mol}^{-1}\text{K}^{-1})
+       \approx 5.82\times10^{1}\ \text{J\,K}^{-1}.
+    \]
+    
+    \[
+    \boxed{C_P-C_V = 5.82\times10^{1}\,\text{J K}^{-1}}
+    \]
+    \end{solution}
+    \subsection*{Step 2.  Express $C_{P}-C_{V}$ in terms of partial derivatives}
+
+\paragraph{1.  Start from the snapshot identities}
+\[
+C_V = \Bigl(\frac{dU}{dT}\Bigr)_{V},
+\qquad
+C_P = \Bigl(\frac{dU}{dT}\Bigr)_{P} 
+      + P\Bigl(\frac{dV}{dT}\Bigr)_{P}.
+\]
+
+\paragraph{2.  Isolate the difference}
+\[
+C_P-C_V
+  = \Bigl(\frac{dU}{dT}\Bigr)_{P}
+  - \Bigl(\frac{dU}{dT}\Bigr)_{V}
+  + P\Bigl(\frac{dV}{dT}\Bigr)_{P}.
+\tag{A}
+\]
+
+\paragraph{3.  Expand \(\bigl(dU/dT\bigr)_{P}\) via the chain rule at constant \(P\)}
+Treat \(U\) as a function of two independent variables \(T\) and \(V\):
+\[
+U = U(T,V).
+\]
+Along a path of \emph{constant} pressure \(P\), the total derivative of \(U\) with respect to \(T\) reads
+\[
+\Bigl(\frac{dU}{dT}\Bigr)_{P}
+  = \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+  + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\,
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+\tag{B}
+\]
+
+\paragraph{4.  Substitute (B) into (A) and cancel the common term}
+Insert (B) into (A):
+\[
+C_P-C_V
+  = \Bigl[\Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+          + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}
+            \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}\Bigr]
+    - \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+    + P\Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+\]
+The two \(\bigl(\partial U/\partial T\bigr)_{V}\) terms cancel:
+\[
+C_P-C_V
+  = \Bigl[\;
+      P
+      + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\Bigr]\,
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+\tag{C}
+\]
+
+\paragraph{5.  Final compact form}
+\[
+\boxed{%
+C_P - C_V
+  = \Bigl[
+      P
+      + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\Bigr]\,
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}}
+\]
+Equation (C) is exactly the expression quoted in the notes.  All that remains (Step 3 in the previous derivation) is to evaluate the two bracketed factors for the specific equation of state \( (P+a)V=nRT \).
+\subsection*{Deriving Eq.\,(B): total derivative along a constant–\(P\) path}
+
+\paragraph{1.  Treat \(U\) as a function of two \emph{independent} variables}
+\[
+U = U(T,V).
+\]
+
+\paragraph{2.  Write the total differential of \(U\)}
+\[
+dU
+  = \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}\,dT
+  + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\,dV.
+\tag{1}
+\]
+
+\paragraph{3.  Impose the constraint “along constant \(P\)”}
+
+* Because \(P\) is held fixed, \(V\) cannot vary independently—it becomes a single‑valued function of \(T\): \(V=V(T)\bigl|\_{P}\).  
+  (Use the equation of state to compute that function later.)
+
+* Therefore, along this path
+  \[
+    dV = \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}\,dT.
+  \tag{2}
+  \]
+
+\paragraph{4.  Substitute (2) into (1) and divide by \(dT\)}
+
+\[
+\boxed{\;
+\Bigl(\frac{dU}{dT}\Bigr)_{P}
+  = \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+  + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}}
+\]
+
+The first term is the “explicit” \(T\) dependence of \(U\) at fixed \(V\);  
+the second term captures the “indirect” \(T\) dependence of \(U\) that flows through the volume \(V(T)\) required to keep \(P\) constant.
+\paragraph{Why does $V$ become a single–valued function of $T$ when $P$ is fixed?}
+
+\begin{enumerate}
+\item \textbf{Thermodynamic surface.}\;
+   For any simple compressible substance the state variables satisfy an
+   \emph{equation of state}
+   \[
+     f(P,T,V)=0
+     \qquad\bigl(\text{with $n$ fixed}\bigr).
+   \]
+   Geometrically, this defines a two‑dimensional surface in the $P$–$T$–$V$ phase‑space.
+
+\item \textbf{Intersection with a constant‑$P$ plane.}\;
+   Fixing the pressure at some value $P=P_0$ amounts to slicing that surface with the plane
+   \[
+     P = P_0.
+   \]
+   The intersection is a \emph{curve} in the $T$–$V$ plane described by
+   \[
+     g(T,V)\equiv f(P_0,T,V)=0.
+   \]
+
+\item \textbf{Implicit‑function theorem.}\;
+   Provided
+   \(\displaystyle \Bigl(\partial g/\partial V\Bigr)_{T}\neq0,\)
+   the implicit‑function theorem guarantees that the curve can be written locally as
+   \[
+     V = V(T)\bigl|_{P=P_0},
+   \]
+   i.e.\ volume becomes a \emph{single‑valued} function of temperature along that path.
+
+   The derivative along the path is then
+   \[
+     \Bigl(\frac{dV}{dT}\Bigr)_{P}
+       = -\,\frac{\displaystyle\Bigl(\partial g/\partial T\Bigr)_{V}}
+                {\displaystyle\Bigl(\partial g/\partial V\Bigr)_{T}}
+       = \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+   \]
+
+\item \textbf{Explicit example (ideal gas).}\;
+   For the ideal‑gas EOS $PV=nRT$,
+   holding $P=P_0$ gives
+   \[
+     V=\frac{nRT}{P_0}\;\;\Longrightarrow\;\;
+     \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}
+       =\frac{nR}{P_0},
+   \]
+   confirming that $V$ is determined \emph{solely} by~$T$ when $P$ is fixed.
+
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Physical intuition.}\;
+Keeping the external (or internal, for a reversible path) pressure fixed means the
+system is always mechanically balanced at that pressure.
+If you now \emph{tweak the temperature}, the only way the state can remain on the
+constant‑$P$ slice of the thermodynamic surface is for the volume to adjust
+\emph{uniquely} to the new $T$. Hence $V$ cannot “choose” a second, independent value—%
+it is locked to $T$ by the imposed constraint $P=P_0$.
+\[
+% ---- Total differential of U(T,V) with no constraint ----
+dU
+  = \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}\,dT
+  + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}\,dV.
+\tag{1}
+\]
+\[
+% ---- Impose the constant‑P path and keep T as the independent variable ----
+\text{Along }P=\text{const},\;V = V(T)\;\Longrightarrow\;
+dV = \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}\,dT.
+\]
+% ---- Substitute into (1) ----
+\[
+\Bigl(\frac{dU}{dT}\Bigr)_{P}
+  = \Bigl(\frac{\partial U}{\partial T}\Bigr)_{V}
+  + \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}
+    \Bigl(\frac{\partial V}{\partial T}\Bigr)_{P}.
+\tag{B}
+\]
+% -------------------------------------------------------------
+\subsection*{Step 3.  Evaluate the internal pressure
+            $\displaystyle\pi_{T}\equiv
+            \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}$}
+
+\paragraph{3.1 Fundamental thermodynamic identity}
+
+For a single‑component fluid,
+\[
+dU = T\,dS - P\,dV.
+\tag{3.1}
+\]
+
+\paragraph{3.2 Take the partial derivative $(\partial/\partial V)_{T}$ of (3.1)}
+
+Holding \(T\) fixed \((dT=0)\),
+\[
+\Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}
+  = T\Bigl(\frac{\partial S}{\partial V}\Bigr)_{T} - P.
+\tag{3.2}
+\]
+
+The left‑hand side is, by definition, the
+\emph{internal pressure}
+\[
+\boxed{\pi_{T} \;=\;
+       \Bigl(\frac{\partial U}{\partial V}\Bigr)_{T}}.
+\tag{3.3}
+\]
+
+\paragraph{3.3 Replace $\displaystyle(\partial S/\partial V)_{T}$
+          by a Maxwell relation}
+
+Start from the Helmholtz free energy
+\(F\equiv U-TS\).  
+Its differential is
+\[
+dF = -S\,dT - P\,dV,
+\]
+so the mixed partials give the Maxwell relation
+\[
+\boxed{\Bigl(\frac{\partial S}{\partial V}\Bigr)_{T}
+       = \Bigl(\frac{\partial P}{\partial T}\Bigr)_{V}.}
+\tag{3.4}
+\]
+
+\paragraph{3.4 Insert (3.4) into (3.2)}
+
+\[
+\pi_{T}
+  = T\Bigl(\frac{\partial P}{\partial T}\Bigr)_{V} - P.
+\]
+This is the “standard Maxwell‑relation result’’ quoted in the notes.
+
+\paragraph{3.5 Apply the specific equation of state}
+
+Given
+\[
+\boxed{(P+a)\,V = nRT},
+\]
+\[
+P = \frac{nRT}{V} - a
+     \quad\Longrightarrow\quad
+\Bigl(\frac{\partial P}{\partial T}\Bigr)_{V}
+     = \frac{nR}{V}.
+\]
+
+\paragraph{3.6 Compute $\pi_{T}$}
+
+\[
+\pi_{T}
+  = T\frac{nR}{V}
+    -\Bigl(\frac{nRT}{V} - a\Bigr)
+  = a.
+\tag{3.5}
+\]
+
+\[
+\boxed{\;\pi_{T}=a\;}
+\]
+
+\emph{Interpretation}:  
+the constant \(a\) represents a temperature‑independent, attractive “cohesive’’ pressure.  
+Because \(\pi_{T}\) measures how the internal energy changes when you compress the system \emph{isothermally}, a purely attractive contribution of magnitude \(a\) shows up unchanged in \(\pi_{T}\).
+\begin{solution}
+  \textbf{Coexistence‐line geometry}\\
+  In the sketch the \emph{Phase I–Phase II} coexistence curve slopes \emph{downward} as
+  temperature increases (negative slope\footnote{%
+  Explicitly $\mathrm{d}P/\mathrm{d}T<0$ because the line descends to the
+  right.}).
+  
+  \bigskip
+  \textbf{Clapeyron (or Gibbs) equation}\\
+  Along any two–phase equilibrium
+  \[
+  \frac{\mathrm{d}P}{\mathrm{d}T}
+     =\frac{\Delta S}{\Delta V},
+     \qquad
+     \Delta S \equiv S_{\text{II}}-S_{\text{I}},\;
+     \Delta V \equiv V_{\text{II}}-V_{\text{I}}
+     \;\;( \text{per particle} ).
+  \]
+  
+  \bigskip
+  \textbf{Sign of $\Delta S$}\\
+  Moving from Phase I to Phase II requires adding heat (the latent heat of
+  transition), so $\Delta S>0$.
+  
+  \bigskip
+  \textbf{Consequence of a negative slope}\\
+  Because $\mathrm{d}P/\mathrm{d}T<0$ while $\Delta S>0$,
+  the quotient must be negative; therefore
+  \[
+  \Delta V < 0
+  \quad\Longrightarrow\quad
+  V_{\text{II}}<V_{\text{I}}.
+  \]
+  
+  \bigskip
+  \textbf{Density comparison}\\
+  Smaller molar (or per‐particle) volume means greater density, so
+  
+  \[
+  \boxed{\text{Phase II is \textit{denser} than Phase I.}}
+  \]
+  
+  \bigskip
+  \textbf{Answer}\\
+  \[
+  \text{(a) Phase II is denser than Phase I.}
+  \]
+  All other listed statements depend on properties (\(\Delta S\) or
+  \(\Delta V\)) that the diagram does \emph{not} fix uniquely.
+  \end{solution}
+  \begin{solution}
+    \textbf{Start from the given thermodynamic identity}
+    \[
+    d\mu \;=\; \frac{V}{N}\,dP \;-\; \frac{S}{N}\,dT
+    \quad
+    \left(
+      \mu\equiv\text{chemical potential per particle},\;
+      \frac{V}{N}\equiv\text{molar (or per‐particle) volume},\;
+      \frac{S}{N}\equiv\text{entropy per particle}
+    \right).
+    \]
+    
+    \bigskip
+    \textbf{Apply the equality of chemical potentials on a coexistence line}\\
+    Along a line where \emph{Phase I} and \emph{Phase II} coexist,
+    \(\mu_{\text{I}} = \mu_{\text{II}}\) at every point.  
+    Therefore their differentials are equal:
+    \[
+    d\mu_{\text{I}} = d\mu_{\text{II}}.
+    \]
+    
+    Insert the identity for each phase and subtract:
+    \[
+    \frac{V_{\text{I}}}{N}\,dP - \frac{S_{\text{I}}}{N}\,dT
+    =
+    \frac{V_{\text{II}}}{N}\,dP - \frac{S_{\text{II}}}{N}\,dT.
+    \]
+    
+    \bigskip
+    \textbf{Isolate the coexistence‐curve slope}\\
+    Rearrange the last equation:
+    \[
+    \bigl(V_{\text{II}} - V_{\text{I}}\bigr)\,dP
+    =
+    \bigl(S_{\text{II}} - S_{\text{I}}\bigr)\,dT.
+    \]
+    Define
+    \(\displaystyle
+      \Delta V \equiv V_{\text{II}}-V_{\text{I}},\;
+      \Delta S \equiv S_{\text{II}}-S_{\text{I}}
+    \)
+    (per particle) and divide by \(dT\):
+    \[
+    \boxed{\;
+      \frac{dP}{dT}
+      = \frac{\Delta S}{\Delta V}
+    \;} .
+    \]
+    This is the \emph{Clapeyron relation}, now obtained directly from the
+    given \(d\mu\) formula.
+    
+    \bigskip
+    \textbf{Use the diagram’s information}\\
+    * The Phase I–Phase II coexistence curve slopes \emph{downward} in the
+      \(P\!-\!T\) plane: \(dP/dT<0.\)
+    * A phase change requires absorbing latent heat, so
+      \(\Delta S = S_{\text{II}}-S_{\text{I}} > 0.\)
+    
+    Because \(dP/dT = \Delta S / \Delta V\) is negative while \(\Delta S\) is
+    positive, the denominator must be negative:
+    \[
+    \Delta V < 0
+    \quad\Longrightarrow\quad
+    V_{\text{II}} < V_{\text{I}}.
+    \]
+    
+    \bigskip
+    \textbf{Density comparison}\\
+    Smaller volume per particle means greater density, hence
+    \[
+    \boxed{\text{Phase II is denser than Phase I.}}
+    \]
+    
+    \bigskip
+    \textbf{Answer}\\
+    \[
+    \text{(a) Phase II is denser than Phase I.}
+    \]
+    \end{solution}
+    %------------------------------------------------------------------
+% Thermodynamic cycle – step‑by‑step solution
+%------------------------------------------------------------------
+
+\textbf{Given data}
+
+\[
+\begin{array}{c|cc}
+\text{Point} & V\;(\text{m}^3) & P\;(\text{Pa}) \\ \hline
+1 & 1.2 & 1027 \\
+2 & 1.4 & 1460 \\
+3 & 1.4 & 1534 \\
+4 & 1.2 & 1156
+\end{array}
+\qquad
+n = 2\;\text{mol}, \quad
+R = 8.314\;\text{J\,mol}^{-1}\text{K}^{-1}, \quad
+C_v = \tfrac{5}{2}R\quad(\text{diatomic})
+\]
+
+%------------------------------------------------------------------
+\section*{1. Work done by the gas during segment $1\rightarrow2$}
+
+The path $1\rightarrow2$ is a straight line on the $P$–$V$ diagram  
+(linear variation of pressure with volume).  
+For a linear path the work equals the area of the trapezoid:
+
+\[
+\begin{aligned}
+W_{1\rightarrow2}
+      &= \int_{V_1}^{V_2} P\,dV
+      = \tfrac{1}{2}\bigl(P_1 + P_2\bigr)\bigl(V_2 - V_1\bigr) \\[6pt]
+      &= \tfrac{1}{2}\bigl(1027 + 1460\bigr)\,\text{Pa}\;(1.4 - 1.2)\,\text{m}^3 \\[6pt]
+      &= 1243.5\;\text{Pa}\times 0.20\;\text{m}^3 \\[4pt]
+      &\approx 2.49\times10^{2}\;\text{J}.
+\end{aligned}
+\]
+
+\[
+\boxed{W_{1\rightarrow2} \;\approx\; +2.49 \times 10^{2}\ \text{J}}
+\]
+
+(Positive sign $\Rightarrow$ work done \emph{by} the gas.)
+
+%------------------------------------------------------------------
+\section*{2. Heat added to the gas during segment $4\rightarrow1$}
+
+Segment $4\rightarrow1$ is vertical ($V=$ const.), so
+
+\[
+W_{4\rightarrow1} \;=\; \int P\,dV = 0.
+\]
+
+For an ideal gas at constant volume
+
+\[
+Q_{4\rightarrow1} \;=\; \Delta U \;=\; nC_v\,(T_1 - T_4).
+\]
+
+\[
+\begin{aligned}
+T_4 &= \frac{P_4 V_4}{nR}
+     = \frac{1156\;\text{Pa}\times 1.2\;\text{m}^3}{(2)(8.314\;\text{J mol}^{-1}\text{K}^{-1})}
+     \approx 83.4\;\text{K},\\[6pt]
+T_1 &= \frac{P_1 V_1}{nR}
+     = \frac{1027\;\text{Pa}\times 1.2\;\text{m}^3}{(2)(8.314\;\text{J mol}^{-1}\text{K}^{-1})}
+     \approx 74.1\;\text{K},\\[6pt]
+\Delta T &= T_1 - T_4 \;=\; 74.1 - 83.4 \;=\; -9.3\;\text{K},\\[6pt]
+\Delta U &= nC_v\Delta T
+         = (2)\!\left(\tfrac{5}{2}R\right)(-9.3\;\text{K}) \\[4pt]
+         &= 41.57\;\text{J K}^{-1}\times(-9.3\;\text{K}) \\[4pt]
+         &\approx -3.9\times10^{2}\;\text{J}.
+\end{aligned}
+\]
+
+\[
+\boxed{Q_{4\rightarrow1} \;\approx\; -3.9 \times 10^{2}\ \text{J}}
+\]
+
+(Negative sign $\Rightarrow$ $3.9\times10^{2}$ J of heat \emph{leaves} the gas; none is added.)
+%--------------------------------------------------------------
+%  Latent–heat problem (entropy of fusion)
+%--------------------------------------------------------------
+\textbf{Data}
+
+\[
+\begin{aligned}
+T        &= 488\;\text{K}, &
+P        &= 1.0731\times10^{4}\;\text{Pa},\\
+L        &= 121\;\text{J\,g}^{-1}, &
+M        &= 35\;\text{g\,mol}^{-1},\\
+\Delta v &= 0.4\;\text{m}^{3}\,\text{kg}^{-1}.
+\end{aligned}
+\]
+
+\bigskip
+\textbf{1.\ Convert latent heat to a molar basis}
+
+\[
+\boxed{L_{\text{molar}} = L\,M}
+      = (121\;\text{J\,g}^{-1})(35\;\text{g\,mol}^{-1})
+      = 4.235\times10^{3}\;\text{J\,mol}^{-1}.
+\]
+
+\bigskip
+\textbf{2.\ Entropy change at constant \emph{T} and \emph{P}}
+
+For a phase transition in equilibrium, \( \Delta G = 0 \) and
+\[
+\Delta H = T\,\Delta S
+\quad\Longrightarrow\quad
+\boxed{\;\Delta S = \dfrac{\Delta H}{T}\;}.
+\]
+
+Assuming the quoted \(L\) is the enthalpy of fusion (the usual experimental definition),
+
+\[
+\Delta S
+  = \frac{4.235\times10^{3}\;\text{J\,mol}^{-1}}
+         {488\;\text{K}}
+  = 8.68\;\text{J\,mol}^{-1}\,\text{K}^{-1}.
+\]
+
+\bigskip
+\textbf{3.\ Small correction if $L$ were an \emph{internal‑energy} value}
+
+If instead \(L\) represented an internal‑energy change, the enthalpy would be
+\[
+\Delta H = L_{\text{molar}} + P\,\Delta V_{\text{molar}},
+\]
+where
+\[
+\Delta V_{\text{molar}}
+   = \Delta v\,M
+   = (0.4\;\text{m}^{3}\,\text{kg}^{-1})(0.035\;\text{kg\,mol}^{-1})
+   = 1.40\times10^{-2}\;\text{m}^{3}\,\text{mol}^{-1}.
+\]
+Hence
+\[
+P\,\Delta V_{\text{molar}}
+   = (1.0731\times10^{4}\;\text{Pa})(1.40\times10^{-2}\;\text{m}^{3}\,\text{mol}^{-1})
+   \approx 1.50\times10^{2}\;\text{J\,mol}^{-1}.
+\]
+Adding this to \(L_{\text{molar}}\) raises \(\Delta S\) only slightly,
+to about \(9.0\;\text{J\,mol}^{-1}\,\text{K}^{-1}\).
+
+\bigskip
+\textbf{4.\ Numerical result vs. the multiple‑choice list}
+
+Either way, the physically consistent answer is
+
+\[
+\boxed{\Delta S \approx 8.7\;\text{J\,mol}^{-1}\,\text{K}^{-1}}.
+\]
+
+None of the five options given (\(4.03,\;1.88,\;0.248,\;\dots\)) equals this value, so it looks as though the answer key (or one of the supplied numbers) contains a misprint.  The derivation above follows standard thermodynamic definitions and the data exactly as provided.
+%-----------------------------------------------------------------
+%  Irreversible heat‑engine problem (entropy increase per cycle)
+%-----------------------------------------------------------------
+
+\textbf{Given data}
+
+\[
+T_H = 532\;\text{K}, \qquad
+T_C = 346\;\text{K}, \qquad
+Q_H = 155\;\text{J}, \qquad
+\varepsilon = 0.238.
+\]
+
+%-----------------------------------------------------------------
+\section*{1.\ Work output of the engine}
+
+\[
+W = \varepsilon\,Q_H
+   = (0.238)(155\ \text{J})
+   = 36.9\ \text{J}.
+\]
+
+%-----------------------------------------------------------------
+\section*{2.\ Heat rejected to the cold reservoir}
+
+\[
+Q_C = Q_H - W
+     = 155\ \text{J} - 36.9\ \text{J}
+     = 118.1\ \text{J}.
+\]
+
+%-----------------------------------------------------------------
+\section*{3.\ Total entropy change per cycle}
+
+Because the engine itself is assumed reversible (no internal losses),
+the only entropy change comes from the two reservoirs:
+
+\[
+\Delta S_{\text{tot}}
+  = \frac{Q_C}{T_C} - \frac{Q_H}{T_H}.
+\]
+
+Insert the numbers:
+
+\[
+\begin{aligned}
+\Delta S_{\text{tot}}
+  &= \frac{118.1\;\text{J}}{346\;\text{K}}
+     \;-\;
+     \frac{155\;\text{J}}{532\;\text{K}} \\[6pt]
+  &= 0.341\;\text{J\,K}^{-1}
+     \;-\;
+     0.291\;\text{J\,K}^{-1} \\[6pt]
+  &= 0.0498\;\text{J\,K}^{-1}.
+\end{aligned}
+\]
+
+\[
+\boxed{\Delta S_{\text{tot}} \;\approx\; 4.98 \times 10^{-2}\ \text{J\,K}^{-1}}
+\]
+
+(The positive value confirms the cycle is irreversible, in accord with
+the second law.)
+%--------------------------------------------------------------
+%  Phase–diagram question: Which statement is true?
+%  (Return‑to‑text LaTeX version)
+%--------------------------------------------------------------
+
+\textbf{Correct choice:} \textbf{(e)} \emph{Phase III has more entropy per particle than Phase II.}
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Step–by–step thermodynamic reasoning}
+
+\begin{enumerate}
+\item[]%
+\item \textbf{Clausius–Clapeyron relation for a coexistence line}
+      \[
+        \frac{dP}{dT}\;=\;\frac{\Delta S}{\Delta V},
+        \qquad
+        \Delta S = S_\beta - S_\alpha,\;\;
+        \Delta V = V_\beta - V_\alpha .
+      \]
+
+\item \textbf{Apply it to the II--III boundary}\\[2pt]
+      The II--III line in the diagram slopes up and to the right, so
+      \[
+        \left(\frac{dP}{dT}\right)_{\mathrm{II\text{--}III}} > 0.
+      \]
+
+\item \textbf{Sign of \(\Delta V\)}\\[2pt]
+      At a given temperature just \emph{below} the coexistence line,
+      Phase II is the \emph{higher‑pressure} phase.
+      Higher pressure favours the phase with \emph{smaller} molar
+      volume, hence
+      \[
+        V_{\mathrm{II}} < V_{\mathrm{III}}
+        \quad\Longrightarrow\quad
+        \Delta V = V_{\mathrm{III}} - V_{\mathrm{II}} > 0.
+      \]
+
+\item \textbf{Deduce the sign of \(\Delta S\)}\\[2pt]
+      Since both \(dP/dT\) and \(\Delta V\) are positive,
+      the Clapeyron relation gives
+      \[
+        \Delta S = S_{\mathrm{III}} - S_{\mathrm{II}} > 0
+        \;\;\Longrightarrow\;\;
+        S_{\mathrm{III}} > S_{\mathrm{II}} .
+      \]
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Why the other options are incorrect}
+
+\begin{itemize}
+  \item \textbf{(a)} and \textbf{(d)}  
+        Along the I--III line, the slope is also
+        \(dP/dT>0\) but Phase I is on the \emph{higher}‑pressure side,
+        leading to \(S_{\mathrm{III}} > S_{\mathrm{I}}\),
+        not the reverse claimed in (a) or (d).
+
+  \item \textbf{(b)}  
+        On the I--II line, Phase II sits at the higher pressure,
+        implying \(V_{\mathrm{II}}<V_{\mathrm{I}}\);
+        statement (b) asserts the opposite density ordering.
+
+  \item \textbf{(c)}  
+        From the II--III argument above we have
+        \(V_{\mathrm{III}} > V_{\mathrm{II}}\),
+        so Phase III is \emph{less} dense, contradicting (c).
+\end{itemize}
+%---------------------------------------------------------------
+%  Local gravity on Pluto from a scale–height measurement
+%---------------------------------------------------------------
+\textbf{Data}
+
+\[
+\frac{n(h)}{n_0}=0.75,\qquad h=10.0\;\text{km},\qquad
+T=50\;\text{K},\qquad
+\text{molecule: } \mathrm{N_2}\;(M = 28\ \text{u})
+\]
+
+\[
+k_B = 1.380\,649\times10^{-23}\;\text{J K}^{-1},\qquad
+m_u = 1.660\,539\times10^{-27}\;\text{kg}.
+\]
+
+%---------------------------------------------------------------
+\section*{1.\ Barometric (isothermal) law}
+
+For an isothermal, ideal gas in hydrostatic equilibrium,
+
+\[
+\boxed{\;
+  \frac{n(h)}{n_0}
+     = \exp\!\left(-\frac{mgh}{k_B T}\right)
+\;}
+\tag{1}
+\]
+
+where \(m\) is the mass of one gas molecule.
+
+%---------------------------------------------------------------
+\section*{2.\ Solve (1) for \(g\)}
+
+\[
+\begin{aligned}
+\ln\!\left(\frac{n(h)}{n_0}\right)
+      &= -\frac{mgh}{k_B T}
+      \quad\Longrightarrow\quad
+      g
+      = -\frac{k_B T}{m h}\,
+        \ln\!\left(\frac{n(h)}{n_0}\right).
+\end{aligned}
+\tag{2}
+\]
+
+%---------------------------------------------------------------
+\section*{3.\ Insert numbers}
+
+Molecular mass (in kg):
+
+\[
+m = 28\,m_u
+    = 28\,(1.660\,539\times10^{-27})\;\text{kg}
+    = 4.6494\times10^{-26}\;\text{kg}.
+\]
+
+Natural logarithm:
+
+\[
+\ln(0.75) = -0.28768.
+\]
+
+Now put everything into (2):
+
+\[
+\begin{aligned}
+g
+&= -\frac{(1.380\,649\times10^{-23}\,\text{J K}^{-1})(50\;\text{K})}
+         {(4.6494\times10^{-26}\,\text{kg})(10\,000\;\text{m})}
+     \;\ln(0.75) \\[6pt]
+&= \frac{6.9032\times10^{-22}}{4.6494\times10^{-22}}
+     \times 0.28768 \\[6pt]
+&= 1.485 \times 0.28768
+ = 0.427\;\text{m s}^{-2}.
+\end{aligned}
+\]
+
+\[
+\boxed{g_{\text{Pluto}} \approx 0.427\ \text{m s}^{-2}}
+\]
+
+\bigskip
+\noindent
+\emph{Interpretation.}  
+The relatively shallow decline (only 25 % drop in number density over
+10 km) implies a weak gravitational field, and the computed value is
+fully consistent with modern spacecraft measurements of Pluto’s surface
+gravity (~0.62 \% of Earth’s).
+%---------------------------------------------------------------
+%  Why the substance at point Q will freeze
+%  (copy‑paste LaTeX explanation)
+%---------------------------------------------------------------
+
+\section*{Thermodynamic reasoning}
+
+\subsection*{1.\ What a $\mu$--$T$ diagram tells us}
+\begin{itemize}
+  \item Each curve gives the \emph{molar} chemical potential $\mu$ of one
+        phase (solid, liquid, gas) at a fixed pressure.
+  \item \textbf{At any temperature, the stable phase is the one with the
+        \emph{lowest} $\mu$.}\;%
+        Minimising $\mu$ minimises the Gibbs free energy
+        $G = N\mu$ for a one‑component system.
+\end{itemize}
+
+\subsection*{2.\ Position of point Q}
+\begin{itemize}
+  \item Point~Q lies on the \emph{dashed} curve (call it the liquid).
+  \item Drawing a vertical line down to the \emph{solid} curve shows that
+        $\mu_{\text{solid}} < \mu_{\text{liquid}}$ at the same~$T$.
+  \item Therefore the liquid at Q is \emph{metastable}: the system can
+        lower $G$ by converting to solid.
+\end{itemize}
+
+\subsection*{3.\ Long‑time outcome at constant $T$ and $P$}
+Because $T$ and $P$ are held fixed,
+the only route to a lower $\mu$ is a phase change.
+Any thermal fluctuation that nucleates a bit of solid is favoured and
+will grow, so \textbf{the substance freezes.}
+
+\subsection*{4.\ Why the other options are excluded}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Option & Reason it cannot happen \\ \midrule
+Sublimation / boiling &
+  Gas curve has the \emph{highest} $\mu$, so gas is least stable. \\
+Melting &
+  Would require $\mu_{\text{liquid}} < \mu_{\text{solid}}$, opposite to
+  the diagram. \\
+Nothing happens &
+  A metastable state can persist briefly, but \emph{``after a long
+  time''} the system always reaches the lowest‑$\mu$ phase. \\ \bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent
+\textbf{Conclusion:}\; After sufficient time the substance will
+\boxed{\text{freeze}.}
+%--------------------------------------------------------------------
+%  Binding energy of an N$_2$ molecule in liquid nitrogen
+%--------------------------------------------------------------------
+\textbf{Given}
+
+\[
+\begin{aligned}
+Q &= 4480\ \text{J} 
+       &&\text{(heat supplied, equal to enthalpy change $\Delta H$)},\\
+m &= 20\ \text{g}, \\
+M &= 28\ \text{g mol}^{-1} 
+       &&\text{(molar mass of N$_2$)},\\
+T &= 77\ \text{K}, \\
+p &= 1\ \text{atm}\approx 1.013\times10^{5}\ \text{Pa},\\
+R &= 8.314\ \text{J mol}^{-1}\text{K}^{-1}.
+\end{aligned}
+\]
+
+\section*{1.\ Moles of nitrogen}
+
+\[
+n = \frac{m}{M}
+    = \frac{20\ \text{g}}{28\ \text{g mol}^{-1}}
+    = 0.7143\ \text{mol}.
+\]
+
+\section*{2.\ $pV$ term for the ideal gas}
+
+For an ideal gas,
+\[
+pV = nRT.
+\]
+At the boiling temperature
+\[
+nRT
+  = (0.7143\ \text{mol})(8.314\ \text{J mol}^{-1}\text{K}^{-1})(77\ \text{K})
+  = 4.57\times10^{2}\ \text{J}.
+\]
+
+\section*{3.\ Change in internal energy}
+
+Because the volume of the liquid is negligible,
+\[
+\Delta U = \Delta H - nRT
+         = 4480\ \text{J} - 457\ \text{J}
+         = 4.02\times10^{3}\ \text{J}.
+\]
+
+\section*{4.\ Number of molecules}
+
+\[
+N = nN_A
+    = (0.7143\ \text{mol})(6.022\times10^{23}\ \text{mol}^{-1})
+    = 4.30\times10^{23}\ \text{molecules}.
+\]
+
+\section*{5.\ Binding energy per molecule}
+
+\[
+\boxed{
+  \varepsilon
+  = \frac{\Delta U}{N}
+  = \frac{4.02\times10^{3}\ \text{J}}{4.30\times10^{23}}
+  = 9.35\times10^{-21}\ \text{J}
+}
+\]
+
+\bigskip
+Thus the binding (cohesive) energy of a nitrogen molecule in the liquid
+is approximately
+\[
+\varepsilon \simeq 9.4\times10^{-21}\ \text{J},
+\]
+matching option \textbf{(b)}.
+%---------------------------------------------------------------
+%  Entropy change of a copper sphere quenched in water
+%---------------------------------------------------------------
+
+\textbf{Data}
+
+\[
+\begin{aligned}
+m_{\mathrm{Cu}} &= 5.0\;\text{kg}, &
+c_{\mathrm{Cu}} &= 385\;\text{J\,kg}^{-1}\text{K}^{-1}, &
+T_{\mathrm{Cu},i} &= 200^{\circ}\text{C}=473.15\;\text{K},\\[4pt]
+m_{\mathrm{H_2O}} &= 50.0\;\text{kg}, &
+c_{\mathrm{H_2O}} &= 4182\;\text{J\,kg}^{-1}\text{K}^{-1}, &
+T_{\mathrm{H_2O},i} &= 5^{\circ}\text{C}=278.15\;\text{K}.
+\end{aligned}
+\]
+
+No heat is lost to the surroundings; the copper + water form an isolated
+system that comes to a common final temperature \(T_f\).
+
+%---------------------------------------------------------------
+\section*{1.\ Find the equilibrium temperature \(T_f\)}
+
+Energy balance (heat lost by Cu = heat gained by water):
+
+\[
+m_{\mathrm{Cu}}\,c_{\mathrm{Cu}}\,(T_{\mathrm{Cu},i}-T_f)
+   = m_{\mathrm{H_2O}}\,c_{\mathrm{H_2O}}\,(T_f-T_{\mathrm{H_2O},i}).
+\]
+
+Insert the numbers:
+
+\[
+(5)(385)(473.15-T_f)
+   = (50)(4182)(T_f-278.15).
+\]
+
+Solve for \(T_f\):
+
+\[
+T_f \approx 280\;\text{K}\quad(\,7^{\circ}\text{C}\,).
+\]
+
+(With more significant figures \(T_f = 280.1\ \text{K}\).)
+
+%---------------------------------------------------------------
+\section*{2.\ Entropy change of the \emph{copper} only}
+
+For a body whose specific heat \(c\) is effectively constant,
+
+\[
+\Delta S_{\mathrm{Cu}}
+   = m_{\mathrm{Cu}}\,c_{\mathrm{Cu}}
+     \int_{T_{\mathrm{Cu},i}}^{T_f}\frac{dT}{T}
+   = m_{\mathrm{Cu}}\,c_{\mathrm{Cu}}
+     \ln\!\left(\frac{T_f}{T_{\mathrm{Cu},i}}\right).
+\]
+
+\[
+\begin{aligned}
+\Delta S_{\mathrm{Cu}}
+ &= (5.0\;\text{kg})(385\;\text{J\,kg}^{-1}\text{K}^{-1})
+    \ln\!\bigl(\tfrac{280.1}{473.15}\bigr) \\[4pt]
+ &= 1925\;\text{J K}^{-1}\times
+    \bigl(-0.523\bigr) \\[4pt]
+ &\approx -1.0\times10^{3}\;\text{J K}^{-1}.
+\end{aligned}
+\]
+
+\[
+\boxed{\;\Delta S_{\mathrm{Cu}}\;\approx\;-1.0\times10^{3}\ \text{J K}^{-1}\;}
+\]
+
+(The negative sign means the copper \emph{loses} entropy as it cools.)
+%------------------------------------------------------------------
+%  Why we substitute $pV = nRT$ in the $\Delta U$ expression
+%------------------------------------------------------------------
+
+\section*{1.\ First--law differential versus state functions}
+
+The first law for an \emph{infinitesimal} change of state is  
+\[
+dU = \delta Q - p\,dV .
+\]
+If the \emph{path} happens to satisfy $dV = 0$ (e.g.\ an ideal
+isochoric process), then the $p\,dV$ term indeed vanishes \emph{along
+that path}.  The vaporisation problem, however, involves a
+\emph{finite} expansion from liquid to gas, so $dV \neq 0$ on that
+path and the above differential is not the most convenient tool.
+
+\bigskip
+\section*{2.\ Enthalpy identity}
+
+Define the molar enthalpy
+\[
+H \;=\; U + pV .
+\]
+Because $H$ is a \emph{state function}, for any initial $(i)$ and final
+$(f)$ states we have the exact algebraic relation
+\[
+\boxed{\;
+  \Delta U
+  = \Delta H - \Delta(pV)
+  = (H_f - H_i) - (p_fV_f - p_iV_i)
+\;}.
+\tag{1}
+\]
+
+Equation~(1) needs no knowledge of the path; it depends only on the
+end‑point states.
+
+\bigskip
+\section*{3.\ Applying Eq.\,(1) to nitrogen vaporisation}
+
+\begin{itemize}
+  \item \emph{Initial state (liquid):}\quad
+        $V_i \approx 0$, hence $p_i V_i \approx 0$.
+  \item \emph{Final state (gas at 1\,atm, $T=77$\,K):}\quad
+        For an ideal gas
+        \[
+          p_fV_f = nRT .
+        \]
+\end{itemize}
+
+Therefore
+\[
+\Delta(pV) = p_fV_f - p_iV_i \;\approx\; nRT - 0 = nRT ,
+\]
+and Eq.\,(1) becomes
+\[
+\boxed{\;
+  \Delta U = \Delta H - nRT
+\;}
+\]
+with $\Delta H = Q_{\text{vap}}$ supplied by the heater (latent heat).
+
+\bigskip
+\section*{4.\ Contrast with a true constant--volume process}
+
+In the copper–water cooling example,
+the \emph{path itself} obeys $dV = 0$, so integrating the
+first‑law differential along that path gives directly
+\[
+\Delta U = \int \delta Q \quad (\text{since } p\,dV = 0).
+\]
+No $nRT$ term appears because the system volume never changes.
+
+\bigskip
+\section*{5.\ Summary}
+
+\begin{itemize}
+  \item $pV = nRT$ is invoked \emph{only} to evaluate the
+        \emph{state‑function difference} $\Delta(pV)$ between the gas
+        and liquid states.
+  \item It has nothing to do with assuming $dV = 0$; in fact the term
+        is crucial precisely because $V$ \emph{does} change during
+        vaporisation.
+\end{itemize}
+%--------------------------------------------------------------------
+%  Two heat‑capacity/equipartition questions
+%--------------------------------------------------------------------
+
+\section*{Problem 1.  Number of atoms in the aluminium block}
+
+\begin{itemize}
+\item Measured heat capacity of the block at $T=300\,$K:
+      \[
+      C_{\text{block}} = 15\;\text{J\,K}^{-1}.
+      \]
+\item High‑temperature (equipartition) limit for a crystalline solid:  
+      each atom contributes $3k_B$ to the heat capacity (Dulong–Petit).
+\[
+C_{\text{per atom}} = 3k_B
+                    = 3\,(1.380\,649\times10^{-23}\,\text{J\,K}^{-1})
+                    = 4.1419\times10^{-23}\,\text{J\,K}^{-1}.
+\]
+\item Number of atoms:
+\[
+N = \frac{C_{\text{block}}}{3k_B}
+    = \frac{15}{4.1419\times10^{-23}}
+    \approx 3.62\times10^{23}\;\text{atoms}.
+\]
+\end{itemize}
+
+\[
+\boxed{N \simeq 3.6\times10^{23}\ \text{atoms}}
+\]
+
+(The choice $3.62\times10^{23}$ is therefore correct.)
+
+%--------------------------------------------------------------------
+\section*{Problem 2.  Identifying the gas from the equilibrium temperature}
+
+\vspace{-0.5em}
+\[
+\begin{array}{lcl}
+T_{\text{block},i} &=& 300\;\text{K},\\
+T_{\text{gas},i}   &=& 400\;\text{K},\\
+T_f               &=& 362\;\text{K},\\
+C_{\text{block}}  &=& 15\;\text{J\,K}^{-1},\\
+n_{\text{gas}}    &=& 1\;\text{mol}.
+\end{array}
+\]
+
+\subsection*{(a) Energy balance}
+
+Because the container is thermally isolated,
+\[
+\Delta Q_{\text{block}} + \Delta Q_{\text{gas}} = 0.
+\]
+
+\[
+C_{\text{block}}\,(T_f - 300)
+   + n\,C_{V,\text{gas}}\,(T_f - 400) = 0.
+\]
+
+Insert the numbers:
+\[
+15\,(362 - 300)
+   + 1\,C_{V,\text{gas}}\,(362 - 400) = 0
+\quad\Longrightarrow\quad
+C_{V,\text{gas}}
+   = 15\,\frac{62}{38} \simeq 24.5\;\text{J\,mol}^{-1}\text{K}^{-1}.
+\]
+
+\subsection*{(b) Match with equipartition values}
+
+\[
+\begin{array}{lcc}
+\text{Gas} & C_V/R & C_V\;(\text{J\,mol}^{-1}\text{K}^{-1}) \\ \hline
+\text{Ar (monatomic)} & \tfrac{3}{2} & 12.5 \\
+\text{H}_2\ \text{(diatomic)} & \tfrac{5}{2} & 20.8 \\
+\text{NH}_3\ \text{(non‑linear polyatomic)} & 3 & 24.9
+\end{array}
+\]
+
+The calculated $C_{V,\text{gas}}\approx 24.5$ J mol\(^{-1}\) K\(^{-1}\)
+matches the non‑linear polyatomic value \(3R\).  Among the options, this
+corresponds to \(\mathrm{NH_3}\).
+
+\[
+\boxed{\text{The gas could be NH}_3.}
+\]
+%-----------------------------------------------------------------
+%  Gallium at its triple point: which phase is favoured
+%  when pressure is increased slightly?
+%-----------------------------------------------------------------
+
+\section*{Given data at the triple point}
+
+\[
+T_{\text{tp}} = 302\;\text{K}, \qquad
+p_{\text{tp}} = 101\;\text{kPa}.
+\]
+
+\[
+\begin{array}{lcl}
+\rho_{\text{solid}} &=& 5.91\;\text{g\,cm}^{-3}, \\
+\rho_{\text{liquid}} &=& 6.05\;\text{g\,cm}^{-3}, \\
+\rho_{\text{gas}}   &=& 0.116\;\text{g\,cm}^{-3}.
+\end{array}
+\]
+
+\section*{Key thermodynamic idea}
+
+At fixed temperature \(T\), the phase with the \emph{lowest molar
+Gibbs free energy} \(G = \mu\) is the stable one.  Infinitesimally
+away from the triple point, a change in pressure favours the phase
+with the \textbf{smallest molar volume} \(V_{\!m}\), because
+
+\[
+\left(\frac{\partial \mu}{\partial p}\right)_T
+   = V_{\!m}.
+\]
+
+\[
+\boxed{\;
+  \mu(p+\mathrm{d}p) = \mu(p_{\text{tp}}) + V_{\!m}\,\mathrm{d}p
+\;}
+\qquad(\mathrm{d}p>0).
+\]
+
+Thus increasing \(p\) lowers the Gibbs energy of the
+high‑density (small‑volume) phase most strongly.
+
+\section*{Compare molar volumes}
+
+Since \(V_{\!m} = M/\rho\) (\(M\) = molar mass, same for all phases),
+ordering by \(\rho\) is equivalent to ordering by~\(V_{\!m}\):
+
+\[
+\rho_{\text{liquid}} > \rho_{\text{solid}} \gg \rho_{\text{gas}}
+\quad\Longrightarrow\quad
+V_{m,\text{liquid}} < V_{m,\text{solid}} \ll V_{m,\text{gas}}.
+\]
+
+\section*{Conclusion}
+
+Because the liquid has the \emph{highest density}
+(\(\rho = 6.05\;\text{g\,cm}^{-3}\)), it possesses the \emph{smallest}
+molar volume and therefore its chemical potential decreases most when
+\(p\) is increased.  Consequently,
+
+\[
+\boxed{\text{A slight pressure increase stabilises the \emph{liquid}
+phase.}}
+\]
+%------------------------------------------------------------------
+%  Shift of the boiling point of water for a tiny pressure change
+%------------------------------------------------------------------
+
+\section*{1.\  Start from equality of chemical potentials}
+
+Along the coexistence curve the molar chemical potentials of liquid
+and vapour are equal: $\mu_{\ell}(T,p)=\mu_{g}(T,p)$.  
+Differentiate that identity:
+
+\[
+\frac{V_{\ell}}{N}\,dp-\frac{S_{\ell}}{N}\,dT
+  =\frac{V_{g}}{N}\,dp-\frac{S_{g}}{N}\,dT
+\quad\Longrightarrow\quad
+\boxed{\,\Delta V_m\,dp = \Delta S_m\,dT\,},
+\]
+where $\Delta V_m\!\equiv V_{g,m}-V_{\ell,m}$ and
+$\Delta S_m\!\equiv S_{g,m}-S_{\ell,m}$.
+
+\section*{2.\  Simplify the volume difference}
+
+The molar volume of liquid water
+$V_{\ell,m}\approx\!1.8\times10^{-5}\,\text{m}^3$  
+is tiny compared with the vapour volume, so  
+$\Delta V_m\simeq V_{g,m}$.
+
+For an ideal gas at the atmospheric boiling point
+($T_0 = 373.15\,$K,\; $p_0 = 1.013\times10^{5}\,$Pa):
+
+\[
+V_{g,m}
+  = \frac{RT_0}{p_0}
+  = \frac{(8.314\;\text{J\,mol}^{-1}\text{K}^{-1})(373.15\;\text{K})}
+         {1.013\times10^{5}\;\text{Pa}}
+  = 3.06\times10^{-2}\;\text{m}^{3}\!\!\;\text{mol}^{-1}.
+\]
+
+\section*{3.\  Entropy difference per mole}
+
+Given $\displaystyle
+\frac{\Delta S}{m}=6.05\times10^{3}\;\frac{\text{J}}{\text{kg\,K}}$  
+and molar mass $M=0.018\;\text{kg\,mol}^{-1}$,
+
+\[
+\Delta S_m = \left(\frac{\Delta S}{m}\right) M
+            = (6.05\times10^{3})(0.018)
+            = 1.09\times10^{2}\;\text{J\,mol}^{-1}\text{K}^{-1}.
+\]
+
+\section*{4.\  Small-pressure formula}
+
+From $\Delta V_m\,dp = \Delta S_m\,dT$:
+
+\[
+dT = \frac{\Delta V_m}{\Delta S_m}\,dp.
+\]
+
+Insert numbers with  
+$dp=-0.16\;\text{Pa}$ (a \emph{decrease} in pressure):
+
+\[
+dT
+  = \frac{3.06\times10^{-2}}{1.09\times10^{2}}(-0.16)
+  = -4.5\times10^{-5}\;\text{K}.
+\]
+
+\section*{5.\  Result}
+
+\[
+\boxed{\;|\Delta T|\;\approx\;4.5\times10^{-5}\ \text{K}\;}
+\]
+
+A pressure change of only $0.16$ Pa (about $1.6\times10^{-6}$ of an
+atmosphere) shifts the boiling point by \emph{just a few
+$10^{-5}$ kelvin}.  The temperature change is so small that it is
+practically undetectable—certainly nowhere near 34 K.
+%-----------------------------------------------------------------
+%  1‑D quantum harmonic oscillator in a thermal bath
+%-----------------------------------------------------------------
+
+\section*{Given}
+\[
+f = 7.0\times10^{11}\ \text{Hz},
+\qquad
+\varepsilon = h f,
+\qquad
+E_0 = 0,
+\qquad
+E_1 = \varepsilon .
+\]
+
+\[
+h = 6.626\,070\,15\times10^{-34}\ \text{J\,s},
+\quad
+k_B = 1.380\,649\times10^{-23}\ \text{J\,K}^{-1}.
+\]
+
+%-----------------------------------------------------------------
+\section*{(a) Temperature at which $P_1/P_0 = 1/3$}
+
+Boltzmann factors for a single oscillator:
+
+\[
+P_n \propto e^{-E_n/(k_B T)} .
+\]
+
+Hence
+\[
+\frac{P_1}{P_0}
+   = \exp\!\bigl[-(E_1-E_0)/(k_B T)\bigr]
+   = e^{-\varepsilon/(k_B T)} .
+\]
+
+Set $P_1/P_0 = 1/3$:
+
+\[
+\frac{1}{3} = e^{-\varepsilon/(k_B T)}
+\quad\Longrightarrow\quad
+T = \frac{\varepsilon}{k_B \ln 3}.
+\]
+
+Numeric value of the level spacing:
+
+\[
+\varepsilon = h f
+            = (6.626\,070\,15\times10^{-34})
+              (7.0\times10^{11})
+            = 4.638\times10^{-22}\ \text{J}.
+\]
+
+\[
+T = \frac{4.638\times10^{-22}}
+         {(1.380\,649\times10^{-23})(\ln 3)}
+  = \frac{4.638\times10^{-22}}
+         {1.512\times10^{-23}}
+  \approx 30.6\ \text{K}.
+\]
+
+\[
+\boxed{T \simeq 30.6\ \text{K}}
+\]
+
+%-----------------------------------------------------------------
+\section*{(b) Behaviour of the ratio $P_1/P_0$ as $T\to\infty$}
+
+\[
+\frac{P_1}{P_0} = e^{-\varepsilon/(k_B T)}
+\;\xrightarrow[T\to\infty]{}\;
+e^{\,0} = 1.
+\]
+
+Thus at extremely high temperature the ground and first‑excited states
+become equally populated:
+
+\[
+\boxed{\displaystyle \lim_{T\to\infty}\frac{P_1}{P_0}=1 }.
+\]
+\end{document}

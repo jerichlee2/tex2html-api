@@ -1,0 +1,334 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417: HW 7}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[1]
+    \textbf{Claim.} If $N$ is a normal subgroup of $G$ and $H$ is any subgroup of $G$, then
+\[
+  NH \;=\; \{\,nh : n\in N,\; h\in H\}\;=\;\{\,hn : h\in H,\; n\in N\}\;=\;HN.
+\]
+\end{problem}
+\begin{solution}
+    \noindent
+
+
+\begin{proof}[Step-by-Step Proof]
+\textbf{Step 1. Show $NH \subseteq HN$.}
+
+\noindent
+Take any element $x \in NH$. Then by definition
+\[
+  x \;=\; n h
+  \quad\text{for some }n \in N,\; h \in H.
+\]
+Because $N$ is normal, for every $g \in G$ we have $gNg^{-1} = N$.  
+In particular, for our $h \in H \subseteq G$, we get $h^{-1} n\,h \in N$.  
+Set $n' = h^{-1} n\,h$.  Then $n' \in N$ and
+\[
+  x \;=\; n\,h 
+        \;=\; h\bigl(h^{-1}n\,h\bigr)
+        \;=\; h\,n'.
+\]
+So $x$ can be written as $h n'$ with $h \in H$ and $n' \in N$, which is exactly an element of $HN$.  
+Hence $x \in HN$, and thus $NH \subseteq HN$.
+
+\medskip
+
+\textbf{Step 2. Show $HN \subseteq NH$.}
+
+\noindent
+Take any element $y \in HN$. Then by definition
+\[
+  y \;=\; h\,n
+  \quad\text{for some }h \in H,\; n \in N.
+\]
+Again, using normality of $N$, set $n' = h\,n\,h^{-1} \in N$.  
+Then
+\[
+  y \;=\; h\,n
+        \;=\;\bigl(h\,n\,h^{-1}\bigr)\,h
+        \;=\; n'\,h.
+\]
+So $y$ can be written as $n' h$ with $n' \in N$ and $h \in H$, i.e.\ $y \in NH$.  
+Thus $HN \subseteq NH$.
+
+\medskip
+
+\textbf{Conclusion:} Combining the two inclusions $NH \subseteq HN$ and $HN \subseteq NH$, we conclude
+\[
+NH \;=\; HN,
+\]
+as desired.
+\end{proof}
+\end{solution}
+\begin{problem}[2]
+
+\end{problem}
+\begin{solution}
+
+% \subsection*{(a) Order $45 = 3^2 \cdot 5$}
+
+By Sylow's theorems, let $n_3$ be the number of Sylow $3$-subgroups, and $n_5$ be the number of Sylow $5$-subgroups. Then
+\[
+n_3 \,\mid\, 5, \quad n_3 \equiv 1 \pmod 3, 
+\quad
+n_5 \,\mid\, 9, \quad n_5 \equiv 1 \pmod 5.
+\]
+These conditions force $n_3 = 1$ and $n_5 = 1$. Hence the Sylow $3$-subgroup (of order $9$) and the Sylow $5$-subgroup (of order $5$) are both normal in $G$. Therefore
+\[
+G \,\cong\, \mathrm{Sylow}_3 \,\times\, \mathrm{Sylow}_5.
+\]
+A group of order $9$ must be abelian (either $\mathbb{Z}_9$ or $\mathbb{Z}_3\times\mathbb{Z}_3$), and $\mathrm{Sylow}_5 \cong \mathbb{Z}_5$. Moreover, no nontrivial semidirect product arises, so
+\[
+G \,\cong\, 
+\begin{cases}
+\mathbb{Z}_9 \,\times\, \mathbb{Z}_5 \;\;(\cong \mathbb{Z}_{45}),\\
+(\mathbb{Z}_3\times \mathbb{Z}_3)\,\times\, \mathbb{Z}_5.
+\end{cases}
+\]
+Either way, $G$ is abelian. Hence there are exactly two abelian groups of order $45$.
+
+% \subsection*{Order $51 = 3 \cdot 17$}
+
+By Sylow's theorems, let $n_3$ be the number of Sylow $3$-subgroups, and $n_{17}$ be the number of Sylow $17$-subgroups. Then
+\[
+n_3 \,\mid\, 17,\quad n_3 \equiv 1 \pmod 3,
+\quad
+n_{17} \,\mid\, 3,\quad n_{17} \equiv 1 \pmod{17}.
+\]
+Thus $n_3 = 1$ and $n_{17} = 1$. This forces both Sylow subgroups to be normal, giving
+\[
+G \,\cong\, \mathrm{Sylow}_3 \,\times\, \mathrm{Sylow}_{17}
+\;\cong\;
+\mathbb{Z}_3 \,\times\, \mathbb{Z}_{17}
+\;\cong\;
+\mathbb{Z}_{51}.
+\]
+No nontrivial semidirect product can occur, so there is exactly one group of order $51$, namely the cyclic group.
+
+% \subsection*{(c) Order $85 = 5 \cdot 17$}
+
+By Sylow's theorems, let $n_5$ be the number of Sylow $5$-subgroups, and $n_{17}$ the number of Sylow $17$-subgroups. Then
+\[
+n_5 \,\mid\, 17,\quad n_5 \equiv 1 \pmod 5,
+\quad
+n_{17} \,\mid\, 5,\quad n_{17} \equiv 1 \pmod{17}.
+\]
+Hence $n_5=1$ and $n_{17}=1$, so both Sylow subgroups are normal. Therefore
+\[
+G \,\cong\, \mathbb{Z}_5 \,\times\, \mathbb{Z}_{17}
+\;\cong\;
+\mathbb{Z}_{85}.
+\]
+Again, no nontrivial semidirect product arises. So there is exactly one group of order $85$, namely $\mathbb{Z}_{85}$.
+\end{solution}
+\begin{problem}[3]
+    \textbf{Claim.} If a finite group $G$ has exactly two distinct conjugacy classes, then $\lvert G\rvert = 2$, and hence $G \cong \mathbb{Z}_2$.
+
+\end{problem}
+\begin{solution}
+
+\medskip
+
+\noindent
+\textbf{Proof.}
+One of the two classes must be $\{\,e\}$, where $e$ is the identity element. Hence the other conjugacy class is $G \setminus \{e\}$, consisting of all non‐identity elements of $G$.
+
+\begin{enumerate}
+\item[(1)] If $G$ has more than two elements, let $x$ be any non‐identity element. Then its conjugacy class is $\mathrm{cl}(x) = G \setminus \{e\}$. Thus
+\[
+\lvert \mathrm{cl}(x)\rvert \;=\; \lvert G \rvert \;-\; 1.
+\]
+
+\item[(2)] On the other hand, by the orbit‐stabilizer theorem (or standard centralizer formula),
+\[
+\lvert \mathrm{cl}(x)\rvert \;=\; \bigl[G : C_G(x)\bigr]
+\;=\;
+\frac{\lvert G\rvert}{\lvert C_G(x)\rvert},
+\]
+where $C_G(x)$ is the centralizer of $x$ in $G$.
+
+\item[(3)] Equating these two expressions for $\lvert \mathrm{cl}(x)\rvert$ gives
+\[
+\lvert G\rvert - 1
+\;=\;
+\frac{\lvert G\rvert}{\lvert C_G(x)\rvert}.
+\]
+Rearranging,
+\[
+\lvert G\rvert
+\;=\;
+(\lvert G\rvert - 1)\,\lvert C_G(x)\rvert.
+\]
+Since $x$ lies in its own centralizer, we have $\lvert C_G(x)\rvert \ge 2$. If $\lvert G\rvert > 2$, then
+\[
+(\lvert G\rvert -1)\,\lvert C_G(x)\rvert
+\;>\;
+\lvert G\rvert,
+\]
+a contradiction.
+
+\item[(4)] Hence it must be that $\lvert G\rvert = 2$. The only group of order 2 is $\mathbb{Z}_2$.
+
+\end{enumerate}
+
+\noindent
+\textbf{Conclusion.} Thus if a finite group $G$ has exactly two conjugacy classes, $G$ is isomorphic to the cyclic group of order $2$, i.e.\ $\mathbb{Z}_2$.
+
+\end{solution}
+\begin{problem}[4]
+    
+\end{problem}
+\begin{solution}
+    \subsection*{(a) The group $S_3$}
+
+Recall that $S_3$ (the symmetric group on 3 letters) has 6 elements, which naturally partition into cycle types:
+\[
+\begin{aligned}
+&\text{Identity: } e,\\
+&\text{Transpositions: } (12), (13), (23),\\
+&\text{3-cycles: } (123), (132).
+\end{aligned}
+\]
+In $S_3,$ elements are conjugate precisely when they have the same cycle structure.  Hence the conjugacy classes are:
+\[
+\{\,e\}, 
+\quad
+\{\,(12),(13),(23)\},
+\quad
+\{\,(123),(132)\}.
+\]
+
+\subsection*{(b) The quaternion group $Q_8$}
+
+Recall $Q_8 = \{\pm 1,\pm i,\pm j,\pm k\}$ with the usual quaternion relations $i^2=j^2=k^2=ijk=-1$. The center of $Q_8$ is $\{\,\pm 1\}$, so both $1$ and $-1$ are central, each forming its own (singleton) conjugacy class:
+\[
+\{\,1\}, 
+\quad
+\{\,-1\}.
+\]
+The remaining 6 elements $\{\,\pm i,\pm j,\pm k\}$ all lie in a single conjugacy class.  Concretely, one checks (for example) that 
+\[
+k\,i\,k^{-1} = j,\quad k\,j\,k^{-1} = -i,\quad
+\text{etc.}
+\]
+so they are all conjugate under the group.  Hence the full set of classes is:
+\[
+\{\,1\},\quad \{\,-1\}, \quad \{\pm i,\pm j,\pm k\}.
+\]
+
+\subsection*{(c) The group $\mathbb{Z}_{12}^*$}
+
+This is the group of units modulo $12$, i.e.\ the set of integers relatively prime to $12$, under multiplication mod $12$.  
+\[
+\mathbb{Z}_{12}^* \;=\;\{\,1,5,7,11\}.
+\]
+A quick check shows $5^2 \equiv 7^2 \equiv 11^2 \equiv 1\pmod{12}$, so every non‐identity element has order $2.$ 
+Hence $\mathbb{Z}_{12}^*$ is an abelian group of order $4$ (in fact isomorphic to the Klein $4$‐group).  
+\emph{In any abelian group, each element forms its own conjugacy class}, since $g x g^{-1} = x$.  
+Therefore the conjugacy classes in $\mathbb{Z}_{12}^*$ are simply
+\[
+\{\,1\},\quad \{\,5\},\quad \{\,7\},\quad \{\,11\}.
+\]
+\end{solution}
+\begin{problem}[5]
+    
+\end{problem}
+\begin{solution}
+    Recall that 
+    \[
+    G \;=\;\mathbb{Z}_2 \oplus \mathbb{Z}_2
+    \]
+    is the Klein four‐group $V_4$, with elements
+    \[
+    \{\, (0,0), (1,0), (0,1), (1,1)\,\}.
+    \]
+    An automorphism of $G$ must permute the three non‐identity elements, since
+    \begin{itemize}
+    \item they all have the same order (namely $2$),
+    \item no nontrivial combination of them equals $(0,0)$, and
+    \item $(0,0)$ must map to itself.
+    \end{itemize}
+    Hence \emph{every} automorphism is uniquely determined by its action on these three elements (which form the set $G\setminus\{\,(0,0)\}$).
+    
+    \medskip
+    
+    \noindent
+    \textbf{Key observation:}  In fact, \emph{any} permutation of the three non‐identity elements extends to an automorphism, because once you prescribe images of $(1,0)$ and $(0,1)$ (which generate $G$), the image of $(1,1)$ is forced, but in a consistent way.  
+    
+    Thus the automorphism group $\mathrm{Aut}(G)$ is isomorphic to the full symmetric group on three letters.  Concretely,
+    \[
+    \mathrm{Aut}(\mathbb{Z}_2 \oplus \mathbb{Z}_2)
+    \;\cong\; S_3.
+    \] 
+\end{solution}
+\begin{problem}[6]
+    
+\end{problem}
+\begin{solution}
+    Recall that $\lvert S_6\rvert = 6! = 720 = 2^4 \cdot 3^2 \cdot 5.$ Hence a Sylow $3$-subgroup of $S_6$ has order $3^2 = 9.$
+
+\medskip
+
+\noindent
+\textbf{Example.} Consider the two disjoint $3$-cycles
+\[
+(1\,2\,3)
+\quad\text{and}\quad
+(4\,5\,6)
+\]
+in $S_6.$ Each has order $3,$ and they commute (since they act on disjoint sets of points). The subgroup
+\[
+\langle\,(1\,2\,3),\,(4\,5\,6)\rangle
+\]
+then has order $9,$ because it is isomorphic to the direct product $\mathbb{Z}_3 \times \mathbb{Z}_3.$ This subgroup is therefore a \emph{Sylow $3$-subgroup} of $S_6$.
+
+\end{solution}
+\end{document}

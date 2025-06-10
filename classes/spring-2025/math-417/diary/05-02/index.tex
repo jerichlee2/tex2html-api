@@ -1,0 +1,496 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{proposition}
+  Let $R$ be an integral domain and let $p\in R$.  
+  If $p$ is \emph{prime}, then $p$ is \emph{irreducible}.
+  \end{proposition}
+  
+  \begin{proof}
+  Write $p=ab$ for some $a,b\in R$.  
+  Because $p$ is prime, $p\mid a$ or $p\mid b$.  
+  Assume $p\mid a$ (the other case is analogous), so $a=pc$ for some $c\in R$.  
+  Then
+  \[
+  p=ab=(pc)b=p(cb).
+  \]
+  Since $R$ is an integral domain and $p\neq 0$, we may cancel $p$ to obtain $1=cb$.  
+  Thus $b$ is a unit, and $p$ is irreducible.
+  \end{proof}
+  
+  \medskip
+  
+  \begin{theorem}
+  Let $R$ be a principal ideal domain (PID) and let $p\in R$.  
+  Then
+  \[
+    p \text{ irreducible} \;\Longleftrightarrow\; p \text{ prime}.
+  \]
+  \end{theorem}
+  
+  \begin{proof}
+  The direction ``prime $\Rightarrow$ irreducible'' holds in every integral
+  domain by the preceding proposition.  
+  We prove the converse.
+  
+  \smallskip
+  Assume $p$ is irreducible.  
+  Since $p$ is not a unit, $(p)$ is a proper ideal.  
+  Suppose $(p)\subsetneq I\subsetneq R$ for some ideal $I$.  
+  Because $R$ is a PID, $I$ is principal, say $I=(a)$.  
+  Then $(p)\subseteq(a)$ implies $p=ab$ for some $b\in R$.  
+  Irreducibility of $p$ forces $a$ or $b$ to be a unit.  
+  If $b$ were a unit, $(a)=(p)$, contradicting $(p)\subsetneq I$; hence $a$
+  is a unit and $I=R$.  
+  Therefore, no ideal lies strictly between $(p)$ and $R$, so $(p)$ is
+  \emph{maximal}.  
+  In any commutative ring, maximal ideals are prime, hence $(p)$ is a prime
+  ideal.  
+  Consequently, $p$ is a prime element.
+  
+  Combining with the previous proposition, we conclude that $p$ is prime
+  iff $p$ is irreducible in a PID.
+  \end{proof}
+  \begin{theorem}
+    \label{thm:UFD-characterisation}
+    An integral domain $R$ is a unique factorisation domain (UFD) \emph{iff}
+    \begin{enumerate}
+      \item\label{UFD-existence}
+        every non--zero, non--unit $a\in R$ can be written as a finite
+        product of irreducible elements (\emph{complete factorisation});
+      \item\label{UFD-prime}
+        every irreducible element of $R$ is prime.
+    \end{enumerate}
+    \end{theorem}
+    
+    \begin{proof}
+    \textbf{$\Longrightarrow$}\;
+    If $R$ is a UFD, property~\ref{UFD-existence} is part of the definition.
+    To prove~\ref{UFD-prime}, let $p\in R$ be irreducible and suppose
+    $p\mid ab$ with $a,b\neq0$.
+    Since $R$ is a UFD we have unique factorisations
+    \[
+      a = u\,p_1^{\alpha_1}\cdots p_r^{\alpha_r},
+      \qquad
+      b = v\,p_1^{\beta_1}p_2^{\beta_2}\cdots p_r^{\beta_r},
+    \]
+    where $u,v\in R^\times$, the $p_i$ are pairwise non--associated
+    irreducibles, and $p\sim p_1$.
+    Then
+    \[
+      ab
+       = uv\,p_1^{\alpha_1+\beta_1}\cdots p_r^{\alpha_r+\beta_r}.
+    \]
+    Because $p\mid ab$, the exponent $\alpha_1+\beta_1$ is positive, so
+    either $\alpha_1>0$ or $\beta_1>0$, i.e.\ $p\mid a$ or $p\mid b$.
+    Thus $p$ is prime.
+    
+    \smallskip
+    \textbf{$\Longleftarrow$}\;
+    Assume \ref{UFD-existence} and \ref{UFD-prime}.
+    To show $R$ is a UFD, we must prove uniqueness of factorisation
+    up to order and association.
+    
+    Let
+    \[
+      c = a_1\cdots a_r = b_1\cdots b_s
+    \]
+    be two factorisations of the same non--unit $c$ into irreducibles.
+    We proceed by induction on $r$.
+    
+    \emph{Base $r=1$.}
+    Then $a_1$ divides $b_1\cdots b_s$; by
+    \ref{UFD-prime} it divides some $b_j$.
+    Relabelling, suppose $j=1$.
+    Irreducibility forces $a_1$ and $b_1$ to be associated.
+    If $s>1$ we would have a unit equal to a product of irreducibles,
+    contradiction, so $s=1$ and the two factorizations coincide.
+    
+    \emph{Inductive step $r>1$.}
+    Again $a_1\mid b_1\cdots b_s$, so $a_1\mid b_j$ for some $j$; rename
+    so $j=1$.
+    Then $b_1=u\,a_1$ for a unit $u$, and
+    \[
+      u^{-1}a_2\cdots a_r = b_2\cdots b_s.
+    \]
+    Absorbing the unit into $a_2$, both sides are now factorizations of the
+    same element with $r-1$ and $s-1$ irreducibles, respectively.
+    By the induction hypothesis $r-1=s-1$ and, after re-ordering,
+    each $a_i$ ($i\ge2$) is associated to $b_i$.
+    Including $i=1$ shows $r=s$ and completes the proof.
+    \end{proof}
+    \begin{theorem}
+      Every principal\-ideal domain (PID) is a unique factorisation domain (UFD).
+      \end{theorem}
+      
+      \begin{proof}
+      By the standard characterisation, an integral domain is a UFD iff
+      \begin{enumerate}
+        \item[(i)] every non--zero, non--unit element can be factored into
+                   irreducibles, and
+        \item[(ii)] every irreducible element is prime.
+      \end{enumerate}
+      
+      \medskip
+      \noindent\textbf{(i) Existence of factorisations.}
+      Because a PID is Noetherian, any strictly increasing chain of principal
+      ideals stabilises.
+      Given $a\neq0$ that is not a unit, either $a$ is irreducible or it can be
+      written $a=bc$ with $b,c$ non--units and $(a)\subsetneq(b),(c)$.
+      Iterating and using the ascending chain condition yields a finite
+      factorisation $a=p_1\cdots p_r$ into irreducibles.
+      
+      \smallskip
+      \noindent\textbf{(ii) Irreducible implies prime.}
+      Let $p$ be irreducible.
+      If $(p)\subsetneq I\subsetneq R$ with $I=(a)$, then $p=ab$.
+      Irreducibility forces $a$ or $b$ to be a unit, whence $I=R$.
+      Thus $(p)$ is maximal, and maximal ideals are prime; hence $p$ is prime.
+      
+      \smallskip
+      With (i) and (ii) verified, $R$ satisfies the UFD conditions.
+      \end{proof}
+      
+      \begin{theorem}
+      Every Euclidean ring is a UFD.
+      \end{theorem}
+      
+      \begin{proof}
+      Given a Euclidean function $\delta\colon R\setminus\{0\}\to\mathbb N$,
+      let $I\neq\{0\}$ be an ideal of $R$ and pick $d\in I$ with minimal
+      $\delta(d)$.
+      For any $x\in I$, division gives $x=qd+r$ with either $r=0$ or
+      $\delta(r)<\delta(d)$.
+      Minimality forces $r=0$, so $x\in(d)$ and $I=(d)$.
+      Hence every ideal is principal and $R$ is a PID.
+      By the previous theorem every PID is a UFD, so every Euclidean ring is a
+      UFD.
+      \end{proof}
+      \paragraph{Why $(p)$ is proper when $p$ is irreducible.}
+Recall that an element $p\in R$ is \emph{irreducible} precisely when
+\begin{enumerate}
+  \item $p$ is \emph{not} a unit, and
+  \item $p=ab\ \Longrightarrow\ a\text{ or }b\text{ is a unit.}$
+\end{enumerate}
+
+Because of condition~(1), $p$ has no inverse in $R$.
+Hence $1\notin(p)=\{\,rp : r\in R\}$; otherwise $1=rp$ would exhibit an
+inverse $r=p^{-1}$.
+Consequently $(p)\subsetneq R$, so $(p)$ is a \emph{proper} ideal.
+\medskip
+\noindent
+Now assume $p_{1}\mid ab$.
+Write unique factorisations in the UFD:
+\[
+  a = u\,p_{1}^{\alpha_{1}}p_{2}^{\alpha_{2}}\cdots p_{r}^{\alpha_{r}},
+  \qquad
+  b = v\,p_{1}^{\beta_{1}}p_{2}^{\beta_{2}}\cdots p_{r}^{\beta_{r}},
+\]
+with $u,v\in R^{\times}$ and $\alpha_i,\beta_i\in\mathbb N\cup\{0\}$.
+Hence
+\[
+  ab = uv\,
+       p_{1}^{\alpha_{1}+\beta_{1}}
+       p_{2}^{\alpha_{2}+\beta_{2}}\cdots
+       p_{r}^{\alpha_{r}+\beta_{r}}.
+\]
+
+Because $p_{1}\mid ab$, the element $p_{1}$ occurs \emph{at least once}
+in the factorisation of $ab$; equivalently
+\[
+  \alpha_{1}+\beta_{1} \;\ge 1.
+\]
+But $\alpha_{1},\beta_{1}$ are non-negative integers, so
+$\alpha_{1}+\beta_{1}\ge1$ implies
+\[
+  \alpha_{1}>0 \quad\text{or}\quad \beta_{1}>0.
+\]
+If $\alpha_{1}>0$, then $p_{1}^{\alpha_{1}}\mid a$ and hence $p_{1}\mid a$.
+If $\beta_{1}>0$, then $p_{1}^{\beta_{1}}\mid b$ and hence $p_{1}\mid b$.
+Thus
+\[
+  p_{1}\mid ab
+  \;\Longrightarrow\;
+  p_{1}\mid a \;\text{or}\; p_{1}\mid b,
+\]
+so $p_{1}$ is \emph{prime}.
+Since $a_{1}\mid b_{1}$ we have $b_{1}=a_{1}u$ for some $u\in R$.
+Both $a_{1}$ and $b_{1}$ are irreducible, hence neither is a unit.
+Because $b_{1}$ is irreducible, any factorisation of $b_{1}$ must involve
+a unit, so $u$ must be that unit; i.e.\ $u\in R^{\times}$.
+Multiplying by $u^{-1}$ gives $a_{1}=u^{-1}b_{1}$, whence
+$b_{1}\mid a_{1}$ and $a_{1}$, $b_{1}$ are associated.
+Applying the division algorithm in $F[X]$ we have
+\[
+  p(x)=q(x)\bigl(x-\alpha\bigr)+r,
+  \qquad \deg r<1,
+\]
+so $r$ is a constant, say $r=c\in F$.
+Evaluating at $x=\alpha$ gives
+\[
+  p(\alpha)=q(\alpha)\,(\alpha-\alpha)+c = c.
+\]
+If $r\neq0$ (i.e.\ $c\neq0$), then $p(\alpha)=c\neq0$, contradicting the
+assumption that $\alpha$ is a root of $p$.
+Hence $r=0$, and the equality becomes $p(x)=q(x)(x-\alpha)$; thus
+\[
+  x-\alpha \;\mid\; p(x).
+\]
+%--------------------------------------------------------------------
+%  Gauss' Lemma (UFD version) – detailed step-by-step proof
+%--------------------------------------------------------------------
+\begin{theorem}[Gauss' Lemma]\label{thm:GaussLemmaUFD}
+  Let $R$ be a unique-factorisation domain (UFD).  
+  If $f,g\in R[X]$ are \emph{primitive} polynomials, then their product
+  $fg$ is again primitive.
+  \end{theorem}
+  
+  \begin{proof}
+  \textbf{Notation.}
+  Write
+  \[
+    f=\sum_{i=0}^{m}a_i\,x^{\,i},\qquad
+    g=\sum_{j=0}^{n}b_j\,x^{\,j},\qquad
+    a_i,b_j\in R,
+  \]
+  and recall that \emph{primitive} means
+  \(
+  \gcd(a_0,\dots,a_m)=\gcd(b_0,\dots,b_n)=1.
+  \)
+  
+  \medskip
+  \noindent
+  \textbf{Step 1 –\,Reduction to a contradiction.}
+  
+  \begin{enumerate}[label=\textbf{(\arabic*)},itemsep=6pt]
+  \item
+  Assume, for contradiction, that $fg$ is \emph{not} primitive.
+  Then its coefficients have a non-trivial common divisor.
+  Choose an \emph{irreducible} element
+  \(
+    \pi\in R
+  \)
+  together with a polynomial
+  \(
+    h=\sum_{k=0}^{m+n}c_k x^{\,k}\in R[X]
+  \)
+  such that
+  \[
+    fg=\pi\,h.
+  \]
+  
+  \item
+  Because $f$ and $g$ are primitive, $\pi$ divides \emph{not all} $a_i$ and
+  \emph{not all} $b_j$.
+  Pick the \underline{smallest} indices
+  \[
+    r=\min\{\,i :\pi\nmid a_i\,\},\qquad
+    s=\min\{\,j :\pi\nmid b_j\,\}.
+  \]
+  By construction $\pi\nmid a_r$ \emph{and} $\pi\nmid b_s$, while
+  $\pi\mid a_i$ for $i<r$ and $\pi\mid b_j$ for $j<s$.
+  \end{enumerate}
+  
+  \medskip
+  \noindent
+  \textbf{Step 2 –\,Look at the coefficient of $x^{\,r+s}$ in $fg$.}
+  
+  \begin{enumerate}[label=\textbf{(\arabic*)},start=3,itemsep=6pt]
+  \item
+  Expand the product:
+  \(
+    fg=\sum_{k=0}^{m+n}c_k x^{\,k},
+  \)
+  so $c_{r+s}$ is the coefficient of $x^{\,r+s}$ in $fg$.
+  Concretely,
+  \[
+    c_{r+s}=a_0b_{r+s}+a_1b_{r+s-1}+\dots+a_{r+s}b_0.
+  \]
+  
+  \item
+  Multiply by $\pi$ using $fg=\pi h$:
+  \[
+    \pi\,c_{r+s}
+      =a_0b_{r+s}+a_1b_{r+s-1}+\dots+a_rb_s+\dots+a_{r+s}b_0.
+  \]
+  
+  \item
+  Solve the above for the \emph{special} product $a_r b_s$:
+  \[
+    a_r b_s
+      =\pi\,c_{r+s}-a_0b_{r+s}-\dots-a_{r+s}b_0
+      \;=\;\lambda\,c_{r+s}-a_0b_{r+s}-\dots-a_{r+s}b_0,
+  \]
+  where $\lambda=1$ (we just rewrote, but introducing $\lambda$ keeps the
+  next sentence short).
+  \end{enumerate}
+  
+  \medskip
+  \noindent
+  \textbf{Step 3 –\,Divisibility analysis of the right-hand side.}
+  
+  \begin{enumerate}[label=\textbf{(\arabic*)},start=6,itemsep=6pt]
+  \item
+  Every term \emph{except} $a_r b_s$ contains a factor $a_i$ with $i<r$ or
+  a factor $b_j$ with $j<s$.
+  By the minimality of $r$ and $s$ these $a_i$ or $b_j$ are all divisible
+  by $\pi$.
+  Hence each term on the right-hand side is divisible by $\pi$, which
+  implies
+  \[
+    \pi \mid a_r b_s.
+  \]
+  
+  \item
+  Because $R$ is a UFD, the irreducible $\pi$ is automatically
+  \emph{prime}.
+  Thus $\pi\mid a_r$ or $\pi\mid b_s$.
+  
+  \item
+  But our choice of $r$ and $s$ guaranteed
+  \(
+    \pi\nmid a_r \text{ and } \pi\nmid b_s,
+  \)
+  a contradiction.
+  \end{enumerate}
+  
+  \medskip
+  \noindent
+  \textbf{Conclusion.}
+  Our assumption that $fg$ is not primitive leads to a contradiction, so
+  $fg$ \emph{must} be primitive.
+  \end{proof}
+  \paragraph{Why every term other than $a_r b_s$ is divisible by $\pi$.}
+
+Recall the choice of the indices
+\[
+  r=\min\{\,i \mid \pi\nmid a_i\,\},
+  \qquad
+  s=\min\{\,j \mid \pi\nmid b_j\,\}.
+\]
+By definition of these minima:
+\[
+  \boxed{\;
+    \pi\mid a_i \ \text{for all } i<r
+    \quad\text{and}\quad
+    \pi\mid b_j \ \text{for all } j<s.
+  \;}
+\tag{$\ast$}
+\]
+
+The coefficient of $x^{\,r+s}$ in the product $fg$
+is
+\[
+  c_{r+s}
+  \;=\;
+  \sum_{i=0}^{r+s} a_i\,b_{\,r+s-i}
+  \;=\;
+  \underbrace{a_0 b_{r+s}}_{i=0}
+  \;+\;
+  \underbrace{a_1 b_{r+s-1}}_{i=1}
+  \;+\;\dots+\;
+  \underbrace{a_r b_s}_{i=r}
+  \;+\;\dots+\;
+  \underbrace{a_{r+s} b_0}_{i=r+s}.
+\]
+
+Take an arbitrary summand $a_i b_{\,r+s-i}$ \emph{different} from
+$a_r b_s$.
+We must show it is divisible by $\pi$.
+There are two mutually exclusive possibilities:
+
+\begin{enumerate}[label=\textbf{Case \arabic*:}, leftmargin=12pt]
+\item $i<r$.  
+      Then $(\ast)$ gives $\pi\mid a_i$, so
+      $\pi\mid a_i b_{\,r+s-i}$.
+\item $i>r$.  
+      In that case $r+s-i < s$ (because $i>r$), so
+      $\pi\mid b_{\,r+s-i}$ by $(\ast)$, and again
+      $\pi\mid a_i b_{\,r+s-i}$.
+\end{enumerate}
+
+In \textbf{both} cases the product is a multiple of $\pi$.
+Hence \emph{every} term in the sum for $\pi c_{r+s}$,
+\[
+  \pi c_{r+s}
+  \;=\;
+  a_0 b_{r+s}
+  +\dots+
+  a_r b_s
+  +\dots+
+  a_{r+s} b_0,
+\]
+is divisible by $\pi$ \emph{except possibly} the single product
+$a_r b_s$.
+This justifies the statement that
+\[
+  \text{“By the minimality of $r$ and $s$ these $a_i$ or $b_j$ are all
+  divisible by $\pi$.”}
+\]
+\[
+  r=\min\{\,i : \pi\nmid a_i\,\}
+  \quad\Longrightarrow\quad
+  \begin{cases}
+    \pi\mid a_i & (i<r),\\
+    \pi\nmid a_r & (i=r).
+  \end{cases}
+\]
+
+(The same with \(s\) and the $b_j$’s.)
+Choosing \emph{max} instead of \emph{min} would not guarantee
+$\pi\mid a_i$ for $i<r$, so the proof would fail.
+\end{document}

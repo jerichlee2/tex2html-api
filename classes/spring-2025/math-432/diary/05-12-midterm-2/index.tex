@@ -1,0 +1,362 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-432 Midterm 2}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\  \begin{problem}
+    Let $a,b,d$ be \emph{infinite} cardinals.
+    
+    \begin{enumerate}[label=\textup{(\alph*)}]
+      \item Show that $d^{\,d}=2^{\,d}$.
+      \item Show that, if $d=2^{\,a}\ge 2^{\,b}$, then $d^{\,b}=d$.
+    \end{enumerate}
+    \end{problem}
+    
+    \begin{solution}
+    Throughout we use three standard facts of cardinal arithmetic for \emph{infinite}
+    cardinals $\kappa,\lambda\ge\aleph_0$:
+    \begin{align}
+      \text{(F1)}\quad & \kappa\le\lambda \;\Longrightarrow\;
+                         2^{\kappa}\le 2^{\lambda}, \\[2pt]
+      \text{(F2)}\quad &
+          (\kappa^{\lambda})^{\mu}= \kappa^{\lambda\cdot\mu}, \\[2pt]
+      \text{(F3)}\quad &
+          \lambda\cdot\lambda=\lambda.
+    \end{align}
+    
+    \medskip
+    \noindent\textbf{(a)  Prove $d^{\,d}=2^{\,d}$.}
+    
+    \begin{enumerate}
+      \item[] \emph{Lower bound.}  
+            Since $2\le d$, monotonicity of the base gives
+            \(
+              2^{\,d}\le d^{\,d}.
+            \)
+    
+      \item[] \emph{Upper bound.}  
+            Because $d\le 2^{\,d}$ (any infinite cardinal is
+            bounded above by its power set),
+            \[
+                d^{\,d}\le(2^{\,d})^{d}
+                       = 2^{\,d\cdot d}
+                       = 2^{\,d} \quad\text{by (F2) and (F3).}
+            \]
+    
+      \item[] \emph{Equality.}  
+            From Steps~1 and~2 we have the double inequality
+            \(
+               2^{\,d}\le d^{\,d}\le 2^{\,d},
+            \)
+            hence $d^{\,d}=2^{\,d}$.
+    \end{enumerate}
+    
+    \bigskip
+    \noindent\textbf{(b)  Assume $d=2^{\,a}\ge 2^{\,b}$ and show $d^{\,b}=d$.}
+    
+    \begin{enumerate}
+      \item[] \emph{Lower bound.}
+            Because $b\ge 1$ and $d\ge 2$,
+            \(
+              d^{\,b}\ge d.
+            \)
+    
+      \item[] \emph{Upper bound.}
+            The hypothesis $2^{\,a}\ge 2^{\,b}$ and fact (F1) allow us to write
+            \[
+               d
+               = 2^{\,a}
+               = (2^{\,a})^{a}
+               = 2^{\,a\cdot a}
+               \;\overset{\text{(F3)}}{=}\;
+                 2^{\,a}
+               \ge (2^{\,b})^{a}.
+            \]
+            Apply (F2) twice to the right--most term:
+            \[
+               (2^{\,b})^{a}
+               =2^{\,b\cdot a}
+               =(2^{\,a})^{b}
+               =d^{\,b}.
+            \]
+            Hence $d\ge d^{\,b}$.
+    
+      \item[] \emph{Equality.}
+            Combining Steps~1 and~2 yields
+            \(
+              d\le d^{\,b}\le d,
+            \)
+            so $d^{\,b}=d$.
+    \end{enumerate}
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}[Hausdorff’s Maximal Chain Theorem]
+        \label{thm:max-chain}
+        Let $(L,\le)$ be a partially ordered set and let $C\subseteq L$ be a
+        (non‑empty) chain.  
+        Then there exists a \emph{maximal chain}
+        $C^{\ast}\subseteq L$ with $C\subseteq C^{\ast}$.
+        \end{theorem}
+        
+        \begin{proof}
+        We proceed with a Zorn–lemma argument, spelled out in detail.
+        
+        \bigskip
+        \textbf{Step 1 (Poset of chains extending $C$).}
+        Define
+        \[
+          \mathcal L
+          \;:=\;
+          \bigl\{\,A\subseteq L \mid C\subseteq A
+                  \text{ and $A$ is a chain in }(L,\le)\bigr\}.
+        \]
+        Partially order $\mathcal L$ by inclusion:
+        for $A,B\in\mathcal L$ write
+        $A\preceq B \iff A\subseteq B$.
+        Then $(\mathcal L,\preceq)$ is itself a poset.
+        
+        \bigskip
+        \textbf{Step 2 (Chains in $\mathcal L$ have upper bounds in
+        $\mathcal L$).}
+        Let
+        \(
+          \mathcal C=\{A_\alpha : \alpha\in I\}\subseteq\mathcal L
+        \)
+        be a chain with respect to $\preceq$ (i.e.\ $\forall\alpha,\beta$,
+        either $A_\alpha\subseteq A_\beta$ or $A_\beta\subseteq A_\alpha$).
+        Define
+        \[
+          A_0 \;:=\; \bigcup_{\alpha\in I} A_\alpha.
+        \]
+        
+        \emph{Claim: $A_0\in\mathcal L$.}
+        
+        \begin{itemize}
+          \item $C\subseteq A_0$ by construction since $C\subseteq A_\alpha$
+                for every $\alpha$.
+          \item \emph{Chain property.}  
+                Take arbitrary $a,b\in A_0$.
+                Choose $\alpha,\beta$ with $a\in A_\alpha$ and $b\in A_\beta$.
+                Because $\mathcal C$ is a chain in $(\mathcal L,\preceq)$,
+                assume without loss of generality $A_\alpha\subseteq A_\beta$.
+                Then $a,b\in A_\beta$, and $A_\beta$ is totally ordered,
+                so $a\le b$ or $b\le a$ in $L$.
+        \end{itemize}
+        Thus $A_0$ is a chain extending $C$, i.e.\ $A_0\in\mathcal L$,
+        and clearly $A_\alpha\preceq A_0$ for all $\alpha$.
+        Hence $A_0$ is an \emph{upper bound} of the chain $\mathcal C$
+        in $(\mathcal L,\preceq)$.
+        
+        \bigskip
+        \textbf{Step 3 (Apply Zorn’s lemma).}
+        Every chain in $\mathcal L$ has an upper bound in $\mathcal L$
+        (Step~2); therefore, by Zorn’s lemma, the poset
+        $(\mathcal L,\preceq)$ possesses a maximal element.
+        Denote this maximal element by $C^{\ast}$.
+        
+        \bigskip
+        \textbf{Step 4 (Interpretation of maximality).}
+        By definition, $C^{\ast}\in\mathcal L$ is a chain with $C\subseteq C^{\ast}$.
+        Its maximality means that if
+        $D\in\mathcal L$ satisfies $C^{\ast}\subseteq D$,
+        then necessarily $D=C^{\ast}$;
+        equivalently, $C^{\ast}$ is a \emph{maximal} chain in $L$
+        that contains $C$.
+        
+        \bigskip
+        \textbf{Step 5 (Conclusion).}
+        Such a chain $C^{\ast}$ is the desired maximal extension of $C$,
+        completing the proof.
+        \end{proof}
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}
+        Let $(A,\le)$ be a \emph{chain} (i.e.\ a totally ordered set).
+        Fix $n\in\Bbb N$ and suppose
+        \[
+           A \;=\; \bigcup_{i=1}^{n} A_i,
+           \qquad
+           A_i\subseteq A,
+           \qquad
+           (A_i,\le)\text{ well‑ordered for each }i.
+        \]
+        Then $(A,\le)$ is itself \emph{well‑ordered}.
+        \end{theorem}
+        
+        \begin{proof}
+        Recall that a chain is well‑ordered iff it contains
+        \emph{no infinite descending sequence};
+        we argue by contradiction using this equivalent formulation.
+        
+        \medskip
+        \textbf{Step 1 (Assume $A$ is \emph{not} well‑ordered).}
+        Then there exists an infinite descending sequence in $A$:
+        \[
+           a_1 \;>\; a_2 \;>\; a_3 \;>\;\cdots .
+        \]
+        Define the subset
+        \[
+           X \;:=\; \{a_1,a_2,a_3,\dots\}\subseteq A .
+        \]
+        $X$ is infinite by construction.
+        
+        \medskip
+        \textbf{Step 2 (Cover $X$ by the $A_i$’s).}
+        Because $A=\bigcup_{i=1}^{n}A_i$, we have
+        \[
+           X
+           \;=\;
+           \bigcup_{i=1}^{n}\!\bigl(X\cap A_i\bigr).
+        \]
+        
+        \medskip
+        \textbf{Step 3 (Pigeonhole principle on a finite union).}
+        A finite union of sets is infinite
+        only if at least one constituent set is infinite.
+        Hence there is an index $k\in\{1,\dots,n\}$ such that
+        \[
+           X\cap A_k\quad\text{is infinite.}
+        \]
+        
+        \medskip
+        \textbf{Step 4 (Infinite descending sequence lives in $A_k$).}
+        Every element of $X\cap A_k$ belongs to the original
+        descending sequence $(a_j)$, and the order on $A_k$
+        is the restriction of $\le$ on $A$.
+        Therefore $(X\cap A_k,\le)$ contains an infinite
+        strictly descending sequence.
+        
+        \medskip
+        \textbf{Step 5 (Contradiction).}
+        $A_k$ was assumed to be well‑ordered, which forbids
+        infinite descending sequences.
+        Step~4 contradicts this,
+        so our initial assumption (that $A$ is not well‑ordered)
+        must be false.
+        
+        \medskip
+        \textbf{Step 6 (Conclusion).}
+        Thus $(A,\le)$ contains no infinite descending sequence,
+        hence is well‑ordered.
+        \end{proof}      
+    \end{solution}
+
+    \begin{solution}
+      \begin{theorem}
+        Every infinite metric space $(M,d)$ contains an \emph{infinite
+        discrete subspace} $A\subseteq M$; that is, for every $x\in A$
+        there exists $r_x>0$ such that the open ball $B(x,r_x)\cap A=\{x\}$.
+        \end{theorem}
+        
+        \begin{proof}
+        We treat two mutually exclusive cases.
+        
+        \medskip
+        \textbf{Case 1: $M$ is discrete.}
+        
+        Because every singleton $\{x\}$ is open in $M$, \emph{any} infinite
+        subset $A\subseteq M$ is automatically discrete.
+        
+        \medskip
+        \textbf{Case 2: $M$ is \emph{not} discrete (so $M$ has a limit point).}
+        
+        \begin{enumerate}
+          \item Choose a limit (accumulation) point $x\in M$.
+                By definition, every open ball centred at $x$ contains
+                infinitely many points of $M$.
+        
+          \item Construct inductively a sequence of distinct points
+                $x_1,x_2,\dots$ in $M\setminus\{x\}$ satisfying
+                \[
+                  d(x_n,x)<\frac1n
+                  \quad\text{and}\quad
+                  x_n\neq x_m \text{ for } n\neq m.
+                \]
+                This is possible because each ball
+                $B\!\bigl(x,\tfrac1n\bigr)$ contains infinitely many points
+                different from~$x$.
+        
+          \item Set
+                \[
+                  A:=\{x_n : n\in\mathbb N\}.
+                \]
+                The set $A$ is infinite by construction.
+          \item Show that every point of $A$ is isolated:
+        
+                \begin{itemize}
+                  \item If $x\notin A$, then for each $x_n$,
+                        the ball
+                        $B\!\bigl(x_n,\tfrac12 d(x_n,x)\bigr)$
+                        meets $A$ only at $x_n$.
+                  \item If $x\in A$ (say $x=x_m$ for some $m$), suppose
+                        contrary to claim that $x$ is not isolated in $A$.
+                        Then some subsequence $(x_{n_k})$ with
+                        $n_k\neq m$ converges to $x_m$, hence also to $x$,
+                        forcing $x_m=x_{n_k}$ for large $k$, a contradiction.
+                        Therefore $x$ \emph{is} isolated in~$A$.
+                \end{itemize}
+        
+                Thus $A$ is an infinite discrete subspace.
+        \end{enumerate}
+        
+        \medskip
+        In either case we obtain the desired infinite discrete subspace~$A$.
+        \end{proof}      
+    \end{solution}
+\end{document}

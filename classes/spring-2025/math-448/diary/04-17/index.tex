@@ -1,0 +1,642 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Linear Fractional (Möbius) Transformations:  A Step--by--Step Walkthrough}
+
+\subsection*{1. Definition}
+A \emph{linear fractional transformation} (LFT) is a rational function
+\[
+   T(z)=\frac{az+b}{cz+d},
+   \qquad a,b,c,d\in\mathbb C,
+   \qquad ad-bc\neq0.
+\]
+The non–vanishing of the determinant $ad-bc$ is essential; it guarantees that
+$T$ is \emph{non‑constant} and \emph{invertible}.
+
+\subsection*{2. Why \boldmath$ad-bc\neq0$ is required}
+\begin{itemize}
+  \item Compute the derivative:
+        \[
+           T'(z)=\frac{ad-bc}{(cz+d)^{2}}.
+        \]
+  \item If $ad-bc=0$, then $T'(z)\equiv0$ and $T$ is constant
+        (its numerator and denominator share a linear factor).
+  \item Hence $ad-bc\neq0$ is necessary to avoid the trivial case.
+\end{itemize}
+
+\subsection*{3. Injectivity (One‑to‑One Property)}
+Assume $z_{1},z_{2}$ satisfy $T(z_{1})=T(z_{2})$:
+\[
+   \frac{az_{1}+b}{cz_{1}+d} = \frac{az_{2}+b}{cz_{2}+d}.
+\]
+Cross‑multiplying,
+\[
+   (az_{1}+b)(cz_{2}+d)=(az_{2}+b)(cz_{1}+d).
+\]
+Expanding and cancelling like terms yields
+\[
+   bc z_{2}+ad z_{1}=ad z_{2}+bc z_{1}
+   \;\Longrightarrow\;
+   (ad-bc)(z_{1}-z_{2})=0.
+   \]
+Because $ad-bc\neq0$, we conclude $z_{1}=z_{2}$.
+Thus $T$ maps distinct points to distinct images.
+
+\subsection*{4. Behaviour at Special Points}
+\begin{itemize}
+  \item \textbf{Pole.}  $T$ has a simple pole at $z=-\dfrac{d}{c}$ (provided $c\neq0$).
+  \item \textbf{Value at infinity.}  Viewing $T$ on the Riemann sphere,
+        \[
+            \lim_{|z|\to\infty}T(z)=\frac{a}{c}.
+        \]
+\end{itemize}
+
+\subsection*{5. Existence and Form of the Inverse}
+Because $T$ is one‑to‑one on $\widehat{\mathbb C}=\mathbb C\cup\{\infty\}$,
+there exists an analytic inverse $T^{-1}$ satisfying
+\[
+   T^{-1}\!\bigl(T(z)\bigr)=z
+   \quad\text{for every }z\in\widehat{\mathbb C}.
+\]
+\begin{enumerate}
+  \item Set $w=T(z)=\dfrac{az+b}{cz+d}$.
+  \item Solve for $z$:
+        \[
+          wz(cz+d)=az+b
+          \;\Longrightarrow\;
+          czw-az=b-dw
+          \;\Longrightarrow\;
+          z=\frac{-dw+b}{cw-a}.
+        \]
+\end{enumerate}
+Hence
+\[
+   T^{-1}(w)=\frac{-dw+b}{cw-a},
+\]
+which is itself a linear fractional transformation with determinant
+$(-d)(-a)-bc=ad-bc\neq0$.
+
+\subsection*{6. Mapping Property}
+Therefore an LFT is a bijective analytic map of the extended complex plane
+onto itself.  Conversely (see the referenced Exercise), any analytic
+one‑to‑one self‑map of $\widehat{\mathbb C}$ must be a linear fractional
+transformation.
+
+\section*{Example 1:  An Automorphism of the Unit Disc}
+
+\paragraph{Claim.}
+Let
+\[
+   T(z)=\lambda\,\frac{a-z}{1-\overline{a}\,z},
+   \qquad |a|<1,\;|\lambda|=1 .
+\]
+Then $T$ maps the open unit disc
+\[
+   \Delta=\{\,z\in\mathbb C : |z|<1\,\}
+\]
+\emph{onto} itself.
+
+\subsection*{Step‑by‑Step Proof}
+
+\begin{enumerate}
+\item \textbf{Reduction to the case $\lambda=1$.}  \\
+      Multiplication by a unimodular constant is an isometry of
+      $\Delta$, so it suffices to show that
+      \[
+          \varphi_{a}(z):=\frac{a-z}{1-\overline{a}\,z}
+      \]
+      maps $\Delta$ into itself.  The result for $T$ then follows by the
+      composition $T=\lambda\varphi_{a}$.
+
+\item \textbf{Compute the modulus of $\varphi_{a}$.}  For $|z|<1$,
+      \[
+          |\varphi_{a}(z)|^{2}
+          =\frac{|a-z|^{2}}{|1-\overline{a}z|^{2}}
+          =\frac{|a|^{2}-2\Re(\overline{a}z)+|z|^{2}}
+                 {1-2\Re(\overline{a}z)+|a|^{2}|z|^{2}}.
+      \]
+
+\item \textbf{Show $|\varphi_{a}(z)|<1$.}\\
+      The inequality $|\varphi_{a}(z)|<1$ is equivalent to
+      \[
+         |a|^{2}-2\Re(\overline{a}z)+|z|^{2}
+         \;<\;
+         1-2\Re(\overline{a}z)+|a|^{2}|z|^{2},
+      \]
+      which simplifies to
+      \[
+         (1-|a|^{2})(1-|z|^{2})>0.
+      \]
+      Because $|a|<1$ and $|z|<1$, both factors are positive, hence
+      $|\varphi_{a}(z)|<1$.  Thus $\varphi_{a}(\Delta)\subset \Delta$,
+      and therefore $T(\Delta)\subset\Delta$.
+
+\item \textbf{Construct the inverse map and verify surjectivity.}\\
+      Solve $w=\lambda\varphi_{a}(z)$ for $z$:
+      \[
+          z
+          =\frac{\overline{\lambda}\,a-\overline{\lambda}\,w}
+                 {1-\overline{a}\,\overline{\lambda}\,w}
+          \;=:\;T^{-1}(w).
+      \]
+      Observe that $|\,\overline{\lambda}\,a|=|a|<1$, so $T^{-1}$ has the
+      same form as $T$ (with $a$ replaced by $\overline{\lambda}a$ and
+      $\lambda$ by $\overline{\lambda}$) and hence maps $\Delta$
+      into itself.  Because $T^{-1}\circ T=\mathrm{id}_{\Delta}$,  
+      $T$ is surjective onto~$\Delta$.
+
+\end{enumerate}
+
+\paragraph{Conclusion.}  
+$T$ is a bijective analytic self‑map of the unit disc~$\Delta$; i.e.\ an
+\emph{automorphism} of~$\Delta$. \qed
+\section*{Fixed Points and Triples for Linear Fractional Transformations}
+
+Throughout, a \emph{linear fractional transformation} (LFT) is a map
+\[
+   T(z)=\frac{az+b}{cz+d},
+   \qquad a,b,c,d\in\mathbb C,\;ad-bc\ne0 .
+\]
+
+%------------------------------------------------
+\subsection*{1.\; An LFT has at most two fixed points}
+
+\begin{itemize}
+   \item A fixed point satisfies $T(z)=z$, i.e.
+         \[
+            z=\frac{az+b}{cz+d}
+            \;\Longleftrightarrow\;
+            cz^{2}+(d-a)z-b=0.
+         \]
+   \item The right–hand side is a quadratic polynomial.
+         Hence there are \emph{at most two} distinct solutions, so an
+         LFT that is not the identity has at most two fixed points.
+\end{itemize}
+
+%------------------------------------------------
+\subsection*{2.\; Equality of two LFTs at three points forces equality everywhere}
+
+\begin{theorem}\label{unique}
+If $T$ and $S$ are LFTs and
+\(
+   T(z_{j})=S(z_{j}) \;(j=1,2,3)
+\)
+for three \emph{distinct} points $z_{1},z_{2},z_{3}$,
+then $T\equiv S$ on $\widehat{\mathbb C}$.
+\end{theorem}
+
+\begin{proof}[Step–by–step proof]
+\begin{enumerate}
+   \item Consider the composition
+         \(
+            R:=S^{-1}\!\circ\,T.
+         \)
+         It is an LFT because the class of LFTs is closed under
+         composition and inversion.
+   \item For each $j=1,2,3$,
+         \(
+            R(z_{j})=S^{-1}\!\bigl(T(z_{j})\bigr)
+                   =S^{-1}\!\bigl(S(z_{j})\bigr)=z_{j},
+         \)
+         so $z_{1},z_{2},z_{3}$ are fixed points of $R$.
+   \item By Section~1, a non‑identity LFT has at most two fixed points.
+         Therefore $R$ must be the identity map, i.e.\ $R(z)=z$ for all
+         $z$.
+   \item Hence $T=S$ on all of $\widehat{\mathbb C}$.
+\end{enumerate}
+\end{proof}
+
+%------------------------------------------------
+\subsection*{3.\; The unique LFT sending one triple to another}
+
+\paragraph{Problem.}
+Given three distinct points $z_{1},z_{2},z_{3}\in\widehat{\mathbb C}$
+and another triple $w_{1},w_{2},w_{3}\in\widehat{\mathbb C}$, show that
+there is a \emph{unique} LFT $L$ with
+\(
+   L(z_{j})=w_{j}\;(j=1,2,3).
+\)
+
+\subsubsection*{Construction}
+
+\begin{enumerate}
+   \item\label{Tdef}
+         Define
+         \[
+             T(z):=\frac{z-z_{1}}{z-z_{3}}\,
+                   \frac{\,z_{2}-z_{3}\,}{\,z_{2}-z_{1}\,}.
+         \]
+         A direct check gives $T(z_{1})=0$, $T(z_{2})=1$, $T(z_{3})=\infty$.
+   \item\label{Sdef}
+         Analogously, set
+         \[
+             S(w):=\frac{w-w_{1}}{w-w_{3}}\,
+                   \frac{\,w_{2}-w_{3}\,}{\,w_{2}-w_{1}\,},
+         \]
+         so $S(w_{1})=0$, $S(w_{2})=1$, $S(w_{3})=\infty$.
+   \item\label{Ldef}
+         Define the desired map as the conjugate
+         \[
+             L(z):=S^{-1}\!\bigl(T(z)\bigr).
+         \]
+         Then
+         \(
+            L(z_{j})=S^{-1}\!\bigl(T(z_{j})\bigr)=S^{-1}(j\text{-th special value})
+                    =w_{j}\;(j=1,2,3).
+         \)
+\end{enumerate}
+
+\subsubsection*{Uniqueness}
+
+Suppose $\tilde{L}$ is another LFT with $\tilde{L}(z_{j})=w_{j}$.
+By Theorem~\ref{unique}, $L$ and $\tilde{L}$ coincide at the three
+distinct points $z_{1},z_{2},z_{3}$, hence $L\equiv\tilde{L}$.
+
+\paragraph{Conclusion}
+There exists exactly one linear fractional transformation sending a
+given ordered triple $(z_{1},z_{2},z_{3})$ to another ordered triple
+$(w_{1},w_{2},w_{3})$, and its explicit form is $L=S^{-1}\circ T$ as
+constructed above.
+\qed
+
+\section*{Example 2.  A Linear Fractional Transformation Sending $0,1,2$ to $-1,0,4$}
+
+\subsection*{Goal}
+Construct the unique linear fractional transformation \(L\) such that
+\[
+    L(0)=-1,\qquad
+    L(1)=0,\qquad
+    L(2)=4 .
+\]
+
+\subsection*{Step 1.  Build an auxiliary map \(T\)}
+Choose the \emph{domain} triple
+\(\;(z_{1},z_{2},z_{3})=(0,1,2)\) and map it to \((0,1,\infty)\):  
+\[
+   T(z)=
+      \frac{z-z_{1}}{z-z_{3}}\,
+      \frac{z_{2}-z_{3}}{\,z_{2}-z_{1}}
+      \;=\;
+      \frac{z-0}{z-2}\,
+      \frac{1-2}{\,1-0}
+      =
+      \frac{z}{\,2-z}.
+\]
+Thus
+\(
+    T(0)=0,\;
+    T(1)=1,\;
+    T(2)=\infty.
+\)
+
+\subsection*{Step 2.  Build an auxiliary map \(S\)}
+Choose the \emph{target} triple
+\((w_{1},w_{2},w_{3})=(-1,0,4)\) and map it to \((0,1,\infty)\):  
+\[
+   S(w)=
+      \frac{w-w_{1}}{w-w_{3}}\,
+      \frac{w_{2}-w_{3}}{\,w_{2}-w_{1}}
+      =
+      \frac{w-(-1)}{w-4}\,
+      \frac{0-4}{\,0-(-1)}
+      =
+      -4\,\frac{w+1}{w-4}.
+\]
+Hence
+\(
+    S(-1)=0,\;
+    S(0)=1,\;
+    S(4)=\infty.
+\)
+
+\subsection*{Step 3.  Invert \(S\)}
+Solve \(S(w)=z\) for \(w\):
+\[
+   z=-4\,\frac{w+1}{w-4}
+   \;\Longrightarrow\;
+   z(w-4)=-4(w+1)
+   \;\Longrightarrow\;
+   zw-4z=-4w-4
+   \;\Longrightarrow\;
+   (z+4)w=4(z-1).
+\]
+Therefore
+\[
+   S^{-1}(z)=\frac{4(z-1)}{\,z+4}.
+\]
+
+\subsection*{Step 4.  Compose to obtain \(L\)}
+Define
+\[
+   L(z):=S^{-1}\!\bigl(T(z)\bigr)
+        =\frac{4\bigl(T(z)-1\bigr)}{T(z)+4}.
+\]
+Insert \(T(z)=\dfrac{z}{2-z}\):
+\[
+   T(z)-1=\frac{z}{2-z}-1=\frac{z-(2-z)}{2-z}=\frac{2z-2}{2-z},\qquad
+   T(z)+4=\frac{z}{2-z}+4=\frac{z+4(2-z)}{2-z}=\frac{8-3z}{2-z}.
+\]
+Hence
+\[
+   L(z)=
+   \frac{4\bigl(2z-2\bigr)}{2-z}\;
+   \Big/\;
+   \frac{8-3z}{2-z}
+   =\frac{4(2z-2)}{8-3z}
+   =\frac{8z-8}{-3z+8}.
+\]
+
+\subsection*{Step 5.  Verification}
+\[
+\begin{aligned}
+   L(0)&=\frac{-8}{8}=-1,\\
+   L(1)&=\frac{0}{5}=0,\\
+   L(2)&=\frac{8\cdot2-8}{-3\cdot2+8}
+        =\frac{8}{2}=4,
+\end{aligned}
+\qquad\checkmark
+\]
+
+\paragraph{Result}
+\[
+   \boxed{\,L(z)=\dfrac{8z-8}{\, -3z+8}\,},
+\]
+the desired linear fractional transformation.
+\section*{Lines and Circles under Linear Fractional Transformations}
+
+Let 
+\[
+   T(z)=\frac{az+b}{cz+d},\qquad a,b,c,d\in\mathbb C,\;ad-bc\ne0.
+\]
+We show \emph{step by step} that $T$ maps every straight line or circle in
+the extended complex plane $\widehat{\Bbb C}$ onto either a line or a
+circle.
+
+\subsection*{1.  Two trivial cases}
+
+\begin{enumerate}
+\item[\textbf{(i)}] \textbf{Translation/rotation/dilation.}  
+      If $c=0$ the map reduces to 
+      \(
+         T(z)=az+b\;(a\ne0).
+      \)
+      The image of a circle 
+      \(
+         C=\{\,|z-z_{0}|=r\,\}
+      \)
+      is the circle
+      \(
+         C'=\{\,|w-(az_{0}+b)|=|a|r\,\};
+      \)
+      the image of a line
+      \(
+         L=\{\Re(Az+B)=0\}
+      \)
+      is the line
+      \(
+         L'=\{\Re(\bar{a}^{-1}A\,w+B-b\bar{a}^{-1}A)=0\}.
+      \)
+\item[\textbf{(ii)}] \textbf{Constant map.}  
+      Excluded by $ad-bc\ne0$, hence ignored.
+\end{enumerate}
+From now on assume $c\ne0$.
+
+\subsection*{2.  Factor \(T\) as a composition of simpler maps}
+
+Write
+\[
+   T(z)=\frac{az+b}{cz+d}
+       =\frac1c\Bigl(\frac{bc-ad}{cz+d}+a\Bigr).
+\]
+Define three auxiliary maps
+\[
+   U(z)=cz+d,\qquad
+   V(w)=\frac1w,\qquad
+   W(t)=\frac{1}{c}\bigl[(bc-ad)t+a\bigr],
+\]
+so that
+\[
+   T(z)=W\!\bigl(V(U(z))\bigr)=W\circ V\circ U.
+\]
+
+\paragraph{Observation.}
+\begin{itemize}
+\item $U$ is affine $\implies$ sends circles to circles, lines to lines.
+\item $W$ is affine $\implies$ same property.
+\item $V$ is the \emph{inversion} $w\mapsto 1/w$,
+      the only non‑affine step; we therefore verify its effect separately.
+\end{itemize}
+
+\subsection*{3.  Effect of inversion \(V(w)=1/w\)}
+
+Write $w=u+iv$ so that
+\(
+   1/w=(u-iv)/(u^{2}+v^{2})=x+iy
+\)
+with
+\[
+   x=\frac{u}{u^{2}+v^{2}},\qquad
+   y=-\frac{v}{u^{2}+v^{2}}.
+\]
+Hence
+\(
+   x^{2}+y^{2}=\dfrac1{u^{2}+v^{2}}.
+\)
+
+\medskip
+\noindent\textbf{(a) A circle/line \emph{not} passing through the origin.}\\
+Such a curve is determined by
+\[
+   \alpha(u^{2}+v^{2})+\beta u+\gamma v=\delta,\qquad
+   \alpha,\beta,\gamma,\delta\in\Bbb R,\ 
+   (\alpha,\beta,\gamma)\ne(0,0,0).
+\]
+Multiply by $x^{2}+y^{2}=1/(u^{2}+v^{2})$ to obtain
+\[
+   \delta(x^{2}+y^{2})-\beta x-\gamma y=\alpha,
+\]
+still the general equation of a circle or a line.  
+Therefore \(V\) sends a line/circle \emph{not} through \(0\) to a
+circle/line.
+
+\medskip
+\noindent\textbf{(b) A line or circle \emph{through} the origin.}\\
+Set, for instance, $\beta u+\gamma v=\delta$ with $\delta=0$.  
+After inversion this becomes
+\(
+   -\beta x-\gamma y=\alpha(x^{2}+y^{2}),
+\)
+a quadratic with non‑zero quadratic term, i.e.\ a \emph{circle}
+passing through the origin.  
+Thus a line through the origin is sent to a circle through the origin
+(and vice‑versa).
+
+\subsection*{4.  Composition argument}
+
+Since \(U\) and \(W\) individually preserve the \emph{type} (circle/line),
+and \(V\) sends circles and lines to circles and lines,
+their composition \(T=W\circ V\circ U\) has the same property.
+
+\subsection*{5.  Summary}
+
+Every linear fractional transformation with \(ad-bc\ne0\) carries:
+
+\begin{itemize}
+\item each straight line that does \emph{not} pass through the inversion
+      centre into a straight line;
+\item each line through the inversion centre into a circle through that
+      centre;
+\item each circle not through the inversion centre into a circle;
+\item each circle through the inversion centre into a line.
+\end{itemize}
+Hence \textbf{every} line or circle is mapped to a line or a circle.
+\qed
+\section*{Conformal Mapping:  Step--by--Step Walkthrough}
+
+\subsection*{1.\;  Setup}
+
+Let $\gamma:[a,b]\to\mathbb C,\;t\mapsto z(t)$ be a smooth (i.e.\ $C^{1}$) curve
+with non--vanishing tangent vector $z'(t_{0})\neq0$ at $t_{0}\in(a,b)$.
+Denote $z_{0}=z(t_{0})$.
+For an analytic function $f$, define the \emph{image curve}
+\[
+   \Gamma:\qquad w(t)=f(z(t)),\qquad a\le t\le b .
+\]
+
+\subsection*{2.\;  Transformation of the tangent vector}
+
+\paragraph{Chain rule.}
+Since $w(t)=f(z(t))$ and $f$ is differentiable,
+\[
+   w'(t)=f'(z(t))\,z'(t),\qquad
+   \text{hence}\quad
+   w'(t_{0}) = f'(z_{0})\,z'(t_{0}).      \tag{1}
+\]
+
+\paragraph{Scaling of length.}
+Taking moduli in \eqref{1},
+\[
+   |w'(t_{0})| = |f'(z_{0})|\,|z'(t_{0})| .       \tag{2}
+\]
+Thus the tangent vector is \emph{magnified} by the factor $|f'(z_{0})|$.
+
+\paragraph{Rotation of direction.}
+For arguments (angles) we have
+\[
+   \arg w'(t_{0}) = \arg f'(z_{0}) + \arg z'(t_{0})\pmod{2\pi}. \tag{3}
+\]
+So the tangent is \emph{rotated} through an angle
+$\theta_{0}:=\arg f'(z_{0})$.
+
+\subsection*{3.\;  Angle between two curves}
+
+Let $\gamma_{1},\gamma_{2}$ be two smooth curves intersecting at $z_{0}$, with
+non--zero tangent vectors $z_{1}'(t_{0}),\,z_{2}'(s_{0})$.
+Define their oriented angle at $z_{0}$ by
+\[
+   \angle(\gamma_{1},\gamma_{2}) := 
+   \arg z_{2}'(s_{0}) - \arg z_{1}'(t_{0}) \pmod{2\pi}. \tag{4}
+\]
+
+\subsection*{4.\;  Preservation of angle and orientation}
+
+\paragraph{Image tangents.}
+By \eqref{1},
+\(
+   w_{1}' = f'(z_{0})\,z_{1}',\;
+   w_{2}' = f'(z_{0})\,z_{2}' .
+\)
+Hence, using \eqref{3},
+\[
+   \arg w_{2}' - \arg w_{1}'
+   = \bigl[\arg f'(z_{0})+\arg z_{2}'\bigr]
+     -\bigl[\arg f'(z_{0})+\arg z_{1}'\bigr]
+   = \arg z_{2}'-\arg z_{1}'. \tag{5}
+\]
+Comparing \eqref{4} and \eqref{5} shows both the \emph{magnitude} and the
+\emph{orientation} (sense) of the angle are preserved.
+
+\subsection*{5.\;  Local conformality criterion}
+
+\begin{theorem}
+\label{thm:local}
+If $f$ is analytic in a disc $|z-z_{0}|<r$ and $f'(z_{0})\neq0$, then
+$f$ is \emph{conformal} at $z_{0}$: it preserves oriented angles between any
+two smooth curves meeting at $z_{0}$.
+\end{theorem}
+
+\begin{proof}
+Given two such curves $\gamma_{1},\gamma_{2}$, formula \eqref{5} shows that
+the angle from $\gamma_{1}$ to $\gamma_{2}$ at $z_{0}$ equals the angle from
+their images at $w_{0}=f(z_{0})$; thus conformality holds.
+\end{proof}
+
+\subsection*{6.\;  Remarks on critical points}
+
+\begin{itemize}
+\item If $f$ has a zero of order $m\ge2$ at $z_{0}$, then $|f'(z_{0})|=0$ and
+      the argument calculation generalises to show the angle between two
+      curves is \emph{multiplied} by $m$; see the exercises following the
+      text.
+\item Because $f'(z)\neq0$ for a one--to--one analytic map (Section~3.2),
+      we obtain:
+
+      \begin{theorem}
+      If $f$ is analytic and injective on a domain $D$, then $f$ is conformal
+      at every point of $D$.
+      \end{theorem}
+\end{itemize}
+
+\end{document}

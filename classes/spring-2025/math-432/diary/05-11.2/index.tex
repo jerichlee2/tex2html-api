@@ -1,0 +1,170 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Practice Final Exam 3}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                MATH 432 – Practice Final Examination (C)                %
+%                (Eight problems; give complete proofs.)                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}[All partial orders on a four-element set]
+  Let $X=\{1,2,3,4\}$.
+  \begin{enumerate}[label=(\alph*)]
+    \item Describe \emph{all} distinct partial orders that can be placed
+          on $X$ (up to isomorphism).  
+    \item How many non-isomorphic posets of size~$4$ are there?
+          Justify your count.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Compositions preserving injectivity]
+  Let $f:A\to B$ and $g:B\to C$ be functions.
+  \begin{enumerate}[label=(\alph*)]
+    \item Show that if both $f$ and $g$ are one-to-one
+          (injective), then $g\circ f$ is injective.
+    \item Show that if $g\circ f$ is injective, then $f$ must be
+          injective.
+    \item Prove: if $f$ is \emph{onto} (surjective) and
+          $g\circ f$ is injective, then $g$ is injective.
+    \item Give an explicit example in which $g\circ f$ is injective
+          while $g$ is \emph{not} injective.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[Images and pre-images under a function]
+  Let $f:A\to B$ be any function.
+  \begin{enumerate}[label=(\alph*)]
+    \item For $B_{1},B_{2}\subset B$ prove that
+          \[
+              f^{-1}(B_{1}\cup B_{2})
+              \;=\;
+              f^{-1}(B_{1})\cup f^{-1}(B_{2}).
+          \]
+    \item For $T\subset B$ prove that
+          \[
+              f^{-1}(T^{\prime})
+              \;=\;
+              \bigl(f^{-1}(T)\bigr)^{\prime},
+          \]
+          where $T^{\prime}$ denotes the complement of $T$ in~$B$.
+    \item Prove that for any $A_{1},A_{2}\subset A$,
+          \[
+              f(A_{1}\cup A_{2})
+              \;=\;
+              f(A_{1})\cup f(A_{2}).
+          \]
+    \item Construct counterexamples to show that, in general,
+          \[
+              f(A_{1}^{\prime})\subset (f(A_{1}))^{\prime}
+              \quad\text{and}\quad
+              f(A_{1}^{\prime})\supset (f(A_{1}))^{\prime}
+          \]
+          need \emph{not} hold.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}[A power-cardinality identity]
+  Let $e$ be an infinite cardinal and let
+  $d$ be a cardinal satisfying $2\le d\le 2^{e}$.
+  Prove that
+  \[
+      d^{\,e}=2^{e}.
+  \]
+  (Avoid citing Theorems 13–16 from the lecture notes;
+  construct explicit injections or bijections instead.)
+\end{problem}
+
+\begin{problem}[Ordinal numbers and the axiom of choice]
+  Suppose $A$ and $B$ are non-empty sets and
+  $f:A\twoheadrightarrow B$ is a surjective map.
+  Using the axiom of choice, prove that
+  the \emph{ordinal number} of $B$ does not exceed that of $A$; i.e.
+  \[
+      \operatorname{o}(B)\le\operatorname{o}(A).
+  \]
+\end{problem}
+
+\begin{problem}[Distance to a set is continuous]
+  Let $(M,D)$ be a metric space and let $A\subset M$ be non-empty.
+  Define, for each $x\in M$,
+  \[
+      f(x)
+      \;:=\;
+      D(x,A)
+      \;:=\;
+      \inf_{a\in A}D(x,a).
+  \]
+  Prove that the function $f:M\to\mathbb{R}$ is continuous.
+\end{problem}
+
+\begin{problem}[Separability passed to subspaces]
+  Prove that every subspace of a separable metric space is separable.
+  (Recall that a metric space is \emph{separable} if it contains a
+  countable dense subset.)
+\end{problem}
+
+\begin{problem}[Infinite discrete subset in an infinite metric space]
+  Let $(M,D)$ be an infinite metric space.
+  Show that $M$ contains an \emph{infinite discrete subset};
+  that is, there exists $A\subset M$ such that
+  $A$ is infinite and each point of $A$ is isolated within~$A$.
+  \emph{Hint:}  Separate the cases where $M$ is already discrete and
+  where it has a limit point.
+\end{problem}
+\end{document}

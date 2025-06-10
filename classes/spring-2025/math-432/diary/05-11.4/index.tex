@@ -1,0 +1,699 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 Practice Final Exam 1 Solution}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%-------------------------------------------------------------------
+%  Problem 1 – Set algebra with the symmetric difference
+%-------------------------------------------------------------------
+\paragraph{Notation.}
+For sets \(A,B\) write
+\[
+   A\setminus B=\{x\in A:x\notin B\},
+   \qquad
+   A\triangle B=(A\setminus B)\cup(B\setminus A).
+\]
+
+\bigskip
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \(\boxed{\,A\triangle B=(A\cup B)\setminus(A\cap B)\,}\)
+
+      \[
+      \begin{aligned}
+      (A\cup B)\setminus(A\cap B)
+           &=\bigl[(A\cup B)\cap(A\cap B)^{\mathrm c}\bigr]          \\[2pt]
+           &=\bigl[(A\cap B^{\mathrm c})\cup(B\cap A^{\mathrm c})\bigr] \\[2pt]
+           &=(A\setminus B)\cup(B\setminus A)
+           =A\triangle B .
+      \end{aligned}
+      \]
+
+%-----------------------------------------------------------------
+\item \(\boxed{\,A\cap(B\triangle C)=(A\cap B)\triangle(A\cap C)\,}\)
+
+      \[
+      \begin{aligned}
+      A\cap(B\triangle C)
+         &=A\cap\bigl[(B\setminus C)\cup(C\setminus B)\bigr]\\
+         &=(A\cap B\cap C^{\mathrm c})\cup(A\cap C\cap B^{\mathrm c})\\
+         &=(A\cap B)\setminus(A\cap C)\;\cup\;
+           (A\cap C)\setminus(A\cap B)\\
+         &=(A\cap B)\triangle(A\cap C).
+      \end{aligned}
+      \]
+
+%-----------------------------------------------------------------
+\item \(\boxed{\,A\triangle C\subset (A\triangle B)\cup(B\triangle C)\,}\)
+
+      Let \(x\in A\triangle C\).
+      Then \(x\in A\setminus C\) or \(x\in C\setminus A\).
+
+      *If \(x\in A\setminus C\)* and \(x\in B\) then  
+      \(x\in B\setminus C\subset B\triangle C\);  
+      if \(x\notin B\) then \(x\in A\setminus B\subset A\triangle B\).
+
+      *If \(x\in C\setminus A\)* and \(x\in B\) then  
+      \(x\in B\setminus A\subset A\triangle B\);  
+      if \(x\notin B\) then \(x\in C\setminus B\subset B\triangle C\).
+
+      In every case \(x\in(A\triangle B)\cup(B\triangle C)\).
+
+%-----------------------------------------------------------------
+\item \(\boxed{\,C\setminus(A\cup B)=(C\setminus A)\cap(C\setminus B)\,}\)
+
+      This is one of De~Morgan’s laws:
+      \[
+         (A\cup B)^{\mathrm c}=A^{\mathrm c}\cap B^{\mathrm c}
+         \quad\Longrightarrow\quad
+         C\cap(A\cup B)^{\mathrm c}
+           =(C\cap A^{\mathrm c})\cap(C\cap B^{\mathrm c}).
+      \]
+
+%-----------------------------------------------------------------
+\item \textbf{(Associativity)}  
+      \(\boxed{\, (A\triangle B)\triangle C = A\triangle(B\triangle C)\,}\)
+
+      Work with characteristic functions
+      \(\chi_S\colon X\to\{0,1\}\) (\(x\mapsto1\) if \(x\in S\)).
+      Then
+      \[
+         \chi_{A\triangle B}
+           =\chi_A+\chi_B\pmod2,\qquad
+         \chi_{(A\triangle B)\triangle C}
+           =\chi_A+\chi_B+\chi_C\pmod2,
+      \]
+      and similarly for the right–hand side; addition mod \(2\) is
+      associative, hence so is \(\triangle\).
+\end{enumerate}
+\begin{problem}
+  \textbf{Problem 2 (Posets, lattices, and completeness).}
+  Let \((L,\le)\) be a lattice.
+  Assume that \emph{every chain} \(C\subset L\) possesses both a least
+  upper bound \(\sup C\) and a greatest lower bound \(\inf C\).
+  
+  \begin{enumerate}[label=\textbf{(\alph*)}]
+  \item Show that \emph{every} subset \(S\subset L\) has a least upper
+        bound.
+  \item Show that \emph{every} subset \(S\subset L\) has a greatest lower
+        bound.
+  \item Conclude that \(L\) is a \emph{complete lattice}.
+  \end{enumerate}
+  \end{problem}
+  
+  \begin{solution}
+  Throughout a \emph{chain} means a totally ordered subset of \(L\).
+  
+  %-----------------------------------------------------------------
+  \subsection*{(a)  Existence of \(\sup S\) for an arbitrary subset
+                \(S\subset L\)}
+  
+  Let \(S\subset L\) be arbitrary and set
+  \[
+     \mathcal U
+        \;=\;
+     \{\,u\in L \mid s\le u\text{ for all }s\in S\}
+  \]
+  (the set of \emph{upper bounds} of \(S\)).
+  Order \(\mathcal U\) by the restriction of \(\le\).
+  
+  \smallskip
+  \textit{Claim.}  Every chain \(\mathcal C\subset\mathcal U\) has an
+  \emph{upper bound} in \(\mathcal U\).
+  
+  Indeed, \(\mathcal C\) is also a chain in \(L\); by the hypothesis it
+  has a least upper bound \(c=\sup \mathcal C\in L\).
+  Each \(s\in S\) is \(\le\) every element of \(\mathcal C\), hence
+  \(s\le c\).
+  Thus \(c\) is an upper bound of \(S\), i.e.\ \(c\in\mathcal U\), and
+  certainly \(c\ge\mathcal C\).
+  
+  \smallskip
+  By \textbf{Zorn’s lemma}, \(\mathcal U\) contains a
+  \emph{minimal} element \(u^{\ast}\).
+  For any upper bound \(u\in\mathcal U\) we have \(u^{\ast}\le u\)
+  (otherwise \(\{u,u^{\ast}\}\) would contradict minimality), so
+  \(u^{\ast}\) is the \emph{least} upper bound of \(S\):
+  \[
+     \boxed{\;
+        \sup S \;=\; u^{\ast}\in L.
+     \;}
+  \]
+  
+  %-----------------------------------------------------------------
+  \subsection*{(b)  Existence of \(\inf S\)}
+  
+  Apply the same argument to the set of \emph{lower} bounds
+  \(
+     \mathcal L=\{\,\ell\in L \mid \ell\le s\text{ for all }s\in S\},
+  \)
+  ordered by \(\le\).
+  Chains in \(\mathcal L\) have lower bounds by the
+  assumption on chains, so Zorn’s lemma yields a
+  \emph{maximal} element \(\ell^{\ast}\), which is the greatest lower
+  bound of \(S\):
+  \[
+     \boxed{\;
+        \inf S \;=\; \ell^{\ast}\in L.
+     \;}
+  \]
+  
+  %-----------------------------------------------------------------
+  \subsection*{(c)  Completeness of \(L\)}
+  
+  Parts (a) and (b) show that \emph{every} subset \(S\subset L\) has both
+  a supremum and an infimum in \(L\).  
+  Therefore \(L\) is a \textbf{complete lattice}.
+  \end{solution}
+  %--------------------------------------------------------------------
+%  Problem 3 – Composition of functions and surjectivity
+%--------------------------------------------------------------------
+\paragraph{Problem.}
+Let \(f:A\to B\) and \(g:B\to C\) be functions.
+\begin{enumerate}[label=\textbf{(\alph*)}]
+   \item Show that if both \(f\) and \(g\) are onto (surjective), then
+         the composition \(g\circ f\) is onto.
+   \item Show that if \(g\circ f\) is onto, then \(g\) is onto.
+   \item Give an explicit example in which \(g\circ f\) is onto but
+         \(f\) is \emph{not} onto.
+\end{enumerate}
+
+\bigskip
+\paragraph{Solution.}
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \textit{Surjectivity of a composition.}
+
+   Assume \(f\) and \(g\) are surjective.
+   Let \(c\in C\).  
+   Since \(g\) is onto, there exists \(b\in B\) with \(g(b)=c\).
+   Because \(f\) is onto, there exists \(a\in A\) with \(f(a)=b\).
+   Then
+   \[
+      (g\circ f)(a)=g\bigl(f(a)\bigr)=g(b)=c.
+   \]
+   Hence every \(c\in C\) is attained by \(g\circ f\); the composition
+   is surjective.
+
+%-----------------------------------------------------------------
+\item \textit{Surjectivity of \(g\) from surjectivity of the
+   composition.}
+
+   Suppose \(g\circ f\) is onto and let \(c\in C\).
+   By surjectivity of \(g\circ f\) there exists \(a\in A\) such that
+   \((g\circ f)(a)=c\).
+   Set \(b=f(a)\in B\); then \(g(b)=c\).
+   Thus every \(c\in C\) lies in the image of \(g\), so \(g\) is
+   surjective.
+
+%-----------------------------------------------------------------
+\item \textit{Example where \(g\circ f\) is onto but \(f\) is not.}
+
+   Take finite sets
+   \[
+      A=\{\,1\,\},\qquad
+      B=\{\,1,2\,\},\qquad
+      C=\{\,\star\,\}.
+   \]
+   Define
+   \[
+      f:A\longrightarrow B,\quad f(1)=1
+      \quad(\text{not onto, since }2\notin\operatorname{im}f),
+   \]
+   \[
+      g:B\longrightarrow C,\quad g(1)=\star,\; g(2)=\star
+      \quad(\text{onto}).
+   \]
+   Then
+   \[
+      (g\circ f)(1)=g\bigl(f(1)\bigr)=g(1)=\star,
+   \]
+   so \(g\circ f:A\to C\) is onto even though \(f\) is not.
+
+\end{enumerate}
+%--------------------------------------------------------------------
+%  Problem 4 — Countability
+%--------------------------------------------------------------------
+\paragraph{Problem 4.}
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Prove that the finite Cartesian product
+      \(\Bbb N\times\Bbb N\times\cdots\times\Bbb N\)
+      (\(k\) copies, \(k<\infty\)) is countable.
+      Deduce that any finite product of countable sets is countable.
+
+\item Let \(A\) be a countably infinite set and put
+      \[
+         X=\bigl\{\,F\subset A : F\text{ is finite}\bigr\}.
+      \]
+      Show that \(X\) is countable.
+\end{enumerate}
+
+\bigskip
+\paragraph{Solution.}
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \textit{Finite powers of \(\Bbb N\) are countable.}
+
+We prove by induction on \(k\ge1\) that
+\(\Bbb N^{k}:=\underbrace{\Bbb N\times\dots\times\Bbb N}_{k\text{ times}}\)
+is countable.
+
+\emph{Base \(k=1\).}  \(\Bbb N\) is countable.
+
+\emph{Induction step.}  Assume \(\Bbb N^{k}\) is countable.
+Since \(\Bbb N\) is countable, the product \(\Bbb N^{k+1}
+          =\Bbb N^{k}\times\Bbb N\) is a countable union of countable
+sets:
+\[
+   \Bbb N^{k+1}
+      =\bigcup_{n\in\Bbb N}\!\bigl(\Bbb N^{k}\times\{n\}\bigr),
+      \qquad
+      \bigl|\Bbb N^{k}\times\{n\}\bigr|
+         =|\Bbb N^{k}|\;(<\infty).
+\]
+A countable union of countable sets is countable, completing the
+induction.
+
+\smallskip
+\textit{Finite products of countable sets.}
+
+Let \(B_{1},\dots,B_{k}\) be countable.
+Choose enumerations \(B_{j}=\{b_{j,0},b_{j,1},\dots\}\).
+Define
+\[
+   f: \Bbb N^{k}\longrightarrow B_{1}\times\dots\times B_{k},
+   \qquad
+   f(n_{1},\dots,n_{k})
+     =(b_{1,n_{1}},\dots,b_{k,n_{k}}).
+\]
+The map \(f\) is surjective, so the product of the \(B_j\) is imaged
+by a countable set; hence it is countable.
+
+%-----------------------------------------------------------------
+\item \textit{The set of finite subsets of a countable set is countable.}
+
+Since \(A\) is countably infinite, list it as
+\(A=\{a_{0},a_{1},a_{2},\dots\}\).
+
+For each \(m\ge0\) let
+\(
+   X_{m}=\bigl\{\,F\subset A : |F|=m\bigr\}
+\)
+(the $m$–element subsets of \(A\)).
+Then
+\(
+   X=\bigcup_{m=0}^{\infty} X_{m}.
+\)
+
+\emph{Claim.} Each \(X_{m}\) is countable.  
+Indeed, identify \(F=\{a_{n_{1}},\dots,a_{n_{m}}\}\) with the strictly
+increasing \(m\)-tuple \((n_{1},\dots,n_{m})\in\Bbb N^{m}\);
+conversely every such tuple gives an \(m\)-element set.
+Thus \(X_{m}\) is in bijection with a subset of \(\Bbb N^{m}\),
+hence countable by part (a).
+
+Finally, \(X\) is a \emph{countable union} of the countable sets
+\(X_{m}\), so \(X\) itself is countable.
+
+\[
+   \boxed{\;X\text{ is countable.}\;}
+\]
+
+\end{enumerate}
+\begin{solution}
+  \textbf{Problem 5. Cardinal arithmetic and explicit bijections}
+  
+  \medskip
+  \textbf{(a)  A bijection \(\displaystyle (0,1)\times(0,1)\times(0,1)\;\longrightarrow\;(0,1)\).}
+  
+  \begin{enumerate}
+      \item[\emph{Step 1:  Fix a unique binary expansion.}]
+            Every number \(x\in(0,1)\) has a binary expansion
+            \[
+                x \;=\; 0.x_{1}x_{2}x_{3}\dots_{\!2},
+                \qquad x_{k}\in\{0,1\}.
+            \]
+            When \(x\) has \emph{two} binary expansions (the terminating one
+            ending in an infinite string of \(1\)’s), always choose the
+            non‑terminating version (ending in infinitely many \(0\)’s).
+            This makes the expansion unique.
+  
+      \item[\emph{Step 2:  Define the map.}]
+            For a triple \(\bigl(x,y,z\bigr)\in(0,1)^{3}\) write
+            \[
+                x=0.x_1x_2x_3\dots_{\!2},\quad
+                y=0.y_1y_2y_3\dots_{\!2},\quad
+                z=0.z_1z_2z_3\dots_{\!2}.
+            \]
+            Put the digits together \emph{three at a time}:
+            \[
+                f(x,y,z)
+                \;=\;
+                0.\,x_1y_1z_1\,x_2y_2z_2\,x_3y_3z_3\dots_{\!2}
+                \;\in\;(0,1).
+            \]
+  
+      \item[\emph{Step 3:  \(f\) is injective.}]
+            If two distinct triples differ in at least one coordinate, the
+            very first binary digit where they differ appears at position
+            \(3k-2,\,3k-1\), or \(3k\) of \(f(x,y,z)\).  Hence
+            \(f(x,y,z)\neq f(x',y',z')\).
+  
+      \item[\emph{Step 4:  \(f\) is surjective.}]
+            Given \(w\in(0,1)\) with unique binary expansion
+            \( w=0.d_{1}d_{2}d_{3}d_{4}d_{5}\dots_{\!2}\),
+            regroup the digits in blocks of three:
+            \[
+                x=0.d_{1}d_{4}d_{7}\dots_{\!2},\quad
+                y=0.d_{2}d_{5}d_{8}\dots_{\!2},\quad
+                z=0.d_{3}d_{6}d_{9}\dots_{\!2}.
+            \]
+            Then \(f(x,y,z)=w\).  Hence \(f\) is bijective.
+  
+      \item[\emph{Step 5:  Cardinality consequence.}]
+            Because \(\bigl|(0,1)\bigr|=\bigl|\mathbb{R}\bigr|\) via the
+            standard bijection \(t\mapsto\frac{1}{\pi}\arctan t+\tfrac12\),
+            the bijection above yields
+            \[
+                \bigl|\mathbb{R}^{3}\bigr|
+                =\bigl|(0,1)^{3}\bigr|
+                =\bigl|(0,1)\bigr|
+                =\bigl|\mathbb{R}\bigr|.
+            \]
+            (The same proof, interleaving \(n\) binary strings, shows
+            \(|\mathbb{R}^{n}|=|\mathbb{R}|\) for every finite \(n\ge 1\).)
+  \end{enumerate}
+  
+  \bigskip
+  \textbf{(b)  Showing \(c+c=c\) without Theorems 13-14.}
+  
+  Let \(c=\bigl|\mathbb{R}\bigr|\).  Adding \(c+c\) means taking the
+  disjoint union of two copies of \(\mathbb{R}\);
+  equivalently consider the product \(\mathbb{R}\times\{0,1\}\).
+  
+  \begin{enumerate}
+      \item[\emph{Step 1:  Shrink two copies of \((0,1)\) inside \((0,1)\).}]
+            Define
+            \[
+                \varphi:(0,1)\times\{0,1\}\;\longrightarrow\;(0,1),\qquad
+                \varphi(x,i)=
+                \begin{cases}
+                     \dfrac{x}{2},              & i=0,\\[6pt]
+                     \dfrac{x+1}{2},            & i=1.
+                \end{cases}
+            \]
+            The images are the disjoint intervals \((0,\tfrac12)\) and
+            \((\tfrac12,1)\), so \(\varphi\) is a bijection.
+  
+      \item[\emph{Step 2:  Transport the bijection to \(\mathbb{R}\).}]
+            Use the earlier bijection
+            \[
+                \psi:\mathbb{R}\;\longrightarrow\;(0,1),\qquad
+                \psi(t)=\frac{1}{\pi}\arctan t+\frac12,
+            \qquad
+                \psi^{-1}(u)=\tan\!\bigl(\pi(u-\tfrac12)\bigr).
+            \]
+            Define
+            \[
+                F:\mathbb{R}\times\{0,1\}\;\longrightarrow\;\mathbb{R},
+                \qquad
+                F(t,i)=\psi^{-1}\!\Bigl(\,\varphi\bigl(\psi(t),i\bigr)\Bigr).
+            \]
+            Because \(\psi\) and \(\varphi\) are bijections, so is \(F\).
+  
+      \item[\emph{Step 3:  Conclude the cardinal arithmetic.}]
+            The domain of \(F\) has cardinality
+            \(\bigl|\mathbb{R}\times\{0,1\}\bigr|=c\cdot 2=c+c\).
+            Its codomain has cardinality \(c\).
+            Hence \(c+c=c\).
+  \end{enumerate}
+  \end{solution}
+  
+%--------------------------------------------------------------------
+%  Problem 6  –  Metric–space topology
+%--------------------------------------------------------------------
+Let \((M,D)\) be a metric space, fix a point \(x\in M\) and real numbers
+\(0<r<s\).
+
+\[
+\begin{aligned}
+A(x,r,s) &:= \{\,y\in M\mid r<D(x,y)<s\}\quad &\text{(punctured annulus)},\\
+S(x,r)   &:= \{\,y\in M\mid D(x,y)=r\}\quad &\text{(sphere)},\\
+\overline A(x,r,s) &:= \{\,y\in M\mid r\le D(x,y)\le s\}
+                           &\text{(closed annulus).}
+\end{aligned}
+\]
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+%-----------------------------------------------------------------
+\item \emph{\(A(x,r,s)\) is open.}
+
+   Let \(y\in A(x,r,s)\); write \(d=D(x,y)\), so \(r<d<s\).
+   Set
+   \[
+      \varepsilon=\frac12\min\bigl\{\,d-r,\;s-d\,\bigr\}>0.
+   \]
+   For any \(z\) with \(D(y,z)<\varepsilon\) the triangle inequality
+   gives
+   \[
+      |D(x,z)-d|\le D(x,z)+D(x,y)-d<\varepsilon,
+      \qquad\Longrightarrow\qquad
+      r< D(x,z)< s .
+   \]
+   Hence the open ball \(B(y,\varepsilon)\subset A(x,r,s)\), so each
+   point of \(A(x,r,s)\) is interior and the set is open.
+
+%-----------------------------------------------------------------
+\item \emph{\(S(x,r)\) is closed.}
+
+   The map
+   \[
+      f:M\longrightarrow\Bbb R,\qquad f(y)=D(x,y),
+   \]
+   is continuous (triangle inequality).
+   The sphere is the pre-image of the closed set \(\{r\}\subset\Bbb R\):
+   \[
+      S(x,r)=f^{-1}\bigl(\{r\}\bigr).
+   \]
+   A continuous pre-image of a closed set is closed, so \(S(x,r)\) is
+   closed in \(M\).
+
+%-----------------------------------------------------------------
+\item \emph{\(\overline A(x,r,s)\) is closed.}
+
+   With the same map \(f\) as above,
+   \[
+      \overline A(x,r,s)=f^{-1}\bigl([\,r,s\,]\bigr).
+   \]
+   The interval \([r,s]\) is closed in \(\Bbb R\); therefore its
+   pre-image under the continuous map \(f\) is closed in \(M\).
+
+\end{enumerate}
+%--------------------------------------------------------------------
+%  Problem 7 – Uniform continuity on \(\Bbb R\)
+%--------------------------------------------------------------------
+Determine which of the following maps \(f:\Bbb R\to\Bbb R\) are
+uniformly continuous.  Prove each claim.
+
+\[
+\begin{array}{lll}
+\text{(i)} & f(x)=x^{2}, \\[4pt]
+\text{(ii)}& f(x)=|x|,   \\[4pt]
+\text{(iii)}& f(x)=\dfrac{1}{1+x^{2}} .
+\end{array}
+\]
+
+\bigskip
+\hrule
+\bigskip
+
+\textbf{Answer.}
+\[
+   \boxed{\;
+      \text{\(x^{2}\) is \emph{not} uniformly continuous, while
+      \(|x|\) and \(\dfrac1{1+x^{2}}\) \textbf{are} uniformly
+      continuous.}
+   \;}
+\]
+
+\bigskip
+\textbf{Proofs.}
+
+\begin{enumerate}[label=\textbf{(\roman*)}]
+
+%-----------------------------------------------------------------
+\item \emph{\(f(x)=x^{2}\) is not uniformly continuous on \(\Bbb R\).}
+
+   Take \(\varepsilon=1\).
+   For any \(\delta>0\) choose
+   \[
+      x = \frac1\delta+\frac{\delta}{2}, \qquad
+      t = \frac1\delta .
+   \]
+   Then \(|x-t|=\dfrac{\delta}{2}<\delta\) but
+   \[
+      |x^{2}-t^{2}| = (x+t)(x-t)
+                    =\left(\frac{2}{\delta}+\frac{\delta}{2}\right)
+                     \frac{\delta}{2}
+                    > 1=\varepsilon .
+   \]
+   Hence the definition of uniform continuity fails; \(x^{2}\) is not
+   uniformly continuous on \(\Bbb R\).
+
+%-----------------------------------------------------------------
+\item \emph{\(f(x)=|x|\) is uniformly continuous on \(\Bbb R\).}
+
+   For all \(x,t\in\Bbb R\),
+   \[
+      \bigl||x|-|t|\bigr|\;\le\;|x-t| \quad\text{(triangle inequality).}
+   \]
+   Given \(\varepsilon>0\) choose \(\delta=\varepsilon\).
+   Then \(|x-t|<\delta\Rightarrow |\,|x|-|t|\,|<\varepsilon\).
+   Hence \(|x|\) is uniformly continuous.
+
+%-----------------------------------------------------------------
+\item \emph{\(\displaystyle f(x)=\dfrac{1}{1+x^{2}}\) is uniformly
+        continuous on \(\Bbb R\).}
+
+   For \(x,t\in\Bbb R\),
+   \[
+      |f(x)-f(t)|
+        =\left|\frac{1}{1+x^{2}}-\frac{1}{1+t^{2}}\right|
+        =\frac{|x^{2}-t^{2}|}{(1+x^{2})(1+t^{2})}
+        =\frac{|x+t|\,|x-t|}{(1+x^{2})(1+t^{2})}.
+   \]
+   Because \(|x+t|\le |x|+|t|\) and the denominators are \(\ge1\),
+   \[
+      |f(x)-f(t)| \;\le\; (|x|+|t|)\,|x-t|
+                    \;\le\; 2\,|x-t|.
+   \]
+   Given \(\varepsilon>0\) pick \(\delta=\dfrac{\varepsilon}{2}\);
+   then \(|x-t|<\delta\Rightarrow |f(x)-f(t)|<\varepsilon\).
+   Thus \(f\) is uniformly continuous on \(\Bbb R\).
+
+\end{enumerate}
+%---------------------------------------------------------------
+%  Every vector space has a basis  (Zorn–Lemma proof)
+%---------------------------------------------------------------
+\begin{theorem}[Basis theorem]
+   Every (possibly infinite–dimensional) real vector space \(V\) possesses
+   a basis, i.e.\ a linearly independent subset \(B\subset V\) that spans
+   the whole space.
+   \end{theorem}
+   
+   \begin{proof}[Proof via Zorn’s lemma, step–by–step]
+   \textbf{Step 1.  Set–up a partially ordered set.}
+   
+   Let
+   \[
+      \mathcal L
+         \;=\;
+      \bigl\{\,L\subset V \,\bigm|\; L\text{ is linearly independent}\bigr\},
+   \]
+   ordered by inclusion \(\subset\).
+   Clearly \((\mathcal L,\subset)\) is a partially ordered set.
+   
+   \medskip
+   \textbf{Step 2.  Chains admit upper bounds.}
+   
+   Let \(\mathcal C\subset\mathcal L\) be a \emph{chain}
+   (totaly ordered by inclusion).
+   Define
+   \[
+      L^{\ast}:=\bigcup_{L\in\mathcal C} L .
+   \]
+   \emph{Claim: \(L^{\ast}\) is linearly independent.}
+   
+   Take a finite subset \(\{v_{1},\dots,v_{n}\}\subset L^{\ast}\).
+   Because \(\mathcal C\) is totally ordered, there exists
+   \(L_{0}\in\mathcal C\) containing all the \(v_{i}\).
+   Since \(L_{0}\) is linearly independent, any relation
+   \(\sum_{i} \alpha_{i}v_{i}=0\) forces \(\alpha_{i}=0\);
+   hence \(L^{\ast}\) is linearly independent and belongs to \(\mathcal L\).
+   
+   Thus \(L^{\ast}\) is an \emph{upper bound} of the chain \(\mathcal C\).
+   
+   \medskip
+   \textbf{Step 3.  Apply Zorn’s lemma.}
+   
+   Because every chain in \(\mathcal L\) has an upper bound in
+   \(\mathcal L\), Zorn’s lemma yields a
+   \emph{maximal} linearly independent subset \(B\subset V\)
+   (\(B\in\mathcal L\)).
+   
+   \medskip
+   \textbf{Step 4.  Show \(B\) spans \(V\).}
+   
+   Assume, to obtain a contradiction, that
+   \(v_{0}\in V\setminus\mathrm{span}(B)\).
+   Then \(B\cup\{v_{0}\}\) is linearly independent
+   (otherwise \(v_{0}\) would be a linear combination of elements of \(B\)).
+   This strictly contains \(B\), contradicting the maximality of \(B\).
+   Therefore no such \(v_{0}\) exists and \(\mathrm{span}(B)=V\).
+   
+   \medskip
+   \textbf{Step 5.  Conclusion.}
+   
+   The set \(B\) is linearly independent (by construction) and spans \(V\),
+   so \(B\) is a \emph{basis} of \(V\).
+   \end{proof}
+
+   
+\end{document}
+

@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 3}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagebreak
+
+  
+  \begin{problem}
+  \textbf{Values and properties of elementary functions}  
+  
+  Compute the \emph{principal value} of each expression, writing every answer in the form \(a+ib\) with \(a,b\in\mathbb{R}\).
+  \begin{enumerate}\itemsep6pt
+    \item[(a)] \(\displaystyle\bigl(1+i\sqrt{3}\bigr)^{40}\).
+    \item[(b)] \(\displaystyle e^{\frac12\bigl(\log(2+2i)-\log(2-2i)\bigr)}\).
+    \item[(c)] \(\displaystyle \log\!\bigl(\cosh(1+i)\bigr)\).
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Isolated singularities}  
+  
+  Let  
+  \[
+    f(z)\;=\;\frac{e^{1/z}}{z^{2}(z-1)}.
+  \]
+  \begin{enumerate}\itemsep6pt
+    \item[(a)] Classify the isolated singularities of \(f\) at \(z=0\) and \(z=1\) (removable, pole of which order, or essential).
+    \item[(b)] Compute \(\displaystyle \operatorname*{Res}_{z=0}f(z)\).
+    \item[(c)] Write the principal part of the Laurent expansion of \(f\) about \(z=0\).
+  \end{enumerate}
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Taylor/Laurent series}  
+  
+  Find the Laurent series of  
+  \[
+    g(z)\;=\;\frac{\log(1+z)}{z^{2}}
+  \]
+  about \(z=0\) and list all terms up to and including the coefficient of \(z^{2}\).
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Integral over a closed contour}  
+  
+  Evaluate, using residues,
+  \[
+    \oint_{\lvert z-2\rvert = 2}
+    \frac{z^{2}}{(z^{2}+1)\,(z-3)}\,dz.
+  \]
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Improper integral}  
+  
+  Show that
+  \[
+    I \;=\;\int_{0}^{\infty}\frac{x\sin x}{x^{2}+1}\,dx
+  \]
+  converges and compute its exact value.
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Number of zeros of a function}  
+  
+  Let  
+  \[
+    h(z)\;=\;z^{5}+2z^{2}+10.
+  \]
+  Use Rouché’s Theorem (or the Argument Principle) to determine the number of zeros of \(h\) inside the circle \(\lvert z\rvert = 2\).
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Conformal mapping}  
+  
+  Construct an explicit conformal map \(T:\Omega\to\mathbb{H}^{+}\), where  
+  \[
+    \Omega=\bigl\{\,z : 0<\operatorname{Im}z<\pi,\; \operatorname{Re}z>0\bigr\},
+    \qquad
+    \mathbb{H}^{+}=\bigl\{\,w : \operatorname{Im}w>0\bigr\}.
+  \]
+  Describe the intermediate mappings you use.
+  \end{problem}
+  
+  \pagebreak
+  
+  \begin{problem}
+  \textbf{Theoretical question}  
+  
+  Prove that if \(f\) is an entire function satisfying
+  \[
+    \bigl|f(z)\bigr|\;\ge\;\bigl|z\bigr|
+    \quad\text{for all }z\in\mathbb{C},
+  \]
+  then \(f(z)=az\) for some constant \(a\) with \(\lvert a\rvert\ge 1\).  
+  \emph{Hint:} Apply the Maximum‑Modulus Principle to \(f(z)/z\) and analyse the behaviour at infinity.
+  \end{problem}
+\end{document}

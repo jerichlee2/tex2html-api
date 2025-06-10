@@ -1,0 +1,1054 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\newcommand{\Log}{\operatorname{Log}}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{HW3}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Step-by-step derivations}
+
+\subsection*{(a) $\displaystyle \frac{d}{dz} \sin z = \cos z$}
+
+\begin{align}
+\frac{d}{dz}\bigl(\sin z\bigr)
+  \;=\;
+  \lim_{h\to 0}\frac{\sin(z + h) - \sin(z)}{h}.
+\end{align}
+Using the sine addition formula,
+\begin{align}
+\sin(z + h) = \sin z \cos h + \cos z \sin h,
+\end{align}
+we rewrite:
+\begin{align}
+\sin(z + h) - \sin(z) 
+  = \sin z \cos h + \cos z \sin h - \sin z 
+  = \sin z(\cos h - 1) + \cos z\,\sin h.
+\end{align}
+Hence,
+\begin{align}
+\frac{\sin(z + h) - \sin(z)}{h}
+  = \sin z \,\frac{\cos h - 1}{h} \;+\; \cos z \,\frac{\sin h}{h}.
+\end{align}
+Taking the limit as $h \to 0$ and knowing that 
+$\displaystyle \lim_{h\to 0}\frac{\sin h}{h} = 1$ 
+and 
+$\displaystyle \lim_{h\to 0}\frac{\cos h - 1}{h} = 0,$ 
+we get
+\begin{align}
+\frac{d}{dz}\bigl(\sin z\bigr) = \cos z.
+\end{align}
+
+\subsection*{(b) $\displaystyle \frac{d}{dz} \cos z = - \sin z$}
+
+Using the same limit definition,
+\begin{align}
+\frac{d}{dz}\bigl(\cos z\bigr)
+  = \lim_{h \to 0} \frac{\cos(z + h) - \cos z}{h}.
+\end{align}
+Using the addition formula 
+$\cos(z + h) = \cos z \cos h - \sin z \sin h,$
+\begin{align}
+\cos(z + h) - \cos z 
+  = \cos z(\cos h - 1) \;-\; \sin z \,\sin h.
+\end{align}
+Hence,
+\begin{align}
+\frac{\cos(z + h) - \cos z}{h}
+  = \cos z \,\frac{\cos h - 1}{h}
+    \;-\; \sin z \,\frac{\sin h}{h}.
+\end{align}
+Taking $h \to 0$ gives $\cos h - 1 \to 0$ at order $h^2,$ so the first term goes to $0$, while $\sin h / h \to 1$.  Therefore,
+\begin{align}
+\frac{d}{dz}\bigl(\cos z\bigr) 
+  = -\,\sin z.
+\end{align}
+
+\subsection*{(c) $\displaystyle \frac{d}{dz} \sinh z = \cosh z$}
+
+Recall 
+\begin{align}
+\sinh z \;=\; \frac{e^z - e^{-z}}{2}.
+\end{align}
+Thus,
+\begin{align}
+\frac{d}{dz}\bigl(\sinh z\bigr)
+  = \frac{d}{dz}\Bigl(\tfrac{e^z - e^{-z}}{2}\Bigr)
+  = \frac{1}{2}\bigl(e^z + e^{-z}\bigr)
+  = \cosh z.
+\end{align}
+
+\subsection*{(d) $\displaystyle \frac{d}{dz} \cosh z = \sinh z$}
+
+Similarly, 
+\begin{align}
+\cosh z \;=\; \frac{e^z + e^{-z}}{2},
+\end{align}
+so
+\begin{align}
+\frac{d}{dz}\bigl(\cosh z\bigr)
+  = \frac{d}{dz}\Bigl(\tfrac{e^z + e^{-z}}{2}\Bigr)
+  = \frac{1}{2}\bigl(e^z - e^{-z}\bigr)
+  = \sinh z.
+\end{align}
+
+\subsection*{(e) $\displaystyle \frac{d}{dz} \tan z = \sec^2 z$}
+
+Using the quotient rule with 
+$$\tan z = \frac{\sin z}{\cos z}$$:
+\begin{align}
+\frac{d}{dz}\bigl(\tan z\bigr)
+  = \frac{(\cos z)\,\frac{d}{dz}(\sin z) - (\sin z)\,\frac{d}{dz}(\cos z)}{\cos^2 z}
+  = \frac{\cos z \cos z - \sin z(-\,\sin z)}{\cos^2 z}
+  = \frac{\cos^2 z + \sin^2 z}{\cos^2 z}
+  = \frac{1}{\cos^2 z}
+  = \sec^2 z.
+\end{align}
+
+\subsection*{(f) $\displaystyle \frac{d}{dz}\bigl(\arcsin z\bigr) 
+             = (1 - z^2)^{-\frac{1}{2}}$}
+
+Let $$y = \arcsin z$$.  Then $$\sin y = z$$.  
+Differentiate both sides with respect to $$z$$:
+\begin{align}
+\cos y \,\frac{dy}{dz} = 1 \quad\Longrightarrow\quad
+\frac{dy}{dz} = \frac{1}{\cos y}.
+\end{align}
+But from $$\sin^2 y + \cos^2 y = 1,$$ and $$\sin y = z,$$ we have $$\cos y = \sqrt{1 - z^2}.$$
+Hence,
+\begin{align}
+\frac{d}{dz}\bigl(\arcsin z\bigr) 
+  = \frac{1}{\sqrt{1 - z^2}} 
+  = (1 - z^2)^{-\tfrac{1}{2}}.
+\end{align}
+
+\subsection*{(g) $\displaystyle \frac{d}{dz}\bigl(\arctan z\bigr) 
+             = (1 + z^2)^{-1}$}
+
+Let $$y = \arctan z$$.  Then $$\tan y = z$$.  
+Differentiate implicitly:
+\begin{align}
+\sec^2 y \,\frac{dy}{dz} = 1
+\quad \Longrightarrow\quad
+\frac{dy}{dz} = \frac{1}{\sec^2 y} = \cos^2 y.
+\end{align}
+But 
+$$\cos^2 y = \frac{1}{\sec^2 y} = \frac{1}{1 + \tan^2 y} = \frac{1}{1 + z^2}.$$
+Hence,
+\begin{align}
+\frac{d}{dz}\bigl(\arctan z\bigr)
+  = \frac{1}{1 + z^2} 
+  = (1 + z^2)^{-1}.
+\end{align}
+
+\section*{Solutions to Exercises 5, 6, and 7}
+
+\subsection*{5.\quad $\displaystyle \frac{d}{dz}\bigl[(z^3 + 100)^{-4}\bigr]$}
+
+\begin{align}
+f(z) \;=\; (z^3 + 100)^{-4}.
+\end{align}
+Use the chain rule.  Let $u(z) = z^3 + 100$ and $g(u) = u^{-4}.$  
+Then
+\begin{align}
+\frac{d}{dz}\bigl(f(z)\bigr)
+  \;=\;
+  \frac{d}{dz}\bigl(g(u(z))\bigr)
+  \;=\;
+  g'(u)\,u'(z).
+\end{align}
+First compute
+\begin{align}
+g'(u) 
+  = -4\,u^{-5}, 
+\quad
+u'(z) 
+  = 3z^2.
+\end{align}
+Hence,
+\begin{align}
+\frac{d}{dz}\bigl[(z^3 + 100)^{-4}\bigr]
+  \;=\;
+  -4\,(z^3 + 100)^{-5}\;\cdot\;3z^2
+  \;=\;
+  -12\,z^2\,(z^3 + 100)^{-5}.
+\end{align}
+
+\subsection*{6.\quad $\displaystyle \frac{d}{dz}\bigl[\bigl(\Log z\bigr)^3\bigr]$}
+
+We assume $\Log z$ denotes the principal branch of the complex logarithm (defined on $\mathbb{C}\setminus(-\infty,0]$).  
+Let
+\begin{align}
+f(z) = (\Log z)^3.
+\end{align}
+By the chain rule, let $u(z) = \Log z$ and $g(u) = u^3$.  
+Then
+\begin{align}
+g'(u) = 3\,u^2,
+\quad
+u'(z) = \frac{d}{dz}\bigl(\Log z\bigr) = \frac{1}{z}.
+\end{align}
+Thus
+\begin{align}
+\frac{d}{dz}\bigl[\bigl(\Log z\bigr)^3\bigr]
+  \;=\;
+  3\,(\Log z)^2 \;\cdot\;\frac{1}{z}
+  \;=\;
+  \frac{3\,(\Log z)^2}{z}.
+\end{align}
+
+\subsection*{7.\quad $\displaystyle \frac{d}{dz}\bigl[\sinh(e^z)\bigr]$}
+
+Let $f(z) = \sinh(e^z)$.  
+Again apply the chain rule:  
+If $u(z) = e^z$ and $g(u) = \sinh(u)$, then 
+\begin{align}
+g'(u) = \cosh(u),
+\quad
+u'(z) = \frac{d}{dz}\bigl(e^z\bigr) = e^z.
+\end{align}
+Hence
+\begin{align}
+\frac{d}{dz}\sinh\bigl(e^z\bigr)
+  = 
+  \cosh\bigl(e^z\bigr)\,\cdot\,e^z.
+\end{align}
+
+\textbf{Solution for Exercise 9:}\\
+
+We have
+\begin{align}
+f(z) \;=\; \frac{z^4 + 1}{z^2}.
+\end{align}
+Rewrite this as 
+\begin{align}
+f(z) \;=\; z^2 + \frac{1}{z^2}.
+\end{align}
+To find an analytic function $$F$$ with $$F'(z) = f(z)$$, we integrate term by term:
+\begin{align}
+F(z)
+\;=\; \int \left( z^2 + \frac{1}{z^2} \right) \, dz
+\;=\; \int z^2 \, dz \;+\; \int \frac{1}{z^2} \, dz.
+\end{align}
+Compute each integral:
+\begin{align}
+\int z^2 \, dz \;=\; \frac{z^3}{3},
+\qquad
+\int \frac{1}{z^2} \, dz \;=\; \int z^{-2} \, dz \;=\; -\,\frac{1}{z}.
+\end{align}
+Hence,
+\begin{align}
+F(z)
+\;=\;
+\frac{z^3}{3}
+-\frac{1}{z}
++ C,
+\end{align}
+where $$C$$ is an arbitrary constant. \\
+
+\textbf{Solution for Exercise 10:}\\
+
+We want to find an analytic function $$F$$ such that
+\begin{align}
+F'(z) \;=\; f(z) \;=\; \sin z \, \cos z.
+\end{align}
+Observe the trigonometric identity:
+\begin{align}
+\sin z \, \cos z \;=\; \tfrac12\,\sin(2z).
+\end{align}
+Hence,
+\begin{align}
+f(z) \;=\; \tfrac12 \sin(2z).
+\end{align}
+We integrate:
+\begin{align}
+F(z) 
+\;=\;
+\int \tfrac12 \sin(2z) \, dz.
+\end{align}
+Recall that 
+$$\displaystyle \frac{d}{dz}\bigl[-\tfrac12 \cos(2z)\bigr] \;=\; \sin(2z)$$.
+Thus, multiplying by $$\tfrac12$$,
+\begin{align}
+F(z)
+\;=\;
+\tfrac12 \left(-\tfrac12 \cos(2z)\right)
+\;+\; C
+\;=\;
+-\tfrac14 \cos(2z)
+\;+\; C.
+\end{align}
+Therefore, the required antiderivative is
+\begin{align}
+F(z) \;=\; -\tfrac14 \cos(2z) \;+\; C.
+\end{align}
+
+\section*{Problem 12}
+
+\textbf{Statement.} 
+Let $f$ and $g$ be analytic on a domain $D$. Show that:
+\begin{enumerate}
+\item[(a)] $f+g$ is analytic on $D$, and $(f+g)' = f' + g'$.
+\item[(b)] $fg$ is analytic on $D$, and $(fg)' = f'g + fg'$.
+\item[(c)] $f/g$ is analytic on $D$ wherever $g(z)\neq 0$, and 
+\begin{align}
+\left(\frac{f}{g}\right)' \;=\; \frac{f'g - fg'}{g^2}.
+\end{align}
+\end{enumerate}
+
+\subsection*{(a) Sum Rule}
+
+\textbf{Proof.} 
+Since $f$ and $g$ are analytic on $D$, they are differentiable at each point $z \in D$. Consider
+\begin{align}
+(f + g)(z + h) \;-\; (f + g)(z)
+\;=\;
+\bigl(f(z + h) - f(z)\bigr)
+\;+\;
+\bigl(g(z + h) - g(z)\bigr).
+\end{align}
+Divide by $h$ and take the limit as $h \to 0$:
+\begin{align}
+\lim_{h \to 0} \frac{(f + g)(z + h) - (f + g)(z)}{h}
+\;=\;
+\lim_{h \to 0} \frac{f(z + h) - f(z)}{h}
+\;+\;
+\lim_{h \to 0} \frac{g(z + h) - g(z)}{h}.
+\end{align}
+By the definition of the derivative (and the fact that $f$ and $g$ are differentiable),
+\begin{align}
+(f + g)'(z) = f'(z) + g'(z).
+\end{align}
+Thus $f+g$ is analytic (being the sum of analytic functions) and its derivative is as given. 
+\quad $\square$
+
+\subsection*{(b) Product Rule}
+
+\textbf{Proof.}
+Consider
+\begin{align}
+(fg)(z + h) - (fg)(z) 
+\;=\;
+f(z + h)\,g(z + h) - f(z)\,g(z).
+\end{align}
+Add and subtract $f(z+h)\,g(z)$ to rearrange:
+\begin{align}
+f(z + h)\,g(z + h)
+- f(z)\,g(z)
+\;=\;
+f(z + h)\,\bigl[g(z + h) - g(z)\bigr]
+\;+\;
+g(z)\,\bigl[f(z + h) - f(z)\bigr].
+\end{align}
+Divide by $h$ and take the limit as $h \to 0$. Since $f$ and $g$ are continuous and differentiable,
+\begin{align}
+\lim_{h \to 0} \frac{f(z + h)\,\bigl[g(z + h) - g(z)\bigr]}{h}
+=
+f(z)\,\lim_{h \to 0}\frac{g(z + h) - g(z)}{h}
+=
+f(z)\,g'(z),
+\end{align}
+and similarly,
+\begin{align}
+\lim_{h \to 0} \frac{g(z)\,\bigl[f(z + h) - f(z)\bigr]}{h}
+=
+g(z)\,\lim_{h \to 0}\frac{f(z + h) - f(z)}{h}
+=
+g(z)\,f'(z).
+\end{align}
+Hence,
+\begin{align}
+(fg)'(z) = f'(z)\,g(z) \;+\; f(z)\,g'(z).
+\end{align}
+This proves that $fg$ is analytic and satisfies the product rule.
+\quad $\square$
+
+\subsection*{(c) Quotient Rule}
+
+\textbf{Proof.}
+Assume $g(z) \neq 0$ on $D$ so that $f/g$ is well-defined there. Then
+\begin{align}
+\left(\frac{f}{g}\right)(z + h) - \left(\frac{f}{g}\right)(z)
+\;=\;
+\frac{f(z + h)}{g(z + h)} - \frac{f(z)}{g(z)}
+\;=\;
+\frac{f(z + h)\,g(z) - f(z)\,g(z + h)}{g(z + h)\,g(z)}.
+\end{align}
+Rewrite the numerator:
+\begin{align}
+f(z + h)\,g(z) - f(z)\,g(z + h)
+\;=\;
+\bigl[f(z + h) - f(z)\bigr]\,g(z)
+\;-\;
+f(z)\,\bigl[g(z + h) - g(z)\bigr].
+\end{align}
+Divide by $h$ and take the limit as $h \to 0$. Again using continuity and differentiability of $f$ and $g$,
+\begin{align}
+\lim_{h \to 0} 
+\frac{\bigl[f(z + h) - f(z)\bigr]\,g(z)}{h}
+=
+f'(z)\,g(z),
+\quad
+\lim_{h \to 0}
+\frac{f(z)\,\bigl[g(z + h) - g(z)\bigr]}{h}
+=
+f(z)\,g'(z).
+\end{align}
+Meanwhile,
+\begin{align}
+\lim_{h \to 0} \frac{1}{g(z + h)\,g(z)} 
+\;=\;
+\frac{1}{g(z)^2},
+\end{align}
+because $g(z)\neq 0$ and $g$ is continuous. Putting it all together:
+\begin{align}
+\left(\frac{f}{g}\right)'(z)
+=
+\frac{f'(z)\,g(z) - f(z)\,g'(z)}{g(z)^2}.
+\end{align}
+This proves that $f/g$ is analytic wherever $g \neq 0$, with the stated derivative.
+\quad $\square$
+
+\section*{Problem 13}
+
+\textbf{Statement.} 
+Suppose $f$ is analytic on a domain $D$ and $g$ is analytic on a domain $\Omega$ containing the range of $f$. Show that $g\bigl(f(z)\bigr)$ is analytic on $D$ and that 
+\begin{align}
+\bigl(g(f(z))\bigr)' = g'\bigl(f(z)\bigr)\,f'(z).
+\end{align}
+
+\subsection*{Chain Rule for Complex Functions}
+
+\textbf{Proof.}
+Fix $z \in D$. By assumption, $f(z) \in \Omega$ where $g$ is analytic. We use the definition of the derivative:
+\begin{align}
+\bigl(g(f(z))\bigr)'
+\;=\;
+\lim_{h \to 0}
+\frac{g\bigl(f(z + h)\bigr) - g\bigl(f(z)\bigr)}{h}.
+\end{align}
+Since $f$ is continuous and differentiable at $z$, for $h$ sufficiently small, $f(z + h)$ stays in $\Omega$. We can write
+\begin{align}
+\frac{g\bigl(f(z + h)\bigr) - g\bigl(f(z)\bigr)}{h}
+=
+\frac{g\bigl(f(z + h)\bigr) - g\bigl(f(z)\bigr)}{f(z + h) - f(z)}
+\,\cdot\,
+\frac{f(z + h) - f(z)}{h}.
+\end{align}
+Taking the limit as $h \to 0$, we recognize the first fraction as the derivative $g'\bigl(f(z)\bigr)$ (by the definition of $g'$ at $f(z)$), and the second fraction as $f'(z)$. Thus
+\begin{align}
+\lim_{h \to 0} 
+\left[
+\frac{g\bigl(f(z + h)\bigr) - g\bigl(f(z)\bigr)}{f(z + h) - f(z)}
+\,\cdot\,
+\frac{f(z + h) - f(z)}{h}
+\right]
+=
+g'\bigl(f(z)\bigr)\,f'(z).
+\end{align}
+Hence 
+\begin{align}
+\bigl(g(f(z))\bigr)' \;=\; g'\bigl(f(z)\bigr)\,f'(z).
+\end{align}
+This completes the proof that $g \circ f$ is analytic on $D$ and satisfies the chain rule. 
+\quad $\square$
+
+\section*{Problem 15}
+\textbf{Statement:} Let $f$ be analytic on a domain $D$ and suppose $f'(z)=0$ for all $z\in D$. Show that $f$ is constant on $D$.
+
+\subsection*{Solution}
+Since $f$ is analytic on $D$, it has a power series expansion about each point in $D$.  In particular, fix any $z_0 \in D$.  Then in some neighborhood of $z_0$, $f$ can be expressed as
+\begin{align}
+f(z) \;=\; a_0 + a_1(z - z_0) + a_2(z - z_0)^2 + \cdots,
+\end{align}
+where $a_n \in \mathbb{C}$.  The derivative $f'(z)$ is then
+\begin{align}
+f'(z)
+\;=\;
+a_1 + 2\,a_2\, (z-z_0) + 3\,a_3\, (z - z_0)^2 + \cdots.
+\end{align}
+By hypothesis, $f'(z) = 0$ for all $z \in D$.  This implies each coefficient of $(z - z_0)^n$ in $f'(z)$ must be zero. Hence
+\begin{align}
+a_1 = 0, \quad a_2 = 0, \quad a_3=0,\quad \dots
+\end{align}
+and so on.  Therefore,
+\begin{align}
+f(z) \;=\; a_0,
+\end{align}
+a constant in any neighborhood of $z_0$.  Since $D$ is a domain (connected open set), a function that is locally constant is actually constant throughout $D$.  Therefore $f$ is constant on $D$.
+
+\quad $\square$
+
+\section*{Problem 18}
+\textbf{Statement:} Show that $h(z) = \overline{z}$ is not analytic on any domain. (Hint: Check the Cauchy--Riemann equations.)
+
+\subsection*{Solution}
+Write $z = x + i\,y$, where $x,y \in \mathbb{R}$.  Then $\overline{z} = x - i\,y$.  In terms of real and imaginary parts,
+\begin{align}
+u(x,y) = x, 
+\qquad
+v(x,y) = -\,y.
+\end{align}
+If $h(z)$ were analytic, it would satisfy the Cauchy--Riemann equations:
+\begin{align}
+\frac{\partial u}{\partial x} 
+\;=\;
+\frac{\partial v}{\partial y},
+\quad\text{and}\quad
+\frac{\partial u}{\partial y}
+\;=\;
+-\,
+\frac{\partial v}{\partial x}.
+\end{align}
+Compute these partial derivatives:
+\begin{align}
+\frac{\partial u}{\partial x} = 1,
+\quad
+\frac{\partial v}{\partial y} = -1,
+\quad
+\frac{\partial u}{\partial y} = 0,
+\quad
+\frac{\partial v}{\partial x} = 0.
+\end{align}
+The first CR equation would require $1 = -1$, which is false.  Therefore the Cauchy--Riemann equations fail to hold except possibly at isolated points (e.g.\ $x$ and $y$ going to special values does not fix this systematically).
+
+Since the Cauchy--Riemann equations fail on any open set in $\mathbb{C}$, $h(z)=\overline{z}$ cannot be analytic on any domain. 
+
+\quad $\square$
+
+\section*{Radius of Convergence Examples}
+
+\subsection*{1) The series \(\displaystyle \sum_{k=1}^{\infty} k\,(z-1)^k\)}
+
+Here, the general term is \(a_k = k\) in front of \((z-1)^k\).  We can use the root test or the standard formula for the radius of convergence of a power series
+\begin{align}
+\sum_{k=0}^{\infty} a_k (z-z_0)^k,
+\end{align}
+which says 
+\begin{align}
+R 
+\;=\; 
+\frac{1}{\displaystyle \limsup_{k \to \infty} \sqrt[k]{|a_k|}}.
+\end{align}
+In our case, \(a_k = k\). Hence
+\begin{align}
+\lim_{k \to \infty} \sqrt[k]{k} = 1.
+\end{align}
+Therefore 
+\begin{align}
+R = \frac{1}{1} = 1.
+\end{align}
+Thus, the radius of convergence of \(\sum_{k=1}^\infty k\,(z-1)^k\) is \(1\).
+
+\subsection*{3) The series \(\displaystyle \sum_{j=0}^{\infty}\frac{z^{3j}}{2^j}\)}
+
+We can rewrite each term as
+\begin{align}
+\frac{z^{3j}}{2^j}
+\;=\;
+\left(\frac{z^3}{2}\right)^j.
+\end{align}
+This is a geometric series in the variable \(\tfrac{z^3}{2}\).  A geometric series 
+\(\sum_{j=0}^\infty r^j\) converges if and only if \(|r| < 1\).  Hence in our case:
+\begin{align}
+\left|\frac{z^3}{2}\right| < 1
+\quad\Longleftrightarrow\quad
+|z^3| < 2
+\quad\Longleftrightarrow\quad
+|z|^3 < 2
+\quad\Longleftrightarrow\quad
+|z| < \sqrt[3]{2}.
+\end{align}
+Therefore, the radius of convergence is 
+\begin{align}
+R = \sqrt[3]{2}.
+\end{align}
+
+\section*{Power Series about the Origin}
+
+Below are the Maclaurin (power) series for each given function, valid in the specified regions.
+
+\medskip
+\noindent
+\textbf{7) $e^{-z}$:}
+\begin{align}
+e^{-z}
+\;=\;
+\sum_{n=0}^\infty \frac{(-z)^n}{n!}
+\;=\;
+\sum_{n=0}^\infty (-1)^n \,\frac{z^n}{n!}.
+\end{align}
+
+\medskip
+\noindent
+\textbf{8) $z^2 \cos(z)$:}
+Recall 
+\(\displaystyle
+\cos(z)
+=\sum_{n=0}^\infty (-1)^n \frac{z^{2n}}{(2n)!}.
+\)
+Hence,
+\begin{align}
+z^2 \cos(z)
+\;=\;
+z^2
+\sum_{n=0}^\infty 
+(-1)^n 
+\frac{z^{2n}}{(2n)!}
+\;=\;
+\sum_{n=0}^\infty
+(-1)^n
+\frac{z^{2n+2}}{(2n)!}.
+\end{align}
+
+\medskip
+\noindent
+\textbf{9) $\displaystyle \frac{z^3}{1 - z^3}$, \quad $|z|<1$:}
+Write
+\(\tfrac{1}{1 - z^3}=\sum_{n=0}^\infty (z^3)^n\)
+for \(|z|<1\).  Then
+\begin{align}
+\frac{z^3}{1 - z^3}
+\;=\;
+z^3 \sum_{n=0}^\infty (z^3)^n 
+\;=\;
+\sum_{n=1}^\infty z^{3n}.
+\end{align}
+
+\medskip
+\noindent
+\textbf{10) $\displaystyle \frac{1 + z}{1 - z}$, \quad $|z|<1$:}
+We can split the fraction as 
+\begin{align}
+\frac{1+z}{1-z}
+\;=\;
+\frac{1}{1-z} \;+\; \frac{z}{1-z}
+\;=\;
+\sum_{n=0}^\infty z^n
+\;+\;
+z \sum_{n=0}^\infty z^n.
+\end{align}
+Hence,
+\begin{align}
+\frac{1 + z}{1 - z}
+\;=\;
+1
+\;+\;
+2\,z
+\;+\;
+2\,z^2
+\;+\;
+2\,z^3
+\;+\;\cdots
+\;=\;
+1 \;+\; 2\sum_{n=1}^\infty z^n.
+\end{align}
+
+\medskip
+\noindent
+\textbf{11) $\displaystyle \frac{z^2}{(4-z)^2}$, \quad $|z|<4$:}
+Factor out $4$ in the denominator:
+\begin{align}
+\frac{1}{(4-z)^2}
+\;=\;
+\frac{1}{16}\,\frac{1}{\bigl(1 - \tfrac{z}{4}\bigr)^2}.
+\end{align}
+Recall the identity
+\(\displaystyle
+\frac{1}{(1-w)^2}
+\;=\;
+\sum_{n=0}^\infty (n+1)\,w^n,
+\)
+valid for \(|w| < 1\).  Taking $w = \frac{z}{4}$ gives
+\begin{align}
+\frac{1}{(4 - z)^2}
+\;=\;
+\frac{1}{16}
+\sum_{n=0}^\infty (n+1)\,\bigl(\tfrac{z}{4}\bigr)^n
+\;=\;
+\sum_{n=0}^\infty 
+(n+1)\,\frac{z^n}{4^{n+2}}.
+\end{align}
+Multiplying by $z^2$ yields
+\begin{align}
+\frac{z^2}{(4 - z)^2}
+\;=\;
+z^2
+\sum_{n=0}^\infty 
+(n+1)\,\frac{z^n}{4^{n+2}}
+\;=\;
+\sum_{n=0}^\infty 
+(n+1)\,\frac{z^{n+2}}{4^{n+2}}.
+\end{align}
+Thus the series converges for $\bigl|\tfrac{z}{4}\bigr|<1$, i.e.\ $|z|<4$.
+
+\section*{Closed--Form Expressions}
+
+\noindent
+\textbf{14)} 
+\begin{align}
+\sum_{n=0}^{\infty} \frac{z^{2n}}{n!}.
+\end{align}
+Observe that 
+\begin{align}
+\sum_{n=0}^\infty \frac{(z^2)^n}{n!} 
+\;=\;
+e^{z^2}.
+\end{align}
+Hence the series sums to 
+\begin{align}
+e^{z^2}.
+\end{align}
+
+\medskip
+\noindent
+\textbf{15)} 
+\begin{align}
+\sum_{n=1}^{\infty} z^{3n}.
+\end{align}
+This is a geometric series in $z^3$ (starting at $n=1$):
+\begin{align}
+z^3 + z^6 + z^9 + \cdots 
+\;=\;
+\sum_{n=1}^\infty (z^3)^n 
+\;=\;
+\frac{z^3}{1 - z^3}
+\quad
+\bigl(\text{for }|z^3|<1, \text{i.e.\ }|z|<1\bigr).
+\end{align}
+
+\medskip
+\noindent
+\textbf{16)} 
+\begin{align}
+\sum_{n=1}^{\infty} n\,\bigl(z - 1\bigr)^{\,n-1}.
+\end{align}
+Recognize this as the derivative of the geometric series.  In general,
+\begin{align}
+\sum_{n=1}^\infty n\,x^{n-1}
+\;=\;
+\frac{d}{dx}\!\Bigl(\sum_{n=1}^\infty x^n\Bigr)
+=
+\frac{d}{dx}\!\biggl(\frac{x}{1 - x}\biggr)
+=
+\frac{1}{(1 - x)^2}.
+\end{align}
+Set $x = z-1$.  Then, for $|z-1|<1$,
+\begin{align}
+\sum_{n=1}^{\infty} n\,(z - 1)^{n-1}
+\;=\;
+\frac{1}{\bigl(1 - (z-1)\bigr)^2}
+\;=\;
+\frac{1}{(2 - z)^2}.
+\end{align}
+
+\section*{Problem Statement}
+\[
+\text{Let } f(z) \;=\; 2\,x\,y^{3} \;+\; i\bigl(3\,y^{2} \;-\; 3\,x^{2}\,y^{2}\bigr),
+\quad \text{where } z = x + i\,y.
+\]
+\textit{Find all points $z$ at which $f'(z)$ exists, and compute $f'(z)$ at those points.}
+
+\bigskip
+
+\noindent
+\textbf{1.\ Rewrite $f(z)$ in terms of its real and imaginary parts.}
+
+Since $z = x + i\,y$, we identify
+\[
+u(x,y) \;=\; 2\,x\,y^{3}, 
+\qquad
+v(x,y) \;=\; 3\,y^{2} \;-\; 3\,x^{2}\,y^{2}.
+\]
+Hence
+\[
+f(z) \;=\; u(x,y) \;+\; i\,v(x,y).
+\]
+
+\bigskip
+
+\noindent
+\textbf{2.\ Compute the partial derivatives.}
+
+\[
+u_x 
+\;=\; \frac{\partial}{\partial x}\bigl(2\,x\,y^{3}\bigr)
+\;=\; 2\,y^{3},
+\qquad
+u_y 
+\;=\; \frac{\partial}{\partial y}\bigl(2\,x\,y^{3}\bigr)
+\;=\; 6\,x\,y^{2}.
+\]
+\[
+v_x 
+\;=\; \frac{\partial}{\partial x}\bigl(3\,y^{2} - 3\,x^{2}\,y^{2}\bigr)
+\;=\; -\,6\,x\,y^{2},
+\qquad
+v_y 
+\;=\; \frac{\partial}{\partial y}\bigl(3\,y^{2} - 3\,x^{2}\,y^{2}\bigr)
+\;=\; 6\,y\,\bigl(1 - x^{2}\bigr).
+\]
+
+\bigskip
+
+\noindent
+\textbf{3.\ Apply the Cauchy--Riemann equations.}
+
+For $f$ to be complex differentiable at $(x,y)$, the Cauchy--Riemann (CR) system must hold:
+\[
+u_x \;=\; v_y,
+\quad
+u_y \;=\; -\,v_x.
+\]
+
+\smallskip
+\noindent
+\textbf{(a) First CR equation: } $u_x = v_y.$
+
+\[
+2\,y^{3}
+\;=\;
+6\,y\,\bigl(1 - x^{2}\bigr).
+\]
+If $y=0$, then both sides vanish and the condition is satisfied for any $x$.  If $y \neq 0$, we divide by $2\,y$:
+\[
+y^{2}
+\;=\;
+3\,\bigl(1 - x^{2}\bigr).
+\]
+Equivalently,
+\[
+y^{2} + 3\,x^{2} 
+\;=\;
+3.
+\]
+This describes an ellipse in the $(x,y)$-plane (with $|x|\le 1$).
+
+\smallskip
+\noindent
+\textbf{(b) Second CR equation: } $u_y = -\,v_x.$
+
+\[
+6\,x\,y^{2}
+\;=\;
+-\bigl(-6\,x\,y^{2}\bigr)
+\;=\;
+6\,x\,y^{2}.
+\]
+This is automatically true for all $x,y$.  
+
+\smallskip
+\noindent
+\textbf{Summary of CR solutions:}
+
+The points where $f'(z)$ exists are:
+\[
+\bigl\{ (x,y) \,:\, y=0 \bigr\}
+\quad\text{or}\quad
+\bigl\{ (x,y) \,:\, y^{2} = 3\,(1 - x^{2}) \bigr\}.
+\]
+In terms of $z = x+ i\,y$, these are \textit{all real $z$} ($y=0$) and \textit{all $z$ on the ellipse} $y^{2} + 3\,x^{2} = 3$.
+
+\bigskip
+
+\noindent
+\textbf{4.\ Compute $f'(z)$ at those points.}
+
+A standard formula for the complex derivative, when CR hold, is:
+\[
+f'(z) 
+\;=\; u_x + i\,v_x.
+\]
+Thus
+\[
+f'(z)
+\;=\;
+u_x(x,y) 
+\;+\;
+i\,v_x(x,y)
+\;=\;
+2\,y^{3}
+\;+\;
+i\,\bigl(-\,6\,x\,y^{2}\bigr)
+\;=\;
+2\,y^{3}
+\;-\;
+6\,i\,x\,y^{2}.
+\]
+
+\smallskip
+\noindent
+\underline{\textit{Case 1:}} $y=0$.
+
+If $y=0$, then
+\[
+f'(z)
+\;=\;
+2\,(0)^{3} - 6\,i\,x\,(0)^{2}
+\;=\;
+0.
+\]
+So on the real axis, $f'(z)=0$ for all $x$.
+
+\smallskip
+\noindent
+\underline{\textit{Case 2:}} $y^{2} = 3\,(1 - x^{2})$ with $y \neq 0$.
+
+Then
+\[
+f'(z)
+\;=\;
+2\,y^{3}
+\;-\;
+6\,i\,x\,y^{2}.
+\]
+One could substitute $y^{2} = 3(1 - x^{2})$ if desired, for example:
+\[
+f'(z)
+\;=\;
+2\,y \,y^{2}
+\;-\;
+6\,i\,x\,y^{2}
+\;=\;
+2\,y\,\bigl(3(1 - x^{2})\bigr)
+\;-\;
+6\,i\,x\,\bigl(3(1 - x^{2})\bigr),
+\]
+\[
+=\;
+6\,(1 - x^{2})\,\Bigl[y \;-\; i\,3\,x\Bigr].
+\]
+In any case, this fully describes $f'(z)$ at those ellipse points.
+
+\bigskip
+
+\noindent
+\textbf{Answer:}
+\begin{itemize}
+\item $f'(z)$ exists exactly at all points where $y=0$ or $y^{2}=3(1-x^{2}).$
+\item At those points,
+\[
+f'(z) \;=\; 2\,y^{3} \;-\; 6\,i\,x\,y^{2}.
+\]
+In particular, on the real axis $(y=0)$, $f'(z) = 0.$
+\end{itemize}
+
+\section*{Power Series of $\displaystyle \frac{1}{z - 1}$ about $z=-2$}
+
+\noindent
+\textbf{Step 1: Rewrite the denominator in terms of $(z+2)$.}
+
+Observe that
+\[
+z - 1 
+\;=\; (z + 2) \;-\; 3.
+\]
+Hence
+\[
+\frac{1}{z - 1}
+\;=\;
+\frac{1}{(z+2) - 3}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 2: Factor out $-3$ in the denominator.}
+
+\[
+\frac{1}{(z+2) - 3}
+\;=\;
+\frac{1}{-\,3\bigl[1 - \tfrac{z+2}{3}\bigr]}
+\;=\;
+-\,\frac{1}{3}\,
+\frac{1}{1 \;-\; \frac{z+2}{3}}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 3: Use the geometric--series expansion.}
+
+Recall that for $|w|<1,$
+\(\displaystyle \frac{1}{1-w} = \sum_{n=0}^\infty w^n.\)
+Set $w = \tfrac{z+2}{3}$. Then as long as
+\[
+\left|\frac{z+2}{3}\right| < 1
+\quad\Longleftrightarrow\quad
+|z+2| < 3,
+\]
+we get
+\[
+\frac{1}{1 \;-\; \frac{z+2}{3}}
+\;=\;
+\sum_{n=0}^\infty
+\left(\frac{z+2}{3}\right)^n.
+\]
+Hence
+\[
+\frac{1}{z - 1}
+\;=\;
+-\,\frac{1}{3}
+\sum_{n=0}^{\infty}
+\left(\frac{z+2}{3}\right)^n
+\;=\;
+-\sum_{n=0}^\infty
+\frac{(z+2)^n}{3^{\,n+1}}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 4: Final form of the power series.}
+
+Therefore, for $|z+2|<3,$
+\[
+\frac{1}{z-1}
+\;=\;
+-\,\sum_{n=0}^\infty 
+\frac{(z+2)^n}{3^{\,n+1}}
+\;=\;
+-\,\frac{1}{3}
+\;-\;\frac{z+2}{3^2}
+\;-\;\frac{(z+2)^2}{3^3}
+\;-\;\cdots.
+\]
+
+\end{document}

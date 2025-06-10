@@ -1,0 +1,318 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 417: HW 8}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+  
+\end{problem}
+
+\begin{solution}
+  \textbf{Goal.}  Determine all ring homomorphisms
+  \[
+  \psi\colon \mathbb Z \longrightarrow \mathbb Z .
+  \]
+  
+  \medskip
+  \textbf{Step 1.  Recall the definition of a ring homomorphism.}  
+  A (not necessarily unital) ring homomorphism between rings $(R,+,\cdot)$ and $(S,+,\cdot)$ is a map
+  $\varphi\colon R\to S$ satisfying
+  \[
+  \varphi(a+b)=\varphi(a)+\varphi(b),\qquad
+  \varphi(ab)=\varphi(a)\varphi(b),\qquad
+  \varphi(0_R)=0_S .
+  \]
+  If one further requires $\varphi(1_R)=1_S$, one speaks of a \emph{unital} ring homomorphism.
+  
+  \medskip
+  \textbf{Step 2.  The image of $1$ must be idempotent.}  
+  For any ring homomorphism $\psi$,
+  \[
+  \psi(1)^2 \;=\; \psi(1\cdot 1)\;=\;\psi(1).
+  \]
+  Hence $\psi(1)$ is an \emph{idempotent} element of the target ring $\mathbb Z$.
+  
+  \medskip
+  \textbf{Step 3.  Classify idempotents in $\mathbb Z$.}  
+  An integer $e\in\mathbb Z$ is idempotent if $e^2=e$, i.e.\ $e(e-1)=0$.  
+  Because $\mathbb Z$ is an integral domain, this forces $e=0$ or $e=1$.  
+  Thus $\psi(1)$ can only be $0$ or $1$.
+  
+  \medskip
+  \textbf{Step 4.  Case $\psi(1)=0$: the zero homomorphism.}  
+  For any $n\in\mathbb Z$ we can write
+  \[
+  n=\underbrace{1+\cdots+1}_{n\text{ times}} \quad\text{(if }n>0\text{)},
+  \qquad
+  -n=\underbrace{(-1)+\cdots+(-1)}_{n\text{ times}}.
+  \]
+  Using additivity,
+  \[
+  \psi(n)=\psi(\underbrace{1+\cdots+1}_{n})=n\,\psi(1)=n\cdot 0=0,
+  \]
+  and similarly $\psi(-n)=0$.  Hence $\psi(n)=0$ for \emph{all} $n\in\mathbb Z$, giving the
+  \[
+  \boxed{\psi_0(n)=0\ \text{ for every }n\in\mathbb Z.}
+  \]
+  
+  \medskip
+  \textbf{Step 5.  Case $\psi(1)=1$: the identity homomorphism.}  
+  Proceeding as above,
+  \[
+  \psi(n)=n\,\psi(1)=n\cdot 1=n,
+  \]
+  and likewise for negative integers.  Thus
+  \[
+  \boxed{\psi_{\mathrm{id}}(n)=n\ \text{ for every }n\in\mathbb Z.}
+  \]
+  
+  \medskip
+  \textbf{Step 6.  Conclusion.}  
+  There are exactly two ring homomorphisms $\mathbb Z\to\mathbb Z$, namely
+  \[
+  \psi_0 \quad\text{and}\quad \psi_{\mathrm{id}} .
+  \]
+  If one insists that a ring homomorphism preserve the multiplicative identity ($\psi(1)=1$), then \emph{only} the identity map $\psi_{\mathrm{id}}$ remains.
+  
+  \end{solution}
+%----------------------------------------------------
+%  Problem 2 — Units form a group
+%----------------------------------------------------
+\begin{problem}[]
+  Let $R$ be a ring with identity $1_R$.
+  Show that the set of \emph{units}
+  \[
+      R^{\times} \;=\; \{\,a\in R \mid \exists\,b\in R \text{ such that } ab = ba = 1_R\,\}
+  \]
+  is a group under the multiplication inherited from $R$.
+  \begin{enumerate}
+      \item[\textbf{Parameters.}]
+            $R$: a ring with $1_R\neq 0_R$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+ \begin{proof}
+  We verify the group axioms step by step.
+
+  \begin{enumerate}
+      \item[\textbf{1. Non–emptiness (Identity).}]
+            The identity element $1_R$ satisfies $1_R \cdot 1_R = 1_R$,
+            hence $1_R\in R^{\times}$.
+            Thus $R^{\times}\neq\varnothing$.
+
+      \item[\textbf{2. Closure under multiplication.}]
+            Let $a,b\in R^{\times}$.
+            Then there exist $a^{-1},b^{-1}\in R$ with
+            \begin{align}
+                a\,a^{-1} = a^{-1}a = 1_R,
+                \qquad
+                b\,b^{-1} = b^{-1}b = 1_R.
+            \end{align}
+            Consider $ab\in R$.  Its (two–sided) inverse is $b^{-1}a^{-1}$ because
+            \begin{align}
+                (ab)(b^{-1}a^{-1}) = a(bb^{-1})a^{-1} = a\,1_R\,a^{-1} = aa^{-1} = 1_R, \\[2pt]
+                (b^{-1}a^{-1})(ab) = b^{-1}(a^{-1}a)b = b^{-1}\,1_R\,b = b^{-1}b = 1_R.
+            \end{align}
+            Therefore $ab\in R^{\times}$ and $R^{\times}$ is closed under multiplication.
+
+      \item[\textbf{3. Associativity.}]
+            Multiplication in $R$ is associative, and $R^{\times}$ is a subset of $R$,
+            so associativity holds automatically:
+            \begin{align}
+                (ab)c = a(bc)
+                \quad\text{for all } a,b,c\in R^{\times}.
+            \end{align}
+
+      \item[\textbf{4. Existence of inverses.}]
+            By definition, every $a\in R^{\times}$ comes equipped with a
+            two–sided inverse $a^{-1}\in R$.
+            We must check $a^{-1}\in R^{\times}$ as well.
+            Indeed, $a^{-1}$ is invertible with inverse $a$:
+            \begin{align}
+                a^{-1}a = aa^{-1} = 1_R,
+            \end{align}
+            so $a^{-1}\in R^{\times}$.
+
+      \item[\textbf{5. Identity element lies in $R^{\times}$.}]
+            Already shown in Step 1, and
+            \begin{align}
+                1_R\cdot a = a\cdot 1_R = a
+                \quad\text{for all } a\in R^{\times}.
+            \end{align}
+  \end{enumerate}
+  Having satisfied closure, associativity, identity, and inverses,
+  $R^{\times}$ is a group under multiplication.
+\end{proof}
+\ 
+\end{solution}
+\begin{problem}[]
+  Show that every finite integral domain is a field.
+  \begin{enumerate}
+      \item[\textbf{Parameters.}]
+            $R$: a finite integral domain, i.e.\ a finite, commutative ring
+            with identity $1_R\neq 0_R$ and no zero--divisors.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+ %----------------------------------------------------
+%  Problem 3 — A finite integral domain is a field
+%----------------------------------------------------
+
+
+\begin{proof}
+  We must prove that every non‑zero element of $R$ is invertible.
+  \begin{enumerate}
+      \item[\textbf{1.  Fix a non‑zero element.}]
+            Let $a\in R$ with $a\neq 0_R$.
+
+      \item[\textbf{2.  Define a map by left multiplication.}]
+            Consider the function
+            \[
+                \varphi_a : R \longrightarrow R,
+                \qquad
+                \varphi_a(x)=ax \quad (x\in R).
+            \]
+
+      \item[\textbf{3.  $\varphi_a$ is injective (one‑to‑one).}]
+            Suppose $\varphi_a(x)=\varphi_a(y)$, i.e.\ $ax=ay$.
+            Then $a(x-y)=0_R$.
+            Since $R$ has no zero‑divisors and $a\neq 0_R$,
+            we must have $x-y=0_R$, hence $x=y$.
+
+      \item[\textbf{4.  Finite injective $\Longrightarrow$ bijective.}]
+            Because $R$ is \emph{finite}, any injective map
+            $R\to R$ is automatically surjective.
+            Thus $\varphi_a$ is bijective.
+
+      \item[\textbf{5.  Existence of an inverse element.}]
+            Surjectivity means there exists $y\in R$ such that
+            \[
+                \varphi_a(y)=ay = 1_R .
+            \]
+            Likewise, because multiplication is commutative,
+            \[
+                ya = 1_R .
+            \]
+            Hence $y$ is a (two‑sided) multiplicative inverse of $a$.
+
+      \item[\textbf{6.  All non‑zeros are units.}]
+            The argument applies to every non‑zero $a\in R$,
+            so every non‑zero element of $R$ is invertible.
+
+      \item[\textbf{7.  Conclusion.}]
+            A commutative ring in which every non‑zero element is a unit
+            is, by definition, a \emph{field}.
+            Therefore the finite integral domain $R$ is a field.
+  \end{enumerate}
+\end{proof} 
+\end{solution}
+\begin{problem}[]
+  Let $R$ be a commutative ring.  
+  An element $x\in R$ is called \emph{nilpotent} if $x^{k}=0$ for some integer $k\ge 1$.  
+  Show that the set
+  \[
+      \mathcal{N}(R) \;=\; \{\,x\in R \mid \exists\,k\ge 1\text{ such that }x^{k}=0\,\}
+  \]
+  of all nilpotent elements of $R$ forms an ideal.
+  \begin{enumerate}
+      \item[\textbf{Parameters.}]
+            $R$: a commutative ring with identity $1_R$ (not required for the argument).
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+ %----------------------------------------------------
+%  Problem 4 — Nilpotent elements form an ideal
+%----------------------------------------------------
+
+
+\begin{proof}
+  We verify the two ideal conditions for $\mathcal{N}(R)$.
+
+  \begin{enumerate}
+      \item[\textbf{1.  Non--emptiness and additive subgroup.}]
+            \begin{enumerate}
+                \item[(a)] \emph{Contains $0_R$.}  
+                          Since $0_R^{\,1}=0_R$, we have $0_R\in\mathcal{N}(R)$.
+                \item[(b)] \emph{Closed under addition.}  
+                          Let $x,y\in\mathcal{N}(R)$ with $x^{m}=0$ and $y^{n}=0$.  
+                          Commutativity allows the binomial theorem:
+                          \[
+                              (x+y)^{\,m+n}
+                              =\sum_{i=0}^{m+n}\binom{m+n}{i}\,x^{\,m+n-i}\,y^{\,i}.
+                          \]
+                          If $i<n$ then $m+n-i>m$ and $x^{\,m+n-i}=0$;   
+                          if $i\ge n$ then $y^{\,i}=0$.  
+                          Hence every term is $0$, so $(x+y)^{\,m+n}=0$ and $x+y\in\mathcal{N}(R)$.
+                \item[(c)] \emph{Closed under additive inverses.}  
+                          For $x^{m}=0$,
+                          \[
+                              (-x)^{m}=(-1)^{m}x^{m}=0,
+                          \]
+                          so $-x\in\mathcal{N}(R)$.
+            \end{enumerate}
+            Thus $\mathcal{N}(R)$ is an additive subgroup of $R$.
+
+      \item[\textbf{2.  Absorption under multiplication.}]
+            Let $r\in R$ and $x\in\mathcal{N}(R)$ with $x^{m}=0$.  
+            Because $R$ is commutative,
+            \[
+                (rx)^{m} \;=\; r^{m}\,x^{m} \;=\; r^{m}\,0 \;=\; 0,
+            \]
+            so $rx\in\mathcal{N}(R)$.  
+            The same calculation shows $xr\in\mathcal{N}(R)$ (identical in a commutative ring).
+
+  \end{enumerate}
+  Having shown that $\mathcal{N}(R)$ is an additive subgroup closed under multiplication by arbitrary elements of $R$, we conclude that $\mathcal{N}(R)$ is indeed an ideal of $R$.
+\end{proof} 
+\end{solution}
+\end{document}

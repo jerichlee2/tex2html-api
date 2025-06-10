@@ -1,0 +1,309 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 432 HW 10}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{proof}
+  Assume every countable closed subset of a metric space \(M\) is complete.
+  We show that \(M\) itself is complete, i.e.\ every Cauchy sequence in
+  \(M\) converges.
+  
+  \medskip
+  Let \((x_n)\) be a Cauchy sequence in \(M\).
+  Set
+  \[
+     A=\{x_n : n\in\Bbb N\}\subset M .
+  \]
+  The set \(A\) is \emph{countable} by construction.
+  We first check that \(A\) is \emph{closed} in~\(M\).
+  
+  \smallskip
+  \textit{Claim.} \(A\) is closed.  
+  Indeed, suppose \(x\in\overline{A}\setminus A\).
+  Then there exists a subsequence \((x_{n_k})\) with \(x_{n_k}\to x\).
+  Because \((x_n)\) is Cauchy, it has at most one limit;
+  convergence of the subsequence forces the whole sequence to converge to
+  the same \(x\in M\), contradicting \(x\notin A\).
+  Hence \(\overline{A}=A\).
+  
+  \smallskip
+  Since \(A\) is \emph{countable and closed}, the hypothesis tells us that
+  \(A\) is a \emph{complete} subspace of \(M\).
+  But \((x_n)\subset A\) is Cauchy, so it must converge to a point
+  \(x\in A\subset M\).
+  
+  \medskip
+  Therefore every Cauchy sequence in \(M\) converges; thus \(M\) is
+  complete.
+  \end{proof}
+  %--------------------------------------------------------------------
+%  2.  Uniform continuity of three functions  (complete solution)
+%--------------------------------------------------------------------
+\begin{enumerate}
+  \item[\textbf{2.}]  Which of the following functions \(f:\Bbb R\to\Bbb R\)
+                      are \emph{uniformly} continuous?  Justify your answer.
+        \begin{enumerate}[]
+        \item \(f(x)=x^{2}\) for all \(x\in\Bbb R\);
+        \item \(f(x)=|x|\) for all \(x\in\Bbb R\);
+        \item \(f(x)=\dfrac{1}{1+x^{2}}\) for all \(x\in\Bbb R\).
+        \end{enumerate}
+  
+  \smallskip
+  \textbf{Solution.}
+  \begin{enumerate}[]
+  %----------------------------------------------------------
+  \item \emph{\(f(x)=x^{2}\) is \textbf{not} uniformly continuous.}
+  
+        Take \(\varepsilon=1\).
+        For any \(\delta>0\) choose
+        \[
+           x=\frac1\delta+\frac{\delta}{2},
+           \qquad
+           t=\frac1\delta .
+        \]
+        Then \( |x-t|=\dfrac{\delta}{2}<\delta \) but
+        \[
+           |f(x)-f(t)|
+              =|x^{2}-t^{2}|
+              =(x+t)(x-t)
+              =\left(\frac{2}{\delta}+\frac{\delta}{2}\right)\frac{\delta}{2}
+              >1=\varepsilon .
+        \]
+        Hence the \(\delta\)-condition fails; \(x^{2}\) is not uniformly
+        continuous on \(\Bbb R\).
+  
+  %----------------------------------------------------------
+  \item \emph{\(f(x)=|x|\) \textbf{is} uniformly continuous.}
+  
+        For all \(x,t\in\Bbb R\) we have the Lipschitz estimate
+        \[
+           \bigl||x|-|t|\bigr|\le |x-t|.
+        \]
+        Given \(\varepsilon>0\) choose \(\delta=\varepsilon\); then
+        \( |x-t|<\delta \) implies
+        \( |\,|x|-|t|\,|<\varepsilon\).
+        Thus \(|x|\) is uniformly continuous on \(\Bbb R\).
+  
+  %----------------------------------------------------------
+  \item \emph{\(f(x)=\dfrac1{1+x^{2}}\) \textbf{is} uniformly continuous.}
+  
+        For \(x,t\in\Bbb R\)
+        \[
+           |f(x)-f(t)|
+             =\left|\frac{1}{1+x^{2}}-\frac{1}{1+t^{2}}\right|
+             =\frac{|x^{2}-t^{2}|}{(1+x^{2})(1+t^{2})}
+             =\frac{|x+t|\,|x-t|}{(1+x^{2})(1+t^{2})}.
+        \]
+        Because \(|x+t|\le |x|+|t|\) and each denominator is \(\ge1\),
+        \[
+           |f(x)-f(t)|
+             \le (|x|+|t|)\,|x-t|
+             \le 2\,|x-t| .
+        \]
+        Given \(\varepsilon>0\) choose \(\delta=\dfrac{\varepsilon}{2}\);
+        then \( |x-t|<\delta\Rightarrow |f(x)-f(t)|<\varepsilon\).
+        Hence \(f(x)=\dfrac1{1+x^{2}}\) is uniformly continuous on
+        \(\Bbb R\).
+  \end{enumerate}
+  \end{enumerate}
+  %--------------------------------------------------------------------
+%  Problem 3  •  Induced metric on an open subset of a complete space
+%--------------------------------------------------------------------
+\paragraph{Problem.}
+Let \((M,D)\) be a \emph{complete} metric space, let \(X\subset M\) be
+open, and set \(A=M\setminus X\).
+Define for \(x,y\in X\)
+\[
+   \widetilde D(x,y)\;:=\;
+   D(x,y)+\Bigl|\frac1{D(x,A)}-\frac1{D(y,A)}\Bigr|.
+\]
+Show that
+\begin{enumerate}[label=(\alph*)]
+   \item \(\widetilde D\) is a metric on \(X\);
+   \item \((X,\widetilde D)\) is complete;
+   \item \((X,D)\) and \((X,\widetilde D)\) are homeomorphic.
+\end{enumerate}
+
+\bigskip
+\paragraph{Solution.}
+\begin{enumerate}[label=(\alph*)]
+
+%--------------------------------------------------------------
+\item \emph{\(\widetilde D\) is a metric.}
+
+Positivity, symmetry, and the fact that \(\widetilde D(x,y)=0\)
+implies \(x=y\) are immediate from the definition.
+We check the triangle inequality.
+
+For \(x,y,z\in X\) the triangle inequality for \(D\) gives
+\[
+   D(x,y)\le D(x,z)+D(z,y). \tag{1}
+\]
+Applying the triangle inequality in \(\Bbb R\) to
+\(D(\cdot,A)^{-1}\) yields
+\[
+   \Bigl|
+     \frac1{D(x,A)}-\frac1{D(y,A)}
+   \Bigr|
+   \le
+   \Bigl|
+     \frac1{D(x,A)}-\frac1{D(z,A)}
+   \Bigr|
+   +
+   \Bigl|
+     \frac1{D(y,A)}-\frac1{D(z,A)}
+   \Bigr|. \tag{2}
+\]
+Adding (1) and (2) proves
+\(
+   \widetilde D(x,y)\le \widetilde D(x,z)+\widetilde D(z,y).
+\)
+Hence \(\widetilde D\) is a metric.
+
+%--------------------------------------------------------------
+\item \emph{\((X,\widetilde D)\) is complete.}
+
+Let \((x_n)\) be a Cauchy sequence in \((X,\widetilde D)\).
+Because \(D\le\widetilde D\), the sequence is Cauchy in \((M,D)\) and
+thus converges to some limit \(x\in M\) (completeness of \(M\)).
+
+\smallskip
+\textit{Claim.} \(x\in X\).
+Otherwise \(x\in A\) and \(D(x_n,x)\to0\) implies \(D(x_n,A)\to0\).
+But
+\[
+   \Bigl|
+     \frac1{D(x_m,A)}-\frac1{D(x_n,A)}
+   \Bigr|
+   \le \widetilde D(x_m,x_n)\longrightarrow 0
+   \quad(m,n\to\infty),
+\]
+so \(\bigl(1/D(x_n,A)\bigr)\) is Cauchy in \(\Bbb R\).
+This contradicts \(D(x_n,A)\to0\).
+Therefore \(x\in X\).
+
+\smallskip
+Finally, continuity of \(D(\,\cdot\!,A)\) gives
+\(1/D(x_n,A)\to 1/D(x,A)\).
+Hence
+\[
+   \widetilde D(x_n,x)
+      =D(x_n,x)+
+       \Bigl|
+         \frac1{D(x_n,A)}-\frac1{D(x,A)}
+       \Bigr|
+      \longrightarrow 0,
+\]
+so \(x_n\to x\) in \((X,\widetilde D)\).
+Thus \((X,\widetilde D)\) is complete.
+
+%--------------------------------------------------------------
+\item \emph{\((X,D)\) and \((X,\widetilde D)\) are homeomorphic.}
+
+The identity map
+\[
+   \mathrm{id}:(X,D)\;\longrightarrow\;(X,\widetilde D)
+\]
+is continuous because \(D\le\widetilde D\).
+Conversely, if \(x_n\to x\) in \((X,\widetilde D)\) then
+\(\widetilde D(x_n,x)\to0\) forces \(D(x_n,x)\to0\);
+hence the inverse identity map is also continuous.
+Therefore the two metric spaces are homeomorphic.
+
+\end{enumerate}
+%--------------------------------------------------------------------
+%  Any subspace of a separable metric space is separable
+%--------------------------------------------------------------------
+\begin{theorem}
+  If \((M,d)\) is a separable metric space and \(A\subset M\), then
+  \(A\) is separable (with the subspace topology).
+  \end{theorem}
+  
+  \begin{proof}
+  Since \(M\) is separable, it has a \emph{countable base}  
+  \(\mathcal U=\{U_n : n\in\Bbb N\}\) of open subsets of \(M\).
+  
+  Define
+  \[
+     \mathcal V \;=\;
+     \bigl\{\, U_n\cap A \;\bigm|\; n\in\Bbb N \bigr\}.
+  \]
+  Because each \(U_n\) is open in \(M\) and \(A\) carries the subspace
+  topology, every \(U_n\cap A\) is open in \(A\); thus
+  \(\mathcal V\subset\mathcal T_A\).
+  
+  \medskip
+  \textit{Claim.} \(\mathcal V\) is a base for the topology on \(A\).
+  
+  Let \(x\in A\) and let \(V\subset A\) be an open neighbourhood of \(x\).
+  Then there exists an open set \(W\subset M\) such that
+  \(V=W\cap A\).
+  Because \(\mathcal U\) is a base of \(M\),
+  there exists \(n\) with \(x\in U_n\subset W\).
+  Consequently
+  \[
+     x\in U_n\cap A \subset W\cap A = V,
+  \]
+  so every open set of \(A\) contains some member of \(\mathcal V\)
+  containing \(x\).
+  Hence \(\mathcal V\) is indeed a base for \(A\).
+  
+  \medskip
+  Since \(\mathcal V\) is countable, \(A\) possesses a countable base and
+  is therefore \emph{separable}.
+  \end{proof}
+\end{document}

@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+How do we get from 
+\begin{align}
+    d(z,z^\prime )=\frac{2\left\vert z-z^\prime  \right\vert }{\left[ (1+\left\vert z \right\vert^{2})(1+\left\vert z^\prime  \right\vert^{2}  ) \right]^{\frac{1}{2}} }
+\end{align}
+to this?
+\begin{align}
+    d(z,\infty )=\frac{2}{\left( 1+\left\vert z \right\vert ^{2} \right)^{2} }
+\end{align}
+Answer: As $z^\prime $ goes to infinity, $\left\vert z-z^\prime \right\vert \to z^\prime $, as $z^\prime $ dominates $z$ . Therefore
+\begin{align} 
+    d(z,z^\prime )&=\frac{2\left\vert z-z^\prime  \right\vert }{\left[ (1+\left\vert z \right\vert^{2})(1+\left\vert z^\prime  \right\vert^{2}  ) \right]^{\frac{1}{2}} } \\[10pt] 
+    &= \frac{2\left\vert z^\prime  \right\vert  }{\left[ (1+\left\vert z \right\vert ^{2})^{\frac{1}{2}}\left\vert z^\prime  \right\vert  \right] }\\[10pt] 
+    &=\frac{2}{\left( 1+\left\vert z \right\vert ^{2} \right)^{\frac{1}{2}} }
+\end{align}  
+\end{document}

@@ -1,0 +1,441 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{siunitx}  % Load the package
+\usepackage{siunitx} % For units like micrometers
+
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section*{Rayleigh Criterion for Resolving Two Lanterns}
+
+We wish to find the minimum separation \( \Delta x \) between two lanterns so that 
+a telescope of diameter \( D \) can resolve them as two distinct points of light at 
+wavelength \( \lambda \).  We assume the telescope and lanterns are separated by a distance 
+\( L \).  According to the Rayleigh criterion, the smallest resolvable angular separation 
+\( \theta \) is given by
+\[
+    \theta_\mathrm{min} \;=\; 1.22 \,\frac{\lambda}{D}.
+\]
+Once we know \( \theta_\mathrm{min} \), the linear separation \( \Delta x \) required at 
+distance \( L \) is 
+\[
+    \Delta x \;=\; \theta_\mathrm{min}\,L.
+\]
+
+\subsection*{Numerical Values}
+
+\begin{itemize}
+  \item Wavelength of the light:
+    \[
+       \lambda = 550\,\text{nm} 
+               = 550 \times 10^{-9}\,\text{m}.
+    \]
+  \item Diameter of the telescope:
+    \[
+       D = 2\,\text{cm} 
+          = 0.02\,\text{m}.
+    \]
+  \item Distance from lanterns to observer (in Concord, MA):
+    \[
+       L = 40\,\text{km} 
+          = 4.0 \times 10^{4}\,\text{m}.
+    \]
+\end{itemize}
+
+\subsection*{Step 1: Compute the Minimum Angular Separation}
+
+\[
+    \theta_\mathrm{min}
+    \;=\; 1.22 \,\frac{ \lambda }{ D }
+    \;=\; 1.22 \,\times \frac{ 550 \times 10^{-9}\,\mathrm{m} }{ 0.02\,\mathrm{m} }.
+\]
+First, compute the fraction:
+\[
+   \frac{550 \times 10^{-9}}{0.02}
+   = 550 \times 10^{-9} \div 2 \times 10^{-2}
+   = 275 \times 10^{-7}
+   = 2.75 \times 10^{-5}.
+\]
+Hence,
+\[
+    \theta_\mathrm{min}
+    = 1.22 \times 2.75 \times 10^{-5}
+    = 3.355 \times 10^{-5}\,\mathrm{radians}.
+\]
+
+\subsection*{Step 2: Compute the Required Linear Separation}
+
+Multiplying the minimum angular separation by the distance \( L \),
+\[
+   \Delta x
+   = \theta_\mathrm{min} \times L
+   = \left(3.355 \times 10^{-5}\right)
+     \times \left(4.0 \times 10^4\,\mathrm{m}\right).
+\]
+\[
+   \Delta x 
+   = 3.355 \times 4.0 \times 10^{-5 + 4}
+   = 13.42 \times 10^{-1}
+   = 1.342\,\mathrm{m}.
+\]
+
+\subsection*{Conclusion}
+
+The lanterns must be separated by about \(\boxed{1.34\,\mathrm{m}}\) or more 
+in order for a \(2\,\mathrm{cm}\) diameter telescope, located \(40\,\mathrm{km}\) away, 
+to resolve them as two distinct lights.
+
+
+\section*{1.\;Reading a Wave Graph}
+A typical wave graph might plot either displacement $y$ versus:
+\begin{itemize}
+  \item \textbf{Time} $t$ (showing wave ``oscillations'' as time progresses), or
+  \item \textbf{Position} $x$ (showing a snapshot of the wave in space at a fixed time).
+\end{itemize}
+
+\subsection*{Key Wave Quantities}
+\begin{itemize}
+  \item \textbf{Amplitude} $A$:
+    \[
+      A = \max |y|,
+    \]
+    the maximum displacement from the equilibrium (zero) position on the wave graph.
+    
+  \item \textbf{Wavelength} $\lambda$:
+    \[
+      \lambda = \text{(distance between two adjacent points in phase)},
+    \]
+    e.g., the distance between consecutive crests or troughs on a plot of $y$ vs.\ $x$.
+    
+  \item \textbf{Period} $T$:
+    \[
+      T = \text{(time between repeating crests or troughs)},
+    \]
+    on a $y$ vs.\ $t$ graph.  Often we use frequency $f = 1/T$.
+    
+  \item \textbf{Intensity} $I$:
+    \[
+      I \propto A^2.
+    \]
+    If other factors (like distance from the source) are held constant, intensity is proportional
+    to the square of the amplitude.
+    
+  \item \textbf{Wave Speed} $v$:
+    \[
+      v = \lambda\,f.
+    \]
+    If you have wavelength $\lambda$ and frequency $f$, the wave speed is their product.
+\end{itemize}
+
+\section*{2.\;Rayleigh Criterion and Telescope Resolution}
+
+\subsection*{Rayleigh Criterion (for circular apertures)}
+When trying to resolve two distant sources of light (stars, lanterns, etc.), the 
+\emph{minimum resolvable angular separation} $\theta_\mathrm{min}$ for a telescope 
+of diameter $D$ (assuming diffraction--limited resolution) is:
+\[
+  \theta_\mathrm{min} = 1.22\,\frac{\lambda}{D}.
+\]
+Here, $\lambda$ is the wavelength of the light and $D$ is the telescope aperture (diameter).
+
+\subsection*{Case 1:\;Given $D$, find Minimum Separation}
+If you already know the telescope diameter $D$, you can find the smallest separation 
+$\Delta x$ of two sources (e.g., lanterns, or other point objects) that can be resolved 
+at distance $L$ via
+\[
+  \Delta x = \theta_\mathrm{min} \times L
+           = \left(1.22\,\frac{\lambda}{D}\right)\,L.
+\]
+
+\subsection*{Case 2:\;Given $\Delta x$ and $L$, find Telescope Diameter $D$}
+If the problem instead tells you \emph{how far away} the objects are ($L$) and 
+\emph{how far apart} they need to be resolved ($\Delta x$), you can rearrange the formula 
+to solve for the \emph{required} telescope diameter $D$.  First note that for small angles,
+\[
+  \theta_\mathrm{min} \approx \frac{\Delta x}{L}.
+\]
+Then set
+\[
+  \frac{\Delta x}{L} = 1.22\,\frac{\lambda}{D}.
+\]
+Hence, the \textbf{required diameter} $D$ is
+\[
+  \boxed{
+    D = 1.22\,\frac{\lambda\,L}{\Delta x}.
+  }
+\]
+
+\section*{Example:\;Space Landing Problem}
+Suppose a problem states:
+\begin{itemize}
+  \item The distance to a spacecraft is $L = \SI{4.0e5}{m}$ (just an example).
+  \item We want to distinguish two details on the spacecraft that are $\Delta x = \SI{2}{m}$ apart.
+  \item Light has wavelength $\lambda = \SI{550e-9}{m}$ (typical visible light).
+\end{itemize}
+We want the telescope diameter $D$ that can just resolve these details:
+\[
+  D = 1.22\,\frac{\lambda\,L}{\Delta x}
+    = 1.22 \times \frac{(550\times10^{-9}\,\mathrm{m})(4.0\times10^5\,\mathrm{m})}%
+                     {2\,\mathrm{m}}
+    \approx \SI{0.1342}{m} \;\approx \SI{13.4}{cm}.
+\]
+So a telescope of about 13--14~cm in diameter would be needed to \emph{just} 
+separate those two points under ideal diffraction‐limited conditions.
+
+
+\section*{Phase Difference of Two Waves}
+
+Consider two coherent wave sources that are in phase with each other 
+(i.e., $\Delta \phi_{\,\text{at sources}} = 0$).  
+We have:
+\[
+  \text{Wavelength: } \lambda = 2.72\,\mathrm{m}, 
+  \quad
+  d_1 = 1.01\,\mathrm{m}, 
+  \quad
+  d_2 = 1.46\,\mathrm{m}.
+\]
+The wave number $k$ is
+\[
+  k \;=\; \frac{2\pi}{\lambda}.
+\]
+
+\subsection*{Step 1: Find the Path Difference}
+The path difference $\Delta r$ between the two waves is
+\[
+  \Delta r \;=\; \bigl|\,d_2 - d_1\bigr|
+              \;=\; |\,1.46\,\mathrm{m} - 1.01\,\mathrm{m}\,|
+              \;=\; 0.45\,\mathrm{m}.
+\]
+
+\subsection*{Step 2: Calculate the Phase Difference}
+Since the sources are in phase at the start, 
+the phase difference $\Delta \phi$ at point $P$ is determined solely by 
+the path difference:
+\[
+  \Delta \phi 
+  \;=\; k\,(\Delta r)
+  \;=\; \left(\frac{2\pi}{\lambda}\right)\,\bigl(\Delta r\bigr).
+\]
+Plug in numbers:
+\[
+  k
+  \;=\; \frac{2\pi}{2.72\,\mathrm{m}}
+  \;\approx\; 2.31\,\mathrm{m}^{-1},
+  \quad
+  \Delta r = 0.45\,\mathrm{m}.
+\]
+Hence,
+\[
+  \Delta \phi 
+  \;=\; 2.31\,\mathrm{m}^{-1} \times 0.45\,\mathrm{m}
+  \;\approx\; 1.04\,\mathrm{radians}.
+\]
+
+\subsection*{Result}
+Therefore, the phase difference of the two waves at the point $P$ is
+\[
+  \boxed{1.04\,\text{radians (approximately)}.}
+\]
+
+
+\section*{Given}
+\[
+  y(x,t) \;=\; \sin\bigl(kx - \omega t\bigr),
+\]
+where
+\[
+  k = 1.891\,\mathrm{m}^{-1},
+  \quad 
+  \omega = 1.386\,\mathrm{s}^{-1}.
+\]
+Waves moving to the right have positive velocity.
+
+\section*{1.\;Wave Velocity}
+For a standard traveling wave of the form $f(kx - \omega t)$, 
+the phase velocity $v$ is given by
+\[
+  v \;=\; \frac{\omega}{k}.
+\]
+Hence,
+\[
+  v = \frac{1.386\,\mathrm{s}^{-1}}{1.891\,\mathrm{m}^{-1}}
+    \;\approx\; 0.733\,\mathrm{m/s}.
+\]
+Since the argument is $kx - \omega t$ (with a minus sign in front of $\omega t$),
+the wave travels in the $+x$ direction. Thus, 
+\[
+  \boxed{v \;\approx\; +\,0.733\,\mathrm{m/s}.}
+\]
+
+\section*{2.\;Phase Change for a Spatial Shift}
+The wave phase at any point $(x,t)$ is
+\[
+  \Phi(x,t) \;=\; k\,x \;-\; \omega\,t.
+\]
+Holding time $t$ fixed, the phase change $\Delta \Phi$ when $x$ increases by 
+$\Delta x = 0.212\,\mathrm{m}$ is
+\[
+  \Delta \Phi 
+  \;=\; k\,\Delta x
+  \;=\; \bigl(1.891\,\mathrm{m}^{-1}\bigr)\,\bigl(0.212\,\mathrm{m}\bigr).
+\]
+Numerically,
+\[
+  \Delta \Phi 
+  \;\approx\; 1.891 \times 0.212
+  \;\approx\; 0.401\,\mathrm{radians}.
+\]
+Hence, 
+\[
+  \boxed{\Delta \Phi \;\approx\; 0.401\,\mathrm{rad}.}
+\]
+
+\section*{Michelson Interferometer: Finding the Wavelength}
+
+\subsection*{Given}
+\begin{itemize}
+\item When the two arms have equal length ($\Delta x = 0$), the intensity at the detector is 
+  \[
+    I_{\max} = 6.93 \,\text{W/m}^2
+  \]
+  (constructive interference).
+\item Moving the right mirror by $\Delta x = 87\,\mu\mathrm{m}$ 
+  reduces the intensity to
+  \[
+    I = \frac{I_{\max}}{4} = \frac{6.93}{4} \approx 1.73\,\text{W/m}^2.
+  \]
+\item Find the wavelength \(\lambda\).
+\end{itemize}
+
+\subsection*{Step 1: Relate Intensity Drop to Phase Difference}
+For two beams of equal amplitude, the resulting intensity 
+(as a function of their phase difference $\phi$) can be written as
+\[
+  I(\phi) \;=\; I_{\max}\,\cos^2\!\bigl(\phi/2\bigr).
+\]
+Since $I = I_{\max}/4$, we have
+\[
+  \frac{I_{\max}}{4} \;=\; I_{\max}\,\cos^2\!\bigl(\phi/2\bigr)
+  \;\;\Longrightarrow\;\; \cos^2\!\bigl(\phi/2\bigr) = \tfrac14.
+\]
+Hence 
+\[
+  \cos\!\bigl(\phi/2\bigr) = \tfrac12
+  \quad\Longrightarrow\quad 
+  \phi/2 = \frac{\pi}{3}
+  \quad\Longrightarrow\quad 
+  \phi = \frac{2\pi}{3}.
+\]
+
+\subsection*{Step 2: Path Difference and Wavelength}
+Moving the mirror by $\Delta x$ changes the path difference by 
+\[
+  d = 2\,\Delta x.
+\]
+The phase difference $\phi$ between the two beams is related to $d$ by
+\[
+  \phi \;=\; \frac{2\pi}{\lambda}\,d 
+  \;=\; \frac{2\pi}{\lambda}\,\bigl(2\,\Delta x\bigr).
+\]
+We know $\phi = \tfrac{2\pi}{3}$, so
+\[
+  \frac{2\pi}{\lambda} \,\bigl(2\,\Delta x\bigr)
+  \;=\; \frac{2\pi}{3}.
+\]
+Divide both sides by $2\pi$,
+\[
+  \frac{2\,\Delta x}{\lambda}
+  \;=\; \frac{1}{3}
+  \quad\Longrightarrow\quad
+  \lambda = 6\,\Delta x.
+\]
+With $\Delta x = 87\,\mu\mathrm{m}$, we get
+\[
+  \lambda = 6 \times 87\,\mu\mathrm{m}
+          = 522\,\mu\mathrm{m}.
+\]
+
+\subsection*{Conclusion}
+\[
+  \boxed{\lambda = 522\,\mu\mathrm{m}.}
+\]
+
+
+\section*{Problem}
+
+How many photons of frequency $4.00 \times 10^{14} \, \text{Hz}$ should be emitted (in a beam) to change the velocity by $3 \, \text{m/s}$?
+
+\begin{enumerate}
+    \item $3.39 \times 10^{36}$
+    \item $3.40 \times 10^{20}$
+    \item $2.94 \times 10^{-21}$
+    \item $\mathbf{3.39 \times 10^{28}}$ \quad \textbf{(Correct Answer)}
+    \item $2.95 \times 10^{-37}$
+\end{enumerate}
+\section*{Follow-Up Question}
+
+If we decrease the frequency of light, how would the number of photons needed change?
+\begin{enumerate}
+    \item Stay the same
+    \item Increase
+    \item Decrease \quad \textbf{(Correct Answer)}
+\end{enumerate}
+
+\noindent
+\begin{enumerate}
+  \item 
+\end{enumerate}
+
+\begin{align}
+  \sum_{s=1}^{\infty} 
+\end{align}
+$\int_{-1}^{0} 1+x \,\mathrm{d}x + \int_{0}^{1}  \,\mathrm{d}x + \int_{1}^{2} 2-x \,\mathrm{d}x $ 
+$\int_{-\infty}^{1} \sqrt{\frac{15}{56}}(1+x^{2})^{2}  \,\mathrm{d}x $ 
+$1 =\int_{-\infty}^{\infty} (c_{1}+c_{1}ix^{2})(c_{1}-c_{1}ix^{2})     \,\mathrm{d}x $ 
+\end{document}

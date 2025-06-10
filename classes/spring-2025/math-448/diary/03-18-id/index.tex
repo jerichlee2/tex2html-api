@@ -1,0 +1,683 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH 448}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Definitions}
+
+\begin{definition}[Complex Numbers]
+The set of \textbf{complex numbers} is defined as
+\[
+\mathbb{C} = \{\, a + bi \mid a,b \in \mathbb{R}, \, i^2 = -1 \,\}.
+\]
+\end{definition}
+
+\begin{definition}[Euler's Formula]
+    $$    
+    R\cos\theta + Ri\sin\theta = Re^{i\theta} \quad (\text{Euler's formula})  
+    $$
+\end{definition}
+\subsubsection*{Random Identity}
+We wish to show that
+\[
+\frac{1}{i} = -i.
+\]
+
+\textbf{Derivation:}
+
+Start with the left-hand side:
+\[
+\frac{1}{i}.
+\]
+Multiply the numerator and the denominator by \(-i\) to rationalize the denominator:
+\[
+\frac{1}{i} = \frac{1}{i} \cdot \frac{-i}{-i} = \frac{-i}{-i^2}.
+\]
+Since \(i^2 = -1\), we have
+\[
+-i^2 = -(-1) = 1.
+\]
+Thus,
+\[
+\frac{-i}{-i^2} = \frac{-i}{1} = -i.
+\]
+
+Therefore, we have verified that
+\[
+\frac{1}{i} = -i.
+\]
+
+
+\subsubsection*{Identities (Complex Numbers):}
+
+\begin{align}
+|z| &= \sqrt{x^2 + y^2}, \quad z = x + iy \\
+\overline{z} &= x - iy \\
+z\overline{z} &= x^2 + y^2 = |z|^2 = |\overline{z}|^2 \\
+\operatorname{Re}(z) &= \frac{z + \overline{z}}{2}, \quad \operatorname{Im}(z) = \frac{z - \overline{z}}{2i} \\
+\cos(\theta) &= \frac{e^{i\theta} + e^{-i\theta}}{2}, \quad \sin(\theta) = \frac{e^{i\theta} - e^{-i\theta}}{2i} \\
+\left\vert e^{iz} \right\vert = e^{\text{Re}(iz) }= e^{-R\sin \theta}
+\end{align}
+
+\subsubsection*{De Moivre's Theorem:}
+\[
+(\cos \theta + i \sin \theta)^n = \cos(n\theta) + i\sin(n\theta), \quad n \in \mathbb{Z}.
+\]
+
+\subsubsection*{Common Taylor Series Expansions}
+\begin{align}
+    e^z = \sum_{n=0}^{\infty} \frac{(z - z_0)^n}{n!} e^{z_0}\\
+&= 
+e^{z_0} 
+\;+\; e^{z_0}\,(z - z_0) 
+\;+\; \frac{e^{z_0}\,(z - z_0)^2}{2!}
+\;+\; \frac{e^{z_0}\,(z - z_0)^3}{3!}
+\;+\; \cdots
+\\
+    \sin x &= \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \\
+    = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \dots \\[8pt]
+    %
+    \cos x &= \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!} \\
+    = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \dots \\[8pt]
+    %
+    \tan x &= \sum_{n=1}^{\infty} \frac{B_{2n}(-4)^n(1-4^n)}{(2n)!} x^{2n-1}\\
+    = x + \frac{x^3}{3} + \frac{2x^5}{15} + \frac{17x^7}{315} + \dots\\
+    \textit{Note: \(B_n\) represents Bernoulli numbers.}
+\end{align}
+\section*{Taylor Expansions of \(\cos\) and \(\sin\) Around \(z_0\)}
+
+Let \(z = z_0 + w\), with \(|w|\ll 1\). Then:
+
+\[
+\cos(z_0 + w)
+= \cos(z_0) 
+- \sin(z_0)\,w
+- \frac{\cos(z_0)}{2!}\,w^2
++ O(w^3).
+\]
+
+\[
+\sin(z_0 + w)
+= \sin(z_0)
++ \cos(z_0)\,w
+- \frac{\sin(z_0)}{2!}\,w^2
++ O(w^3).
+\]
+
+These follow from the usual Taylor series expansions and the derivatives:
+\[
+\frac{d}{dz}\cos z = -\sin z,\quad
+\frac{d}{dz}\sin z = \cos z,\quad \text{etc.}
+\]
+
+\subsubsection*{Trig Identities}
+
+\begin{enumerate}
+\item \textbf{Algebraic Identities:}
+\[
+    (a + b)(a^2 - ab + b^2) = a^3 + b^3
+    \]
+
+\item \textbf{Pythagorean Identities:}
+\[
+\sin^2 x + \cos^2 x = 1,\quad 1+\tan^2 x = \sec^2 x,\quad 1+\cot^2 x = \csc^2 x
+\]
+
+\item \textbf{Angle Addition and Subtraction:}
+\[
+\sin(x \pm y) = \sin x \cos y \pm \cos x \sin y
+\]
+\[
+\cos(x \pm y) = \cos x \cos y \mp \sin x \sin y
+\]
+\[
+\tan(x \pm y) = \frac{\tan x \pm \tan y}{1 \mp \tan x \tan y}
+\]
+
+\item \textbf{Double-Angle Identities:}
+\[
+\sin(2x) = 2 \sin x \cos x
+\]
+\[
+\cos(2x) = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x
+\]
+\[
+\tan(2x) = \frac{2\tan x}{1 - \tan^2 x}
+\]
+\pagebreak
+\item \textbf{Half-Angle Identities:}
+\[
+\sin\frac{x}{2} = \pm\sqrt{\frac{1 - \cos x}{2}}, \quad 
+\cos\frac{x}{2} = \pm\sqrt{\frac{1 + \cos x}{2}}
+\]
+\[
+\tan\frac{x}{2} = \frac{\sin x}{1 + \cos x} = \frac{1 - \cos x}{\sin x}
+\]
+
+\item \textbf{Product-to-Sum Identities:}
+\[
+\sin x \sin y = \frac{1}{2}\left[\cos(x - y) - \cos(x + y)\right]
+\]
+\[
+\cos x \cos y = \frac{1}{2}\left[\cos(x - y) + \cos(x + y)\right]
+\]
+\[
+\sin x \cos y = \frac{1}{2}\left[\sin(x + y) + \sin(x - y)\right]
+\]
+
+\item \textbf{Sum-to-Product Identities:}
+\[
+\sin x + \sin y = 2\sin\frac{x + y}{2}\cos\frac{x - y}{2}
+\]
+\[
+\sin x - \sin y = 2\cos\frac{x + y}{2}\sin\frac{x - y}{2}
+\]
+\[
+\cos x + \cos y = 2\cos\frac{x + y}{2}\cos\frac{x - y}{2}
+\]
+\[
+\cos x - \cos y = -2\sin\frac{x + y}{2}\sin\frac{x - y}{2}
+\]
+
+\end{enumerate}
+
+\begin{definition}[Branch of a Multi-Valued Function]
+
+    In complex analysis, a \emph{branch} of a multi-valued function (e.g.\ the logarithm, square root, or any power function) is a single-valued “slice” obtained by:
+    
+    \begin{itemize}
+      \item \textbf{Choosing a branch cut:} A curve or line in the complex plane along which we remove points to prevent “looping around” the singularity.
+      \item \textbf{Restricting the argument:} We impose a condition on $\arg(z)$ so that each $z$ has exactly one value for the function, rather than infinitely many.
+    \end{itemize}
+    
+    Concretely, for the complex logarithm,
+    \[
+    \log z = \ln|z| + i(\arg z + 2\pi k), \quad k \in \mathbb{Z},
+    \]
+    selecting a branch means fixing $k$ (or fixing an interval for $\arg z$) so that $\log z$ becomes single-valued and analytic on $\mathbb{C}$ minus the chosen branch cut.
+      
+\end{definition}
+\subsection*{Important Identities for the Complex Logarithm}
+
+\subsubsection*{1. Definition of the Multi-valued Logarithm}
+For any nonzero complex number \(z\),
+\[
+\log z = \ln |z| + i\Bigl(\arg z + 2\pi k\Bigr), \quad k\in\mathbb{Z},
+\]
+where \(\ln|z|\) is the usual real logarithm and \(\arg z\) denotes any argument of \(z\).
+
+\subsubsection*{2. The Principal Branch of the Logarithm}
+The principal value of the logarithm, denoted by \(\Log z\), is defined by
+\[
+\Log z = \ln |z| + i\,\Arg z,\quad \Arg z\in (-\pi,\pi],
+\]
+so that \(\Log z\) is single-valued on its domain.
+
+\subsubsection*{3. Exponential and Logarithm Inversion}
+A fundamental property is that exponentiation inverts the logarithm:
+\[
+e^{\log z} = z,
+\]
+but more precisely, for the principal branch we have
+\[
+e^{\Log z} = z.
+\]
+\textbf{Derivation:}  
+Start with the definition of the principal logarithm:
+\[
+\Log z = \ln|z| + i\,\Arg z.
+\]
+Then exponentiate:
+\[
+e^{\Log z} = e^{\ln|z| + i\,\Arg z} 
+= e^{\ln|z|}\,e^{i\,\Arg z} 
+= |z|\Bigl(\cos(\Arg z) + i\sin(\Arg z)\Bigr).
+\]
+Since \(z\) can be written in polar form as \(z = |z|e^{i\,\Arg z}\), it follows that
+\[
+e^{\Log z} = z.
+\]
+
+\subsubsection*{4. Logarithm of a Product}
+For nonzero complex numbers \(z\) and \(w\),
+\[
+\log(zw) = \log z + \log w \quad \text{(modulo }2\pi i\text{)}.
+\]
+In terms of the principal branch,
+\[
+\Log(zw) = \Log z + \Log w + 2\pi i k, \quad k\in\mathbb{Z},
+\]
+and if \(\Log z + \Log w\) lies in \((-\pi, \pi]\) (or is adjusted accordingly), then \(k=0\).
+
+\subsubsection*{5. Logarithm of a Quotient}
+Similarly, for nonzero \(z\) and \(w\),
+\[
+\log\left(\frac{z}{w}\right) = \log z - \log w \quad \text{(modulo }2\pi i\text{)}.
+\]
+
+\subsubsection*{6. Derivative of the Logarithm}
+The derivative of the principal branch \(\Log z\) is given by
+\[
+\frac{d}{dz}\Log z = \frac{1}{z}, \quad z\neq 0.
+\]
+
+\subsubsection*{7. Inverse Property for the Exponential Function}
+For any complex number \(z\),
+\[
+\ln\Bigl(e^z\Bigr) = z + 2\pi i k, \quad k\in\mathbb{Z}.
+\]
+If we restrict to the principal branch (assuming \(\Im(z) \in (-\pi,\pi]\)), then
+\[
+\Log\Bigl(e^z\Bigr) = z.
+\]
+\subsubsection*{Generalized Binomial Expansion:}
+
+For any real or complex exponent \(\alpha\), the binomial series is given by:
+\[
+(1 + x)^\alpha = \sum_{n=0}^{\infty} \binom{\alpha}{n} x^n, \quad |x| < 1,
+\]
+
+where the generalized binomial coefficient is defined as:
+\[
+\binom{\alpha}{n} = \frac{\alpha(\alpha - 1)(\alpha - 2)\dots(\alpha - n + 1)}{n!}.
+\]
+
+\subsubsection*{Geometric Series Formulas:}
+
+\begin{enumerate}
+
+\item \textbf{Finite Geometric Series:}
+\[
+\sum_{k=0}^{n} ar^k = a\frac{1 - r^{n+1}}{1 - r}, \quad r \neq 1
+\]
+
+\item \textbf{Infinite Geometric Series:}
+\[
+\sum_{k=0}^{\infty} ar^k = \frac{a}{1 - r}, \quad |r| < 1
+\]
+\[
+\frac{1}{1+u} 
+\;=\; \sum_{n=0}^{\infty} (-1)^n\,u^n
+\quad\text{for }|u| < 1.
+\]
+
+
+\end{enumerate}
+\subsubsection*{Derivatives of \(\displaystyle \frac{1}{z}\) in Terms of \(\frac{1}{z^n}\)}
+
+\[
+f(z) = \frac{1}{z}.
+\]
+We compute successive derivatives:
+\[
+f'(z) = -\frac{1}{z^2},\quad
+f''(z) = 2!\,\frac{1}{z^3} \quad(\text{with a sign }(-1)^2=+1),
+\quad
+f^{(3)}(z) = -3!\,\frac{1}{z^4}, 
+\quad \dots
+\]
+By induction or direct pattern recognition, the general formula for the \(n\)-th derivative (\(n\ge 1\)) is
+\[
+f^{(n)}(z) 
+= \frac{d^n}{dz^n}\bigl(\tfrac{1}{z}\bigr)
+= (-1)^n\,n!\,\frac{1}{z^{\,n+1}}.
+\]
+\subsubsection*{Parameterizations:}
+
+\begin{itemize}
+    \item Line segment from \( z_0 \) to \( z_1 \):
+    \[
+    \gamma(t) = t z_1 + (1 - t) z_0, \quad 0 \leq t \leq 1
+    \]
+
+    \item Circle of radius \( R \) centered at \( p \):
+    \[
+    \gamma(t) = p + R e^{i t}, \quad 0 \leq t \leq 2\pi
+    \]
+\end{itemize}
+
+
+\begin{definition}[Complex Differentiability and Holomorphic Functions]
+Let \(U \subset \mathbb{C}\) be an open set. A function \(f: U \to \mathbb{C}\) is said to be \textbf{complex differentiable} at \(z_0 \in U\) if the limit
+\[
+f'(z_0) = \lim_{z \to z_0} \frac{f(z)-f(z_0)}{z-z_0}
+\]
+exists. If \(f\) is differentiable at every point in \(U\), then \(f\) is called \textbf{holomorphic} (or \textbf{analytic}) on \(U\).
+\end{definition}
+
+\begin{definition}[Cauchy--Riemann Equations]
+Let \(f(z)=u(x,y)+iv(x,y)\) be defined on an open subset of \(\mathbb{C}\) with \(z=x+iy\). If \(f\) is differentiable at a point, then the real functions \(u\) and \(v\) satisfy the \textbf{Cauchy--Riemann equations}:
+\[
+u_x = v_y \quad \text{and} \quad u_y = -v_x.
+\]
+\end{definition}
+
+\begin{definition}[Power Series and Radius of Convergence]
+A \textbf{power series} centered at \(z_0\) is an expression of the form
+\[
+\sum_{n=0}^{\infty} a_n (z-z_0)^n, \quad a_n\in \mathbb{C}.
+\]
+There exists a \textbf{radius of convergence} \(R \ge 0\) such that the series converges absolutely for \(|z-z_0| < R\) and diverges for \(|z-z_0| > R\).
+\end{definition}
+
+\subsubsection*{Power Series:}
+
+\begin{align*}
+f(z) &= \sum_{n=0}^{\infty} a_n (z - z_0)^n \\[6pt]
+f'(z) &= \sum_{n=1}^{\infty} n a_n (z - z_0)^{n-1} \\[6pt]
+(fg)(z) &= \sum_{n=0}^{\infty} c_n (z - z_0)^n, \quad c_n = \sum_{k=0}^{n} a_k b_{n-k} \\[6pt]
+a_n &= \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{(z - z_0)^{n+1}}\,dz
+\end{align*}
+
+\subsubsection*{Logarithmic Series Expansions:}
+
+\begin{align*}
+\log(1 + w) &= \sum_{n=1}^{\infty} (-1)^{n+1}\frac{w^n}{n}, \quad |w|<1 \\[6pt]
+\log(1 - z) &= -\sum_{n=1}^{\infty} \frac{z^n}{n}, \quad |z|<1
+\end{align*}
+
+\begin{definition}[Taylor Series]
+If \(f\) is analytic in a disk \(|z-z_0| < R\), then it can be represented as a \textbf{Taylor series}:
+\[
+f(z) = \sum_{n=0}^{\infty} \frac{f^{(n)}(z_0)}{n!}(z-z_0)^n.
+\]
+\end{definition}
+
+\begin{definition}[Laurent Series]
+Let \(f\) be analytic in an annulus \(A = \{\,z \in \mathbb{C} : r < |z-z_0| < R\,\}\). Then \(f\) has a \textbf{Laurent series expansion}
+\[
+f(z) = \sum_{n=-\infty}^{\infty} c_n (z-z_0)^n,
+\]
+which converges for \(z \in A\).
+\end{definition}
+
+\begin{definition}[Isolated Singularities]
+Let \(z_0\) be an isolated singular point of \(f\). Then:
+\begin{enumerate}[label=(\roman*)]
+    \item \(z_0\) is a \textbf{removable singularity} if \(f\) can be redefined at \(z_0\) to become analytic.
+    \item \(z_0\) is a \textbf{pole} of order \(m\) if \((z-z_0)^m f(z)\) is analytic and nonzero at \(z_0\).
+    \item \(z_0\) is an \textbf{essential singularity} if it is neither removable nor a pole.
+\end{enumerate}
+\end{definition}
+
+
+
+\begin{definition}[Residue]
+If \(f\) has an isolated singularity at \(z_0\) with Laurent expansion
+\[
+f(z) = \sum_{n=-\infty}^{\infty} c_n (z-z_0)^n,
+\]
+the coefficient \(c_{-1}\) is called the \textbf{residue} of \(f\) at \(z_0\), denoted \(\operatorname{Res}(f,z_0)\).
+\end{definition}
+
+\subsubsection*{Residue Formulas:}
+
+\begin{itemize}
+    \item Residue of a function at a pole of order $m$ at $z_0$:
+    \[
+    \text{Res}(f; z_0) = c_{-1} = \frac{H^{(m-1)}(z_0)}{(m-1)!}
+    \]
+    \textit{Note: $c_{-1}$ is the coefficient of the $(z - z_0)^{-1}$ term in the Laurent expansion around $z_0$.}
+
+    \item Residue of a rational function $\frac{F}{G}$ at a simple pole $z_0$ (where $G(z_0) = 0$ and $G'(z_0) \neq 0$):
+    \[
+    \text{Res}\left(\frac{F}{G}; z_0\right) = \frac{F(z_0)}{G'(z_0)}
+    \]
+    \textit{Note: This formula is applicable only for simple poles.}
+\end{itemize}
+
+\begin{definition}[Contour and Contour Integral]
+A \textbf{contour} is a piecewise smooth curve \(\gamma: [a,b] \to \mathbb{C}\). The \textbf{contour integral} of a function \(f\) along \(\gamma\) is defined by
+\[
+\int_\gamma f(z) \,dz = \int_a^b f(\gamma(t)) \, \gamma'(t) \, dt.
+\]
+\end{definition}
+
+\begin{definition}[Branches and Branch Cuts]
+For a multi-valued function (such as \(\log z\) or \(z^{1/n}\)), a \textbf{branch} is a single-valued, continuous selection of values. A \textbf{branch cut} is a curve (or set) in \(\mathbb{C}\) along which the function is discontinuous to maintain single-valuedness on the complement.
+\end{definition}
+
+\section{Major Theorems, Propositions, and Lemmas}
+\subsubsection*{Fundamental Theorem of Calculus in the Complex Plane.}  
+In complex analysis, the result you are using is often called the \emph{Fundamental Theorem of Calculus for Line Integrals} (in the complex plane) or, equivalently, “if a function has an antiderivative, then the integral is path‐independent.”
+
+\begin{theorem}[Fundamental Theorem of Calculus in the Complex Plane]
+Let $f$ be a function that is analytic on a simply connected domain $D$, and suppose $F$ is an antiderivative of $f$ on $D$ (that is, $F'(z) = f(z)$ for all $z \in D$). Then for any path $\gamma$ in $D$ from $z_0$ to $z_1$,
+\[
+\int_\gamma f(z)\,dz \;=\; F(z_1) \;-\; F(z_0).
+\]
+In particular, the integral of $f$ over any closed loop in $D$ is zero, so $\int_\gamma f(z)\,dz$ is independent of the path chosen.
+\end{theorem}
+
+\textbf{Example.}  
+In your example,
+\[
+f(z) \;=\;\frac{1}{z^2},
+\]
+you observed that
+\[
+\frac{d}{dz}\bigl(-\tfrac{1}{z}\bigr) \;=\;\frac{1}{z^2}.
+\]
+Hence $-\tfrac{1}{z}$ is an antiderivative of $\tfrac{1}{z^2}$. Therefore, on any domain in $\mathbb{C}\setminus\{0\}$ (which is simply connected once you exclude the origin), the line integral of $\tfrac{1}{z^2}$ depends only on the endpoints and not on the specific path.
+
+\begin{theorem}[Cauchy's Integral Theorem]
+Let \(U\) be a simply connected open subset of \(\mathbb{C}\) and let \(f: U \to \mathbb{C}\) be analytic. Then for every closed contour \(\gamma\) in \(U\),
+\[
+\int_\gamma f(z)\,dz = 0.
+\]
+\end{theorem}
+
+\begin{theorem}[Cauchy's Integral Formula]
+Let \(f\) be analytic in a simply connected domain \(U\) and let \(\gamma\) be a positively oriented, simple closed contour in \(U\). If \(z_0\) is interior to \(\gamma\), then
+\[
+f(z_0) = \frac{1}{2\pi i} \int_\gamma \frac{f(z)}{z-z_0}\,dz.
+\]
+Moreover, for any \(n \geq 1\),
+\[
+f^{(n)}(z_0) = \frac{n!}{2\pi i} \int_\gamma \frac{f(z)}{(z-z_0)^{n+1}}\,dz.
+\]
+\end{theorem}
+
+\begin{theorem}[Morera's Theorem]
+Let \(f\) be continuous on an open set \(U\). If
+\[
+\int_\gamma f(z)\,dz = 0
+\]
+for every closed contour \(\gamma\) in \(U\), then \(f\) is analytic in \(U\).
+\end{theorem}
+
+\begin{theorem}[Taylor's Theorem for Analytic Functions]
+If \(f\) is analytic in a disk \(|z-z_0| < R\), then
+\[
+f(z) = \sum_{n=0}^{\infty} \frac{f^{(n)}(z_0)}{n!}(z-z_0)^n,
+\]
+with the series converging absolutely for \(|z-z_0| < R\).
+\end{theorem}
+
+\begin{theorem}[Laurent Series Theorem]
+If \(f\) is analytic in an annulus \(r < |z-z_0| < R\), then \(f\) can be represented by a Laurent series
+\[
+f(z) = \sum_{n=-\infty}^{\infty} c_n (z-z_0)^n,
+\]
+which converges for \(z\) in the annulus.
+\end{theorem}
+
+\subsubsection*{Laurent Series (Inside an Annulus):}
+
+If \( f(z) \) is analytic on the annulus 
+\[
+r < |z - z_0| < R,
+\]
+then \( f(z) \) can be decomposed into:
+\[
+f(z) = f_1(z) + f_2(z),
+\]
+where
+\[
+f_1(z) = \sum_{n=0}^{\infty} a_n (z - z_0)^n \quad\text{(analytic part)},
+\]
+and
+\[
+f_2(z) = \sum_{n=1}^{\infty} a_{-n} (z - z_0)^{-n} \quad\text{(principal part)}.
+\]
+
+Here, \(f_1(z)\) is analytic at \(z_0\), while \(f_2(z)\) contains the singular behavior of \(f(z)\) at \(z_0\).
+
+\begin{theorem}[Residue Theorem]
+Let \(f\) be analytic in a region \(U\) except for finitely many isolated singularities \(z_1, z_2, \dots, z_n\). If \(\gamma\) is a positively oriented, simple closed contour in \(U\) that encloses these singularities, then
+\[
+\int_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{n} \operatorname{Res}(f,z_k).
+\]
+\end{theorem}
+
+\begin{theorem}[Classification of Isolated Singularities]
+Let \(z_0\) be an isolated singularity of \(f\). Then \(z_0\) is either:
+\begin{enumerate}[label=(\roman*)]
+    \item a \textbf{removable singularity},
+    \item a \textbf{pole} of order \(m\) (if there exists a minimal positive integer \(m\) such that \((z-z_0)^m f(z)\) is analytic and nonzero at \(z_0\)), or
+    \item an \textbf{essential singularity}.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Casorati–Weierstrass]
+If \(f(z)\) is analytic in a neighborhood of a point \(z_0\) except possibly at \(z_0\), where \(f(z)\) has an essential singularity, then the set of values taken by \(f(z)\) in any punctured neighborhood of \(z_0\) is dense in the complex plane. 
+
+Formally, for every \(\varepsilon > 0\) and every complex number \(w\), there exists a \(z\) with \(0 < |z - z_0| < \varepsilon\) such that
+\[
+|f(z) - w| < \varepsilon.
+\]
+\end{theorem}
+
+\begin{theorem}[Riemann's Removable Singularity]
+Suppose a function \( f(z) \) is analytic on a punctured neighborhood \(0 < |z - z_0| < r \) and that
+\[
+\lim_{z \to z_0}(z - z_0)f(z) = 0.
+\]
+
+Then the singularity at \( z_0 \) is removable. In other words, \( f(z) \) can be analytically extended to \( z_0 \) by defining
+\[
+f(z_0) = \lim_{z \to z_0} f(z).
+\]
+\end{theorem}
+
+\begin{theorem}[Maximum Modulus Principle]
+If \(f\) is a nonconstant analytic function on a domain \(U\), then \(|f(z)|\) cannot attain a local maximum in \(U\).
+\end{theorem}
+
+\begin{theorem}[Liouville's Theorem]
+Every bounded entire function (analytic on \(\mathbb{C}\)) is constant.
+\end{theorem}
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+Every nonconstant polynomial \(p(z)\) with complex coefficients has at least one zero in \(\mathbb{C}\).
+\end{theorem}
+
+\begin{theorem}[Argument Principle]
+Let \(f\) be meromorphic inside and on a closed contour \(\gamma\) (with no zeros or poles on \(\gamma\)). Then
+\[
+\frac{1}{2\pi i}\int_\gamma \frac{f'(z)}{f(z)}\,dz = N - P,
+\]
+where \(N\) (respectively, \(P\)) is the number of zeros (respectively, poles) of \(f\) inside \(\gamma\), counted with multiplicity.
+\end{theorem}
+
+\begin{theorem}[Rouché's Theorem]
+Let \(f\) and \(g\) be analytic inside and on a simple closed contour \(\gamma\). If \(|g(z)| < |f(z)|\) on \(\gamma\), then \(f\) and \(f+g\) have the same number of zeros inside \(\gamma\), counting multiplicity.
+\end{theorem}
+
+\begin{theorem}[Schwarz Reflection Principle]
+Suppose \(f\) is analytic in a domain \(U\) that is symmetric with respect to the real axis, and \(f\) maps the real axis into \(\mathbb{R}\). Then \(f\) can be extended to an analytic function on the reflection of \(U\) across the real axis by defining
+\[
+f(\overline{z}) = \overline{f(z)}.
+\]
+\end{theorem}
+
+\begin{theorem}[Open Mapping Theorem]
+If \(f\) is a nonconstant analytic function on a domain \(U\), then \(f\) maps open subsets of \(U\) onto open subsets of \(\mathbb{C}\).
+\end{theorem}
+
+\begin{theorem}[Identity Theorem]
+Let \(f\) and \(g\) be analytic on a connected domain \(U\). If the set
+\[
+\{ z \in U : f(z)=g(z) \}
+\]
+has an accumulation point in \(U\), then \(f\equiv g\) on \(U\).
+\end{theorem}
+
+\section{Lemmas and Propositions}
+
+\begin{lemma}[Cauchy's Inequality]
+Let \(f\) be analytic in the closed disk \(\overline{D}(z_0,R)=\{z: |z-z_0| \le R\}\). Then, for every \(n \ge 0\),
+\[
+\left| f^{(n)}(z_0) \right| \le \frac{n!}{R^n} \max_{|z-z_0|=R} |f(z)|.
+\]
+\end{lemma}
+
+\begin{proposition}[Properties of Contour Integrals]
+If \(f\) is continuous on a contour \(\gamma\), then the value of the contour integral
+\[
+\int_\gamma f(z)\,dz
+\]
+is independent of the parameterization of \(\gamma\).
+\end{proposition}
+
+\begin{proposition}[Existence of Primitives]
+If \(f\) is analytic in a simply connected domain \(U\), then \(f\) has an antiderivative (or primitive) \(F\) in \(U\) such that
+\[
+F'(z) = f(z) \quad \text{for all } z \in U.
+\]
+\end{proposition}
+\textbf{PROPOSITION} \quad Suppose $P$ and $Q$ are polynomials that are real-valued on the real axis and for which the degree of $Q$ exceeds the degree of $P$ by 2 or more. If $Q(x) \neq 0$ for all real $x$, then
+\begin{align}
+    \int_{-\infty}^{\infty} \frac{P(x)}{Q(x)} \, dx = 2\pi i \sum_U \operatorname{Res}\left(\frac{P}{Q}; z_j\right),
+\end{align}
+where the sum is taken over all poles of $P/Q$ that lie in the upper half-plane $U = \{z : \operatorname{Im}\, z > 0\}$.
+
+\end{document}

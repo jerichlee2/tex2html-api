@@ -1,0 +1,339 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\F}{F}
+\DeclareMathOperator{\Z}{Z}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{examples}{Examples}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{definition}[Ring]
+  A \emph{ring} is an ordered triple $(R,+,\cdot)$ consisting of a non‑empty set $R$ together with two binary operations
+  \[
+  +\colon R\times R\to R
+  \quad\text{and}\quad
+  \cdot\colon R\times R\to R
+  \]
+  such that the following axioms hold:
+  
+  \begin{enumerate}
+    \item[\textbf{(R1)}] \textbf{Additive group:} $(R,+)$ is an abelian group; that is,
+      \begin{enumerate}
+        \item[\textit{(i)}] $(a+b)+c = a+(b+c)$ \hfill(associativity)
+        \item[\textit{(ii)}] $a+b = b+a$ \hfill(commutativity)
+        \item[\textit{(iii)}] there exists $0\in R$ with $a+0 = a$ \hfill(additive identity)
+        \item[\textit{(iv)}] for every $a\in R$ there exists $(-a)\in R$ with $a+(-a)=0$ \hfill(additive inverse)
+      \end{enumerate}
+  
+    \item[\textbf{(R2)}] \textbf{Multiplicative semigroup:} $(R,\cdot)$ is associative:
+      \[
+        (ab)c = a(bc)\quad\text{for all }a,b,c\in R.
+      \]
+  
+    \item[\textbf{(R3)}] \textbf{Distributive laws:} multiplication distributes over addition:
+      \[
+        a(b+c) = ab+ac
+        \quad\text{and}\quad
+        (a+b)c = ac+bc
+        \quad\text{for all }a,b,c\in R.
+      \]
+  \end{enumerate}
+  If, in addition,
+  
+  \begin{enumerate}
+    \item[\textbf{(R4)}] there exists $1\in R$ satisfying $1a=a1=a$ for every $a\in R$,
+  \end{enumerate}
+  then $R$ is called a \emph{ring with unity} (or \emph{unital ring}).  
+  A ring is \emph{commutative} if $ab=ba$ for all $a,b\in R$.
+  \end{definition}
+  \begin{definition}[Unital (or Unit‑Preserving) Ring Homomorphism]
+    Let $(R,+,\cdot,1_R)$ and $(S,+,\cdot,1_S)$ be rings with multiplicative identities $1_R$ and $1_S$, respectively.  
+    A map
+    \[
+    \varphi\colon R \longrightarrow S
+    \]
+    is called a \emph{unital ring homomorphism} (or simply a \emph{ring homomorphism that preserves unity}) if it satisfies all three of the following conditions:
+    \begin{enumerate}
+      \item \textbf{Additive preservation:} \quad
+            $\displaystyle \varphi(a+b)=\varphi(a)+\varphi(b)$ \;for all $a,b\in R$.
+      \item \textbf{Multiplicative preservation:} \quad
+            $\displaystyle \varphi(ab)=\varphi(a)\,\varphi(b)$ \;for all $a,b\in R$.
+      \item \textbf{Unit preservation:} \quad
+            $\displaystyle \varphi(1_R)=1_S$.
+    \end{enumerate}
+    Equivalently, a unital ring homomorphism is a ring homomorphism that is simultaneously a group homomorphism with respect to addition, a monoid homomorphism with respect to multiplication, and that carries the multiplicative identity of the domain to that of the codomain.
+    \end{definition}
+    \begin{definition}[Finite Integral Domain]
+      A \emph{ring} $(R,+,\cdot)$ is called an \emph{integral domain} if
+      \begin{enumerate}
+        \item $R$ is commutative under multiplication, i.e.\ $ab = ba$ for all $a,b\in R$;
+        \item $R$ has a multiplicative identity $1\neq 0$;
+        \item $R$ has no zero divisors: whenever $a,b\in R$ satisfy $ab = 0$, then $a = 0$ or $b = 0$.
+      \end{enumerate}
+      An integral domain $R$ is said to be \emph{finite} (or a \emph{finite integral domain}) if its underlying set contains only finitely many elements; that is,
+      \[
+        \lvert R \rvert < \infty.
+      \]
+    \end{definition}
+
+    \begin{examples}
+      \leavevmode
+      \begin{enumerate}
+        \item \textbf{Prime fields.}\;
+          For every prime $p$ the ring
+          \[
+            \F_{p}\;=\;\Z/p\Z
+          \]
+          is a finite integral domain (in fact a field) with $p$ elements.
+          Examples:
+          \[
+            \F_{2},\quad
+            \F_{3},\quad
+            \F_{5},\quad
+            \F_{7},\quad
+            \F_{11},\;\dots
+          \]
+    
+        \item \textbf{Degree‑$n$ extensions of a prime field.}\;
+          For each prime power $q=p^{\,n}$ ($n\ge 2$) there exists—up to isomorphism—a unique
+          finite field $\F_{q}$ with $q$ elements.  One realises it as a
+          quotient of the polynomial ring $\F_{p}[x]$ by an irreducible
+          polynomial of degree~$n$:
+          \[
+            \F_{q}\;\cong\;\F_{p}[x]\big/\bigl(f(x)\bigr),\qquad \deg f = n.
+          \]
+          Small explicit examples include
+          \begin{align*}
+            \F_{4} &\;\cong\; \F_{2}[x]\bigl/(x^{2}+x+1\bigr),\\
+            \F_{8} &\;\cong\; \F_{2}[x]\bigl/(x^{3}+x+1\bigr),\\
+            \F_{9} &\;\cong\; \F_{3}[x]\bigl/(x^{2}+1\bigr),\\
+            \F_{16}&\;\cong\; \F_{2}[x]\bigl/(x^{4}+x+1\bigr),\\
+            \F_{25}&\;\cong\; \F_{5}[x]\bigl/(x^{2}+2\bigr),\\
+            &\;\vdots
+          \end{align*}
+          Each of these fields is a finite integral domain with $p^{n}$ elements.
+      \end{enumerate}
+    \end{examples}
+    \begin{theorem}
+      Every finite integral domain is a field.
+      \end{theorem}
+      
+      \begin{proof}[Step--by--step proof]
+      Let \(R\) be a finite integral domain.  
+      We must show that every non--zero element of \(R\) possesses a multiplicative inverse; equivalently, that
+      \[
+      R^{\times}\;=\;R\setminus\{0\}.
+      \]
+      
+      \begin{enumerate}
+        \item\label{step:def-map}
+              \textbf{Fix a non--zero element and define a left--multiplication map.}  
+              Choose an arbitrary \(a\in R\setminus\{0\}\) and consider the function
+              \[
+                \psi_a : R \longrightarrow R,\qquad
+                r \longmapsto ar .
+              \]
+        \item\label{step:inj}
+              \textbf{The map \(\psi_a\) is injective (cancellation law).}  
+              Suppose \(r_1,r_2\in R\) satisfy \(\psi_a(r_1)=\psi_a(r_2)\); i.e.\ \(ar_1=ar_2\).  
+              Because \(R\) is an integral domain, \(a\neq0\) and the cancellation law holds, giving \(r_1=r_2\).  
+              Hence \(\psi_a\) is injective.
+      
+        \item\label{step:surj}
+              \textbf{Injective \(\Rightarrow\) surjective (finiteness of \(R\)).}  
+              The set \(R\) is finite, so an injective self--map must also be surjective.  
+              Therefore \(\psi_a\) is surjective: for every \(y\in R\) there exists \(b\in R\) with \(\psi_a(b)=y\).
+      
+        \item\label{step:inverse}
+              \textbf{Locate a preimage of \(1\) to get an inverse for \(a\).}  
+              In particular, \(1\in R\) has a preimage: there exists \(b\in R\) such that
+              \[
+                \psi_a(b)=ab = 1 .
+              \]
+              Thus \(b\) is a right inverse of \(a\).  In an integral domain, a right inverse is also a left inverse, so \(ba=1\) as well.  
+              Hence \(a\) is invertible.
+      
+        \item\label{step:conclude}
+              \textbf{Conclude that \(R\) is a field.}  
+              Since the choice of \(a\neq0\) was arbitrary, every non--zero element of \(R\) is invertible.  
+              Therefore \(R^{\times}=R\setminus\{0\}\) and \(R\) satisfies the definition of a field.
+              \qedhere
+      \end{enumerate}
+      \end{proof}
+      \begin{definition}[Ideal]
+        Let $(R,+,\cdot)$ be a ring.  
+        A non‑empty subset $I \subseteq R$ is called an \emph{ideal} of $R$ if  
+        \begin{enumerate}
+          \item $(I,+)$ is a subgroup of $(R,+)$; equivalently, for all $a,b \in I$ we have $a - b \in I$.
+          \item For every $r \in R$ and every $a \in I$, the products $ra$ and $ar$ lie in $I$.  
+          % In a commutative ring the single condition $ra \in I$ suffices.
+        \end{enumerate}
+      \end{definition}
+      \begin{theorem}[Subgroup Test]
+        Let $(G,\ast)$ be a group and let $H\subseteq G$ be a non‐empty subset.
+        The following statements are equivalent:
+        \begin{enumerate}
+          \item $H$ is a subgroup of $G$.
+          \item For every $a,b\in H$ the element $a\ast b^{-1}$ also lies in $H$.
+          \item $\;$\begin{enumerate}
+                    \item[(i)] For every $a,b\in H$ we have $a\ast b\in H$ (closure under the group
+                              operation), and
+                    \item[(ii)] for every $a\in H$ we have $a^{-1}\in H$ (closure under inverses).
+                 \end{enumerate}
+        \end{enumerate}
+        In practice, (2) is often the quickest criterion:  
+        \[
+          H\neq\varnothing\quad\text{and}\quad a,b\in H\Longrightarrow a\ast b^{-1}\in H
+          \ \Longrightarrow\ H\le G .
+        \]
+      \end{theorem}
+      \begin{theorem}[Subring Test]
+        Let $(R,+,\cdot)$ be a ring (not necessarily with $1$), and let $S\subseteq R$ be a non‑empty subset.
+        The following are equivalent:
+        \begin{enumerate}
+          \item $S$ is a subring of $R$ (that is, $S$ itself is a ring under the induced operations).
+          \item For every $a,b\in S$ one has
+                \[
+                   a-b\in S \qquad\text{and}\qquad a\cdot b\in S.
+                \]
+          \item $\;$\begin{enumerate}
+                    \item[(i)] $S$ is closed under addition: $a,b\in S\;\Longrightarrow\;a+b\in S$,
+                    \item[(ii)] $S$ is closed under additive inverses: $a\in S\;\Longrightarrow\;-a\in S$,
+                    \item[(iii)] $S$ is closed under multiplication: $a,b\in S\;\Longrightarrow\;a\cdot b\in S$.
+                 \end{enumerate}
+        \end{enumerate}
+      
+        \noindent
+        \textbf{With Unity.}  
+        If $R$ is a unital ring and one requires subrings to share the same multiplicative identity,
+        then any of the above conditions \emph{plus} $1_R\in S$ is equivalent to “$S$ is a (unital) subring of $R$”.
+      \end{theorem}
+      \[
+  (x + y)^{n} \;=\; \sum_{k = 0}^{n} \binom{n}{k}\, x^{\,n-k}\, y^{\,k},
+  \qquad\text{where}\quad
+  \binom{n}{k} \;=\; \frac{n!}{k!\,(n-k)!}.
+\]
+\begin{proposition}
+  Let $R$ be a ring and let $a,b\in R$ be nilpotent.
+  \begin{enumerate}
+    \item[\textup{(i)}]  If $R$ is \emph{commutative}, then $a+b$ is nilpotent.
+    \item[\textup{(ii)}] In a \emph{non‑commutative} ring the conclusion can fail.
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \textbf{(i) Commutative case.}
+  Suppose $a^{m}=0$ and $b^{n}=0$ for some $m,n\ge 1$.  By the binomial theorem,
+  \[
+    (a+b)^{m+n}\;=\;\sum_{k=0}^{m+n}\binom{m+n}{k}\,a^{\,m+n-k}\,b^{\,k}.
+  \]
+  \begin{itemize}
+    \item If $k<n$, then $m+n-k>m$, so $a^{\,m+n-k}=0$.
+    \item If $k\ge n$, then $b^{\,k}=0$.
+  \end{itemize}
+  Every summand is therefore $0$, hence $(a+b)^{m+n}=0$ and $a+b$ is nilpotent.
+
+  \medskip
+  \textbf{(ii) Non‑commutative counter‑example.}
+  In the matrix ring $M_{2}(\mathbb{Q})$ set
+  \[
+    N_{1}=\begin{pmatrix}0&1\\ 0&0\end{pmatrix},\qquad
+    N_{2}=\begin{pmatrix}0&0\\ 1&0\end{pmatrix}.
+  \]
+  Both satisfy $N_{1}^{2}=N_{2}^{2}=0$, but
+  \[
+    (N_{1}+N_{2})^{2}=I_{2},
+  \]
+  the $2\times 2$ identity matrix, which is certainly \emph{not} nilpotent.
+\end{proof}
+\begin{proof}
+  \textbf{Hypotheses.}  Assume $a^{m}=0$ and $b^{n}=0$ in a \emph{commutative} ring,  
+  with $m,n\ge 1$.
+  
+  \begin{enumerate}
+    \item \textbf{Binomial expansion.}  
+          For any integer $k\ge 1$,
+          \begin{align}
+            (a+b)^{k} \;=\; \sum_{i=0}^{k} \binom{k}{i}\,a^{\,k-i}\,b^{\,i}. \tag{1}
+          \end{align}
+  
+    \item \textbf{Criterion for vanishing.}  
+          A term in (1) is $0$ provided it contains either the factor $a^{m}$  
+          or the factor $b^{n}$.  
+          Thus for every $i$ we require
+          \begin{align}
+            k-i \;\ge\; m 
+            \quad\text{or}\quad 
+            i \;\ge\; n. \tag{2}
+          \end{align}
+  
+    \item \textbf{Choosing $k=m+n$.}  
+          Let $k=m+n$.  Then for each index $i$ we have two cases:
+          \begin{enumerate}
+            \item[(a)] If $i<n$, then $k-i=(m+n)-i>m$, so $a^{\,k-i}=0$.
+            \item[(b)] If $i\ge n$, then $b^{\,i}=0$.
+          \end{enumerate}
+          Consequently every summand in (1) is $0$, whence
+          \begin{align}
+            (a+b)^{\,m+n}=0. \tag{3}
+          \end{align}
+  
+    \item \textbf{Smallest guaranteed exponent.}  
+          Condition (2) actually holds for any $k\ge m+n-1$, so
+          \begin{align}
+            (a+b)^{\,m+n-1}=0 \quad\text{as well}. \tag{4}
+          \end{align}
+          The exponent $m+n$ is chosen only because it avoids the “$-1$’’ and
+          keeps the proof tidy.
+  \end{enumerate}
+  \end{proof}
+\end{document}

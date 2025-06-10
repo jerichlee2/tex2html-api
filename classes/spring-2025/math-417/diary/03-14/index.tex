@@ -1,0 +1,443 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-417: HW 6}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \subsection*{1.  They Are Not Isomorphic}
+
+Recall that \(Q_8=\{\pm 1,\pm i,\pm j,\pm k\}\) is the (non-abelian) quaternion 
+group of order~8, and \(\mathbb{Z}_2\) is the cyclic group of order~2.
+Hence \(Q_8\times \mathbb{Z}_2\) is also \emph{non-abelian}.  
+On the other hand, 
+\[
+\mathbb{Z}_4\oplus \mathbb{Z}_4 = \{(a,b)\mid a,b\in \mathbb{Z}_4\}
+\]
+is clearly abelian (since \(\mathbb{Z}_4\) is abelian and the direct sum 
+of abelian groups is abelian).  
+
+Thus one group is abelian and the other is not, so 
+\[
+Q_8\times \mathbb{Z}_2 \;\not\cong\; 
+\mathbb{Z}_4\oplus \mathbb{Z}_4.
+\]
+
+\subsection*{2.  They Have the Same Numbers of Elements of Each Order}
+
+Despite not being isomorphic, it turns out that for each positive integer \(n\),
+the two groups have the same number of elements of order~\(n\).  We check this 
+by classifying all elements by their orders.
+
+\bigskip
+\noindent
+\textbf{(A) Counting element orders in \(Q_8\times \mathbb{Z}_2\).}
+
+\begin{itemize}
+\item 
+\emph{Order 1:} 
+There is only one identity element, namely \((1,0)\). 
+
+\item 
+\emph{Order 2:}
+An element \((q,x)\) in \(Q_8\times \mathbb{Z}_2\) has order~2 exactly 
+when \((q,x)^2 = (1,0)\).  Concretely, 
+\[
+(q,x)^2 = (q^2,\;2x) = (q^2,0),
+\]
+so we need \(q^2=1\) in \(Q_8\).  The only elements of \(Q_8\) 
+satisfying \(q^2=1\) are \(q = \pm 1\).  
+\begin{itemize}
+\item If \(q=1\), then \((1,x)^2=(1,2x)=(1,0)\) forces \(2x=0\). In 
+\(\mathbb{Z}_2\) the element \(x\) can be \(0\) or \(1\), 
+but if \(x=0\), \((1,0)\) is the identity, not order~2.  
+Hence \(x=1\) works, giving the element \(\,(1,1)\) of order~2.
+\item If \(q=-1\), again \(x\) can be \(0\) or \(1\).  So we get 
+\((-1,0)\) and \((-1,1)\) both squaring to the identity. 
+\end{itemize}
+Thus there are precisely \(\,3\) elements of order~2: 
+\[
+(-1,0),\quad (1,1),\quad (-1,1).
+\]
+
+\item 
+\emph{Order 4:} 
+All remaining non-identity elements must have order~2 or~4 in this group 
+(since \(Q_8\) itself only has elements of order 1,2,4).  
+We have already accounted for \(1\) element of order~1, 
+and \(3\) elements of order~2, so the remaining \(16 - (1+3)=12\) 
+elements must have order~4.  
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{(B) Counting element orders in \(\mathbb{Z}_4\oplus \mathbb{Z}_4\).}
+
+Write a general element as \((a,b)\) with \(a,b\in \mathbb{Z}_4\).
+Recall the possible element orders in \(\mathbb{Z}_4\) are~1,~2, or~4.
+
+\begin{itemize}
+\item 
+\emph{Order 1:} 
+Only \((0,0)\) is the identity element.
+
+\item
+\emph{Order 2:}
+The element \((a,b)\) has order~2 precisely if 
+\[
+2\cdot(a,b) = (2a,2b) = (0,0).
+\]
+In \(\mathbb{Z}_4\), doubling an element kills it only if that element 
+is \(0\) or~\(2\).  So for \((a,b)\) to have order~2, 
+each of \(a\) and \(b\) is either \(0\) or \(2\), 
+but they cannot \emph{both} be \(0\) (that would be the identity).  
+Hence we get exactly three elements of order~2:
+\[
+(2,0),\quad (0,2),\quad (2,2).
+\]
+
+\item
+\emph{Order 4:}
+All remaining non-identity elements have order~4.  
+Again, we have one identity \((0,0)\) and three elements of order~2, 
+so the remaining \(16-(1+3)=12\) elements have order~4.
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{Conclusion:}  
+In both \(Q_8\times \mathbb{Z}_2\) and \(\mathbb{Z}_4\oplus \mathbb{Z}_4\), 
+there is:
+\[
+1\text{ element of order 1 (the identity),} 
+\quad
+3\text{ elements of order 2,} 
+\quad
+12\text{ elements of order 4,}
+\]
+and indeed no elements of any other order.  In particular, 
+they have the same number of elements of each order \(n\), yet 
+one is non-abelian and the other is abelian, so they 
+cannot be isomorphic.
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \noindent
+\textbf{Notation.}
+We write \(D_m=\langle r,s \mid r^m=1,\; s^2=1,\; sr=r^{-1}s\rangle\) 
+as the \emph{dihedral group of order \(2m\)}.  
+Likewise, \(D_n=\langle R,S \mid R^n=1,\;S^2=1,\;SR=R^{-1}S\rangle\).
+
+\medskip
+
+\noindent
+\textbf{Goal.}  Suppose \(m\mid n\), i.e.\ \(n = km\) for some integer \(k\).  
+We must construct an \emph{injective} group homomorphism 
+\(\phi : D_m \longrightarrow D_n\).  
+
+\bigskip
+
+\noindent
+\textbf{Step 1. Define the map on generators.} 
+Set
+\[
+\phi(r) \;=\; R^{\,k},
+\quad
+\phi(s) \;=\; S.
+\]
+Recall \(R\) is a rotation of order~\(n\), so \(R^k\) has order \(\frac{n}{\gcd(n,k)} = \frac{km}{\gcd(km,k)}\). 
+Since \(\gcd(km,k)=k\), the element \(R^k\) has order \(m\).  
+Hence \(\phi(r)\) satisfies \((R^k)^m = R^{km} = R^n = 1\), 
+consistent with \(r^m=1\).  
+
+\bigskip
+
+\noindent
+\textbf{Step 2. Check that the relations are preserved.}
+
+\begin{itemize}
+\item
+\emph{Relation \(r^m=1\).}  
+We have 
+\[
+\phi(r^m) 
+\;=\; 
+\phi(r)^m 
+\;=\; 
+\bigl(R^k\bigr)^m 
+\;=\; 
+R^{km} 
+\;=\; 
+R^n 
+\;=\; 
+1,
+\]
+as required.
+
+\item
+\emph{Relation \(s^2=1\).}  
+Clearly 
+\[
+\phi(s^2)
+\;=\;
+\phi(s)\,\phi(s)
+\;=\;
+S\,S
+\;=\;
+1.
+\]
+
+\item
+\emph{Relation \(sr=r^{-1}s\).}  
+We must show 
+\(\phi(s)\,\phi(r)\;=\;\phi(r^{-1})\,\phi(s)\).  
+Compute each side:
+\[
+\phi(s)\,\phi(r)
+\;=\;
+S\,R^k,
+\qquad
+\phi(r^{-1})\,\phi(s)
+\;=\;
+\phi(r)^{-1}S
+\;=\;
+(R^k)^{-1}S
+\;=\;
+R^{-k}S.
+\]
+But in \(D_n\), the standard relation \(SR = R^{-1}S\) tells us 
+\[
+S\,R^k 
+\;=\; 
+(SRS^{-1})(SRS^{-1})\cdots (SRS^{-1}) \quad (k \text{ times})
+\;=\;
+R^{-k}S.
+\]
+Hence \(\phi(s)\phi(r)=\phi(r^{-1})\phi(s)\), 
+preserving the dihedral relation.
+\end{itemize}
+
+Thus \(\phi\) respects all the defining relations of \(D_m\), so it extends 
+to a well-defined homomorphism \(\phi\colon D_m\to D_n\).
+
+\bigskip
+
+\noindent
+\textbf{Step 3. The map \(\phi\) is injective.}  
+Because \(r\) has image \(R^k\) of order \(m\), no nontrivial power of \(\phi(r)\) is the identity.  
+The only possible way for \(\phi\) to identify two distinct elements of \(D_m\) would be if 
+some nontrivial product in \(r,s\) mapped to the identity in \(D_n\).  
+However, one can check case by case or invoke the universal property of presentations: 
+since \(\phi\) respects the relations faithfully and \(\phi(r)\) has the same order as \(r\), 
+any nontrivial element of \(D_m\) is sent to a nontrivial element of \(D_n\).  
+
+Alternatively, we note that a dihedral group of order \(2m\) can be viewed 
+as a semidirect product \(\mathbb{Z}_m\rtimes\mathbb{Z}_2\).  
+Our map injects \(\langle r\rangle \cong \mathbb{Z}_m\) into \(\langle R^k\rangle\cong \mathbb{Z}_m\), 
+and similarly it sends the flip generator \(s\) to a flip generator in \(D_n\).  
+This semidirect structure is clearly preserved, forcing injectivity.
+
+\bigskip
+
+\noindent
+\textbf{Conclusion.}  
+When \(m\mid n\), the above \(\phi\) is an injective homomorphism, 
+thereby embedding \(D_m\) into \(D_n\).  
+\qedsymbol
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        Suppose $y = g x g^{-1}$ for some $g \in G$.  
+        We claim $\mathrm{ord}(x) = \mathrm{ord}(y)$. 
+        
+        Indeed, observe that for any positive integer $n$,
+        \[
+        y^n
+        \;=\;
+        (g x g^{-1})^n
+        \;=\;
+        g x^n g^{-1}.
+        \]
+        Hence $y^n = e$ (the identity) if and only if $x^n = e$.  
+        It follows that the smallest positive integer $n$ for which $x^n=e$ 
+        is exactly the same as the smallest $n$ for which $y^n = e$.  
+        Therefore $x$ and $y$ have the same order.
+        \end{proof}
+\end{solution}
+
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    We have 
+\[
+A \;=\;\begin{pmatrix} 0 & -1\\[6pt] 1 & 0 \end{pmatrix},
+\quad
+B \;=\;\begin{pmatrix} 0 & 1\\[6pt] -1 & -1 \end{pmatrix},
+\quad
+AB \;=\; A\,B 
+\;=\; \begin{pmatrix} 1 & 1\\[5pt] 0 & 1 \end{pmatrix}.
+\]
+A quick way to see whether two matrices in \(\mathrm{GL}_2(\mathbb{R})\) can be conjugate is to compare their \emph{Jordan/real canonical forms}, which are determined (at least over \(\mathbb{C}\)) by their characteristic polynomials and, in the real case, the signs of certain invariants.  
+
+\subsection*{Characteristic polynomials:}
+
+\begin{itemize}
+\item 
+\(\chi_A(x) = \det(xI - A) = x^2 + 1.\)
+So \(A\) has (complex) eigenvalues \( \pm i\).  In fact, \(A\) represents a rotation by \(90^\circ\) in the plane.
+
+\item
+\(\chi_B(x) = x^2 + x + 1.\)
+Hence \(B\) has eigenvalues \(\tfrac{-1 \pm \sqrt{-3}}{2}\), i.e.\ a rotation by \(120^\circ\).  
+
+\item
+\(\chi_{AB}(x) = \det(xI - AB) = (x-1)^2.\)
+So \(AB\) is a \emph{unipotent} (shear) matrix, with a single eigenvalue \(1\) (of algebraic multiplicity 2). 
+\end{itemize}
+
+\subsection*{Conclusion on conjugacy:}
+
+Two matrices in \(\mathrm{GL}_2(\mathbb{R})\) are similar if and only if they have the same Jordan (or real Jordan) normal form.  In particular, they must share the same characteristic polynomial (and the same additional structure if that polynomial factors over~\(\mathbb{R}\)).  
+
+Here, all three matrices have \emph{different} characteristic polynomials:
+\[
+A:\;\;x^2+1,\qquad
+B:\;\;x^2+x+1,\qquad
+AB:\;(x-1)^2.
+\]
+Hence none of them can be conjugate to any other.  
+
+\[
+\boxed{\text{No two of the matrices \(A,B,AB\) are conjugate; each lies in a distinct conjugacy class.}}
+\]
+We want to prove that for any element \(x\) in a group \(G\) and any positive integer \(k\), the following holds:
+\[
+(gxg^{-1})^k = gx^kg^{-1}.
+\]
+
+\textbf{Proof:} \\
+Conjugation by \(g\) is an automorphism of \(G\). Let
+\[
+\varphi(y) = g y g^{-1}.
+\]
+Since \(\varphi\) is an automorphism, it preserves the group operation:
+\[
+\varphi(yz) = \varphi(y)\varphi(z) \quad \text{for all } y,z \in G.
+\]
+In particular, this implies that \(\varphi\) preserves powers.
+
+\textbf{Proof by Induction:}
+
+\textbf{Base Case:} For \(k=1\),
+\[
+(gxg^{-1})^1 = gxg^{-1} = gx^1g^{-1}.
+\]
+
+\textbf{Inductive Step:} Assume that for some positive integer \(k\),
+\[
+(gxg^{-1})^k = gx^kg^{-1}.
+\]
+Then, for \(k+1\) we have:
+\[
+(gxg^{-1})^{k+1} = (gxg^{-1})^k (gxg^{-1}).
+\]
+By the inductive hypothesis, substitute the expression for \((gxg^{-1})^k\):
+\[
+(gxg^{-1})^{k+1} = \bigl(gx^kg^{-1}\bigr)(gxg^{-1}).
+\]
+Using the associativity of the group operation and noting that \(g^{-1}g = e\) (the identity element), we obtain:
+\[
+(gxg^{-1})^{k+1} = gx^k (g^{-1}g) xg^{-1} = gx^k xg^{-1} = gx^{k+1}g^{-1}.
+\]
+
+By the principle of mathematical induction, the statement holds for all positive integers \(k\).
+
+\end{solution}
+\begin{problem}[]
+    
+\end{problem}
+\begin{solution}
+    \begin{proof}
+        \textbf{(a) $\Longrightarrow$ (b):}  
+        Suppose $G$ acts transitively on a set $X$ of size $m$. Pick a point $x_0 \in X$ and 
+        let $H = \{\,g \in G : g\cdot x_0 = x_0\}\,$ be its stabilizer subgroup.  
+        Since the action is transitive, each element of $X$ can be written uniquely as $g\cdot x_0$ for some $g\in G$. 
+        Then the orbit of $x_0$ is $G\cdot x_0 \cong G/H$, 
+        and because the action is transitive and $X$ has $m$ elements, 
+        we see $\lvert G : H\rvert = m$.  
+        
+        \medskip
+        
+        \noindent
+        \textbf{(b) $\Longrightarrow$ (a):}  
+        Conversely, suppose there is a subgroup $H < G$ of index $m$, i.e.\ the set of left cosets 
+        \[
+        X \;=\; \{\,gH : g \in G\}
+        \]
+        has cardinality $m$.  Define an action of $G$ on these cosets by left multiplication:
+        \[
+        g \cdot (aH) \;=\; (ga)H.
+        \]
+        One checks this is indeed a well-defined group action on $X$; it is automatically transitive 
+        since any coset can be reached from any other by multiplying by a suitable element of $G$.  
+        Thus $G$ acts transitively on a set $X$ of size $m$.
+        
+        \medskip
+        
+        Hence (a) and (b) are equivalent. 
+        \end{proof}
+        
+\end{solution}
+\end{document}

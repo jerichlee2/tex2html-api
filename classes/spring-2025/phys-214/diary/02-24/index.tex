@@ -1,0 +1,580 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Step-by-Step Solution in \LaTeX{}}
+
+\subsection*{1. Convert Photon Energy (eV) to Wavelength \(\lambda\)}
+
+\textbf{(a) Convert the photon energy from eV to joules}
+
+\[
+E = 1.89 \,\text{eV}, \quad
+1 \,\text{eV} = 1.602 \times 10^{-19} \,\text{J}.
+\]
+
+\[
+E_{\text{J}} = 1.89 \,\text{eV} \times 1.602 \times 10^{-19} \,\frac{\text{J}}{\text{eV}}
+= 3.03 \times 10^{-19} \,\text{J}.
+\]
+
+\textbf{(b) Use \(\displaystyle E = \frac{hc}{\lambda}\) to solve for \(\lambda\)}
+
+\[
+\lambda = \frac{hc}{E_{\text{J}}}.
+\]
+
+Using:
+\[
+h = 6.626 \times 10^{-34}\,\text{J}\cdot\text{s}, 
+\quad
+c = 3.00 \times 10^{8}\,\text{m/s},
+\]
+
+\[
+\lambda 
+= \frac{(6.626 \times 10^{-34}\,\text{J}\cdot\text{s})(3.00 \times 10^{8}\,\text{m/s})}{3.03 \times 10^{-19}\,\text{J}}
+\approx 6.56 \times 10^{-7}\,\text{m}
+= 656\,\text{nm}.
+\]
+
+\subsection*{2. Determine the Grating Spacing \(d\)}
+
+The grating has \(6000\) lines per centimeter. The spacing \(d\) is the reciprocal:
+
+\[
+d = \frac{1}{6000 \,\text{lines/cm}} = 1.6667 \times 10^{-4} \,\text{cm}.
+\]
+
+Convert cm to m (\(1\,\text{cm} = 10^{-2}\,\text{m}\)):
+
+\[
+d = 1.6667 \times 10^{-4} \,\text{cm} \times 10^{-2}\,\text{m/cm} 
+= 1.6667 \times 10^{-6} \,\text{m}.
+\]
+
+\subsection*{3. Apply the Diffraction Grating Equation}
+
+For normal incidence and first-order diffraction (\(m=1\)):
+
+\[
+d \,\sin \theta = m \,\lambda \quad \Longrightarrow \quad d\,\sin \theta = \lambda 
+\quad (\text{since } m=1).
+\]
+
+\[
+\sin \theta = \frac{\lambda}{d}
+= \frac{6.56 \times 10^{-7}\,\text{m}}{1.6667 \times 10^{-6}\,\text{m}}
+\approx 0.393.
+\]
+
+\subsection*{4. Solve for \(\theta\)}
+
+\[
+\theta = \sin^{-1}(0.393) \approx 23^\circ.
+\]
+
+\[
+\boxed{\theta \approx 23^\circ \text{ (first-order diffraction angle)}}
+\]
+
+\section*{Step-by-Step Solution}
+
+\subsection*{Problem Statement}
+\noindent
+We have two closely spaced Sodium (Na) emission lines at 
+\[
+\lambda_1 = 589.00\,\text{nm} 
+\quad \text{and} \quad 
+\lambda_2 = 589.59\,\text{nm}.
+\]
+A diffraction grating (up to 3.0\,cm wide) is used in second order (\(m=2\)). 
+We want to determine the minimum number of lines per centimeter required 
+for the grating to \emph{just resolve} these two lines, assuming 
+the grating is fully illuminated.
+
+\subsection*{1. Compute the Required Resolving Power}
+The separation between the two lines is
+\[
+\Delta \lambda 
+= \lambda_2 - \lambda_1
+= 589.59\,\text{nm} - 589.00\,\text{nm} 
+= 0.59\,\text{nm}.
+\]
+Taking an approximate wavelength \(\lambda \approx 589\,\text{nm}\), 
+the \emph{resolving power} \(R\) needed is
+\[
+R 
+= \frac{\lambda}{\Delta \lambda}
+= \frac{589\,\text{nm}}{0.59\,\text{nm}}
+\approx 1000.
+\]
+
+\subsection*{2. Relate Resolving Power to Grating Parameters}
+For a diffraction grating, the resolving power \(R\) is given by
+\[
+R = m \, N,
+\]
+where 
+\begin{itemize}
+    \item \(m\) is the diffraction order (here \(m = 2\)),
+    \item \(N\) is the total number of illuminated slits (or lines).
+\end{itemize}
+Since \(R = 1000\) and \(m = 2\),
+\[
+1000 = 2 \, N
+\quad \Longrightarrow \quad
+N = 500.
+\]
+Thus, we need at least \(500\) slits to be illuminated by the light 
+in order to achieve the required resolution.
+
+\subsection*{3. Determine Lines per Centimeter}
+If the grating is fully illuminated across its maximum width of \(3.0\,\text{cm}\), 
+then the total number of illuminated lines \(N\) is
+\[
+N = (\text{lines/cm}) \times (3.0\,\text{cm}).
+\]
+Let \(L\) be the number of lines per centimeter. Then
+\[
+N = 3.0 \, L.
+\]
+We have \(N = 500\), so
+\[
+3.0 \, L = 500
+\quad \Longrightarrow \quad
+L = \frac{500}{3.0}
+= 166.7 \,\text{lines/cm}.
+\]
+Rounding suitably,
+\[
+\boxed{L \approx 167\;\text{lines/cm}.}
+\]
+
+\subsection*{Final Answer}
+\noindent
+\emph{The minimum number of lines per centimeter required 
+to just resolve the Na doublet in second order, assuming a 
+3.0\,cm fully illuminated grating, is about \(167\)\,lines/cm.}
+
+
+\section*{Bohr Model of the Hydrogen Atom: First Six Energy Levels}
+
+\subsection*{1. Background}
+According to the Bohr model, the electron in a hydrogen atom occupies discrete energy levels 
+labeled by the principal quantum number \(n = 1, 2, 3, \dots\). 
+The energy of each level is given (in electron volts) by the formula
+\[
+E_n = -\frac{13.6\,\text{eV}}{n^2},
+\]
+where \(13.6\,\text{eV}\) is the ground-state (lowest) energy magnitude for hydrogen.
+
+\subsection*{2. Calculate Each Energy Level}
+We want the first six energy levels: \(n = 1, 2, 3, 4, 5,\) and \(6\).
+
+\paragraph{Level \(n=1\)}
+\[
+E_1 
+= -\frac{13.6\,\text{eV}}{1^2} 
+= -13.6\,\text{eV}.
+\]
+
+\paragraph{Level \(n=2\)}
+\[
+E_2 
+= -\frac{13.6\,\text{eV}}{2^2} 
+= -\frac{13.6\,\text{eV}}{4} 
+= -3.40\,\text{eV}.
+\]
+
+\paragraph{Level \(n=3\)}
+\[
+E_3 
+= -\frac{13.6\,\text{eV}}{3^2} 
+= -\frac{13.6\,\text{eV}}{9} 
+\approx -1.51\,\text{eV}.
+\]
+
+\paragraph{Level \(n=4\)}
+\[
+E_4 
+= -\frac{13.6\,\text{eV}}{4^2} 
+= -\frac{13.6\,\text{eV}}{16} 
+= -0.85\,\text{eV}.
+\]
+
+\paragraph{Level \(n=5\)}
+\[
+E_5 
+= -\frac{13.6\,\text{eV}}{5^2} 
+= -\frac{13.6\,\text{eV}}{25} 
+\approx -0.54\,\text{eV}.
+\]
+
+\paragraph{Level \(n=6\)}
+\[
+E_6 
+= -\frac{13.6\,\text{eV}}{6^2} 
+= -\frac{13.6\,\text{eV}}{36} 
+\approx -0.38\,\text{eV}.
+\]
+
+\subsection*{3. Summary of Results}
+\[
+\begin{aligned}
+E_1 &= -13.6\,\text{eV}, \\
+E_2 &= -3.40\,\text{eV}, \\
+E_3 &= -1.51\,\text{eV}, \\
+E_4 &= -0.85\,\text{eV}, \\
+E_5 &= -0.54\,\text{eV}, \\
+E_6 &= -0.38\,\text{eV}.
+\end{aligned}
+\]
+
+\noindent
+These negative signs indicate that the electron is \emph{bound} to the nucleus; 
+the zero of energy is defined as the electron being infinitely far from the nucleus. 
+Higher \(n\) values correspond to \emph{less negative} (i.e., higher) energy levels.
+
+\section*{Hydrogen Transitions: Energies, Wavelengths, and EM Regions}
+
+Below are sample calculations and a summary table for the specified electronic transitions in the hydrogen atom. 
+All energies are in eV, wavelengths in nm, and the electromagnetic (EM) region is indicated (UV, visible with approximate color, or IR).
+
+\subsection*{1. Energy Differences and Wavelengths}
+\noindent
+The energy of a hydrogen level with principal quantum number \(n\) is:
+\[
+E_n = -\frac{13.6\,\text{eV}}{n^2}.
+\]
+A photon emitted by a transition from \(n_i\) (initial) to \(n_f\) (final) has energy
+\[
+E_{\gamma} \;=\; E_{n_i} - E_{n_f},
+\]
+and the corresponding wavelength (in nm) can be found using:
+\[
+\lambda \,[\text{nm}] \;=\; \frac{1240\,\text{eV}\cdot\text{nm}}{E_{\gamma}\,[\text{eV}]}.
+\]
+
+\subsection*{2. Transitions to \texorpdfstring{$n_f=1$}{n=1} (Lyman Series)}
+\[
+\begin{aligned}
+&\textbf{(a)}\; n_i = 2 \;\longrightarrow\; n_f = 1: \\
+&\quad E_{2} = -3.40\,\text{eV}, \quad E_{1} = -13.6\,\text{eV}, \\
+&\quad E_{\gamma} = E_{2} - E_{1} = (-3.40) - (-13.6) = 10.2\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{10.2} \approx 121.6\,\text{nm} \quad (\text{UV region}). \\[6pt]
+&\textbf{(b)}\; n_i = 3 \;\longrightarrow\; n_f = 1: \\
+&\quad E_{3} = -1.51\,\text{eV}, \quad E_{1} = -13.6\,\text{eV}, \\
+&\quad E_{\gamma} = E_{3} - E_{1} = (-1.51) - (-13.6) = 12.09\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{12.09} \approx 102.5\,\text{nm} \quad (\text{UV region}).
+\end{aligned}
+\]
+
+\subsection*{3. Transitions to \texorpdfstring{$n_f=2$}{n=2} (Balmer Series)}
+\[
+\begin{aligned}
+&\textbf{(a)}\; n_i = 3 \;\longrightarrow\; n_f = 2: \\
+&\quad E_{3} = -1.51\,\text{eV}, \quad E_{2} = -3.40\,\text{eV}, \\
+&\quad E_{\gamma} = E_{3} - E_{2} = (-1.51) - (-3.40) = 1.89\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{1.89} \approx 656\,\text{nm} \quad (\text{red, visible}). \\[6pt]
+&\textbf{(b)}\; n_i = 4 \;\longrightarrow\; n_f = 2: \\
+&\quad E_{4} = -0.85\,\text{eV}, \quad E_{2} = -3.40\,\text{eV}, \\
+&\quad E_{\gamma} = E_{4} - E_{2} = (-0.85) - (-3.40) = 2.55\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{2.55} \approx 486\,\text{nm} \quad (\text{blue-green, visible}). \\[6pt]
+&\textbf{(c)}\; n_i = 5 \;\longrightarrow\; n_f = 2: \\
+&\quad E_{5} = -0.54\,\text{eV}, \quad E_{2} = -3.40\,\text{eV}, \\
+&\quad E_{\gamma} = E_{5} - E_{2} = (-0.54) - (-3.40) = 2.86\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{2.86} \approx 434\,\text{nm} \quad (\text{violet, visible}). \\[6pt]
+&\textbf{(d)}\; n_i = 6 \;\longrightarrow\; n_f = 2: \\
+&\quad E_{6} = -0.38\,\text{eV}, \quad E_{2} = -3.40\,\text{eV}, \\
+&\quad E_{\gamma} = E_{6} - E_{2} = (-0.38) - (-3.40) = 3.02\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{3.02} \approx 411\,\text{nm} \quad (\text{violet, near UV}).
+\end{aligned}
+\]
+
+\subsection*{4. Transitions to \texorpdfstring{$n_f=3$}{n=3} (Paschen Series)}
+\[
+\begin{aligned}
+&\textbf{(a)}\; n_i = 4 \;\longrightarrow\; n_f = 3: \\
+&\quad E_{4} = -0.85\,\text{eV}, \quad E_{3} = -1.51\,\text{eV}, \\
+&\quad E_{\gamma} = E_{4} - E_{3} = (-0.85) - (-1.51) = 0.66\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{0.66} \approx 1880\,\text{nm} \quad (\text{IR region}). \\[6pt]
+&\textbf{(b)}\; n_i = 5 \;\longrightarrow\; n_f = 3: \\
+&\quad E_{5} = -0.54\,\text{eV}, \quad E_{3} = -1.51\,\text{eV}, \\
+&\quad E_{\gamma} = E_{5} - E_{3} = (-0.54) - (-1.51) = 0.97\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{0.97} \approx 1280\,\text{nm} \quad (\text{IR region}). \\[6pt]
+&\textbf{(c)}\; n_i = 6 \;\longrightarrow\; n_f = 3: \\
+&\quad E_{6} = -0.38\,\text{eV}, \quad E_{3} = -1.51\,\text{eV}, \\
+&\quad E_{\gamma} = E_{6} - E_{3} = (-0.38) - (-1.51) = 1.13\,\text{eV}, \\
+&\quad \lambda = \frac{1240}{1.13} \approx 1097\,\text{nm} \quad (\text{IR region}).
+\end{aligned}
+\]
+
+\subsection*{5. Summary Table}
+
+\noindent
+\textbf{(a) To \(\,n_f = 1\) (Lyman Series, UV):}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Transition & $E_{n_i}$ (eV) & $E_{n_f}$ (eV) & $E_\gamma$ (eV) & $\lambda$ (nm) \\ \hline
+$n_i=2 \to n_f=1$ & -3.40 & -13.6 & 10.2 & 122 (UV) \\ \hline
+$n_i=3 \to n_f=1$ & -1.51 & -13.6 & 12.09 & 102 (UV) \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{(b) To \(\,n_f = 2\) (Balmer Series, visible or near UV):}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Transition & $E_{n_i}$ (eV) & $E_{n_f}$ (eV) & $E_\gamma$ (eV) & $\lambda$ (nm) \\ \hline
+$n_i=3 \to n_f=2$ & -1.51 & -3.40 & 1.89 & 656 (red) \\ \hline
+$n_i=4 \to n_f=2$ & -0.85 & -3.40 & 2.55 & 486 (blue-green) \\ \hline
+$n_i=5 \to n_f=2$ & -0.54 & -3.40 & 2.86 & 434 (violet) \\ \hline
+$n_i=6 \to n_f=2$ & -0.38 & -3.40 & 3.02 & 411 (violet) \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{(c) To \(\,n_f = 3\) (Paschen Series, IR):}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Transition & $E_{n_i}$ (eV) & $E_{n_f}$ (eV) & $E_\gamma$ (eV) & $\lambda$ (nm) \\ \hline
+$n_i=4 \to n_f=3$ & -0.85 & -1.51 & 0.66 & 1880 (IR) \\ \hline
+$n_i=5 \to n_f=3$ & -0.54 & -1.51 & 0.97 & 1280 (IR) \\ \hline
+$n_i=6 \to n_f=3$ & -0.38 & -1.51 & 1.13 & 1097 (IR) \\ \hline
+\end{tabular}
+
+
+\section*{Transition from \(n_i=4\) to \(n_f=1\) (Hydrogen Atom)}
+
+\subsection*{1. Energy Levels}
+Recall that the energy of the hydrogen atom at principal quantum number \(n\) is given by
+\[
+E_n = -\frac{13.6\,\text{eV}}{n^2}.
+\]
+Hence,
+\[
+E_4 = -\frac{13.6\,\text{eV}}{4^2} = -\frac{13.6\,\text{eV}}{16} = -0.85\,\text{eV},
+\quad
+E_1 = -\frac{13.6\,\text{eV}}{1^2} = -13.6\,\text{eV}.
+\]
+
+\subsection*{2. Photon Energy for the Transition}
+A photon emitted by the transition \(n_i = 4 \to n_f = 1\) has energy
+\[
+E_{\gamma} = E_{4} - E_{1}
+= \bigl(-0.85\,\text{eV}\bigr) - \bigl(-13.6\,\text{eV}\bigr)
+= 13.6\,\text{eV} - 0.85\,\text{eV}
+= 12.75\,\text{eV}.
+\]
+
+\subsection*{3. Wavelength of the Emitted Photon}
+Using the conversion 
+\[
+\lambda \,[\text{nm}] = \frac{1240\,\text{eV}\cdot\text{nm}}{E_{\gamma}\,[\text{eV}]},
+\]
+we find
+\[
+\lambda 
+= \frac{1240}{12.75}
+\approx 97.3\,\text{nm}.
+\]
+This wavelength is in the \textbf{vacuum ultraviolet (UV)} region.
+
+\subsection*{4. Summary}
+\[
+\boxed{
+\text{For } n_i=4 \to n_f=1:\;
+E_{\gamma} \approx 12.75\,\text{eV},\;
+\lambda \approx 97.3\,\text{nm}\; (\text{vacuum UV}).
+}
+\]
+
+\section*{Calculations for a Diffraction Grating with 7500 lines/cm}
+
+\subsection*{1. Slit Spacing}
+\begin{itemize}
+    \item The grating has 7500 lines per centimeter (\(\text{lines/cm}\)).
+    \item To find the slit spacing \(d\), take the reciprocal of the line density 
+    and convert centimeters to meters:
+    \[
+      d 
+      = \frac{1}{7500\,\text{lines/cm}} 
+      = \frac{1}{7500}\,\text{cm} 
+      = \frac{1}{7500} \times 10^{-2}\,\text{m} 
+      \;=\; 1.33 \times 10^{-6}\,\text{m}.
+    \]
+\end{itemize}
+
+\subsection*{2. First-Order Maximum Angle}
+\begin{itemize}
+    \item The wavelength of the yellow light is \(\lambda = 589.3\,\text{nm} = 589.3 \times 10^{-9}\,\text{m}.\)
+    \item For first-order diffraction (\(m=1\)) at normal incidence, the grating equation is:
+    \[
+      d \,\sin \theta = m \,\lambda 
+      \quad\Longrightarrow\quad
+      \sin \theta = \frac{\lambda}{d}.
+    \]
+    \item Substitute the values:
+    \[
+      \sin \theta 
+      = \frac{589.3 \times 10^{-9}\,\text{m}}{1.33 \times 10^{-6}\,\text{m}}
+      \;\approx\; 0.442.
+    \]
+    \item Solve for \(\theta\):
+    \[
+      \theta = \sin^{-1}(0.442) 
+      \;\approx\; 26.2^\circ.
+    \]
+\end{itemize}
+
+\subsection*{Final Answers}
+\[
+\boxed{
+d \;\approx\; 1.33\times10^{-6}\,\text{m}, 
+\quad
+\theta_1 \;\approx\; 26.2^\circ.
+}
+\]
+
+\section*{Predicting First-Order Angles for the Four Balmer Lines}
+
+\subsection*{Given Data}
+\begin{itemize}
+  \item Hydrogen Balmer-series lines (transitions to $n_f = 2$):
+    \[
+      \begin{aligned}
+      n_i = 3 \;\to\; 2 &: \quad \lambda \approx 656\,\text{nm},\\
+      n_i = 4 \;\to\; 2 &: \quad \lambda \approx 486\,\text{nm},\\
+      n_i = 5 \;\to\; 2 &: \quad \lambda \approx 434\,\text{nm},\\
+      n_i = 6 \;\to\; 2 &: \quad \lambda \approx 410\,\text{nm}.
+      \end{aligned}
+    \]
+  \item A diffraction grating with spacing $d$ (from previous calculation). 
+    For example, if the grating is $7500\,\text{lines/cm}$, then
+    \[
+      d \;=\; \frac{1}{7500\,\text{lines/cm}}
+             \;=\; 1.33 \times 10^{-6}\,\text{m}.
+    \]
+  \item First-order diffraction condition:
+    \[
+      d \,\sin\theta = \lambda
+      \quad\Longrightarrow\quad
+      \sin\theta = \frac{\lambda}{d}.
+    \]
+\end{itemize}
+
+\subsection*{Calculations for Each Line (Example with $d = 1.33\times10^{-6}\,\text{m}$)}
+\begin{enumerate}
+  \item \textbf{$n_i=3 \to n_f=2$:} 
+    \[
+      \lambda = 656\,\text{nm} = 6.56\times10^{-7}\,\text{m}.
+    \]
+    \[
+      \sin\theta = \frac{6.56\times10^{-7}\,\text{m}}{1.33\times10^{-6}\,\text{m}}
+      \approx 0.49,
+      \quad
+      \theta \approx \sin^{-1}(0.49) \approx 29.5^\circ.
+    \]
+
+  \item \textbf{$n_i=4 \to n_f=2$:} 
+    \[
+      \lambda = 486\,\text{nm} = 4.86\times10^{-7}\,\text{m}.
+    \]
+    \[
+      \sin\theta = \frac{4.86\times10^{-7}\,\text{m}}{1.33\times10^{-6}\,\text{m}}
+      \approx 0.37,
+      \quad
+      \theta \approx 21.4^\circ.
+    \]
+
+  \item \textbf{$n_i=5 \to n_f=2$:} 
+    \[
+      \lambda = 434\,\text{nm} = 4.34\times10^{-7}\,\text{m}.
+    \]
+    \[
+      \sin\theta = \frac{4.34\times10^{-7}\,\text{m}}{1.33\times10^{-6}\,\text{m}}
+      \approx 0.33,
+      \quad
+      \theta \approx 19.0^\circ.
+    \]
+
+  \item \textbf{$n_i=6 \to n_f=2$:} 
+    \[
+      \lambda = 410\,\text{nm} = 4.10\times10^{-7}\,\text{m}.
+    \]
+    \[
+      \sin\theta = \frac{4.10\times10^{-7}\,\text{m}}{1.33\times10^{-6}\,\text{m}}
+      \approx 0.31,
+      \quad
+      \theta \approx 17.8^\circ.
+    \]
+\end{enumerate}
+
+\subsection*{Summary Table (Example)}
+\[
+\begin{array}{c|c|c}
+\textbf{Transition} & \lambda \,(\text{nm}) & \theta_1 \,(\text{degrees}) \\
+\hline
+3 \to 2 & 656 & 29.5 \\
+4 \to 2 & 486 & 21.4 \\
+5 \to 2 & 434 & 19.0 \\
+6 \to 2 & 410 & 17.8 \\
+\end{array}
+\]
+
+\noindent
+\textit{Note: Your actual angles will depend on the specific grating spacing }$d$\textit{ 
+from your lab's first calculation. Simply use }$\theta = \sin^{-1}\!\bigl(\lambda/d\bigr)$\textit{ 
+for each wavelength.}
+\end{document}

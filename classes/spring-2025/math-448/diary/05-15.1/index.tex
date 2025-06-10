@@ -1,0 +1,588 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+%------------------------------------------------------------
+%  Laurent (actually Maclaurin) expansion of  h(z)=z\cot z
+%  about z = 0 – first four non-zero terms
+%------------------------------------------------------------
+
+\[
+\cot z \;=\; \frac{\cos z}{\sin z}
+           \;=\; \frac{1-\frac{z^{2}}{2!}+\frac{z^{4}}{4!}-\dots}
+                     {z-\frac{z^{3}}{3!}+\frac{z^{5}}{5!}-\dots}
+           \;=\; \frac{1}{z}
+                 \Bigl(1-\tfrac{z^{2}}{3}-\tfrac{z^{4}}{45}
+                       -\tfrac{2z^{6}}{945}-\dots\Bigr).
+\]
+
+Multiplying by \(z\) gives
+
+\[
+\boxed{\;
+   z\cot z
+     \;=\;
+     1 \;-\;\frac{z^{2}}{3}
+        \;-\;\frac{z^{4}}{45}
+        \;-\;\frac{2z^{6}}{945}
+        \;+\;\cdots
+   \;}
+\]
+
+Hence the first four non-zero terms of the Laurent
+(Maclaurin) series about \(z=0\) are
+\[
+1,\; -\dfrac{z^{2}}{3},\; -\dfrac{z^{4}}{45},
+   \; -\dfrac{2z^{6}}{945}.
+\]
+\[
+f(z)\;=\;\frac{z-\sin z}{(z-1)^{2}}
+\]
+
+\textbf{Which point are we talking about?}  
+The only place where the \emph{numerator} vanishes is \(z=0\) (because
+\(\sin 0=0\)).  Around \(z=1\) the denominator blows up, so
+\(z=1\) is \emph{not} a zero but a pole of order \(2\).
+Hence the “order of the zero’’ question concerns \(z=0\).
+
+\bigskip
+\textbf{Definition.}  
+A holomorphic function \(f\) has a \emph{zero of order \(m\)} at
+\(z=z_{0}\) if
+\[
+f(z)= (z-z_{0})^{m}\,g(z),
+\qquad g \text{ analytic and } g(z_{0})\neq0 .
+\]
+
+\bigskip
+\textbf{Step 1 – series of the numerator.}
+Use the Maclaurin expansion
+\[
+\sin z = z-\frac{z^{3}}{3!}+\frac{z^{5}}{5!}-\cdots .
+\]
+Subtracting from \(z\) gives
+\[
+z-\sin z
+   = z-\Bigl(z-\frac{z^{3}}{6}+\frac{z^{5}}{120}-\cdots\Bigr)
+   = \frac{z^{3}}{6}-\frac{z^{5}}{120}+\cdots
+   = z^{3}\Bigl(\frac16-\frac{z^{2}}{120}+\cdots\Bigr).
+\]
+
+\textbf{Step 2 – behaviour of the denominator at \(z=0\).}
+\((z-1)^{2}=1-2z+z^{2}\), which is non-zero at \(z=0\).
+
+\textbf{Step 3 – factor out the lowest power of \(z\).}
+Near \(z=0\)
+\[
+f(z)=
+\frac{z^{3}\bigl(\tfrac16-\tfrac{z^{2}}{120}+\cdots\bigr)}
+     {1-2z+z^{2}}
+     = z^{3}\,\underbrace{\frac{\tfrac16-\tfrac{z^{2}}{120}+\cdots}
+                               {1-2z+z^{2}}}_{g(z)},
+\]
+and the bracketed quotient \(g(z)\) is analytic with
+\(g(0)=\tfrac16\neq0\).
+
+\bigskip
+\[
+\boxed{\;
+\text{Therefore } f \text{ has a zero of order } 3 \text{ at } z=0.
+\;}
+\]
+
+(Meanwhile, \(z=1\) is a pole of order \(2\) because the numerator
+is non-zero there while the denominator behaves like \((z-1)^{2}\).)
+\[
+\textbf{Why isolate (“factor out’’) the \emph{smallest} power of }
+      (z-z_{0})?
+\]
+
+\begin{enumerate}
+\item \textbf{Definition recap.}  
+      A holomorphic function \(f\) has a zero of \emph{order \(m\)} at
+      \(z_{0}\) iff one (hence both) of the following equivalent
+      conditions holds:
+      \[
+      \boxed{\;
+        f(z) = (z-z_{0})^{m}\,g(z),
+        \quad g(z_{0})\neq0
+      \;}
+      \quad\Longleftrightarrow\quad
+      \boxed{\;
+        \displaystyle
+        \lim_{z\to z_{0}}\frac{f(z)}{(z-z_{0})^{m}} = g(z_{0})\neq0
+      \;}
+      \]
+      That is, \emph{exactly} \(m\) factors of \((z-z_{0})\) vanish and
+      the remainder \(g\) stays non-zero.
+
+\item \textbf{Smallest power \(\Rightarrow\) largest non-vanishing term.}  
+      In the Taylor/Laurent series
+      \[
+      f(z)=\sum_{n\ge0} a_{n}\,(z-z_{0})^{n},
+      \]
+      the first non-zero coefficient appears at some index \(m\):
+      \(a_{0}=a_{1}=\dots=a_{m-1}=0,\;a_{m}\neq0\).
+      Factoring out \((z-z_{0})^{m}\) extracts this earliest
+      non-vanishing term, leaving a series whose constant term
+      \(a_{m}\) is \(\neq0\).  Any higher power would make the
+      remaining series start with \(a_{m}\,(z-z_{0})^{k}\) (\(k>0\)),
+      which \emph{does} vanish at \(z_{0}\)—so \(g(z_{0})\) would be
+      \(0\), contradicting the definition.
+
+\item \textbf{Geometric meaning.}  
+      A zero of order
+      \(m\) is a point where the graph of \(f\) “touches’’ the \(0\)
+      level with multiplicity \(m\); algebraically it is where
+      the first \(m-1\) derivatives vanish:
+      \[
+        f(z_{0})=f'(z_{0})=\dots=f^{(m-1)}(z_{0})=0,
+        \qquad f^{(m)}(z_{0})\neq0.
+      \]
+      Factoring out the lowest power makes these derivative conditions
+      manifest.
+
+\item \textbf{Analytic convenience.}  
+      Once we isolate the smallest exponent, the quotient \(g\) is
+      analytic and non-zero at \(z_{0}\).  Therefore
+      \(\log g\) is analytic there, residues are easy to
+      compute, limits are finite, etc.—all the standard tools of
+      complex analysis apply cleanly.
+
+\end{enumerate}
+
+\[
+\boxed{\;
+\text{Hence we factor the \emph{lowest} power so that the leftover
+      factor is \underline{non-vanishing}; this power is, by definition,
+      the order (multiplicity) of the zero.}
+\;}\]
+\pagebreak
+%-----------------------------------------------------------------
+%  Determine the type of each singular point of
+%      f(z)=\dfrac{e^{\pi/z}+1}{z^{2}(z-i)(z+2i)^{2}}
+%  (principal branches assumed)
+%-----------------------------------------------------------------
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*]
+
+  %-----------------------------------------------------------------
+  \item \textbf{$z=0$ : essential singularity}
+  
+  \begin{enumerate}[label=(\alph*)]
+  \item The factor $e^{\pi/z}$ is \emph{essential} at $z=0$ because its
+        Laurent series
+        \(
+            e^{\pi/z}=\displaystyle\sum_{n=0}^{\infty}
+                       \dfrac{\pi^{\,n}}{n!}\,z^{-n}
+        \)
+        contains \emph{infinitely many negative powers}.
+  \item Multiplying by the rational factor
+        $\displaystyle\dfrac{1}{z^{2}(z-i)(z+2i)^{2}}$ 
+        does not remove any of those infinitely many terms; it only adds a
+        finite number of additional negative powers.
+  \end{enumerate}
+  
+  \[
+  \boxed{\;
+     z=0 \text{ is an \emph{essential} singularity of } f
+   \;}
+  \]
+  
+  %-----------------------------------------------------------------
+  \item \textbf{$z=i$ : removable singularity}
+  
+  \begin{enumerate}[label=(\alph*)]
+  \item Evaluate the numerator:
+        \[
+        e^{\pi/i}+1
+        =e^{-\pi i}+1
+        =(-1)+1
+        =0 .
+        \]
+        Hence the numerator vanishes at $z=i$.
+  \item To see \emph{how} it vanishes, expand
+        $g(z):=e^{\pi/z}$ near $z=i$:
+        \[
+        g'(z)= -\frac{\pi\,e^{\pi/z}}{z^{2}}
+        \quad\Longrightarrow\quad
+        g'(i)= -\frac{\pi(-1)}{i^{2}}=-\pi\neq0.
+        \]
+        Thus
+        \(
+           g(z)+1 = (z-i)\bigl(-\pi+\mathcal O(z-i)\bigr),
+        \)
+        i.e.\ the zero is \emph{simple}.
+  \item The denominator contains exactly the same simple factor
+        $(z-i)$, so it cancels completely and leaves a finite,
+        holomorphic limit.
+  \end{enumerate}
+  
+  \[
+  \boxed{\;
+     z=i \text{ is a \emph{removable} singularity of } f
+   \;}
+  \]
+  
+  %-----------------------------------------------------------------
+  \item \textbf{$z=-2i$ : pole of order $2$}
+  
+  \begin{enumerate}[label=(\alph*)]
+  \item The denominator has $(z+2i)^{2}$, so at worst $z=-2i$ is a pole
+        of order $2$.
+  \item Check the numerator:
+        \[
+        e^{\pi/(-2i)}+1
+        =e^{\,\frac{i\pi}{2}}+1
+        =i+1\neq0,
+        \]
+        i.e.\ it \emph{does not} vanish at $z=-2i$.
+  \end{enumerate}
+  
+  \[
+  \boxed{\;
+     z=-2i \text{ is a \emph{pole of order }2 \text{ for } f}
+   \;}
+  \]
+  
+  \end{enumerate}
+  
+  \bigskip
+  \hrule
+  \bigskip
+  \noindent
+  \textbf{Summary}
+  
+  \[
+  \boxed{
+  \begin{array}{c|c}
+  \text{Point} & \text{Type of singularity}\\\hline
+  z=0      & \text{essential}\\
+  z=i      & \text{removable (defines }f(i)\text{)}\\
+  z=-2i    & \text{pole of order }2
+  \end{array}}
+  \]
+  \pagebreak
+  %-----------------------------------------------------------------
+%  Let $f$ be a polynomial of degree $n$ satisfying
+%         $\displaystyle |f(z)|\le M \quad\text{for }|z|=1.$
+%  Prove that
+%         $\displaystyle |f(z)|\le M\,|z|^{n}\quad\text{for }|z|\ge 1.$
+%
+%  (Hint given: apply the Maximum Modulus Principle to
+%               $w^{\,n}f(1/w)$ in the disk $|w|\le 1$.)
+%-----------------------------------------------------------------
+
+\begin{proof}
+  \textbf{1.\; Set--up.}  Write the polynomial explicitly:
+  \[
+  f(z)=a_{n}z^{n}+a_{n-1}z^{\,n-1}+\dots+a_{1}z+a_{0},
+  \qquad a_{n}\neq0,\;n\in\Bbb N.
+  \]
+  
+  \bigskip
+  \textbf{2.\; Define an auxiliary function on the punctured unit disk.}
+  For $w\ne0$ put
+  \[
+  g(w):=w^{\,n}\,f\!\left(\frac1w\right).
+  \tag{2.1}
+  \]
+  \textit{Observation.}  Since $f$ is polynomial, $f(1/w)$ is
+  holomorphic on $0<|w|\le1$ and the prefactor $w^{\,n}$ cancels the pole
+  of order $n$ at $w=0$.  Hence $g$ is holomorphic on the entire disk
+  $|w|\le1$ (Riemann’s removable–singularity theorem).
+  
+  Indeed, expanding (2.1) gives
+  \[
+  g(w)
+    =w^{\,n}\Bigl(a_{n}w^{-n}+a_{n-1}w^{-(n-1)}+\dots+a_{1}w^{-1}+a_{0}\Bigr)
+    =a_{n}+a_{n-1}w+\dots+a_{0}w^{\,n},
+  \]
+  a polynomial in $w$.
+  
+  \bigskip
+  \textbf{3.\; Boundary estimate for $g$.}
+  If $|w|=1$ then $|1/w|=1$, so by the hypothesis
+  $|f(1/w)|\le M$.  Therefore
+  \[
+  |g(w)|
+    = |w^{\,n}|\,\bigl|f(1/w)\bigr|
+    = 1^{n}\,|f(1/w)|
+    \le M,
+    \qquad |w|=1.
+  \tag{3.1}
+  \]
+  
+  \bigskip
+  \textbf{4.\; Apply the Maximum Modulus Principle.}
+  Because $g$ is holomorphic on the closed unit disk and satisfies
+  $|g(w)|\le M$ on the boundary circle, the Maximum Modulus Principle
+  implies
+  \[
+  |g(w)|\le M
+  \quad\text{for every }|w|\le1.
+  \tag{4.1}
+  \]
+  
+  \bigskip
+  \textbf{5.\; Translate the bound back to $f$.}
+  Take an arbitrary $z$ with $|z|\ge1$ and set $w:=1/z$.  Then
+  $0<|w|\le1$ and (4.1) gives
+  \[
+  |g(w)|=|w^{\,n}f(1/w)|
+        =|w|^{\,n}\,|f(z)|
+        =|z|^{-n}\,|f(z)|
+        \;\le\; M.
+  \]
+  Multiply both sides by $|z|^{n}$:
+  \[
+  |f(z)|\;\le\; M\,|z|^{\,n},
+  \qquad |z|\ge1.
+  \tag{5.1}
+  \]
+  
+  \bigskip
+  \textbf{6.\; Conclusion.}  Inequality \emph{(5.1)} establishes the desired
+  estimate for all $|z|\ge1$.
+  
+  \[
+  \boxed{\;
+          |f(z)|\;\le\; M\,|z|^{\,n},
+          \quad\forall\,|z|\ge1
+        \;}
+  \]
+  
+  \end{proof}
+  \pagebreak
+  %------------------------------------------------------------
+%  Liouville’s Theorem (Complex Analysis)
+%------------------------------------------------------------
+
+\begin{theorem}[Liouville]
+  If a function \(f:\,\mathbb{C} \to \mathbb{C}\) is entire\footnote{%
+  Holomorphic (analytic) on the whole complex plane.}
+  and \emph{bounded}, i.e.\ there exists \(M>0\) such that
+  \[
+  |f(z)|\;\le\;M\qquad\text{for all }z\in\mathbb{C},
+  \]
+  then \(f\) is \emph{constant}.
+  \end{theorem}
+  
+  \begin{proof}
+  Fix an arbitrary \(R>0\).  
+  For every \(z\) with \(|z|<\tfrac{R}{2}\) Cauchy’s estimates give
+  \[
+  |f'(z)|
+     \;\le\;
+     \frac{\max_{|w|=R}|f(w)|}{R-|z|}
+     \;\le\;
+     \frac{M}{R-|z|}
+     \;\le\;
+     \frac{M}{R/2}
+     \;=\;\frac{2M}{R}.
+  \]
+  
+  Letting \(R\to\infty\) forces the bound \(|f'(z)|\le\frac{2M}{R}\to 0\),
+  hence \(f'(z)=0\) for \emph{all} \(z\in\mathbb{C}\).  
+  Therefore \(f\) is constant.
+  \end{proof}
+  
+  \bigskip
+  \textbf{Consequences.}
+  \begin{enumerate}
+    \item \emph{Fundamental Theorem of Algebra.}  
+          If \(p(z)\) is a non-constant complex polynomial, then \(p(z)\)
+          must attain every complex value—including \(0\); hence \(p\)
+          has at least one root in \(\mathbb{C}\).
+    \item \emph{Entire functions with growth conditions.}  
+          If an entire function satisfies
+          \(\displaystyle |f(z)|\le C(1+|z|)^{k}\) for some \(k<\infty\),
+          then successive applications of Cauchy’s estimates show that
+          \(f\) must be a polynomial of degree at most \(k\).
+  \end{enumerate}
+  \pagebreak
+  %-----------------------------------------------------------------
+%  Exercise 2.4 #21                (Entire functions of polynomial growth)
+%-----------------------------------------------------------------
+\begin{problem}
+  Let \(f\in\mathcal A(\mathbb{C})\) (entire) and assume there exist constants
+  \(A>0\), \(R_{0}>0\), \(m>0\) such that
+  \[
+     |f(z)| \;\le\; A\,|z|^{m}
+     \qquad\text{whenever } |z|\;\ge\;R_{0}.
+  \]
+  Prove that \(f\) must be a polynomial of degree \(\le m\).
+  \end{problem}
+  
+  \begin{proof}[Step-by-step solution]
+  \textbf{1.\; Expand \(f\) in a Maclaurin series.}  
+  Because \(f\) is entire,
+  \[
+     f(z) \;=\; \sum_{n=0}^{\infty} a_{n}\,z^{n},
+     \qquad z\in\mathbb{C},
+  \]
+  and the series converges everywhere.
+  
+  \bigskip
+  \textbf{2.\; Cauchy’s coefficient estimate.}  
+  For any radius \(R>0\) let
+  \[
+     M_{R} \;:=\;
+     \max_{|z|=R} |f(z)|.
+  \]
+  Cauchy’s estimates give
+  \[
+     |a_{n}|
+     \;\le\;
+     \frac{M_{R}}{R^{n}},
+     \qquad n=0,1,2,\dots
+  \tag{2.1}
+  \]
+  
+  \bigskip
+  \textbf{3.\; Use the growth condition to bound \(M_{R}\).}  
+  If \(R>R_{0}\) then every point on the circle \(|z|=R\) satisfies the
+  hypothesis, hence
+  \[
+     M_{R} \;=\; \max_{|z|=R}|f(z)|
+              \;\le\;
+              A\,R^{m}.
+  \tag{3.1}
+  \]
+  
+  \bigskip
+  \textbf{4.\; Combine (2.1) and (3.1).}  
+  For \(R>R_{0}\) we have
+  \[
+     |a_{n}|
+     \;\le\;
+     \frac{A\,R^{m}}{R^{n}}
+     \;=\;
+     A\,R^{\,m-n}.
+  \tag{4.1}
+  \]
+  
+  \bigskip
+  \textbf{5.\; Show that coefficients with \(n>m\) vanish.}  
+  Fix any index \(n>m\).
+  Letting \(R\to\infty\) in (4.1) forces
+  \(A\,R^{\,m-n}\to0\) (because \(m-n<0\)), so
+  \(|a_{n}|\le 0\).  Hence
+  \[
+     a_{n}=0
+     \qquad\text{for every } n>m.
+  \]
+  
+  \bigskip
+  \textbf{6.\; Conclude the form of \(f\).}  
+  Since all coefficients beyond degree \(m\) are zero,
+  \[
+     f(z)
+     \;=\;
+     \sum_{n=0}^{m} a_{n}\,z^{n},
+  \]
+  a polynomial of degree at most \(m\).
+  \end{proof}
+  %------------------------------------------------------------
+%  Rouché’s Theorem
+%------------------------------------------------------------
+\begin{theorem}[Rouché]
+  Let \(f\) and \(g\) be holomorphic on an open set containing a
+  simple closed positively oriented contour \(\Gamma\)
+  and its interior \(D\).
+  Suppose that on \(\Gamma\) one has the strict inequality
+  \[
+    \boxed{\;|g(z)| < |f(z)|\quad\text{for every }z\in\Gamma\;.}
+  \]
+  Then \(f\) and \(f+g\) have the \emph{same number of zeros
+  (counted with multiplicities)} in the interior \(D\).
+  \end{theorem}
+  
+  \bigskip
+  \noindent
+  \textbf{Sketch of proof.}
+  Because \(|g(z)|<|f(z)|\) on \(\Gamma\), the function
+  \[
+    h_t(z):=f(z)+t\,g(z),
+    \qquad 0\le t\le1,
+  \]
+  never vanishes on \(\Gamma\); indeed
+  \(|t\,g(z)|\le|g(z)|<|f(z)|\) so \(h_t(z)\neq0\) there.
+  Hence for each \(t\) the argument principle applies:
+  \[
+    N(t)=\frac1{2\pi i}\oint_{\Gamma}\!
+          \frac{h_t'(z)}{h_t(z)}\,dz
+  \]
+  
+  is an integer counting the zeros of \(h_t\) in \(D\).
+  The integrand depends holomorphically on \((t,z)\), so \(N(t)\)
+  is continuous in \(t\) but integer-valued—therefore constant.
+  Taking \(t=0\) and \(t=1\) we conclude \(N(0)=N(1)\):
+  \(f\) and \(f+g\) possess the same number of interior zeros. \(\qed\)
+  
+  \bigskip
+  \textbf{Common corollary (polynomial version).}
+  If \(p(z)=a_n z^n+\dots+a_0\) is a polynomial and
+  \[
+    |a_n z^n| > \bigl|a_{n-1}z^{n-1}+\dots+a_0\bigr|
+    \quad\text{on }\Gamma:\;|z|=R,
+  \]
+  then \(p\) has exactly \(n\) zeros inside \(|z|<R\).  
+  Taking \(R\) large makes the inequality hold automatically, giving the
+  classical fact that a degree-\(n\) polynomial has \(n\) zeros in \(\mathbb{C}\).
+\end{document}

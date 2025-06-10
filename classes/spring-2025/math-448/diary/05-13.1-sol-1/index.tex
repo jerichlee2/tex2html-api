@@ -1,0 +1,1116 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{MATH-448 Practice Final Exam 1 Solution}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{solution}
+  Let 
+  \[
+    z = \sqrt{3}+i .
+  \]
+  We wish to find \emph{all} values of \(z^{15/2}\).
+  
+  \subsection*{1.  Polar form of \(z\)}
+  \[
+    |z| = \sqrt{(\sqrt{3})^{2}+1^{2}} = \sqrt{3+1}=2,
+    \qquad
+    \arg z = \arctan\!\Bigl(\tfrac{1}{\sqrt{3}}\Bigr)=\frac{\pi}{6}.
+  \]
+  Hence
+  \[
+    z = 2\,e^{\,i(\pi/6+2\pi k)}, 
+    \qquad k\in\mathbb{Z}.
+  \]
+  
+  \subsection*{2.  Principal logarithm (multi‑valued)}
+  \[
+    \Log z=\ln 2 + i\bigl(\tfrac{\pi}{6}+2\pi k\bigr), 
+    \qquad k\in\mathbb{Z}.
+  \]
+  
+  \subsection*{3.  Raising to the power \(15/2\)}
+  \[
+    z^{15/2} 
+    = \exp\!\Bigl(\tfrac{15}{2}\,\Log z\Bigr)
+    = 2^{15/2}\,
+      \exp\!\Bigl(i\tfrac{15}{2}\bigl(\tfrac{\pi}{6}+2\pi k\bigr)\Bigr),
+    \qquad k\in\mathbb{Z}.
+  \]
+  
+  
+  \subsection*{4.  Distinct values}
+  Because the exponent \(\tfrac{15}{2}\) is in lowest terms, there are exactly
+  \(2\) distinct values, corresponding to \(k=0,1\):
+  
+  \[
+  \begin{aligned}
+  k &= 0: &
+  \phi_0 &= \tfrac{15}{2}\cdot\tfrac{\pi}{6}= \frac{5\pi}{4},
+  \\[4pt]
+  k &= 1: &
+  \phi_1 &= \tfrac{15}{2}\!\Bigl(\tfrac{\pi}{6}+2\pi\Bigr)
+         =\tfrac{15}{2}\cdot\tfrac{13\pi}{6}
+         =\frac{65\pi}{4}
+         \equiv \frac{\pi}{4}\pmod{2\pi}.
+  \end{aligned}
+  \]
+  \subsection*{Why “lowest terms’’ \(\displaystyle\frac{15}{2}\) $\;\Longrightarrow\;$ exactly \(2\) values}
+
+Let \(z=re^{i\theta}\) with \(r>0\) and \(\theta\in\mathbb{R}\).
+For any rational exponent \(\dfrac{p}{q}\) written in \emph{lowest terms}
+(\(\gcd(p,q)=1\)),
+the multi–valued power is  
+\[
+   z^{p/q}=r^{\,p/q}\;
+            \exp\!\Bigl(i\tfrac{p}{q}(\theta+2\pi k)\Bigr),
+   \qquad k\in\mathbb{Z}.
+\]
+
+\paragraph{Step 1:  When do two choices of \(k\) give the same value?}
+Pick \(k_1,k_2\in\mathbb{Z}\).  
+The two values coincide iff their arguments differ by an integer multiple of
+\(2\pi\):
+\[
+  \tfrac{p}{q}\bigl(\theta+2\pi k_1\bigr)
+  \;-\;
+  \tfrac{p}{q}\bigl(\theta+2\pi k_2\bigr)
+  \;=\;
+  2\pi m
+  \quad(m\in\mathbb{Z}).
+\]
+After cancelling \(\theta\) this becomes
+\[
+   \frac{2\pi p}{q}\,(k_1-k_2)=2\pi m
+   \;\;\Longrightarrow\;\;
+   p\,(k_1-k_2)=q\,m.
+\]
+
+\paragraph{Step 2:  Use \(\gcd(p,q)=1\).}
+Because \(p\) and \(q\) are coprime, the only way for
+\(p\,(k_1-k_2)\) to be divisible by \(q\) is that
+\(\boxed{k_1-k_2\equiv 0\pmod{q}}\).
+Hence increasing \(k\) by \(q\) (or any multiple of \(q\)) returns to the
+same value, while \(k,k+1,\dots,k+q-1\) generate \emph{different} values.
+
+\paragraph{Step 3:  Apply to \(\dfrac{15}{2}\).}
+Here \(p=15,\;q=2,\;\gcd(15,2)=1\).
+Therefore  
+\[
+   k\mapsto k+2
+\]
+is the first (smallest) shift in \(k\) that reproduces the same value, so the
+set \(\{k=0,1\}\) already exhausts all distinct values.
+
+\[
+\boxed{\text{Exactly \(q=2\) distinct values.}}
+\]
+
+\paragraph{Mnemonic.}
+For an exponent \(\dfrac{p}{q}\) in lowest terms,  
+\emph{the denominator \(q\) counts the number of branches} of the
+multi‑valued function \(z^{p/q}\).
+  
+  \subsection*{5.  Numerical evaluation}
+  \[
+    2^{15/2}=2^{7+\tfrac12}=128\sqrt{2}.
+  \]
+  
+  \[
+  \begin{aligned}
+  z_0 &= 128\sqrt{2}\,
+        \bigl(\cos\tfrac{5\pi}{4}+i\sin\tfrac{5\pi}{4}\bigr)
+       =128\sqrt{2}\, \Bigl(-\tfrac{\sqrt{2}}{2}-i\tfrac{\sqrt{2}}{2}\Bigr)
+       =-128-128\,i,
+  \\[6pt]
+  z_1 &= 128\sqrt{2}\,
+        \bigl(\cos\tfrac{\pi}{4}+i\sin\tfrac{\pi}{4}\bigr)
+       =128\sqrt{2}\, \Bigl(\tfrac{\sqrt{2}}{2}+i\tfrac{\sqrt{2}}{2}\Bigr)
+       =128+128\,i.
+  \end{aligned}
+  \]
+  
+  \[
+  \boxed{(\sqrt{3}+i)^{15/2}\in\{-128-128\,i,\;128+128\,i\}.}
+  \]
+  \end{solution}
+  \begin{solution}
+    \textbf{Goal.}  Find every value of the fourth root
+    \[
+          w^4=-8-8i\sqrt3,
+          \qquad w\in\mathbb{C},
+    \]
+    and write the answers in the form $a+ib$ with real $a,b$.
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{Step 1.  Express the radicand in polar form.}
+    
+    \vspace{-6pt}
+    \begin{align*}
+    z&=-8-8i\sqrt3\\
+    |z|&=\sqrt{(-8)^2+\bigl(-8\sqrt3\bigr)^2}=\sqrt{64+192}=16,\\
+    \arg(z)&=\pi+\arctan\!\Bigl(\tfrac{\sqrt3}{1}\Bigr)=\pi+\frac{\pi}{3}=\frac{4\pi}{3}
+              \quad\bigl(\text{in the 3rd quadrant}\bigr).
+    \end{align*}
+    
+    Hence
+    \[
+       z=16\,e^{\,i(4\pi/3+2\pi k)},\qquad k\in\mathbb{Z}.
+    \]
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{Step 2.  Take the exponent $1/4$ (with $p=1,\;q=4$ in lowest terms).}
+    
+    Using the multi‑valued power formula,
+    \[
+       z^{1/4}=16^{\,1/4}\;
+                \exp\!\Bigl(i\tfrac14\bigl(\tfrac{4\pi}{3}+2\pi k\bigr)\Bigr),
+                \qquad k\in\mathbb{Z}.
+    \]
+    
+    \[
+       16^{1/4}=2,\qquad
+       \tfrac14\!\bigl(\tfrac{4\pi}{3}\bigr)=\tfrac{\pi}{3},\qquad
+       \tfrac14(2\pi k)=\tfrac{\pi}{2}k.
+    \]
+    
+    Thus
+    \[
+       w_k
+       =2\,e^{\,i(\pi/3+\pi k/2)},\qquad k=0,1,2,3.
+    \]
+    
+    \emph{Why only $k=0,1,2,3$?}  
+    Because $q=4$ (the denominator of $1/4$ in lowest terms), increasing $k$
+    by $4$ returns to the same value: $k\mapsto k+4$ is the first repeat.
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{Step 3.  Convert each $w_k$ to $a+ib$.}
+    
+    \[
+    \begin{aligned}
+    k=0:\;w_0&=2\!\left(\cos\frac{\pi}{3}+i\sin\frac{\pi}{3}\right)
+             =2\!\left(\frac12+i\frac{\sqrt3}{2}\right)
+             =\boxed{1+i\sqrt3},\\[6pt]
+    k=1:\;w_1&=2\!\left(\cos\frac{5\pi}{6}+i\sin\frac{5\pi}{6}\right)
+             =2\!\left(-\frac{\sqrt3}{2}+i\frac12\right)
+             =\boxed{-\sqrt3+i},\\[6pt]
+    k=2:\;w_2&=2\!\left(\cos\frac{4\pi}{3}+i\sin\frac{4\pi}{3}\right)
+             =2\!\left(-\frac12-i\frac{\sqrt3}{2}\right)
+             =\boxed{-1-i\sqrt3},\\[6pt]
+    k=3:\;w_3&=2\!\left(\cos\frac{11\pi}{6}+i\sin\frac{11\pi}{6}\right)
+             =2\!\left(\frac{\sqrt3}{2}-i\frac12\right)
+             =\boxed{\sqrt3-i}.
+    \end{aligned}
+    \]
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{Answer.}  All fourth‑roots of $-8-8i\sqrt3$ are
+    \[
+    \boxed{\;
+       1+i\sqrt3,\;
+       -\sqrt3+i,\;
+       -1-i\sqrt3,\;
+       \sqrt3-i
+    \;}.
+    \]
+    
+    \bigskip
+    \textbf{Branch‑count check.}  
+    Because the exponent is $1/4$ with denominator $q=4$ in lowest terms,
+    the theory guarantees \emph{exactly $4$ distinct values}, matching the list above.
+    \end{solution}
+    \begin{solution}
+      \textbf{Principal branch of the complex logarithm.}
+      For any non‑zero \(z\in\mathbb{C}\),
+      \[
+         \Log z \;=\; \ln|z| \;+\; i\,\Arg(z),
+      \]
+      where
+      \[
+         \Arg(z)\in(-\pi,\pi]
+      \]
+      is the principal argument.
+      
+      \bigskip
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{Step 1.  Polar form of \(1-i\).}
+      
+      \[
+         1-i \;=\; \sqrt2\,e^{\,i(-\pi/4)},
+      \]
+      because
+      \[
+         |\,1-i\,|=\sqrt{1^2+(-1)^2}=\sqrt2,
+         \qquad
+         \Arg(1-i)=-\frac{\pi}{4}\in(-\pi,\pi].
+      \]
+      
+      \bigskip
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{Step 2.  Apply the formula.}
+      
+      \[
+         \Log(1-i)
+         \;=\;
+         \ln\!\bigl(\sqrt2\bigr)
+         + i\!\left(-\frac{\pi}{4}\right)
+         \;=\;
+         \frac{1}{2}\ln 2 \;-\; i\,\frac{\pi}{4}.
+      \]
+      
+      \[
+      \boxed{\displaystyle
+         \Log(1-i)=\frac{\ln 2}{2}-\frac{\pi i}{4}}
+      \]
+      
+      \medskip
+      \textit{Only this value lies on the principal branch; all other logarithmic
+      values differ by integer multiples of \(2\pi i\).}
+      \end{solution}
+      \begin{solution}
+        \textbf{Claim.}\; For every \(z\in\mathcal{C}\setminus\{\pm i\}\) one has
+        \[
+           \arctan z \;=\;\frac{1}{2i}\,
+           \Log\!\Bigl(\frac{1+iz}{\,1-iz\,}\Bigr),
+        \]
+        where \(\Log\) denotes the principal branch of the logarithm
+        (\(\Arg\in(-\pi,\pi]\)).
+        
+        \bigskip
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \textbf{1.  Exponential representation of \(\tan w\).}
+        
+        For any \(w\in\mathcal{C}\) the tangent can be written in terms of exponentials:
+        \[
+           \tan w
+           \;=\;
+           \frac{\sin w}{\cos w}
+           \;=\;
+           \frac{e^{iw}-e^{-iw}}{i\bigl(e^{iw}+e^{-iw}\bigr)}
+           \;=\;
+           \frac{e^{2iw}-1}{\,i\bigl(e^{2iw}+1\bigr)}.
+        \tag{1}
+        \]
+        
+        \bigskip
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \textbf{2.  Solve \(\tan w=z\) for \(e^{2iw}\).}
+        
+        Set \(w=\arctan z\), so \(\tan w=z\).  
+        Using (1),
+        \[
+           z
+           =\frac{e^{2iw}-1}{\,i\bigl(e^{2iw}+1\bigr)}
+           \;\Longrightarrow\;
+           i z\bigl(e^{2iw}+1\bigr)=e^{2iw}-1.
+        \]
+        Rearrange:
+        \[
+           e^{2iw}(1-iz)=1+iz
+           \;\Longrightarrow\;
+           e^{2iw}
+             =\frac{1+iz}{1-iz},
+             \qquad z\neq\pm i.
+        \tag{2}
+        \]
+        
+        \bigskip
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \textbf{3.  Take the principal logarithm.}
+        
+        Applying the principal logarithm to (2):
+        \[
+           2iw
+           =\Log\!\Bigl(\tfrac{1+iz}{\,1-iz\,}\Bigr),
+        \]
+        hence
+        \[
+           w
+           =\frac{1}{2i}\,
+             \Log\!\Bigl(\tfrac{1+iz}{\,1-iz\,}\Bigr).
+        \tag{3}
+        \]
+        
+        \bigskip
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \textbf{4.  Identify \(w\) with \(\arctan z\).}
+        
+        Equation (3) expresses the same \(w\) which, by definition, satisfies
+        \(\tan w=z\) and lies on the principal branch of \(\arctan\).  
+        Therefore
+        \[
+           \boxed{\displaystyle
+              \arctan z
+              \;=\;
+              \frac{1}{2i}\,
+              \Log\!\Bigl(\frac{1+iz}{\,1-iz\,}\Bigr)}
+              \qquad(z\in\mathcal{C}\setminus\{\pm i\}).
+        \]
+        
+        \medskip
+        \textit{Branch discussion.}  
+        The points \(z=\pm i\) are excluded because \(1\mp iz=0\) makes the
+        logarithm singular.  
+        Away from those points the formula is analytic, and the choice of the
+        principal branch of \(\Log\) ensures \(\arctan z\) coincides with its usual
+        real‑valued restriction on \((-\,\tfrac{\pi}{2},\tfrac{\pi}{2})\).
+        \end{solution}
+        \begin{solution}
+          Start with
+          \[
+             \frac{e^{iw}-e^{-iw}}{\,i\bigl(e^{iw}+e^{-iw}\bigr)}.
+          \]
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 1.  Multiply \emph{numerator and denominator} by $e^{iw}$.}
+          
+          (The goal is to clear the negative exponent so everything involves
+          $e^{2iw}$.)
+          
+          \[
+          \frac{e^{iw}-e^{-iw}}{\,i\bigl(e^{iw}+e^{-iw}\bigr)}
+          \;
+          \overset{\times\,e^{iw}}{=}\;
+          \frac{e^{iw}\bigl(e^{iw}-e^{-iw}\bigr)}
+               {\,i\,e^{iw}\bigl(e^{iw}+e^{-iw}\bigr)}.
+          \]
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 2.  Distribute the factor $e^{iw}$ in the numerator and
+          denominator.}
+          
+          \[
+          \begin{aligned}
+          \text{Numerator:}\quad
+          e^{iw}\bigl(e^{iw}-e^{-iw}\bigr)
+                &=e^{2iw}-1,\\[4pt]
+          \text{Denominator:}\quad
+          e^{iw}\bigl(e^{iw}+e^{-iw}\bigr)
+                &=e^{2iw}+1.
+          \end{aligned}
+          \]
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 3.  Substitute these back.}
+          
+          \[
+             \frac{e^{2iw}-1}{\,i\bigl(e^{2iw}+1\bigr)}.
+          \]
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Conclusion.}\;
+          \[
+             \boxed{
+               \displaystyle
+               \frac{e^{iw}-e^{-iw}}{\,i\bigl(e^{iw}+e^{-iw}\bigr)}
+               \;=\;
+               \frac{e^{2iw}-1}{\,i\bigl(e^{2iw}+1\bigr)}
+             }.
+          \]
+          
+          \medskip
+          \emph{Why this matters.}  
+          The left‑hand ratio is exactly \(\tan w\) written in exponential form, so the
+          right‑hand version—depending only on \(e^{2iw}\)—is convenient for solving
+          \(\tan w=z\) and leads directly to the logarithmic identity for \(\arctan z\).
+          \end{solution}
+          \begin{solution}
+            Let
+            \[
+               f(z)=\frac{\sin z}{z^{3}(1-z)},\qquad z\in\mathcal{C}\,\setminus\{0,1\}.
+            \]
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{(a)  Singularity at \(z=0\)}
+            
+            \textbf{Laurent expansion.}  
+            Recall the Maclaurin series
+            \(
+               \sin z = z-\dfrac{z^{3}}{6}+O(z^{5}).
+            \)
+            Hence
+            \[
+               f(z)=\frac{z-\dfrac{z^{3}}{6}+O(z^{5})}{z^{3}(1-z)}
+                   =\frac{1-\dfrac{z^{2}}{6}+O(z^{4})}{z^{2}(1-z)}.
+            \]
+            Since \(\dfrac1{1-z}=1+z+z^{2}+O(z^{3})\),
+            \[
+               f(z)=\frac{1+z+\dfrac{5}{6}z^{2}+O(z^{3})}{z^{2}}
+                    =\frac{1}{z^{2}}+\frac{1}{z}+O(1).
+            \]
+            
+            \textbf{Classification.}  
+            The highest negative power is \(z^{-2}\); therefore \(z=0\) is a
+            \emph{pole of order \(2\)} (and not removable or essential).
+            
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \subsection*{(b)  Singularity at \(z=1\)}
+            
+            Set \(t=z-1\) so that \(t\to0\) means \(z\to1\).
+            Then
+            \[
+               \sin z
+                  =\sin(1+t)
+                  =\sin1+\cos1\,t-\frac{\sin1}{2}t^{2}+O(t^{3}),
+            \]
+            and
+            \[
+               z^{3}(1-z)=(1+t)^{3}(-t)=-t\bigl(1+3t+3t^{2}+t^{3}\bigr).
+            \]
+            Thus
+            \[
+               f(z)
+               =-\frac{\sin1+\cos1\,t+O(t^{2})}{t\bigl(1+3t+3t^{2}+t^{3}\bigr)}
+               =-\frac{\sin1}{t}+O(1).
+            \]
+            
+            \textbf{Classification.}  
+            The principal part contains only the term \(\dfrac{-\sin1}{t}\);
+            hence \(z=1\) is a \emph{simple pole} (pole of order \(1\)).
+            
+            \bigskip
+            \[
+            \boxed{\;
+               z=0:\ \text{pole of order }2,\qquad
+               z=1:\ \text{pole of order }1
+            \;}
+            \]
+            \end{solution}
+            \subsection*{(b)  Residues at the isolated singularities}
+
+Recall 
+\[
+   f(z)=\frac{\sin z}{z^{3}(1-z)}, 
+   \qquad f\colon\mathbb{C}\setminus\{0,1\}\to\mathbb{C} .
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Residue at \(z=0\) (pole of order 2).}
+
+For a pole of order \(m\) at \(z_0\) the residue is
+\[
+   \Res_{z=z_0}f \;=\;
+   \frac{1}{(m-1)!}\,
+   \lim_{z\to z_0}
+   \frac{\mathrm{d}^{\,m-1}}{\mathrm{d}z^{\,m-1}}
+   \Bigl[(z-z_0)^{m}f(z)\Bigr].
+\]
+
+Here \(m=2,\;z_0=0\):
+\[
+\Res_{z=0}f
+   =\lim_{z\to0}\frac{\mathrm{d}}{\mathrm{d}z}
+     \Bigl[z^{2}\,f(z)\Bigr]
+   =\lim_{z\to0}\frac{\mathrm{d}}{\mathrm{d}z}
+     \Bigl[\frac{\sin z}{z(1-z)}\Bigr].
+\]
+
+Differentiate and then take the limit:
+
+\[
+\frac{\mathrm{d}}{\mathrm{d}z}
+   \Bigl(\frac{\sin z}{z(1-z)}\Bigr)
+   =\frac{z(1-z)\cos z-\sin z\bigl[(1-z)-z\bigr]}
+          {z^{2}(1-z)^{2}}
+   =\frac{z(1-z)\cos z-\sin z\,(1-2z)}{z^{2}(1-z)^{2}}.
+\]
+
+As \(z\to0\):
+\[
+   z(1-z)\cos z \;\longrightarrow\; 0,
+   \qquad
+   \sin z\,(1-2z) \;\sim\; z.
+\]
+
+Therefore
+\[
+   \Res_{z=0}f
+   =\lim_{z\to0}\frac{-z}{z^{2}}=-1\cdot(-1)=\boxed{1}.
+\]
+(A quicker route is the Laurent series expansion
+\(f(z)=z^{-2}+z^{-1}+O(1)\), whose \(z^{-1}\)-coefficient is also \(1\).)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Residue at \(z=1\) (simple pole).}
+
+Because the pole at \(z=1\) is simple,
+\[
+   \Res_{z=1}f
+   =\lim_{z\to1}(z-1)\,f(z)
+   =\lim_{z\to1}
+     \frac{(z-1)\sin z}{z^{3}(1-z)}.
+\]
+
+Note that \((z-1)/(1-z)=-1\).  Hence
+\[
+   \Res_{z=1}f
+   =-\;\frac{\sin 1}{1^{3}}
+   =\boxed{-\sin 1}.
+\]
+
+\bigskip
+\[
+   \boxed{\Res_{z=0}f=1,\qquad \Res_{z=1}f=-\sin 1.}
+\]
+\begin{solution}
+  We already have
+  \[
+     f(z)=\frac{\sin z}{z^{3}(1-z)},\qquad z\neq 0 .
+  \]
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{Step 1.  Series needed.}
+  
+  \[
+     \sin z = z-\frac{z^{3}}{6}+\frac{z^{5}}{120}-\dotsb,
+     \qquad
+     \frac{1}{1-z}=1+z+z^{2}+z^{3}+\dotsb ,
+     \qquad |z|<1.
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{Step 2.  Divide \(\sin z\) by \(z^{3}\).}
+  
+  \[
+     \frac{\sin z}{z^{3}}
+     =\frac{z}{z^{3}}-\frac{z^{3}}{6z^{3}}+\frac{z^{5}}{120z^{3}}-\dotsb
+     =\frac{1}{z^{2}}-\frac16+\frac{z^{2}}{120}-\dotsb .
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{Step 3.  Multiply by \(1/(1-z)\).}
+  
+  Keep only the terms capable of producing the first three
+  non‑zero powers (\,\(z^{-2},z^{-1},z^{0}\)\,):
+  
+  \[
+  \begin{aligned}
+  f(z)
+  &=\bigl(z^{-2}-\tfrac16+\dotsb\bigr)\bigl(1+z+z^{2}+\dotsb\bigr)\\[4pt]
+  &=z^{-2}\bigl(1+z+z^{2}\bigr)
+     -\tfrac16(1)+\dotsb\\[4pt]
+  &=\frac{1}{z^{2}}+\frac{1}{z}
+     +\Bigl(1-\frac16\Bigr)+O(z)\\[4pt]
+  &=\frac{1}{z^{2}}+\frac{1}{z}+\frac56+O(z).
+  \end{aligned}
+  \]
+  
+  \bigskip
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \textbf{Answer (first three non‑zero terms).}
+  \[
+     \boxed{\displaystyle
+        f(z)=\frac{1}{z^{2}}+\frac{1}{z}+\frac56+O(z)\quad\text{as }z\to0 }.
+  \]
+  \end{solution}
+  \begin{solution}
+    We need the Laurent expansion of
+    \[
+       g(z)=\frac{1}{z^{2}\sin z}
+    \]
+    about \(z=0\), listing all terms up to (and including) the \(z^{2}\) term.
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{1.  Series for \(\sin z\) and its reciprocal.}
+    
+    \[
+       \sin z
+       = z-\frac{z^{3}}{6}+\frac{z^{5}}{120}-\frac{z^{7}}{5040}+\dotsb
+       \qquad(|z|<\infty).
+    \]
+    
+    Factor out the leading \(z\):
+    \[
+       \sin z
+       =z\Bigl(1-\frac{z^{2}}{6}+\frac{z^{4}}{120}-\dotsb\Bigr).
+    \]
+    
+    Hence
+    \[
+    \frac{1}{\sin z}
+       =\frac{1}{z}\;
+        \frac{1}{1-\dfrac{z^{2}}{6}+\dfrac{z^{4}}{120}-\dotsb}.
+    \]
+    
+    Use the geometric‑series inversion
+    \(
+       \dfrac{1}{1-w}=1+w+w^{2}+w^{3}+\dotsb
+    \)
+    with
+    \(w=\dfrac{z^{2}}{6}-\dfrac{z^{4}}{120}+\dotsb\):
+    \[
+    \begin{aligned}
+    \frac{1}{\sin z}
+     &=\frac{1}{z}
+       \Bigl[
+          1+\frac{z^{2}}{6}
+            +\Bigl(\frac{z^{2}}{6}\Bigr)^{2}
+            -\frac{z^{4}}{120}
+            +O\!\bigl(z^{6}\bigr)
+       \Bigr]\\[4pt]
+     &=\frac{1}{z}
+       \Bigl(
+          1+\frac{z^{2}}{6}+\frac{z^{4}}{36}-\frac{z^{4}}{120}
+          +O\!\bigl(z^{6}\bigr)
+       \Bigr)\\[4pt]
+     &=\frac{1}{z}
+       \Bigl(
+          1+\frac{z^{2}}{6}+\frac{7z^{4}}{360}+O\!\bigl(z^{6}\bigr)
+       \Bigr)\\[4pt]
+     &=\frac{1}{z}+\frac{z}{6}+\frac{7z^{3}}{360}+O\!\bigl(z^{5}\bigr).
+    \end{aligned}
+    \]
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{2.  Multiply by \(1/z^{2}\).}
+    
+    \[
+       g(z)=\frac{1}{z^{2}}\cdot\frac{1}{\sin z}
+            =\frac{1}{z^{2}}
+             \biggl(
+               \frac{1}{z}+\frac{z}{6}+\frac{7z^{3}}{360}+O(z^{5})
+             \biggr)
+            =\frac{1}{z^{3}}+\frac{1}{6z}+\frac{7z}{360}+O(z^{3}).
+    \]
+    
+    \bigskip
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \textbf{3.  Laurent series up to the \(z^{2}\) term.}
+    
+    \[
+    \boxed{\displaystyle
+       g(z)=\frac{1}{z^{3}}+\frac{1}{6z}+\frac{7}{360}\,z
+            +0\cdot z^{2}+O\!\bigl(z^{3}\bigr)
+       \quad\text{as }z\to0 }.
+    \]
+    
+    (The coefficient of \(z^{2}\) happens to be zero.)
+    \end{solution}
+    \begin{solution}
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{Setup.}
+      The integrand
+      \[
+         F(z)\;=\;\frac{e^{z}}{(z-1)(z-2)^{2}}
+      \]
+      has isolated singularities at
+      \[
+         z=1 \quad(\text{simple pole}), 
+         \qquad
+         z=2 \quad(\text{double pole}).
+      \]
+      The contour is the circle
+      \(\displaystyle C:\ |z-2|=1\).
+      It encloses \(z=2\) (which lies at the centre) but \emph{does not enclose}
+      \(z=1\) (which sits exactly one radius away on~$C$ and is therefore outside
+      the interior taken by the residue theorem).  
+      Hence
+      \[
+         \oint_{C} F(z)\,dz
+         \;=\;2\pi i\;\Res_{z=2}F.
+      \]
+      
+      \bigskip
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{Residue at the double pole \(z=2\).}
+      For a pole of order~\(2\) at \(z_{0}\),
+      \[
+         \Res_{z=z_{0}}F
+         \;=\;
+         \lim_{z\to z_{0}}
+         \frac{d}{dz}\Bigl[(z-z_{0})^{2}F(z)\Bigr].
+      \]
+      Here \(z_{0}=2\), so
+      \[
+         \Res_{z=2}F
+         =\left.\frac{d}{dz}
+           \left[
+              \frac{e^{z}}{z-1}
+           \right]
+           \right|_{z=2}.
+      \]
+      Differentiate:
+      \[
+         \frac{d}{dz}\!\left(\frac{e^{z}}{z-1}\right)
+         =\frac{e^{z}}{z-1}-\frac{e^{z}}{(z-1)^{2}}.
+      \]
+      Evaluate at \(z=2\):
+      \[
+         \Res_{z=2}F
+         =\frac{e^{2}}{1}-\frac{e^{2}}{1^{2}}
+         =0.
+      \]
+      
+      \bigskip
+      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      \textbf{Integral value.}
+      \[
+         \oint_{|z-2|=1}\frac{e^{z}}{(z-1)(z-2)^{2}}\;dz
+         \;=\;
+         2\pi i\;(0)
+         \;=\;
+         \boxed{0}.
+      \]
+      
+      \medskip
+      \textit{Remark.}  
+      Because the lone enclosed pole contributes zero residue,
+      the entire contour integral vanishes.
+      \end{solution}
+      \begin{solution}
+        \textbf{Taylor (Maclaurin) series of $\sin(z+1)$ about $z=0$.}
+        
+        Start from the Maclaurin series of $\sin w$:
+        \[
+           \sin w \;=\;\sum_{n=0}^{\infty}
+                        (-1)^{n}\,\frac{w^{2n+1}}{(2n+1)!},
+           \qquad w\in\mathbb{C}.
+        \]
+        Set $w=z+1$:
+        \[
+           \sin(z+1)
+           \;=\;
+           \sum_{n=0}^{\infty}
+               (-1)^{n}\,\frac{(z+1)^{2n+1}}{(2n+1)!}.
+        \]
+        
+        \bigskip
+        \textbf{Expand in powers of $z$.}  
+        A convenient closed form—already expanded—is obtained by using
+        elementary trig identities:
+        \[
+           \boxed{\;
+             \sin(z+1)=\sin 1\,\cos z+\cos 1\,\sin z
+           \;}
+        \]
+        and then substituting the Maclaurin series for $\sin z$ and $\cos z$:
+        \[
+        \begin{aligned}
+        \sin(z+1)
+        &=\sin 1\left(1-\frac{z^{2}}{2!}+\frac{z^{4}}{4!}-\cdots\right)
+         +\cos 1\left(z-\frac{z^{3}}{3!}+\frac{z^{5}}{5!}-\cdots\right)\\[4pt]
+        &=\sin 1
+          +z\cos 1
+          -\frac{z^{2}}{2!}\sin 1
+          -\frac{z^{3}}{3!}\cos 1
+          +\frac{z^{4}}{4!}\sin 1
+          +\frac{z^{5}}{5!}\cos 1
+          -\cdots.
+        \end{aligned}
+        \]
+        
+        \bigskip
+        \textbf{Coefficient form.}
+        Writing
+        \[
+           \sin(z+1)=\sum_{k=0}^{\infty}a_k\,z^{k},
+        \]
+        the coefficients are
+        \[
+           a_{2m}=(-1)^{m}\frac{\sin 1}{(2m)!},
+           \qquad
+           a_{2m+1}=(-1)^{m}\frac{\cos 1}{(2m+1)!},
+           \qquad m=0,1,2,\dots.
+        \]
+        
+        \bigskip
+        \textbf{First few terms.}
+        \[
+           \boxed{\displaystyle
+             \sin(z+1)=
+               \sin 1
+               +(\cos 1)\,z
+               -\frac{\sin 1}{2}\,z^{2}
+               -\frac{\cos 1}{6}\,z^{3}
+               +\frac{\sin 1}{24}\,z^{4}
+               +\frac{\cos 1}{120}\,z^{5}
+               +\cdots
+           } 
+        \]
+        valid for all $z\in\mathbb{C}$ because $\sin$ is entire.
+        \end{solution}
+        \begin{solution}
+          \textbf{Goal.}  Construct a biholomorphic map
+          \[
+             T:\;
+             \Omega=\{\,z\in\mathbb{C}:0<\Re z<\pi,\;\Im z>0\,\}
+             \;\longrightarrow\;
+             \mathbb{H}^{+}:=\{\,w\in\mathbb{C}:\Im w>0\,\}.
+          \]
+          
+          The construction is achieved by composing two elementary conformal maps.
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 1 – Exponential map to the upper semicircle of the unit disc.}
+          
+          Define
+          \[
+             w_1 \;=\; e^{\,i z}.
+          \]
+          
+          Write $z=x+iy$ with $0<x<\pi$ and $y>0$.  Then
+          \[
+             w_1 \;=\; e^{\,i(x+iy)}
+                  \;=\; e^{-y}\,e^{\,ix},
+             \qquad
+             0<e^{-y}<1,\; 0<x<\pi.
+          \]
+          Hence
+          \[
+             |w_1| = e^{-y} \in (0,1), 
+             \quad
+             \arg w_1 = x \in (0,\pi).
+          \]
+          Therefore $w_1$ ranges over the \emph{open upper semicircle}
+          \[
+             D^{+} \;=\;\{\,\zeta\in\mathbb{C}:|\zeta|<1,\;\Im\zeta>0\,\},
+          \]
+          and the map $z\mapsto w_1=e^{iz}$ is conformal on~$\Omega$ because
+          $e^{iz}$ is entire and $e^{iz}\neq0$ in~$\Omega$.
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 2 – Cayley transform to the upper half–plane.}
+          
+          The classical Cayley transform
+          \[
+             C(\zeta) \;=\;
+             i\,\frac{1+\zeta}{1-\zeta},
+             \qquad |\zeta|<1,
+          \]
+          is a Möbius map satisfying $C(D)=\mathbb{H}^{+}$ and
+          $C(\partial D)=\mathbb{R}$.  Because $D^{+}\subset D$, the restriction
+          of~$C$ to $D^{+}$ is still conformal, and its image is the whole upper
+          half–plane (the complement $D\setminus D^{+}$ merely overlaps onto
+          $\mathbb{R}$ under~$C$).
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Step 3 – Composition.}
+          
+          Set
+          \[
+             T(z) \;=\;
+             C\!\bigl(w_1\bigr)
+             \;=\;
+             i\,
+             \frac{1+e^{\,i z}}{1-e^{\,i z}},
+             \qquad z\in\Omega.
+          \]
+          Since each constituent map is holomorphic with non–vanishing derivative
+          in its domain, the composition~$T$ is holomorphic and one–to–one on
+          $\Omega$.  Moreover, by construction $T(\Omega)=\mathbb{H}^{+}$.
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Boundary behaviour check.}
+          
+          \begin{itemize}
+            \item \emph{Bottom edge} ($y=0$, $0<x<\pi$):  
+                  $e^{\,ix}$ lies on the unit circle,
+                  so $T(z)\in\mathbb{R}$.
+          
+            \item \emph{Left edge} ($x=0$, $y>0$):  
+                  $w_1=e^{-y}\in(0,1)$ is real.  
+                  Then $T(z)=i\frac{1+w_1}{1-w_1}\in i(1,\infty)$, i.e.\ the
+                  positive imaginary axis.
+          
+            \item \emph{Right edge} ($x=\pi$, $y>0$):  
+                  $w_1=-e^{-y}\in(-1,0)$ is real.  
+                  Hence $T(z)=i\frac{1-w_1}{1+w_1}\in i(0,1)$, i.e.\ the same
+                  positive imaginary axis but between $0$ and~$i$.
+          
+            \item \emph{Vertex at infinity} ($y\to\infty$):  
+                  $w_1\to0$ and $T(z)\to i$.
+          \end{itemize}
+          
+          These images meet precisely on the real line~$\mathbb{R}$, confirming
+          that $T$ indeed carries the interior of~$\Omega$ bijectively onto
+          $\mathbb{H}^{+}$ and the boundary of~$\Omega$ onto~$\partial\mathbb{H}^{+}$.
+          
+          \bigskip
+          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          \textbf{Final explicit conformal map.}
+          \[
+             \boxed{\;
+               T(z)
+               \;=\;
+               i\,\frac{1+e^{\,i z}}{1-e^{\,i z}},
+               \qquad z\in\Omega
+             \;}
+          \]
+          \end{solution}
+          \begin{solution}
+            We must classify each singular point of 
+            \[
+               f(z)\;=\;\frac{e^{\pi/z}+1}{z^{2}\,(z-i)\,(z+2i)^{2}}.
+            \]
+            The denominator vanishes (and hence $f$ can fail to be analytic) at
+            \[
+               z=0,\quad z=i,\quad z=-2i.
+            \]
+            We analyse the nature of the singularity at each point in turn.
+            
+            \bigskip
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \textbf{1.\ The point $z=0$ is an \emph{essential} singularity.}
+            
+            The exponential $e^{\pi/z}$ has the Laurent expansion
+            \[
+               e^{\pi/z}
+               \;=\;
+               \sum_{n=0}^{\infty}\frac{\pi^{n}}{n!}\,z^{-n},
+               \qquad z\neq0,
+            \]
+            containing \emph{infinitely many} negative powers; therefore
+            $e^{\pi/z}$ is essential at $z=0$.
+            Multiplying by the additional factor
+            $1/(z^{2}(z-i)(z+2i)^{2})$ cannot cancel this infinite principal part,
+            so $f$ itself also has an \textbf{essential singularity at $z=0$}.
+            
+            \bigskip
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \textbf{2.\ The point $z=i$ is \emph{removable}.}
+            
+            Compute the numerator at $z=i$:
+            \[
+               e^{\pi/i}+1
+               \;=\;
+               e^{-\mathrm{i}\pi}+1
+               =
+               -1+1
+               =0.
+            \]
+            Thus $e^{\pi/z}+1$ possesses a \emph{simple} zero at $z=i$.
+            To see this, differentiate:
+            \[
+               \left.\frac{d}{dz}e^{\pi/z}\right|_{z=i}
+               = -\frac{\pi}{i^{2}}\,e^{\pi/i}
+               = \pi\bigl(-1\bigr)
+               \neq 0,
+            \]
+            so the zero is of order~$1$.
+            
+            Because the denominator also vanishes to first order in $(z-i)$,
+            the factors cancel.  Define
+            \[
+               g(z)
+               \;:=\;
+               \frac{e^{\pi/z}+1}{z^{2}\,(z+2i)^{2}},
+               \qquad\text{analytic near }z=i,
+            \]
+            then $f(z)=g(z)/(z-i)$ and $g(i)=0$.
+            Hence
+            \[
+               \lim_{z\to i}f(z)
+               =\lim_{z\to i}\frac{g(z)-g(i)}{z-i}
+               =g'(i)
+               \;\in\;\mathbb{C},
+            \]
+            showing that $f$ extends holomorphically to $z=i$.
+            Hence the singularity is \textbf{removable at $z=i$}.
+            
+            \bigskip
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \textbf{3.\ The point $z=-2i$ is a \emph{pole of order $2$}.}
+            
+            At $z=-2i$ the denominator has a factor $(z+2i)^{2}$.
+            Since
+            \[
+               e^{\pi/(-2i)}+1
+               =e^{-\pi i/2}+1
+               =-\,\mathrm{i}+1
+               \;\neq\;0,
+            \]
+            the numerator \emph{does not vanish} there.
+            Moreover the other denominator factors $z^{2}$ and $(z-i)$ are non‑zero
+            at $z=-2i$.
+            Consequently
+            \[
+               (z+2i)^{2}f(z)
+               =\frac{e^{\pi/z}+1}{z^{2}(z-i)}
+            \]
+            is analytic and non‑zero at $z=-2i$, so the singularity is a
+            \textbf{pole of order $2$ at $z=-2i$}.
+            
+            \bigskip
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            \textbf{Summary.}\;  
+            \[
+               \boxed{\;
+                  \begin{array}{lcl}
+                     z=0     &\longrightarrow& \text{essential singularity},\\[2pt]
+                     z=i     &\longrightarrow& \text{removable singularity},\\[2pt]
+                     z=-2i   &\longrightarrow& \text{pole of order }2.
+                  \end{array}
+               \;}
+            \]
+            \end{solution}
+\end{document}

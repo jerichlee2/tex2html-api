@@ -1,0 +1,209 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+
+\lstset{
+    breaklines=true,         % Enable line wrapping
+    breakatwhitespace=false, % Wrap lines even if there's no whitespace
+    basicstyle=\ttfamily,    % Use monospaced font
+    frame=single,            % Add a frame around the code
+    columns=fullflexible,    % Better handling of variable-width fonts
+}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./Figures/}{#1.pdf_tex}
+}
+\theoremstyle{definition} % This style uses normal (non-italicized) text
+\newtheorem{solution}{Solution}
+\newtheorem{proposition}{Proposition}
+\newtheorem{problem}{Problem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{plain} % Restore the default style for other theorem environments
+%
+
+% Theorem-like environments
+% Title information
+\title{}
+\author{Jerich Lee}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \section*{Solution}
+
+  \subsection*{1.1}
+  As the temperature increases at fixed pressure (approximately 101 kPa), the stable phase is the one with the lowest chemical potential \(\mu\). From the \(\mu\) vs.\ \(T\) plot on the right panel:
+  \begin{enumerate}[label=(\arabic*)]
+    \item At low temperature, the solid curve lies lowest, so the material is in the \emph{solid} phase.
+    \item At the temperature \(T_m\) where the solid and liquid curves intersect, about 
+      \[
+        T_m \approx 0^\circ\mathrm{C},
+      \]
+      the solid–liquid transition occurs and the material becomes \emph{liquid}.
+    \item The material remains liquid until the temperature \(T_b\) where the liquid and vapor curves intersect, about
+      \[
+        T_b \approx 100^\circ\mathrm{C},
+      \]
+      at which point the liquid–vapor transition occurs and the material becomes \emph{vapor}.
+  \end{enumerate}
+  
+  \subsection*{1.2}
+  Still using the \(\mu\) vs.\ \(T\) figure, answer the questions:
+  \begin{enumerate}[label=(\alph*)]
+    \item \textbf{Is the supercooled water in equilibrium with the environment?}\\
+      No.  At \(-10^\circ\mathrm{C}\) and ambient pressure, the chemical potential of the solid (ice) lies below that of the liquid.  Thus the true equilibrium phase is ice.  The liquid state is only \emph{metastable} (supercooled) because there is an energy barrier to nucleation of ice.
+    \item \textbf{What would cause the free energy of the water to decrease?}\\
+      Formation of an ice nucleus (for example by introducing impurities or a rough surface to provide nucleation sites) allows the system to transition to the phase with lower \(\mu\).  Freezing releases latent heat and lowers the Gibbs free energy, driving the system toward the equilibrium solid phase.
+  \end{enumerate} 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \subsection*{1.3}
+By comparing the two diagrams, we note that on the \(\mu\) vs.\ \(T\) plot the solid–liquid and liquid–vapor intersections occur at approximately \(0^\circ\mathrm{C}\) and \(100^\circ\mathrm{C}\), respectively.  Those are exactly the melting and boiling points of water at one atmosphere.  Hence the fixed pressure of the \(\mu\) vs.\ \(T\) diagram is
+\[
+  p \approx 1~\mathrm{atm} \approx 101~\mathrm{kPa}.
+\]
+
+\subsection*{1.4}
+The \(p\)–\(T\) phase diagram for water shows that the solid–liquid coexistence line has a slight negative slope.  Equivalently, from the Clapeyron equation,
+\[
+  \frac{dP}{dT} = \frac{\Delta S}{\Delta V}
+  \quad\Longrightarrow\quad
+  \frac{dT}{dP} = \frac{\Delta V}{\Delta S}\,,
+\]
+and since \(\Delta V<0\) for melting ice, we have \(dT/dP<0\).  Therefore, if the pressure is increased slightly, the melting point of ice \emph{decreases}.
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \subsection*{2.1}
+  Starting from the definition
+  \[
+  G = U - T S + p V,
+  \]
+  take the differential and apply the product rule:
+  \[
+  dG = dU - T\,dS - S\,dT + p\,dV + V\,dp.
+  \]
+  Substitute the fundamental relation \(dU = T\,dS - p\,dV + \mu\,dN\):
+  \[
+  dG = \bigl(T\,dS - p\,dV + \mu\,dN\bigr)
+        - T\,dS - S\,dT + p\,dV + V\,dp
+      = -S\,dT + V\,dp + \mu\,dN.
+  \]
+  
+  \subsection*{2.2}
+  Since \(G = \mu N\), another expression for its differential is
+  \[
+  dG = N\,d\mu + \mu\,dN.
+  \]
+  Equating this with the result from part 2.1,
+  \[
+  N\,d\mu + \mu\,dN \;=\; -S\,dT + V\,dp + \mu\,dN,
+  \]
+  we cancel the \(\mu\,dN\) terms to obtain
+  \[
+  N\,d\mu = V\,dp - S\,dT
+  \quad\Longrightarrow\quad
+  d\mu = \frac{V}{N}\,dp \;-\;\frac{S}{N}\,dT.
+  \] 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \subsection*{2.3}
+  At constant temperature (\(dT=0\)), the differential from part 2 becomes
+  \[
+  d\mu = \frac{V}{N}\,dp.
+  \]
+  Assuming \(\tfrac{V}{N}\) is (approximately) constant over the small pressure change, integrate from \(p_1\) to \(p_2\):
+  \[
+  \Delta\mu \;=\; \mu(p_2)-\mu(p_1)
+  =\int_{p_1}^{p_2}\frac{V}{N}\,dp
+  =\frac{V}{N}\;(p_2 - p_1).
+  \]
+  Hence,
+  \[
+  \boxed{\mu(p_2)-\mu(p_1)=\frac{V}{N}\,(p_2-p_1).}
+  \] 
+\end{solution}
+\begin{problem}[]
+  
+\end{problem}
+\begin{solution}
+  \section*{3. CO\(_2\) phase diagram}
+
+  At fixed temperature \(T\), we increase the pressure from \(p_1\) (liquid region) to \(p_2\) (solid region).
+  
+  \begin{enumerate}[label=(\alph*)]
+    \item \(\mu_{\ell}(p_{1}) < \mu_{s}(p_{1})\).  
+      At \(p_{1}\), the liquid phase is stable, so its chemical potential is lower than that of the solid.
+    
+    \item \(\mu_{s}(p_{2}) < \mu_{\ell}(p_{2})\).  
+      At \(p_{2}\), the solid phase is stable, so its chemical potential is lower than that of the liquid.
+    
+    \item Add the two inequalities:
+      \[
+        \bigl[\mu_{s}(p_{2}) - \mu_{s}(p_{1})\bigr]
+        + \bigl[\mu_{\ell}(p_{1}) - \mu_{\ell}(p_{2})\bigr]
+        < 0.
+      \]
+      By part 2.3,
+      \[
+        \mu_{s}(p_{2}) - \mu_{s}(p_{1})
+        = \frac{V_{s}}{N_{s}}\,(p_{2}-p_{1}),
+        \quad
+        \mu_{\ell}(p_{1}) - \mu_{\ell}(p_{2})
+        = -\,\frac{V_{\ell}}{N_{\ell}}\,(p_{2}-p_{1}).
+      \]
+      Hence
+      \[
+        \frac{V_{s}}{N_{s}}\,(p_{2}-p_{1})
+        \;-\;\frac{V_{\ell}}{N_{\ell}}\,(p_{2}-p_{1})
+        <0.
+      \]
+    
+    \item Since \(p_{2}-p_{1}>0\), we conclude
+      \[
+        \frac{V_{s}}{N_{s}} \;<\;\frac{V_{\ell}}{N_{\ell}}.
+      \]
+      The molar (or specific) volume of the solid is smaller than that of the liquid.
+    
+    \item \textbf{Water’s anomalous slope.}  
+      For water, the solid–liquid line in the \(p\)–\(T\) diagram slopes \emph{negatively}.  From the Clapeyron equation,
+      \(\,dP/dT = \Delta S/\Delta V\), a negative slope requires \(\Delta V<0\) on melting.  Since ice has larger volume than liquid water, \(\Delta V = V_{\ell}-V_{s}<0\), so \(dP/dT<0\).
+  \end{enumerate} 
+\end{solution}
+\end{document}
