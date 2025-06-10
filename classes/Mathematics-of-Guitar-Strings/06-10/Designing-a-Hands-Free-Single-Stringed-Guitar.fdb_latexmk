@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1749598780.96317 "/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex" "Designing-a-Hands-Free-Single-Stringed-Guitar.pdf" "Designing-a-Hands-Free-Single-Stringed-Guitar" 1749598782.00406 0
-  "/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex" 1749598780.71665 7376 12ba1b67eb067042880c96ecdc2d8f05 ""
+["pdflatex"] 1749599859.49425 "/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex" "Designing-a-Hands-Free-Single-Stringed-Guitar.pdf" "Designing-a-Hands-Free-Single-Stringed-Guitar" 1749599860.557 0
+  "/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex" 1749599859.23799 7376 e165ce4157b3030cedb3d2b1b22c33db ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -171,9 +171,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1710571862.48943 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1710571826 8221424 096a2afea9898eaddb935b45b38cfbab ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "Designing-a-Hands-Free-Single-Stringed-Guitar.aux" 1749598781.93969 2073 2b74602a4a8697b082e428d1e0d627c1 "pdflatex"
-  "Designing-a-Hands-Free-Single-Stringed-Guitar.out" 1749598781.56443 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Designing-a-Hands-Free-Single-Stringed-Guitar.tex" 1749598780.71665 7376 12ba1b67eb067042880c96ecdc2d8f05 ""
+  "Designing-a-Hands-Free-Single-Stringed-Guitar.aux" 1749599860.49221 2073 2b74602a4a8697b082e428d1e0d627c1 "pdflatex"
+  "Designing-a-Hands-Free-Single-Stringed-Guitar.out" 1749599860.1107 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Designing-a-Hands-Free-Single-Stringed-Guitar.tex" 1749599859.23799 7376 e165ce4157b3030cedb3d2b1b22c33db ""
   "fgs/fig1.png" 1749597843.2715 118775 be742df7aab7c96e39a575588d68c62b ""
   "fgs/fig2.png" 1749597843.28182 155076 2d58437fdfaae9ac154a2f9bbbceacd3 ""
   "fgs/fig3.png" 1749597843.2868 398197 e6d3fbe059f9ad9adc413ba4023390c6 ""
