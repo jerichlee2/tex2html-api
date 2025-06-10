@@ -17,7 +17,7 @@ from functools import lru_cache
 # Configuration (edit these four lines or use env vars)
 # ──────────────────────────────────────────────────────────────
 BASE_DIR   = pathlib.Path(os.getenv("T2H_REPO_ROOT",
-                     "/Users/jerichlee/Documents/jerich")).resolve()
+                     "https://jerichlee2.github.io/Jerich.ai")).resolve()
 TEX2HTML   = pathlib.Path(os.getenv("T2H_SCRIPT",
                      BASE_DIR / "scripts/tex-to-html.py")).resolve()
 PYTHON_EXE = os.getenv("T2H_PYTHON", "python3")
