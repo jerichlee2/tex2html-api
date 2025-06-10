@@ -33,23 +33,31 @@ def tex_escape(txt: str) -> str:
                .replace(">", "&gt;"))
 
 # ────────────────── generic env extractor (nested-safe) ──────────────────
-def grab_env(block: str, pos: int, env: str) -> tuple[str, int]:
-    beg_pat = re.compile(rf"\\begin\{{{env}\}}\s*(\[[^\]]*\])?", re.S)
-    end_pat = re.compile(rf"\\end\{{{env}\}}", re.S)
+# ────────────────── generic env extractor (nested-safe) ──────────────────
+def grab_env(tex: str, pos: int, env: str) -> tuple[str, int]:
 
-    m0 = beg_pat.match(block, pos)
+    beg_pat = rf"\\begin\{{{env}\}}\s*(\[[^\]]*\])?"
+    end_pat = rf"\\end\{{{env}\}}"
+    token_re = re.compile(fr"{beg_pat}|{end_pat}", re.S)
+
+    # Confirm we're sitting exactly on the opening tag and skip past it.
+    m0 = re.match(beg_pat, tex[pos:], re.S)
     if not m0:
-        raise ValueError(f"Expected \\begin{{{env}}} at {pos}")
-    depth, cursor = 1, m0.end()
+        raise ValueError(f"Expected \\begin{{{env}}} at index {pos}")
+    depth = 1
+    cursor = pos + m0.end()           # start scanning *after* the first tag
 
-    while True:
-        m = re.search(rf"{beg_pat.pattern}|{end_pat.pattern}", block[cursor:], re.S)
+    while depth and cursor < len(tex):
+        m = token_re.search(tex, cursor)
         if not m:
             raise ValueError(f"Missing \\end{{{env}}}")
-        cursor += m.end()
+        cursor = m.end()              # advance past this token
         depth += 1 if m.group(0).startswith("\\begin") else -1
-        if depth == 0:
-            return block[pos:cursor], cursor
+
+    if depth != 0:
+        raise ValueError(f"Missing \\end{{{env}}}")
+
+    return tex[pos:cursor], cursor
 
 # ────────────────── recursive LaTeX-to-HTML core ──────────────────
 def render(tex: str, in_math=False) -> str:
