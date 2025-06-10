@@ -204,14 +204,26 @@ Find:
             = \lim \sigma_{n} = L=\lim s_{n}  
            \end{align}  
         \end{proof}
-        \begin{proof}
-         \item Suppose $s_{n} = (-1)^n$. Then $\lim s_{n} = \text{DNE} $. But we know:
-        \begin{align}
-            \frac{\text{$-1$ or $0$  } }{N} \underbrace{\to }_{N\to \infty } 0
-        \end{align}
-        Therefore, the $\lim_{n \to \infty} \sigma_{n}$  exists if $\lim_{n \to \infty} s_{n}=\text{DNE} $. 
-        \end{proof}
+        \item
+      \begin{proof}
+        Suppose $s_n = (-1)^n$.  Then
+        $\displaystyle\lim_{n\to\infty}s_n$ does **not** exist,
+        because the subsequence of even indices converges to $1$ while
+        the subsequence of odd indices converges to $-1$.
 
+        However
+        \[
+          \sigma_n=\frac{1}{n}\sum_{k=1}^{n}(-1)^k =
+          \begin{cases}
+            -\dfrac1n &\text{if $n$ is even},\\[6pt]
+             \;\;0    &\text{if $n$ is odd},
+          \end{cases}
+        \]
+        and in both cases $\sigma_n\to 0$.
+        Thus $\displaystyle\lim_{n\to\infty}\sigma_n = 0$
+        even though $\displaystyle\lim_{n\to\infty}s_n$ does not exist.
+      \end{proof}
+         
     \end{enumerate}
 \end{solution}
 

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1749540503.40422 "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.2/limits-and-sequences-continued.tex" "limits-and-sequences-continued.pdf" "limits-and-sequences-continued" 1749540503.89924 0
-  "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.2/limits-and-sequences-continued.tex" 1749540502.63504 12826 16033a8364cdf2f2119898ec83215bcc ""
+["pdflatex"] 1749568151.51744 "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.2/limits-and-sequences-continued.tex" "limits-and-sequences-continued.pdf" "limits-and-sequences-continued" 1749568152.04173 0
+  "/Users/jerichlee/Documents/tex2html-api/classes/MATH-447/06-10.2/limits-and-sequences-continued.tex" 1749568151.29199 13168 d1352833c94bcc954c0b23b0929744e4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -85,9 +85,9 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1710571862.48943 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1710571826 8221424 096a2afea9898eaddb935b45b38cfbab ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "limits-and-sequences-continued.aux" 1749540503.84921 162 f042405b684a8c860cba07045d113040 "pdflatex"
-  "limits-and-sequences-continued.out" 1749540503.67932 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "limits-and-sequences-continued.tex" 1749540502.63504 12826 16033a8364cdf2f2119898ec83215bcc ""
+  "limits-and-sequences-continued.aux" 1749568151.99026 162 f042405b684a8c860cba07045d113040 "pdflatex"
+  "limits-and-sequences-continued.out" 1749568151.81736 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "limits-and-sequences-continued.tex" 1749568151.29199 13168 d1352833c94bcc954c0b23b0929744e4 ""
   (generated)
   "limits-and-sequences-continued.aux"
   "limits-and-sequences-continued.log"

@@ -25,13 +25,13 @@
 \maketitle
 
 \begin{problem}[9.12]
-    \begin{itemize}
+    \begin{enumerate}
         \item Assume all $s_n \neq 0$ and that the limit $L = \lim \left| \frac{s_{n+1}}{s_n} \right|$ exists.
         \begin{enumerate}
             \item[(a)] Show that if $L < 1$, then $\lim s_n = 0$. \emph{Hint:} Select $a$ so that $L < a < 1$ and obtain $N$ so that $|s_{n+1}| < a|s_n|$ for $n \ge N$. Then show $|s_n| < a^{n-N}|s_N|$ for $n > N$.
             \item[(b)] Show that if $L > 1$, then $\lim |s_n| = +\infty$. \emph{Hint:} Apply (a) to the sequence $t_n = \frac{1}{|s_n|}$; see Theorem 9.10.
         \end{enumerate}
-    \end{itemize}
+    \end{enumerate}
 \end{problem}
 
 \begin{solution}
@@ -53,9 +53,9 @@
   
       %-----------------  (b)  -----------------%
       \item[(b)]
-        \begin{proposition}
-          If $L>1$, then $\displaystyle\lim_{n\to\infty}|s_n|=+\infty$.
-        \end{proposition}
+        % \begin{proposition}
+        %   If $L>1$, then $\displaystyle\lim_{n\to\infty}|s_n|=+\infty$.
+        % \end{proposition}
         \begin{proof}
           Define $t_n = \dfrac{1}{|s_n|}$.  
           From the ratio in part (a) we get
@@ -141,14 +141,14 @@ $\sum_{n=1}^{\infty} \frac{1}{n^{2}}$
 
 
 \begin{problem}[10.6]
-    \begin{itemize}
+    \begin{enumerate}
         \item[(a)] Let $(s_n)$ be a sequence such that
         \begin{align}
         |s_{n+1} - s_n| < 2^{-n} \quad \text{for all } n \in \mathbb{N}.
         \end{align}
         Prove $(s_n)$ is a Cauchy sequence and hence a convergent sequence.
         \item[(b)] Is the result in (a) true if we only assume $|s_{n+1} - s_n| < \frac{1}{n}$ for all $n \in \mathbb{N}$?
-    \end{itemize}
+    \end{enumerate}
 
 
 \end{problem}
