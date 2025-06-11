@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.16)  10 JUN 2025 19:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.16)  10 JUN 2025 19:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -628,8 +628,7 @@ File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \c@example=\count354
 \c@corollary=\count355
 Package translations Info: No language package found. I am going to use `english' as default language. on input line 57.
-
-No file designing-a-hands-free-single-stringed-guitar.aux.
+ (./designing-a-hands-free-single-stringed-guitar.aux)
 \openout1 = `designing-a-hands-free-single-stringed-guitar.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
@@ -650,6 +649,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
 LaTeX Font Info:    ... okay on input line 57.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
 LaTeX Font Info:    ... okay on input line 57.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -883,10 +883,10 @@ Package rerunfilecheck Info: Checksums for `designing-a-hands-free-single-string
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 29000 strings out of 474116
- 595829 string characters out of 5743682
+ 29003 strings out of 474116
+ 595991 string characters out of 5743682
  1940187 words of memory out of 5000000
- 50911 multiletter control sequences out of 15000+600000
+ 50912 multiletter control sequences out of 15000+600000
  561434 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,6n,93p,666b,926s stack positions out of 10000i,1000n,20000p,200000b,200000s
