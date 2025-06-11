@@ -275,9 +275,6 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduledecora
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.markings.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.markings.code.tex
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/graphics/color.sty
-INPUT ./designing-a-hands-free-single-stringed-guitar.aux
-INPUT ./designing-a-hands-free-single-stringed-guitar.aux
-INPUT designing-a-hands-free-single-stringed-guitar.aux
 OUTPUT designing-a-hands-free-single-stringed-guitar.aux
 OUTPUT designing-a-hands-free-single-stringed-guitar.out
 OUTPUT designing-a-hands-free-single-stringed-guitar.pdf
