@@ -85,7 +85,7 @@ def render(tex: str, in_math=False) -> str:
                          # keep LaTeX for MathJax
             elif env in ("align", "align*", "equation", "equation*", "gather",
              "multline", "split"):
-    out.append(f"$${block}$$")                       # keep math for MathJax
+                out.append(f"$${block}$$")                       # keep math for MathJax
 
             elif env == "tabular":
                 # extract the column spec and body
