@@ -82,9 +82,27 @@ def render(tex: str, in_math=False) -> str:
                 out.append(f"<pre class='code-block'>{tex_escape(inner)}</pre>")
             elif env == "figure":
                 out.append(handle_figure(inner))
+                         # keep LaTeX for MathJax
             elif env in ("align", "align*", "equation", "equation*", "gather",
-                         "multline", "split"):
-                out.append(f"$${block}$$")              # keep LaTeX for MathJax
+             "multline", "split"):
+    out.append(f"$${block}$$")                       # keep math for MathJax
+
+            elif env == "tabular":
+                # extract the column spec and body
+                spec_match = re.match(r"\\begin\{tabular\}\{([^}]*)\}", block, re.S)
+                colspec = spec_match.group(1) if spec_match else ""
+                tab_body = re.sub(r"\\begin\{tabular\}\{[^}]*\}|\\end\{tabular\}", "",
+                                block, flags=re.S)
+                out.append(tabular_to_html(colspec, tab_body))
+
+            elif env == "table":
+                # optional caption
+                cap = re.search(r"\\caption\*?\{(.*?)\}", inner, re.S)
+                caption_html = f"<figcaption>{render(cap.group(1))}</figcaption>" if cap else ""
+                # find the (first) tabular inside and convert it
+                tab_m = re.search(r"\\begin\{tabular\}.*?\\end\{tabular\}", inner, re.S)
+                table_html = render(tab_m.group(0)) if tab_m else ""
+                out.append(f"<figure>{table_html}{caption_html}</figure>")
             elif env in ("problem", "solution", "proof",
                          "lemma", "proposition", "theorem"):
                 label = env.capitalize().rstrip("*") + "."
@@ -135,6 +153,35 @@ def handle_figure(inner: str) -> str:
     return (f"<figure><img src='{imgsrc}' alt='{caption}' "
             "style='max-width:100%;height:auto;'>"
             f"{cap_html}</figure>")
+
+# ────────────────── table helpers ────────────────────────────
+def tabular_to_html(spec: str, body: str) -> str:
+    """Convert the inside of a tabular to an HTML table.
+
+    * spec – the column spec, e.g. '|l|c|'
+    * body – everything between \begin{tabular}{...} and \end{tabular}
+    """
+    # Split rows on \\  (strip trailing spaces and \hline's)
+    rows = []
+    for raw in re.split(r"\\\\", body):
+        line = raw.strip()
+        if not line or line == r"\hline":
+            continue
+        line = line.replace(r"\hline", "")
+        rows.append([cell.strip() for cell in line.split("&")])
+
+    # First row = header if every cell contains \textbf or has bold tag
+    header_html = ""
+    if all(re.search(r"\\textbf|<strong>", c) for c in rows[0]):
+        header_cells = [f"<th>{render(c)}</th>" for c in rows.pop(0)]
+        header_html = "<thead><tr>" + "".join(header_cells) + "</tr></thead>"
+
+    body_html = "<tbody>" + "".join(
+        "<tr>" + "".join(f"<td>{render(c)}</td>" for c in r) + "</tr>"
+        for r in rows
+    ) + "</tbody>"
+
+    return f"<table>{header_html}{body_html}</table>"
 
 # ────────────────── public convert() function ──────────────────
 def convert(latex_path: pathlib.Path, extra_class: str="") -> str:
