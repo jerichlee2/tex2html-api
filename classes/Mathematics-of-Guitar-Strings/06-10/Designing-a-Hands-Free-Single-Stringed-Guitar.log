@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.16)  10 JUN 2025 18:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.16)  10 JUN 2025 19:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex
-(/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/Designing-a-Hands-Free-Single-Stringed-Guitar.tex
+**/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex
+(/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -628,30 +628,9 @@ File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \c@example=\count354
 \c@corollary=\count355
 Package translations Info: No language package found. I am going to use `english' as default language. on input line 57.
- (./Designing-a-Hands-Free-Single-Stringed-Guitar.aux
 
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-
-LaTeX Warning: Label `fig:' multiply defined.
-
-)
-\openout1 = `Designing-a-Hands-Free-Single-Stringed-Guitar.aux'.
+No file designing-a-hands-free-single-stringed-guitar.aux.
+\openout1 = `designing-a-hands-free-single-stringed-guitar.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
 LaTeX Font Info:    ... okay on input line 57.
@@ -671,7 +650,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
 LaTeX Font Info:    ... okay on input line 57.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
 LaTeX Font Info:    ... okay on input line 57.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -707,11 +685,10 @@ LaTeX Font Info:    ... okay on input line 57.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 57.
-(./Designing-a-Hands-Free-Single-Stringed-Guitar.out) (./Designing-a-Hands-Free-Single-Stringed-Guitar.out)
 \@outlinefile=\write4
-\openout4 = `Designing-a-Hands-Free-Single-Stringed-Guitar.out'.
+\openout4 = `designing-a-hands-free-single-stringed-guitar.out'.
 
- (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count356
 \scratchdimen=\dimen313
@@ -763,74 +740,161 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 60.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<fgs/fig1.png, id=7, 361.35pt x 184.69pt>
-File: fgs/fig1.png Graphic file (type png)
-<use fgs/fig1.png>
-Package pdftex.def Info: fgs/fig1.png  used on input line 88.
-(pdftex.def)             Requested size: 375.80544pt x 192.07867pt.
-<fgs/fig2.png, id=9, 330.23375pt x 184.69pt>
-File: fgs/fig2.png Graphic file (type png)
-<use fgs/fig2.png>
-Package pdftex.def Info: fgs/fig2.png  used on input line 99.
-(pdftex.def)             Requested size: 375.80544pt x 210.18523pt.
-<fgs/fig3.png, id=10, 365.365pt x 275.0275pt>
-File: fgs/fig3.png Graphic file (type png)
-<use fgs/fig3.png>
-Package pdftex.def Info: fgs/fig3.png  used on input line 113.
-(pdftex.def)             Requested size: 375.80544pt x 282.8996pt.
- [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./fgs/fig1.png> <./fgs/fig2.png>]
-<fgs/fig4.png, id=26, 344.28625pt x 252.945pt>
-File: fgs/fig4.png Graphic file (type png)
-<use fgs/fig4.png>
-Package pdftex.def Info: fgs/fig4.png  used on input line 124.
-(pdftex.def)             Requested size: 375.80544pt x 276.10213pt.
-<fgs/fig5.png, id=27, 379.4175pt x 225.84375pt>
-File: fgs/fig5.png Graphic file (type png)
-<use fgs/fig5.png>
-Package pdftex.def Info: fgs/fig5.png  used on input line 131.
-(pdftex.def)             Requested size: 375.80544pt x 223.6997pt.
-<fgs/fig6.png, id=28, 412.54124pt x 249.93375pt>
-File: fgs/fig6.png Graphic file (type png)
-<use fgs/fig6.png>
-Package pdftex.def Info: fgs/fig6.png  used on input line 138.
-(pdftex.def)             Requested size: 375.80544pt x 227.68033pt.
-<fgs/fig7.png, id=29, 332.24126pt x 178.6675pt>
-File: fgs/fig7.png Graphic file (type png)
-<use fgs/fig7.png>
-Package pdftex.def Info: fgs/fig7.png  used on input line 158.
-(pdftex.def)             Requested size: 375.80544pt x 202.10728pt.
-<fgs/fig8.png, id=30, 367.3725pt x 206.7725pt>
-File: fgs/fig8.png Graphic file (type png)
-<use fgs/fig8.png>
-Package pdftex.def Info: fgs/fig8.png  used on input line 165.
-(pdftex.def)             Requested size: 375.80544pt x 211.533pt.
- [3 <./fgs/fig3.png>] [4 <./fgs/fig4.png> <./fgs/fig5.png>] [5 <./fgs/fig6.png> <./fgs/fig7.png>] [6 <./fgs/fig8.png>] (./Designing-a-Hands-Free-Single-Stringed-Guitar.aux)
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig1.png' not found on input line 88.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:88: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig1.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88 ...tics-of-Guitar-Strings/06-10/fgs/fig1.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig2.png' not found on input line 99.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:99: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig2.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99 ...tics-of-Guitar-Strings/06-10/fgs/fig2.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig3.png' not found on input line 113.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:113: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig3.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.113 ...ics-of-Guitar-Strings/06-10/fgs/fig3.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[1
+
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig4.png' not found on input line 124.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:124: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig4.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.124 ...ics-of-Guitar-Strings/06-10/fgs/fig4.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig5.png' not found on input line 131.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:131: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig5.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.131 ...ics-of-Guitar-Strings/06-10/fgs/fig5.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig6.png' not found on input line 138.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:138: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig6.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.138 ...ics-of-Guitar-Strings/06-10/fgs/fig6.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[4] [5] [6] [7]
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig7.png' not found on input line 158.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:158: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig7.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.158 ...ics-of-Guitar-Strings/06-10/fgs/fig7.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig8.png' not found on input line 165.
+
+
+/Users/jerichlee/Documents/tex2html-api/classes/Mathematics-of-Guitar-Strings/06-10/designing-a-hands-free-single-stringed-guitar.tex:165: Package pdftex.def Error: File `classes/Mathematics-of-Guitar-Strings/06-10/fgs/fig8.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.165 ...ics-of-Guitar-Strings/06-10/fgs/fig8.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[8] [9] (./designing-a-hands-free-single-stringed-guitar.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package rerunfilecheck Info: File `Designing-a-Hands-Free-Single-Stringed-Guitar.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+Package rerunfilecheck Warning: File `designing-a-hands-free-single-stringed-guitar.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `designing-a-hands-free-single-stringed-guitar.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 28818 strings out of 474116
- 581389 string characters out of 5743682
+ 29000 strings out of 474116
+ 595829 string characters out of 5743682
  1940187 words of memory out of 5000000
- 50727 multiletter control sequences out of 15000+600000
- 561265 words of font info for 49 fonts, out of 8000000 for 9000
+ 50911 multiletter control sequences out of 15000+600000
+ 561434 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,6n,93p,666b,926s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Designing-a-Hands-Free-Single-Stringed-Guitar.pdf (6 pages, 1584206 bytes).
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on designing-a-hands-free-single-stringed-guitar.pdf (9 pages, 47791 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
- 15 named destinations out of 1000 (max. 500000)
- 53 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
+ 18 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
