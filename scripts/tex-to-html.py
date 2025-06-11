@@ -156,11 +156,6 @@ def handle_figure(inner: str) -> str:
 
 # ────────────────── table helpers ────────────────────────────
 def tabular_to_html(spec: str, body: str) -> str:
-    """Convert the inside of a tabular to an HTML table.
-
-    * spec – the column spec, e.g. '|l|c|'
-    * body – everything between \begin{tabular}{...} and \end{tabular}
-    """
     # Split rows on \\  (strip trailing spaces and \hline's)
     rows = []
     for raw in re.split(r"\\\\", body):

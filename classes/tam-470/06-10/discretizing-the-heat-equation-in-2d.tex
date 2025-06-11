@@ -230,18 +230,18 @@ T_{i,j}^n = \lambda^n e^{i(\alpha i + \beta j)},
 where $\alpha$ and $\beta$ are wave numbers in the $x$ and $y$ directions, respectively, and $\lambda$ is the amplification factor per time step. We substitute this trial solution into the homogeneous version of the update equation and look for conditions on $\Delta t$ that ensure $|\lambda| \leq 1$ for stability.
 
 \noindent Substitute $T_{i,j}^n = \lambda^n e^{i(\alpha i + \beta j)}$ into the discrete Laplacian terms:
-\begin{align*}
+\begin{align}
 T_{i+1,j}^n &= \lambda^n e^{i[\alpha(i+1) + \beta j]} = \lambda^n e^{i\alpha}e^{i(\alpha i + \beta j)}, \\
 T_{i-1,j}^n &= \lambda^n e^{i[\alpha(i-1) + \beta j]} = \lambda^n e^{-i\alpha}e^{i(\alpha i + \beta j)}, \\
 T_{i,j+1}^n &= \lambda^n e^{i[\alpha i + \beta (j+1)]} = \lambda^n e^{i\beta}e^{i(\alpha i + \beta j)}, \\
 T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^{i(\alpha i + \beta j)}.
-\end{align*}
+\end{align}
 
 \noindent Factor out $\lambda^n e^{i(\alpha i + \beta j)}$:
-\begin{align*}
+\begin{align}
 \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} &= \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta x^2} (e^{i\alpha} - 2 + e^{-i\alpha}), \\
 \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} &= \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta y^2} (e^{i\beta} - 2 + e^{-i\beta}).
-\end{align*}
+\end{align}
 
 \noindent Note that $(e^{i\theta} - 2 + e^{-i\theta}) = -2 + (e^{i\theta} + e^{-i\theta}) = -2 + 2\cos\theta = 2(\cos\theta - 1)$.
 
@@ -274,11 +274,11 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
 \end{align}
 
 \noindent Solve for $\Delta t$:
-\begin{align*}
+\begin{align}
 -1 \leq 1 - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2} \right) &\implies -2 \leq - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right) \\
 \implies \frac{4 \Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right) \leq 2 \\
 \implies \Delta t \leq \frac{\rho c}{2k}\left(\frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right)^{-1}.
-\end{align*}
+\end{align}
 
 \noindent This is the stability constraint that ensures the explicit scheme remains stable. It shows that the time step must be small enough relative to the spatial discretization and material properties.
             \begin{align}
@@ -446,6 +446,5 @@ When we use the same time step as in the previous question, $\Delta t=0.01$ seco
     \item The plot in \autoref{fig:10} shows the maximum temperature vs. power for different laser velocities. The most obvious trend is that as the velocity of the laser decreased, the rate of the maximum temperature for each laser velocity increased; i.e., the behavior of each velocity when plotted for power vs temperature showed increasing, linear behavior. Intuitively, this demonstrates that as the rate of the movement of the laser decreases, the domain of the system has more time to heat, allowing for an accumulated heat build up, resulting in a larger maximum temperature. 
     At higher speeds, the laser has less time to concentrate its energy on a point and its neighbors, which leads to distributing heat more superficially, which leads to a lower linear slope value. 
     \end{enumerate}
-
 \end{solution}
 \end{document}
