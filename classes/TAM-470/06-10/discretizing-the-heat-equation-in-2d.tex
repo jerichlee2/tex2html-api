@@ -60,7 +60,7 @@
 
 
 \begin{solution}
-\noindent
+
     \begin{enumerate}
         \item \subsubsection*{Update Scheme for Interior Nodes}
 
@@ -70,40 +70,40 @@
         \end{align}
         where $\rho$ is the density, $c$ is the heat capacity, $k$ is the thermal conductivity, $T$ is the temperature, and $Q$ is the heat source.
         
-        \noindent We proceed by discretizing this equation in space and time. Consider a uniform spatial grid with spacing $\Delta x$ in the $x$-direction and $\Delta y$ in the $y$-direction, and a uniform time step $\Delta t$. We define:
+         We proceed by discretizing this equation in space and time. Consider a uniform spatial grid with spacing $\Delta x$ in the $x$-direction and $\Delta y$ in the $y$-direction, and a uniform time step $\Delta t$. We define:
         \begin{align}
         T_{i,j}^n \approx T(x_i, y_j, t_n),
         \end{align}
         where $x_i = i \Delta x$, $y_j = j \Delta y$, and $t_n = n \Delta t$.
         
-        \noindent First, we approximate the time derivative $\frac{\partial T}{\partial t}$ using a forward difference:
+         First, we approximate the time derivative $\frac{\partial T}{\partial t}$ using a forward difference:
         \begin{align}
         \frac{\partial T}{\partial t}(x_i, y_j, t_n) \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t}.
         \end{align}
         
-        \noindent Next, we discretize the spatial second derivatives using central differences. For the $x$-direction:
+         Next, we discretize the spatial second derivatives using central differences. For the $x$-direction:
         \begin{align}
         \frac{\partial^2 T}{\partial x^2}(x_i, y_j, t_n) \approx \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2}.
         \end{align}
         
-        \noindent Similarly, in the $y$-direction:
+         Similarly, in the $y$-direction:
         \begin{align}
         \frac{\partial^2 T}{\partial y^2}(x_i, y_j, t_n) \approx \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2}.
         \end{align}
         
-        \noindent The source term $Q(x_i,y_j,t_n)$ is approximated as $Q_{i,j}^n$.
+         The source term $Q(x_i,y_j,t_n)$ is approximated as $Q_{i,j}^n$.
         
-        \noindent Substituting these finite-difference approximations back into the PDE, we have:
+         Substituting these finite-difference approximations back into the PDE, we have:
         \begin{align}
         \rho c \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t} = k \left( \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} \right) + Q_{i,j}^n.
         \end{align}
         
-        \noindent Finally, we solve for $T_{i,j}^{n+1}$:
+         Finally, we solve for $T_{i,j}^{n+1}$:
         \begin{align}
         T_{i,j}^{n+1} &= T_{i,j}^n + \frac{\Delta t}{\rho c}\bigg[ k\bigg( \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} \bigg) + Q_{i,j}^n \bigg]. \label{eqn7}
         \end{align}
         
-        \noindent This is the explicit update formula for the interior nodes. Every new time step $T_{i,j}^{n+1}$ is computed explicitly using known values from the current time step $T_{i,j}^n$. The terms involving second derivatives handle heat diffusion, while the $Q_{i,j}^n$ term accounts for the heat source.
+         This is the explicit update formula for the interior nodes. Every new time step $T_{i,j}^{n+1}$ is computed explicitly using known values from the current time step $T_{i,j}^n$. The terms involving second derivatives handle heat diffusion, while the $Q_{i,j}^n$ term accounts for the heat source.
 
         \item \subsubsection*{Update Scheme for Boundary Nodes}
 
@@ -176,7 +176,7 @@
 \end{solution}
 
 \begin{solution}
-    \noindent
+    
 
         For Question 2, we will implement a stationary laser source at the midpoint of the top domain and select time step $\Delta t = 0.01$ seconds.
 
@@ -218,18 +218,18 @@
             \end{enumerate}
         
             \subsubsection*{Stability Analysis}  
-            \noindent To derive the stability constraint for the explicit finite-difference scheme, we will use von Neumann stability analysis. Starting from the discrete update scheme for the 2D heat equation (\autoref{eqn7}), we focus on the homogeneous form (no source term $Q$):
+             To derive the stability constraint for the explicit finite-difference scheme, we will use von Neumann stability analysis. Starting from the discrete update scheme for the 2D heat equation (\autoref{eqn7}), we focus on the homogeneous form (no source term $Q$):
 \begin{align}
 T_{i,j}^{n+1} = T_{i,j}^n + \frac{\Delta t}{\rho c}\left[ k \left( \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2}\right) \right].
 \end{align}
 
-\noindent For the stability analysis, we assume a solution of the form:
+ For the stability analysis, we assume a solution of the form:
 \begin{align}
 T_{i,j}^n = \lambda^n e^{i(\alpha i + \beta j)},
 \end{align}
 where $\alpha$ and $\beta$ are wave numbers in the $x$ and $y$ directions, respectively, and $\lambda$ is the amplification factor per time step. We substitute this trial solution into the homogeneous version of the update equation and look for conditions on $\Delta t$ that ensure $|\lambda| \leq 1$ for stability.
 
-\noindent Substitute $T_{i,j}^n = \lambda^n e^{i(\alpha i + \beta j)}$ into the discrete Laplacian terms:
+ Substitute $T_{i,j}^n = \lambda^n e^{i(\alpha i + \beta j)}$ into the discrete Laplacian terms:
 \begin{align}
 T_{i+1,j}^n &= \lambda^n e^{i[\alpha(i+1) + \beta j]} = \lambda^n e^{i\alpha}e^{i(\alpha i + \beta j)}, \\
 T_{i-1,j}^n &= \lambda^n e^{i[\alpha(i-1) + \beta j]} = \lambda^n e^{-i\alpha}e^{i(\alpha i + \beta j)}, \\
@@ -237,15 +237,15 @@ T_{i,j+1}^n &= \lambda^n e^{i[\alpha i + \beta (j+1)]} = \lambda^n e^{i\beta}e^{
 T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^{i(\alpha i + \beta j)}.
 \end{align}
 
-\noindent Factor out $\lambda^n e^{i(\alpha i + \beta j)}$:
+ Factor out $\lambda^n e^{i(\alpha i + \beta j)}$:
 \begin{align}
 \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} &= \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta x^2} (e^{i\alpha} - 2 + e^{-i\alpha}), \\
 \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} &= \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta y^2} (e^{i\beta} - 2 + e^{-i\beta}).
 \end{align}
 
-\noindent Note that $(e^{i\theta} - 2 + e^{-i\theta}) = -2 + (e^{i\theta} + e^{-i\theta}) = -2 + 2\cos\theta = 2(\cos\theta - 1)$.
+ Note that $(e^{i\theta} - 2 + e^{-i\theta}) = -2 + (e^{i\theta} + e^{-i\theta}) = -2 + 2\cos\theta = 2(\cos\theta - 1)$.
 
-\noindent Thus:
+ Thus:
 \begin{align}
 \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} = \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta x^2} \cdot 2(\cos\alpha - 1),
 \end{align}
@@ -253,44 +253,44 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
 \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} = \frac{\lambda^n e^{i(\alpha i + \beta j)}}{\Delta y^2} \cdot 2(\cos\beta - 1).
 \end{align}
 
-\noindent The update equation becomes:
+ The update equation becomes:
 \begin{align}
 \lambda^{n+1} e^{i(\alpha i + \beta j)} = \lambda^n e^{i(\alpha i + \beta j)} + \frac{\Delta t}{\rho c} \left[ k \left( \frac{2(\cos\alpha - 1)}{\Delta x^2} + \frac{2(\cos\beta - 1)}{\Delta y^2} \right)\lambda^n e^{i(\alpha i + \beta j)} \right].
 \end{align}
 
-\noindent Canceling $\lambda^n e^{i(\alpha i + \beta j)}$:
+ Canceling $\lambda^n e^{i(\alpha i + \beta j)}$:
 \begin{align}
 \lambda = 1 + \frac{\Delta t k}{\rho c}\left( \frac{2(\cos\alpha - 1)}{\Delta x^2} + \frac{2(\cos\beta - 1)}{\Delta y^2}\right).
 \end{align}
 
-\noindent Since $|\cos\theta - 1| \leq 0$, the most restrictive case occurs when $\cos\alpha = \cos\beta = -1$, which gives the largest magnitude of negative shift, i.e. $\cos\theta - 1 = -2$. Substituting $\cos\alpha = \cos\beta = -1$:
+ Since $|\cos\theta - 1| \leq 0$, the most restrictive case occurs when $\cos\alpha = \cos\beta = -1$, which gives the largest magnitude of negative shift, i.e. $\cos\theta - 1 = -2$. Substituting $\cos\alpha = \cos\beta = -1$:
 \begin{align}
 \lambda = 1 + \frac{\Delta t k}{\rho c}\left(\frac{2(-2)}{\Delta x^2} + \frac{2(-2)}{\Delta y^2}\right) = 1 - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right).
 \end{align}
 
-\noindent For stability, we require $|\lambda| \leq 1$. The most important condition is $\lambda \geq -1$, as $\lambda \leq 1$ is implied if $\lambda < 1$. Thus:
+ For stability, we require $|\lambda| \leq 1$. The most important condition is $\lambda \geq -1$, as $\lambda \leq 1$ is implied if $\lambda < 1$. Thus:
 \begin{align}
 -1 \leq 1 - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2} \right).
 \end{align}
 
-\noindent Solve for $\Delta t$:
+ Solve for $\Delta t$:
 \begin{align}
 -1 \leq 1 - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2} \right) &\implies -2 \leq - \frac{4\Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right) \\
 \implies \frac{4 \Delta t k}{\rho c}\left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right) \leq 2 \\
 \implies \Delta t \leq \frac{\rho c}{2k}\left(\frac{1}{\Delta x^2} + \frac{1}{\Delta y^2}\right)^{-1}.
 \end{align}
 
-\noindent This is the stability constraint that ensures the explicit scheme remains stable. It shows that the time step must be small enough relative to the spatial discretization and material properties.
+ This is the stability constraint that ensures the explicit scheme remains stable. It shows that the time step must be small enough relative to the spatial discretization and material properties.
             \begin{align}
             r_x = \frac{k \Delta t}{\rho c \Delta x^2}, \quad r_y = \frac{k \Delta t}{\rho c \Delta y^2}, \quad \text{and we require } r_x + r_y < 0.5.
             \end{align}
         
-            \noindent We have chosen $\Delta t = 0.01$ seconds. To verify that a time step of $\Delta t = 0.01\,\text{s}$ satisfies the stability constraint, we begin with the derived inequality:
+             We have chosen $\Delta t = 0.01$ seconds. To verify that a time step of $\Delta t = 0.01\,\text{s}$ satisfies the stability constraint, we begin with the derived inequality:
             \begin{align}
             \Delta t \leq \frac{\rho c}{2k} \left( \frac{1}{\Delta x^2} + \frac{1}{\Delta y^2} \right)^{-1}.
             \end{align}
             
-            \noindent We know the physical and numerical parameters: $\rho$, $c$, $k$, $\Delta x$, and $\Delta y$. We proceed by computing the allowable maximum $\Delta t_{\max}$.
+             We know the physical and numerical parameters: $\rho$, $c$, $k$, $\Delta x$, and $\Delta y$. We proceed by computing the allowable maximum $\Delta t_{\max}$.
             
             First, define:
             \begin{align}
@@ -301,7 +301,7 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
             \Delta t_{\max} = \frac{\rho c}{2k}\cdot \frac{1}{S}.
             \end{align}
             
-            \noindent Using the given problem parameters:
+             Using the given problem parameters:
             \begin{align}
             \rho = 7900\,\text{kg/m}^3, \quad c = 470\,\text{J/(kg·K)}, \quad k = 48\,\text{W/(m·K)},
             \end{align}
@@ -318,7 +318,7 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
             S = 10^6 + 10^6 = 2 \times 10^6.
             \end{align}
             
-            \noindent Next, we compute $\frac{\rho c}{2k}$:
+             Next, we compute $\frac{\rho c}{2k}$:
             \begin{align}
             \rho c = 7900 \times 470 = 3{,}713{,}000.
             \end{align}
@@ -326,17 +326,17 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
             \frac{\rho c}{2k} = \frac{3{,}713{,}000}{2 \times 48} = \frac{3{,}713{,}000}{96} \approx 38{,}677.08.
             \end{align}
             
-            \noindent Therefore:
+             Therefore:
             \begin{align}
             \Delta t_{\max} = 38{,}677.08 \cdot \frac{1}{2 \times 10^6} = 38{,}677.08 \times 5 \times 10^{-7} \approx 0.01934\,\text{s}.
             \end{align}
             
-            \noindent As we have chosen $\Delta t = 0.01\,\text{s}$, we compare:
+             As we have chosen $\Delta t = 0.01\,\text{s}$, we compare:
             \begin{align}
             0.01\,\text{s} \leq 0.01934\,\text{s}.
             \end{align}
             
-            \noindent This inequality is true, so $\Delta t = 0.01\,\text{s}$ is within the stability limit. Therefore, a time step of 0.01 seconds works for the given parameters and ensures the numerical stability of the explicit scheme.
+             This inequality is true, so $\Delta t = 0.01\,\text{s}$ is within the stability limit. Therefore, a time step of 0.01 seconds works for the given parameters and ensures the numerical stability of the explicit scheme.
         
         
         \begin{enumerate}
@@ -359,14 +359,14 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
     \item The plots of temperature vs time at $x = 0.5L_x$ at the top surface ($y = L_y$), 20\% depth ($y = 0.8L_y$), and 50\% depth ($y = 0.5L_y$) are shown in \autoref{fig:1}
      \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/Figure_2-proj2.png}
+        \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/Figure_2-proj2.png}
         \caption{Temperature vs Time at Different Depths}
         \label{fig:1}
     \end{figure}
     \item A plot of temperature vs position at the final time along the line $x = 0.5L_x$ is shown in \autoref{fig:2}
      \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/Figure_3-proj-2.png}
+        \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/Figure_3-proj-2.png}
         \caption{Temperature vs position at the final time along the line $x = 0.5L_x$}
         \label{fig:2}
     \end{figure}
@@ -376,19 +376,19 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
         \item \autoref{fig:3} : \begin{figure}[htbp]
 
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.2.4.1.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.2.4.1.png}
             \caption{t=10s}
             \label{fig:3}
         \end{figure}
         \item \autoref{fig:4}: \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.2.4.2.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.2.4.2.png}
             \caption{t=40s}
             \label{fig:4}
         \end{figure}
     \item \autoref{fig:5}: \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.2.4.3.png}
+        \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.2.4.3.png}
         \caption{t=40s}
         \label{fig:5}
     \end{figure}
@@ -399,32 +399,32 @@ T_{i,j-1}^n &= \lambda^n e^{i[\alpha i + \beta (j-1)]} = \lambda^n e^{-i\beta}e^
 \end{solution}
 
 \begin{solution}
-\noindent
+
 
 When we use the same time step as in the previous question, $\Delta t=0.01$ seconds, the code terminates and converges.
      \begin{enumerate}
         \item \autoref{fig:6} \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.3.1.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.3.1.png}
             \caption{Plots of temperature vs time at $x = 0.5L_x$ at the top surface ($y = L_y$), 20\% depth ($y = 0.8L_y$), and 50\% depth ($y = 0.5L_y$).}
             \label{fig:6}
         \end{figure}
         \item \begin{enumerate}
            \item  \autoref{fig:7} \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.3.2.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.3.2.png}
             \caption{Contour plots of temperature distribution in the domain at $t = 0.2t_\text{end}$ seconds}
             \label{fig:7}
         \end{figure}
         \item \autoref{fig:8} \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.3.3.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.3.3.png}
             \caption{Contour plots of temperature distribution in the domain at $t = 0.5t_\text{end}$ seconds}
             \label{fig:8}
         \end{figure}
     \item \autoref{fig:9} \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.3.4.png}
+        \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.3.4.png}
         \caption{Contour plots of temperature distribution in the domain at $t = t_\text{end}$ seconds}
         \label{fig:9}
     \end{figure}
@@ -435,11 +435,11 @@ When we use the same time step as in the previous question, $\Delta t=0.01$ seco
 \end{solution}
 
 \begin{solution}
-    \noindent
+    
     \begin{enumerate}
         \item \autoref{fig:10} \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{classes/TAM-470/06-10/proj-2.4.1.png}
+            \includegraphics[width=0.8\textwidth]{classes/fall-2024/tam-470/diary/12-09/proj-2.4.1.png}
             \caption{Maximum temperature on the vertical axis vs power}
             \label{fig:10}
         \end{figure}
