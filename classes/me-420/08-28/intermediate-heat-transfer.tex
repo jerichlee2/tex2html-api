@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+
+%––––– Packages –––––
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{cancel}
+  \usetikzlibrary{calc,patterns,arrows.meta,decorations.markings}
+
+%––––– Custom macros –––––
+\newcommand{\incfig}[1]{%%
+    \def\svgwidth{\columnwidth}%%
+    \import{./Figures/}{##1.pdf_tex}%%
+}
+
+%––––– Theorem styles –––––
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+%––––– Meta –––––
+\title{Intermediate Heat Transfer}
+\author{Jerich Lee}
+\date{August 28, 2025}
+
+\begin{document}
+\maketitle
+
+% Your content starts here.
+
+\end{document}
